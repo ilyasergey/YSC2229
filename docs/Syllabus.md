@@ -1,4 +1,4 @@
-## Syllabus for YCS2229: Introductory Data Structures and Algorithms
+## Syllabus for YSC2229: Introductory Data Structures and Algorithms
 
 * Week 01a (Jan 11)
   * Introduction: information, data, representing computations
@@ -48,7 +48,9 @@
 * Week 06b (Feb 18)
   * Hash-functions and hash-tables
 
--------------[Mid-term break]-----------------
+```
+<<< Mid-term break >>>
+```
 
 * Week 08a (Mar 4)
   * Basic probability theory and its application to analysis of algorithms
