@@ -1,12 +1,12 @@
 ## Syllabus for YCS2229: Introductory Data Structures and Algorithms
 
 * Week 01a (Jan 11)
-  * General presentation: information, data, representing computations
+  * Introduction: information, data, representing computations
   * Representation of data in memory
   * Recursion and loops: correctness and termination, invariants and variants
   * Folding algebraic lists
 * Week 01b (Jan 11)
-  * Fibonacci numbers, computing power and discrete logarithms
+  * Fibonacci numbers, computing powers and discrete logarithms
   * Algorithmic complexity
   * Order notation, big-O, little-o
 
@@ -18,7 +18,7 @@
 * Week 02b (Jan 21)
   * Complexity of loops
   * Sums of series, approximating with integrals
-  * Analysing sorting algorithms
+  * Analysing complexity of sorting algorithms
 
 * Week 03a (Jan 28)
   * Divide-and-conquer algorithms
@@ -27,18 +27,16 @@
 * Week 03b (Jan 28)
   * Complexity of recursive algorithms
   * Recurrence relations
-  * Master-theorem
+  * Master theorem
   
 * Week 04a (Feb 4)
-  * Quick-sort and its worst-case complexity
-  * Best-worst complexity for sorting
+  * Quicksort and its worst-case complexity
+  * Best-worst complexity for comparison-based sorting
 * Week 04b (Feb 4)
-  * Sorting in linear time
-  * counting sort, bucket sort and radix sort
+  * Sorting in linear time: counting sort, bucket sort and radix sort
 
 * Week 05a (Feb 11)
-  * Binary-search trees
-  * AVL trees
+  * Binary-search trees, AVL trees
 * Week 05b (Feb 11)
   * Connection between searching and sorting
   * Heap-sort and its complexity
@@ -65,76 +63,38 @@
   * Writing property tests in OCaml
   * QuickCheck and its applications
 * Week 09b (Mar 11)
-  // Dynamic programming, KMP, and RegExp matching
+  * Elements of dynamic programming
+  * Memoization
 
 * Week 10a (Mar 18)
-  // Dynamic programming, KMP, and RegExp matching
+  * String matching, Rabin-Karp  algorithm
 * Week 10b (Mar 18)
-  // More fun with regular expressions
-  // Prefix trees
+  * Knuth–Morris–Pratt algorithm
+  * Prefix trees
 
 * Week 11a (Mar 25)
-  // Graphs
+  * Representing undirected graphs as data structures
+  * Depth- and breadth-first search
+  * Connected components
 * Week 11b (Mar 25)
-  // Graphs
+  * Directed graphs
+  * Cycle detection, topological sort
 
 * Week 12a (Apr 1)
-  // Graphs
+  * Minimal spanning trees
+  * Kruskal and Prim algorithms
 * Week 12b (Apr 1)
-  // Graphs
+  * Weighted graphs and shortest paths
+  * Dijkstra's algorithm
 
 * Week 13a (Apr 8)
-  // Elements of CG: convex hulls
+  * Elements of Computational Geometry
+  * Convex hulls: 
 * Week 13b (Apr 8)
-  // Elements of CG
+  * Triangulations and guarding a gallery
 
 * Week 14a (Apr 15)
-  * general recap, review of the term project
+  * Recap of the course, review of the term project
 * Week 14b (Apr 15)
-  * memory management and algorithms for garbage collection
-  * patterns of memory inefficiency
-
-========================================
-
-## Scratchpad
-
-
-* Memory management and garbage collection
-
-* Elements of Computational Geometry
-
-* Elements of dynamic programming
-
-* Lists and iteration
-
-* Programming with lists and folding
- 
-* Basic probability theory and average-case complexity
-* Average-case complexity of QuickSort
-
-* Property-based testing and QuickCheck
-
-
-
-
-
-
-1. Motivation triangle: space, time, simplicity
-2. Complexity
-3. Invariants Variants
-4. Storing and querying data
-    1. Arrays and Sorting
-    2. Arrays are good: show with strings
-    3. Searching
-    4. Sorting
-5. Abstract data types, representing stacks and queues
-6. Sequencing access
-    1. Lists
-    2. Stacks
-    3. Queues
-        1. Functional queues
-7. Optimisation:
-    1. Recursion and dynamic programming
-8. Graphs
-9. Elements of computational geometry
-
+  * Memory management and algorithms for garbage collection
+  * Patterns of memory inefficiency
