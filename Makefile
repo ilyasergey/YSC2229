@@ -20,7 +20,7 @@ help:
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-gh-pages:
+site:
 	git checkout gh-pages
 	rm -rf build _sources _static
 	git checkout master $(GH_PAGES_SOURCES) $(RESOURCEDIR)
