@@ -6,7 +6,8 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 SOURCEDIR     = source
 BUILDDIR      = build
-GH_PAGES_SOURCES = source resources Makefile
+GH_PAGES_SOURCES = source Makefile
+RESOURCEDIR   = resources 
 
 # Put it first so that "make" without argument is like "make help".
 help:
@@ -22,7 +23,7 @@ help:
 gh-pages:
 	git checkout gh-pages
 	rm -rf build _sources _static
-	git checkout master $(GH_PAGES_SOURCES)
+	git checkout master $(GH_PAGES_SOURCES) $(RESOURCEDIR)
 	git reset HEAD
 	make html
 	mv -fv build/html/* ./
