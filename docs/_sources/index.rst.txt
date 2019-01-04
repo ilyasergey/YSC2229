@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Introductory Data Structures and Algorithms's documentation!
+Introductory Data Structures and Algorithms
 =======================================================================
 
 .. toctree::
@@ -16,5 +16,6 @@ Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
+..
+   * :ref:`modindex`
 * :ref:`search`
