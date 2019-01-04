@@ -1,9 +1,8 @@
 ## Syllabus for YSC2229: Introductory Data Structures and Algorithms
 
 * Week 01a (Jan 11)
-  * Introduction: information, data, representing computations
-  * Representation of data in memory
-  * Recursion and loops: correctness and termination, invariants and variants
+  * Introduction: information, data, analysing computations
+  * Recursion (structural, general) and loops: correctness and termination, invariants and variants
   * Folding algebraic lists
 * Week 01b (Jan 11)
   * Fibonacci numbers, computing powers and discrete logarithms
