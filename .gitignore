@@ -1,4 +1,5 @@
 .#*
+.DS_Store
 
 # sphinx build folder
 _build
