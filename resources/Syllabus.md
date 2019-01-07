@@ -1,20 +1,20 @@
 ## Syllabus for YSC2229: Introductory Data Structures and Algorithms
 
-* Week 01a (Jan 11)
+* Week 01a (Jan 21)
   * Introduction: information, data, analysing computations
   * Recursion (structural, general) and loops: correctness and termination, invariants and variants
   * Folding algebraic lists
-* Week 01b (Jan 11)
+* Week 01b (Jan 21)
   * Fibonacci numbers, computing powers and discrete logarithms
   * Algorithmic complexity
   * Order notation, big-O, little-o
 
-* Week 02a (Jan 21)
+* Week 02a (Jan 23)
   * Arrays and operations on them
   * Typical problems involving arrays
   * Multi-dimensional arrays and nested loops
   * Basic searching and sorting: insertion sort, bubble-sort
-* Week 02b (Jan 21)
+* Week 02b (Jan 23)
   * Complexity of loops
   * Sums of series, approximating with integrals
   * Analysing complexity of sorting algorithms
