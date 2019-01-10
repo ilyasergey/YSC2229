@@ -19,7 +19,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = u'Introductory Data Structures and Algorithms'
+project = u'YSC2229: Introductory Data Structures and Algorithms'
 copyright = u'2019, Ilya Sergey'
 author = u'Ilya Sergey'
 
@@ -74,24 +74,31 @@ pygments_style = None
 
 # -- Options for HTML output -------------------------------------------------
 
-import guzzle_sphinx_theme
+html_title = 'YSC2229 2019'
 
-html_theme_path = guzzle_sphinx_theme.html_theme_path()
-html_theme = 'guzzle_sphinx_theme'
+# html_theme = 'default'
+# html_theme = 'sphinxdoc'
+# html_theme = 'agogo'
+# html_theme = 'haiku'
+# html_theme = 'scrolls'
+# html_theme = 'nature'
+# html_theme = 'alabaster'
+html_theme = "sphinx_rtd_theme"
 
-# Register the theme as an extension to generate a sitemap.xml
-extensions.append("guzzle_sphinx_theme")
+# import guzzle_sphinx_theme
+# html_theme_path = guzzle_sphinx_theme.html_theme_path()
+# # Register the theme as an extension to generate a sitemap.xml
+# extensions.append("guzzle_sphinx_theme")
+# # Guzzle theme options (see theme.conf for more information)
+# html_theme_options = {
+#     # Set the name of the project to appear in the sidebar
+#     "project_nav_name": "YSC2229",
+# }
+# html_theme = 'guzzle_sphinx_theme'
 
-# Guzzle theme options (see theme.conf for more information)
-html_theme_options = {
-    # Set the name of the project to appear in the sidebar
-    "project_nav_name": "Project Name",
-}
-
-# The theme to use for HTML and HTML Help pages.  See the documentation for
-# a list of builtin themes.
-#
-html_theme = 'guzzle_sphinx_theme'
+# from better import better_theme_path
+# html_theme_path = [better_theme_path]
+# html_theme = 'better'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -145,7 +152,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'IntroductoryDataStructuresandAlgorithms.tex', u'Introductory Data Structures and Algorithms Documentation',
+    (master_doc, 'IntroductoryDataStructuresandAlgorithms.tex', u'Introductory Data Structures and Algorithms',
      u'Ilya Sergey', 'manual'),
 ]
 
@@ -155,7 +162,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'introductorydatastructuresandalgorithms', u'Introductory Data Structures and Algorithms Documentation',
+    (master_doc, 'introductorydatastructuresandalgorithms', u'Introductory Data Structures and Algorithms',
      [author], 1)
 ]
 
@@ -166,7 +173,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'IntroductoryDataStructuresandAlgorithms', u'Introductory Data Structures and Algorithms Documentation',
+    (master_doc, 'IntroductoryDataStructuresandAlgorithms', u'Introductory Data Structures and Algorithms',
      author, 'IntroductoryDataStructuresandAlgorithms', 'One line description of project.',
      'Miscellaneous'),
 ]
