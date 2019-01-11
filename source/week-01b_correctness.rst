@@ -150,9 +150,10 @@ computations, which we will see below.
 
 A function ``f`` is called **correct** with respect to a specification
 ``P``/``Q``, if whenever its input satisfies ``P`` (i.e., ``P x1 ...
-xn = true``), its result satisfies ``Q``. The process of checking that
-an implementation of a function obeys its ascribed specification is
-called **program verification**.
+xn = true``), its result ``res`` satisfies ``Q`` (i.e., ``Q x1 ... xn
+res = true)``. The process of checking that an implementation of a
+function obeys its ascribed specification is called **program
+verification**.
 
 Indeed, any function can be given multiple specifications. For
 instance, both ``P`` and ``Q`` can just be constant ``true``,
