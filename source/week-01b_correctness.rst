@@ -116,22 +116,87 @@ if the specification cpatures a wrong property or ignores some
 essential relations between an input and a result of an algorithm,
 then such tests can make more harm than good.
 
-**TODO**: now say how one could decompose the verification by looking
-to the internals. Explain what preconditions/postconditions are::
+What we really want to ensure is that the recursive ``walk`` function
+processes the lists correctly, iteratively computing the minimum
+amongst the list's elements, getting closer to it with every
+iteration. That is, since each "step" of ``walk`` either returns the
+result or recomputes the minimum, for the part of the list *already
+observed*, it would be good to capture it in some form of a
+specification.
 
-  let find_min_walk_pre ls xs min = 
-    is_min ls min ||
-    List.exists (fun e -> e < min) xs
+Such a specification for an arbitrary function ``f x1 ... xn`` with
+arguments ``x1``, ..., ``xn`` can be captured by means of a
+*precondition* and a *postcondition*, which are boolean functions that
+play the following role:
+
+* A precondition ``P x1 ... xn`` describes the relation between the
+  arguments of ``f`` *right before* ``f`` is called. It is usually the
+  duty of the client of the function (i.e., the code that calls it) to
+  make sure that the precondition holds.
+
+* A postcondition ``Q x1 ... xn res`` describes the relation between
+  the arguments of ``f`` and its result right after ``f`` returns
+  ``res``, being called with ``x1 ... xn`` as its arguments. It is a
+  duty of the function implementer of ``f`` to ensure that the
+  postcondition holds. 
+
+Together the pre- and postcondition ``P``/``Q`` of a function are
+frequently referred to as a *contract*, *specification*, or
+*invariant*. Even though we will be using those notions
+interchangeably, *contract* is most commonly appears in the context of
+dynamic correctness checking (i.e., testing), while *invariant* is
+most commonly used in the context of imperative computations, which we
+will see below.
+
+A function ``f`` is called **correct** with respect to a specification
+``P``/``Q``, if whenever its input satisfies ``P`` (i.e., ``P x1 ...
+xn = true``), its result satisfies ``Q``. The process of checking that
+an implementation of a function obeys its ascribed specification is
+called **program verification**.
+
+Indeed, any function can be given multiple specifications. For
+instance, both ``P`` and ``Q`` can just be constant ``true``,
+trivially making the function correct. The real power of being able to
+ascribe and check the specifications comes from the fact that they
+allow to reason about correctness of the computations that employ the
+specified function. Let us see how it works on our ``find_min``
+example.
+
+What should be the pre-/postcondition we should ascribe to ``walk``?
+That very much depends on what do we want to be true of its result.
+Since it's supposed to deliver the minimum of the list ``ls``, it
+seems reasonable to fix the postcondition to be as follows::
 
   let find_min_walk_post ls xs min res = 
     is_min ls res
+   
+We can even use it for annotating (via OCaml's ``assert``) the body of
+``find_min`` making sure that it holds once we return from the
+top-level call of ``walk``. Notice, that since ``walk`` is an internal
+function of ``find_min``, its postcondition also includes ``ls``,
+which it uses, so it can be considered as another parameter (remember
+lambda-lifting?).
+
+Choosing the right precondition for ``walk`` is somewhat trickier
+
+[TODO: Stopped here]
+
 
 **TODO**: say how precondition should be chosen as such that
   * In the base case it trivially gives us the desired property of the
     result
   * It can be established before the initial and the recursive call. 
 
-And now let us annotate the function with them::
+
+Therefore, let us choose the following precondition for ``walk``::
+
+  let find_min_walk_pre ls xs min = 
+    is_min ls min ||
+    List.exists (fun e -> e < min) xs
+
+
+And now let us annotate the function with both pre- and
+postconditions::
 
   let find_min_with_invariants ls = 
 
