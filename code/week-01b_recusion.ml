@@ -194,6 +194,7 @@ let find_min_loop_inv ls =
     let cur_min = ref h in
     assert (find_min_walk_pre ls !cur_tail !cur_min);
     let min = loop cur_tail cur_min in
+    assert (find_min_walk_post ls !cur_tail !cur_min min);
     Some min
   | _ -> None
 

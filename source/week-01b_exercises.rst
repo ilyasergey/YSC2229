@@ -13,6 +13,9 @@ Mandatory exercises
 * :ref:`exercise-find-min2`:
   Implement and verify the ``find_min2``.
 
+* :ref:`exercise-find_min2_loop`:
+  Imperative version of ``find_min2`` with loop invariants.
+
 ..
    * Summing up elements using the list
      * Functional version 
@@ -24,5 +27,6 @@ Mandatory exercises
 Recommended exercises
 ---------------------
 
-* Find an invariant for tail-recursive insertion-sort
+* :ref:`exercise-tail_rec`: 
+  Reflections on tail-recursive functions.
 

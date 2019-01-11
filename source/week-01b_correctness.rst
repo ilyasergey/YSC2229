@@ -60,7 +60,7 @@ function terminates, returning the result.
 
 .. _exercise-find-min-termination-measure:
 
-Exercise 1
+Exercise 3
 ----------
 
 What is the termination measure of ``walk`` within ``find_min``?
@@ -296,9 +296,9 @@ correctness proof. However, those techniques are explained in a course
 on Functional Programming and Proving, and we will not be covering
 them here.
 
-.. _exercise-find-min2:
+.. _exercise-find-min2: 
 
-Exercise 2
+Exercise 4
 ----------
 
 * Implement the function ``find_min2``, similar to ``find_min`` (also
