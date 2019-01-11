@@ -177,28 +177,65 @@ function of ``find_min``, its postcondition also includes ``ls``,
 which it uses, so it can be considered as another parameter (remember
 lambda-lifting?).
 
-Choosing the right precondition for ``walk`` is somewhat trickier
+Choosing the right precondition for ``walk`` is somewhat trickier, as
+it needs to assist us in showing the two following executions
+properties of the function being specified:
 
-[TODO: Stopped here]
+* In the base case of a recursion (in case of ``walk``, it's the
+  branch `[] -> ...`), it trivially gives us the desired property of
+  the result, i.e., the postcondition holds.
 
+* It can be established before the initial and the recursive call. 
 
-**TODO**: say how precondition should be chosen as such that
-  * In the base case it trivially gives us the desired property of the
-    result
-  * It can be established before the initial and the recursive call. 
+Unfortunately, coming up with the right preconditions for given
+postconditions is a bit of a work of art. More problematically, it
+cannot be automated, and the problem of finding a precondition is
+similar to finding good initial hypotheses for theorems in
+mathematics. This is also one of the problems that cannot be solved
+algorithmically: we cannot have an algorithm, which, given a
+postcondition and a function, would infer a precondition for it in a
+general case. Such a problem, thus is equivalent to the infamous
+`Halting Problem <https://en.wikipedia.org/wiki/Halting_problem>`, but
+the proof of such an equivalence is outside the scope of this course.
 
+Nevertheless, we can still tru to *guess* a precondition, and, for
+most of the algorithms it is quite feasible. The trick is to look at
+the postcondition (i.e., ``find_min_walk_post`` in our case) as the
+"final" state of the computation, and try to guess, from looking at
+the initial and intermediate stages, what is different, and who
+exactly the program brings us to the state captured by the
+postcondition.
 
-Therefore, let us choose the following precondition for ``walk``::
+In the case of ``walk``, every iteration (the case ``h :: t -> ...``)
+recomputes the minium based on the head of the current remaining list.
+In this it makes sure that it has the most "up-to-date" value as a
+minimum, such that it either is already a global minimum (but we're
+not sure in it yet, as we haven't seen the rest of the list), or the
+minimum is somewhere in the tail yet to be explored. This property is
+a reasonable precondition, which we can capture by the following
+predicate (i.e., a boolean function)::
 
   let find_min_walk_pre ls xs min = 
+    (* min is a global minimum, *)
     is_min ls min ||
+    (* or, the minimum is in the remaining tail xs *)
     List.exists (fun e -> e < min) xs
 
+Notice the two critical components of a good precondition:
 
-And now let us annotate the function with both pre- and
-postconditions::
+* ``find_min_walk_pre`` holds before the first time we call ``walk``
+  from the main function's body.
+* Assuming it holds at the beginning of the base case, we know it
+  implies the desired result ``is_min ls min``, as the second
+  component of the disjunction ``List.exists (fun e -> e < min) xs``,
+  with ``xs = []`` becomes ``false``.
 
-  let find_min_with_invariants ls = 
+What remains is to make sure that the precondition is satisfied at
+each recursive call. We can do so by annotating our program suitably
+with assertions (it requires small modifications in order to assert
+postconditions of the result)::
+
+  let find_min_with_invariant ls = 
 
     let rec walk xs min = 
       match xs with
@@ -209,7 +246,7 @@ postconditions::
         res
       | h :: t ->
         let min' = if h < min then h else min in
-        (* Checking the precondition *)
+        (* Checking the precondition of the recursive call *)
         assert (find_min_walk_pre ls t min');
         let res = walk t min' in
         (* Checking the postcondition *)
@@ -218,7 +255,7 @@ postconditions::
 
     in match ls with
     | h :: t -> 
-      (* Checking the precondition *)
+      (* Checking the precondition of the initial call *)
       assert (find_min_walk_pre ls t h);
       let res = walk t h in
       (* Checking the postcondition *)
@@ -226,27 +263,84 @@ postconditions::
       Some res
     | _ -> None
 
-* TODO: explain what is being tested.
+Adding the ``assert`` statements makes us enforce the pre- and
+postcondition. Have we guessed them wrongly, a program would crash on
+some inputs. For instance, we can change ``<`` to ``>`` in the main
+iteration of the ``walk``, and it will crash. We can now run now
+invariant-annotated program as before ensuring that on all provided
+test inputs it doesn't crash and returns the expected results.
+
+Why would the assertion right before the recursive call to `walk`
+crash, should we change ``<`` to ``>``? Let us notice that the way
+``min'`` is computed, it is "adapted" for the updated state, in which
+the recursive call is made: specifically, it accounts for the fact
+that ``h`` might have been the new global minimum of ``ls`` ---
+something that would have been done wrongly with an opposite
+comparison.
+
+Once we have checked the annotation function, we known that on those
+test inputs, not only we get the right answers (which could be a sheer
+luck), but also at every internal computation step, the main worker
+function ``walk`` maintains a consistent invariant (i.e., satisfies
+its pre/postconditions), thus, keeping the computation "on track"
+towards the correct outcome.
+
+Does it mean that the function is correct with respect to its
+invariant? Unfortunately, even though adding intermediate assertions
+gave us stronger confidence in this, the only tool we have at our
+disposal are still only tests. In order to gain the full confidence in
+the function's correctness, we would have to use a tool, such as Coq.
+Having pre-/postconditions would also be very helpful in that case, as
+they would specify precisely the induction hypothesis for our
+correctness proof. However, those techniques are explained in a course
+on Functional Programming and Proving, and we will not be covering
+them here.
+
+.. _exercise-find-min2:
+
+Exercise 2
+----------
+
+* Implement the function ``find_min2``, similar to ``find_min`` (also
+  using the auxiliary ``walk``) that finds not the minimal element,
+  but the *second* minimal element.
+
+  **Hint:** ``walk`` is easier to implement if it takes both the
+  "absolute" minimum ``m1`` and the second minimum ``m2``, i.e., has
+  the type ``int list -> int -> int -> int``.
+
+* Write its specification (a relation between its input/output).
+
+  **Hint:** the following definition might be helpful::
+  
+    let is_min2 ls m1 m2 = 
+      m1 <= m2 &&
+      List.for_all (fun e -> e == m1 || m2 <= e ) ls
+
+* Write the precondition for ``walk`` and annotate the function with
+  the assertions, enforcing the pre- and postconditions. 
+
+  **Hint:** you might want to start from devising the second disjunct
+  of ``find_min2_walk_pre ls xs m1 m2`` to state that "a list has an
+  element that is its second minimum, positioned appropriately with
+  respect to ``m1`` and ``m2``".
+
+* Test your annotated function ``find_min2_with_inv``.
 
 
 
 
+..
+   Quick outline of the remainder
+   ------------------------------
 
-Quick outline of the remainder
-------------------------------
+   * Imperative version of `find_min`
+     * tests
+     * loop invariant
 
-* `find_min`
-  * tests
-  * assertions about correcntess
-  * pre/postconditions -- preservation of the effect / invariant
+   * Loop invariant for countinting
 
-* Imperative version of `find_min`
-  * tests
-  * loop invariant
-
-* Loop invariant for countinting
-
-* sorting the list via insertion
-  * what is the desired property
-  * precondition / postcondition
+   * sorting the list via insertion
+     * what is the desired property
+     * precondition / postcondition
 
