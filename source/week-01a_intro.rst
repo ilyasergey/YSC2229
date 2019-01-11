@@ -11,13 +11,13 @@ i.e., obtaining **new** information for what one already has.
 
 An **algorithm** is any well-defined computational procedure that
 takes some value, or set of values, as input and produces some value,
-or set of values, as output, always terminating with a reslut. An
+or set of values, as output, always terminating with a result. An
 algorithm is thus a sequence of computational steps that transform the
 input into the output.
 
 In this course, we will take a look at some of the problems that can
 be solved by algorithms, learn how to approach new problems that
-require algorithmic solution, and, most imporrtant, will learn how to
+require algorithmic solution, and, most important, will learn how to
 *reason* about crucial properties of algorithms: correctness,
 termination and complexity.
 
@@ -41,7 +41,7 @@ sorting problem:
   ``b1``, ``b2``, ..., ``bn``, such that ``b1 <= b2 <= ... <= bn``.
 
 The description above presents a specification of a problem, but does
-not describe how to come from intput to an output. Indeed, there might
+not describe how to come from input to an output. Indeed, there might
 be many ways to approach the same specifications, and, as an examples,
 there multiple algorithms, solving a sorting problem, some of which we
 will see in this course. 
@@ -65,7 +65,7 @@ solved by means of an algorithm. Some other problems include:
 
 Some real-world problems might require multiple algorithms to solve,
 for instance move-and tag problem, in which a number of robots need to
-awake in a shortest possible perios of time, by waking up each other. 
+awake in a shortest possible period of time, by waking up each other. 
 
 Data structures
 ---------------
@@ -146,7 +146,7 @@ Exercise 1
 ----------
 
 Give an example of a real-life application that requires an
-implementation of and algorithm (or algoritmhs) as its part, and
+implementation of and algorithm (or algorithms) as its part, and
 discuss the algorithms involved: how do they interact, what are they
 inputs and outputs.
 
