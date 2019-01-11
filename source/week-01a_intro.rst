@@ -63,9 +63,12 @@ solved by means of an algorithm. Some other problems include:
 * Various geometric problems: for instance, locating a point on a
   plane.
 
-Some real-world problems might require multiple algorithms to solve,
-for instance move-and tag problem, in which a number of robots need to
-awake in a shortest possible period of time, by waking up each other. 
+Some real-world problems might require multiple algorithms to solve.
+As instances of such a problem, on the lectures we discussed (a)
+*move-and-tag* problem, in which a number of robots need to awake in a
+shortest possible period of time, by waking up each other, and *room
+furnishing* problem, in which one need to cover the maximal room
+surface with furniture.
 
 Data structures
 ---------------
@@ -157,7 +160,7 @@ Exercise 2
 
 Programming in OCaml in Emacs is much more pleasant with instant
 navigation, auto-completion and type information available. It is
-recommented that you install Merlin_ mode for this and learn its
+recommended that you install Merlin_ mode for this and learn its
 shortcuts
 
 .. _Merlin: https://github.com/ocaml/merlin/wiki/emacs-from-scratch
