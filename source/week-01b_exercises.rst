@@ -31,3 +31,5 @@ Recommended exercises
   Reflections on tail-recursive functions.
 
 * :ref:`exercise-sort-desc`: Sorting in a descendent order.
+
+* :ref:`exercise-sort-tail`: Tail-recursive insertion sort.

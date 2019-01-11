@@ -175,8 +175,50 @@ with them::
     assert (insert_sort_walk_inv ls ls []);
     walk ls []
 
+.. _exercise-sort-tail:
 
+Exercise 8
+----------
 
+It is possible to implement (quite unelegantly and not very
+efficiently) the insertion sort on lists, so it would be
+tail-recursive. For this, we will have to rewrite it, so ``insert``
+would use the boolean flug ``run`` in order to indicate whether the
+insertion has already taken place, or the iteration should continue::
 
+  let insert_sort_tail ls = 
+    let rec walk xs prefix =
+      match xs with
+      | [] -> prefix
+      | h :: t -> 
+          let rec insert elem acc remaining run = 
+            if not run then acc
+            else match remaining with
+              | [] -> acc @ [elem]
+              | h :: t as l ->
+                if h < elem 
+                then 
+                  let run' = true in
+                  let acc' = acc @ [h] in
+                  insert elem acc' t run'
+                else 
+                  let run' = false in
+                  let acc' = acc @ (elem :: l) in
+                  insert elem acc' t run'
+          in
 
+          let acc' = insert h [] prefix true in
+          walk t acc'
+    in 
+    walk ls []
+
+* Define the invariants for auxiliary functions::
+
+    let insert_inv prefix elem acc remaining run = (* ... *)
+    let insert_sort_tail_walk_inv ls xs acc = (* ... *)
+
+  Annotate the implementation above with them and test it.
+
+* Transform ``insert_sort_tail`` into an imperative version, which
+  uses (nested) loops instead of recursion.
 

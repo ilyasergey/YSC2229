@@ -366,18 +366,18 @@ let insert_sort_tail ls =
               then 
                 let run' = true in
                 let acc' = acc @ [h] in
-                assert (insert_inv prefix elem acc' t run');
+                (* assert (insert_inv prefix elem acc' t run'); *)
                 insert elem acc' t run'
               else 
                 let run' = false in
                 let acc' = acc @ (elem :: l) in
-                assert (insert_inv prefix elem acc' t run');
+                (* assert (insert_inv prefix elem acc' t run'); *)
                 insert elem acc' t run'
         in
 
-        assert (insert_inv prefix h [] prefix true);
+        (* assert (insert_inv prefix h [] prefix true); *)
         let acc' = insert h [] prefix true in
-        assert (insert_sort_tail_walk_inv ls t acc');
+        (* assert (insert_sort_tail_walk_inv ls t acc'); *)
         walk t acc'
   in 
   walk ls []

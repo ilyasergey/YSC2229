@@ -141,12 +141,12 @@ play the following role:
   postcondition holds. 
 
 Together the pre- and postcondition ``P``/``Q`` of a function are
-frequently referred to as a *contract*, *specification*, or
-*invariant*. Even though we will be using those notions
-interchangeably, *contract* is most commonly appears in the context of
-dynamic correctness checking (i.e., testing), while *invariant* is
-most commonly used in the context of imperative computations, which we
-will see below.
+frequently referred to as a **contract**, **specification**, or
+**invariant** of a function. Even though we will be using those
+notions interchangeably, *contract* is most commonly appears in the
+context of dynamic correctness checking (i.e., testing), while
+*invariant* is most commonly used in the context of imperative
+computations, which we will see below.
 
 A function ``f`` is called **correct** with respect to a specification
 ``P``/``Q``, if whenever its input satisfies ``P`` (i.e., ``P x1 ...
