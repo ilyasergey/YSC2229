@@ -246,45 +246,55 @@ let insert_sort_walk_inv ls xs acc =
 
  *)
   
-let insert_sort_insert_pre remaining  = 
-  sorted remaining
+let insert_sort_insert_pre elem prefix  =  sorted prefix
 
-let insert_sort_insert_post res elem remaining  = 
+let insert_sort_insert_post res elem prefix  = 
   sorted res &&
-  same_elems res (elem :: remaining)
+  same_elems res (elem :: prefix)
 
-let insert_sort_with_assertions ls = 
-  let rec walk xs acc =
-    match xs with
-    | [] -> 
-      let res = acc in
-      assert (sorted_spec ls res); 
-      res
-    | h :: t -> 
+  let insert_sort_with_inv ls = 
+    let rec walk xs acc =
+      match xs with
+      | [] -> 
+        let res = acc in
+        (* walk's postcondition *)
+        assert (sorted_spec ls res); 
+        res
+      | h :: t -> 
+
         let rec insert elem remaining = 
           match remaining with
           | [] -> 
+            (* insert's postcondition *)
             assert (insert_sort_insert_post [elem] elem remaining);
             [elem]
           | h :: t as l ->
             if h < elem 
-            then 
+            then (
+              (* insert's precondition *)
+              assert (insert_sort_insert_pre elem t);
               let res = insert elem t in
+              (* insert's postcondition *)
               (assert (insert_sort_insert_post (h :: res) elem remaining);
-              h :: res)
+              h :: res))
             else 
-              (assert (insert_sort_insert_post (elem :: l) elem remaining);
-               elem :: l)
+              let res = elem :: l in
+              (* insert's postcondition *)
+              (assert (insert_sort_insert_post res elem remaining);
+               res)
         in
-      let acc' = 
-        (assert (insert_sort_insert_pre acc);
-        insert h acc) in
-      assert (insert_sort_walk_inv ls t acc');
-      walk t acc'
-  in 
-  assert (insert_sort_walk_inv ls ls []);
-  walk ls []
 
+        let acc' = (
+           (* insert's precondition *)
+           assert (insert_sort_insert_pre h acc);
+           insert h acc) in
+        (* walk's precondition *) 
+        assert (insert_sort_walk_inv ls t acc');
+        walk t acc'
+    in 
+    assert (insert_sort_walk_inv ls ls []);
+    walk ls []
+    
 (* 
 Exercise 2.
 -----------

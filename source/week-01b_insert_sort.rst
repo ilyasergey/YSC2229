@@ -93,3 +93,90 @@ the descending order and test it.
 Sorting invariants
 ------------------
 
+Let us now make the intuition about the correctness of sorting formal,
+capturing it in the form of specifications for the two recursive
+functions it uses, ``walk`` and ``insert``.
+
+Since ``walk`` is tail-recursive, we can get away without its
+postcondition, and just specify the precondition, which is also its
+invariant::
+
+  let insert_sort_walk_inv ls t acc = 
+    sorted acc &&
+    same_elems (acc @ t) ls
+
+The invariant ``insert_sort_walk_inv`` ensures that the prefix ``acc``
+processed so far is sorted, and also that the concatenation of the
+tail ``t`` to be processed has the same elements as the original list
+``ls``. 
+
+The recursive procedure ``insert`` is not tail-recursive, hence we
+will have to provide both the pre- and the postcondition::
+
+  let insert_sort_insert_pre elem prefix = sorted elem prefix
+
+  let insert_sort_insert_post res elem prefix  = 
+    sorted res &&
+    same_elems res (elem :: prefix)
+
+That is, whenever insert is run on a ``prefix``, it expects it to be
+sorted. Once it finishes, it returns a sorted list ``res``, which has
+all alements of ``prefxi``, and also the inserted ``elem``. 
+
+It's easy to see that the postcondition of ``insert`` implies the
+precondition of ``walk``, at each recursive iteration. Furthermore,
+the invariant of ``walk`` becomes the correcntess specification of the
+top-level sorting function, once ``t`` becomes empty, i.e., in its
+base case. 
+
+Let us now check all of those sepcifications by annotating the code
+with them::
+
+  let insert_sort_with_inv ls = 
+    let rec walk xs acc =
+      match xs with
+      | [] -> 
+        let res = acc in
+        (* walk's postcondition *)
+        assert (sorted_spec ls res); 
+        res
+      | h :: t -> 
+
+        let rec insert elem remaining = 
+          match remaining with
+          | [] -> 
+            (* insert's postcondition *)
+            assert (insert_sort_insert_post [elem] elem remaining);
+            [elem]
+          | h :: t as l ->
+            if h < elem 
+            then (
+              (* insert's precondition *)
+              assert (insert_sort_insert_pre elem t);
+              let res = insert elem t in
+              (* insert's postcondition *)
+              (assert (insert_sort_insert_post (h :: res) elem remaining);
+              h :: res))
+            else 
+              let res = elem :: l in
+              (* insert's postcondition *)
+              (assert (insert_sort_insert_post res elem remaining);
+               res)
+        in
+
+        let acc' = (
+           (* insert's precondition *)
+           assert (insert_sort_insert_pre h acc);
+           insert h acc) in
+        (* walk's precondition *) 
+        assert (insert_sort_walk_inv ls t acc');
+        walk t acc'
+    in 
+    assert (insert_sort_walk_inv ls ls []);
+    walk ls []
+
+
+
+
+
+
