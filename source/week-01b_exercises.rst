@@ -7,6 +7,9 @@ Exercises
 Mandatory exercises
 -------------------
 
+* :ref:`exercise-find-min-termination-measure`: 
+  define and check the termination measure for ``find_min``'s ``walk``.
+
 * Fun with find-two
 * Summing up elements using the list
   * Functional version 

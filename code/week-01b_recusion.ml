@@ -16,25 +16,27 @@ let find_min ls =
 
 (*  Let's start from some test *)
 
-let get_exn o = match o with
-  | Some e -> e
-  | _ -> raise (Failure "Empty option!") 
-
 (* This is a precise specification of the algorithm,
    implemented by `find_min` *)
 
 (* Some testing *)
 let is_min ls m = List.for_all (fun e -> e >= m) ls
 
-let find_min_correct find_min ls = 
-  let min = find_min ls in
-  ls = [] && min = None ||
-  is_min ls (get_exn min) 
+let get_exn o = match o with
+  | Some e -> e
+  | _ -> raise (Failure "Empty option!") 
+
+let find_min_spec find_min_fun ls = 
+  let result = find_min_fun ls in
+  ls = [] && result = None ||
+  is_min ls (get_exn result) 
+
 
 let generic_test_find_min find_min = 
-  find_min_correct find_min [] &&
-  find_min_correct find_min [1; 2; 3] &&
-  find_min_correct find_min [31; 42; 239; 5; 100]
+  find_min_spec find_min [] &&
+  find_min_spec find_min [1; 2; 3] &&
+  find_min_spec find_min [31; 42; 239; 5; 100]
+
 
 let test_find_min = 
   generic_test_find_min find_min
@@ -46,34 +48,40 @@ let test_find_min =
   * It holds at the end of every function invocation
   * When we return from the function at the top level, 
     it should give us the desired correctness property, i.e., 
-   `find_min_correct`
+   `find_min_spec`
  *)
 
 let find_min_walk_pre ls xs min = 
   is_min ls min ||
   List.exists (fun e -> e < min) xs
 
+let find_min_walk_post ls xs min res = 
+  is_min ls res
+
+
 (* Let us instrument walk_with invariant *) 
 
-let find_min_with_inv ls = 
+let find_min_with_invariant ls = 
   let rec walk xs min = 
     match xs with
     | [] -> 
-      (* Printf.printf "Inv: %b\n" (find_min_walk_pre ls [] min);  *)
       assert (find_min_walk_pre ls [] min);
-      assert (is_min ls min);
-      min
+      let res = min in
+      assert (find_min_walk_post ls xs min res);
+      res
     | h :: t ->
       let min' = if h < min then h else min in
       assert (find_min_walk_pre ls t min');
-      walk t min'
+      let res = walk t min' in
+      assert (find_min_walk_post ls xs min res);
+      res
+
   in match ls with
   | h :: t -> 
     assert (find_min_walk_pre ls t h);
-    let min = walk t h in
-    (* What do we know about the result at the momnt? *)
-    assert (is_min ls min);
-    Some min
+    let res = walk t h in
+    assert (find_min_walk_post ls t h res);
+    Some res
   | _ -> None
 
 (* let test_find_min2_with_inv = 
