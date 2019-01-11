@@ -143,6 +143,16 @@ There are two ways to analyse algorithms:
   - can deal with all cases (even impractically large input instances);
   - machine-independent.
 
+Useful Resources
+----------------
+
+* Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford
+  Stein. 
+  **Introduction to Algorithms**; 3rd edition.
+* Robert Sedgewick, Kevin Wayne. 
+  **Algorithms**; 4th edition.
+
+
 .. _exercise-algo-example:
 
 Exercise 1
