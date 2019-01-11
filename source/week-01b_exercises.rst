@@ -30,4 +30,4 @@ Recommended exercises
 * :ref:`exercise-tail_rec`: 
   Reflections on tail-recursive functions.
 
-* :ref:`exercise-merlin-sort-desc`: Experimenting with insertion sort.
+* :ref:`exercise-sort-desc`: Sorting in a descendent order.
