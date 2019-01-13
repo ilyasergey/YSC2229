@@ -20,7 +20,10 @@ let find_min ls =
    implemented by `find_min` *)
 
 (* Some testing *)
-let is_min ls m = List.for_all (fun e -> e >= m) ls
+let is_min ls m = 
+  List.for_all (fun e -> e >= m) ls &&
+  List.mem m ls
+                  
 
 let get_exn o = match o with
   | Some e -> e
@@ -121,12 +124,14 @@ The invariant should inform you how to change m1 and m2.
 (* Solution to the exercise 1 *)
 
 let is_min2 ls m1 m2 = 
-  m1 <= m2 &&
-  List.for_all (fun e -> e == m1 || m2 <= e )ls
+  m1 < m2 &&
+  List.for_all (fun e -> e == m1 || m2 <= e ) ls &&
+  List.mem m2 ls
+  
 
 let find_min2_walk_inv ls xs m1 m2 = 
   is_min2 ls m1 m2 ||
-  List.exists (fun e -> e < m1 || m1 <= e && e < m2) xs
+  List.exists (fun e -> e < m1 || m1 <= e && e < m2 && e <> m1) xs
 
 let find_min2 ls = 
   let rec walk xs m1 m2 = 
@@ -134,7 +139,7 @@ let find_min2 ls =
     | [] -> m2
     | h :: t ->
       let m1' = min h m1 in
-      let m2' = if h < m1 then m1 else if h < m2 then h else m2  in
+      let m2' = if h < m1 then m1 else if h < m2 && h <> m1 then h else m2  in
       Printf.printf "m1' = %d, m2' = %d, Inv: %b\n" 
         m1' m2' (find_min2_walk_inv ls t m1' m2') ;
       assert (find_min2_walk_inv ls t m1' m2');

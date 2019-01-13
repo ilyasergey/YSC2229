@@ -4,9 +4,9 @@ Correctness of Recursive Algorithms
 ===================================
 
 Data types, present in the modern computer languages, allow one to
-provide finite descriptions of arbitrary-size data. A classical
-example of such description, recall the definition of the list data
-type in OCaml, following the grammar::
+provide finite descriptions of arbitrary-size data. As an example of
+such description, remember the definition of the list data type in
+OCaml, following the grammar::
 
   <list-of-things> ::= []
                      | <thing> :: <list-of-things>
@@ -18,10 +18,11 @@ Warm-up: finding a minimum in a list of integers
 ------------------------------------------------
 
 Being defined recursively, lists are commonly processed by means of
-recursive functions. As a warm-up, just to remind us what it's like to
-work with lists, let us write a function that walks the list finding
-its minimal element ``min``, and returns ``Some min``, if it's found and
-``None`` if the list is empty::
+recursive functions (which shouldn't be too surprising). As a warm-up,
+just to remind us what it's like to work with lists, let us write a
+function that walks the list finding its minimal element ``min``, and
+returns ``Some min``, if it's found and ``None`` if the list is
+empty::
 
   let find_min ls = 
     let rec walk xs min = 
@@ -36,8 +37,8 @@ its minimal element ``min``, and returns ``Some min``, if it's found and
       Some min
     | _ -> None
 
-Checking termination of ``find_min``
-------------------------------------
+Reasoning about termination
+---------------------------
 
 How do we know that ``find_min`` indeed terminates on every input?
 Since the only source of non-termination in functional programs is
@@ -49,7 +50,7 @@ new input. Therefore, every time it runs on a *smaller* list, and
 whenever it reaches the empty list ``[]``, it simply outputs the
 result ``min``. 
 
-The list argument ``xs``, or, more precisely, it size, is commonly
+The list argument ``xs``, or, more precisely, its size, is commonly
 referred to as a **termination measure** or **variant** of a recursive
 function. A somewhat more formal definition of *variant* of a
 recursive procedure ``f`` is a function that maps arguments of ``f``
@@ -68,21 +69,25 @@ Define it as a function ``f : 'a list -> int -> int`` and change the
 implementation of ``walk`` annotating it with outputs to check that
 the measure indeed decreases.
 
-* Hint: use OCaml's ``Printf.printf`` utility to output results of the
-  termination measure mid-execution.
+* **Hint:** use OCaml's ``Printf.printf`` utility to output results of
+  the termination measure mid-execution.
 
-Checking correctness of ``find_min``
-------------------------------------
+Reasoning about correctness
+---------------------------
 
 How do we know that the function is indeed correct, i.e., does what
-it's supposed to do? A familiar way to probe it for the *presence* of
-bugs is to give the function a specification and write some tests.
+it's supposed to do? A familiar way to probe the implementation it for
+the *presence* of bugs is to give the function a specification and
+write some tests.
 
 The declarative specification, defined as a function in OCaml, defines
-``m`` as a minimum for a list ``ls``, if all elements of ``ls`` are not
-smaller than ``m``::
+``m`` as a minimum for a list ``ls``, if *all* elements of ``ls`` are
+not smaller than ``m``, and also ``m`` is indeed an element of
+``ls``::
 
-  let is_min ls m = List.for_all (fun e -> e >= m) ls
+  let is_min ls m = 
+    List.for_all (fun e -> m <= e) ls &&
+    List.mem m ls
 
 Let us now use it in the following specification, which makes use of
 the function ``get_exn`` to *unpack* the value wrapped into an option
@@ -108,13 +113,14 @@ the function candidate ``find_min_fun`` to be checked, and a list
   # find_min_spec find_min [31; 42; 239; 5; 100];;
   - : bool = true
 
-Those test cases are indeed only meaningful if we trust that our
+Those test cases are only meaningful if we trust that our
 specification ``find_min_spec`` indeed correctly describes the
 expected behaviour of its argument ``find_min_fin``. In other words,
 to recall, the tests are only as good as the specification they check:
-if the specification cpatures a wrong property or ignores some
+if the specification captures a wrong property or ignores some
 essential relations between an input and a result of an algorithm,
-then such tests can make more harm than good.
+then such tests can make more harm than good, giving a false sense of
+an implementation not having any issues.
 
 What we really want to ensure is that the recursive ``walk`` function
 processes the lists correctly, iteratively computing the minimum
@@ -124,15 +130,16 @@ result or recomputes the minimum, for the part of the list *already
 observed*, it would be good to capture it in some form of a
 specification.
 
-Such a specification for an arbitrary function ``f x1 ... xn`` with
-arguments ``x1``, ..., ``xn`` can be captured by means of a
-*precondition* and a *postcondition*, which are boolean functions that
-play the following role:
+Such a specification for an arbitrary, possibly recursive, function
+``f x1 ... xn`` with arguments ``x1``, ..., ``xn`` can be captured by
+means of a **precondition** and a **postcondition**, which are boolean
+functions that play the following role:
 
 * A precondition ``P x1 ... xn`` describes the relation between the
   arguments of ``f`` *right before* ``f`` is called. It is usually the
   duty of the client of the function (i.e., the code that calls it) to
-  make sure that the precondition holds.
+  make sure that the precondition holds whenever ``f`` is about to be
+  called.
 
 * A postcondition ``Q x1 ... xn res`` describes the relation between
   the arguments of ``f`` and its result right after ``f`` returns
@@ -141,12 +148,12 @@ play the following role:
   postcondition holds. 
 
 Together the pre- and postcondition ``P``/``Q`` of a function are
-frequently referred to as a **contract**, **specification**, or
-**invariant** of a function. Even though we will be using those
-notions interchangeably, *contract* is most commonly appears in the
-context of dynamic correctness checking (i.e., testing), while
-*invariant* is most commonly used in the context of imperative
-computations, which we will see below.
+frequently referred to as its **contract**, **specification**, or
+**invariant**. Even though we will be using those notions
+interchangeably, *contract* is most commonly appears in the context of
+dynamic correctness checking (i.e., testing), while *invariant* is
+most commonly used in the context of imperative computations, which we
+will see below.
 
 A function ``f`` is called **correct** with respect to a specification
 ``P``/``Q``, if whenever its input satisfies ``P`` (i.e., ``P x1 ...
@@ -189,23 +196,24 @@ properties of the function being specified:
 * It can be established before the initial and the recursive call. 
 
 Unfortunately, coming up with the right preconditions for given
-postconditions is a bit of a work of art. More problematically, it
-cannot be automated, and the problem of finding a precondition is
+postconditions is known to be a work of art. More problematically, it
+*cannot* be automated, and the problem of finding a precondition is
 similar to finding good initial hypotheses for theorems in
-mathematics. This is also one of the problems that cannot be solved
-algorithmically: we cannot have an algorithm, which, given a
-postcondition and a function, would infer a precondition for it in a
-general case. Such a problem, thus is equivalent to the infamous
-`Halting Problem <https://en.wikipedia.org/wiki/Halting_problem>`, but
-the proof of such an equivalence is outside the scope of this course.
+mathematics. Ironically, this is also one of the problems that itself
+is not possible to solve algorithmically: we cannot have an algorithm,
+which, given a postcondition and a function, would infer a
+precondition for it in a general case. Such a problem, thus is
+equivalent to the infamous `Halting Problem
+<https://en.wikipedia.org/wiki/Halting_problem>`_, but the proof of
+such an equivalence is outside the scope of this course.
 
-Nevertheless, we can still tru to *guess* a precondition, and, for
+Nevertheless, we can still try to *guess* a precondition, and, for
 most of the algorithms it is quite feasible. The trick is to look at
 the postcondition (i.e., ``find_min_walk_post`` in our case) as the
 "final" state of the computation, and try to guess, from looking at
 the initial and intermediate stages, what is different, and who
 exactly the program brings us to the state captured by the
-postcondition.
+postcondition, approaching it gradually as it executes its body.
 
 In the case of ``walk``, every iteration (the case ``h :: t -> ...``)
 recomputes the minium based on the head of the current remaining list.
@@ -265,8 +273,8 @@ postconditions of the result)::
     | _ -> None
 
 Adding the ``assert`` statements makes us enforce the pre- and
-postcondition. Have we guessed them wrongly, a program would crash on
-some inputs. For instance, we can change ``<`` to ``>`` in the main
+postcondition: had we have guessed them wrongly, a program would crash
+on some inputs. For instance, we can change ``<`` to ``>`` in the main
 iteration of the ``walk``, and it will crash. We can now run now
 invariant-annotated program as before ensuring that on all provided
 test inputs it doesn't crash and returns the expected results.
@@ -286,16 +294,16 @@ function ``walk`` maintains a consistent invariant (i.e., satisfies
 its pre/postconditions), thus, keeping the computation "on track"
 towards the correct outcome.
 
-Does it mean that the function is correct with respect to its
+Does this mean that the function is correct with respect to its
 invariant? Unfortunately, even though adding intermediate assertions
 gave us stronger confidence in this, the only tool we have at our
 disposal are still only tests. In order to gain the full confidence in
-the function's correctness, we would have to use a tool, such as Coq.
-Having pre-/postconditions would also be very helpful in that case, as
-they would specify precisely the induction hypothesis for our
-correctness proof. However, those techniques are explained in a course
-on Functional Programming and Proving, and we will not be covering
-them here.
+the function's correctness, we would have to use a tool, such as
+`Coq<https://coq.inria.fr/>`_. Having pre-/postconditions would also
+be very helpful in that case, as they would specify precisely the
+induction hypothesis for our correctness proof. However, those
+techniques are explained in a course on Functional Programming and
+Proving, and we will not be covering them here.
 
 .. _exercise-find-min2: 
 
@@ -304,7 +312,11 @@ Exercise 4
 
 * Implement the function ``find_min2``, similar to ``find_min`` (also
   using the auxiliary ``walk``) that finds not the minimal element,
-  but the *second* minimal element.
+  but the *second* minimal element. For instance, it should bive the
+  following output on a list ``[2; 6; 78; 2; 5; 3; 1]``::
+
+    # find_min2  [2; 6; 78; 2; 5; 3; 1];;
+    - : int option = Some 2
 
   **Hint:** ``walk`` is easier to implement if it takes both the
   "absolute" minimum ``m1`` and the second minimum ``m2``, i.e., has
@@ -315,8 +327,9 @@ Exercise 4
   **Hint:** the following definition might be helpful::
   
     let is_min2 ls m1 m2 = 
-      m1 <= m2 &&
-      List.for_all (fun e -> e == m1 || m2 <= e ) ls
+      m1 < m2 &&
+      List.for_all (fun e -> e == m1 || m2 <= e) ls &&
+      List.mem m2 ls
 
 * Write the precondition for ``walk`` and annotate the function with
   the assertions, enforcing the pre- and postconditions. 
@@ -326,10 +339,7 @@ Exercise 4
   element that is its second minimum, positioned appropriately with
   respect to ``m1`` and ``m2``".
 
-* Test your annotated function ``find_min2_with_inv``.
-
-
-
+* Test your annotated function ``find_min2_with_invariant``.
 
 ..
    Quick outline of the remainder
@@ -339,7 +349,7 @@ Exercise 4
      * tests
      * loop invariant
 
-   * Loop invariant for countinting
+   * Loop invariant for counting
 
    * sorting the list via insertion
      * what is the desired property
