@@ -8,15 +8,6 @@ implemented is known as *tail-call-recursion*: each recursive call
 happens to be the very last thing the function does in a non-base
 (recursive) case. 
 
-.. _exercise-tail_rec:
-
-Exercise 5
-----------
-
-Give an example of a non-tail recursive function in OCaml and show, if
-possible, an equivalent tail-recursive function.
-
-
 Due to this structure, which leaves "nothing to do" after the
 recursive call, a tail-recursive function can be transformed to an
 imperative ``while``-loop. The benefits of such transformation is the
@@ -57,17 +48,31 @@ The result of transforming `find_min` into a loop is as follows::
       Some min
     | _ -> None
 
-Notice that the function ``walk`` has become ``loop``, which is no
-longer recursive: the recursion has been unfolded into the stack, and
-pattern-matching has been replaced by the loop condition ``!cur_tail
-<> []``. Furthermore, all parameters are now just references that are
-being reassigned at each loop iteration. 
+Notice that the function ``walk`` has been renamed ``loop``, which is
+no longer recursive: the tail recursion has been "unfolded" into the
+loop, and pattern-matching has been replaced by the loop condition
+``!cur_tail <> []``. Furthermore, all parameters are now just
+references that are being reassigned at each loop iteration.
 
 An important observation is that reassigning the mutable variables in
 the imperative implementation is an equivalent to passing new
 arguments in the recursive one. Knowing that makes it easy to "switch"
 between loop-based imperative and tail-recursive functional
 implementations.
+
+Loop variants
+-------------
+
+The function ``find_min_loop`` still terminates. The main source of
+non-termination in imperative programs, in addition to recursion, are
+loops. However, we can reason about the loop termination in the same
+way we did for recursive programs: by means of finding a **loop
+variant** (i.e., termination measure), expressed as a function of
+values stored in variables, affected by the loop iteration. 
+
+In the case of ``loop`` above the loop variant is the size of a list
+stored in the variable ``cur_tail``, which keeps decreasing, leading
+to the loop termination when the it becomes zero.
 
 Loop invariants
 ---------------
@@ -129,10 +134,20 @@ program as follows::
       Some min
     | _ -> None
 
+
+.. _exercise-tail_rec:
+
+Exercise 5
+----------
+
+Give an example of an interesting non-tail recursive function in OCaml
+and show, if possible, an equivalent tail-recursive function.
+
 .. _exercise-find_min2_loop:
 
 Exercise 6
 ----------
+
 Implement an imperative version of the function ``find_min2`` from
 :ref:`exercise-find-min2`, annotate its with loop invariants and run
 the tests.
