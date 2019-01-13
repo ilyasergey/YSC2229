@@ -34,7 +34,7 @@ The following OCaml code implement the sorting procedure::
 Notice that there are two recursive auxiliary function in it: ``walk``
 and ``insert``. They play the following roles:
 
-* The ouoter ``walk`` traverses the entire lists and for each next
+* The outer ``walk`` traverses the entire lists and for each next
   element, inserts it at a correct position to the prefix via
   ``insert``, which is already assumed ordered.
 
@@ -45,7 +45,7 @@ and ``insert``. They play the following roles:
 Correctness of sorting
 ----------------------
 
-In order to reason about ht ecorrectness of sorting, we first need to
+In order to reason about the correctness of sorting, we first need to
 say what its specification is, i.e., what is a correctly sorted list.
 This notion is described by the following definition::
 
@@ -110,8 +110,9 @@ processed so far is sorted, and also that the concatenation of the
 tail ``t`` to be processed has the same elements as the original list
 ``ls``. 
 
-The recursive procedure ``insert`` is not tail-recursive, hence we
-will have to provide both the pre- and the postcondition::
+The recursive procedure ``insert`` is, unfortunately, not
+tail-recursive, hence we will have to provide both the pre- and the
+postcondition::
 
   let insert_sort_insert_pre elem prefix = sorted elem prefix
 
@@ -123,13 +124,13 @@ That is, whenever insert is run on a ``prefix``, it expects it to be
 sorted. Once it finishes, it returns a sorted list ``res``, which has
 all alements of ``prefxi``, and also the inserted ``elem``. 
 
-It's easy to see that the postcondition of ``insert`` implies the
+Let us notice that the postcondition of ``insert`` implies the
 precondition of ``walk``, at each recursive iteration. Furthermore,
 the invariant of ``walk`` becomes the correcntess specification of the
 top-level sorting function, once ``t`` becomes empty, i.e., in its
-base case. 
+base case.
 
-Let us now check all of those sepcifications by annotating the code
+We can now check all of those sepcifications by annotating the code
 with them::
 
   let insert_sort_with_inv ls = 
