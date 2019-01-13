@@ -1,4 +1,6 @@
 
+
+
 (* Swapping two elements in an array *)
 
 let swap arr i j = 
@@ -23,6 +25,18 @@ let a1 = [|6; 239; 5; 2; 3; 42; 0|]
 
 let a2 = Array.make 10 0
 
+(**********************************************)
+(*  Essence of the simple sorting             *)
+(*
+
+* Grow up the sorted array path
+* Adjust it as the new elements come by
+
+*)
+(**********************************************)
+
+
+
 (* Insert_sort: loop-based implementation *)
 let insert_sort arr = 
   let len = Array.length arr in
@@ -43,13 +57,16 @@ Rewrite insertion sort, so it would be starting not from the
 
 *)
 
+(* Print out partial arrays and try the loop invariant *)
+
 let select_sort arr = 
   print_int_array arr;
   let len = Array.length arr in
   for i = 0 to len - 1 do
     Printf.printf "Sorted prefix: "; 
     print_int_array (Array.sub arr 0 i);
-    for j = i + 1 to len - 1 do
+    (* Invariant: a[i] holds the minimun wrt a[i ... j] *)
+    for j = i to len - 1 do
       if arr.(j) < arr.(i)
       then 
         (swap arr i j;
@@ -65,3 +82,21 @@ Rewrite selection sort, so it would be looking for a maximum rather
    than a minimum.
 
 *)
+
+(* Exercise: bubble sort invariant *)
+
+let bubble_sort arr = 
+  let len = Array.length arr in
+  print_int_array arr;
+  (* Invariant: a[0 .. i] is sorted. *)
+  for i = 0 to len - 1 do
+    let j = ref (len - 1) in
+    (* Invariant: a[j] is the smallest in a[j ... len - 1] *)
+    while !j > i do
+      if arr.(!j) < arr.(!j - 1) 
+      then swap arr !j (!j - 1)
+      else ();
+      j := !j - 1
+    done;
+    print_int_array arr;
+  done
