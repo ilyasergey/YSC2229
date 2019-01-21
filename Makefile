@@ -22,7 +22,7 @@ help:
 
 site:
 	git checkout gh-pages
-	rm -rf build _sources _static
+	rm -rf build _sources _static _images
 	git checkout master $(GH_PAGES_SOURCES) $(RESOURCEDIR)
 	git reset HEAD
 	make html
