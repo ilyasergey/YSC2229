@@ -224,12 +224,31 @@ minimum is somewhere in the tail yet to be explored. This property is
 a reasonable precondition, which we can capture by the following
 predicate (i.e., a boolean function)::
 
-  let find_min_walk_pre ls xs min = 
-    (* min is a global minimum, *)
-    is_min ls min ||
-    (* or, the minimum is in the remaining tail xs *)
-    List.exists (fun e -> e < min) xs
+  let walk_pre ls xs min = 
+    (* xs is a suffix of ls *)
+    is_suffix xs ls &&    
+    ((* min is a global minimum, *) 
+     is_min ls min ||
+     (* or, the minimum is in the remaining tail xs *)
+     List.exists (fun e -> e < min) xs)
 
+This definition relies on two auxiliary functions::
+
+  let rec remove_first ls n = 
+    if n <= 0 then ls
+    else match ls with 
+      | [] -> []
+      | h :: t -> remove_first t (n-1)
+
+  let is_suffix xs ls = 
+    let n1 = List.length xs in
+    let n2 = List.length ls in
+    let diff = n2 - n1 in
+    if diff < 0 then false
+    else
+      let ls_tail = remove_first ls diff in
+      ls_tail = xs
+ 
 Notice the two critical components of a good precondition:
 
 * ``find_min_walk_pre`` holds before the first time we call ``walk``
