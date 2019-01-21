@@ -7,7 +7,7 @@ SPHINXBUILD   = sphinx-build
 SOURCEDIR     = source
 BUILDDIR      = build
 GH_PAGES_SOURCES = source Makefile
-RESOURCEDIR   = resources .nojekyll 
+RESOURCEDIR   = resources/2019 .nojekyll 
 
 # Put it first so that "make" without argument is like "make help".
 help:
