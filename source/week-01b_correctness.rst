@@ -299,7 +299,7 @@ invariant? Unfortunately, even though adding intermediate assertions
 gave us stronger confidence in this, the only tool we have at our
 disposal are still only tests. In order to gain the full confidence in
 the function's correctness, we would have to use a tool, such as
-`Coq<https://coq.inria.fr/>`_. Having pre-/postconditions would also
+`Coq <https://coq.inria.fr/>`_. Having pre-/postconditions would also
 be very helpful in that case, as they would specify precisely the
 induction hypothesis for our correctness proof. However, those
 techniques are explained in a course on Functional Programming and
