@@ -311,9 +311,10 @@ Exercise 4
 ----------
 
 * Implement the function ``find_min2``, similar to ``find_min`` (also
-  using the auxiliary ``walk``) that finds not the minimal element,
-  but the *second* minimal element. For instance, it should bive the
-  following output on a list ``[2; 6; 78; 2; 5; 3; 1]``::
+  using the auxiliary ``walk``, but without relying on any other
+  auxiliary functions, e.g., sorting) that finds not the minimal
+  element, but the *second* minimal element. For instance, it should
+  bive the following output on a list ``[2; 6; 78; 2; 5; 3; 1]``::
 
     # find_min2  [2; 6; 78; 2; 5; 3; 1];;
     - : int option = Some 2
