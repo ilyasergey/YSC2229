@@ -1,0 +1,440 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sorting Lists via Insertion Sort &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Exercises" href="week-01b_exercises.html" />
+    <link rel="prev" title="From Recursion to Imperative Loops" href="week-01b_loops.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">YSC2229 Lecture Notes, Week 01</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-01a_intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-01a_exercises.html">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-01b_correctness.html">Correctness of Recursive Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-01b_loops.html">From Recursion to Imperative Loops</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Sorting Lists via Insertion Sort</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#insertion-sort-implementation">Insertion sort implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#correctness-of-sorting">Correctness of sorting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-7">Exercise 7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sorting-invariants">Sorting invariants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-8">Exercise 8</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-01b_exercises.html">Exercises</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="YSC2229-lecture-notes-week-01.html">YSC2229 Lecture Notes, Week 01</a> &raquo;</li>
+        
+      <li>Sorting Lists via Insertion Sort</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/week-01b_insert_sort.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sorting-lists-via-insertion-sort">
+<h1>Sorting Lists via Insertion Sort<a class="headerlink" href="#sorting-lists-via-insertion-sort" title="Permalink to this headline">¶</a></h1>
+<p>The task of finding the minimal and the second-minimal element in a
+list can be made much simpler and fast, if the list is
+<em>pre-processed</em>, namely, sorted. Indeed, for a sorted list we can just
+take it first or a second element, knowing that it will be what we
+need. Below, we will see our first implementation of sorting a list.</p>
+<div class="section" id="insertion-sort-implementation">
+<h2>Insertion sort implementation<a class="headerlink" href="#insertion-sort-implementation" title="Permalink to this headline">¶</a></h2>
+<p>The following OCaml code implement the sorting procedure:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert_sort</span> <span class="n">ls</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">xs</span> <span class="n">acc</span> <span class="o">=</span>
+    <span class="k">match</span> <span class="n">xs</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">acc</span>
+    <span class="o">|</span> <span class="n">h</span> <span class="o">::</span> <span class="n">t</span> <span class="o">-&gt;</span>
+      <span class="k">let</span> <span class="k">rec</span> <span class="n">insert</span> <span class="n">elem</span> <span class="n">remaining</span> <span class="o">=</span>
+        <span class="k">match</span> <span class="n">remaining</span> <span class="k">with</span>
+        <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="o">[</span><span class="n">elem</span><span class="o">]</span>
+        <span class="o">|</span> <span class="n">h</span> <span class="o">::</span> <span class="n">t</span> <span class="k">as</span> <span class="n">l</span> <span class="o">-&gt;</span>
+          <span class="k">if</span> <span class="n">h</span> <span class="o">&lt;</span> <span class="n">elem</span>
+          <span class="k">then</span> <span class="n">h</span> <span class="o">::</span> <span class="o">(</span><span class="n">insert</span> <span class="n">elem</span> <span class="n">t</span><span class="o">)</span> <span class="k">else</span> <span class="o">(</span><span class="n">elem</span> <span class="o">::</span> <span class="n">l</span><span class="o">)</span>
+      <span class="k">in</span>
+      <span class="k">let</span> <span class="n">acc&#39;</span> <span class="o">=</span> <span class="n">insert</span> <span class="n">h</span> <span class="n">acc</span> <span class="k">in</span>
+      <span class="n">walk</span> <span class="n">t</span> <span class="n">acc&#39;</span>
+<span class="k">in</span>
+<span class="n">walk</span> <span class="n">ls</span> <span class="bp">[]</span>
+</pre></div>
+</div>
+<p>Notice that there are two recursive auxiliary function in it: <code class="docutils literal notranslate"><span class="pre">walk</span></code>
+and <code class="docutils literal notranslate"><span class="pre">insert</span></code>. They play the following roles:</p>
+<ul class="simple">
+<li>The outer <code class="docutils literal notranslate"><span class="pre">walk</span></code> traverses the entire lists and for each next
+element, inserts it at a correct position to the prefix via
+<code class="docutils literal notranslate"><span class="pre">insert</span></code>, which is already assumed ordered.</li>
+<li>The inner <code class="docutils literal notranslate"><span class="pre">insert</span></code> traverses the sorted prefix (called
+<code class="docutils literal notranslate"><span class="pre">remaining</span></code>) and inserts an element <code class="docutils literal notranslate"><span class="pre">elem</span></code> to a correct
+position.</li>
+</ul>
+</div>
+<div class="section" id="correctness-of-sorting">
+<h2>Correctness of sorting<a class="headerlink" href="#correctness-of-sorting" title="Permalink to this headline">¶</a></h2>
+<p>In order to reason about the correctness of sorting, we first need to
+say what its specification is, i.e., what is a correctly sorted list.
+This notion is described by the following definition:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">sorted</span> <span class="n">ls</span> <span class="o">=</span>
+  <span class="k">match</span> <span class="n">ls</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="bp">true</span>
+  <span class="o">|</span> <span class="n">h</span> <span class="o">::</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span> <span class="n">e</span> <span class="o">&gt;=</span> <span class="n">h</span><span class="o">)</span> <span class="n">t</span> <span class="o">&amp;&amp;</span> <span class="n">sorted</span> <span class="n">t</span>
+</pre></div>
+</div>
+<p>A list <code class="docutils literal notranslate"><span class="pre">res</span></code> is a correctly sorted version of a list <code class="docutils literal notranslate"><span class="pre">ls</span></code> if
+it’s (a) sorted and (b) has all the same elements as <code class="docutils literal notranslate"><span class="pre">res</span></code>, which we
+can define as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">same_elems</span> <span class="n">ls1</span> <span class="n">ls2</span> <span class="o">=</span>
+   <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span>
+      <span class="nn">List</span><span class="p">.</span><span class="n">find_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e&#39;</span> <span class="o">-&gt;</span> <span class="n">e&#39;</span> <span class="o">=</span> <span class="n">e</span><span class="o">)</span> <span class="n">ls2</span> <span class="o">=</span>
+      <span class="nn">List</span><span class="p">.</span><span class="n">find_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e&#39;</span> <span class="o">-&gt;</span> <span class="n">e&#39;</span> <span class="o">=</span> <span class="n">e</span><span class="o">)</span> <span class="n">ls1</span><span class="o">)</span>
+     <span class="n">ls1</span>
+
+<span class="k">let</span> <span class="n">sorted_spec</span> <span class="n">ls</span> <span class="n">res</span> <span class="o">=</span>
+  <span class="n">same_elems</span> <span class="n">ls</span> <span class="n">res</span> <span class="o">&amp;&amp;</span> <span class="n">sorted</span> <span class="n">res</span>
+</pre></div>
+</div>
+<p>With the following functions we can now test insertion sort:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">sort_test</span> <span class="n">sorter</span> <span class="n">ls</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">sorter</span> <span class="n">ls</span> <span class="k">in</span>
+  <span class="n">sorted_spec</span> <span class="n">ls</span> <span class="n">res</span><span class="o">;;</span>
+
+<span class="o">#</span> <span class="n">insert_sort</span> <span class="bp">[]</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="kt">list</span> <span class="o">=</span> <span class="bp">[]</span>
+<span class="o">#</span> <span class="n">sort_test</span> <span class="n">insert_sort</span> <span class="bp">[]</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">true</span>
+<span class="o">#</span> <span class="n">insert_sort</span> <span class="o">[</span><span class="mi">5</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">42</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">1</span><span class="o">];;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="kt">list</span> <span class="o">=</span> <span class="o">[</span><span class="mi">1</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">42</span><span class="o">]</span>
+<span class="o">#</span> <span class="n">sort_test</span> <span class="n">insert_sort</span> <span class="o">[</span><span class="mi">5</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">42</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">1</span><span class="o">];;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercise-7">
+<span id="exercise-sort-desc"></span><h2>Exercise 7<a class="headerlink" href="#exercise-7" title="Permalink to this headline">¶</a></h2>
+<p>Implement a version of an insertion sort that sorts the elements in
+the descending order and test it.</p>
+</div>
+<div class="section" id="sorting-invariants">
+<h2>Sorting invariants<a class="headerlink" href="#sorting-invariants" title="Permalink to this headline">¶</a></h2>
+<p>Let us now make the intuition about the correctness of sorting formal,
+capturing it in the form of specifications for the two recursive
+functions it uses, <code class="docutils literal notranslate"><span class="pre">walk</span></code> and <code class="docutils literal notranslate"><span class="pre">insert</span></code>.</p>
+<p>Since <code class="docutils literal notranslate"><span class="pre">walk</span></code> is tail-recursive, we can get away without its
+postcondition, and just specify the precondition, which is also its
+invariant:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert_sort_walk_inv</span> <span class="n">ls</span> <span class="n">t</span> <span class="n">acc</span> <span class="o">=</span>
+  <span class="n">sorted</span> <span class="n">acc</span> <span class="o">&amp;&amp;</span>
+  <span class="n">same_elems</span> <span class="o">(</span><span class="n">acc</span> <span class="o">@</span> <span class="n">t</span><span class="o">)</span> <span class="n">ls</span>
+</pre></div>
+</div>
+<p>The invariant <code class="docutils literal notranslate"><span class="pre">insert_sort_walk_inv</span></code> ensures that the prefix <code class="docutils literal notranslate"><span class="pre">acc</span></code>
+processed so far is sorted, and also that the concatenation of the
+tail <code class="docutils literal notranslate"><span class="pre">t</span></code> to be processed has the same elements as the original list
+<code class="docutils literal notranslate"><span class="pre">ls</span></code>.</p>
+<p>The recursive procedure <code class="docutils literal notranslate"><span class="pre">insert</span></code> is, unfortunately, not
+tail-recursive, hence we will have to provide both the pre- and the
+postcondition:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert_sort_insert_pre</span> <span class="n">elem</span> <span class="n">prefix</span> <span class="o">=</span> <span class="n">sorted</span> <span class="n">elem</span> <span class="n">prefix</span>
+
+<span class="k">let</span> <span class="n">insert_sort_insert_post</span> <span class="n">res</span> <span class="n">elem</span> <span class="n">prefix</span>  <span class="o">=</span>
+  <span class="n">sorted</span> <span class="n">res</span> <span class="o">&amp;&amp;</span>
+  <span class="n">same_elems</span> <span class="n">res</span> <span class="o">(</span><span class="n">elem</span> <span class="o">::</span> <span class="n">prefix</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>That is, whenever insert is run on a <code class="docutils literal notranslate"><span class="pre">prefix</span></code>, it expects it to be
+sorted. Once it finishes, it returns a sorted list <code class="docutils literal notranslate"><span class="pre">res</span></code>, which has
+all alements of <code class="docutils literal notranslate"><span class="pre">prefxi</span></code>, and also the inserted <code class="docutils literal notranslate"><span class="pre">elem</span></code>.</p>
+<p>Let us notice that the postcondition of <code class="docutils literal notranslate"><span class="pre">insert</span></code> implies the
+precondition of <code class="docutils literal notranslate"><span class="pre">walk</span></code>, at each recursive iteration. Furthermore,
+the invariant of <code class="docutils literal notranslate"><span class="pre">walk</span></code> becomes the correcntess specification of the
+top-level sorting function, once <code class="docutils literal notranslate"><span class="pre">t</span></code> becomes empty, i.e., in its
+base case.</p>
+<p>We can now check all of those sepcifications by annotating the code
+with them:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert_sort_with_inv</span> <span class="n">ls</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">xs</span> <span class="n">acc</span> <span class="o">=</span>
+    <span class="k">match</span> <span class="n">xs</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span>
+      <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">acc</span> <span class="k">in</span>
+      <span class="c">(* walk&#39;s postcondition *)</span>
+      <span class="k">assert</span> <span class="o">(</span><span class="n">sorted_spec</span> <span class="n">ls</span> <span class="n">res</span><span class="o">);</span>
+      <span class="n">res</span>
+    <span class="o">|</span> <span class="n">h</span> <span class="o">::</span> <span class="n">t</span> <span class="o">-&gt;</span>
+
+      <span class="k">let</span> <span class="k">rec</span> <span class="n">insert</span> <span class="n">elem</span> <span class="n">remaining</span> <span class="o">=</span>
+        <span class="k">match</span> <span class="n">remaining</span> <span class="k">with</span>
+        <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span>
+          <span class="c">(* insert&#39;s postcondition *)</span>
+          <span class="k">assert</span> <span class="o">(</span><span class="n">insert_sort_insert_post</span> <span class="o">[</span><span class="n">elem</span><span class="o">]</span> <span class="n">elem</span> <span class="n">remaining</span><span class="o">);</span>
+          <span class="o">[</span><span class="n">elem</span><span class="o">]</span>
+        <span class="o">|</span> <span class="n">h</span> <span class="o">::</span> <span class="n">t</span> <span class="k">as</span> <span class="n">l</span> <span class="o">-&gt;</span>
+          <span class="k">if</span> <span class="n">h</span> <span class="o">&lt;</span> <span class="n">elem</span>
+          <span class="k">then</span> <span class="o">(</span>
+            <span class="c">(* insert&#39;s precondition *)</span>
+            <span class="k">assert</span> <span class="o">(</span><span class="n">insert_sort_insert_pre</span> <span class="n">elem</span> <span class="n">t</span><span class="o">);</span>
+            <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">insert</span> <span class="n">elem</span> <span class="n">t</span> <span class="k">in</span>
+            <span class="c">(* insert&#39;s postcondition *)</span>
+            <span class="o">(</span><span class="k">assert</span> <span class="o">(</span><span class="n">insert_sort_insert_post</span> <span class="o">(</span><span class="n">h</span> <span class="o">::</span> <span class="n">res</span><span class="o">)</span> <span class="n">elem</span> <span class="n">remaining</span><span class="o">);</span>
+            <span class="n">h</span> <span class="o">::</span> <span class="n">res</span><span class="o">))</span>
+          <span class="k">else</span>
+            <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">elem</span> <span class="o">::</span> <span class="n">l</span> <span class="k">in</span>
+            <span class="c">(* insert&#39;s postcondition *)</span>
+            <span class="o">(</span><span class="k">assert</span> <span class="o">(</span><span class="n">insert_sort_insert_post</span> <span class="n">res</span> <span class="n">elem</span> <span class="n">remaining</span><span class="o">);</span>
+             <span class="n">res</span><span class="o">)</span>
+      <span class="k">in</span>
+
+      <span class="k">let</span> <span class="n">acc&#39;</span> <span class="o">=</span> <span class="o">(</span>
+         <span class="c">(* insert&#39;s precondition *)</span>
+         <span class="k">assert</span> <span class="o">(</span><span class="n">insert_sort_insert_pre</span> <span class="n">h</span> <span class="n">acc</span><span class="o">);</span>
+         <span class="n">insert</span> <span class="n">h</span> <span class="n">acc</span><span class="o">)</span> <span class="k">in</span>
+      <span class="c">(* walk&#39;s precondition *)</span>
+      <span class="k">assert</span> <span class="o">(</span><span class="n">insert_sort_walk_inv</span> <span class="n">ls</span> <span class="n">t</span> <span class="n">acc&#39;</span><span class="o">);</span>
+      <span class="n">walk</span> <span class="n">t</span> <span class="n">acc&#39;</span>
+  <span class="k">in</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">insert_sort_walk_inv</span> <span class="n">ls</span> <span class="n">ls</span> <span class="bp">[]</span><span class="o">);</span>
+  <span class="n">walk</span> <span class="n">ls</span> <span class="bp">[]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercise-8">
+<span id="exercise-sort-tail"></span><h2>Exercise 8<a class="headerlink" href="#exercise-8" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to implement (quite unelegantly and not very
+efficiently) the insertion sort on lists, so it would be
+tail-recursive. For this, we will have to rewrite it, so <code class="docutils literal notranslate"><span class="pre">insert</span></code>
+would use the boolean flug <code class="docutils literal notranslate"><span class="pre">run</span></code> in order to indicate whether the
+insertion has already taken place, or the iteration should continue:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert_sort_tail</span> <span class="n">ls</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">xs</span> <span class="n">prefix</span> <span class="o">=</span>
+    <span class="k">match</span> <span class="n">xs</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">prefix</span>
+    <span class="o">|</span> <span class="n">h</span> <span class="o">::</span> <span class="n">t</span> <span class="o">-&gt;</span>
+        <span class="k">let</span> <span class="k">rec</span> <span class="n">insert</span> <span class="n">elem</span> <span class="n">acc</span> <span class="n">remaining</span> <span class="n">run</span> <span class="o">=</span>
+          <span class="k">if</span> <span class="n">not</span> <span class="n">run</span> <span class="k">then</span> <span class="n">acc</span>
+          <span class="k">else</span> <span class="k">match</span> <span class="n">remaining</span> <span class="k">with</span>
+            <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">acc</span> <span class="o">@</span> <span class="o">[</span><span class="n">elem</span><span class="o">]</span>
+            <span class="o">|</span> <span class="n">h</span> <span class="o">::</span> <span class="n">t</span> <span class="k">as</span> <span class="n">l</span> <span class="o">-&gt;</span>
+              <span class="k">if</span> <span class="n">h</span> <span class="o">&lt;</span> <span class="n">elem</span>
+              <span class="k">then</span>
+                <span class="k">let</span> <span class="n">run&#39;</span> <span class="o">=</span> <span class="bp">true</span> <span class="k">in</span>
+                <span class="k">let</span> <span class="n">acc&#39;</span> <span class="o">=</span> <span class="n">acc</span> <span class="o">@</span> <span class="o">[</span><span class="n">h</span><span class="o">]</span> <span class="k">in</span>
+                <span class="n">insert</span> <span class="n">elem</span> <span class="n">acc&#39;</span> <span class="n">t</span> <span class="n">run&#39;</span>
+              <span class="k">else</span>
+                <span class="k">let</span> <span class="n">run&#39;</span> <span class="o">=</span> <span class="bp">false</span> <span class="k">in</span>
+                <span class="k">let</span> <span class="n">acc&#39;</span> <span class="o">=</span> <span class="n">acc</span> <span class="o">@</span> <span class="o">(</span><span class="n">elem</span> <span class="o">::</span> <span class="n">l</span><span class="o">)</span> <span class="k">in</span>
+                <span class="n">insert</span> <span class="n">elem</span> <span class="n">acc&#39;</span> <span class="n">t</span> <span class="n">run&#39;</span>
+        <span class="k">in</span>
+
+        <span class="k">let</span> <span class="n">acc&#39;</span> <span class="o">=</span> <span class="n">insert</span> <span class="n">h</span> <span class="bp">[]</span> <span class="n">prefix</span> <span class="bp">true</span> <span class="k">in</span>
+        <span class="n">walk</span> <span class="n">t</span> <span class="n">acc&#39;</span>
+  <span class="k">in</span>
+  <span class="n">walk</span> <span class="n">ls</span> <span class="bp">[]</span>
+</pre></div>
+</div>
+<ul>
+<li><p class="first">Define the invariants for auxiliary functions:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert_inv</span> <span class="n">prefix</span> <span class="n">elem</span> <span class="n">acc</span> <span class="n">remaining</span> <span class="n">run</span> <span class="o">=</span> <span class="c">(* ... *)</span>
+<span class="k">let</span> <span class="n">insert_sort_tail_walk_inv</span> <span class="n">ls</span> <span class="n">xs</span> <span class="n">acc</span> <span class="o">=</span> <span class="c">(* ... *)</span>
+</pre></div>
+</div>
+<p>Annotate the implementation above with them and test it.</p>
+</li>
+<li><p class="first">Transform <code class="docutils literal notranslate"><span class="pre">insert_sort_tail</span></code> into an imperative version, which
+uses (nested) loops instead of recursion.</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-01b_exercises.html" class="btn btn-neutral float-right" title="Exercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-01b_loops.html" class="btn btn-neutral" title="From Recursion to Imperative Loops" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

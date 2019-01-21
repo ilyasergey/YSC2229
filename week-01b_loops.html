@@ -1,0 +1,359 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>From Recursion to Imperative Loops &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Sorting Lists via Insertion Sort" href="week-01b_insert_sort.html" />
+    <link rel="prev" title="Correctness of Recursive Algorithms" href="week-01b_correctness.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">YSC2229 Lecture Notes, Week 01</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-01a_intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-01a_exercises.html">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-01b_correctness.html">Correctness of Recursive Algorithms</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">From Recursion to Imperative Loops</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#loop-variants">Loop variants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loop-invariants">Loop invariants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-5">Exercise 5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-6">Exercise 6</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-01b_insert_sort.html">Sorting Lists via Insertion Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-01b_exercises.html">Exercises</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="YSC2229-lecture-notes-week-01.html">YSC2229 Lecture Notes, Week 01</a> &raquo;</li>
+        
+      <li>From Recursion to Imperative Loops</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/week-01b_loops.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="from-recursion-to-imperative-loops">
+<h1>From Recursion to Imperative Loops<a class="headerlink" href="#from-recursion-to-imperative-loops" title="Permalink to this headline">¶</a></h1>
+<p>The way the auxiliary function <code class="docutils literal notranslate"><span class="pre">walk</span></code> function <cite>find_min</cite> has been
+implemented is known as <em>tail-call-recursion</em>: each recursive call
+happens to be the very last thing the function does in a non-base
+(recursive) case.</p>
+<p>Due to this structure, which leaves “nothing to do” after the
+recursive call, a tail-recursive function can be transformed to an
+imperative <code class="docutils literal notranslate"><span class="pre">while</span></code>-loop. The benefits of such transformation is the
+possibility not to use the <a class="reference external" href="https://en.wikipedia.org/wiki/Call_stack">Call Stack</a>, necessary to stall the
+calling structure of the program, but rather keep the computation
+“flat”.</p>
+<p>The transformation of a tail-recursive program into a program that
+uses the <code class="docutils literal notranslate"><span class="pre">while</span></code>-loop happens in two phases:</p>
+<ul class="simple">
+<li>Make the parameters of the functions <em>mutable</em> references, so they
+could be re-assigned at each loop iteration.</li>
+<li>Make the branch-condition of  “base” case to be that of the
+<code class="docutils literal notranslate"><span class="pre">while</span></code>-loop. Whatever post-processing of the result takes place
+in the base cases, should now be done after the loop.</li>
+</ul>
+<p>The result of transforming <cite>find_min</cite> into a loop is as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">find_min_loop</span> <span class="n">ls</span> <span class="o">=</span>
+
+  <span class="k">let</span> <span class="n">loop</span> <span class="n">cur_tail</span> <span class="n">cur_min</span> <span class="o">=</span>
+    <span class="k">while</span> <span class="o">!</span><span class="n">cur_tail</span> <span class="o">&lt;&gt;</span> <span class="bp">[]</span> <span class="k">do</span>
+      <span class="k">let</span> <span class="n">xs</span> <span class="o">=</span> <span class="o">!</span><span class="n">cur_tail</span> <span class="k">in</span>
+      <span class="k">let</span> <span class="n">h</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">hd</span> <span class="n">xs</span> <span class="k">in</span>
+      <span class="k">let</span> <span class="n">min</span> <span class="o">=</span> <span class="o">!</span><span class="n">cur_min</span> <span class="k">in</span>
+      <span class="n">cur_min</span> <span class="o">:=</span> <span class="k">if</span> <span class="n">h</span> <span class="o">&lt;</span> <span class="n">min</span> <span class="k">then</span> <span class="n">h</span> <span class="k">else</span> <span class="n">min</span><span class="o">;</span>
+      <span class="n">cur_tail</span> <span class="o">:=</span> <span class="nn">List</span><span class="p">.</span><span class="n">tl</span> <span class="n">xs</span>
+    <span class="k">done</span><span class="o">;</span>
+    <span class="o">!</span><span class="n">cur_min</span>
+
+  <span class="k">in</span> <span class="k">match</span> <span class="n">ls</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="n">h</span> <span class="o">::</span> <span class="n">t</span> <span class="o">-&gt;</span>
+    <span class="k">let</span> <span class="n">cur_tail</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">t</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">cur_min</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">h</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">min</span> <span class="o">=</span> <span class="n">loop</span> <span class="n">cur_tail</span> <span class="n">cur_min</span> <span class="k">in</span>
+    <span class="nc">Some</span> <span class="n">min</span>
+  <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="nc">None</span>
+</pre></div>
+</div>
+<p>Notice that the function <code class="docutils literal notranslate"><span class="pre">walk</span></code> has been renamed <code class="docutils literal notranslate"><span class="pre">loop</span></code>, which is
+no longer recursive: the tail recursion has been “unfolded” into the
+loop, and pattern-matching has been replaced by the loop condition
+<code class="docutils literal notranslate"><span class="pre">!cur_tail</span> <span class="pre">&lt;&gt;</span> <span class="pre">[]</span></code>. Furthermore, all parameters are now just
+references that are being reassigned at each loop iteration.</p>
+<p>An important observation is that reassigning the mutable variables in
+the imperative implementation is an equivalent to passing new
+arguments in the recursive one. Knowing that makes it easy to “switch”
+between loop-based imperative and tail-recursive functional
+implementations.</p>
+<div class="section" id="loop-variants">
+<h2>Loop variants<a class="headerlink" href="#loop-variants" title="Permalink to this headline">¶</a></h2>
+<p>The function <code class="docutils literal notranslate"><span class="pre">find_min_loop</span></code> still terminates. The main source of
+non-termination in imperative programs, in addition to recursion, are
+loops. However, we can reason about the loop termination in the same
+way we did for recursive programs: by means of finding a <strong>loop
+variant</strong> (i.e., termination measure), expressed as a function of
+values stored in variables, affected by the loop iteration.</p>
+<p>In the case of <code class="docutils literal notranslate"><span class="pre">loop</span></code> above the loop variant is the size of a list
+stored in the variable <code class="docutils literal notranslate"><span class="pre">cur_tail</span></code>, which keeps decreasing, leading
+to the loop termination when the it becomes zero.</p>
+</div>
+<div class="section" id="loop-invariants">
+<h2>Loop invariants<a class="headerlink" href="#loop-invariants" title="Permalink to this headline">¶</a></h2>
+<p>Now, as we have a program with a loop, can we use the same methodology
+to ensure its correctness using pre- and postconditions? The answer is
+yes, and, in fact, we are only going to need the definitions that we
+already have.</p>
+<p>The precondition of what used to be <code class="docutils literal notranslate"><span class="pre">walk</span></code> and is now <code class="docutils literal notranslate"><span class="pre">loop</span></code>
+becomes <em>loop invariant</em>, which serves exactly the same purpose as the
+precondition of a recursive version. Specifically, it should</p>
+<ul class="simple">
+<li>be true before and after each iteration;</li>
+<li>when conjoined with the loop condition, allow for establishing the
+property of the loop-affected state, implying the client-imposed
+specification.</li>
+</ul>
+<p>Notice that the first quality of the loop invariant is the same as of
+the precondition. The fact that it must hold not just at the
+beginning, but also at the end of each iteration is because in a loop,
+a new iteration begins right after the previous one ends, and hence it
+expects its “precondition”/”invariant” to hold. The second quality
+corresponds to the intuition that the invariant/precondition should be
+chosen in a way that when a loop terminates (or, equivalently, a
+recursive function returns), the invariant allows to infer the
+postcondition.</p>
+<p>All that said, for our imperative version of finding a minimum, we can
+use <code class="docutils literal notranslate"><span class="pre">find_min_walk_pre</span></code> as the loop invariant, annotating the
+program as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">find_min_loop_inv</span> <span class="n">ls</span> <span class="o">=</span>
+
+  <span class="k">let</span> <span class="n">loop</span> <span class="n">cur_tail</span> <span class="n">cur_min</span> <span class="o">=</span>
+    <span class="c">(* The invariant holds at the beginning of the loop *)</span>
+    <span class="k">assert</span> <span class="o">(</span><span class="n">find_min_walk_pre</span> <span class="n">ls</span> <span class="o">!</span><span class="n">cur_tail</span> <span class="o">!</span><span class="n">cur_min</span><span class="o">);</span>
+    <span class="k">while</span> <span class="o">!</span><span class="n">cur_tail</span> <span class="o">&lt;&gt;</span> <span class="bp">[]</span> <span class="k">do</span>
+      <span class="k">let</span> <span class="n">xs</span> <span class="o">=</span> <span class="o">!</span><span class="n">cur_tail</span> <span class="k">in</span>
+      <span class="k">let</span> <span class="n">h</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">hd</span> <span class="n">xs</span> <span class="k">in</span>
+      <span class="k">let</span> <span class="n">min</span> <span class="o">=</span> <span class="o">!</span><span class="n">cur_min</span> <span class="k">in</span>
+      <span class="n">cur_min</span> <span class="o">:=</span> <span class="k">if</span> <span class="n">h</span> <span class="o">&lt;</span> <span class="n">min</span> <span class="k">then</span> <span class="n">h</span> <span class="k">else</span> <span class="n">min</span><span class="o">;</span>
+      <span class="n">cur_tail</span> <span class="o">:=</span> <span class="nn">List</span><span class="p">.</span><span class="n">tl</span> <span class="n">xs</span><span class="o">;</span>
+      <span class="c">(* The invariant holds at the end of the iteration *)</span>
+      <span class="k">assert</span> <span class="o">(</span><span class="n">find_min_walk_pre</span> <span class="n">ls</span> <span class="o">!</span><span class="n">cur_tail</span> <span class="o">!</span><span class="n">cur_min</span><span class="o">);</span>
+    <span class="k">done</span><span class="o">;</span>
+    <span class="o">!</span><span class="n">cur_min</span>
+
+  <span class="k">in</span> <span class="k">match</span> <span class="n">ls</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="n">h</span> <span class="o">::</span> <span class="n">t</span> <span class="o">-&gt;</span>
+    <span class="k">let</span> <span class="n">cur_tail</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">t</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">cur_min</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">h</span> <span class="k">in</span>
+    <span class="c">(* The invariant holds at the beginning of the loop *)</span>
+    <span class="k">assert</span> <span class="o">(</span><span class="n">find_min_walk_pre</span> <span class="n">ls</span> <span class="o">!</span><span class="n">cur_tail</span> <span class="o">!</span><span class="n">cur_min</span><span class="o">);</span>
+    <span class="k">let</span> <span class="n">min</span> <span class="o">=</span> <span class="n">loop</span> <span class="n">cur_tail</span> <span class="n">cur_min</span> <span class="k">in</span>
+    <span class="c">(* Upon finishing the loop, the invariant implies the postcondition. *)</span>
+    <span class="k">assert</span> <span class="o">(</span><span class="n">find_min_walk_post</span> <span class="n">ls</span> <span class="o">!</span><span class="n">cur_tail</span> <span class="o">!</span><span class="n">cur_min</span> <span class="n">min</span><span class="o">);</span>
+    <span class="nc">Some</span> <span class="n">min</span>
+  <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="nc">None</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercise-5">
+<span id="exercise-tail-rec"></span><h2>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
+<p>Give an example of an interesting non-tail recursive function in OCaml
+and show, if possible, an equivalent tail-recursive function.</p>
+</div>
+<div class="section" id="exercise-6">
+<span id="exercise-find-min2-loop"></span><h2>Exercise 6<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h2>
+<p>Implement an imperative version of the function <code class="docutils literal notranslate"><span class="pre">find_min2</span></code> from
+<a class="reference internal" href="week-01b_correctness.html#exercise-find-min2"><span class="std std-ref">Exercise 4</span></a>, annotate its with loop invariants and run
+the tests.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-01b_insert_sort.html" class="btn btn-neutral float-right" title="Sorting Lists via Insertion Sort" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-01b_correctness.html" class="btn btn-neutral" title="Correctness of Recursive Algorithms" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

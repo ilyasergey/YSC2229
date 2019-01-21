@@ -1,0 +1,291 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Intro &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">YSC2229 Lecture Notes, Week 01</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Intro</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/_scratch.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="intro">
+<h1>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h1>
+<p>A programming language is a notation to express computations. A program is something written according to this notation. It can be executed to perform a computation. A computation is some kind of processing operation over some data. Data are representations of information.</p>
+<p>Here is an analogy. A natural language (Danish, for example) is a collection of words assembled into sentences. Words are composed of letters, and sentences are composed of words and punctuation marks. There is a common agreement about correct Danish words (spelling) and about correct Danish sentences (grammar). Spelling and grammar pertain to the syntax of Danish. Sentences are then communicated, either orally or in writing, from someone to someone else, to convey a meaning. Meaning pertains to the semantics of Danish. To stay within the analogy, let us only consider written communication in the rest of this paragraph. Improperly spelled words and improperly constructed sentences are misunderstood or not understood at all. Understandable sentences carry information.</p>
+<p>T.T.T.
+—Piet Hein</p>
+<p>Here is a comparison. A cooking recipe is a notation that conveys how to cook something. It specifies data (the ingredients, e.g., eggs, butter, salt, pepper, thyme), resources and tools (e.g., a stove and a pan), and an algorithm (a method to operate on the data, e.g., to beat the eggs towards cooking an omelet). To make a dish, a cook can then operate over the ingredients according to the recipe.</p>
+<div class="section" id="about-this-course">
+<h2>About this course<a class="headerlink" href="#about-this-course" title="Permalink to this headline">¶</a></h2>
+<p>Intuitively, the unit-test function is simple to write – for any given
+binary tree, the candidate function should return the mirror image of
+this tree:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">test_mirror</span> <span class="n">candidate_mirror</span> <span class="o">=</span>
+ <span class="c">(* test_mirror : (binary_tree -&gt; binary_tree) -&gt; bool *)</span>
+     <span class="o">(</span><span class="n">candidate_mirror</span>
+        <span class="o">(</span><span class="nc">Leaf</span> <span class="mi">10</span><span class="o">)</span>
+      <span class="o">=</span> <span class="o">(</span><span class="nc">Leaf</span> <span class="mi">10</span><span class="o">))</span>
+  <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">candidate_mirror</span>
+        <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Leaf</span> <span class="mi">10</span><span class="o">,</span>
+               <span class="nc">Leaf</span> <span class="mi">20</span><span class="o">))</span>
+      <span class="o">=</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Leaf</span> <span class="mi">20</span><span class="o">,</span>
+               <span class="nc">Leaf</span> <span class="mi">10</span><span class="o">)))</span>
+  <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">candidate_mirror</span>
+        <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Leaf</span> <span class="mi">10</span><span class="o">,</span>
+               <span class="nc">Node</span> <span class="o">(</span><span class="nc">Leaf</span> <span class="mi">20</span><span class="o">,</span>
+                     <span class="nc">Leaf</span> <span class="mi">30</span><span class="o">)))</span>
+      <span class="o">=</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Leaf</span> <span class="mi">30</span><span class="o">,</span>
+                     <span class="nc">Leaf</span> <span class="mi">20</span><span class="o">),</span>
+               <span class="nc">Leaf</span> <span class="mi">10</span><span class="o">)))</span>
+  <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">candidate_mirror</span>
+        <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Leaf</span> <span class="mi">10</span><span class="o">,</span>
+                     <span class="nc">Leaf</span> <span class="mi">20</span><span class="o">),</span>
+               <span class="nc">Node</span> <span class="o">(</span><span class="nc">Leaf</span> <span class="mi">30</span><span class="o">,</span>
+                     <span class="nc">Leaf</span> <span class="mi">40</span><span class="o">)))</span>
+      <span class="o">=</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="nc">Leaf</span> <span class="mi">40</span><span class="o">,</span>
+                     <span class="nc">Leaf</span> <span class="mi">30</span><span class="o">),</span>
+               <span class="nc">Node</span> <span class="o">(</span><span class="nc">Leaf</span> <span class="mi">20</span><span class="o">,</span>
+                     <span class="nc">Leaf</span> <span class="mi">10</span><span class="o">))))</span>
+  <span class="c">(* etc.*)</span><span class="o">;;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercise-1">
+<span id="exercise-more-clauses-for-test-mirror"></span><h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<p>Add two conjunctive clauses in <code class="docutils literal notranslate"><span class="pre">test_mirror</span></code>:</p>
+<ul>
+<li><p class="first">one with a tree of depth 4 where all the left subtrees are leaves, and</p>
+</li>
+<li><p class="first">one with a tree of depth 4 where all the right subtrees are leaves.</p>
+</li>
+<li><p class="first">The abstract-syntax tree of the regular expression <code class="docutils literal notranslate"><span class="pre">(seq</span> <span class="pre">(seq</span> <span class="pre">(atom</span> <span class="pre">1)</span>
+<span class="pre">(atom</span> <span class="pre">2))</span> <span class="pre">(seq</span> <span class="pre">(atom</span> <span class="pre">3)</span> <span class="pre">(atom</span> <span class="pre">4)))</span></code> reads as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span>                  &lt;regexp&gt;
+                     |
+                     |
+                     |
+                  (seq &lt;regexp&gt; &lt;regexp&gt;)
+                          /          \
+                         /            \
+                        /              \
+ (seq &lt;regexp&gt; &lt;regexp&gt;)                (seq &lt;regexp&gt; &lt;regexp&gt;)
+        /          \                           /          \
+       /            \                         /            \
+      /              \                       /              \
+(atom &lt;atom&gt;)   (atom &lt;atom&gt;)          (atom &lt;atom&gt;)    (atom &lt;atom&gt;)
+        |               |                      |                |
+        1               2                      3                4
+</pre></div>
+</div>
+<p>And indeed <code class="docutils literal notranslate"><span class="pre">(seq</span> <span class="pre">(seq</span> <span class="pre">(atom</span> <span class="pre">1)</span> <span class="pre">(atom</span> <span class="pre">2))</span> <span class="pre">(seq</span> <span class="pre">(atom</span> <span class="pre">3)</span> <span class="pre">(atom</span> <span class="pre">4)))</span></code>
+can be derived from left to right as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">regexp</span><span class="o">&gt;</span> <span class="o">-&gt;</span>
+<span class="o">(</span><span class="n">seq</span> <span class="o">&lt;</span><span class="n">regexp</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">regexp</span><span class="o">&gt;)</span> <span class="o">-&gt;</span>
+<span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">seq</span> <span class="o">&lt;</span><span class="n">regexp</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">regexp</span><span class="o">&gt;)</span> <span class="o">&lt;</span><span class="n">regexp</span><span class="o">&gt;)</span> <span class="o">-&gt;</span>
+<span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">atom</span> <span class="o">&lt;</span><span class="n">atom</span><span class="o">&gt;)</span> <span class="o">&lt;</span><span class="n">regexp</span><span class="o">&gt;)</span> <span class="o">&lt;</span><span class="n">regexp</span><span class="o">&gt;)</span> <span class="o">-&gt;</span>
+<span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">atom</span> <span class="mi">1</span><span class="o">)</span> <span class="o">&lt;</span><span class="n">regexp</span><span class="o">&gt;)</span> <span class="o">&lt;</span><span class="n">regexp</span><span class="o">&gt;)</span> <span class="o">-&gt;</span>
+<span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">atom</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">atom</span> <span class="o">&lt;</span><span class="n">atom</span><span class="o">&gt;))</span> <span class="o">&lt;</span><span class="n">regexp</span><span class="o">&gt;)</span> <span class="o">-&gt;</span>
+<span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">atom</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">atom</span> <span class="mi">2</span><span class="o">))</span> <span class="o">&lt;</span><span class="n">regexp</span><span class="o">&gt;)</span> <span class="o">-&gt;</span>
+<span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">atom</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">atom</span> <span class="mi">2</span><span class="o">))</span> <span class="o">(</span><span class="n">seq</span> <span class="o">&lt;</span><span class="n">regexp</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">regexp</span><span class="o">&gt;))</span> <span class="o">-&gt;</span>
+<span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">atom</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">atom</span> <span class="mi">2</span><span class="o">))</span> <span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">atom</span> <span class="o">&lt;</span><span class="n">atom</span><span class="o">&gt;)</span> <span class="o">&lt;</span><span class="n">regexp</span><span class="o">&gt;))</span> <span class="o">-&gt;</span>
+<span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">atom</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">atom</span> <span class="mi">2</span><span class="o">))</span> <span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">atom</span> <span class="mi">3</span><span class="o">)</span> <span class="o">&lt;</span><span class="n">regexp</span><span class="o">&gt;))</span> <span class="o">-&gt;</span>
+<span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">atom</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">atom</span> <span class="mi">2</span><span class="o">))</span> <span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">atom</span> <span class="mi">3</span><span class="o">)</span> <span class="o">(</span><span class="n">atom</span> <span class="o">&lt;</span><span class="n">atom</span><span class="o">&gt;)))</span> <span class="o">-&gt;</span>
+<span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">atom</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">atom</span> <span class="mi">2</span><span class="o">))</span> <span class="o">(</span><span class="n">seq</span> <span class="o">(</span><span class="n">atom</span> <span class="mi">3</span><span class="o">)</span> <span class="o">(</span><span class="n">atom</span> <span class="mi">4</span><span class="o">)))</span>
+</pre></div>
+</div>
+<p>It can also be derived from right to left.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="recap-information-and-data">
+<h2>Recap: Information and Data<a class="headerlink" href="#recap-information-and-data" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
