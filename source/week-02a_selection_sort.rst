@@ -19,7 +19,7 @@ suffix of the array::
      done
    done
 
-Tracing Seleciton Sort
+Tracing Selection Sort
 ----------------------
 
 Let us print intermediate stages of the selection sort as follows::
@@ -171,7 +171,9 @@ Exercise 2
 Rewrite selection sort, so it would walk the array right-to-left,
 looking for a maximum rather than a minimum for a currently
 unprocessed sub-array, while sorting the overall array in an ascending
-order. Write the invariants for this version.
+order. Write the invariants for this version and explain how the inner
+loop invariant, upon the loop's termination, implies the outer loop's
+invariant.
 
 .. _exercise-generalised-sort: 
 
@@ -189,4 +191,22 @@ array of lists by length.
 Exercise 4
 ----------
 
-Bubble Sort
+Bubble Sort is a popular, but inefficient, sorting algorithm, similar
+to selection sort. Instead of selecting a new minimum, it works by
+repeatedly swapping adjacent elements in the suffix that are out of
+order. In *pseudocode* it is implemented as follows::
+
+  BubbleSort (A):
+    for i = 1 to A.length - 1
+      for j = A downto i + 1
+        if A[j] < A[j - 1]
+          swap A[j] and A[j - 1]
+
+* Implement the algorithm in OCaml using ``for-to`` and ``for-downto``
+  constructs.
+
+* Implement tracing for it. 
+
+* State the inner and the outer loop invariants. Explain in text how
+  the inner invariant, upon finishing the inner loop, implies the
+  invariant of the outer loop.

@@ -206,6 +206,7 @@ Exercise 1
 Implement a version of insertion sort for arrays called
 ``insert_sort_backwards``, so that its outer loop would be starting
 not from the beginning (i.e., index 0), but from the end of an array
-(i.e., ``(Array.length arr) - 1``). Specify its inner and outer
-invariants.
+(i.e., ``(Array.length arr) - 1``). Encode and check the invariants
+for this versionm and explain how the inner loop invariant, upon the
+loop's termination, implies the outer loop's invariant.
 

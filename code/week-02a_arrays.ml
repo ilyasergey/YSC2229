@@ -295,22 +295,29 @@ let bubble_sort_print arr =
     print_newline (); print_newline ();
   done
 
+let bubble_sort_outer_inv i arr =
+  sub_array_sorted 0 i arr
+
+let bubble_sort_inner_inv i j arr =
+  let len = Array.length arr in
+  sub_array_sorted 0 i arr &&
+  j >= i &&  
+  is_min_sub_array j len arr arr.(j) &&
+  suffix_larger_than_prefix i arr
+
+
 let bubble_sort_inv arr = 
   let len = Array.length arr in
-  print_int_array arr;
   (* Invariant: a[0 .. i] is sorted. *)  
   for i = 0 to len - 1 do
-    assert (sub_array_sorted 0 i arr);
-    let j = ref (len - 1) in
+    assert (bubble_sort_outer_inv i arr);
     (* Invariant: a[j] is the smallest in a[j ... len - 1] *)
-    while !j > i do
-      assert (is_min_sub_array !j (len - 1) arr arr.(!j));
-      if arr.(!j) < arr.(!j - 1) 
-      then swap arr !j (!j - 1)
+    for j = len - 1 downto i + 1 do
+      assert (bubble_sort_inner_inv i j arr);
+      if arr.(j) < arr.(j - 1) 
+      then swap arr j (j - 1)
       else ();
-      j := !j - 1;
-      assert (is_min_sub_array !j (len - 1) arr arr.(!j))
+      assert (bubble_sort_inner_inv i (j - 1) arr)
     done;
-    print_int_array arr;
-    assert (sub_array_sorted 0 i arr);
+    assert (bubble_sort_outer_inv i arr);
   done
