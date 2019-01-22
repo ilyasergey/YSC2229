@@ -237,6 +237,18 @@ let select_sort_general arr =
     done
   done
 
+let sum_matrix m n = 
+  let sum = ref 0 in
+  for i = 0 to n - 1 do
+    for j = 0 to n - 1 do
+       sum := !sum + m.(i).(j)
+    done
+  done;
+  !sum
+
+let m = [| [|1; 2; 3|]; [|4; 5; 6|]; [|7; 8; 9 |] |]
+
+
 (* Exercise:
 
 Rewrite selection sort, so it would be looking for a maximum rather
