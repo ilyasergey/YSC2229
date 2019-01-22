@@ -185,12 +185,23 @@ let select_sort_print arr =
     print_newline (); print_newline ();
   done
 
+let suffix_larger_than_prefix i arr =
+  let len = Array.length arr in
+  let prefix = array_to_list 0 i arr in
+  let suffix = array_to_list i len arr in
+  List.for_all (fun e -> 
+      List.for_all (fun f -> e <= f)  suffix
+    ) prefix
+
 let select_sort_outer_inv i arr =
-  sub_array_sorted 0 i arr
+  sub_array_sorted 0 i arr &&
+  suffix_larger_than_prefix i arr
 
 let select_sort_inner_inv j i arr = 
   is_min_sub_array i j arr arr.(i) &&
-  sub_array_sorted 0 i arr
+  sub_array_sorted 0 i arr &&
+  suffix_larger_than_prefix i arr
+
 
 let select_sort_inv arr = 
   let len = Array.length arr in
@@ -203,7 +214,7 @@ let select_sort_inv arr =
       else ();
       assert (select_sort_inner_inv (j + 1) i arr);
     done;
-    assert (select_sort_outer_inv i arr);
+    assert (select_sort_outer_inv (i + 1) arr);
   done
 
 
