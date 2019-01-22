@@ -7,7 +7,7 @@ So far the main data structure we've been looking and and using as a
 container is an algebraic list. While simple to work with and grow by
 adding new elements to the beginning, algebraic lists have a
 significant shortcoming: they do not allow an instant access to their
-elements. For instance, in a list ``6; 239; 5; 2; 3; 42; 0``, in order
+elements. For instance, in a list ``6; 8; 5; 2; 3; 7; 0``, in order
 to obtain its fourth element, one needs to "peel off" for previous
 elements by means of deconstructing the list, as implemented by the
 function ``nth`` from the standard OCaml library::
@@ -38,7 +38,7 @@ allocate a new array of the necessary size.
 In OCaml, arrays with all known elements can be created sugin the
 following syntax::
   
-  let a1 = [|6; 239; 5; 2; 3; 42; 0|]
+  let a1 = [|6; 8; 5; 2; 3; 7; 0|]
 
 creates an array with 7 numbers and assigns its reference to ``a1``.
 It is also possible to create an array of a fixed size, filled with
@@ -79,11 +79,11 @@ is modified. In this sense, arrays are similar to references, that are
 modified in-place::
 
   # a1;;
-  - : int array = [|6; 239; 5; 2; 3; 42; 0|]
+  - : int array = [|6; 8; 5; 2; 3; 7; 0|]
   # a1.(0) <- 12;;
   - : unit = ()
   # a1;;
-  - : int array = [|12; 239; 5; 2; 3; 42; 0|]
+  - : int array = [|12; 8; 5; 2; 3; 7; 0|]
 
 The following functions swaps two elements of an array indexed via
 ``i`` and ``j`` (assuming they are within the array indexing bounds)::
@@ -93,7 +93,7 @@ The following functions swaps two elements of an array indexed via
     arr.(i) <- arr.(j);
     arr.(j) <- tmp
 
-It is useful to be able to print a sub-array ``arr.(l) .. arr.(u)`` of
+It is useful to be able to print a sub-array ``arr.(l) .. arr.(u - 1)`` of
 a given array ``arr`` for debugging purposes. Here, for the sake of
 simplicity we assume the array to be filled with integers::
 

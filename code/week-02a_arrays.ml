@@ -23,7 +23,7 @@ let print_int_array arr =
   let len = Array.length arr in
   print_int_sub_array 0 (len - 1) arr
 
-let a1 = [|6; 239; 5; 2; 3; 42; 0|]
+let a1 = [|6; 8; 5; 2; 3; 7; 0|]
 
 
 (* Tell about index out of bounds *)
@@ -107,19 +107,26 @@ let insert_sort_print arr =
     print_newline (); print_newline ()
   done
 
+let insert_sort_inner_loop_inv j i arr = 
+  is_min_sub_array !j i arr arr.(!j) &&
+  sub_array_sorted 0 !j arr && 
+  sub_array_sorted (!j + 1) (i + 1) arr
+
+let insert_sort_outer_loop_inv i arr = 
+  sub_array_sorted 0 i arr
 
 let insert_sort_inv arr = 
   let len = Array.length arr in
   for i = 0 to len - 1 do
-    assert (sub_array_sorted 0 i arr);    
+    assert (insert_sort_outer_loop_inv i arr);    
     let j = ref i in 
     while !j > 0 && arr.(!j) < arr.(!j - 1) do
-      assert (is_min_sub_array !j i arr arr.(!j));
+      assert (insert_sort_inner_loop_inv j i arr);
       swap arr !j (!j - 1);
       j := !j - 1;
-      assert (is_min_sub_array !j i arr arr.(!j))
+      assert (insert_sort_inner_loop_inv j i arr);
     done;
-    assert (sub_array_sorted 0 i arr)
+    assert (insert_sort_outer_loop_inv (i + 1) arr)
   done
 
 
@@ -166,19 +173,25 @@ let select_sort_print arr =
     print_newline (); print_newline ();
   done
 
+let select_sort_outer_inv i arr =
+  sub_array_sorted 0 i arr
+
+let select_sort_inner_inv j i arr = 
+  is_min_sub_array i j arr arr.(i) &&
+  sub_array_sorted 0 i arr
 
 let select_sort_inv arr = 
   let len = Array.length arr in
   for i = 0 to len - 1 do
-    assert (sub_array_sorted 0 i arr);
+    assert (select_sort_outer_inv i arr);
     for j = i to len - 1 do
-      assert (is_min_sub_array i j arr arr.(i));
+      assert (select_sort_inner_inv j i arr);
       if arr.(j) < arr.(i)
       then swap arr i j
       else ();
-      assert (is_min_sub_array i (j + 1) arr arr.(i));
+      assert (select_sort_inner_inv (j + 1) i arr);
     done;
-    assert (sub_array_sorted 0 (i + 1) arr);
+    assert (select_sort_outer_inv i arr);
   done
 
 
