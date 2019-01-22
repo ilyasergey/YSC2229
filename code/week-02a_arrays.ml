@@ -51,6 +51,17 @@ let insert_sort arr =
     done
   done
 
+let insert_sort_backwards arr = 
+  let len = Array.length arr in
+  for i = len - 1 downto 0 do
+    let j = ref i in 
+    while !j < len - 1 && arr.(!j) > arr.(!j + 1) do
+      swap arr !j (!j + 1);
+      j := !j + 1
+    done
+  done
+
+
 (* Auxiliary functions for invariants *)
 
 let rec sorted ls = 
@@ -104,6 +115,7 @@ let insert_sort_print arr =
       j := !j - 1;
     done;
     print_int_sub_array 0 (i + 1) arr; 
+    print_int_sub_array (i + 1) len arr; 
     print_newline (); print_newline ()
   done
 

@@ -189,3 +189,23 @@ Notice that at the end of the inner loop, the three conjuncts of
 ``insert_sort_inner_loop_inv`` together imply that the entire prefix
 ``arr.(0) ... arr.(i)`` is sorted, i.e., the new element is correctly
 positioned within it.
+
+Termination of Insertion Sort
+-----------------------------
+
+It is not difficult to prove that insertion sort terminates: its outer
+loop is an iteration, bounded by ``len - 1``. Its inner loop's
+termination measure (variant) is ``j``, so the loop terminates when
+``j`` reaches 0.
+
+.. _exercise-insert-sort-backwards: 
+
+Exercise 1
+----------
+
+Implement a version of insertion sort for arrays called
+``insert_sort_backwards``, so that its outer loop would be starting
+not from the beginning (i.e., index 0), but from the end of an array
+(i.e., ``(Array.length arr) - 1``). Specify its inner and outer
+invariants.
+
