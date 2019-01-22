@@ -9,7 +9,7 @@ YSC2229 Lecture Notes, Week 02
   week-02a_insert_sort
   week-02a_selection_sort
 
-  week-02b_complexity
-  week-02b_notation
-  week-02b_sums
+..  week-02b_complexity
+..  week-02b_notation
+..  week-02b_sums
 

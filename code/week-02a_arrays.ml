@@ -25,6 +25,7 @@ let print_int_array arr =
 
 let a1 = [|6; 239; 5; 2; 3; 42; 0|]
 
+
 (* Tell about index out of bounds *)
 
 let a2 = Array.make 10 0
@@ -45,7 +46,7 @@ let insert_sort arr =
   for i = 0 to len - 1 do
     let j = ref i in 
     while !j > 0 && arr.(!j) < arr.(!j - 1) do
-      swap arr !j (!j -1);
+      swap arr !j (!j - 1);
       j := !j - 1
     done
   done

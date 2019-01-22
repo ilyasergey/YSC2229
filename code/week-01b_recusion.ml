@@ -45,7 +45,7 @@ let test_find_min =
   generic_test_find_min find_min
 
 (* Now let's write an invariant for `find_min`'s `walk` *)
-(* Remembere what an invariant is for:
+(* Remember what an invariant is for:
   * It constrains the parameters of the function
   * It holds before every recursive  call the function 
   * It holds at the end of every function invocation

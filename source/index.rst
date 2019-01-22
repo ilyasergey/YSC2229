@@ -10,7 +10,7 @@ Introductory Data Structures and Algorithms (YSC2229)
    :maxdepth: 2
 
    YSC2229-lecture-notes-week-01
-..   YSC2229-lecture-notes-week-02
+   YSC2229-lecture-notes-week-02
 ..   YSC2229-lecture-notes-week-03
 
 ..
