@@ -10,6 +10,9 @@ Mandatory exercises
 * :ref:`exercise-insert-sort-backwards`: 
   Backwards insertion sort.
 
+* :ref:`exercise-comparison-order`:
+  Comparison of insertion sort and selection sort.
+
 * :ref:`exercise-bubble-sort`:
   Bubble sort: implementation and analysis.
 

@@ -177,6 +177,7 @@ invariant.
 
 .. _exercise-generalised-sort: 
 
+
 Exercise 3
 ----------
 
@@ -186,9 +187,23 @@ arbitrary type ``'a array`` and comparator ``less_than`` of type ``'a
 according to this comparator. Test your implementation by sorting an
 array of lists by length.
 
-.. _exercise-bubble-sort: 
+.. _exercise-comparison-order:
 
 Exercise 4
+----------
+
+* Which sorting method executes less primitive operations, such as
+  swapping and comparing array elements, for an array in reverse
+  order, selection sort or insertion sort?
+
+* Which method runs faster on a fully sorted array?
+
+Conduct experiments and justify your answer by explaining the
+mechanics of the algorithms.
+
+.. _exercise-bubble-sort: 
+
+Exercise 5
 ----------
 
 Bubble Sort is a popular, but inefficient, sorting algorithm, similar

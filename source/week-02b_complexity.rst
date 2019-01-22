@@ -4,6 +4,7 @@ Complexity of Algorithms
 ========================
 
 
+
 .. image:: ../resources/plots.jpg
    :width: 820px
    :align: center
