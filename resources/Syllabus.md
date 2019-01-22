@@ -10,7 +10,7 @@ Week 01b (Jan 21)
 Correctness and termination of recursive programs. Pre- and post-conditions. Reasoning about correctness of list-processing recursive functions. Relation between recursion and loops; tail recursion. 
 
 Week 02a (Jan 23)
-Basic searching and sorting with arrays: selection sort, insertion sort.
+Basic array sorting: selection sort, insertion sort.
 Week 02b (Jan 23)
 Algorithmic complexity; order notation: big-O, little-o. Complexity of loops; sums of series, approximating with integrals. Analysing complexity of sorting algorithms.
 
