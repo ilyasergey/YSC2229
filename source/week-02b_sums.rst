@@ -142,6 +142,53 @@ We can obtain it as follows:
    \left[\frac{x^4}{4}\right]_{1}^{n+1} = \frac{(n + 1)^4 - 1}{4} \in
    O(n^4)
 
+Big O and function composition
+------------------------------
+
+Let us take :math:`f_1(n) \in O(g_1(n))` and :math:`f_2(n) \in
+O(g_2(n))`. Assuming :math:`g_2(n)` grows monotonically, what would be
+the tight enough complexity class for :math:`f_2(f_1(n))`? 
+
+It's tempting to say that it should be :math:`g_2(g_2(n))`. However,
+recalls that by the definition of big O, :math:`f_1(n) \leq c_1\cdot
+g_2(n)` and :math:`f_2(n) \leq c_2\cdot g_2(n)` for :math:`n \geq n_0`
+and some constants :math:`c_1, c_2` and :math:`n_0`.
+
+By monotonicity of :math:`g2` we get 
+
+.. math::
+
+  f_2(f_1(n)) \leq c_2 \cdot g_2(f_1(n)) \leq c_2 \cdot g_2(c_1 \cdot
+  g_1(n)).
+
+Therefore
+
+.. math::
+
+  f_2(f_1(n)) \in O(g_2(c_1 \cdot g_1(n)))
+
+The implication of this is one should thread function composition with
+some care. Specifically, it is okay to drop :math:`c_1` if :math:`g_2`
+is a polynomial, logarithmic, or their composition, since:
+
+.. math::
+
+  \begin{align*}
+  (c\cdot f(n))^k &= c^k \cdot f(n)^k \in O(f(n)^k) \\
+  \log(c\cdot f(n)) &= \log c + \log(f(n)) \in O(\log(f(n)) 
+  \end{align*}
+
+However, this does not work more fast-growing functions :math:`g_2(n)`,
+such as an exponent and factorial:
+
+.. math::
+
+  \begin{align*}
+  k^{c\cdot f(n)} &= (k^c)^{f(n)} \notin O(k^{f(n)}) \\
+  (c \cdot f(n))! &= (c\cdot f(n)) \cdot (c\cdot f(n) - 1) \cdot
+  \ldots \cdot (f(n))! \notin O((f(n))!)
+  \end{align*}
+
 Complexity of algorithms with loops
 -----------------------------------
 
