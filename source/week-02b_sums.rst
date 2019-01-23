@@ -61,7 +61,7 @@ the standard notation as follows:
 where :math:`a` is called the lower limit, and :math:`b` is the upper
 limit. The whole sum is :math:`0` if :math:`a < b`.
 
-Arithmetic Series
+Arithmetic series
 -----------------
 
 Arithmetic series are the series of the form :math:`\sum_{i=a}^{b}i`.
@@ -89,7 +89,7 @@ lower bound has the same complexity:
   \sum_{i=j}^{n}i = \sum_{i=1}^{n}i - \sum_{i=1}^{j - 1}i 
   = \frac{n \cdot (n + 1)}{2} - \frac{j \cdot (j - 1)}{2} \in O(n^2) 
 
-Geometric Series
+Geometric series
 ----------------
 
 Geometric series are defined as series of exponents:
@@ -141,4 +141,80 @@ We can obtain it as follows:
 Complexity of algorithms with loops
 -----------------------------------
 
-TODO
+Let us get back to our program that sums up elements of an array::
+
+ let sum = ref 0 in
+ for i = 0 to n - 1 do 
+     sum := !sum + arr.(i)
+ done;
+ !sum
+
+The first assignment is an atomic command, and so it the last
+references, hence they both take :math:`O(1)`. The bounded
+``for``-iteration executes :math:`n` times, each time with a constant
+demand of its body, hence it's complexity is :math:`O(n)`. To
+summarise, the overall complexity of the procedure is :math:`O(n)`.
+
+
+Let us now take a look at one of the sorting algorithms that we've
+studies, namely, Insertion Sort::
+
+ let insert_sort arr = 
+   let len = Array.length arr in
+   for i = 0 to len - 1 do
+     let j = ref i in 
+     while !j > 0 && arr.(!j) < arr.(!j - 1) do
+       swap arr !j (!j - 1);
+       j := !j - 1
+     done
+   done
+
+Assuming that the size of the array is :math:`n`, the outer loop
+makes. The inner loop, however, goes in an opposite direction and
+starts from :math:`j` such that :math:`0 \leq j < n` and, in the worst
+case, terminates with :math:`j = 0`. The complexity of the body of the
+inner loop is linear (as swam performs three atomic operations, and
+the assignment is atomic). Thereforem we can estimate the complexity
+of this sorting by the following sum (assuming :math:`c` is a constant
+accounting for the complexity of the inner loop body):
+
+.. math::
+
+  \sum_{i=0}^{n-1}\sum_{j=0}^{i}c = c \sum_{i=0}^{n - 1}i = c\frac{n (n -
+  1)}{2} \in O(n^2).
+
+With this, we conclude that the complexity of the insertion sort is
+*quadratic* in the size of its input, i.e., the length of the array.
+
+.. _exercise-matrix-sum-complexity: 
+
+Exercise 10
+-----------
+
+One can represent a matrix of :math:`n \times n` elements in OCaml as a
+two-dimensional array::
+
+  #   let m = [| [|1; 2; 3|]; [|4; 5; 6|]; [|7; 8; 9 |] |];;
+  val m : int array array = [|[|1; 2; 3|]; [|4; 5; 6|]; [|7; 8; 9|]|] 
+
+Implement a procedure that takes a matrix and its dimension and
+traverses it, summing up *all* elements in it. Express the complexity
+of this procedure using big-O notation and justify your answer using
+the material above.
+
+.. _exercise-select-sort-complexity: 
+
+Exercise 11
+-----------
+
+Express the complexity of selection sort using big O notation. Justify
+your answer.
+ 
+.. _exercise-bubble-sort-complexity: 
+
+Exercise 12
+-----------
+
+Express the complexity of Bubble Sort (see
+:ref:`exercise-bubble-sort`) using big O notation. Justify your
+answer.
