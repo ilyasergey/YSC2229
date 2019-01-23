@@ -25,7 +25,7 @@ structured in a sequence, but allow immediate access to their
 elements, referred to by an *index* (i.e., position in an array). At
 the low-level, arrays are implemented by means of *fixed offsets*, and
 take ful advantage of the random-access memory (RAM), implemented by
-the modern compute architechures, allowing one to access a location
+the modern compute architectures, allowing one to access a location
 with a known address almost immediately.
 
 The price to pay for that is the inability to change the size of an
@@ -127,4 +127,4 @@ bounded iteration loop of a general form::
 In both cases ``start_value`` and ``end_value`` must be of type
 ``int``, and ``expression`` is of type ``unit``. There is no way to
 "break" from the iteration in OCaml, interrupting it, hence sometimes
-it is more preferrable to use a more general ``while``-loop.
+it is more preferable to use a more general ``while``-loop.
