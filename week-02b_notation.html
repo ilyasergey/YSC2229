@@ -180,7 +180,7 @@ infinitely, i.e., <span class="math notranslate nohighlight">\(n \rightarrow \in
 there is a value <span class="math notranslate nohighlight">\(x_0\)</span> and a constant <span class="math notranslate nohighlight">\(c &gt; 0\)</span>, such that for all <span class="math notranslate nohighlight">\(x \geq x_0,
 f(x) &lt; c \cdot g(x)\)</span>.</p>
 <p>This can be illustrated as follows:</p>
-<a class="reference internal image-reference" href="../resources/bigo.png"><img alt="../resources/bigo.png" class="align-center" src="../resources/bigo.png" style="width: 550px;" /></a>
+<a class="reference internal image-reference" href="_images/bigo.png"><img alt="_images/bigo.png" class="align-center" src="_images/bigo.png" style="width: 550px;" /></a>
 <p>The intuition is that <span class="math notranslate nohighlight">\(f(x)\)</span> grows no faster than <span class="math notranslate nohighlight">\(c \cdot g(x)\)</span> as <span class="math notranslate nohighlight">\(x\)</span> gets larger. Notice that the notation <span class="math notranslate nohighlight">\(O(g(x))\)</span> describes a <em>set</em> of functions, “approximated” by <span class="math notranslate nohighlight">\(g(x)\)</span>, modulo constant factors and the starting point.</p>
 </div>
 <div class="section" id="properties-of-big-o-notation">
@@ -190,7 +190,7 @@ f(x) &lt; c \cdot g(x)\)</span>.</p>
 (i.e., we can forget about constant factors).  Since <span class="math notranslate nohighlight">\(\log_{a}n = \log_{a}b \times \log_{b}n\)</span>, we don’t need to be specific about the base when saying <span class="math notranslate nohighlight">\(O(log n)\)</span>.</p>
 <p><strong>Property 2:</strong> <span class="math notranslate nohighlight">\(f(n) + g(n) \in O(\max(f(n), g(n))\)</span>.</p>
 <p>Here, <span class="math notranslate nohighlight">\(\max((f(n), g(n))\)</span> is a function that for any n, returns the maximum of <span class="math notranslate nohighlight">\(f(n)\)</span> and <span class="math notranslate nohighlight">\(g(n))\)</span>:</p>
-<a class="reference internal image-reference" href="../resources/omax.png"><img alt="../resources/omax.png" class="align-center" src="../resources/omax.png" style="width: 550px;" /></a>
+<a class="reference internal image-reference" href="_images/omax.png"><img alt="_images/omax.png" class="align-center" src="_images/omax.png" style="width: 550px;" /></a>
 <p>The property follows from the fact that for any <span class="math notranslate nohighlight">\(n,
 f(n) + g(n) \leq 2 \cdot f(n)\)</span> or <span class="math notranslate nohighlight">\(f(n) + g(n) \leq 2 \cdot g(n)\)</span>.  Therefore, <span class="math notranslate nohighlight">\(f(n) + g(n) \leq 2 \cdot \max(f(n), g(n))\)</span>.</p>
 <p><strong>Property 3:</strong> <span class="math notranslate nohighlight">\(\max(f(n), g(n)) \in O(f(n) + g(n))\)</span>.</p>
@@ -245,7 +245,7 @@ n - c &lt; 0,~\text{for all}~n \geq n_0 \\
 </div>
 <div class="section" id="hierarchy-of-algorithm-complexities">
 <h2>Hierarchy of algorithm complexities<a class="headerlink" href="#hierarchy-of-algorithm-complexities" title="Permalink to this headline">¶</a></h2>
-<a class="reference internal image-reference" href="../resources/hierarchy.png"><img alt="../resources/hierarchy.png" class="align-center" src="../resources/hierarchy.png" style="width: 800px;" /></a>
+<a class="reference internal image-reference" href="_images/hierarchy.png"><img alt="_images/hierarchy.png" class="align-center" src="_images/hierarchy.png" style="width: 800px;" /></a>
 </div>
 <div class="section" id="complexity-of-sequential-composition">
 <h2>Complexity of sequential composition<a class="headerlink" href="#complexity-of-sequential-composition" title="Permalink to this headline">¶</a></h2>
