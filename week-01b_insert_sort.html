@@ -216,10 +216,14 @@ This notion is described by the following definition:</p>
 it’s (a) sorted and (b) has all the same elements as <code class="docutils literal notranslate"><span class="pre">res</span></code>, which we
 can define as follows:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">same_elems</span> <span class="n">ls1</span> <span class="n">ls2</span> <span class="o">=</span>
-   <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span>
-      <span class="nn">List</span><span class="p">.</span><span class="n">find_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e&#39;</span> <span class="o">-&gt;</span> <span class="n">e&#39;</span> <span class="o">=</span> <span class="n">e</span><span class="o">)</span> <span class="n">ls2</span> <span class="o">=</span>
-      <span class="nn">List</span><span class="p">.</span><span class="n">find_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e&#39;</span> <span class="o">-&gt;</span> <span class="n">e&#39;</span> <span class="o">=</span> <span class="n">e</span><span class="o">)</span> <span class="n">ls1</span><span class="o">)</span>
-     <span class="n">ls1</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span>
+      <span class="nn">List</span><span class="p">.</span><span class="n">find_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e&#39;</span> <span class="o">-&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="n">e&#39;</span><span class="o">)</span> <span class="n">ls2</span> <span class="o">=</span>
+      <span class="nn">List</span><span class="p">.</span><span class="n">find_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e&#39;</span> <span class="o">-&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="n">e&#39;</span><span class="o">)</span> <span class="n">ls1</span>
+    <span class="o">)</span> <span class="n">ls1</span> <span class="o">&amp;&amp;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span>
+      <span class="nn">List</span><span class="p">.</span><span class="n">find_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e&#39;</span> <span class="o">-&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="n">e&#39;</span><span class="o">)</span> <span class="n">ls2</span> <span class="o">=</span>
+      <span class="nn">List</span><span class="p">.</span><span class="n">find_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e&#39;</span> <span class="o">-&gt;</span> <span class="n">e</span> <span class="o">=</span> <span class="n">e&#39;</span><span class="o">)</span> <span class="n">ls1</span>
+    <span class="o">)</span> <span class="n">ls2</span>
 
 <span class="k">let</span> <span class="n">sorted_spec</span> <span class="n">ls</span> <span class="n">res</span> <span class="o">=</span>
   <span class="n">same_elems</span> <span class="n">ls</span> <span class="n">res</span> <span class="o">&amp;&amp;</span> <span class="n">sorted</span> <span class="n">res</span>
