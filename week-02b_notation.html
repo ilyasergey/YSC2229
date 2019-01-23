@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Sums of Series and Complexities of Loops" href="week-02b_sums.html" />
+    <link rel="prev" title="Complexity of Algorithms" href="week-02b_complexity.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,8 +78,31 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">YSC2229 Lecture Notes, Week 02</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-02a_arrays.html">Arrays and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02a_insert_sort.html">Insertion Sort on Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02a_selection_sort.html">Selection Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02a_exercises.html">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_complexity.html">Complexity of Algorithms</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Order Notation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#big-o-notation">Big O-notation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#properties-of-big-o-notation">Properties of Big O-notation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#little-o-notation">Little o-notation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#proofs-using-o-notation">Proofs using O-notation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hierarchy-of-algorithm-complexities">Hierarchy of algorithm complexities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#complexity-of-sequential-composition">Complexity of sequential composition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-6">Exercise 6</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-7">Exercise 7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-8">Exercise 8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-9">Exercise 9</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_sums.html">Sums of Series and Complexities of Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_exercises.html">Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -123,6 +148,8 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
+          <li><a href="YSC2229-lecture-notes-week-02.html">YSC2229 Lecture Notes, Week 02</a> &raquo;</li>
+        
       <li>Order Notation</li>
     
     
@@ -144,7 +171,120 @@
             
   <div class="section" id="order-notation">
 <h1>Order Notation<a class="headerlink" href="#order-notation" title="Permalink to this headline">¶</a></h1>
-<p>Coming soon.</p>
+<p>Let us introduce a concise notation for <em>asymptotic</em> behaviour of time
+demand functions as an input size <span class="math notranslate nohighlight">\(n\)</span> of an algorithm grows
+infinitely, i.e., <span class="math notranslate nohighlight">\(n \rightarrow \infty\)</span>.</p>
+<div class="section" id="big-o-notation">
+<span id="def-big-o"></span><h2>Big O-notation<a class="headerlink" href="#big-o-notation" title="Permalink to this headline">¶</a></h2>
+<p><strong>Definition</strong> The positive-valued function <span class="math notranslate nohighlight">\(f(x) \in O(g(x))\)</span> if and only if
+there is a value <span class="math notranslate nohighlight">\(x_0\)</span> and a constant <span class="math notranslate nohighlight">\(c &gt; 0\)</span>, such that for all <span class="math notranslate nohighlight">\(x \geq x_0,
+f(x) &lt; c \cdot g(x)\)</span>.</p>
+<p>This can be illustrated as follows:</p>
+<a class="reference internal image-reference" href="../resources/bigo.png"><img alt="../resources/bigo.png" class="align-center" src="../resources/bigo.png" style="width: 550px;" /></a>
+<p>The intuition is that <span class="math notranslate nohighlight">\(f(x)\)</span> grows no faster than <span class="math notranslate nohighlight">\(c \cdot g(x)\)</span> as <span class="math notranslate nohighlight">\(x\)</span> gets larger. Notice that the notation <span class="math notranslate nohighlight">\(O(g(x))\)</span> describes a <em>set</em> of functions, “approximated” by <span class="math notranslate nohighlight">\(g(x)\)</span>, modulo constant factors and the starting point.</p>
+</div>
+<div class="section" id="properties-of-big-o-notation">
+<span id="def-big-o-props"></span><h2>Properties of Big O-notation<a class="headerlink" href="#properties-of-big-o-notation" title="Permalink to this headline">¶</a></h2>
+<p><strong>Property 1:</strong> <span class="math notranslate nohighlight">\(O(k \cdot f(n)) = O(f(n))\)</span>, for any constant <span class="math notranslate nohighlight">\(k\)</span>.</p>
+<p>Multiplying by <span class="math notranslate nohighlight">\(k\)</span> just means re-adjusting the values of the arbitrary constant factor <span class="math notranslate nohighlight">\(c\)</span> in the definition of big-O.  This property ensures machine-independence
+(i.e., we can forget about constant factors).  Since <span class="math notranslate nohighlight">\(\log_{a}n = \log_{a}b \times \log_{b}n\)</span>, we don’t need to be specific about the base when saying <span class="math notranslate nohighlight">\(O(log n)\)</span>.</p>
+<p><strong>Property 2:</strong> <span class="math notranslate nohighlight">\(f(n) + g(n) \in O(\max(f(n), g(n))\)</span>.</p>
+<p>Here, <span class="math notranslate nohighlight">\(\max((f(n), g(n))\)</span> is a function that for any n, returns the maximum of <span class="math notranslate nohighlight">\(f(n)\)</span> and <span class="math notranslate nohighlight">\(g(n))\)</span>:</p>
+<a class="reference internal image-reference" href="../resources/omax.png"><img alt="../resources/omax.png" class="align-center" src="../resources/omax.png" style="width: 550px;" /></a>
+<p>The property follows from the fact that for any <span class="math notranslate nohighlight">\(n,
+f(n) + g(n) \leq 2 \cdot f(n)\)</span> or <span class="math notranslate nohighlight">\(f(n) + g(n) \leq 2 \cdot g(n)\)</span>.  Therefore, <span class="math notranslate nohighlight">\(f(n) + g(n) \leq 2 \cdot \max(f(n), g(n))\)</span>.</p>
+<p><strong>Property 3:</strong> <span class="math notranslate nohighlight">\(\max(f(n), g(n)) \in O(f(n) + g(n))\)</span>.</p>
+<p>This property follows from the fact that for any <span class="math notranslate nohighlight">\(n, \max(f(n), g(n)) \leq f(n)\)</span> or <span class="math notranslate nohighlight">\(\max(f(n), g(n)) \leq g(n)\)</span>. Therefore, <span class="math notranslate nohighlight">\(\max(f(n), g(n)) \leq f(n) + g(n)\)</span>.</p>
+<p><strong>Corollary:</strong> <span class="math notranslate nohighlight">\(O(f(n) + g(n)) = O(\max(f(n), g(n))\)</span>.</p>
+<p><strong>Property 4:</strong> If <span class="math notranslate nohighlight">\(f(n) \in O(g(n))\)</span>, then <span class="math notranslate nohighlight">\(f(n) + g(n) \in O(g(n))\)</span>.</p>
+<p>Follows from the fact that there exist <span class="math notranslate nohighlight">\(c, n0\)</span>, such that for any <span class="math notranslate nohighlight">\(n \geq n0, f(n) \leq c \cdot g(n)\)</span>; Therefore, for any <span class="math notranslate nohighlight">\(n \geq n0, f(n) + g(n) \leq (c + 1) \cdot g(n)\)</span>.
+Intuitively, a faster-growing function eventually dominates.</p>
+</div>
+<div class="section" id="little-o-notation">
+<h2>Little o-notation<a class="headerlink" href="#little-o-notation" title="Permalink to this headline">¶</a></h2>
+<p><strong>Definition</strong> The positive-valued function <span class="math notranslate nohighlight">\(f(x) \in o(g(x))\)</span> if and only if
+for all constants <span class="math notranslate nohighlight">\(\varepsilon &gt; 0\)</span>, there exists a value <span class="math notranslate nohighlight">\(x_0\)</span>,
+such that for all <span class="math notranslate nohighlight">\(x lgeq x_0, f(x) &lt; \varepsilon \cdot g(x)\)</span>.</p>
+<p>This definition provides a tighter boundary on <span class="math notranslate nohighlight">\(f(x)\)</span>: it states that <span class="math notranslate nohighlight">\(g(x)\)</span> grows much faster (i.e., more than a constant factor times faster) than <span class="math notranslate nohighlight">\(f(x)\)</span>.</p>
+<p><strong>Example</strong>: <span class="math notranslate nohighlight">\(x^2 \in o(x^3)\)</span>, as for any <span class="math notranslate nohighlight">\(\varepsilon &gt; 0\)</span> we can take <span class="math notranslate nohighlight">\(x_0(\varepsilon) = \frac{1}{\varepsilon} + 1\)</span>, so for all <span class="math notranslate nohighlight">\(x \geq x_0(\varepsilon), \varepsilon \cdot x^3 \geq \varepsilon \cdot (\frac{1}{\varepsilon} + 1) \cdot x^2 &gt; x^2\)</span>.</p>
+</div>
+<div class="section" id="proofs-using-o-notation">
+<h2>Proofs using O-notation<a class="headerlink" href="#proofs-using-o-notation" title="Permalink to this headline">¶</a></h2>
+<p><strong>Standard exercise:</strong> show that <span class="math notranslate nohighlight">\(f(x) \in O(g(x))\)</span> (or not) is approached as follows:</p>
+<ul class="simple">
+<li>Unfold the definition of O-notation;</li>
+<li>Assuming that the statement is true, try to find a fixed pair of values <span class="math notranslate nohighlight">\(c\)</span> and <span class="math notranslate nohighlight">\(x_0\)</span> from the definition to prove that the inequality holds for any <span class="math notranslate nohighlight">\(x\)</span>;</li>
+<li>If such <em>fixed</em> pair cannot be found, as it depends on the value of <span class="math notranslate nohighlight">\(x\)</span>, then the universal quantification over <span class="math notranslate nohighlight">\(x\)</span> in the definition doesn’t hold, hence <span class="math notranslate nohighlight">\(f(x) \notin O(g(x))\)</span>.</li>
+</ul>
+<p><strong>Example 1</strong>: Is <span class="math notranslate nohighlight">\(n^2 \in O(n^3)\)</span>?</p>
+<p>Assume this holds for some <span class="math notranslate nohighlight">\(c\)</span> and <span class="math notranslate nohighlight">\(n_0\)</span>, then:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+&amp; n^2 - c \cdot n^3 &lt; 0,~\text{for all}~n \geq n_0 \\
+\implies &amp;
+n^2 (1 - c \cdot n) &lt; 0,~\text{for all}~n \geq n_0 \\
+\implies &amp;
+c \cdot n &lt; 1,~\text{for all}~n \geq n_0 \\
+\implies &amp;
+n &gt; \frac{1}{c},~\text{for all}~n \geq n_0 \\
+\end{align*}\end{split}\]</div>
+<p>As this clearly holds for <span class="math notranslate nohighlight">\(n_0 = 2\)</span> and <span class="math notranslate nohighlight">\(c = 1\)</span>, we may conclude that <span class="math notranslate nohighlight">\(n^2 \in O(n^3)\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(\square\)</span></p>
+<p><strong>Example 2</strong>: Is <span class="math notranslate nohighlight">\(n^3 \in O(n^2)\)</span>?</p>
+<p>Assume this holds for some <span class="math notranslate nohighlight">\(c\)</span> and <span class="math notranslate nohighlight">\(n_0\)</span>, then:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+&amp; n^3 - c \cdot n^2 &lt; 0,~\text{for all}~n \geq n_0 \\
+\implies &amp;
+n^2 \cdot (n - c) &lt; 0,~\text{for all}~n \geq n_0 \\
+\implies &amp;
+n - c &lt; 0,~\text{for all}~n \geq n_0 \\
+\end{align*}\end{split}\]</div>
+<p>Now, since <span class="math notranslate nohighlight">\(c\)</span> and <span class="math notranslate nohighlight">\(n_0\)</span> are arbitrary, but fixed, we can consider <span class="math notranslate nohighlight">\(n = c + 1 + n_0\)</span>
+(and so we can do for any <span class="math notranslate nohighlight">\(c\)</span> and <span class="math notranslate nohighlight">\(n_0\)</span>), so we see that the inequality doesn’t hold, hence in this case no fixed <span class="math notranslate nohighlight">\(c\)</span> and <span class="math notranslate nohighlight">\(n_0\)</span> can be found to satisfy it for any <span class="math notranslate nohighlight">\(n\)</span>. Therefore <span class="math notranslate nohighlight">\(n^3 \notin O(n^2)\)</span>.</p>
+</div>
+<div class="section" id="hierarchy-of-algorithm-complexities">
+<h2>Hierarchy of algorithm complexities<a class="headerlink" href="#hierarchy-of-algorithm-complexities" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="../resources/hierarchy.png"><img alt="../resources/hierarchy.png" class="align-center" src="../resources/hierarchy.png" style="width: 800px;" /></a>
+</div>
+<div class="section" id="complexity-of-sequential-composition">
+<h2>Complexity of sequential composition<a class="headerlink" href="#complexity-of-sequential-composition" title="Permalink to this headline">¶</a></h2>
+<p>Consider the following OCaml program, where <code class="docutils literal notranslate"><span class="pre">a</span></code> is a value of size <code class="docutils literal notranslate"><span class="pre">n</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="n">f1</span><span class="o">(</span><span class="n">a</span><span class="o">)</span>
+
+<span class="k">in</span>  <span class="n">x</span> <span class="o">+</span> <span class="n">f2</span><span class="o">(</span><span class="n">a</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Assuming the complexity of <code class="docutils literal notranslate"><span class="pre">f1</span></code> is <span class="math notranslate nohighlight">\(f(n)\)</span> and the complexity of <cite>f2</cite> is <span class="math notranslate nohighlight">\(g(n)\)</span>, executing both of them sequentially leads to summing up their complexity, which is over-approximated by <span class="math notranslate nohighlight">\(O(\max(f(n), g(n))\)</span>. This process of “collapsing” big O’s can be repeated for a finite number of steps, when it <em>does not depend</em> on the input size.</p>
+</div>
+<div class="section" id="exercise-6">
+<span id="exercise-big-o-defs1"></span><h2>Exercise 6<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h2>
+<p>Assume that each of the expressions below gives the time demand <span class="math notranslate nohighlight">\(T(n)\)</span> of an algorithm for solving a problem of size <span class="math notranslate nohighlight">\(n\)</span>. Specify the complexity of each algorithm using big <span class="math notranslate nohighlight">\(O\)</span>-notation.</p>
+<ol class="loweralpha simple">
+<li><span class="math notranslate nohighlight">\(500n + 100n^{1.5} + 50n \log_{10}n\)</span></li>
+<li><span class="math notranslate nohighlight">\(n \log_3 n + n \log_2 n\)</span></li>
+<li><span class="math notranslate nohighlight">\(n^2 \log_2 n + n (\log_2 n)^2\)</span></li>
+<li><span class="math notranslate nohighlight">\(0.5 n + 6n ^{1.5} + 2.5 \cdot n ^{1.75}\)</span></li>
+</ol>
+</div>
+<div class="section" id="exercise-7">
+<span id="exercise-big-o-defs2"></span><h2>Exercise 7<a class="headerlink" href="#exercise-7" title="Permalink to this headline">¶</a></h2>
+<p>The following statements provide some “properties” of the big O-notation for the functions <span class="math notranslate nohighlight">\(f(n)\)</span>, <span class="math notranslate nohighlight">\(g(n)\)</span> etc.  State whether each statement is <cite>TRUE</cite> or <cite>FALSE</cite>. If it’s true, provide a proof sketch using the properties of the O-notation, otherwise providing a correct formulation matching the “property” name and a proof sketch while it holds.</p>
+<ol class="loweralpha simple">
+<li><span class="math notranslate nohighlight">\(5 n + 10 n^2 + 100 n^3 \in O(n^4)\)</span></li>
+<li><span class="math notranslate nohighlight">\(5n + 10n^2 + 100 n^3 \in O(n^2 \log n)\)</span></li>
+<li>Rule of products: <span class="math notranslate nohighlight">\(g_1 (n) \in O(f_1(n))\)</span> and <span class="math notranslate nohighlight">\(g_2 (n) \in O(f_2(n))\)</span>, then <span class="math notranslate nohighlight">\(g_1 (n) \cdot g_2 (n) \in O(f_1(n) \cdot f_2(n))\)</span>.</li>
+<li>Prove that <span class="math notranslate nohighlight">\(T_n = c_0 + c_1 n + c_2 n^2 + c_3 n^3 \in O(n^3)\)</span> using the formal definition of the big <span class="math notranslate nohighlight">\(O\)</span> notation.</li>
+</ol>
+</div>
+<div class="section" id="exercise-8">
+<span id="exercise-big-o-defs3"></span><h2>Exercise 8<a class="headerlink" href="#exercise-8" title="Permalink to this headline">¶</a></h2>
+<p>One of the two software packages, <em>A</em> or <em>B</em>, should be chosen to process data collections, containing each up to <span class="math notranslate nohighlight">\(10^{12}\)</span> records. Average processing time of the package <em>A</em> is <span class="math notranslate nohighlight">\(T_A(n) = 0.1 n \log_2 n\)</span> nanoseconds and the average processing time of the package <em>B</em> is <span class="math notranslate nohighlight">\(T_B(n) = 5n\)</span> nanoseconds. Which algorithm has better performance in the big <span class="math notranslate nohighlight">\(O\)</span> sense? Work out exact conditions when these packages outperform each other.</p>
+</div>
+<div class="section" id="exercise-9">
+<span id="exercise-big-o-defs4"></span><h2>Exercise 9<a class="headerlink" href="#exercise-9" title="Permalink to this headline">¶</a></h2>
+<p>Algorithms <em>A</em> and <em>B</em> spend exactly <span class="math notranslate nohighlight">\(T_A(n) = c_A n \log_2 n\)</span> and <span class="math notranslate nohighlight">\(T_B(n) = c_B n^2\)</span> nanoseconds, respectively, for a problem of size <span class="math notranslate nohighlight">\(n\)</span>. Find the best algorithm for processing <span class="math notranslate nohighlight">\(n = 2^{20}\)</span> data items if the algorithm <em>A</em> spends 10 nanoseconds to process 1024 items, while the algorithm <em>B</em> spends only 1 nanosecond to process 1024 items.</p>
+</div>
 </div>
 
 
@@ -152,6 +292,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-02b_sums.html" class="btn btn-neutral float-right" title="Sums of Series and Complexities of Loops" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-02b_complexity.html" class="btn btn-neutral" title="Complexity of Algorithms" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

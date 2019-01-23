@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Selection Sort" href="week-02a_selection_sort.html" />
+    <link rel="prev" title="Arrays and Operations on Them" href="week-02a_arrays.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,8 +78,25 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">YSC2229 Lecture Notes, Week 02</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-02a_arrays.html">Arrays and Operations on Them</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Insertion Sort on Arrays</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tracing-insertion-sort">Tracing Insertion Sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#insertion-sort-invariants">Insertion Sort Invariants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#termination-of-insertion-sort">Termination of Insertion Sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-1">Exercise 1</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-02a_selection_sort.html">Selection Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02a_exercises.html">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_complexity.html">Complexity of Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_notation.html">Order Notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_sums.html">Sums of Series and Complexities of Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_exercises.html">Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -123,6 +142,8 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
+          <li><a href="YSC2229-lecture-notes-week-02.html">YSC2229 Lecture Notes, Week 02</a> &raquo;</li>
+        
       <li>Insertion Sort on Arrays</li>
     
     
@@ -144,7 +165,207 @@
             
   <div class="section" id="insertion-sort-on-arrays">
 <h1>Insertion Sort on Arrays<a class="headerlink" href="#insertion-sort-on-arrays" title="Permalink to this headline">¶</a></h1>
-<p>TODO</p>
+<p>Previously, we have studied insertion sort and its invariants on
+lists. Let us now use the same idea to sort an array. Since adding an
+element into an array prefix is more difficult than it would be for
+lists, we are going to implement the sorting a bit differently:
+namely, <em>swapping</em>, right-to-left, the elements of each prefix (taken
+from the beginning of the array increasingly), until it becomes
+sorted:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert_sort</span> <span class="n">arr</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">i</span> <span class="k">in</span>
+    <span class="k">while</span> <span class="o">!</span><span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">arr</span><span class="o">.(!</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">.(!</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="k">do</span>
+      <span class="n">swap</span> <span class="n">arr</span> <span class="o">!</span><span class="n">j</span> <span class="o">(!</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+      <span class="n">j</span> <span class="o">:=</span> <span class="o">!</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">done</span>
+  <span class="k">done</span>
+</pre></div>
+</div>
+<p>We can now sort our array (notice that the operation does not return a
+new array, but rather modifies an old one):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">a1</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="kt">array</span> <span class="o">=</span> <span class="o">[|</span><span class="mi">6</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span><span class="o">|]</span>
+<span class="o">#</span> <span class="n">insert_sort</span> <span class="n">a1</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
+<span class="o">#</span> <span class="n">a1</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="kt">array</span> <span class="o">=</span> <span class="o">[|</span><span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">8</span><span class="o">|]</span>
+</pre></div>
+</div>
+<div class="section" id="tracing-insertion-sort">
+<h2>Tracing Insertion Sort<a class="headerlink" href="#tracing-insertion-sort" title="Permalink to this headline">¶</a></h2>
+<p>Why does insertion sort implemented this way works? An answer to that
+could be obtained via suitable invariants. But before we discover
+them, it might be a good idea to study what does the algorithm do,
+step by step. We are going to do that by instrumenting the code as
+follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* A function unit -&gt; unit that prints two spaces *)</span>
+<span class="k">let</span> <span class="n">print_offset</span> <span class="o">_</span> <span class="o">=</span> <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&quot;  &quot;</span>
+
+<span class="k">let</span> <span class="n">insert_sort_print</span> <span class="n">arr</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="n">print_int_sub_array</span> <span class="mi">0</span> <span class="n">i</span> <span class="n">arr</span><span class="o">;</span>
+    <span class="n">print_int_sub_array</span> <span class="n">i</span> <span class="n">len</span> <span class="n">arr</span><span class="o">;</span>
+    <span class="n">print_newline</span> <span class="bp">()</span><span class="o">;</span>
+
+   <span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">i</span> <span class="k">in</span>
+    <span class="k">while</span> <span class="o">!</span><span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">arr</span><span class="o">.(!</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">.(!</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="k">do</span>
+      <span class="n">print_offset</span> <span class="bp">()</span><span class="o">;</span>
+      <span class="n">print_int_sub_array</span> <span class="mi">0</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">arr</span><span class="o">;</span>
+      <span class="n">print_int_sub_array</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">len</span> <span class="n">arr</span><span class="o">;</span>
+      <span class="n">print_newline</span> <span class="bp">()</span><span class="o">;</span>
+
+      <span class="n">swap</span> <span class="n">arr</span> <span class="o">!</span><span class="n">j</span> <span class="o">(!</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+      <span class="n">j</span> <span class="o">:=</span> <span class="o">!</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="k">done</span><span class="o">;</span>
+
+    <span class="n">print_int_sub_array</span> <span class="mi">0</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">arr</span><span class="o">;</span>
+    <span class="o">*</span> <span class="n">print_int_sub_array</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">len</span> <span class="n">arr</span><span class="o">;</span>
+    <span class="n">print_newline</span> <span class="bp">()</span><span class="o">;</span> <span class="n">print_newline</span> <span class="bp">()</span>
+<span class="k">done</span>
+</pre></div>
+</div>
+<p>That is, we print the array, divided via the current index <code class="docutils literal notranslate"><span class="pre">i</span></code>, at
+the beginning and at the end of each top-level iteration (at the end,
+the index is incremented, as it would be at the beginning of the next
+iteration or after the loop). In th inner loop, we pring the
+intermediate arrays. Notice that <code class="docutils literal notranslate"><span class="pre">print_int_sub_array</span> <span class="pre">l</span> <span class="pre">u</span> <span class="pre">arr</span></code> does
+not print the element <code class="docutils literal notranslate"><span class="pre">arr.(u)</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">insert_sort_print</span> <span class="n">a1</span><span class="o">;;</span>
+<span class="o">[|</span>  <span class="o">|]</span> <span class="o">[|</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+<span class="o">[|</span> <span class="mi">6</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+
+<span class="o">[|</span> <span class="mi">6</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+<span class="o">[|</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+
+<span class="o">[|</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+  <span class="o">[|</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">5</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+  <span class="o">[|</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+<span class="o">[|</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+
+<span class="o">[|</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+  <span class="o">[|</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">2</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+  <span class="o">[|</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+  <span class="o">[|</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+<span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+
+<span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+  <span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">3</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+  <span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+  <span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+<span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+
+<span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+  <span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">7</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">0</span> <span class="o">|]</span>
+<span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">0</span> <span class="o">|]</span>
+
+<span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">0</span> <span class="o">|]</span>
+  <span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span> <span class="o">[|</span>  <span class="o">|]</span>
+  <span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span>  <span class="o">|]</span>
+  <span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span>  <span class="o">|]</span>
+  <span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span>  <span class="o">|]</span>
+  <span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span>  <span class="o">|]</span>
+  <span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span>  <span class="o">|]</span>
+<span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span>  <span class="o">|]</span>
+
+<span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="insertion-sort-invariants">
+<h2>Insertion Sort Invariants<a class="headerlink" href="#insertion-sort-invariants" title="Permalink to this headline">¶</a></h2>
+<p>From the trace above, we can see that at the beginning and the end of
+each top-level iteration, the prefix <code class="docutils literal notranslate"><span class="pre">arr.(0)</span> <span class="pre">..</span> <span class="pre">arr.(i)</span></code> is sorted.
+Furthermore, from the intermediate steps of the inner loop, we can see
+that in each iteration the new element “crawls” from the end towards
+the beginning, until it finds its position in the sorted prefix.</p>
+<p>Importantly, at each iteration of the inner loop, the element at the
+position <code class="docutils literal notranslate"><span class="pre">j</span></code> is the smallest element of the prefix’s suffix, i.e.,
+<code class="docutils literal notranslate"><span class="pre">arr.(!j)</span> <span class="pre">..</span> <span class="pre">arr.(i)</span></code>. We can capture that via the following
+definitions, which check that a sub-array of array is indeed sorted:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">array_to_list</span> <span class="n">l</span> <span class="n">u</span> <span class="n">arr</span> <span class="o">=</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">l</span> <span class="o">&lt;=</span> <span class="n">u</span><span class="o">);</span>
+  <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">ref</span> <span class="bp">[]</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">i</span> <span class="o">=</span> <span class="n">ref</span> <span class="o">(</span><span class="n">u</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">while</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="o">!</span><span class="n">i</span> <span class="k">do</span>
+    <span class="n">res</span> <span class="o">:=</span> <span class="n">arr</span><span class="o">.(!</span><span class="n">i</span><span class="o">)</span> <span class="o">::</span> <span class="o">!</span><span class="n">res</span><span class="o">;</span>
+    <span class="n">i</span> <span class="o">:=</span> <span class="o">!</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="o">!</span><span class="n">res</span>
+
+<span class="k">let</span> <span class="k">rec</span> <span class="n">sorted</span> <span class="n">ls</span> <span class="o">=</span>
+  <span class="k">match</span> <span class="n">ls</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="bp">true</span>
+  <span class="o">|</span> <span class="n">h</span> <span class="o">::</span> <span class="n">t</span> <span class="o">-&gt;</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span> <span class="n">e</span> <span class="o">&gt;=</span> <span class="n">h</span><span class="o">)</span> <span class="n">t</span> <span class="o">&amp;&amp;</span> <span class="n">sorted</span> <span class="n">t</span>
+
+<span class="k">let</span> <span class="n">sub_array_sorted</span> <span class="n">l</span> <span class="n">u</span> <span class="n">arr</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">ls</span> <span class="o">=</span> <span class="n">array_to_list</span> <span class="n">l</span> <span class="n">u</span> <span class="n">arr</span> <span class="k">in</span>
+  <span class="n">sorted</span> <span class="n">ls</span>
+
+<span class="k">let</span> <span class="n">array_sorted</span> <span class="n">arr</span> <span class="o">=</span>
+  <span class="n">sub_array_sorted</span> <span class="mi">0</span> <span class="o">(</span><span class="nn">Array</span><span class="p">.</span><span class="n">length</span>  <span class="n">arr</span><span class="o">)</span> <span class="n">arr</span>
+</pre></div>
+</div>
+<p>The following functions check that an elemen <code class="docutils literal notranslate"><span class="pre">min</span></code> is a minimum with
+resepct to a particular sub-array:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">is_min</span> <span class="n">ls</span> <span class="n">min</span> <span class="o">=</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span> <span class="n">min</span> <span class="o">&lt;=</span> <span class="n">e</span><span class="o">)</span> <span class="n">ls</span>
+
+<span class="k">let</span> <span class="n">is_min_sub_array</span> <span class="n">l</span> <span class="n">u</span> <span class="n">arr</span> <span class="n">min</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">ls</span> <span class="o">=</span> <span class="n">array_to_list</span> <span class="n">l</span> <span class="n">u</span> <span class="n">arr</span> <span class="k">in</span>
+  <span class="n">is_min</span> <span class="n">ls</span> <span class="n">min</span>
+</pre></div>
+</div>
+<p>We can now state the invariants:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert_sort_inner_loop_inv</span> <span class="n">j</span> <span class="n">i</span> <span class="n">arr</span> <span class="o">=</span>
+  <span class="n">is_min_sub_array</span> <span class="o">!</span><span class="n">j</span> <span class="n">i</span> <span class="n">arr</span> <span class="n">arr</span><span class="o">.(!</span><span class="n">j</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+  <span class="n">sub_array_sorted</span> <span class="mi">0</span> <span class="o">!</span><span class="n">j</span> <span class="n">arr</span> <span class="o">&amp;&amp;</span>
+  <span class="n">sub_array_sorted</span> <span class="o">(!</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">arr</span>
+
+<span class="k">let</span> <span class="n">insert_sort_outer_loop_inv</span> <span class="n">i</span> <span class="n">arr</span> <span class="o">=</span>
+  <span class="n">sub_array_sorted</span> <span class="mi">0</span> <span class="n">i</span> <span class="n">arr</span>
+</pre></div>
+</div>
+<p>and write the invariant-annotated version of the sorting:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert_sort_inv</span> <span class="n">arr</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">assert</span> <span class="o">(</span><span class="n">insert_sort_outer_loop_inv</span> <span class="n">i</span> <span class="n">arr</span><span class="o">);</span>
+    <span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">i</span> <span class="k">in</span>
+    <span class="k">while</span> <span class="o">!</span><span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">arr</span><span class="o">.(!</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">.(!</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="k">do</span>
+      <span class="k">assert</span> <span class="o">(</span><span class="n">insert_sort_inner_loop_inv</span> <span class="n">j</span> <span class="n">i</span> <span class="n">arr</span><span class="o">);</span>
+      <span class="n">swap</span> <span class="n">arr</span> <span class="o">!</span><span class="n">j</span> <span class="o">(!</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+      <span class="n">j</span> <span class="o">:=</span> <span class="o">!</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+      <span class="k">assert</span> <span class="o">(</span><span class="n">insert_sort_inner_loop_inv</span> <span class="n">j</span> <span class="n">i</span> <span class="n">arr</span><span class="o">);</span>
+    <span class="k">done</span><span class="o">;</span>
+    <span class="k">assert</span> <span class="o">(</span><span class="n">insert_sort_outer_loop_inv</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">arr</span><span class="o">)</span>
+  <span class="k">done</span>
+</pre></div>
+</div>
+<p>Notice that at the end of the inner loop, the three conjuncts of
+<code class="docutils literal notranslate"><span class="pre">insert_sort_inner_loop_inv</span></code> together imply that the entire prefix
+<code class="docutils literal notranslate"><span class="pre">arr.(0)</span> <span class="pre">...</span> <span class="pre">arr.(i)</span></code> is sorted, i.e., the new element is correctly
+positioned within it.</p>
+</div>
+<div class="section" id="termination-of-insertion-sort">
+<h2>Termination of Insertion Sort<a class="headerlink" href="#termination-of-insertion-sort" title="Permalink to this headline">¶</a></h2>
+<p>It is not difficult to prove that insertion sort terminates: its outer
+loop is an iteration, bounded by <code class="docutils literal notranslate"><span class="pre">len</span> <span class="pre">-</span> <span class="pre">1</span></code>. Its inner loop’s
+termination measure (variant) is <code class="docutils literal notranslate"><span class="pre">j</span></code>, so the loop terminates when
+<code class="docutils literal notranslate"><span class="pre">j</span></code> reaches 0.</p>
+</div>
+<div class="section" id="exercise-1">
+<span id="exercise-insert-sort-backwards"></span><h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<p>Implement a version of insertion sort for arrays called
+<code class="docutils literal notranslate"><span class="pre">insert_sort_backwards</span></code>, so that its outer loop would be starting
+not from the beginning (i.e., index 0), but from the end of an array
+(i.e., <code class="docutils literal notranslate"><span class="pre">(Array.length</span> <span class="pre">arr)</span> <span class="pre">-</span> <span class="pre">1</span></code>). Encode and check the invariants
+for this versionm and explain how the inner loop invariant, upon the
+loop’s termination, implies the outer loop’s invariant.</p>
+</div>
 </div>
 
 
@@ -152,6 +373,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-02a_selection_sort.html" class="btn btn-neutral float-right" title="Selection Sort" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-02a_arrays.html" class="btn btn-neutral" title="Arrays and Operations on Them" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

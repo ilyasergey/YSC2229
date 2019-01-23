@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Exercises" href="week-02a_exercises.html" />
+    <link rel="prev" title="Insertion Sort on Arrays" href="week-02a_insert_sort.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,8 +78,28 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">YSC2229 Lecture Notes, Week 02</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-02a_arrays.html">Arrays and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02a_insert_sort.html">Insertion Sort on Arrays</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Selection Sort</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tracing-selection-sort">Tracing Selection Sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#invariants-of-selection-sort">Invariants of Selection Sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#termination-of-selection-sort">Termination of Selection Sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-2">Exercise 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-3">Exercise 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-4">Exercise 4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-5">Exercise 5</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-02a_exercises.html">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_complexity.html">Complexity of Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_notation.html">Order Notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_sums.html">Sums of Series and Complexities of Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_exercises.html">Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -123,6 +145,8 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
+          <li><a href="YSC2229-lecture-notes-week-02.html">YSC2229 Lecture Notes, Week 02</a> &raquo;</li>
+        
       <li>Selection Sort</li>
     
     
@@ -144,7 +168,213 @@
             
   <div class="section" id="selection-sort">
 <h1>Selection Sort<a class="headerlink" href="#selection-sort" title="Permalink to this headline">¶</a></h1>
-<p>TODO</p>
+<p>Selection sort is another sorting algorithm based on finding a minimum
+in an array. Unlike insertion sort, which locates each new element in
+an already sorted prefix, selection sort obtains the sorted prefix by
+“extending” it, at each iteration, with a minimum of a not-yet sorted
+suffix of the array:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">select_sort</span> <span class="n">arr</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="k">to</span> <span class="n">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+      <span class="k">if</span> <span class="n">arr</span><span class="o">.(</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span>
+      <span class="k">then</span> <span class="n">swap</span> <span class="n">arr</span> <span class="n">i</span> <span class="n">j</span>
+      <span class="k">else</span> <span class="bp">()</span>
+    <span class="k">done</span>
+  <span class="k">done</span>
+</pre></div>
+</div>
+<div class="section" id="tracing-selection-sort">
+<h2>Tracing Selection Sort<a class="headerlink" href="#tracing-selection-sort" title="Permalink to this headline">¶</a></h2>
+<p>Let us print intermediate stages of the selection sort as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">select_sort_print</span> <span class="n">arr</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="n">print_int_sub_array</span> <span class="mi">0</span> <span class="n">i</span> <span class="n">arr</span><span class="o">;</span>
+    <span class="n">print_int_sub_array</span> <span class="n">i</span> <span class="n">len</span> <span class="n">arr</span><span class="o">;</span>
+    <span class="n">print_newline</span> <span class="bp">()</span><span class="o">;</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="k">to</span> <span class="n">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+      <span class="n">print_offset</span> <span class="bp">()</span><span class="o">;</span>
+      <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&quot;j = %d, a[j] = %d, a[i] = %d: &quot;</span> <span class="n">j</span> <span class="n">arr</span><span class="o">.(</span><span class="n">j</span><span class="o">)</span> <span class="n">arr</span><span class="o">.(</span><span class="n">i</span><span class="o">);</span>
+      <span class="n">print_int_sub_array</span> <span class="mi">0</span> <span class="n">i</span> <span class="n">arr</span><span class="o">;</span>
+      <span class="n">print_int_sub_array</span> <span class="n">i</span> <span class="n">len</span> <span class="n">arr</span><span class="o">;</span>
+      <span class="n">print_newline</span> <span class="bp">()</span><span class="o">;</span>
+
+      <span class="k">if</span> <span class="n">arr</span><span class="o">.(</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span>
+      <span class="k">then</span> <span class="n">swap</span> <span class="n">arr</span> <span class="n">i</span> <span class="n">j</span>
+      <span class="k">else</span> <span class="bp">()</span>
+    <span class="k">done</span><span class="o">;</span>
+
+    <span class="n">print_int_sub_array</span> <span class="mi">0</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">arr</span><span class="o">;</span>
+    <span class="n">print_int_sub_array</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">len</span> <span class="n">arr</span><span class="o">;</span>
+    <span class="n">print_newline</span> <span class="bp">()</span><span class="o">;</span> <span class="n">print_newline</span> <span class="bp">()</span><span class="o">;</span>
+  <span class="k">done</span>
+</pre></div>
+</div>
+<p>This results in the following output:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">select_sort_print</span> <span class="n">a1</span><span class="o">;;</span>
+<span class="o">[|</span>  <span class="o">|]</span> <span class="o">[|</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">6</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">6</span><span class="o">:</span> <span class="o">[|</span>  <span class="o">|]</span> <span class="o">[|</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">6</span><span class="o">:</span> <span class="o">[|</span>  <span class="o">|]</span> <span class="o">[|</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">2</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">5</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">6</span><span class="o">:</span> <span class="o">[|</span>  <span class="o">|]</span> <span class="o">[|</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">3</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">2</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">5</span><span class="o">:</span> <span class="o">[|</span>  <span class="o">|]</span> <span class="o">[|</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">4</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">3</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">2</span><span class="o">:</span> <span class="o">[|</span>  <span class="o">|]</span> <span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">5</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">7</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">2</span><span class="o">:</span> <span class="o">[|</span>  <span class="o">|]</span> <span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">6</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">2</span><span class="o">:</span> <span class="o">[|</span>  <span class="o">|]</span> <span class="o">[|</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span>
+<span class="o">[|</span> <span class="mi">0</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">2</span> <span class="o">|]</span>
+
+<span class="o">[|</span> <span class="mi">0</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">2</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">2</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">2</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">6</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">2</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">3</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">5</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">6</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">2</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">4</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">3</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">5</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">2</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">5</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">7</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">3</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">2</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">6</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">2</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">3</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">2</span> <span class="o">|]</span>
+<span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">3</span> <span class="o">|]</span>
+
+<span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">3</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">2</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">3</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">3</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">6</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">3</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">4</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">5</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">6</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">3</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">5</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">7</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">5</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">3</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">6</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">3</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">5</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">3</span> <span class="o">|]</span>
+<span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">5</span> <span class="o">|]</span>
+
+<span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">5</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">3</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">5</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">4</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">6</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">5</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">5</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">7</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">6</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">5</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">6</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">5</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">6</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">5</span> <span class="o">|]</span>
+<span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">6</span> <span class="o">|]</span>
+
+<span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">6</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">4</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">6</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">5</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">7</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">6</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">6</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">6</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">7</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">6</span> <span class="o">|]</span>
+<span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">7</span> <span class="o">|]</span>
+
+<span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">7</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">5</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">7</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">6</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">7</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">7</span> <span class="o">|]</span>
+<span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span> <span class="o">|]</span>
+
+<span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span> <span class="o">|]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="mi">6</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">,</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">8</span><span class="o">:</span> <span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span> <span class="o">|]</span> <span class="o">[|</span> <span class="mi">8</span> <span class="o">|]</span>
+<span class="o">[|</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">8</span> <span class="o">|]</span> <span class="o">[|</span>  <span class="o">|]</span>
+
+<span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
+</pre></div>
+</div>
+<p>Notice that at each iteration of the inner loop, a new minimum of the
+remaining suffix is identified and at the end this is what becomes and
+“extension” of the currently growing prefix: <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">3</span></code>,
+<code class="docutils literal notranslate"><span class="pre">5</span></code>, etc. During the inner iteration, we look for minimum in the
+same way we were looking for a minimum in a list. All elements in the
+non-sorted suffix are larger or equal than elements in the prefix. The
+current element <code class="docutils literal notranslate"><span class="pre">arr.(i)</span></code> is, thus a minimum of the
+prefix-of-the-suffix of the array, yet it’s larger than any element in
+the prefix.</p>
+</div>
+<div class="section" id="invariants-of-selection-sort">
+<h2>Invariants of Selection Sort<a class="headerlink" href="#invariants-of-selection-sort" title="Permalink to this headline">¶</a></h2>
+<p>The observed above intuition can be captured by the following
+invariants:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">suffix_larger_than_prefix</span> <span class="n">i</span> <span class="n">arr</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">prefix</span> <span class="o">=</span> <span class="n">array_to_list</span> <span class="mi">0</span> <span class="n">i</span> <span class="n">arr</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">suffix</span> <span class="o">=</span> <span class="n">array_to_list</span> <span class="n">i</span> <span class="n">len</span> <span class="n">arr</span> <span class="k">in</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span>
+      <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">f</span> <span class="o">-&gt;</span> <span class="n">e</span> <span class="o">&lt;=</span> <span class="n">f</span><span class="o">)</span>  <span class="n">suffix</span>
+    <span class="o">)</span> <span class="n">prefix</span>
+
+<span class="k">let</span> <span class="n">select_sort_outer_inv</span> <span class="n">i</span> <span class="n">arr</span> <span class="o">=</span>
+  <span class="n">sub_array_sorted</span> <span class="mi">0</span> <span class="n">i</span> <span class="n">arr</span> <span class="o">&amp;&amp;</span>
+  <span class="n">suffix_larger_than_prefix</span> <span class="n">i</span> <span class="n">arr</span>
+
+<span class="k">let</span> <span class="n">select_sort_inner_inv</span> <span class="n">j</span> <span class="n">i</span> <span class="n">arr</span> <span class="o">=</span>
+  <span class="n">is_min_sub_array</span> <span class="n">i</span> <span class="n">j</span> <span class="n">arr</span> <span class="n">arr</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+  <span class="n">sub_array_sorted</span> <span class="mi">0</span> <span class="n">i</span> <span class="n">arr</span> <span class="o">&amp;&amp;</span>
+  <span class="n">suffix_larger_than_prefix</span> <span class="n">i</span> <span class="n">arr</span>
+</pre></div>
+</div>
+<p>leading to the following annotated version:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">select_sort_inv</span> <span class="n">arr</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">assert</span> <span class="o">(</span><span class="n">select_sort_outer_inv</span> <span class="n">i</span> <span class="n">arr</span><span class="o">);</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="k">to</span> <span class="n">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+      <span class="k">assert</span> <span class="o">(</span><span class="n">select_sort_inner_inv</span> <span class="n">j</span> <span class="n">i</span> <span class="n">arr</span><span class="o">);</span>
+      <span class="k">if</span> <span class="n">arr</span><span class="o">.(</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span>
+      <span class="k">then</span> <span class="n">swap</span> <span class="n">arr</span> <span class="n">i</span> <span class="n">j</span>
+      <span class="k">else</span> <span class="bp">()</span><span class="o">;</span>
+      <span class="k">assert</span> <span class="o">(</span><span class="n">select_sort_inner_inv</span> <span class="o">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">i</span> <span class="n">arr</span><span class="o">);</span>
+    <span class="k">done</span><span class="o">;</span>
+    <span class="k">assert</span> <span class="o">(</span><span class="n">select_sort_outer_inv</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">arr</span><span class="o">);</span>
+  <span class="k">done</span>
+</pre></div>
+</div>
+<p>Notice that the inner invariant, when <code class="docutils literal notranslate"><span class="pre">j</span></code> becomes <code class="docutils literal notranslate"><span class="pre">len</span></code> (i.e.,
+right before the end of the last iteration), implies that the found
+element <code class="docutils literal notranslate"><span class="pre">arr.(i)</span></code> is the global minimum of the suffix (which is all
+larger than prefix), and, hence the sorted prefix can be extended with
+this element, while remaining sorted.</p>
+</div>
+<div class="section" id="termination-of-selection-sort">
+<h2>Termination of Selection Sort<a class="headerlink" href="#termination-of-selection-sort" title="Permalink to this headline">¶</a></h2>
+<p>the algorithm terminates, as both loops in it, inner and outer are
+bounded and iterate over finite sub-arrays of a given array.</p>
+</div>
+<div class="section" id="exercise-2">
+<span id="exercise-selection-max"></span><h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<p>Rewrite selection sort, so it would walk the array right-to-left,
+looking for a maximum rather than a minimum for a currently
+unprocessed sub-array, while sorting the overall array in an ascending
+order. Write the invariants for this version and explain how the inner
+loop invariant, upon the loop’s termination, implies the outer loop’s
+invariant.</p>
+</div>
+<div class="section" id="exercise-3">
+<span id="exercise-generalised-sort"></span><h2>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<p>Generalise either insertion or selection sort to take an array of
+arbitrary type <code class="docutils literal notranslate"><span class="pre">'a</span> <span class="pre">array</span></code> and comparator <code class="docutils literal notranslate"><span class="pre">less_than</span></code> of type <code class="docutils literal notranslate"><span class="pre">'a</span>
+<span class="pre">-&gt;</span> <span class="pre">'a</span> <span class="pre">-&gt;</span> <span class="pre">bool</span></code>, and return an array sorted in an ascending order
+according to this comparator. Test your implementation by sorting an
+array of lists by length.</p>
+</div>
+<div class="section" id="exercise-4">
+<span id="exercise-comparison-order"></span><h2>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Which sorting method executes less primitive operations, such as
+swapping and comparing array elements, for an array in reverse
+order, selection sort or insertion sort?</li>
+<li>Which method runs faster on a fully sorted array?</li>
+</ul>
+<p>Conduct experiments and justify your answer by explaining the
+mechanics of the algorithms.</p>
+</div>
+<div class="section" id="exercise-5">
+<span id="exercise-bubble-sort"></span><h2>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
+<p>Bubble Sort is a popular, but inefficient, sorting algorithm, similar
+to selection sort. Instead of selecting a new minimum, it works by
+repeatedly swapping adjacent elements in the suffix that are out of
+order. In <em>pseudocode</em> it is implemented as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="nc">BubbleSort</span> <span class="o">(</span><span class="nc">A</span><span class="o">):</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">to</span> <span class="nn">A</span><span class="p">.</span><span class="n">length</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="nc">A</span> <span class="k">downto</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+      <span class="k">if</span> <span class="nc">A</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">&lt;</span> <span class="nc">A</span><span class="o">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]</span>
+        <span class="n">swap</span> <span class="nc">A</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="ow">and</span> <span class="nc">A</span><span class="o">[</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Implement the algorithm in OCaml using <code class="docutils literal notranslate"><span class="pre">for-to</span></code> and <code class="docutils literal notranslate"><span class="pre">for-downto</span></code>
+constructs.</li>
+<li>Implement tracing for it.</li>
+<li>State the inner and the outer loop invariants. Explain in text how
+the inner invariant, upon finishing the inner loop, implies the
+invariant of the outer loop.</li>
+</ul>
+</div>
 </div>
 
 
@@ -152,6 +382,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-02a_exercises.html" class="btn btn-neutral float-right" title="Exercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-02a_insert_sort.html" class="btn btn-neutral" title="Insertion Sort on Arrays" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

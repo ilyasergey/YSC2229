@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Introductory Data Structures and Algorithms (YSC2229) &mdash; YSC2229 2019</title>
+  <title>Exercises &mdash; YSC2229 2019</title>
   
 
   
@@ -28,7 +28,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="YSC2229 Lecture Notes, Week 01" href="YSC2229-lecture-notes-week-01.html" /> 
+    <link rel="next" title="Complexity of Algorithms" href="week-02b_complexity.html" />
+    <link rel="prev" title="Selection Sort" href="week-02a_selection_sort.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -47,7 +48,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
           
 
           
@@ -77,9 +78,23 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">YSC2229 Lecture Notes, Week 01</a></li>
-<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">YSC2229 Lecture Notes, Week 02</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-02a_arrays.html">Arrays and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02a_insert_sort.html">Insertion Sort on Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02a_selection_sort.html">Selection Sort</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Exercises</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mandatory-exercises">Mandatory exercises</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#recommended-exercises">Recommended exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_complexity.html">Complexity of Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_notation.html">Order Notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_sums.html">Sums of Series and Complexities of Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_exercises.html">Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -94,7 +109,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">YSC2229: Introductory Data Structures and Algorithms</a>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
         
       </nav>
 
@@ -123,15 +138,17 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#">Docs</a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Introductory Data Structures and Algorithms (YSC2229)</li>
+          <li><a href="YSC2229-lecture-notes-week-02.html">YSC2229 Lecture Notes, Week 02</a> &raquo;</li>
+        
+      <li>Exercises</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/week-02a_exercises.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -144,30 +161,26 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="introductory-data-structures-and-algorithms-ysc2229">
-<h1>Introductory Data Structures and Algorithms (YSC2229)<a class="headerlink" href="#introductory-data-structures-and-algorithms-ysc2229" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">YSC2229 Lecture Notes, Week 01</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-01a_intro.html">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01a_exercises.html">Exercises</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01b_correctness.html">Correctness of Recursive Algorithms</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01b_loops.html">From Recursion to Imperative Loops</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01b_insert_sort.html">Sorting Lists via Insertion Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01b_exercises.html">Exercises</a></li>
+  <div class="section" id="exercises">
+<h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="mandatory-exercises">
+<h2>Mandatory exercises<a class="headerlink" href="#mandatory-exercises" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="week-02a_insert_sort.html#exercise-insert-sort-backwards"><span class="std std-ref">Exercise 1</span></a>:
+Backwards insertion sort.</li>
+<li><a class="reference internal" href="week-02a_selection_sort.html#exercise-comparison-order"><span class="std std-ref">Exercise 4</span></a>:
+Comparison of insertion sort and selection sort.</li>
+<li><a class="reference internal" href="week-02a_selection_sort.html#exercise-bubble-sort"><span class="std std-ref">Exercise 5</span></a>:
+Bubble sort: implementation and analysis.</li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">YSC2229 Lecture Notes, Week 02</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-02a_arrays.html">Arrays and Operations on Them</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02a_insert_sort.html">Insertion Sort on Arrays</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02a_selection_sort.html">Selection Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02a_exercises.html">Exercises</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02b_complexity.html">Complexity of Algorithms</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02b_notation.html">Order Notation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02b_sums.html">Sums of Series and Complexities of Loops</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02b_exercises.html">Exercises</a></li>
-</ul>
-</li>
+</div>
+<div class="section" id="recommended-exercises">
+<h2>Recommended exercises<a class="headerlink" href="#recommended-exercises" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="week-02a_selection_sort.html#exercise-selection-max"><span class="std std-ref">Exercise 2</span></a>:
+Backwards selection-sort with a maximum.</li>
+<li><a class="reference internal" href="week-02a_selection_sort.html#exercise-generalised-sort"><span class="std std-ref">Exercise 3</span></a>:
+Generalised sorting.</li>
 </ul>
 </div>
 </div>
@@ -180,8 +193,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="YSC2229-lecture-notes-week-01.html" class="btn btn-neutral float-right" title="YSC2229 Lecture Notes, Week 01" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="week-02b_complexity.html" class="btn btn-neutral float-right" title="Complexity of Algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
+      
+        <a href="week-02a_selection_sort.html" class="btn btn-neutral" title="Selection Sort" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

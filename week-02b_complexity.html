@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Order Notation" href="week-02b_notation.html" />
+    <link rel="prev" title="Exercises" href="week-02a_exercises.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,8 +78,19 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">YSC2229 Lecture Notes, Week 02</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-02a_arrays.html">Arrays and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02a_insert_sort.html">Insertion Sort on Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02a_selection_sort.html">Selection Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02a_exercises.html">Exercises</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Complexity of Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_notation.html">Order Notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_sums.html">Sums of Series and Complexities of Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_exercises.html">Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -123,6 +136,8 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
+          <li><a href="YSC2229-lecture-notes-week-02.html">YSC2229 Lecture Notes, Week 02</a> &raquo;</li>
+        
       <li>Complexity of Algorithms</li>
     
     
@@ -144,27 +159,32 @@
             
   <div class="section" id="complexity-of-algorithms">
 <h1>Complexity of Algorithms<a class="headerlink" href="#complexity-of-algorithms" title="Permalink to this headline">¶</a></h1>
+<p>Having experimented with different implementations of computing a
+determinant of a matrix, via Laplace expansion of LU-decomposition, we
+have observed that the performance in the former case is significantly
+worse than in the latter one, roughy illustrated by the plots above:</p>
 <a class="reference internal image-reference" href="_images/plots.jpg"><img alt="_images/plots.jpg" class="align-center" src="_images/plots.jpg" style="width: 820px;" /></a>
-<div class="section" id="why-estimate-complexity-theoretically">
-<h2>Why estimate complexity theoretically?<a class="headerlink" href="#why-estimate-complexity-theoretically" title="Permalink to this headline">¶</a></h2>
-<p><em>Trying some math:</em></p>
-<p>If <span class="math notranslate nohighlight">\(\sigma_{1}\)</span> equals <span class="math notranslate nohighlight">\(\sigma_{2}\)</span> then etc, etc.</p>
-<div class="math notranslate nohighlight">
-\[\langle \alpha, \beta  \rangle
-\in
-\Biggl \lbrace
-{
-M,\text{ if }
-{
-l(\underline{x}) =
-      \frac { p(\underline{x}|M ) } { p(\underline{x}|U) }
-      \geq
-       \frac { p(U) }{ p(M) } }
-\atop
-U, \text{ otherwise }
-}\]</div>
-<p>[The rest is coming soon.]</p>
-</div>
+<p>While the absolute execution time might differ depending on the
+performance of the computer that executes the program, what is
+important is how quickly the performance deteriorates, as we increase
+the size of the input (i.e., the rank of the matrix, in this case).</p>
+<p>Our goal is, thus, to estimate how slow/fast are our algorithms (i.e.,
+what is their time demand). For this, we will use (mathematical
+functions* of the input size to describe time demand of a specific
+algorithm. Specifically, we want to formulate time demand (aka
+<em>algorithmic complexity</em>) functions in a Machine-independent way,
+focusing on the asymptotic growth, rather than its exact values
+(different for each CPU).</p>
+<p>The machine-independent demand is characterised by the formal
+conventions, taken in order to make the reasoning uniform:</p>
+<ul class="simple">
+<li>Elementary operations take different time on various machines, but this difference does not matter for the relative time demand.</li>
+<li>A machine-independent measure of time is given by counting <em>elementary operations</em> (not their time). Examples of elementary operations include: addition, multiplication, AND, OR, comparisons,
+assignments.</li>
+<li>In some cases it is common to neglect “cheaper” elementary operations,
+focusing only on more “expensive” ones (e.g., multiplication beats
+addition).</li>
+</ul>
 </div>
 
 
@@ -172,6 +192,15 @@ U, \text{ otherwise }
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-02b_notation.html" class="btn btn-neutral float-right" title="Order Notation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-02a_exercises.html" class="btn btn-neutral" title="Exercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Exercises" href="week-02b_exercises.html" />
+    <link rel="prev" title="Order Notation" href="week-02b_notation.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,8 +78,29 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">YSC2229 Lecture Notes, Week 02</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-02a_arrays.html">Arrays and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02a_insert_sort.html">Insertion Sort on Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02a_selection_sort.html">Selection Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02a_exercises.html">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_complexity.html">Complexity of Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_notation.html">Order Notation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Sums of Series and Complexities of Loops</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#arithmetic-series">Arithmetic series</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#geometric-series">Geometric series</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#estimating-a-sum-by-an-integral">Estimating a sum by an integral</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#big-o-and-function-composition">Big O and function composition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#complexity-of-algorithms-with-loops">Complexity of algorithms with loops</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-10">Exercise 10</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-11">Exercise 11</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-12">Exercise 12</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_exercises.html">Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -123,6 +146,8 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
+          <li><a href="YSC2229-lecture-notes-week-02.html">YSC2229 Lecture Notes, Week 02</a> &raquo;</li>
+        
       <li>Sums of Series and Complexities of Loops</li>
     
     
@@ -144,7 +169,195 @@
             
   <div class="section" id="sums-of-series-and-complexities-of-loops">
 <h1>Sums of Series and Complexities of Loops<a class="headerlink" href="#sums-of-series-and-complexities-of-loops" title="Permalink to this headline">¶</a></h1>
-<p>Coming soon.</p>
+<p>So far we have seen the complexities of simple straight-line programs,
+taking the maximum of their asymptotic time demand, using the property
+of big-O with regard to the maximum. Unfortunately, this approach does
+not work if the number of steps an algorithm makes depends on the size
+of the input. In such cases, an algorithm typically features a loop,
+and the demand of a loop intuitively should be obtained as a sum of
+demands of its iterations.</p>
+<p>Consider, for instance, the following OCaml program that sums up
+elements of an array:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">0</span> <span class="k">in</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="n">sum</span> <span class="o">:=</span> <span class="o">!</span><span class="n">sum</span> <span class="o">+</span> <span class="n">arr</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span>
+<span class="k">done</span>
+<span class="o">!</span><span class="n">sum</span>
+</pre></div>
+</div>
+<p>Each individual summation has complexity <span class="math notranslate nohighlight">\(O(1)\)</span>. Why can’t we
+obtain the overall complexity to be <span class="math notranslate nohighlight">\(O(1)\)</span> if we just sum them
+using the rule of maximums (<span class="math notranslate nohighlight">\(\max(O(1), \ldots, O(1)) = O(1)\)</span>)?</p>
+<p>The problem is similar to summing up a series of numbers in math:</p>
+<div class="math notranslate nohighlight">
+\[\underbrace{1 + 1 + \ldots + 1}_{k~\text{times}} = \sum_{i=1}^{k}1 = k\]</div>
+<p>but also</p>
+<div class="math notranslate nohighlight">
+\[\lim_{n \rightarrow \infty} \sum_{i=1}^{n}1 = \infty\]</div>
+<p>What in fact we need to estimate is how fast does this sum grow, as a
+function of its upper limit <span class="math notranslate nohighlight">\(n\)</span>, which corresponds the number
+of iterations:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i=1}^{n}1 = \underbrace{1 + 1 + \ldots + 1}_{n~\text{times}} =
+k \in O(n)\]</div>
+<p>By distributivity of the sums:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i=1}^{n} k = \underbrace{k + k + \ldots + k}_{n~\text{times}} =
+n \times k \in O(n)\]</div>
+<p>In general, such sums are referred as <em>series</em> in mathematics and have
+the standard notation as follows:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i= a}^{b} f(i)= f(a) + f(a + 1) + \ldots + f(b)\]</div>
+<p>where <span class="math notranslate nohighlight">\(a\)</span> is called the lower limit, and <span class="math notranslate nohighlight">\(b\)</span> is the upper
+limit. The whole sum is <span class="math notranslate nohighlight">\(0\)</span> if <span class="math notranslate nohighlight">\(a &lt; b\)</span>.</p>
+<div class="section" id="arithmetic-series">
+<h2>Arithmetic series<a class="headerlink" href="#arithmetic-series" title="Permalink to this headline">¶</a></h2>
+<p>Arithmetic series are the series of the form <span class="math notranslate nohighlight">\(\sum_{i=a}^{b}i\)</span>.
+Following the example of Gauss, one can notice that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+ 2 \times \sum_{i=1}^{n} i &amp;= 1 + 2 + \ldots + (n - 1) + n = \\
+ &amp;= n + (n - 1) + \ldots + 2 + 1  \\
+ &amp;= n \cdot (n + 1)
+\end{align*}\end{split}\]</div>
+<p>This gives us the formula for arithmetic series:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i=1}^{n}i = \frac{n \cdot (n + 1)}{2} \in O(n^2)\]</div>
+<p>Somewhat surprisingly, an arithmetic series starting at constant non-1
+lower bound has the same complexity:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i=j}^{n}i = \sum_{i=1}^{n}i - \sum_{i=1}^{j - 1}i
+= \frac{n \cdot (n + 1)}{2} - \frac{j \cdot (j - 1)}{2} \in O(n^2)\]</div>
+</div>
+<div class="section" id="geometric-series">
+<h2>Geometric series<a class="headerlink" href="#geometric-series" title="Permalink to this headline">¶</a></h2>
+<p>Geometric series are defined as series of exponents:</p>
+<div class="math notranslate nohighlight">
+\[S(n) = a + a^2 + a^3 + \ldots + a^n = \sum_{i=1}{n}a^i\]</div>
+<p>Let us notice that</p>
+<div class="math notranslate nohighlight">
+\[\begin{align*}
+a \cdot S(n) &amp;= a^2 + a^3 + \ldots + a^{n + 1}
+&amp;= S(n) - a + a^{n+1}
+\end{align*}\]</div>
+<p>Therefore, for <span class="math notranslate nohighlight">\(a \neq 1\)</span></p>
+<div class="math notranslate nohighlight">
+\[S(n) = \frac{a (1 - a^n)}{1 - 1}\]</div>
+</div>
+<div class="section" id="estimating-a-sum-by-an-integral">
+<h2>Estimating a sum by an integral<a class="headerlink" href="#estimating-a-sum-by-an-integral" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes it is difficult to write an explicit expression for a sum.
+The following trick helps to estimate sums of values of monotonically
+growing functions:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i=1}^{n}f(i) \leq \int_{1}^{n+1} f(x) dx\]</div>
+<a class="reference internal image-reference" href="../resources/integral.png"><img alt="../resources/integral.png" class="align-center" src="../resources/integral.png" style="width: 600px;" /></a>
+<p><strong>Example</strong>: What is the complexity class of <span class="math notranslate nohighlight">\(\sum_{i=1}^{n}i^3\)</span>?</p>
+<p>We can obtain it as follows:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i=1}^{n}i^3 \leq \int_{1}^{n+1} x^3 dx =
+\left[\frac{x^4}{4}\right]_{1}^{n+1} = \frac{(n + 1)^4 - 1}{4} \in
+O(n^4)\]</div>
+</div>
+<div class="section" id="big-o-and-function-composition">
+<h2>Big O and function composition<a class="headerlink" href="#big-o-and-function-composition" title="Permalink to this headline">¶</a></h2>
+<p>Let us take <span class="math notranslate nohighlight">\(f_1(n) \in O(g_1(n))\)</span> and <span class="math notranslate nohighlight">\(f_2(n) \in
+O(g_2(n))\)</span>. Assuming <span class="math notranslate nohighlight">\(g_2(n)\)</span> grows monotonically, what would be
+the tight enough complexity class for <span class="math notranslate nohighlight">\(f_2(f_1(n))\)</span>?</p>
+<p>It’s tempting to say that it should be <span class="math notranslate nohighlight">\(g_2(g_2(n))\)</span>. However,
+recalls that by the definition of big O, <span class="math notranslate nohighlight">\(f_1(n) \leq c_1\cdot
+g_2(n)\)</span> and <span class="math notranslate nohighlight">\(f_2(n) \leq c_2\cdot g_2(n)\)</span> for <span class="math notranslate nohighlight">\(n \geq n_0\)</span>
+and some constants <span class="math notranslate nohighlight">\(c_1, c_2\)</span> and <span class="math notranslate nohighlight">\(n_0\)</span>.</p>
+<p>By monotonicity of <span class="math notranslate nohighlight">\(g2\)</span> we get</p>
+<div class="math notranslate nohighlight">
+\[f_2(f_1(n)) \leq c_2 \cdot g_2(f_1(n)) \leq c_2 \cdot g_2(c_1 \cdot
+g_1(n)).\]</div>
+<p>Therefore</p>
+<div class="math notranslate nohighlight">
+\[f_2(f_1(n)) \in O(g_2(c_1 \cdot g_1(n)))\]</div>
+<p>The implication of this is one should thread function composition with
+some care. Specifically, it is okay to drop <span class="math notranslate nohighlight">\(c_1\)</span> if <span class="math notranslate nohighlight">\(g_2\)</span>
+is a polynomial, logarithmic, or their composition, since:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+(c\cdot f(n))^k &amp;= c^k \cdot f(n)^k \in O(f(n)^k) \\
+\log(c\cdot f(n)) &amp;= \log c + \log(f(n)) \in O(\log(f(n))
+\end{align*}\end{split}\]</div>
+<p>However, this does not work more fast-growing functions <span class="math notranslate nohighlight">\(g_2(n)\)</span>,
+such as an exponent and factorial:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+k^{c\cdot f(n)} &amp;= (k^c)^{f(n)} \notin O(k^{f(n)}) \\
+(c \cdot f(n))! &amp;= (c\cdot f(n)) \cdot (c\cdot f(n) - 1) \cdot
+\ldots \cdot (f(n))! \notin O((f(n))!)
+\end{align*}\end{split}\]</div>
+</div>
+<div class="section" id="complexity-of-algorithms-with-loops">
+<h2>Complexity of algorithms with loops<a class="headerlink" href="#complexity-of-algorithms-with-loops" title="Permalink to this headline">¶</a></h2>
+<p>Let us get back to our program that sums up elements of an array:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">0</span> <span class="k">in</span>
+<span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="n">sum</span> <span class="o">:=</span> <span class="o">!</span><span class="n">sum</span> <span class="o">+</span> <span class="n">arr</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span>
+<span class="k">done</span><span class="o">;</span>
+<span class="o">!</span><span class="n">sum</span>
+</pre></div>
+</div>
+<p>The first assignment is an atomic command, and so it the last
+references, hence they both take <span class="math notranslate nohighlight">\(O(1)\)</span>. The bounded
+<code class="docutils literal notranslate"><span class="pre">for</span></code>-iteration executes <span class="math notranslate nohighlight">\(n\)</span> times, each time with a constant
+demand of its body, hence it’s complexity is <span class="math notranslate nohighlight">\(O(n)\)</span>. To
+summarise, the overall complexity of the procedure is <span class="math notranslate nohighlight">\(O(n)\)</span>.</p>
+<p>Let us now take a look at one of the sorting algorithms that we’ve
+studies, namely, Insertion Sort:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert_sort</span> <span class="n">arr</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">i</span> <span class="k">in</span>
+    <span class="k">while</span> <span class="o">!</span><span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">arr</span><span class="o">.(!</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="o">.(!</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="k">do</span>
+      <span class="n">swap</span> <span class="n">arr</span> <span class="o">!</span><span class="n">j</span> <span class="o">(!</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+      <span class="n">j</span> <span class="o">:=</span> <span class="o">!</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">done</span>
+  <span class="k">done</span>
+</pre></div>
+</div>
+<p>Assuming that the size of the array is <span class="math notranslate nohighlight">\(n\)</span>, the outer loop
+makes. The inner loop, however, goes in an opposite direction and
+starts from <span class="math notranslate nohighlight">\(j\)</span> such that <span class="math notranslate nohighlight">\(0 \leq j &lt; n\)</span> and, in the worst
+case, terminates with <span class="math notranslate nohighlight">\(j = 0\)</span>. The complexity of the body of the
+inner loop is linear (as swam performs three atomic operations, and
+the assignment is atomic). Thereforem we can estimate the complexity
+of this sorting by the following sum (assuming <span class="math notranslate nohighlight">\(c\)</span> is a constant
+accounting for the complexity of the inner loop body):</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i=0}^{n-1}\sum_{j=0}^{i}c = c \sum_{i=0}^{n - 1}i = c\frac{n (n -
+1)}{2} \in O(n^2).\]</div>
+<p>With this, we conclude that the complexity of the insertion sort is
+<em>quadratic</em> in the size of its input, i.e., the length of the array.</p>
+</div>
+<div class="section" id="exercise-10">
+<span id="exercise-matrix-sum-complexity"></span><h2>Exercise 10<a class="headerlink" href="#exercise-10" title="Permalink to this headline">¶</a></h2>
+<p>One can represent a matrix of <span class="math notranslate nohighlight">\(n \times n\)</span> elements in OCaml as a
+two-dimensional array:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span>   <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="o">[|</span> <span class="o">[|</span><span class="mi">1</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">|];</span> <span class="o">[|</span><span class="mi">4</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">|];</span> <span class="o">[|</span><span class="mi">7</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">9</span> <span class="o">|]</span> <span class="o">|];;</span>
+<span class="k">val</span> <span class="n">m</span> <span class="o">:</span> <span class="kt">int</span> <span class="kt">array</span> <span class="kt">array</span> <span class="o">=</span> <span class="o">[|[|</span><span class="mi">1</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">|];</span> <span class="o">[|</span><span class="mi">4</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">|];</span> <span class="o">[|</span><span class="mi">7</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">9</span><span class="o">|]|]</span>
+</pre></div>
+</div>
+<p>Implement a procedure that takes a matrix and its dimension and
+traverses it, summing up <em>all</em> elements in it. Express the complexity
+of this procedure using big-O notation and justify your answer using
+the material above.</p>
+</div>
+<div class="section" id="exercise-11">
+<span id="exercise-select-sort-complexity"></span><h2>Exercise 11<a class="headerlink" href="#exercise-11" title="Permalink to this headline">¶</a></h2>
+<p>Express the complexity of selection sort using big O notation. Justify
+your answer.</p>
+</div>
+<div class="section" id="exercise-12">
+<span id="exercise-bubble-sort-complexity"></span><h2>Exercise 12<a class="headerlink" href="#exercise-12" title="Permalink to this headline">¶</a></h2>
+<p>Express the complexity of Bubble Sort (see
+<a class="reference internal" href="week-02a_selection_sort.html#exercise-bubble-sort"><span class="std std-ref">Exercise 5</span></a>) using big O notation. Justify your
+answer.</p>
+</div>
 </div>
 
 
@@ -152,6 +365,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-02b_exercises.html" class="btn btn-neutral float-right" title="Exercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-02b_notation.html" class="btn btn-neutral" title="Order Notation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
