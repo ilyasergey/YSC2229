@@ -4,8 +4,8 @@ Complexity of Algorithms
 ========================
 
 Having experimented with different implementations of computing a
-determinant of a matrix, via Laplace expancion of LU-decomposition, we
-have observed that the peformance in the former case is significantly
+determinant of a matrix, via Laplace expansion of LU-decomposition, we
+have observed that the performance in the former case is significantly
 worse than in the latter one, roughy illustrated by the plots above:
 
 .. image:: ../resources/plots.jpg
