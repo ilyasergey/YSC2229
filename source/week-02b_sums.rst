@@ -126,7 +126,11 @@ growing functions:
   \sum_{i=1}^{n}f(i) \leq \int_{1}^{n+1} f(x) dx
 
 
-[TODO: Picture]
+.. image:: ../resources/integral.png
+   :width: 600px
+   :align: center
+
+
 
 **Example**: What is the complexity class of :math:`\sum_{i=1}^{n}i^3`?
 
