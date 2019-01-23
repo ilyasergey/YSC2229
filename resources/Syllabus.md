@@ -9,25 +9,25 @@ Correctness and termination of recursive programs. Pre- and post-conditions. Rea
 Week 02a (Jan 23)
 Basic array sorting: selection sort, insertion sort.
 Week 02b (Jan 23)
-Algorithmic complexity; order notation: big-O, little-o. Complexity of loops; sums of series, approximating with integrals. Analysing complexity of sorting algorithms.
+Algorithmic complexity; order notation: big-O, little-o. Complexity of loops; sums of series, approximating with integrals. Analysing complexity of sorting algorithms.
 
 Week 03a (Jan 28)
-Divide-and-conquer algorithms. Binary search, Exponential search. Merge-sort.
+Divide-and-conquer algorithms. Binary search, Exponential search. Merge-sort.
 Week 03b (Jan 28)
-Complexity of recursive algorithms. Recurrence relations. Master theorem.
+Complexity of recursive algorithms. Recurrence relations. Master theorem.
 
 Week 04a (Feb 4)
-QuickSort and its worst-case complexity. Best-worst complexity for comparison-based sorting.
+QuickSort and its worst-case complexity. Best-worst complexity for comparison-based sorting.
 Week 04b (Feb 4)
 Sorting in linear time: counting sort, bucket sort and radix sort.
 
 Week 05a (Feb 11)
-Binary-search trees. AVL trees. 
+Binary-search trees. AVL trees. 
 Week 05b (Feb 11)
-Binary heaps, Fibonacci heaps. Connection between searching and sorting. Heap-sort and its complexity.
+Binary heaps, Fibonacci heaps. Connection between searching and sorting. Heap-sort and its complexity.
 
 Week 06a (Feb 18)
-Abstract data types and representation independence. OCaml records, objects, and mutability. Representing, manipulating, and testing queues and lists. Memory management and algorithms for garbage collection. Patterns of memory inefficiency.
+Abstract data types and representation independence. OCaml records, objects, and mutability. Representing, manipulating, and testing queues and lists. Memory management and algorithms for garbage collection. Patterns of memory inefficiency.
 Week 06b (Feb 18)
 Hash-functions and hash-tables.
 
@@ -36,24 +36,24 @@ Hash-functions and hash-tables.
 Week 08a (Mar 4)
 Randomised algorithms for string matching, Rabin-Karp algorithm.
 Week 08b (Mar 4)
-Randomised algorithms for search. Bloom filters. 
+Randomised algorithms for search. Bloom filters. 
 Week 09a (Mar 11)
-Knuth–Morris–Pratt algorithm. Prefix trees.
+Knuth–Morris–Pratt algorithm. Prefix trees.
 Week 09b (Mar 11)
 Compression and decompression. Huffman coding.
 
 Week 10a (Mar 18)
-Basic probability theory and its application to analysis of algorithms. Average-case complexity. Expected complexity of quick-sort. 
+Basic probability theory and its application to analysis of algorithms. Average-case complexity. Expected complexity of quick-sort. 
 Week 10b (Mar 18)
 Union-Find and its variations.
 
 Week 11a (Mar 25)
-Representing undirected graphs as data structures. Depth- and breadth-first search. Connected components.
+Representing undirected graphs as data structures. Depth- and breadth-first search. Connected components.
 Week 11b (Mar 25)
-Directed graphs. Cycle detection, topological sort.
+Directed graphs. Cycle detection, topological sort.
 
 Week 12a (Mar 25)
-Minimal spanning trees. Kruskal and Prim algorithms.
+Minimal spanning trees. Kruskal and Prim algorithms.
 Week 12b (Mar 25)
 Weighted graphs and shortest paths, Dijkstra's algorithm.
 
