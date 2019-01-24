@@ -7,8 +7,8 @@ So far the main data structure we've been looking and and using as a
 container is an algebraic list. While simple to work with and grow by
 adding new elements to the beginning, algebraic lists have a
 significant shortcoming: they do not allow an instant access to their
-elements. For instance, in a list ``6; 8; 5; 2; 3; 7; 0``, in order
-to obtain its fourth element, one needs to "peel off" for previous
+elements. For instance, in a list ``[6; 8; 5; 2; 3; 7; 0]``, in order
+to obtain its fourth element, one needs to "peel off" four previous
 elements by means of deconstructing the list, as implemented by the
 function ``nth`` from the standard OCaml library::
 
@@ -20,20 +20,20 @@ function ``nth`` from the standard OCaml library::
       | a::l -> if n = 0 then a else walk l (n-1)
     in walk l n
  
-Arrays are similar and complementary to lists. They also encode data
-structured in a sequence, but allow immediate access to their
+Arrays are similar but also complementary to lists. They also encode
+data structured in a sequence, but allow immediate access to their
 elements, referred to by an *index* (i.e., position in an array). At
 the low-level, arrays are implemented by means of *fixed offsets*, and
-take ful advantage of the random-access memory (RAM), implemented by
-the modern compute architectures, allowing one to access a location
-with a known address almost immediately.
+take the full advantage of the random-access memory (RAM), implemented
+by the modern computer architectures and allowing one to access a
+location with a known address almost immediately.
 
-The price to pay for that is the inability to change the size of an
-array dynamically. In essence, once array is created, it "reserves" a
-fixed sequence of memory locations in RAM. Indeed, since more data can
-be allocated after the array, it is not easy to allow for its future
-growth. Therefore, the only way to extend (or shrink) and array is to
-allocate a new array of the necessary size.
+The price to pay for the instant access is the inability to change the
+size of an array dynamically. In essence, once array is created, it
+"reserves" a fixed sequence of memory locations in RAM. Indeed, since
+more data can be allocated after the array, it is not easy to allow
+for its future growth. Therefore, the only way to extend (or shrink)
+and array is to allocate a new array of the necessary size.
 
 In OCaml, arrays with all known elements can be created sugin the
 following syntax::
@@ -56,8 +56,8 @@ Elements of an array are accessed using their indices::
   - : int = 6
 
 Notice that the indices start from 0 (not from 1), and end with the
-number equal to an array's length - 1. This is often confusing and
-might lead to an infamous `Off-by-one error
+number equal to an array's length minus one. This is often confusing
+and might lead to the infamous `Off-by-one error
 <https://en.wikipedia.org/wiki/Off-by-one_error>`_. An attempt to
 address the elements outside of this range lead to an exception::
 

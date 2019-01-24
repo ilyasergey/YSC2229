@@ -163,8 +163,8 @@
 container is an algebraic list. While simple to work with and grow by
 adding new elements to the beginning, algebraic lists have a
 significant shortcoming: they do not allow an instant access to their
-elements. For instance, in a list <code class="docutils literal notranslate"><span class="pre">6;</span> <span class="pre">8;</span> <span class="pre">5;</span> <span class="pre">2;</span> <span class="pre">3;</span> <span class="pre">7;</span> <span class="pre">0</span></code>, in order
-to obtain its fourth element, one needs to “peel off” for previous
+elements. For instance, in a list <code class="docutils literal notranslate"><span class="pre">[6;</span> <span class="pre">8;</span> <span class="pre">5;</span> <span class="pre">2;</span> <span class="pre">3;</span> <span class="pre">7;</span> <span class="pre">0]</span></code>, in order
+to obtain its fourth element, one needs to “peel off” four previous
 elements by means of deconstructing the list, as implemented by the
 function <code class="docutils literal notranslate"><span class="pre">nth</span></code> from the standard OCaml library:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">nth</span> <span class="n">l</span> <span class="n">n</span> <span class="o">=</span>
@@ -176,19 +176,19 @@ function <code class="docutils literal notranslate"><span class="pre">nth</span>
   <span class="k">in</span> <span class="n">walk</span> <span class="n">l</span> <span class="n">n</span>
 </pre></div>
 </div>
-<p>Arrays are similar and complementary to lists. They also encode data
-structured in a sequence, but allow immediate access to their
+<p>Arrays are similar but also complementary to lists. They also encode
+data structured in a sequence, but allow immediate access to their
 elements, referred to by an <em>index</em> (i.e., position in an array). At
 the low-level, arrays are implemented by means of <em>fixed offsets</em>, and
-take ful advantage of the random-access memory (RAM), implemented by
-the modern compute architectures, allowing one to access a location
-with a known address almost immediately.</p>
-<p>The price to pay for that is the inability to change the size of an
-array dynamically. In essence, once array is created, it “reserves” a
-fixed sequence of memory locations in RAM. Indeed, since more data can
-be allocated after the array, it is not easy to allow for its future
-growth. Therefore, the only way to extend (or shrink) and array is to
-allocate a new array of the necessary size.</p>
+take the full advantage of the random-access memory (RAM), implemented
+by the modern computer architectures and allowing one to access a
+location with a known address almost immediately.</p>
+<p>The price to pay for the instant access is the inability to change the
+size of an array dynamically. In essence, once array is created, it
+“reserves” a fixed sequence of memory locations in RAM. Indeed, since
+more data can be allocated after the array, it is not easy to allow
+for its future growth. Therefore, the only way to extend (or shrink)
+and array is to allocate a new array of the necessary size.</p>
 <p>In OCaml, arrays with all known elements can be created sugin the
 following syntax:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">a1</span> <span class="o">=</span> <span class="o">[|</span><span class="mi">6</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">0</span><span class="o">|]</span>
@@ -209,8 +209,8 @@ some “default” element. For instance,:</p>
 </pre></div>
 </div>
 <p>Notice that the indices start from 0 (not from 1), and end with the
-number equal to an array’s length - 1. This is often confusing and
-might lead to an infamous <a class="reference external" href="https://en.wikipedia.org/wiki/Off-by-one_error">Off-by-one error</a>. An attempt to
+number equal to an array’s length minus one. This is often confusing
+and might lead to the infamous <a class="reference external" href="https://en.wikipedia.org/wiki/Off-by-one_error">Off-by-one error</a>. An attempt to
 address the elements outside of this range lead to an exception:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">a1</span><span class="o">.(</span><span class="mi">7</span><span class="o">);;</span>
 <span class="nc">Exception</span><span class="o">:</span> <span class="nc">Invalid_argument</span> <span class="s2">&quot;index out of bounds&quot;</span><span class="o">.</span>
