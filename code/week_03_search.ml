@@ -8,9 +8,9 @@ open Week_02a_arrays
 
 (* Generating elements for an array *)
 
-let generate_keys bound num = 
+let generate_keys bound len = 
   let acc = ref [] in
-  for i = 0 to num - 1 do
+  for i = 0 to len - 1 do
     acc := (Random.int bound) :: ! acc
   done;
   !acc
@@ -59,11 +59,11 @@ let generate_key_value_array len =
 (* TODO: test all these things *)
 
 let time f x =
-    let t = Sys.time () in
-    let fx = f x in
-    Printf.printf "execution elapsed time: %f sec\n"
-        (Sys.time () -. t);
-    fx
+  let t = Sys.time () in
+  let fx = f x in
+  Printf.printf "Execution elapsed time: %f sec\n"
+    (Sys.time () -. t);
+  fx
 
 (* Insertion sort on KV-arrays *)
 
@@ -351,6 +351,9 @@ let rec merge_sort_inv arr =
 let better_merge aux lo mid hi dest =
   let i = ref lo in
   let j = ref mid in
+  for k = lo to hi - 1 do
+    aux.(k) <- dest.(k)
+  done;
   for k = lo to hi - 1 do
     if !i >= mid
     then (dest.(k) <- aux.(!j); j := !j + 1)

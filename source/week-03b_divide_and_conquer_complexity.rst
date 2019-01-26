@@ -1,6 +1,6 @@
 .. -*- mode: rst -*-
 
-Complexity of Divide-and-Concuer Algorithms
+Complexity of Divide-and-Conquer Algorithms
 ===========================================
 
 Changing variable in recurrence relations

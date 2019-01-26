@@ -7,6 +7,7 @@ Introductory Data Structures and Algorithms (YSC2229)
 =====================================================
 
 .. toctree::
+   :numbered:
    :maxdepth: 2
 
    YSC2229-lecture-notes-week-01
