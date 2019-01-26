@@ -29,38 +29,56 @@ The intuition is that :math:`f(x)` grows no faster than :math:`c \cdot g(x)` as 
 Properties of Big O-notation
 ----------------------------
 
-**Property 1:** :math:`O(k \cdot f(n)) = O(f(n))`, for any constant :math:`k`.  
+.. admonition:: Property 1
+
+   :math:`O(k \cdot f(n)) = O(f(n))`, for any constant :math:`k`.  
 
 Multiplying by :math:`k` just means re-adjusting the values of the arbitrary constant factor :math:`c` in the definition of big-O.  This property ensures machine-independence  (i.e., we can forget about constant factors).  Since :math:`\log_{a}n = \log_{a}b \times \log_{b}n`, we don't need to be specific about the base when saying :math:`O(log n)`.
 
-**Property 2:** :math:`f(n) + g(n) \in O(\max(f(n), g(n))`.
+.. admonition:: Property 2
+   :math:`f(n) + g(n) \in O(\max(f(n), g(n))`.
 
-Here, :math:`\max((f(n), g(n))` is a function that for any n, returns the maximum of :math:`f(n)` and :math:`g(n))`:
+   Here, :math:`\max((f(n), g(n))` is a function that for any n, returns the maximum of :math:`f(n)` and :math:`g(n))`:
 
-.. image:: ../resources/omax.png
-   :width: 550px
-   :align: center
+   .. image:: ../resources/omax.png
+     :width: 550px
+     :align: center
 
 The property follows from the fact that for any :math:`n,  f(n) + g(n) \leq 2 \cdot f(n)` or :math:`f(n) + g(n) \leq 2 \cdot g(n)`.  Therefore, :math:`f(n) + g(n) \leq 2 \cdot \max(f(n), g(n))`.
 
-**Property 3:** :math:`\max(f(n), g(n)) \in O(f(n) + g(n))`.
+.. admonition:: Property 3
+   
+   :math:`\max(f(n), g(n)) \in O(f(n) + g(n))`.
 
-This property follows from the fact that for any :math:`n, \max(f(n), g(n)) \leq f(n)` or :math:`\max(f(n), g(n)) \leq g(n)`. Therefore, :math:`\max(f(n), g(n)) \leq f(n) + g(n)`.
+   This property follows from the fact that for any :math:`n, \max(f(n), g(n)) \leq f(n)` or :math:`\max(f(n), g(n)) \leq g(n)`. Therefore, :math:`\max(f(n), g(n)) \leq f(n) + g(n)`.
 
-**Corollary:** :math:`O(f(n) + g(n)) = O(\max(f(n), g(n))`.
+.. admonition:: Corollary 
+   
+   :math:`O(f(n) + g(n)) = O(\max(f(n), g(n))`.
 
-**Property 4:** If :math:`f(n) \in O(g(n))`, then :math:`f(n) + g(n) \in O(g(n))`.
+.. admonition:: Property 4 
+   
+   If :math:`f(n) \in O(g(n))`, then :math:`f(n) + g(n) \in O(g(n))`.
 
 Follows from the fact that there exist :math:`c, n0`, such that for any :math:`n \geq n0, f(n) \leq c \cdot g(n)`; Therefore, for any :math:`n \geq n0, f(n) + g(n) \leq (c + 1) \cdot g(n)`. Intuitively, a faster-growing function eventually dominates.
 
 Little o-notation
 -----------------
 
-**Definition** The positive-valued function :math:`f(x) \in o(g(x))` if and only if  for all constants :math:`\varepsilon > 0`, there exists a value :math:`x_0`,  such that for all :math:`x lgeq x_0, f(x) < \varepsilon \cdot g(x)`.
+.. admonition:: Definition 
+
+   The positive-valued function :math:`f(x) \in o(g(x))` if and only if  for all constants :math:`\varepsilon > 0`, there exists a value :math:`x_0`,  such that for all :math:`x lgeq x_0, f(x) < \varepsilon \cdot g(x)`.
 
 This definition provides a tighter boundary on :math:`f(x)`: it states that :math:`g(x)` grows much faster (i.e., more than a constant factor times faster) than :math:`f(x)`.
 
-**Example**: :math:`x^2 \in o(x^3)`, as for any :math:`\varepsilon > 0` we can take :math:`x_0(\varepsilon) = \frac{1}{\varepsilon} + 1`, so for all :math:`x \geq x_0(\varepsilon), \varepsilon \cdot x^3 \geq \varepsilon \cdot (\frac{1}{\varepsilon} + 1) \cdot x^2 > x^2`.
+.. admonition:: Example 
+
+   We can show that :math:`x^2 \in o(x^3)`, as for any
+   :math:`\varepsilon > 0` we can take :math:`x_0(\varepsilon) = 
+   \frac{1}{\varepsilon} + 1`, so for all :math:`x \geq
+   x_0(\varepsilon), \varepsilon \cdot x^3 \geq \varepsilon \cdot
+   (\frac{1}{\varepsilon} + 1) \cdot x^2 > x^2`.
+
 
 Proofs using O-notation
 -----------------------

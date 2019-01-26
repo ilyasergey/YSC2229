@@ -1,4 +1,4 @@
 .. -*- mode: rst -*-
 
-Divide-and-Conquer Algorithms
-=============================
+Divide-and-Conquer and Searching in Sorted Arrays
+=================================================
