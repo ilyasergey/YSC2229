@@ -230,10 +230,14 @@ let rec sorted ls =
     List.for_all (fun e -> e >= h) t && sorted t
     
 let same_elems ls1 ls2 =
-   List.for_all (fun e -> 
-      List.find_all (fun e' -> e' = e) ls2 = 
-      List.find_all (fun e' -> e' = e) ls1) 
-     ls1
+  List.for_all (fun e ->
+      List.find_all (fun e' -> e = e') ls2 =
+      List.find_all (fun e' -> e = e') ls1
+    ) ls1 &&
+  List.for_all (fun e ->
+      List.find_all (fun e' -> e = e') ls2 =
+      List.find_all (fun e' -> e = e') ls1
+    ) ls2
 
 let sorted_spec ls res = 
   same_elems ls res && sorted res

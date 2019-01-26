@@ -1,0 +1,4 @@
+.. -*- mode: rst -*-
+
+Merge-Sort
+==========

@@ -11,7 +11,7 @@ Introductory Data Structures and Algorithms (YSC2229)
 
    YSC2229-lecture-notes-week-01
    YSC2229-lecture-notes-week-02
-..   YSC2229-lecture-notes-week-03
+   YSC2229-lecture-notes-week-03
 
 ..
    Indices and tables
