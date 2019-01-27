@@ -172,13 +172,14 @@ Assume that each of the expressions below gives the time demand :math:`T(n)` of 
 Exercise 7
 ----------
 
-The following statements provide some "properties" of the big O-notation for the functions :math:`f(n)`, :math:`g(n)` etc.  State whether each statement is `TRUE` or `FALSE`. If it's true, provide a proof sketch using the properties of the O-notation, otherwise providing a correct formulation matching the "property" name and a proof sketch while it holds.
+The following statements provide some "properties" of the big O-notation for the functions :math:`f(n)`, :math:`g(n)` etc.  State whether each statement is `TRUE` or `FALSE`. If it is true, provide a proof sketch using the properties of the O-notation. If it is false, provide a counter-example, and if you a way to fix it (e.g., by changing the boundary on the right), provide a "correct" formulation a proof sketch while it holds.
 
 (a) :math:`5 n + 10 n^2 + 100 n^3 \in O(n^4)`
 
 (b) :math:`5n + 10n^2 + 100 n^3 \in O(n^2 \log n)`
 
 (c) Rule of products: :math:`g_1 (n) \in O(f_1(n))` and :math:`g_2 (n) \in O(f_2(n))`, then :math:`g_1 (n) \cdot g_2 (n) \in O(f_1(n) \cdot f_2(n))`.
+
 (d) Prove that :math:`T_n = c_0 + c_1 n + c_2 n^2 + c_3 n^3 \in O(n^3)` using the formal definition of the big :math:`O` notation.
 
 .. _exercise-big-o-defs3: 
