@@ -106,10 +106,10 @@ By unfolding the definition recursively, we can obtain the following formula to 
 
   \begin{align*}
   f(n) &= b_n \cdot f(n - 1) \\
-  &= b_n \cdot n_{n-1} \cdot f(n - 2) \\
+  &= b_n \cdot b_{n-1} \cdot f(n - 2) \\
   & \ldots \\
-  &= b_n \cdot b_{n = 1} \cdot \ldots \cdot b_{a + 1} \cdot f(a) \\
-  &= b_n \cdot b_{n = 1} \cdot \ldots \cdot b_{a + 1} \cdot d
+  &= b_n \cdot b_{n - 1} \cdot \ldots \cdot b_{a + 1} \cdot f(a) \\
+  &= b_n \cdot b_{n - 1} \cdot \ldots \cdot b_{a + 1} \cdot d
   \end{align*}
 
 Therefore:

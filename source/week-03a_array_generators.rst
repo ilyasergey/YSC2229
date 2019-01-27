@@ -106,8 +106,6 @@ It can be used with any arbitrary computation that takes at least one argument.
 Randomised array generation and testing
 ---------------------------------------
 
-[Automatically testing insert-sort]
-
 Let us re-implement insert-sort, so it would be useful for our new setting of arrays with key-value pairs and test its performance::
 
  let new_insert_sort arr = 
