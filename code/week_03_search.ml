@@ -230,7 +230,6 @@ let exponential_search arr k =
 let merge from1 from2 dest lo hi =
   let len1 = Array.length from1 in 
   let len2 = Array.length from2 in 
-  assert (len1 + len2 = hi - lo);
   let i = ref 0 in
   let j = ref 0 in
   for k = lo to hi - 1 do
@@ -267,8 +266,8 @@ let copy_array arr lo hi =
     
 let rec merge_sort arr = 
   let rec sort a = 
-    let hi = Array.length a in
     let lo = 0 in
+    let hi = Array.length a in
     if hi - lo <= 1 then ()
     else
       let mid = lo + (hi - lo) / 2 in

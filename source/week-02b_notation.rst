@@ -13,7 +13,7 @@ infinitely, i.e., :math:`n \rightarrow \infty`.
 Big O-notation
 --------------
 
-**Definition** The positive-valued function :math:`f(x) \in O(g(x))` if and only if  there is a value :math:`x_0` and a constant :math:`c > 0`, such that for all :math:`x \geq x_0,  f(x) < c \cdot g(x)`.
+**Definition** The positive-valued function :math:`f(x) \in O(g(x))` if and only if  there is a value :math:`x_0` and a constant :math:`c > 0`, such that for all :math:`x \geq x_0,  f(x) \leq c \cdot g(x)`.
 
 This can be illustrated as follows:
 
@@ -33,10 +33,10 @@ Properties of Big O-notation
 
    :math:`O(k \cdot f(n)) = O(f(n))`, for any constant :math:`k`.  
 
-Multiplying by :math:`k` just means re-adjusting the values of the arbitrary constant factor :math:`c` in the definition of big-O.  This property ensures machine-independence  (i.e., we can forget about constant factors).  Since :math:`\log_{a}n = \log_{a}b \times \log_{b}n`, we don't need to be specific about the base when saying :math:`O(log n)`.
+Multiplying by :math:`k` just means re-adjusting the values of the arbitrary constant factor :math:`c` in the definition of big-O.  This property ensures machine-independence  (i.e., we can forget about constant factors).  Since :math:`\log_{a}n = \log_{a}b \times \log_{b}n`, we don't need to be specific about the base when saying :math:`O(\log~n)`.
 
 .. admonition:: Property 2
-   :math:`f(n) + g(n) \in O(\max(f(n), g(n))`.
+   :math:`f(n) + g(n) \in O(\max(f(n), g(n))`
 
    Here, :math:`\max((f(n), g(n))` is a function that for any n, returns the maximum of :math:`f(n)` and :math:`g(n))`:
 
@@ -50,7 +50,7 @@ The property follows from the fact that for any :math:`n,  f(n) + g(n) \leq 2 
    
    :math:`\max(f(n), g(n)) \in O(f(n) + g(n))`.
 
-   This property follows from the fact that for any :math:`n, \max(f(n), g(n)) \leq f(n)` or :math:`\max(f(n), g(n)) \leq g(n)`. Therefore, :math:`\max(f(n), g(n)) \leq f(n) + g(n)`.
+This property follows from the fact that for any :math:`n, \max(f(n), g(n)) \leq f(n)` or :math:`\max(f(n), g(n)) \leq g(n)`. Therefore, :math:`\max(f(n), g(n)) \leq f(n) + g(n)`.
 
 .. admonition:: Corollary 
    
@@ -67,7 +67,7 @@ Little o-notation
 
 .. admonition:: Definition 
 
-   The positive-valued function :math:`f(x) \in o(g(x))` if and only if  for all constants :math:`\varepsilon > 0`, there exists a value :math:`x_0`,  such that for all :math:`x lgeq x_0, f(x) < \varepsilon \cdot g(x)`.
+   The positive-valued function :math:`f(x) \in o(g(x))` if and only if  for all constants :math:`\varepsilon > 0`, there exists a value :math:`x_0`,  such that for all :math:`x lgeq x_0, f(x) \leq \varepsilon \cdot g(x)`.
 
 This definition provides a tighter boundary on :math:`f(x)`: it states that :math:`g(x)` grows much faster (i.e., more than a constant factor times faster) than :math:`f(x)`.
 
@@ -98,11 +98,11 @@ Assume this holds for some :math:`c` and :math:`n_0`, then:
 .. math::
 
  \begin{align*} 
- & n^2 - c \cdot n^3 < 0,~\text{for all}~n \geq n_0 \\
+ & n^2 - c \cdot n^3 \leq 0,~\text{for all}~n \geq n_0 \\
  \implies & 
- n^2 (1 - c \cdot n) < 0,~\text{for all}~n \geq n_0 \\
+ n^2 (1 - c \cdot n) \leq 0,~\text{for all}~n \geq n_0 \\
  \implies & 
- c \cdot n < 1,~\text{for all}~n \geq n_0 \\
+ c \cdot n \leq 1,~\text{for all}~n \geq n_0 \\
  \implies & 
  n > \frac{1}{c},~\text{for all}~n \geq n_0 \\
  \end{align*} 
@@ -117,14 +117,16 @@ Assume this holds for some :math:`c` and :math:`n_0`, then:
 
 .. math::
  \begin{align*} 
- & n^3 - c \cdot n^2 < 0,~\text{for all}~n \geq n_0 \\
+ & n^3 - c \cdot n^2 \leq 0,~\text{for all}~n \geq n_0 \\
  \implies & 
- n^2 \cdot (n - c) < 0,~\text{for all}~n \geq n_0 \\
+ n^2 \cdot (n - c) \leq 0,~\text{for all}~n \geq n_0 \\
  \implies & 
- n - c < 0,~\text{for all}~n \geq n_0 \\
+ n - c \leq 0,~\text{for all}~n \geq n_0 \\
  \end{align*} 
 
-Now, since :math:`c` and :math:`n_0` are arbitrary, but fixed, we can consider :math:`n = c + 1 + n_0`  (and so we can do for any :math:`c` and :math:`n_0`), so we see that the inequality doesn't hold, hence in this case no fixed :math:`c` and :math:`n_0` can be found to satisfy it for any :math:`n`. Therefore :math:`n^3 \notin O(n^2)`.
+Now, since :math:`c` and :math:`n_0` are arbitrary, but fixed, we can consider :math:`n = c + 1 + n_0`  (and so we can do for any :math:`c` and :math:`n_0`), so we see that the inequality doesn't hold, hence in this case no fixed :math:`c` and :math:`n_0` can be found to satisfy it for any :math:`n`. Therefore :math:`n^3 \notin O(n^2)`. 
+
+:math:`\square`
 
 Hierarchy of algorithm complexities
 -----------------------------------
@@ -188,11 +190,11 @@ The following statements provide some "properties" of the big O-notation for the
 Exercise 8
 ----------
 
-One of the two software packages, *A* or *B*, should be chosen to process data collections, containing each up to :math:`10^{12}` records. Average processing time of the package *A* is :math:`T_A(n) = 0.1 n \log_2 n` nanoseconds and the average processing time of the package *B* is :math:`T_B(n) = 5n` nanoseconds. Which algorithm has better performance in the big :math:`O` sense? Work out exact conditions when these packages outperform each other.
+One of the two software packages, *A* or *B*, should be chosen to process data collections, containing each up to :math:`10^{12}` records. Average processing time of the package *A* is :math:`T_A(n) = 0.1 \cdot n \cdot \log_2 n` nanoseconds and the average processing time of the package *B* is :math:`T_B(n) = 5 \cdot n` nanoseconds. Which algorithm has better performance in the big :math:`O` sense? Work out exact conditions when these packages outperform each other.
 
 .. _exercise-big-o-defs4: 
 
 Exercise 9
 ----------
 
-Algorithms *A* and *B* spend exactly :math:`T_A(n) = c_A n \log_2 n` and :math:`T_B(n) = c_B n^2` nanoseconds, respectively, for a problem of size :math:`n`. Find the best algorithm for processing :math:`n = 2^{20}` data items if the algorithm *A* spends 10 nanoseconds to process 1024 items, while the algorithm *B* spends only 1 nanosecond to process 1024 items.
+Algorithms *A* and *B* spend exactly :math:`T_A(n) = c_A \cdot n \cdot \log_2 n` and :math:`T_B(n) = c_B \cdot n^2` nanoseconds, respectively, for a problem of size :math:`n`. Find the best algorithm for processing :math:`n = 2^{20}` data items if the algorithm *A* spends 10 nanoseconds to process 1024 items, while the algorithm *B* spends only 1 nanosecond to process 1024 items.

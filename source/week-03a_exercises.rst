@@ -19,7 +19,7 @@ Mandatory exercises
   Implement and analyse the exponential search.
 
 * :ref:`exercise-fast-merge-sort`:
-  Implement a version of merge-sort that does not allocate auxiliary arrays at every recursive call.
+  Merge sort with a single auxiliary array.
 
 * :ref:`exercise-index-sort`:
   Index sort.
