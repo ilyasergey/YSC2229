@@ -236,10 +236,10 @@ lower bound has the same complexity:</p>
 \[S(n) = a + a^2 + a^3 + \ldots + a^n = \sum_{i=1}^{n}a^i\]</div>
 <p>Let us notice that</p>
 <div class="math notranslate nohighlight">
-\[\begin{align*}
-a \cdot S(n) &amp;= a^2 + a^3 + \ldots + a^{n + 1}
+\[\begin{split}\begin{align*}
+a \cdot S(n) &amp;= a^2 + a^3 + \ldots + a^{n + 1} \\
 &amp;= S(n) - a + a^{n+1}
-\end{align*}\]</div>
+\end{align*}\end{split}\]</div>
 <p>Therefore, for <span class="math notranslate nohighlight">\(a \neq 1\)</span></p>
 <div class="math notranslate nohighlight">
 \[S(n) = \frac{a (1 - a^n)}{1 - 1}\]</div>

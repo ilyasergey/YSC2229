@@ -212,25 +212,19 @@ f(n) + g(n) \leq 2 \cdot f(n)\)</span> or <span class="math notranslate nohighli
 <p class="first admonition-title">Property 4</p>
 <p class="last">If <span class="math notranslate nohighlight">\(f(n) \in O(g(n))\)</span>, then <span class="math notranslate nohighlight">\(f(n) + g(n) \in O(g(n))\)</span>.</p>
 </div>
-<p>Follows from the fact that there exist <span class="math notranslate nohighlight">\(c, n0\)</span>, such that for any <span class="math notranslate nohighlight">\(n \geq n0, f(n) \leq c \cdot g(n)\)</span>; Therefore, for any <span class="math notranslate nohighlight">\(n \geq n0, f(n) + g(n) \leq (c + 1) \cdot g(n)\)</span>.
+<p>Follows from the fact that there exist <span class="math notranslate nohighlight">\(c, n_0\)</span>, such that for any <span class="math notranslate nohighlight">\(n \geq n_0, f(n) \leq c \cdot g(n)\)</span>; Therefore, for any <span class="math notranslate nohighlight">\(n \geq n0, f(n) + g(n) \leq (c + 1) \cdot g(n)\)</span>.
 Intuitively, a faster-growing function eventually dominates.</p>
 </div>
 <div class="section" id="little-o-notation">
 <h2>2.6.3. Little o-notation<a class="headerlink" href="#little-o-notation" title="Permalink to this headline">¶</a></h2>
 <div class="admonition-definition admonition">
 <p class="first admonition-title">Definition</p>
-<p class="last">The positive-valued function <span class="math notranslate nohighlight">\(f(x) \in o(g(x))\)</span> if and only if</p>
+<p class="last">The positive-valued function <span class="math notranslate nohighlight">\(f(x) \in o(g(x))\)</span> if and only if for all constants <span class="math notranslate nohighlight">\(\varepsilon &gt; 0\)</span> there exists a value <span class="math notranslate nohighlight">\(x_0\)</span> such that for all <span class="math notranslate nohighlight">\(x \geq x_0, f(x) \leq \varepsilon \cdot g(x)\)</span>.</p>
 </div>
-<p>for all constants <span class="math notranslate nohighlight">\(\varepsilon &gt; 0\)</span>, there exists a value <span class="math notranslate nohighlight">\(x_0\)</span>,
-such that for all <span class="math notranslate nohighlight">\(x lgeq x_0, f(x) \leq \varepsilon \cdot g(x)\)</span>.</p>
 <p>This definition provides a tighter boundary on <span class="math notranslate nohighlight">\(f(x)\)</span>: it states that <span class="math notranslate nohighlight">\(g(x)\)</span> grows much faster (i.e., more than a constant factor times faster) than <span class="math notranslate nohighlight">\(f(x)\)</span>.</p>
 <div class="admonition-example admonition">
 <p class="first admonition-title">Example</p>
-<p class="last">We can show that <span class="math notranslate nohighlight">\(x^2 \in o(x^3)\)</span>, as for any
-<span class="math notranslate nohighlight">\(\varepsilon &gt; 0\)</span> we can take <span class="math notranslate nohighlight">\(x_0(\varepsilon) =
-\frac{1}{\varepsilon} + 1\)</span>, so for all <span class="math notranslate nohighlight">\(x \geq
-x_0(\varepsilon), \varepsilon \cdot x^3 \geq \varepsilon \cdot
-(\frac{1}{\varepsilon} + 1) \cdot x^2 &gt; x^2\)</span>.</p>
+<p class="last">We can show that <span class="math notranslate nohighlight">\(x^2 \in o(x^3)\)</span>, as for any <span class="math notranslate nohighlight">\(\varepsilon &gt; 0\)</span> we can take <span class="math notranslate nohighlight">\(x_0(\varepsilon) = \frac{1}{\varepsilon} + 1\)</span>, so for all <span class="math notranslate nohighlight">\(x \geq x_0(\varepsilon), \varepsilon \cdot x^3 \geq \varepsilon \cdot (\frac{1}{\varepsilon} + 1) \cdot x^2 &gt; x^2\)</span>.</p>
 </div>
 </div>
 <div class="section" id="proofs-using-o-notation">

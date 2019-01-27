@@ -60,24 +60,20 @@ This property follows from the fact that for any :math:`n, \max(f(n), g(n)) \leq
    
    If :math:`f(n) \in O(g(n))`, then :math:`f(n) + g(n) \in O(g(n))`.
 
-Follows from the fact that there exist :math:`c, n0`, such that for any :math:`n \geq n0, f(n) \leq c \cdot g(n)`; Therefore, for any :math:`n \geq n0, f(n) + g(n) \leq (c + 1) \cdot g(n)`. Intuitively, a faster-growing function eventually dominates.
+Follows from the fact that there exist :math:`c, n_0`, such that for any :math:`n \geq n_0, f(n) \leq c \cdot g(n)`; Therefore, for any :math:`n \geq n0, f(n) + g(n) \leq (c + 1) \cdot g(n)`. Intuitively, a faster-growing function eventually dominates.
 
 Little o-notation
 -----------------
 
 .. admonition:: Definition 
 
-   The positive-valued function :math:`f(x) \in o(g(x))` if and only if  for all constants :math:`\varepsilon > 0`, there exists a value :math:`x_0`,  such that for all :math:`x lgeq x_0, f(x) \leq \varepsilon \cdot g(x)`.
+   The positive-valued function :math:`f(x) \in o(g(x))` if and only if for all constants :math:`\varepsilon > 0` there exists a value :math:`x_0` such that for all :math:`x \geq x_0, f(x) \leq \varepsilon \cdot g(x)`.
 
 This definition provides a tighter boundary on :math:`f(x)`: it states that :math:`g(x)` grows much faster (i.e., more than a constant factor times faster) than :math:`f(x)`.
 
 .. admonition:: Example 
 
-   We can show that :math:`x^2 \in o(x^3)`, as for any
-   :math:`\varepsilon > 0` we can take :math:`x_0(\varepsilon) = 
-   \frac{1}{\varepsilon} + 1`, so for all :math:`x \geq
-   x_0(\varepsilon), \varepsilon \cdot x^3 \geq \varepsilon \cdot
-   (\frac{1}{\varepsilon} + 1) \cdot x^2 > x^2`.
+   We can show that :math:`x^2 \in o(x^3)`, as for any :math:`\varepsilon > 0` we can take :math:`x_0(\varepsilon) = \frac{1}{\varepsilon} + 1`, so for all :math:`x \geq x_0(\varepsilon), \varepsilon \cdot x^3 \geq \varepsilon \cdot (\frac{1}{\varepsilon} + 1) \cdot x^2 > x^2`.
 
 
 Proofs using O-notation
