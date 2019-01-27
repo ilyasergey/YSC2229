@@ -6,12 +6,15 @@ Exercises
 Mandatory exercises
 -------------------
 
-.. * :ref:`exercise-big-o-defs1`: 
-..   Using the definition of big O notation.   
+* :ref:`exercise-recur`:
+  Solving various recurrence relations.
+
+* :ref:`exercise-determ`: 
+  Complexity of a recursive matrix determinant.
 
 
 Recommended exercises
 ---------------------
 
-.. * :ref:`exercise-big-o-defs4`: 
-..   Choosing the best algorithm for a work.
+* :ref:`exercise-determ2`: 
+  More realistic complexity of a recursive matrix determinant.

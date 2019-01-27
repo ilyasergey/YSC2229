@@ -133,7 +133,7 @@ Let us re-implement insert-sort, so it would be useful for our new setting of ar
 
 .. _exercise-randomised-testing:
 
-Exercise 1
+Exercise 4
 ----------
 Implement a function that generates takes (a) a sorting procedure ``sort`` for a key-value array, (b) a number ``n`` and a number ``length``, and generates ``n`` random arrays of the length ``length``, testing that ``sort`` is indeed correct on all those arrays. 
 
