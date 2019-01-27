@@ -23,6 +23,9 @@ Mandatory exercises
 Recommended exercises
 ---------------------
 
+* :ref:`exercise-randomised-testing`:
+  Randomised testing of a sorting procedure.
+
 * :ref:`exercise-three-way-merge-sort`:
   Implement a version of merge-sort that splits the sub-arrays into three parts and then combines them together. Compare its performance to the ordinary 2-way merge-sort.
 
