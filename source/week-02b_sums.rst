@@ -103,7 +103,7 @@ Let us notice that
 .. math::
 
   \begin{align*}
-  a \cdot S(n) &= a^2 + a^3 + \ldots + a^{n + 1}
+  a \cdot S(n) &= a^2 + a^3 + \ldots + a^{n + 1} \\
   &= S(n) - a + a^{n+1}
   \end{align*}
 
