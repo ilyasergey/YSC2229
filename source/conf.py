@@ -205,3 +205,5 @@ mathjax_config = {
     'extensions': ['tex2jax.js'],
     'jax': ['input/TeX', 'output/HTML-CSS'],
 }
+
+html_show_sourcelink = False
