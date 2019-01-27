@@ -129,7 +129,7 @@ let rec binary_search_print arr k =
       None
     (* Converged on a single element *)
     else 
-      let mid = lo + (hi - lo) / 2 - 1 in
+      let mid = lo + (hi - lo) / 2 in
       if fst arr.(mid) = k 
       then Some (arr.(mid))
       else if fst arr.(mid) < k
@@ -192,9 +192,6 @@ let binary_search_inv arr k =
   assert (binary_search_rank_pre arr 0 len k);
   rank 0 len
 
-(* EXERCISE: find elements in a given range of the keys in a sorted array. 
-   Estimate the complexity.
-*)
 
 
 (* EXERCISE: exponential search *)
@@ -379,11 +376,4 @@ let rec fast_merge_sort arr =
   sort 0 len
 
 
-
-
-
-
-
-
-
-
+(* Exercise: index-sort *)
