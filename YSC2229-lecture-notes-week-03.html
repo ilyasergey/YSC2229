@@ -1,0 +1,256 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>YSC2229 Lecture Notes, Week 03 &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>YSC2229 Lecture Notes, Week 03</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/YSC2229-lecture-notes-week-03.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ysc2229-lecture-notes-week-03">
+<h1>YSC2229 Lecture Notes, Week 03<a class="headerlink" href="#ysc2229-lecture-notes-week-03" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="week-03a_array_generators.html">Generating Arrays</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_array_generators.html#simple-random-generators">Simple random generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_array_generators.html#measuring-execution-time">Measuring execution time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_array_generators.html#randomised-array-generation-and-testing">Randomised array generation and testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_array_generators.html#exercise-1">Exercise 1</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-03a_search.html">Searching in Arrays</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#linear-search">Linear Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#exercise-2">Exercise 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#binary-search">Binary Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#exercise-3">Exercise 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#binary-search-invariant">Binary Search Invariant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#exercise-4">Exercise 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#the-main-idea-of-divide-and-conquer-algorithms">The Main Idea of Divide-and-Conquer algorithms</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-03a_merge_sort.html">Merge Sort</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html#merging-two-sorted-arrays">Merging two sorted arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html#invariant-of-merge">Invariant of <code class="docutils literal notranslate"><span class="pre">merge</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html#main-sorting-procedure-and-its-invariants">Main sorting procedure and its invariants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html#exercise-5">Exercise 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html#exercise-6">Exercise 6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html#exercise-7">Exercise 7</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-03a_exercises.html">Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_exercises.html#mandatory-exercises">Mandatory exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_exercises.html#recommended-exercises">Recommended exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-03b_recursive_complexity.html">Complexity of Recursive Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html#complexity-of-computing-the-factorial">Complexity of computing the factorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html#method-of-differences">Method of differences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html#first-order-recurrence-relations">First-Order Recurrence Relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html#complexity-of-naive-determinant">Complexity of naive determinant</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-03b_divide_and_conquer_complexity.html">Complexity of Divide-and-Conquer Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_divide_and_conquer_complexity.html#changing-variable-in-recurrence-relations">Changing variable in recurrence relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_divide_and_conquer_complexity.html#complexity-of-binary-search">Complexity of Binary Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_divide_and_conquer_complexity.html#complexity-of-merge-sort">Complexity of Merge-Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_divide_and_conquer_complexity.html#the-master-theorem">The Master Theorem</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-03b_exercises.html">Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_exercises.html#mandatory-exercises">Mandatory exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_exercises.html#recommended-exercises">Recommended exercises</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

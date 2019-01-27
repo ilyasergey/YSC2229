@@ -96,7 +96,7 @@ Geometric series are defined as series of exponents:
 
 .. math::
 
-  S(n) = a + a^2 + a^3 + \ldots + a^n = \sum_{i=1}{n}a^i
+  S(n) = a + a^2 + a^3 + \ldots + a^n = \sum_{i=1}^{n}a^i
 
 Let us notice that
 

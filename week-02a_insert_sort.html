@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Insertion Sort on Arrays &mdash; YSC2229 2019</title>
+  <title>2.2. Insertion Sort on Arrays &mdash; YSC2229 2019</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Selection Sort" href="week-02a_selection_sort.html" />
-    <link rel="prev" title="Arrays and Operations on Them" href="week-02a_arrays.html" /> 
+    <link rel="next" title="2.3. Selection Sort" href="week-02a_selection_sort.html" />
+    <link rel="prev" title="2.1. Arrays and Operations on Them" href="week-02a_arrays.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -79,22 +79,22 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">YSC2229 Lecture Notes, Week 01</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">YSC2229 Lecture Notes, Week 02</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="week-02a_arrays.html">Arrays and Operations on Them</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Insertion Sort on Arrays</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#tracing-insertion-sort">Tracing Insertion Sort</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#insertion-sort-invariants">Insertion Sort Invariants</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#termination-of-insertion-sort">Termination of Insertion Sort</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#exercise-1">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-02a_arrays.html">2.1. Arrays and Operations on Them</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.2. Insertion Sort on Arrays</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tracing-insertion-sort">2.2.1. Tracing Insertion Sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#insertion-sort-invariants">2.2.2. Insertion Sort Invariants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#termination-of-insertion-sort">2.2.3. Termination of Insertion Sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-1">2.2.4. Exercise 1</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="week-02a_selection_sort.html">Selection Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02a_exercises.html">Exercises</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02b_complexity.html">Complexity of Algorithms</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02b_notation.html">Order Notation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02b_sums.html">Sums of Series and Complexities of Loops</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02b_exercises.html">Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02a_selection_sort.html">2.3. Selection Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02a_exercises.html">2.4. Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_complexity.html">2.5. Complexity of Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_notation.html">2.6. Order Notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_sums.html">2.7. Sums of Series and Complexities of Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02b_exercises.html">2.8. Exercises</a></li>
 </ul>
 </li>
 </ul>
@@ -142,9 +142,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="YSC2229-lecture-notes-week-02.html">YSC2229 Lecture Notes, Week 02</a> &raquo;</li>
+          <li><a href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a> &raquo;</li>
         
-      <li>Insertion Sort on Arrays</li>
+      <li>2.2. Insertion Sort on Arrays</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -164,7 +164,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="insertion-sort-on-arrays">
-<h1>Insertion Sort on Arrays<a class="headerlink" href="#insertion-sort-on-arrays" title="Permalink to this headline">¶</a></h1>
+<h1>2.2. Insertion Sort on Arrays<a class="headerlink" href="#insertion-sort-on-arrays" title="Permalink to this headline">¶</a></h1>
 <p>Previously, we have studied insertion sort and its invariants on
 lists. Let us now use the same idea to sort an array. Since adding an
 element into an array prefix is more difficult than it would be for
@@ -194,7 +194,7 @@ new array, but rather modifies an old one):</p>
 </pre></div>
 </div>
 <div class="section" id="tracing-insertion-sort">
-<h2>Tracing Insertion Sort<a class="headerlink" href="#tracing-insertion-sort" title="Permalink to this headline">¶</a></h2>
+<h2>2.2.1. Tracing Insertion Sort<a class="headerlink" href="#tracing-insertion-sort" title="Permalink to this headline">¶</a></h2>
 <p>Why does insertion sort implemented this way works? An answer to that
 could be obtained via suitable invariants. But before we discover
 them, it might be a good idea to study what does the algorithm do,
@@ -275,7 +275,7 @@ not print the element <code class="docutils literal notranslate"><span class="pr
 </div>
 </div>
 <div class="section" id="insertion-sort-invariants">
-<h2>Insertion Sort Invariants<a class="headerlink" href="#insertion-sort-invariants" title="Permalink to this headline">¶</a></h2>
+<h2>2.2.2. Insertion Sort Invariants<a class="headerlink" href="#insertion-sort-invariants" title="Permalink to this headline">¶</a></h2>
 <p>From the trace above, we can see that at the beginning and the end of
 each top-level iteration, the prefix <code class="docutils literal notranslate"><span class="pre">arr.(0)</span> <span class="pre">..</span> <span class="pre">arr.(i)</span></code> is sorted.
 Furthermore, from the intermediate steps of the inner loop, we can see
@@ -351,14 +351,14 @@ resepct to a particular sub-array:</p>
 positioned within it.</p>
 </div>
 <div class="section" id="termination-of-insertion-sort">
-<h2>Termination of Insertion Sort<a class="headerlink" href="#termination-of-insertion-sort" title="Permalink to this headline">¶</a></h2>
+<h2>2.2.3. Termination of Insertion Sort<a class="headerlink" href="#termination-of-insertion-sort" title="Permalink to this headline">¶</a></h2>
 <p>It is not difficult to prove that insertion sort terminates: its outer
 loop is an iteration, bounded by <code class="docutils literal notranslate"><span class="pre">len</span> <span class="pre">-</span> <span class="pre">1</span></code>. Its inner loop’s
 termination measure (variant) is <code class="docutils literal notranslate"><span class="pre">j</span></code>, so the loop terminates when
 <code class="docutils literal notranslate"><span class="pre">j</span></code> reaches 0.</p>
 </div>
 <div class="section" id="exercise-1">
-<span id="exercise-insert-sort-backwards"></span><h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-insert-sort-backwards"></span><h2>2.2.4. Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
 <p>Implement a version of insertion sort for arrays called
 <code class="docutils literal notranslate"><span class="pre">insert_sort_backwards</span></code>, so that its outer loop would be starting
 not from the beginning (i.e., index 0), but from the end of an array
@@ -376,10 +376,10 @@ loop’s termination, implies the outer loop’s invariant.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="week-02a_selection_sort.html" class="btn btn-neutral float-right" title="Selection Sort" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="week-02a_selection_sort.html" class="btn btn-neutral float-right" title="2.3. Selection Sort" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="week-02a_arrays.html" class="btn btn-neutral" title="Arrays and Operations on Them" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="week-02a_arrays.html" class="btn btn-neutral" title="2.1. Arrays and Operations on Them" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
