@@ -19,7 +19,7 @@ the ``factorial`` function::
    if n <= 0 then 1
    else n * (factorial (n - 1))
 
-Assume its complexity i the number of multiplications (taken as the
+Assume its complexity is the number of multiplications (taken as the
 most expensive operations) it performs for a number ``n`` (so ``n``
 will also serve as the "size" of the problem). We can write the
 relation on factorial's complexity :math:`F(n)` using the following
@@ -32,13 +32,12 @@ relation:
   F(n) &= F (n - 1) + 1
   \end{align*}
 
-That is, the value of :math:`F(n)` is defined recursively (shouldn't
-be that much of a surprise, huh?) thourgh a value of :math:`n - 1`. 
+That is, the value of :math:`F(n)` is defined recursively (shouldn't be that much of a surprise, huh?) thourgh the value of :math:`F(n - 1)`.
 
 Method of differences
 ---------------------
 
-We can now exploint this pattern by constructing a number of equations of the following shape, following the definition of :math:`F(n)` of the factorial complexity, and add them to
+We can now exploit this pattern by constructing a number of equations of the following shape, following the definition of :math:`F(n)` of the factorial complexity, and sum them up together:
 
 .. math::
 
@@ -49,7 +48,7 @@ We can now exploint this pattern by constructing a number of equations of the fo
   &+& \ldots \\
   &+& F(1) &- F(0) &= 1 \\
   \hline 
-  && F(n) &- F(0) &= 1
+  && F(n) &- F(0) &= n
   \end{align*}
 
 As the result, we obtain :math:`F(n) = n` (since :math:`F(0) = 0`), therefore we can conclude that :math:`F(n) \in O(n)`.
@@ -125,7 +124,7 @@ Inhomogeneous recurrence relations
 
 .. admonition:: Definition
 
-  **Inhomogeneous recurrence relations** take the following form for some constants :math:`a`, :math:`f(n)` and a coefficientc :math:`b_n` and :math:`c_n`, which might be functions of :math:`n`:
+  **Inhomogeneous recurrence relations** take the following form for some constants :math:`a`, :math:`f(n)` and a coefficient :math:`b_n` and :math:`c_n`, which might be functions of :math:`n`:
 
   .. math:: 
 
@@ -134,18 +133,18 @@ Inhomogeneous recurrence relations
     f(a) &= d
     \end{align*}
 
-The trick to solve an inhomogeneous relation is to "pretend" that we are solving a homogeneous recurrence relation by chainging the function :math:`f(n)` to :math:`g(n)`, such that 
+The trick to solve an inhomogeneous relation is to "pretend" that we are solving a homogeneous recurrence relation by changing the function :math:`f(n)` to :math:`g(n)`, such that 
 
 .. math::
 
   \begin{align*}
-  f(n) &= b_a \cdot b_{a+1}\cdot \ldots \cdot b_n \cdot g(n) ~\text{if}~ n > a \\
+  f(n) &= b_{a+1}\cdot \ldots \cdot b_n \cdot g(n) ~\text{if}~ n > a \\
   f(a) &= g(a) = d
   \end{align*}
 
 Intuitively, this "change of function" allows us to reduce a general recurrence relation to the one where :math:`b_n = 1`. In other words, :math:`g(n)` is a "calibrated" version of :math:`f(n)` that behaves "like" :math:`f(n)` module the appended product of coefficients.
 
-Let us see how this trick helps us to solve the initial relation. We start by expanging the definition of :math:`f(n)` for :math:`n > 0` as follows:
+Let us see how this trick helps us to solve the initial relation. We start by expanding the definition of :math:`f(n)` for :math:`n > 0` as follows:
 
 .. math::
 
@@ -155,7 +154,7 @@ We then recall that :math:`f(n)` can be expressed via :math:`g(n)`, and rewrite 
 
 .. math::
 
-  \underbrace{b_a \cdot b_{a+1}\cdot \ldots \cdot b_n}_{X} \cdot g(n) = \underbrace{b_n \cdot b_a \cdot b_{a+1}\cdot \ldots \cdot b_{n-1}}_{X} \cdot g(n) + c_n
+  \underbrace{b_{a+1}\cdot \ldots \cdot b_n}_{X} \cdot g(n) = \underbrace{b_n \cdot b_{a+1}\cdot \ldots \cdot b_{n-1}}_{X} \cdot g(n) + c_n
 
 Notice that the parts marked via :math:`X` are, in fact the same, so we can divide both parts of the expression by it, so we can get
 
