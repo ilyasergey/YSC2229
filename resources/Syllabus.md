@@ -12,7 +12,7 @@ Week 02b (Jan 23)
 Algorithmic complexity; order notation: big-O, little-o. Complexity of loops; sums of series, approximating with integrals. Analysing complexity of sorting algorithms.
 
 Week 03a (Jan 28)
-Divide-and-conquer algorithms. Binary search, Exponential search. Merge-sort.
+Generating random key-value arrays. Divide-and-conquer algorithms. Binary search, Exponential search. Merge-sort.
 Week 03b (Jan 28)
 Complexity of recursive algorithms. Recurrence relations. Master theorem.
 
@@ -34,18 +34,19 @@ Hash-functions and hash-tables.
 [Mid-term break]
 
 Week 08a (Mar 4)
-Randomised algorithms for string matching, Rabin-Karp algorithm.
+Union-Find and its variations. 
 Week 08b (Mar 4)
-Randomised algorithms for search. Bloom filters. 
+Randomised algorithms for string search. Bloom filters.
+
 Week 09a (Mar 11)
-Knuth–Morris–Pratt algorithm. Prefix trees.
+Randomised algorithms for string matching, Rabin-Karp algorithm.
 Week 09b (Mar 11)
-Compression and decompression. Huffman coding.
+Knuth–Morris–Pratt algorithm. Prefix trees.
 
 Week 10a (Mar 18)
-Basic probability theory and its application to analysis of algorithms. Average-case complexity. Expected complexity of quick-sort. 
+Compression and decompression.
 Week 10b (Mar 18)
-Union-Find and its variations.
+Huffman coding.
 
 Week 11a (Mar 25)
 Representing undirected graphs as data structures. Depth- and breadth-first search. Connected components.
@@ -58,11 +59,12 @@ Week 12b (Mar 25)
 Weighted graphs and shortest paths, Dijkstra's algorithm.
 
 Week 13a (Apr 1)
-Number-theoretic algorithms. The Chinese remainder theorem. The RSA cryptosystem.
-Week 13b (Apr 1)
-Elements of dynamic programming. Knapsack problem. Memoization.
-
-Week 14a (Apr 8)
 Elements of Computational Geometry. Detecting intersections. Convex hulls.
-Week 14b (Apr 8)
+Week 13b (Apr 1)
 Triangulations and guarding an art gallery.
+ 
+Week 14a (Apr 8)
+Number-theoretic algorithms. The Chinese remainder theorem. The RSA cryptosystem.
+Week 14b (Apr 8)
+Elements of dynamic programming. Knapsack problem. Memoization.
+Discussion of the final project.
