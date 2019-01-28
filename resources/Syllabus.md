@@ -41,7 +41,7 @@ Randomised algorithms for string search. Bloom filters.
 Week 09a (Mar 11)
 Randomised algorithms for string matching, Rabin-Karp algorithm.
 Week 09b (Mar 11)
-Knuth–Morris–Pratt algorithm. Prefix trees.
+Knuth-Morris-Pratt algorithm. Prefix trees.
 
 Week 10a (Mar 18)
 Compression and decompression.
