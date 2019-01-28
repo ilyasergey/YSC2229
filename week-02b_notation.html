@@ -103,6 +103,7 @@
 <li class="toctree-l2"><a class="reference internal" href="week-02b_exercises.html">2.8. Exercises</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
 </ul>
 
             
@@ -174,10 +175,11 @@ demand functions as an input size <span class="math notranslate nohighlight">\(n
 infinitely, i.e., <span class="math notranslate nohighlight">\(n \rightarrow \infty\)</span>.</p>
 <div class="section" id="big-o-notation">
 <span id="def-big-o"></span><h2>2.6.1. Big O-notation<a class="headerlink" href="#big-o-notation" title="Permalink to this headline">¶</a></h2>
-<p><strong>Definition</strong> The positive-valued function <span class="math notranslate nohighlight">\(f(x) \in O(g(x))\)</span> if and only if
-there is a value <span class="math notranslate nohighlight">\(x_0\)</span> and a constant <span class="math notranslate nohighlight">\(c &gt; 0\)</span>, such that for all <span class="math notranslate nohighlight">\(x \geq x_0,
-f(x) \leq c \cdot g(x)\)</span>.</p>
-<p>This can be illustrated as follows:</p>
+<div class="admonition-definition admonition">
+<p class="first admonition-title">Definition</p>
+<p class="last">The positive-valued function <span class="math notranslate nohighlight">\(f(x) \in O(g(x))\)</span> if and only if there is a value <span class="math notranslate nohighlight">\(x_0\)</span> and a constant <span class="math notranslate nohighlight">\(c &gt; 0\)</span>, such that for all <span class="math notranslate nohighlight">\(x \geq x_0\)</span>, <span class="math notranslate nohighlight">\(f(x) \leq c \cdot g(x)\)</span>.</p>
+</div>
+<p>This definition can be illustrated as follows:</p>
 <a class="reference internal image-reference" href="_images/bigo.png"><img alt="_images/bigo.png" class="align-center" src="_images/bigo.png" style="width: 550px;" /></a>
 <p>The intuition is that <span class="math notranslate nohighlight">\(f(x)\)</span> grows no faster than <span class="math notranslate nohighlight">\(c \cdot g(x)\)</span> as <span class="math notranslate nohighlight">\(x\)</span> gets larger. Notice that the notation <span class="math notranslate nohighlight">\(O(g(x))\)</span> describes a <em>set</em> of functions, “approximated” by <span class="math notranslate nohighlight">\(g(x)\)</span>, modulo constant factors and the starting point.</p>
 </div>

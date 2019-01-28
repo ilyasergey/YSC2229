@@ -3,7 +3,7 @@
 Merge Sort
 ==========
 
-Merge sort is a algorithm that applies the divide-and-conquer idea to sorting. 
+Merge sort is an algorithm that applies the divide-and-conquer idea to sorting. 
 
 Merging two sorted arrays
 -------------------------
@@ -127,7 +127,7 @@ Having checked the invariants for ``merge`` it's almost trivial to annotate ``me
  
 .. _exercise-fast-merge-sort:
 
-Exercise 5 
+Exercise 8 
 ----------
 
 The merge sort presented above can be improved by getting rid of allocating new sub-arrays to copy elements to and sort recursively every time. The way to do it is to initially allocate just one auxiliary array ``aux`` of the same size as the initial one and use it as a "sandbox" for sorting, without ever allocating more arrays. Indeed, the ``merge`` procedure will have to be adapted as well.
@@ -136,15 +136,15 @@ Implement this version of the merge sort and compare its performance (using func
 
 .. _exercise-three-way-merge-sort:
 
-Exercise 6 
+Exercise 9 
 ----------
 
 Implement a version of merge sort that splits the sub-arrays into three parts and then combines them together. Compare its performance to the ordinary 2-way merge sort.
 
 .. _exercise-index-sort:
 
-Exercise 7
-----------
+Exercise 10
+-----------
 
 Develop and implement a version of merge sort that does not rearrange the input array ``arr``, but returns an array ``perm`` of type ``int array``, such that ``perm.(i)`` is the index in ``arr`` of the entry with ``i`` th smallest key in the array.
 

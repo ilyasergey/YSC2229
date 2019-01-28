@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Searching in Arrays &mdash; YSC2229 2019</title>
+  <title>3.4. Searching in Arrays &mdash; YSC2229 2019</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3.5. Merge Sort" href="week-03a_merge_sort.html" />
+    <link rel="prev" title="3.3. Generating Arrays" href="week-03a_array_generators.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,9 +78,27 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html">3.1. Complexity of Simple Recursive Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_exercises.html">3.2. Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_array_generators.html">3.3. Generating Arrays</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.4. Searching in Arrays</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#linear-search">3.4.1. Linear Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-5">3.4.2. Exercise 5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#binary-search">3.4.3. Binary Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-6">3.4.4. Exercise 6</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#binary-search-invariant">3.4.5. Binary Search Invariant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-7">3.4.6. Exercise 7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-main-idea-of-divide-and-conquer-algorithms">3.4.7. The Main Idea of Divide-and-Conquer algorithms</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html">3.5. Merge Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_exercises.html">3.6. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -124,7 +144,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Searching in Arrays</li>
+          <li><a href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a> &raquo;</li>
+        
+      <li>3.4. Searching in Arrays</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -142,11 +164,11 @@
            <div itemprop="articleBody">
             
   <div class="section" id="searching-in-arrays">
-<h1>Searching in Arrays<a class="headerlink" href="#searching-in-arrays" title="Permalink to this headline">¶</a></h1>
+<h1>3.4. Searching in Arrays<a class="headerlink" href="#searching-in-arrays" title="Permalink to this headline">¶</a></h1>
 <p>Let us put key-value arrays to some good use.</p>
 <div class="section" id="linear-search">
-<h2>Linear Search<a class="headerlink" href="#linear-search" title="Permalink to this headline">¶</a></h2>
-<p>One of the most common operations with key-value arrays is <em>searching</em> looking for the index of an element with some known key, or reporting that there is not such element. The simples implementation of searching walks through the entire array until the saught element is found, or the whole array is traversed:</p>
+<h2>3.4.1. Linear Search<a class="headerlink" href="#linear-search" title="Permalink to this headline">¶</a></h2>
+<p>One of the most common operations with key-value arrays is <em>searching</em> looking for the index of an element with some known key, or reporting that there is not such element. The simples implementation of searching walks through the entire array until the sought element is found, or the whole array is traversed:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">linear_search</span> <span class="n">arr</span> <span class="n">k</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
   <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">ref</span> <span class="nc">None</span> <span class="k">in</span>
@@ -171,13 +193,13 @@
 </div>
 <p>In the first case, <code class="docutils literal notranslate"><span class="pre">linear_search</span></code> has returned the index (<code class="docutils literal notranslate"><span class="pre">5</span></code>) of an element with the key 4, as well as the element itself. In the second case, it returns <code class="docutils literal notranslate"><span class="pre">None</span></code>, as there is no key <code class="docutils literal notranslate"><span class="pre">10</span></code> in the array <code class="docutils literal notranslate"><span class="pre">a</span></code>.</p>
 </div>
-<div class="section" id="exercise-2">
-<span id="exercise-find-range-unsorted"></span><h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-5">
+<span id="exercise-find-range-unsorted"></span><h2>3.4.2. Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
 <p>Find a procedure that takes an unsorted array and a given range of keys (represented by a pair of numbers <code class="docutils literal notranslate"><span class="pre">lo</span> <span class="pre">&lt;</span> <span class="pre">hi</span></code>, right boundary not included), and returns the list of all elements in the array, whose keys are in that range. Estimate the complexity of this procedure.</p>
 </div>
 <div class="section" id="binary-search">
-<h2>Binary Search<a class="headerlink" href="#binary-search" title="Permalink to this headline">¶</a></h2>
-<p>Binary search is an efficient search procedure that works on a <em>sorted array</em> and looks for an element in it, repeatedly divigin its search-space by half:</p>
+<h2>3.4.3. Binary Search<a class="headerlink" href="#binary-search" title="Permalink to this headline">¶</a></h2>
+<p>Binary search is an efficient search procedure that works on a <em>sorted array</em> and looks for an element in it, repeatedly dividing its search-space by half:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">binary_search</span> <span class="n">arr</span> <span class="n">k</span> <span class="o">=</span>
   <span class="k">let</span> <span class="k">rec</span> <span class="n">rank</span> <span class="n">lo</span> <span class="n">hi</span> <span class="o">=</span>
     <span class="k">if</span> <span class="n">hi</span> <span class="o">&lt;=</span> <span class="n">lo</span>
@@ -246,12 +268,12 @@
 </div>
 <p>Notice that at each iteration the sub-array halves, so <code class="docutils literal notranslate"><span class="pre">binary_sort</span></code> does not even have consider the entire array!</p>
 </div>
-<div class="section" id="exercise-3">
-<span id="exercise-binare-no-mid"></span><h2>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-6">
+<span id="exercise-binare-no-mid"></span><h2>3.4.4. Exercise 6<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h2>
 <p>Modify <code class="docutils literal notranslate"><span class="pre">binary_search</span></code> in a way that it does not test the equality of <code class="docutils literal notranslate"><span class="pre">fst</span> <span class="pre">arr.(mid)</span> <span class="pre">=</span> <span class="pre">k</span></code> and does not exclude the middle element, but rather considers it as a part of one of the recursively processed array subparts.</p>
 </div>
 <div class="section" id="binary-search-invariant">
-<h2>Binary Search Invariant<a class="headerlink" href="#binary-search-invariant" title="Permalink to this headline">¶</a></h2>
+<h2>3.4.5. Binary Search Invariant<a class="headerlink" href="#binary-search-invariant" title="Permalink to this headline">¶</a></h2>
 <p>Binary search crucially relies on the fact that the given array (and hence its contiguous sub-arrays) are sorted, so, upon comparing the key to the middle, it can safely ignore the half that is irrelevant for it. This can be captured by the following precondition we are going to give to <code class="docutils literal notranslate"><span class="pre">rank</span></code>. It postulates that a sought element with a key <code class="docutils literal notranslate"><span class="pre">k</span></code> is in the whole arrays if and only if it is in the sub array, bound by <code class="docutils literal notranslate"><span class="pre">lo</span> <span class="pre">..</span> <span class="pre">hi</span></code> that we are about to consider:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">binary_search_rank_pre</span> <span class="n">arr</span> <span class="n">lo</span> <span class="n">hi</span> <span class="n">k</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
@@ -296,12 +318,12 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="exercise-4">
-<span id="exercise-exponential-search"></span><h2>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-7">
+<span id="exercise-exponential-search"></span><h2>3.4.6. Exercise 7<a class="headerlink" href="#exercise-7" title="Permalink to this headline">¶</a></h2>
 <p>Exponential search is a more efficient version of binary-search, which can also work on infinite sorted arrays (e.g., never-ending streams of given key-value pairs). It starts by choosing the initial search range by it to be an increasing power of two. Once a suitable range is determined, it works similarly to binary search on that range. Implement exponential search and formally explain its worst-case complexity.</p>
 </div>
 <div class="section" id="the-main-idea-of-divide-and-conquer-algorithms">
-<h2>The Main Idea of Divide-and-Conquer algorithms<a class="headerlink" href="#the-main-idea-of-divide-and-conquer-algorithms" title="Permalink to this headline">¶</a></h2>
+<h2>3.4.7. The Main Idea of Divide-and-Conquer algorithms<a class="headerlink" href="#the-main-idea-of-divide-and-conquer-algorithms" title="Permalink to this headline">¶</a></h2>
 <p>Both Binary and Exponential search algorithms are examples of the so-called <em>divide-and-conquer</em> approach. In this approach the processing of a data (a key-value array in our case) is based on multi-branched recursion. A divide-and-conquer algorithm works by recursively breaking down a problem into two or more sub-problems of the same or related type, until these become simple enough to be solved directly (such as reporting an element). The solutions to the sub-problems are then combined to give a solution to the original problem.</p>
 <p><strong>Checkpoint question:</strong> What is the “divide” and what is a “conquer” phase of the binary search?</p>
 </div>
@@ -312,6 +334,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-03a_merge_sort.html" class="btn btn-neutral float-right" title="3.5. Merge Sort" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-03a_array_generators.html" class="btn btn-neutral" title="3.3. Generating Arrays" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

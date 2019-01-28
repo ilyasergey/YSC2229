@@ -8,7 +8,7 @@ Let us put key-value arrays to some good use.
 Linear Search
 -------------
 
-One of the most common operations with key-value arrays is *searching* looking for the index of an element with some known key, or reporting that there is not such element. The simples implementation of searching walks through the entire array until the saught element is found, or the whole array is traversed::
+One of the most common operations with key-value arrays is *searching* looking for the index of an element with some known key, or reporting that there is not such element. The simples implementation of searching walks through the entire array until the sought element is found, or the whole array is traversed::
 
  let linear_search arr k = 
    let len = Array.length arr in
@@ -35,7 +35,7 @@ In the first case, ``linear_search`` has returned the index (``5``) of an elemen
 
 .. _exercise-find-range-unsorted:
 
-Exercise 2
+Exercise 5
 ----------
 
 Find a procedure that takes an unsorted array and a given range of keys (represented by a pair of numbers ``lo < hi``, right boundary not included), and returns the list of all elements in the array, whose keys are in that range. Estimate the complexity of this procedure.
@@ -43,7 +43,7 @@ Find a procedure that takes an unsorted array and a given range of keys (represe
 Binary Search
 -------------
 
-Binary search is an efficient search procedure that works on a *sorted array* and looks for an element in it, repeatedly divigin its search-space by half::
+Binary search is an efficient search procedure that works on a *sorted array* and looks for an element in it, repeatedly dividing its search-space by half::
 
  let rec binary_search arr k = 
    let rec rank lo hi = 
@@ -114,7 +114,7 @@ Notice that at each iteration the sub-array halves, so ``binary_sort`` does not 
 
 .. _exercise-binare-no-mid:
 
-Exercise 3
+Exercise 6
 ----------
 
 Modify ``binary_search`` in a way that it does not test the equality of ``fst arr.(mid) = k`` and does not exclude the middle element, but rather considers it as a part of one of the recursively processed array subparts.
@@ -167,7 +167,7 @@ We can also annotate our implementation with this invariant and test it::
 
 .. _exercise-exponential-search:
 
-Exercise 4
+Exercise 7
 ----------
 
 Exponential search is a more efficient version of binary-search, which can also work on infinite sorted arrays (e.g., never-ending streams of given key-value pairs). It starts by choosing the initial search range by it to be an increasing power of two. Once a suitable range is determined, it works similarly to binary search on that range. Implement exponential search and formally explain its worst-case complexity.

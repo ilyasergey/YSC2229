@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Merge Sort &mdash; YSC2229 2019</title>
+  <title>3.5. Merge Sort &mdash; YSC2229 2019</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3.6. Exercises" href="week-03a_exercises.html" />
+    <link rel="prev" title="3.4. Searching in Arrays" href="week-03a_search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,9 +78,26 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html">3.1. Complexity of Simple Recursive Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_exercises.html">3.2. Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_array_generators.html">3.3. Generating Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html">3.4. Searching in Arrays</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.5. Merge Sort</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#merging-two-sorted-arrays">3.5.1. Merging two sorted arrays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#invariant-of-merge">3.5.2. Invariant of <code class="docutils literal notranslate"><span class="pre">merge</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#main-sorting-procedure-and-its-invariants">3.5.3. Main sorting procedure and its invariants</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-8">3.5.4. Exercise 8</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-9">3.5.5. Exercise 9</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-10">3.5.6. Exercise 10</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_exercises.html">3.6. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -124,7 +143,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Merge Sort</li>
+          <li><a href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a> &raquo;</li>
+        
+      <li>3.5. Merge Sort</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -142,10 +163,10 @@
            <div itemprop="articleBody">
             
   <div class="section" id="merge-sort">
-<h1>Merge Sort<a class="headerlink" href="#merge-sort" title="Permalink to this headline">¶</a></h1>
-<p>Merge sort is a algorithm that applies the divide-and-conquer idea to sorting.</p>
+<h1>3.5. Merge Sort<a class="headerlink" href="#merge-sort" title="Permalink to this headline">¶</a></h1>
+<p>Merge sort is an algorithm that applies the divide-and-conquer idea to sorting.</p>
 <div class="section" id="merging-two-sorted-arrays">
-<h2>Merging two sorted arrays<a class="headerlink" href="#merging-two-sorted-arrays" title="Permalink to this headline">¶</a></h2>
+<h2>3.5.1. Merging two sorted arrays<a class="headerlink" href="#merging-two-sorted-arrays" title="Permalink to this headline">¶</a></h2>
 <p>The heart of merge sort heart is the procedure <code class="docutils literal notranslate"><span class="pre">merge</span></code> that merges two already sorted arrays, <code class="docutils literal notranslate"><span class="pre">from1</span></code> and <code class="docutils literal notranslate"><span class="pre">from2</span></code>, into a dedicated subarray ranging from <code class="docutils literal notranslate"><span class="pre">lo</span></code> to <code class="docutils literal notranslate"><span class="pre">hi</span></code> of an initial “destination” array <code class="docutils literal notranslate"><span class="pre">dest</span></code>:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">merge</span> <span class="n">from1</span> <span class="n">from2</span> <span class="n">dest</span> <span class="n">lo</span> <span class="n">hi</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">len1</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">from1</span> <span class="k">in</span>
@@ -165,7 +186,7 @@
 </div>
 </div>
 <div class="section" id="invariant-of-merge">
-<h2>Invariant of <code class="docutils literal notranslate"><span class="pre">merge</span></code><a class="headerlink" href="#invariant-of-merge" title="Permalink to this headline">¶</a></h2>
+<h2>3.5.2. Invariant of <code class="docutils literal notranslate"><span class="pre">merge</span></code><a class="headerlink" href="#invariant-of-merge" title="Permalink to this headline">¶</a></h2>
 <p>We can check that <code class="docutils literal notranslate"><span class="pre">merge</span></code> indeed creates a sorted array out of two smaller sorted arrays using the following familiar auxiliary functions:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">sorted</span> <span class="n">ls</span> <span class="o">=</span>
   <span class="k">match</span> <span class="n">ls</span> <span class="k">with</span>
@@ -215,7 +236,7 @@
 </div>
 </div>
 <div class="section" id="main-sorting-procedure-and-its-invariants">
-<h2>Main sorting procedure and its invariants<a class="headerlink" href="#main-sorting-procedure-and-its-invariants" title="Permalink to this headline">¶</a></h2>
+<h2>3.5.3. Main sorting procedure and its invariants<a class="headerlink" href="#main-sorting-procedure-and-its-invariants" title="Permalink to this headline">¶</a></h2>
 <p>The main merge sort procedure preforms sorting recursively by (a) by splitting the given array range into two new smaller arrays repeatedly until reaching the primitive arrays (of size of 0 or 1, which are already sorted) and (b) merging the small arrays bottom-up into the larger arrays, until the top range is reached:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">copy_array</span> <span class="n">arr</span> <span class="n">lo</span> <span class="n">hi</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="n">hi</span> <span class="o">-</span> <span class="n">lo</span> <span class="k">in</span>
@@ -263,17 +284,17 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="exercise-5">
-<span id="exercise-fast-merge-sort"></span><h2>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-8">
+<span id="exercise-fast-merge-sort"></span><h2>3.5.4. Exercise 8<a class="headerlink" href="#exercise-8" title="Permalink to this headline">¶</a></h2>
 <p>The merge sort presented above can be improved by getting rid of allocating new sub-arrays to copy elements to and sort recursively every time. The way to do it is to initially allocate just one auxiliary array <code class="docutils literal notranslate"><span class="pre">aux</span></code> of the same size as the initial one and use it as a “sandbox” for sorting, without ever allocating more arrays. Indeed, the <code class="docutils literal notranslate"><span class="pre">merge</span></code> procedure will have to be adapted as well.</p>
 <p>Implement this version of the merge sort and compare its performance (using function <code class="docutils literal notranslate"><span class="pre">time</span></code>) with the previous version of merge sort. Describe the invariant for the new version of merge and for the main function and check that it holds.</p>
 </div>
-<div class="section" id="exercise-6">
-<span id="exercise-three-way-merge-sort"></span><h2>Exercise 6<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-9">
+<span id="exercise-three-way-merge-sort"></span><h2>3.5.5. Exercise 9<a class="headerlink" href="#exercise-9" title="Permalink to this headline">¶</a></h2>
 <p>Implement a version of merge sort that splits the sub-arrays into three parts and then combines them together. Compare its performance to the ordinary 2-way merge sort.</p>
 </div>
-<div class="section" id="exercise-7">
-<span id="exercise-index-sort"></span><h2>Exercise 7<a class="headerlink" href="#exercise-7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-10">
+<span id="exercise-index-sort"></span><h2>3.5.6. Exercise 10<a class="headerlink" href="#exercise-10" title="Permalink to this headline">¶</a></h2>
 <p>Develop and implement a version of merge sort that does not rearrange the input array <code class="docutils literal notranslate"><span class="pre">arr</span></code>, but returns an array <code class="docutils literal notranslate"><span class="pre">perm</span></code> of type <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">array</span></code>, such that <code class="docutils literal notranslate"><span class="pre">perm.(i)</span></code> is the index in <code class="docutils literal notranslate"><span class="pre">arr</span></code> of the entry with <code class="docutils literal notranslate"><span class="pre">i</span></code> th smallest key in the array.</p>
 </div>
 </div>
@@ -283,6 +304,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-03a_exercises.html" class="btn btn-neutral float-right" title="3.6. Exercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-03a_search.html" class="btn btn-neutral" title="3.4. Searching in Arrays" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

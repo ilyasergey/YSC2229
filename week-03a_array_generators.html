@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Generating Arrays &mdash; YSC2229 2019</title>
+  <title>3.3. Generating Arrays &mdash; YSC2229 2019</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3.4. Searching in Arrays" href="week-03a_search.html" />
+    <link rel="prev" title="3.2. Exercises" href="week-03b_exercises.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,9 +78,24 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html">3.1. Complexity of Simple Recursive Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_exercises.html">3.2. Exercises</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.3. Generating Arrays</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#simple-random-generators">3.3.1. Simple random generators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#measuring-execution-time">3.3.2. Measuring execution time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#randomised-array-generation-and-testing">3.3.3. Randomised array generation and testing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-4">3.3.4. Exercise 4</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html">3.4. Searching in Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html">3.5. Merge Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_exercises.html">3.6. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -124,7 +141,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Generating Arrays</li>
+          <li><a href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a> &raquo;</li>
+        
+      <li>3.3. Generating Arrays</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -142,7 +161,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="generating-arrays">
-<h1>Generating Arrays<a class="headerlink" href="#generating-arrays" title="Permalink to this headline">¶</a></h1>
+<h1>3.3. Generating Arrays<a class="headerlink" href="#generating-arrays" title="Permalink to this headline">¶</a></h1>
 <p>Searching and sorting are the two main procedures one perfroms on arrays, and this is why the performance of the corresponding algorithms plays crucial role in practical applications. In this chapter we will explore more efficient ways to do so.</p>
 <p>In order to not duplicate the development let us include some of the files from the previous weeks, as they already contain a number of useful functions. This can be done in OCaml by first compiling the corresponding file and then loading it in a current development. For instance, if the previous week’s file has been called <cite>week_02.ml</cite>, it can be included into the current one by first running the following command from the terminal:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">ocamlc</span> <span class="n">week_02</span><span class="o">.</span><span class="n">ml</span>
@@ -154,7 +173,7 @@
 </pre></div>
 </div>
 <div class="section" id="simple-random-generators">
-<h2>Simple random generators<a class="headerlink" href="#simple-random-generators" title="Permalink to this headline">¶</a></h2>
+<h2>3.3.1. Simple random generators<a class="headerlink" href="#simple-random-generators" title="Permalink to this headline">¶</a></h2>
 <p>To test not only the correctness, but also the performance of our search and sorting algorithms, let us invest some time into creating the procedures for random arrays. In this chapter and further we will consider slightly more interesting arrays than just arrays of integers of type <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">array</span></code>. Specifically, each element of an array will hold a <em>pair</em>: a <em>key</em> (typically an integer), identifying an element, and a <em>value</em>, which carries some interesting payload. In a general case, some elements might have duplicating keys, and different keys can correspond to the same element. Do not confuse the array indices (which are used for efficient access to specific array entries) with element keys (which are domain-specific and can be anything identifying the corresponding payload).</p>
 <p>Let us start from implementing a random generator for lists of rundom numbers in a range from <code class="docutils literal notranslate"><span class="pre">0</span></code> to a given <code class="docutils literal notranslate"><span class="pre">bound</span></code>, of a specified length <code class="docutils literal notranslate"><span class="pre">len</span></code>:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">generate_keys</span> <span class="n">bound</span> <span class="n">len</span> <span class="o">=</span>
@@ -225,7 +244,7 @@
 </div>
 </div>
 <div class="section" id="measuring-execution-time">
-<h2>Measuring execution time<a class="headerlink" href="#measuring-execution-time" title="Permalink to this headline">¶</a></h2>
+<h2>3.3.2. Measuring execution time<a class="headerlink" href="#measuring-execution-time" title="Permalink to this headline">¶</a></h2>
 <p>For our future experiments with algorithms and data structures, it is useful to be able to measure execution time, hence we implement the following helper function:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">time</span> <span class="n">f</span> <span class="n">x</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="nn">Sys</span><span class="p">.</span><span class="n">time</span> <span class="bp">()</span> <span class="k">in</span>
@@ -237,8 +256,7 @@
 <p>It can be used with any arbitrary computation that takes at least one argument.</p>
 </div>
 <div class="section" id="randomised-array-generation-and-testing">
-<h2>Randomised array generation and testing<a class="headerlink" href="#randomised-array-generation-and-testing" title="Permalink to this headline">¶</a></h2>
-<p>[Automatically testing insert-sort]</p>
+<h2>3.3.3. Randomised array generation and testing<a class="headerlink" href="#randomised-array-generation-and-testing" title="Permalink to this headline">¶</a></h2>
 <p>Let us re-implement insert-sort, so it would be useful for our new setting of arrays with key-value pairs and test its performance:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">new_insert_sort</span> <span class="n">arr</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
@@ -263,8 +281,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="exercise-1">
-<span id="exercise-randomised-testing"></span><h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-4">
+<span id="exercise-randomised-testing"></span><h2>3.3.4. Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
 <p>Implement a function that generates takes (a) a sorting procedure <code class="docutils literal notranslate"><span class="pre">sort</span></code> for a key-value array, (b) a number <code class="docutils literal notranslate"><span class="pre">n</span></code> and a number <code class="docutils literal notranslate"><span class="pre">length</span></code>, and generates <code class="docutils literal notranslate"><span class="pre">n</span></code> random arrays of the length <code class="docutils literal notranslate"><span class="pre">length</span></code>, testing that <code class="docutils literal notranslate"><span class="pre">sort</span></code> is indeed correct on all those arrays.</p>
 </div>
 </div>
@@ -274,6 +292,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-03a_search.html" class="btn btn-neutral float-right" title="3.4. Searching in Arrays" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-03b_exercises.html" class="btn btn-neutral" title="3.2. Exercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

@@ -13,9 +13,11 @@ infinitely, i.e., :math:`n \rightarrow \infty`.
 Big O-notation
 --------------
 
-**Definition** The positive-valued function :math:`f(x) \in O(g(x))` if and only if  there is a value :math:`x_0` and a constant :math:`c > 0`, such that for all :math:`x \geq x_0,  f(x) \leq c \cdot g(x)`.
+.. admonition:: Definition 
 
-This can be illustrated as follows:
+  The positive-valued function :math:`f(x) \in O(g(x))` if and only if there is a value :math:`x_0` and a constant :math:`c > 0`, such that for all :math:`x \geq x_0`, :math:`f(x) \leq c \cdot g(x)`.
+
+This definition can be illustrated as follows:
 
 .. image:: ../resources/bigo.png
    :width: 550px

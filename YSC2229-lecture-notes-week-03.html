@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>YSC2229 Lecture Notes, Week 03 &mdash; YSC2229 2019</title>
+  <title>3. YSC2229 Lecture Notes, Week 03 &mdash; YSC2229 2019</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3.1. Complexity of Simple Recursive Algorithms" href="week-03b_recursive_complexity.html" />
+    <link rel="prev" title="2.8. Exercises" href="week-02b_exercises.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,9 +78,18 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. YSC2229 Lecture Notes, Week 03</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html">3.1. Complexity of Simple Recursive Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_exercises.html">3.2. Exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_array_generators.html">3.3. Generating Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html">3.4. Searching in Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html">3.5. Merge Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_exercises.html">3.6. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -124,7 +135,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>YSC2229 Lecture Notes, Week 03</li>
+      <li>3. YSC2229 Lecture Notes, Week 03</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -142,57 +153,55 @@
            <div itemprop="articleBody">
             
   <div class="section" id="ysc2229-lecture-notes-week-03">
-<h1>YSC2229 Lecture Notes, Week 03<a class="headerlink" href="#ysc2229-lecture-notes-week-03" title="Permalink to this headline">¶</a></h1>
+<h1>3. YSC2229 Lecture Notes, Week 03<a class="headerlink" href="#ysc2229-lecture-notes-week-03" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="week-03a_array_generators.html">Generating Arrays</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-03a_array_generators.html#simple-random-generators">Simple random generators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03a_array_generators.html#measuring-execution-time">Measuring execution time</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03a_array_generators.html#randomised-array-generation-and-testing">Randomised array generation and testing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03a_array_generators.html#exercise-1">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03b_recursive_complexity.html">3.1. Complexity of Simple Recursive Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html#complexity-of-computing-the-factorial">3.1.1. Complexity of computing the factorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html#method-of-differences">3.1.2. Method of differences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html#recurrence-relations">3.1.3. Recurrence relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html#first-order-recurrence-relations">3.1.4. First-order recurrence relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html#inhomogeneous-recurrence-relations">3.1.5. Inhomogeneous recurrence relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html#exercise-1">3.1.6. Exercise 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html#complexity-of-recursive-matrix-determinant">3.1.7. Complexity of recursive matrix determinant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html#exercise-2">3.1.8. Exercise 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html#exercise-3">3.1.9. Exercise 3</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-03a_search.html">Searching in Arrays</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#linear-search">Linear Search</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#exercise-2">Exercise 2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#binary-search">Binary Search</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#exercise-3">Exercise 3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#binary-search-invariant">Binary Search Invariant</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#exercise-4">Exercise 4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#the-main-idea-of-divide-and-conquer-algorithms">The Main Idea of Divide-and-Conquer algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03b_exercises.html">3.2. Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_exercises.html#mandatory-exercises">3.2.1. Mandatory exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03b_exercises.html#recommended-exercises">3.2.2. Recommended exercises</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-03a_merge_sort.html">Merge Sort</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html#merging-two-sorted-arrays">Merging two sorted arrays</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html#invariant-of-merge">Invariant of <code class="docutils literal notranslate"><span class="pre">merge</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html#main-sorting-procedure-and-its-invariants">Main sorting procedure and its invariants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html#exercise-5">Exercise 5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html#exercise-6">Exercise 6</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html#exercise-7">Exercise 7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03a_array_generators.html">3.3. Generating Arrays</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_array_generators.html#simple-random-generators">3.3.1. Simple random generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_array_generators.html#measuring-execution-time">3.3.2. Measuring execution time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_array_generators.html#randomised-array-generation-and-testing">3.3.3. Randomised array generation and testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_array_generators.html#exercise-4">3.3.4. Exercise 4</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-03a_exercises.html">Exercises</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-03a_exercises.html#mandatory-exercises">Mandatory exercises</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03a_exercises.html#recommended-exercises">Recommended exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03a_search.html">3.4. Searching in Arrays</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#linear-search">3.4.1. Linear Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#exercise-5">3.4.2. Exercise 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#binary-search">3.4.3. Binary Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#exercise-6">3.4.4. Exercise 6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#binary-search-invariant">3.4.5. Binary Search Invariant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#exercise-7">3.4.6. Exercise 7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_search.html#the-main-idea-of-divide-and-conquer-algorithms">3.4.7. The Main Idea of Divide-and-Conquer algorithms</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-03b_recursive_complexity.html">Complexity of Recursive Algorithms</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html#complexity-of-computing-the-factorial">Complexity of computing the factorial</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html#method-of-differences">Method of differences</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html#first-order-recurrence-relations">First-Order Recurrence Relations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03b_recursive_complexity.html#complexity-of-naive-determinant">Complexity of naive determinant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03a_merge_sort.html">3.5. Merge Sort</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html#merging-two-sorted-arrays">3.5.1. Merging two sorted arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html#invariant-of-merge">3.5.2. Invariant of <code class="docutils literal notranslate"><span class="pre">merge</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html#main-sorting-procedure-and-its-invariants">3.5.3. Main sorting procedure and its invariants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html#exercise-8">3.5.4. Exercise 8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html#exercise-9">3.5.5. Exercise 9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_merge_sort.html#exercise-10">3.5.6. Exercise 10</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-03b_divide_and_conquer_complexity.html">Complexity of Divide-and-Conquer Algorithms</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-03b_divide_and_conquer_complexity.html#changing-variable-in-recurrence-relations">Changing variable in recurrence relations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03b_divide_and_conquer_complexity.html#complexity-of-binary-search">Complexity of Binary Search</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03b_divide_and_conquer_complexity.html#complexity-of-merge-sort">Complexity of Merge-Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03b_divide_and_conquer_complexity.html#the-master-theorem">The Master Theorem</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-03b_exercises.html">Exercises</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-03b_exercises.html#mandatory-exercises">Mandatory exercises</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03b_exercises.html#recommended-exercises">Recommended exercises</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03a_exercises.html">3.6. Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_exercises.html#mandatory-exercises">3.6.1. Mandatory exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03a_exercises.html#recommended-exercises">3.6.2. Recommended exercises</a></li>
 </ul>
 </li>
 </ul>
@@ -204,6 +213,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-03b_recursive_complexity.html" class="btn btn-neutral float-right" title="3.1. Complexity of Simple Recursive Algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-02b_exercises.html" class="btn btn-neutral" title="2.8. Exercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
