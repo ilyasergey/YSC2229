@@ -12,7 +12,7 @@ Week 02b (Jan 23)
 Algorithmic complexity; order notation: big-O, little-o. Complexity of loops; sums of series, approximating with integrals. Analysing complexity of sorting algorithms.
 
 Week 03a (Jan 28)
-Divide-and-conquer algorithms. Binary search, Exponential search. Merge-sort.
+Generating random key-value arrays. Divide-and-conquer algorithms. Binary search, Exponential search. Merge-sort.
 Week 03b (Jan 28)
 Complexity of recursive algorithms. Recurrence relations. Master theorem.
 
