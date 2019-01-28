@@ -3,7 +3,7 @@
 Merge Sort
 ==========
 
-Merge sort is a algorithm that applies the divide-and-conquer idea to sorting. 
+Merge sort is an algorithm that applies the divide-and-conquer idea to sorting. 
 
 Merging two sorted arrays
 -------------------------
