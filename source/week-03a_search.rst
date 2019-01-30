@@ -170,7 +170,7 @@ We can also annotate our implementation with this invariant and test it::
 Exercise 7
 ----------
 
-Exponential search is a more efficient version of binary-search, which can also work on infinite sorted arrays (e.g., never-ending streams of given key-value pairs). It starts by choosing the initial search range by making it to be an increasing power of two. Once a suitable range is determined, it works similarly to binary search on that range. Implement exponential search and formally explain its worst-case complexity.
+Exponential search is a more efficient version of binary-search, which can also work on infinite sorted arrays (e.g., never-ending streams of given key-value pairs). It starts by choosing the initial search range by making it to be an increasing power of two. Once a suitable range is determined, it works similarly to binary search on that range.  Implement exponential search and argue for its correcntess. [Optionally] Annotate it with precondition.
 
 The Main Idea of Divide-and-Conquer algorithms
 ----------------------------------------------
