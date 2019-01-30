@@ -130,7 +130,7 @@ definitions, which check that a sub-array of array is indeed sorted::
     assert (l <= u);
     let res = ref [] in
     let i = ref (u - 1) in
-    while l < !i do
+    while l <= !i do
       res := arr.(!i) :: !res;
       i := !i - 1             
     done;
