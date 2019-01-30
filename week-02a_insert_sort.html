@@ -288,7 +288,7 @@ definitions, which check that a sub-array of array is indeed sorted:</p>
   <span class="k">assert</span> <span class="o">(</span><span class="n">l</span> <span class="o">&lt;=</span> <span class="n">u</span><span class="o">);</span>
   <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">ref</span> <span class="bp">[]</span> <span class="k">in</span>
   <span class="k">let</span> <span class="n">i</span> <span class="o">=</span> <span class="n">ref</span> <span class="o">(</span><span class="n">u</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="k">in</span>
-  <span class="k">while</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="o">!</span><span class="n">i</span> <span class="k">do</span>
+  <span class="k">while</span> <span class="n">l</span> <span class="o">&lt;=</span> <span class="o">!</span><span class="n">i</span> <span class="k">do</span>
     <span class="n">res</span> <span class="o">:=</span> <span class="n">arr</span><span class="o">.(!</span><span class="n">i</span><span class="o">)</span> <span class="o">::</span> <span class="o">!</span><span class="n">res</span><span class="o">;</span>
     <span class="n">i</span> <span class="o">:=</span> <span class="o">!</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span>
   <span class="k">done</span><span class="o">;</span>
