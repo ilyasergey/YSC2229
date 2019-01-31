@@ -212,8 +212,8 @@ repeatedly swapping adjacent elements in the suffix that are out of
 order. In *pseudocode* it is implemented as follows::
 
   BubbleSort (A):
-    for i = 1 to A.length - 1
-      for j = A downto i + 1
+    for i = 0 to A.length - 1
+      for j = A.length - 1 downto i + 1
         if A[j] < A[j - 1]
           swap A[j] and A[j - 1]
 
