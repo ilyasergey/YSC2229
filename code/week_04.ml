@@ -200,6 +200,89 @@ module DescKVSorting = Sorting(KeyDesc)
 let kv_sort_asc = AscKVSorting.sort
 let kv_sort_desc = DescKVSorting.sort
 
+(*****************************************************)
+(*              Linear-time sorting                  *)
+(*****************************************************)
+
+let generate_array_small_keys len = 
+  let kvs = list_zip (generate_keys 10 len) (generate_words 5 len) in
+  let almost_array = list_zip (iota (len - 1)) kvs in
+  let arr = Array.make len (0, "") in
+  List.iter (fun (i, kv) -> arr.(i) <- kv) almost_array;
+  arr
+
+let list_to_array ls = match ls with
+  | [] -> [||]
+  | h :: t ->
+    let len = List.length ls in
+    let arr = Array.make len h in
+    let almost_array = list_zip (iota (len - 1)) ls in
+    List.iter (fun (i, e) -> arr.(i) <- e) almost_array;
+    arr
+
+(* bucket sort for a fixed number of buckets *)
+  
+let simple_bucket_sort bnum arr = 
+  let buckets = Array.make bnum [] in
+  let len = Array.length arr in 
+  for i = 0 to len - 1 do
+    let key = fst arr.(i) in
+    let b = buckets.(key) in
+    buckets.(key) <- arr.(i) :: b
+  done;
+  let res = ref [] in
+  for i = bnum - 1 downto 0 do
+    res := List.append (List.rev (buckets.(i))) !res
+  done;
+  list_to_array !res
+  
+(* Explain stability of sorting! *)    
+
+
+(* Enhanced bucket_sort *)
+
+let kv_insert_sort ls = 
+  let rec walk xs acc =
+    match xs with
+    | [] -> acc
+    | h :: t -> 
+      let rec insert elem remaining = 
+        match remaining with
+        | [] -> [elem]
+        | h :: t as l ->
+          if fst h < fst elem 
+          then h :: (insert elem t) else (elem :: l)
+      in
+      let acc' = insert h acc in
+      walk t acc'
+  in 
+  walk ls []
+
+(* The idea to divide into buckets is not so bad *)
+
+let bucket_sort max ?(bnum = 1000) arr = 
+  let buckets = Array.make bnum [] in
+  let len = Array.length arr in 
+  for i = 0 to len - 1 do
+    let key = fst arr.(i) in
+    let bind = (key / max) * bnum in
+    let b = buckets.(bind) in
+    buckets.(bind) <- arr.(i) :: b
+  done;
+  let res = ref [] in
+  for i = bnum - 1 downto 0 do
+    let bucket_contents = List.rev (buckets.(i)) in 
+    let sorted_bucket = kv_insert_sort bucket_contents in
+    res := List.append sorted_bucket !res
+  done;
+  list_to_array !res
+
+let e = generate_key_value_array 1000
+
+(* Radix sort *)
+
+(* Reuse simple_bucket_sort *)
+
 
 
 
