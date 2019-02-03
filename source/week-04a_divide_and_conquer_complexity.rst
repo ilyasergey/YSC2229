@@ -13,10 +13,16 @@ Complexity of Binary Search
 
 TODO
 
-Complexity of Merge-Sort
+Complexity of Merge Sort
 ------------------------
 
 TODO
+
+Complexity of QuickSort
+------------------------
+
+TODO
+
 
 The Master Theorem
 ------------------
