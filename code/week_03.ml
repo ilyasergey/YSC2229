@@ -3,8 +3,9 @@
 (***********************************)
 
 (* Load *)
-#load "week_02a_arrays.cmo";;
-open Week_02a_arrays
+(* Next line is only necessary for REPL *)
+(* #load "week_02.cmo";;  *)
+open Week_02
 
 (* Generating elements for an array *)
 
@@ -373,13 +374,3 @@ let rec fast_merge_sort arr =
 
   in
   sort 0 len
-
-
-(* Exercise: index-sort *)
-
-
-let rec factorial n = 
-  if n <= 0 then 1
-  else n * (factorial @@ n - 1)
-
-                

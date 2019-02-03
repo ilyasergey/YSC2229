@@ -1,5 +1,7 @@
 .. -*- mode: rst -*-
 
+.. _sec-loading_modules:
+
 Generating Arrays
 =================
 
@@ -11,8 +13,8 @@ In order to not duplicate the development let us include some of the files from 
 
 and then, assuming that the current file is in the same folder, adding the following lines to the current development::
 
-  #load "week_02a_arrays.cmo";;
-  open Week_02a_arrays
+  #load "week_02.cmo";;
+  open Week_02
 
 Simple random generators
 ------------------------
