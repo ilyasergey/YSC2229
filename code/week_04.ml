@@ -227,8 +227,9 @@ let simple_bucket_sort bnum arr =
   let len = Array.length arr in 
   for i = 0 to len - 1 do
     let key = fst arr.(i) in
-    let b = buckets.(key) in
-    buckets.(key) <- arr.(i) :: b
+    let bindex = key mod bnum in
+    let b = buckets.(bindex) in
+    buckets.(bindex) <- arr.(i) :: b
   done;
   let res = ref [] in
   for i = bnum - 1 downto 0 do
@@ -283,6 +284,35 @@ let e = generate_key_value_array 1000
 
 (* Reuse simple_bucket_sort *)
 
+let radix_sort arr = 
+  let len = Array.length arr in
+  let max_key = 
+    let res = ref 0 in
+    for i = 0 to len - 1 do
+      if fst arr.(i) > !res 
+      then res := fst arr.(i)
+    done; !res
+  in
+  if len = 0 then arr
+  else
+    let radix = ref max_key in
+    let ls = array_to_list 0 len arr in
+    let keys = List.map fst ls in
+    let combined = list_to_array (list_zip keys ls) in
+    let res = ref combined in
+    while !radix > 0 do
+      res := simple_bucket_sort 10 !res;
+      for i = 0 to len - 1 do
+        let (k, v) = !res.(i) in
+        !res.(i) <- (k / 10, v)
+      done;
+      radix := !radix / 10
+    done;
+    let result_list = array_to_list 0 len !res in
+    list_to_array @@ List.map snd result_list
 
-
+      
+let test_radix_sort arr = 
+  let len = (Array.length arr) in
+  same_elems (array_to_list 0 len arr) (array_to_list 0 len (radix_sort arr))
 
