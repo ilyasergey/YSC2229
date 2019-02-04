@@ -49,9 +49,9 @@ let partition_print arr lo hi =
       printf "pivot = (%d, %s)\n" (fst pivot) (snd pivot);
       printf "lo = %d to  i = %d: " lo !i;
       print_kv_array arr lo !i; print_newline ();
-      printf "i = %d  to j = %d: "!i j;
+      printf "i = %d  to j = %d: " !i j;
       print_kv_array arr !i j; print_newline ();
-      printf "j = %d  to hi = %d: "!i hi;
+      printf "j = %d  to hi = %d: " j hi;
       print_kv_array arr j (hi -1); print_newline ();
       print_newline ();
 
@@ -84,7 +84,7 @@ let quick_sort arr =
     else 
       let mid = partition arr lo hi in
       sort arr lo mid;
-      sort arr mid hi
+      sort arr (mid + 1) hi
   in
   sort arr 0 (Array.length arr)
 
@@ -94,14 +94,11 @@ let quick_sort_print arr =
     if hi - lo <= 1 then ()
     else 
       let mid = partition arr lo hi in
-
-      printf "mid = %d\n" mid;
-      print_kv_array arr lo mid; print_newline ();
-      print_kv_array arr mid hi; print_newline ();
-      print_newline ();
-
+      printf "lo = %d, hi = %d\n" lo hi;
+      print_kv_array arr lo hi; print_newline ();
+      printf "mid = %d\n" mid; print_newline ();
       sort arr lo mid;
-      sort arr mid hi
+      sort arr (mid + 1) hi
   in
   sort arr 0 (Array.length arr)
 
