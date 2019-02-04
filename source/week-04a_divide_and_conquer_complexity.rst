@@ -69,7 +69,7 @@ Remember, however, that this has been done under assumptions that :math:`n = 2^k
                 
   If :math:`f(n) \in O(g(n))` for :math:`n` being a power of 2, then :math:`f(n) \in O(g(n))` for *any* :math:`n` if the following two conditions hold:
   1. :math:`g` is non-decreasing for all :math:`n > n_0` for some fixed :math:`n_0`, and
-  2. `g(2\cdot n) \in O(g(n))`, i.e., :math:`g` is *smooth* (does not grow too fast).
+  2. :math:`g(2 \cdot n) \in O(g(n))`, i.e., :math:`g` is *smooth* (does not grow too fast).
 
 The first condition of the theorem is true for most of the functions of interest and means that :math:`g` is "predictable" and will not suddenly start decreasing in between the "checkpoints" being the powers of two. The second condition states that in between those checkpoints the function does not grow to fast, so on the segment :math:`[2^k ... 2^{k+1}]` one can still use it for asymptotic approximation. Combinations of polynomials and algorithms are smooth, but it's not the case for exponents and factorial.
 
