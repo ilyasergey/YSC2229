@@ -76,7 +76,7 @@ The first condition of the theorem is true for most of the functions of interest
 Getting back to our example with binary search and its complexity :math:`t(n) \in O(\log n)` for powers of 2, we can assert that
 
 1. :math:`\log n` is growing monotonically, that is, it's non-decreasing.
-2. :math:`\log (2n) = :math:`\log 2 + \log n \in O(\log n)`, therefore the function is smooth.
+2. :math:`\log (2n) = \log 2 + \log n \in O(\log n)`, therefore the function is smooth.
 
 As the result we can conclude that time demand of binary search is within :math:`O(\log n)` unconditionally.
 
