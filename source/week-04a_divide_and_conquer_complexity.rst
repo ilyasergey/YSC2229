@@ -245,7 +245,7 @@ As a mnemonics, one can think of
 
 The following theorem serves a "Swiss-army knife" for recurrence relations of the form :math:`T(n) = aT(n/b) + f(n)`, where :math:`a \geq 1` and `b > 1` are constants, and :math:`f(n)` is eventually non-decreasing.
 
-.. admonition:: Theorem (Master Theorem)
+.. admonition:: Theorem (The Master Method for Solving Recurrences)
 
   Let :math:`T(n) = aT(n/b) + f(n)`, then :math:`T(n)` has the following asymptotic behaviour:               
 
