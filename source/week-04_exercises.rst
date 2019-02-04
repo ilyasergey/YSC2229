@@ -28,6 +28,15 @@ Recommended exercises
 * :ref:`exercise-more-notations`
   Relating big-O, :math:`\Omega`, and :math:`\Theta`-notation.
 
+* :ref:`exercise-functor-printing`
+  Functor for sorting and printing
+
+* :ref:`exercise-bucket-sort`
+  Fun with bucket sort
+
+* :ref:`exercise-radix-sort`
+  Radix sort invariant
+
 
 .. _exercise-partition-invariants: 
 
@@ -79,7 +88,26 @@ Exercise 6
 
 Prove, out of definitions that for ay two functions :math:`f(n)` and `:math:`g(n)`, one has :math:`f(n) \in \Theta(g(n))` if and only if :math:`f(n) \in O(g(n))` and :math:`f(n) \in \Omega(g(n))`.
 
+.. _exercise-functor-printing:
+
 Exercise 7
 ----------
 
 Enhance :ref:`sec-functor-sorting` ``Sorting``, so it would also take an instance of a signature ``Printable`` that provides an implementation for printing elements of an array. With that ``Sorting`` should also feature a second version of sorting, ``sort_print``, which will print a sorting trace using the machinery imported from ``Printable``.
+
+.. _exercise-bucket-sort:
+
+Exercise 8
+----------
+
+Change the implementation of :ref:`sec-bucket-sort`, so it would not
+require to take the gues for a maximal key as a parameter, while
+retaining the same aymptotic complexity.
+
+.. _exercise-radix-sort:
+
+Exercise 9
+----------
+
+Implement and test the invariant for the ``while``-loop of
+:ref:`sec-radix-sort`.

@@ -237,6 +237,7 @@ let simple_bucket_sort bnum arr =
 (* Explain stability of sorting! *)    
 
 
+
 (* Enhanced bucket_sort *)
 
 let kv_insert_sort ls = 
@@ -311,5 +312,6 @@ let radix_sort arr =
       
 let test_radix_sort arr = 
   let len = (Array.length arr) in
-  same_elems (array_to_list 0 len arr) (array_to_list 0 len (radix_sort arr))
+  same_elems (array_to_list 0 len arr) 
+    (array_to_list 0 len (radix_sort arr))
 

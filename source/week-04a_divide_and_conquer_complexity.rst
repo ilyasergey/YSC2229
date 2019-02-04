@@ -191,9 +191,6 @@ Recall the code of Quicksort::
    in
    sort arr 0 (Array.length arr)
 
-
-
-
 The complexity of:math:`t(n)` of the internal ``sort`` is combined from the following components:
 
 * Partitioning the array into two sub-arrays (:math:`c \cdot n`), and 
@@ -250,7 +247,7 @@ The following theorem serves a "Swiss-army knife" for recurrence relations of th
   Let :math:`T(n) = aT(n/b) + f(n)`, then :math:`T(n)` has the following asymptotic behaviour:               
 
   * If :math:`f(n) \in O(n^{\log_b a - \varepsilon})` for some :math:`\varepsilon > 0`, then :math:`T(n) \in \Theta(n^{\log_b a})`;
-  * If :math:`f(n) \in \Theta(n^{\log_b a})` for some then :math:`T(n) \in Theta(n^{\log_b a} \log n)`
+  * If :math:`f(n) \in \Theta(n^{\log_b a})` for some then :math:`T(n) \in \Theta(n^{\log_b a} \log n)`
   * If :math:`f(n) \in \Omega(n^{\log_b a + \varepsilon})` for some :math:`\varepsilon > 0`, and it :math:`a f(n/b) \leq c f(n)` for some constant :math:`c < 1` and sufficiently large :math:`n`, then :math:`T(n) \in \Theta(f(n))`.
 
 The proof of the Master Theorem as well as its advanced applications are beyond the scope of this course, and you are welcome to refer to the book **Introduction to Algorithms** by Cormen et al. for the details and examples.

@@ -1,7 +1,7 @@
 .. -*- mode: rst -*-
 
 Best-Worst Case for Comparison-Based Sorting
-===========================================
+============================================
 
 A strength and a weakness of Comparison-Based Sorting is the fact that the only operation it relies in its implementation is a primitive to compare two elements. This makes it very generic and applicable to diverse classes of data, but also puts a theoretical limit on how fast (in the asymptotic big-O sence) we can sort arrays *if we use only comparison*.
 
@@ -34,3 +34,5 @@ We can then use `Stirling's formula <https://en.wikipedia.org/wiki/Stirling%27s_
   t(n) \approx n \log_e n = (\log_e 2) n \log_2 n \in O(n \log n)
 
 With this we establish that the best possible algorithm for sorting arrays using only comparison will be deemed to perform :math:`O(n \log n)` comparisons in the worst case.
+
+The complexity class :math:`O(n \log n)` is so paramount in the study of algorithms that it deserved its own name: computations having this complexity are often referred to as having **linearithmic** complexity.
