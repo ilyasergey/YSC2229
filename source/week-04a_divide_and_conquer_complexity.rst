@@ -37,7 +37,7 @@ Its complexity can be described by the following recurrence relation, depending 
   t(n) &= t\left(\frac{n}{2}\right) + c
   \end{align*}
 
-where the complexity of returning a value is taken to be negligeable (and, hence, 0) and :math:`c` is a complexity of computing the middle and dereferencing elements of an array.
+where the complexity of returning a value is taken to be negligible (and, hence, 0) and :math:`c` is a complexity of computing the middle and dereferencing elements of an array.
 
 Let us notice that this is not a first-order recurrence relation that we've used to see, as the input size is *divided* by two rather than subtracted 1 as in previous examples. In order to reduce the problem to the one we already know how to solve, we make a *change of variable*, assuming, for the time being, that the size :math:`n` is a power of 2. Specifically, we take :math:`n = 2^k` for some :math:`k`. We can then rewrite the relations above as follows, for a function :math:`f(k) = t(2^k) = t(n)`:
 
