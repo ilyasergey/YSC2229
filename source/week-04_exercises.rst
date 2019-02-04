@@ -78,3 +78,8 @@ Exercise 6
 ----------
 
 Prove, out of definitions that for ay two functions :math:`f(n)` and `:math:`g(n)`, one has :math:`f(n) \in \Theta(g(n))` if and only if :math:`f(n) \in O(g(n))` and :math:`f(n) \in \Omega(g(n))`.
+
+Exercise 7
+----------
+
+Enhance :ref:`sec-functor-sorting` ``Sorting``, so it would also take an instance of a signature ``Printable`` that provides an implementation for printing elements of an array. With that ``Sorting`` should also feature a second version of sorting, ``sort_print``, which will print a sorting trace using the machinery imported from ``Printable``.
