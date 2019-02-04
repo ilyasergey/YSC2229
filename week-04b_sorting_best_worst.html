@@ -1,0 +1,240 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>4.5. Best-Worst Case for Comparison-Based Sorting &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4.6. Sorting in Linear Time" href="week-04b_linear_time.html" />
+    <link rel="prev" title="4.4. Generalising Comparison-Based Sorting" href="week-04b_comparison_based_sorting.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-04a_modules.html">4.1. OCaml REPL and Multiple Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04a_quicksort.html">4.2. Quicksort and Its Variations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04a_divide_and_conquer_complexity.html">4.3. Complexity of Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04b_comparison_based_sorting.html">4.4. Generalising Comparison-Based Sorting</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.5. Best-Worst Case for Comparison-Based Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04b_linear_time.html">4.6. Sorting in Linear Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04_exercises.html">4.7. Exercises</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a> &raquo;</li>
+        
+      <li>4.5. Best-Worst Case for Comparison-Based Sorting</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="best-worst-case-for-comparison-based-sorting">
+<h1>4.5. Best-Worst Case for Comparison-Based Sorting<a class="headerlink" href="#best-worst-case-for-comparison-based-sorting" title="Permalink to this headline">¶</a></h1>
+<p>A strength and a weakness of Comparison-Based Sorting is the fact that the only operation it relies in its implementation is a primitive to compare two elements. This makes it very generic and applicable to diverse classes of data, but also puts a theoretical limit on how fast (in the asymptotic big-O sence) we can sort arrays <em>if we use only comparison</em>.</p>
+<p>Let us se what is this theoretical limit. Quicksort, Insertion sort, Merge sort are all comparison-based sorting algorithms: they compare elements pairwise. An “ideal” algorithm will always perform no more than <span class="math notranslate nohighlight">\(t(n)\)</span> comparisons, for the worst possible case on an array of size <span class="math notranslate nohighlight">\(n\)</span>. What is then <span class="math notranslate nohighlight">\(t(n)\)</span>?</p>
+<p>Let us think in the following way. What a sorting delivers is a permutation of an initial array, which is also sorted. A number of possible permutations of <span class="math notranslate nohighlight">\(n\)</span> elements is <span class="math notranslate nohighlight">\(n!\)</span>, and such an algorithm should find “the right one” by following a path in a binary decision tree, where each node corresponds to comparing just two elements.</p>
+<p>As an example, consider the following decision tree for an array of just three elements <code class="docutils literal notranslate"><span class="pre">[|A;</span> <span class="pre">B;</span> <span class="pre">C|]</span></code>:</p>
+<a class="reference internal image-reference" href="_images/decisions.png"><img alt="_images/decisions.png" class="align-center" src="_images/decisions.png" style="width: 700px;" /></a>
+<p>Intuitively, by making <span class="math notranslate nohighlight">\(t(n)\)</span> steps in a decision tree, in its search for the “correctly ordered” permutation, the algorithm should be able to say, which ordering it is. Since the number of reachable leaves in <span class="math notranslate nohighlight">\(t(n)\)</span> steps is <span class="math notranslate nohighlight">\(2^{t(n)}\)</span>, and the number of possible orderings is <span class="math notranslate nohighlight">\(n!\)</span>, it should be the case that</p>
+<div class="math notranslate nohighlight">
+\[2^{t(n)} \geq n!\]</div>
+<p>To obtain the boundary on <span class="math notranslate nohighlight">\(t(n)\)</span> we need to solve this inequality. We can do so by first taking tha logarithm of the both sides:</p>
+<div class="math notranslate nohighlight">
+\[t(n) \geq \log_2(n!)\]</div>
+<p>We can then use <a class="reference external" href="https://en.wikipedia.org/wiki/Stirling%27s_approximation">Stirling’s formula</a> for large <span class="math notranslate nohighlight">\(n\)</span>, which states that <span class="math notranslate nohighlight">\(n! \approx \sqrt{2\pi n}\left(\frac{n}{e}\right)^n\)</span>. Therefore, we obtain</p>
+<div class="math notranslate nohighlight">
+\[t(n) \approx n \log_e n = (\log_e 2) n \log_2 n \in O(n \log n)\]</div>
+<p>With this we establish that the best possible algorithm for sorting arrays using only comparison will be deemed to perform <span class="math notranslate nohighlight">\(O(n \log n)\)</span> comparisons in the worst case.</p>
+<p>The complexity class <span class="math notranslate nohighlight">\(O(n \log n)\)</span> is so paramount in the study of algorithms that it deserved its own name: computations having this complexity are often referred to as having <strong>linearithmic</strong> complexity.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-04b_linear_time.html" class="btn btn-neutral float-right" title="4.6. Sorting in Linear Time" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-04b_comparison_based_sorting.html" class="btn btn-neutral" title="4.4. Generalising Comparison-Based Sorting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

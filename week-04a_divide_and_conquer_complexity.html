@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Complexity of Divide-and-Conquer Algorithms &mdash; YSC2229 2019</title>
+  <title>4.3. Complexity of Divide-and-Conquer Algorithms &mdash; YSC2229 2019</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4.4. Generalising Comparison-Based Sorting" href="week-04b_comparison_based_sorting.html" />
+    <link rel="prev" title="4.2. Quicksort and Its Variations" href="week-04a_quicksort.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,10 +78,26 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-04a_modules.html">4.1. OCaml REPL and Multiple Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04a_quicksort.html">4.2. Quicksort and Its Variations</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.3. Complexity of Divide-and-Conquer Algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#changing-variable-in-recurrence-relations">4.3.1. Changing variable in recurrence relations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#complexity-of-merge-sort">4.3.2. Complexity of Merge Sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#complexity-of-quicksort">4.3.3. Complexity of Quicksort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-master-theorem">4.3.4. The Master Theorem</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-04b_comparison_based_sorting.html">4.4. Generalising Comparison-Based Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04b_sorting_best_worst.html">4.5. Best-Worst Case for Comparison-Based Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04b_linear_time.html">4.6. Sorting in Linear Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04_exercises.html">4.7. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -125,7 +143,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Complexity of Divide-and-Conquer Algorithms</li>
+          <li><a href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a> &raquo;</li>
+        
+      <li>4.3. Complexity of Divide-and-Conquer Algorithms</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -143,22 +163,196 @@
            <div itemprop="articleBody">
             
   <div class="section" id="complexity-of-divide-and-conquer-algorithms">
-<h1>Complexity of Divide-and-Conquer Algorithms<a class="headerlink" href="#complexity-of-divide-and-conquer-algorithms" title="Permalink to this headline">¶</a></h1>
+<h1>4.3. Complexity of Divide-and-Conquer Algorithms<a class="headerlink" href="#complexity-of-divide-and-conquer-algorithms" title="Permalink to this headline">¶</a></h1>
+<p>We have seen several examples of divide-and-conquer algorithms. As their main trait is dividing the input into several parts and solving the problem recursively, one should be able to analyse their complexity via the recurrence relations method (Section <a class="reference internal" href="week-03b_recursive_complexity.html#sec-rr"><span class="std std-ref">Complexity of Simple Recursive Algorithms</span></a>). The only thing we need is a little twist:</p>
 <div class="section" id="changing-variable-in-recurrence-relations">
-<h2>Changing variable in recurrence relations<a class="headerlink" href="#changing-variable-in-recurrence-relations" title="Permalink to this headline">¶</a></h2>
-<p>TODO</p>
+<h2>4.3.1. Changing variable in recurrence relations<a class="headerlink" href="#changing-variable-in-recurrence-relations" title="Permalink to this headline">¶</a></h2>
+<p>Consider the binary search program:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">binary_search</span> <span class="n">arr</span> <span class="n">k</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">rank</span> <span class="n">lo</span> <span class="n">hi</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="n">hi</span> <span class="o">&lt;=</span> <span class="n">lo</span>
+    <span class="k">then</span>
+      <span class="c">(* Empty array *)</span>
+      <span class="nc">None</span>
+    <span class="c">(* Converged on a single element *)</span>
+    <span class="k">else</span>
+      <span class="k">let</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">lo</span> <span class="o">+</span> <span class="o">(</span><span class="n">hi</span> <span class="o">-</span> <span class="n">lo</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="k">in</span>
+      <span class="k">if</span> <span class="n">fst</span> <span class="n">arr</span><span class="o">.(</span><span class="n">mid</span><span class="o">)</span> <span class="o">=</span> <span class="n">k</span>
+      <span class="k">then</span> <span class="nc">Some</span> <span class="o">(</span><span class="n">arr</span><span class="o">.(</span><span class="n">mid</span><span class="o">))</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="n">fst</span> <span class="n">arr</span><span class="o">.(</span><span class="n">mid</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">k</span>
+      <span class="k">then</span> <span class="n">rank</span> <span class="o">(</span><span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">hi</span>
+      <span class="k">else</span> <span class="n">rank</span> <span class="n">lo</span> <span class="n">mid</span>
+  <span class="k">in</span>
+  <span class="n">rank</span> <span class="mi">0</span> <span class="o">(</span><span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span><span class="o">)</span>
+</pre></div>
 </div>
-<div class="section" id="complexity-of-binary-search">
-<h2>Complexity of Binary Search<a class="headerlink" href="#complexity-of-binary-search" title="Permalink to this headline">¶</a></h2>
-<p>TODO</p>
+<p>Its complexity can be described by the following recurrence relation, depending on the size <span class="math notranslate nohighlight">\(n\)</span> of the input array <code class="docutils literal notranslate"><span class="pre">arr</span></code>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+t(0) &amp;= 0 \\
+t(n) &amp;= t\left(\frac{n}{2}\right) + c
+\end{align*}\end{split}\]</div>
+<p>where the complexity of returning a value is taken to be negligible (and, hence, 0) and <span class="math notranslate nohighlight">\(c\)</span> is a complexity of computing the middle and dereferencing elements of an array.</p>
+<p>Let us notice that this is not a first-order recurrence relation that we’ve used to see, as the input size is <em>divided</em> by two rather than subtracted 1 as in previous examples. In order to reduce the problem to the one we already know how to solve, we make a <em>change of variable</em>, assuming, for the time being, that the size <span class="math notranslate nohighlight">\(n\)</span> is a power of 2. Specifically, we take <span class="math notranslate nohighlight">\(n = 2^k\)</span> for some <span class="math notranslate nohighlight">\(k\)</span>. We can then rewrite the relations above as follows, for a function <span class="math notranslate nohighlight">\(f(k) = t(2^k) = t(n)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+f(0) &amp;= t(2^0) = t(1) = c \\
+f(k) &amp;= t(2^k) = t\left(\frac{2^k}{2}\right) + c = f(k - 1) + c
+\end{align*}\end{split}\]</div>
+<p>Therefore, by changing the variable, we obtain:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+f(0) &amp;= c \\
+f(k) &amp;= f(k - 1) + c
+\end{align*}\end{split}\]</div>
+<p>This is a familiar form that can be solved by the method of differences obtaining <span class="math notranslate nohighlight">\(f(k) = c \cdot (k + 1)\)</span>. An since <span class="math notranslate nohighlight">\(f(k) = t(2^k)\)</span>, and also <span class="math notranslate nohighlight">\(k = \log_2 n\)</span>, we get</p>
+<div class="math notranslate nohighlight">
+\[t(n) = t(2^k) = f(k) = f(\log_2 n) = c \cdot \log_2 n + c \in O(\log n).\]</div>
+<p>Remember, however, that this has been done under assumptions that <span class="math notranslate nohighlight">\(n = 2^k\)</span>, and this result is not guaranteed for other <span class="math notranslate nohighlight">\(n\)</span>. The total asymptotic guarantee, in the big-O sense, can be however, obtained via the following theorem.</p>
+<div class="admonition-theorem admonition">
+<p class="first admonition-title">Theorem</p>
+<p class="last">If <span class="math notranslate nohighlight">\(f(n) \in O(g(n))\)</span> for <span class="math notranslate nohighlight">\(n\)</span> being a power of 2, then <span class="math notranslate nohighlight">\(f(n) \in O(g(n))\)</span> for <em>any</em> <span class="math notranslate nohighlight">\(n\)</span> if the following two conditions hold:
+1. <span class="math notranslate nohighlight">\(g\)</span> is non-decreasing for all <span class="math notranslate nohighlight">\(n &gt; n_0\)</span> for some fixed <span class="math notranslate nohighlight">\(n_0\)</span>, and
+2. <cite>g(2cdot n) in O(g(n))</cite>, i.e., <span class="math notranslate nohighlight">\(g\)</span> is <em>smooth</em> (does not grow too fast).</p>
+</div>
+<p>The first condition of the theorem is true for most of the functions of interest and means that <span class="math notranslate nohighlight">\(g\)</span> is “predictable” and will not suddenly start decreasing in between the “checkpoints” being the powers of two. The second condition states that in between those checkpoints the function does not grow to fast, so on the segment <span class="math notranslate nohighlight">\([2^k ... 2^{k+1}]\)</span> one can still use it for asymptotic approximation. Combinations of polynomials and algorithms are smooth, but it’s not the case for exponents and factorial.</p>
+<p>Getting back to our example with binary search and its complexity <span class="math notranslate nohighlight">\(t(n) \in O(\log n)\)</span> for powers of 2, we can assert that</p>
+<ol class="arabic simple">
+<li><span class="math notranslate nohighlight">\(\log n\)</span> is growing monotonically, that is, it’s non-decreasing.</li>
+<li><span class="math notranslate nohighlight">\(\log (2n) = :math:\)</span>log 2 + log n in O(log n)`, therefore the function is smooth.</li>
+</ol>
+<p>As the result we can conclude that time demand of binary search is within <span class="math notranslate nohighlight">\(O(\log n)\)</span> unconditionally.</p>
 </div>
 <div class="section" id="complexity-of-merge-sort">
-<h2>Complexity of Merge-Sort<a class="headerlink" href="#complexity-of-merge-sort" title="Permalink to this headline">¶</a></h2>
-<p>TODO</p>
+<h2>4.3.2. Complexity of Merge Sort<a class="headerlink" href="#complexity-of-merge-sort" title="Permalink to this headline">¶</a></h2>
+<p>Recall the code of merge sort:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">merge_sort</span> <span class="n">arr</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">sort</span> <span class="n">a</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">lo</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">hi</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">a</span> <span class="k">in</span>
+    <span class="k">if</span> <span class="n">hi</span> <span class="o">-</span> <span class="n">lo</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="k">then</span> <span class="bp">()</span>
+    <span class="k">else</span>
+      <span class="k">let</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">lo</span> <span class="o">+</span> <span class="o">(</span><span class="n">hi</span> <span class="o">-</span> <span class="n">lo</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="k">in</span>
+      <span class="k">let</span> <span class="n">from1</span> <span class="o">=</span> <span class="n">copy_array</span> <span class="n">a</span> <span class="n">lo</span> <span class="n">mid</span> <span class="k">in</span>
+      <span class="k">let</span> <span class="n">from2</span> <span class="o">=</span> <span class="n">copy_array</span> <span class="n">a</span> <span class="n">mid</span> <span class="n">hi</span> <span class="k">in</span>
+      <span class="n">sort</span> <span class="n">from1</span><span class="o">;</span> <span class="n">sort</span> <span class="n">from2</span><span class="o">;</span>
+      <span class="n">merge</span> <span class="n">from1</span> <span class="n">from2</span> <span class="n">a</span> <span class="n">lo</span> <span class="n">hi</span>
+  <span class="k">in</span>
+  <span class="n">sort</span> <span class="n">arr</span>
+</pre></div>
+</div>
+<p>Notice that the complexity <span class="math notranslate nohighlight">\(t(n)\)</span> of the internal <code class="docutils literal notranslate"><span class="pre">sort</span></code> is combined from the following components:</p>
+<ul class="simple">
+<li>Computing the middle of the array (constant <span class="math notranslate nohighlight">\(d\)</span>),</li>
+<li>Copying the array into two sub-arrays (<span class="math notranslate nohighlight">\(c_1 \cdot n\)</span>), and</li>
+<li>Merging two sub-arrays of the half-size (<span class="math notranslate nohighlight">\(c_2 \cdot n\)</span>), and</li>
+<li>Running two recursive sorting calls (<span class="math notranslate nohighlight">\(2 \cdot t(n/2)\)</span>).</li>
+</ul>
+<p>Therefore, merging come constants, we can write its recurrence relation as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+t(0) &amp;= t(1) = 0 \\
+t(n) &amp;= 2 \cdot t\left(\frac{n}{2}\right) + cn + d
+\end{align*}\end{split}\]</div>
+<p>We can now solve it by means of changing the variable <span class="math notranslate nohighlight">\(n = 2^k\)</span>, <span class="math notranslate nohighlight">\(t(n) = f(2^k)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+f(0) &amp;= t(1) = 0 \\
+f(k) &amp;= 2 \cdot t\left(\frac{n}{2}\right) + cn + d = 2 f(k - 1) + c \cdot 2^k + d
+\end{align*}\end{split}\]</div>
+<p>Therefore</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+f(0) &amp;= 0 \\
+f(k) &amp;= 2 f(k - 1) + c \cdot 2^k + d
+\end{align*}\end{split}\]</div>
+<p>We can solve this first-order inhomogeneous recurrence relation by changing the function</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+f(k) &amp;= 2^{k - 1}\cdot g(k) \\
+g(1) &amp;= f(1) = 0
+\end{align*}\end{split}\]</div>
+<p>Repeating the steps from the previous lectures, we obtain:</p>
+<div class="math notranslate nohighlight">
+\[f(k) = 2^{k - 1}\cdot g(k) = 2(2^{k - 2}\cdot g(k - 1)) + c \cdot 2^k + d\]</div>
+<p>and by dividing both parts of the equation by <span class="math notranslate nohighlight">\(2^{k - 1}\)</span>, we obtain:</p>
+<div class="math notranslate nohighlight">
+\[g(k) = g(k - 1) + 2c + \frac{d}{2^k-1}\]</div>
+<p>By the method of differences, we obtain</p>
+<div class="math notranslate nohighlight">
+\[g(k) \leq 2c(k - 1) + d\]</div>
+<p>The last sum of series is less than <span class="math notranslate nohighlight">\(d\)</span>, hence it was approximated by <span class="math notranslate nohighlight">\(d\)</span>.</p>
+<p>We can now substitute back, obtaining</p>
+<div class="math notranslate nohighlight">
+\[f(k) = 2^{k-1} \cdot g(k) \leq 2^k\cdot c \cdot k + d\]</div>
+<p>Recalling that <span class="math notranslate nohighlight">\(t(n) = f(\log_2 n)\)</span>, we obtain:</p>
+<div class="math notranslate nohighlight">
+\[t(n) = c \cdot 2^{\log_2 n}\cdot (\log_2 n) + d = c\cdot n \cdot \log_2 n + d \in O(n \log n)\]</div>
+<p>As we have obtained <span class="math notranslate nohighlight">\(t(n) \in O(n \log n)\)</span> for the powers of two, we need to check the conditions of the theorem, Indeed, <span class="math notranslate nohighlight">\(n \log n\)</span> is a monotonically growing function. It is also not difficult to check that it is smooth, hence the worst-case complexity of merge sort is in <span class="math notranslate nohighlight">\(O(n \log n)\)</span>.</p>
+</div>
+<div class="section" id="complexity-of-quicksort">
+<h2>4.3.3. Complexity of Quicksort<a class="headerlink" href="#complexity-of-quicksort" title="Permalink to this headline">¶</a></h2>
+<p>Recall the code of Quicksort:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">quick_sort</span> <span class="n">arr</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">sort</span> <span class="n">arr</span> <span class="n">lo</span> <span class="n">hi</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="n">hi</span> <span class="o">-</span> <span class="n">lo</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="k">then</span> <span class="bp">()</span>
+    <span class="k">else</span>
+      <span class="k">let</span> <span class="n">mid</span> <span class="o">=</span> <span class="n">partition</span> <span class="n">arr</span> <span class="n">lo</span> <span class="n">hi</span> <span class="k">in</span>
+      <span class="n">sort</span> <span class="n">arr</span> <span class="n">lo</span> <span class="n">mid</span><span class="o">;</span>
+      <span class="n">sort</span> <span class="n">arr</span> <span class="n">mid</span> <span class="n">hi</span>
+  <span class="k">in</span>
+  <span class="n">sort</span> <span class="n">arr</span> <span class="mi">0</span> <span class="o">(</span><span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The complexity of:math:<cite>t(n)</cite> of the internal <code class="docutils literal notranslate"><span class="pre">sort</span></code> is combined from the following components:</p>
+<ul class="simple">
+<li>Partitioning the array into two sub-arrays (<span class="math notranslate nohighlight">\(c \cdot n\)</span>), and</li>
+<li>Running two recursive sorting calls (<span class="math notranslate nohighlight">\(2 \cdot t(n/2)\)</span>).</li>
+</ul>
+<p>Therefore, one can obtain a complexity in the class <span class="math notranslate nohighlight">\(O(n \log n)\)</span> for quick sort by solving the following recurrence relation, similar to the one we have already solved for merge sort:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+t(0) &amp;= t(1) = 0 \\
+t(n) &amp;= 2 \cdot t\left(\frac{n}{2}\right) + n
+\end{align*}\end{split}\]</div>
+<p>The second component is, however, a bit subtle as the fact that the input is divided by two <em>is not guaranteed</em> (unlike in merge sort). The partitioning into two equal halves is only the case if the pivot for partitioning has been chosen so putting it at its “right place” would partition the array precisely in the middle. And, as we’ve seen from the examples before, this is not always true.</p>
+<p>However, remember that we have assumed that all keys in the array are randomly distributed. Therefore, it is highly unlikely that at each recursive call we will partition the array badly (e.g., to <span class="math notranslate nohighlight">\(n - 1\)</span> and <cite>1</cite> element). Proving that the <em>average</em> sorting time of quick sort is still within <span class="math notranslate nohighlight">\(O(n \log n)\)</span> is beyond the scope of this lecture.</p>
+<p>As the final remark, when asked about the <em>worst</em>-case complexity of Quicksort, one should be careful and tell <span class="math notranslate nohighlight">\(O(n \log n)\)</span> only specifying that it is an <em>average</em>-case complexity on uniformly distributed inputs. For the truly worst-case complexity the recurrence relations will be somewhat different (see <a class="reference internal" href="week-04_exercises.html#exercise-quicksort-worst"><span class="std std-ref">Exercise 5</span></a>):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+t(0) &amp;= t(1) = 0 \\
+t(n) &amp;= t(n - 1) + n + c
+\end{align*}\end{split}\]</div>
+<p>What do you think the complexity will be in this case?</p>
 </div>
 <div class="section" id="the-master-theorem">
-<h2>The Master Theorem<a class="headerlink" href="#the-master-theorem" title="Permalink to this headline">¶</a></h2>
-<p>TODO</p>
+<h2>4.3.4. The Master Theorem<a class="headerlink" href="#the-master-theorem" title="Permalink to this headline">¶</a></h2>
+<p>Divide-and-conquer algorithms come in many shapes, and so far we have seen only a class of very specific (albeit, arguably, most common) one — such that divide their input into two parts. For a general case of analysing the recursive algorithms, there is a widely used theorem, known and Master Theorem or a Master Method for solving recurrence relations, which covers a larger class of algorithms. Here we provide necessary definitions to formulate the theorem and give its statement.</p>
+<div class="admonition-definition-theta-notation admonition">
+<p class="first admonition-title">Definition (Theta-notation)</p>
+<p class="last">The positive-valued function <span class="math notranslate nohighlight">\(f(x) \in \Theta(g(x))\)</span> if and only if there is a value <span class="math notranslate nohighlight">\(x_0\)</span> and constants <span class="math notranslate nohighlight">\(c_1, c_2 &gt; 0\)</span>, such that for all <span class="math notranslate nohighlight">\(x \geq x_0\)</span>, <span class="math notranslate nohighlight">\(c_1 \cdot g(x) \leq f(x) \leq c_2 \cdot g(x)\)</span>.</p>
+</div>
+<div class="admonition-definition-omega-notation admonition">
+<p class="first admonition-title">Definition (Omega-notation)</p>
+<p class="last">The positive-valued function <span class="math notranslate nohighlight">\(f(x) \in \Omega(g(x))\)</span> if and only if there is a value <span class="math notranslate nohighlight">\(x_0\)</span> and constants <span class="math notranslate nohighlight">\(c &gt; 0\)</span>, such that for all <span class="math notranslate nohighlight">\(x \geq x_0\)</span>, <span class="math notranslate nohighlight">\(c \cdot g(x) \leq f(x)\)</span>.</p>
+</div>
+<p>As a mnemonics, one can think of</p>
+<ul class="simple">
+<li><span class="math notranslate nohighlight">\(f(n) \in O(g(n))\)</span> as “<span class="math notranslate nohighlight">\(f \leq g\)</span>”</li>
+<li><span class="math notranslate nohighlight">\(f(n) \in \Omega(g(n))\)</span> as “<span class="math notranslate nohighlight">\(f \geq g\)</span>”, and</li>
+<li><span class="math notranslate nohighlight">\(f(n) \in \Theta(g(n))\)</span> as “<span class="math notranslate nohighlight">\(f = g\)</span>”</li>
+</ul>
+<p>The following theorem serves a “Swiss-army knife” for recurrence relations of the form <span class="math notranslate nohighlight">\(T(n) = aT(n/b) + f(n)\)</span>, where <span class="math notranslate nohighlight">\(a \geq 1\)</span> and <cite>b &gt; 1</cite> are constants, and <span class="math notranslate nohighlight">\(f(n)\)</span> is eventually non-decreasing.</p>
+<div class="admonition-theorem-the-master-method-for-solving-recurrences admonition">
+<p class="first admonition-title">Theorem (The Master Method for Solving Recurrences)</p>
+<p>Let <span class="math notranslate nohighlight">\(T(n) = aT(n/b) + f(n)\)</span>, then <span class="math notranslate nohighlight">\(T(n)\)</span> has the following asymptotic behaviour:</p>
+<ul class="last simple">
+<li>If <span class="math notranslate nohighlight">\(f(n) \in O(n^{\log_b a - \varepsilon})\)</span> for some <span class="math notranslate nohighlight">\(\varepsilon &gt; 0\)</span>, then <span class="math notranslate nohighlight">\(T(n) \in \Theta(n^{\log_b a})\)</span>;</li>
+<li>If <span class="math notranslate nohighlight">\(f(n) \in \Theta(n^{\log_b a})\)</span> for some then <span class="math notranslate nohighlight">\(T(n) \in \Theta(n^{\log_b a} \log n)\)</span></li>
+<li>If <span class="math notranslate nohighlight">\(f(n) \in \Omega(n^{\log_b a + \varepsilon})\)</span> for some <span class="math notranslate nohighlight">\(\varepsilon &gt; 0\)</span>, and it <span class="math notranslate nohighlight">\(a f(n/b) \leq c f(n)\)</span> for some constant <span class="math notranslate nohighlight">\(c &lt; 1\)</span> and sufficiently large <span class="math notranslate nohighlight">\(n\)</span>, then <span class="math notranslate nohighlight">\(T(n) \in \Theta(f(n))\)</span>.</li>
+</ul>
+</div>
+<p>The proof of the Master Theorem as well as its advanced applications are beyond the scope of this course, and you are welcome to refer to the book <strong>Introduction to Algorithms</strong> by Cormen et al. for the details and examples.</p>
 </div>
 </div>
 
@@ -167,6 +361,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-04b_comparison_based_sorting.html" class="btn btn-neutral float-right" title="4.4. Generalising Comparison-Based Sorting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-04a_quicksort.html" class="btn btn-neutral" title="4.2. Quicksort and Its Variations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

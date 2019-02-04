@@ -17,14 +17,14 @@ Week 03b (Jan 28)
 Complexity of recursive algorithms. Recurrence relations. Master theorem.
 
 Week 04a (Feb 4)
-QuickSort and its worst-case complexity. Best-worst complexity for comparison-based sorting.
+QuickSort and its worst-case complexity. 
 Week 04b (Feb 4)
-Sorting in linear time: counting sort, bucket sort and radix sort.
+Best-worst complexity for comparison-based sorting. Sorting in linear time: bucket sort and radix sort.
 
 Week 05a (Feb 11)
 Binary-search trees. AVL trees. 
 Week 05b (Feb 11)
-Binary heaps, Fibonacci heaps. Connection between searching and sorting. Heap-sort and its complexity.
+Binary heaps. Connection between searching and sorting. Heap-sort and its complexity.
 
 Week 06a (Feb 18)
 Abstract data types and representation independence. OCaml records, objects, and mutability. Representing, manipulating, and testing queues and lists. Memory management and algorithms for garbage collection. Patterns of memory inefficiency.

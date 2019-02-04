@@ -1,0 +1,267 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>4. YSC2229 Lecture Notes, Week 04 &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4.1. OCaml REPL and Multiple Files" href="week-04a_modules.html" />
+    <link rel="prev" title="3.6. Exercises" href="week-03a_exercises.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. YSC2229 Lecture Notes, Week 04</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-04a_modules.html">4.1. OCaml REPL and Multiple Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04a_quicksort.html">4.2. Quicksort and Its Variations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04a_divide_and_conquer_complexity.html">4.3. Complexity of Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04b_comparison_based_sorting.html">4.4. Generalising Comparison-Based Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04b_sorting_best_worst.html">4.5. Best-Worst Case for Comparison-Based Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04b_linear_time.html">4.6. Sorting in Linear Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04_exercises.html">4.7. Exercises</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>4. YSC2229 Lecture Notes, Week 04</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ysc2229-lecture-notes-week-04">
+<h1>4. YSC2229 Lecture Notes, Week 04<a class="headerlink" href="#ysc2229-lecture-notes-week-04" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="week-04a_modules.html">4.1. OCaml REPL and Multiple Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04a_quicksort.html">4.2. Quicksort and Its Variations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-04a_quicksort.html#partitioning-an-array">4.2.1. Partitioning an array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04a_quicksort.html#partitioning-in-action">4.2.2. Partitioning in action</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04a_quicksort.html#sorting-via-partitioning">4.2.3. Sorting via partitioning</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-04a_divide_and_conquer_complexity.html">4.3. Complexity of Divide-and-Conquer Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-04a_divide_and_conquer_complexity.html#changing-variable-in-recurrence-relations">4.3.1. Changing variable in recurrence relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04a_divide_and_conquer_complexity.html#complexity-of-merge-sort">4.3.2. Complexity of Merge Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04a_divide_and_conquer_complexity.html#complexity-of-quicksort">4.3.3. Complexity of Quicksort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04a_divide_and_conquer_complexity.html#the-master-theorem">4.3.4. The Master Theorem</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-04b_comparison_based_sorting.html">4.4. Generalising Comparison-Based Sorting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-04b_comparison_based_sorting.html#comparator-as-a-parameter">4.4.1. Comparator as a parameter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04b_comparison_based_sorting.html#a-functor-for-sorting">4.4.2. A functor for sorting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-04b_sorting_best_worst.html">4.5. Best-Worst Case for Comparison-Based Sorting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04b_linear_time.html">4.6. Sorting in Linear Time</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-04b_linear_time.html#simple-bucket-sort">4.6.1. Simple Bucket Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04b_linear_time.html#enhanced-bucket-sort">4.6.2. Enhanced Bucket Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04b_linear_time.html#stability-of-sorting">4.6.3. Stability of sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04b_linear_time.html#radix-sort">4.6.4. Radix Sort</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-04_exercises.html">4.7. Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-04_exercises.html#mandatory-exercises">4.7.1. Mandatory exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04_exercises.html#recommended-exercises">4.7.2. Recommended exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04_exercises.html#exercise-1">4.7.3. Exercise 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04_exercises.html#exercise-2">4.7.4. Exercise 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04_exercises.html#exercise-3">4.7.5. Exercise 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04_exercises.html#exercise-4">4.7.6. Exercise 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04_exercises.html#exercise-5">4.7.7. Exercise 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04_exercises.html#exercise-6">4.7.8. Exercise 6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04_exercises.html#exercise-7">4.7.9. Exercise 7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04_exercises.html#exercise-8">4.7.10. Exercise 8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04_exercises.html#exercise-9">4.7.11. Exercise 9</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-04a_modules.html" class="btn btn-neutral float-right" title="4.1. OCaml REPL and Multiple Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-03a_exercises.html" class="btn btn-neutral" title="3.6. Exercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

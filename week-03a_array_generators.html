@@ -96,6 +96,7 @@
 <li class="toctree-l2"><a class="reference internal" href="week-03a_exercises.html">3.6. Exercises</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
 </ul>
 
             
@@ -161,15 +162,15 @@
            <div itemprop="articleBody">
             
   <div class="section" id="generating-arrays">
-<h1>3.3. Generating Arrays<a class="headerlink" href="#generating-arrays" title="Permalink to this headline">¶</a></h1>
+<span id="sec-loading-modules"></span><h1>3.3. Generating Arrays<a class="headerlink" href="#generating-arrays" title="Permalink to this headline">¶</a></h1>
 <p>Searching and sorting are the two main procedures one perfroms on arrays, and this is why the performance of the corresponding algorithms plays crucial role in practical applications. In this chapter we will explore more efficient ways to do so.</p>
 <p>In order to not duplicate the development let us include some of the files from the previous weeks, as they already contain a number of useful functions. This can be done in OCaml by first compiling the corresponding file and then loading it in a current development. For instance, if the previous week’s file has been called <cite>week_02.ml</cite>, it can be included into the current one by first running the following command from the terminal:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">ocamlc</span> <span class="n">week_02</span><span class="o">.</span><span class="n">ml</span>
 </pre></div>
 </div>
 <p>and then, assuming that the current file is in the same folder, adding the following lines to the current development:</p>
-<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span><span class="n">load</span> <span class="s2">&quot;week_02a_arrays.cmo&quot;</span><span class="o">;;</span>
-<span class="k">open</span> <span class="nc">Week_02a_arrays</span>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span><span class="n">load</span> <span class="s2">&quot;week_02.cmo&quot;</span><span class="o">;;</span>
+<span class="k">open</span> <span class="nc">Week_02</span>
 </pre></div>
 </div>
 <div class="section" id="simple-random-generators">

@@ -1,0 +1,246 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>4.1. OCaml REPL and Multiple Files &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4.2. Quicksort and Its Variations" href="week-04a_quicksort.html" />
+    <link rel="prev" title="4. YSC2229 Lecture Notes, Week 04" href="YSC2229-lecture-notes-week-04.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.1. OCaml REPL and Multiple Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04a_quicksort.html">4.2. Quicksort and Its Variations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04a_divide_and_conquer_complexity.html">4.3. Complexity of Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04b_comparison_based_sorting.html">4.4. Generalising Comparison-Based Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04b_sorting_best_worst.html">4.5. Best-Worst Case for Comparison-Based Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04b_linear_time.html">4.6. Sorting in Linear Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04_exercises.html">4.7. Exercises</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a> &raquo;</li>
+        
+      <li>4.1. OCaml REPL and Multiple Files</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ocaml-repl-and-multiple-files">
+<h1>4.1. OCaml REPL and Multiple Files<a class="headerlink" href="#ocaml-repl-and-multiple-files" title="Permalink to this headline">¶</a></h1>
+<p>On the previous week we have learned how to compile an OCaml file into a separate module and then use it in other files using the directives <code class="docutils literal notranslate"><span class="pre">#load</span></code> and <code class="docutils literal notranslate"><span class="pre">open</span></code> (see Section <a class="reference internal" href="week-03a_array_generators.html#sec-loading-modules"><span class="std std-ref">Generating Arrays</span></a>).  Unfortunately, when our project grows, the REPL directives (such as <code class="docutils literal notranslate"><span class="pre">#load</span></code>) prevent regular compilation via OCaml Compiler (<code class="docutils literal notranslate"><span class="pre">ocamlc</span></code>), which complains about bad syntax. Therefore, they need to be commented out. For instance, in the past week’s file, <code class="docutils literal notranslate"><span class="pre">week_03.ml</span></code> we have to comment out the following line, in order to compile it:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* #load &quot;week_02.cmo&quot;;;  *)</span>
+<span class="k">open</span> <span class="nc">Week_02</span>
+</pre></div>
+</div>
+<p>Notice that the module <code class="docutils literal notranslate"><span class="pre">Week_02</span></code> is still recognised by Merlin highlighting in Emacs, as it’s compiled and is in the same folder, and the directive has only served the purpose of informing REPL where to load the the contents of the module <code class="docutils literal notranslate"><span class="pre">Week_02</span></code>.</p>
+<p>To inform REPL of this dependency more elegantly and in a reusable way, let us execute the following commands from the terminal first (assuming <code class="docutils literal notranslate"><span class="pre">week_02.ml</span></code> and <code class="docutils literal notranslate"><span class="pre">week_03.ml</span></code> are the files from the past weeks, that do not contain REPL directives, such as <code class="docutils literal notranslate"><span class="pre">#load</span></code>):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">ocamlc</span> <span class="n">week_02</span><span class="o">.</span><span class="n">ml</span> <span class="n">week_03</span><span class="o">.</span><span class="n">ml</span>
+<span class="n">ocamlmktop</span> <span class="o">-</span><span class="n">o</span> <span class="n">mytoplevel</span> <span class="n">week_02</span><span class="o">.</span><span class="n">cmo</span> <span class="n">week_03</span><span class="o">.</span><span class="n">cmo</span>
+</pre></div>
+</div>
+<p>The first line compiles the sources from the past two weeks into two separate modules (whose binary representation is stored in files <code class="docutils literal notranslate"><span class="pre">week_02.cmo</span></code> and <code class="docutils literal notranslate"><span class="pre">week_03.cmo</span></code>); the second line creates a specialised binary <code class="docutils literal notranslate"><span class="pre">mytoplevel</span></code> for a REPL, which already has the two past weeks as loaded libraries.</p>
+<p>In order to take advantage of this set up, let us create the new file, <code class="docutils literal notranslate"><span class="pre">week_04.ml</span></code>, which makes use of the past two weeks:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">Week_02</span>
+<span class="k">open</span> <span class="nc">Week_03</span>
+</pre></div>
+</div>
+<p>Now, when running the REPL from Tuareg (<code class="docutils literal notranslate"><span class="pre">C-c</span> <span class="pre">C-b</span></code>), once prompted to choose the executable to interpret OCaml definitions (the default one is <code class="docutils literal notranslate"><span class="pre">ocaml</span></code>), type instead:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">mytoplevel</span>
+</pre></div>
+</div>
+<p>As the result, the contents of the two past weeks (linked via the <code class="docutils literal notranslate"><span class="pre">ocamlmktop</span></code> command as shown above) will be loaded. You can repeat this operation for the next weeks, simply adding what you need loaded modules to REPL, as following the same pattern.</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-04a_quicksort.html" class="btn btn-neutral float-right" title="4.2. Quicksort and Its Variations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="YSC2229-lecture-notes-week-04.html" class="btn btn-neutral" title="4. YSC2229 Lecture Notes, Week 04" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
