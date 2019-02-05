@@ -67,17 +67,19 @@ module SortChecker = functor (C : sig
       
 end
 
+module type CompareAndPrint = sig
+  type t
+  val comp : t -> t -> int
+  (* For pretty-printing *)
+  val pp : t -> string
+end
+
 (* Binary heaps as arrays *)
-module Heaps (C : sig
-    type t
-    val comp : t -> t -> int
-    (* For pretty-printing *)
-    val pp : t -> string
-  end)  = struct
+module Heaps (C : CompareAndPrint)  = struct
   include C
   include ArrayPrinter(C)
-      
-  
+
+
   (* 1. Main heap operations *)
   let parent arr i = 
     if i = 0 

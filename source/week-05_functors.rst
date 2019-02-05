@@ -1,5 +1,7 @@
 .. -*- mode: rst -*-
 
+.. _sec-array-functors:
+
 Printing and Validating Generic Arrays
 ======================================
 
