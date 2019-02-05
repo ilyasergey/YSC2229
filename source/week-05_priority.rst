@@ -73,3 +73,28 @@ Finally, the following construction allows to print out the contents of a priori
   let print_heap h =     
     P.print_array h.arr
 
+Operations on Priority Queues
+-----------------------------
+
+The first and the simplest operation on a priority queue ``h`` is to take its highest-ranked element (i.e., the one with the greatest priority, expressed by means of its key value)::
+
+  let heap_maxinum h = (h.arr).(0)
+
+The next operation allows not just look at, but also extract (i.e., obtain and remove) the maximal element from the priority queue::
+
+  let heap_extract_max h = 
+    if !(h.heap_size) < 1 then None
+    else
+      let a = h.arr in
+      let max = a.(0) in
+      a.(0) <- a.(!(h.heap_size) - 1);
+      a.(!(h.heap_size) - 1) <- None;
+      h.heap_size := !(h.heap_size) - 1;
+      max_heapify !(h.heap_size) h.arr 0;
+      Some max
+
+The way ``heap_extract_max`` works for a non-empty heap is by taking its maximal element, and then putting one of the smallest elements (``a.(!(h.heap_size) - 1)``) to its place, reducing the heap size and restoring the heap shape via already familiar procedure ``max_heapify`` applied to the first element in the array (which is the only heap offender after swapping). 
+
+
+Working with Priority Queues
+----------------------------

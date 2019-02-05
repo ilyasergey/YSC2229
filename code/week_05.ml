@@ -386,18 +386,18 @@ module PriorityQueue(C: CompareAndPrint) = struct
     arr : H.t array
   }
 
-  (* Make a priority queue *)
+  let mk_empty_queue size = 
+    assert (size >= 0);
+    {heap_size = ref 0;
+     arr = Array.make size None}
+
+  (* Make a priority queue from an array *)
   let mk_queue a = 
     let ls = List.map (fun e -> Some e) (to_list a) in
     let a' = list_to_array ls in
     build_max_heap a';
     {heap_size = ref (Array.length a);
      arr = a'}
-
-  let mk_empty_queue size = 
-    assert (size >= 0);
-    {heap_size = ref 0;
-     arr = Array.make size None}
 
   module P = ArrayPrinter(COpt)
 
