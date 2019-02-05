@@ -38,7 +38,10 @@ module ArrayPrinter = functor (P : sig
       let len = Array.length arr in
       print_sub_array 0 len arr              
   end
-  
+
+let to_list arr = 
+  array_to_list 0 (Array.length arr) arr
+    
 module SortChecker =  functor 
   (C : sig type t val comp : t -> t -> int end) -> struct
   
@@ -47,9 +50,6 @@ module SortChecker =  functor
     | [] -> true
     | h :: t -> 
       List.for_all (fun e -> C.comp e h >= 0) t && sorted t
-
-  let to_list arr = 
-    array_to_list 0 (Array.length arr) arr
       
   let sub_array_sorted l u arr = 
     let ls = array_to_list l u arr in 
@@ -383,7 +383,23 @@ Execution elapsed time: 2.380267 sec
 (* 8. Priority queues *)
 
 module PriorityQueue(C: CompareAndPrint) = struct 
-  module H = Heaps(C)
+
+  (* Need to lift C to options *)
+  module COpt = struct
+    type t = C.t option
+    
+    let comp x y = match x, y with 
+      | Some a, Some b -> C.comp a b
+      | None, Some _ -> -1
+      | Some _, None -> 1
+      | None, None -> 0
+        
+    let pp x = match x with 
+      | Some x -> C.pp x
+      | None -> "Nont"
+  end
+
+  module H = Heaps(COpt)
   (* Do no inline, just include *)
   open H
 
@@ -394,13 +410,21 @@ module PriorityQueue(C: CompareAndPrint) = struct
 
   (* Make a priority queue *)
   let mk_queue a = 
-    let a' = Array.copy a in
+    let ls = List.map (fun e -> Some e) (to_list a) in
+    let a' = list_to_array ls in
     build_max_heap a';
     {heap_size = ref (Array.length a);
      arr = a'}
 
-  let print_heap h = 
-    print_array h.arr
+  let mk_empty_queue size = 
+    assert (size >= 0);
+    {heap_size = ref 0;
+     arr = Array.make size None}
+
+  module P = ArrayPrinter(COpt)
+
+  let print_heap h =     
+    P.print_array h.arr
 
   (* Dereferencing the record *)
   let heap_maxinum h = (h.arr).(0)
@@ -411,10 +435,32 @@ module PriorityQueue(C: CompareAndPrint) = struct
       let a = h.arr in
       let max = a.(0) in
       a.(0) <- a.(!(h.heap_size) - 1);
+      a.(!(h.heap_size) - 1) <- None;
       h.heap_size := !(h.heap_size) - 1;
       max_heapify !(h.heap_size) h.arr 0;
       Some max
 
+  let heap_increase_key h i key =
+    let a = h.arr in
+    let c = comp key (a.(i)) >= 0 in
+    if not c then (
+      Printf.printf "A new ket is smaller than current key!";
+      assert false);
+    a.(i) <- key;
+    let j = ref i in
+    while !j > 0 && comp (snd (H.parent a (!j))) a.(!j) < 0 do
+      let pj = fst (H.parent a (!j)) in
+      swap a !j pj;
+      j := pj
+    done
+
+  let max_heap_insert h elem = 
+    let hs = !(h.heap_size) in
+    if hs >= Array.length h.arr 
+    then raise (Failure "Maximal heap capacity reached!");
+    h.heap_size := hs + 1;
+    h.arr.(hs) <- None;
+    heap_increase_key h hs (Some elem)
 end
 
 module PQ = PriorityQueue(KV)
@@ -422,8 +468,66 @@ open PQ
 
 let q = mk_queue (generate_key_value_array 10)
 
-(* Test that the prefix is still a heap *)
+(*
+# print_heap q;;
+[| (8, gelui); (6, isdto); (8, ximoh); (5, fvfxl); (3, kiswm); (1, lsbam); (6, qelvi); (0, nagva); (1, jijlw); (0, syvzb) |] - : unit = ()
+*)
 
+(* Extracting elements *)
+
+
+(* Test that after removals the prefix is still a heap *)
+
+(*
+
+# heap_extract_max q;;
+- : PQ.H.t option = Some (Some (8, "gelui"))
+# q;;
+- : PQ.heap =
+{heap_size = {contents = 9};
+ arr =
+  [|Some (8, "ximoh"); Some (6, "isdto"); Some (6, "qelvi");
+    Some (5, "fvfxl"); Some (3, "kiswm"); Some (1, "lsbam");
+    Some (0, "syvzb"); Some (0, "nagva"); Some (1, "jijlw"); None|]}
+# heap_extract_max q;;
+- : PQ.H.t option = Some (Some (8, "ximoh"))
+# q;;
+- : PQ.heap =
+{heap_size = {contents = 8};
+ arr =
+  [|Some (6, "isdto"); Some (5, "fvfxl"); Some (6, "qelvi");
+    Some (1, "jijlw"); Some (3, "kiswm"); Some (1, "lsbam");
+    Some (0, "syvzb"); Some (0, "nagva"); None; None|]}
+# heap_extract_max q;;
+- : PQ.H.t option = Some (Some (6, "isdto"))
+# q;;
+- : PQ.heap =
+{heap_size = {contents = 7};
+ arr =
+  [|Some (6, "qelvi"); Some (5, "fvfxl"); Some (1, "lsbam");
+    Some (1, "jijlw"); Some (3, "kiswm"); Some (0, "nagva");
+    Some (0, "syvzb"); None; None; None|]}
+# PQ.H.is_heap q.arr;;
+- : bool = true
+*)
 
 (* Inserting elements *)
 
+let pq = mk_empty_queue 10;;
+
+max_heap_insert pq (2, "aaa");;
+max_heap_insert pq (3, "bbb");;
+max_heap_insert pq (5, "cc");;
+max_heap_insert pq (8, "dd");;
+max_heap_insert pq (13, "trololo");;
+
+(***************************************************)
+(*
+
+Exercises:
+
+1. Rewrite max_heapify with a loop
+
+
+
+*)
