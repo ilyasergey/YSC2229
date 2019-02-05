@@ -116,6 +116,10 @@ We can do so by querying its contents::
 
 Notice that, while not sorted (in an ascending or a descending order), the heap (as per its definition) always has the element with the greatest key in at the position 0 of the array.
 
+.. admonition:: Definition 
+
+  A heap defined as per the definition above (a parent is larger than children) is called *max-heap*. A heap, defined via the property (a parent is smaller than children) is called *min-heap*.
+
 
 Checking that an array is a heap
 --------------------------------
