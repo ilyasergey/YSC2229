@@ -162,17 +162,8 @@
             
   <div class="section" id="generalising-comparison-based-sorting">
 <h1>4.4. Generalising Comparison-Based Sorting<a class="headerlink" href="#generalising-comparison-based-sorting" title="Permalink to this headline">¶</a></h1>
-<p>So far we have seen a number of sorting algorithms that were useful on
-arrays of particular shape, such as filled with just integers, or
-pairs having integers as their first components. However, the only
-operation we required of a data inhabiting the array to provide is the
-ability to <em>compare</em> its elements with each other. Such an ability has
-been provided by means of comparing integers, but the very same
-algorithms can be used, e.g., for sorting arrays of lists (ordered
-via length) or strings (ordered lexicographically), or even arrays of
-arrays.</p>
-<p>Let us generalise the latest introduced sorting algorithm, namely,
-Quicksort via two different mechanisms OCaml provides.</p>
+<p>So far we have seen a number of sorting algorithms that were useful on arrays of particular shape, such as filled with just integers, or pairs having integers as their first components. However, the only operation we required of a data inhabiting the array to provide is the ability to <em>compare</em> its elements with each other. Such an ability has been provided by means of comparing integers, but the very same algorithms can be used, e.g., for sorting arrays of lists (ordered via length) or strings (ordered lexicographically), or even arrays of arrays.</p>
+<p>Let us generalise the latest introduced sorting algorithm, namely, Quicksort via two different mechanisms OCaml provides.</p>
 <div class="section" id="comparator-as-a-parameter">
 <h2>4.4.1. Comparator as a parameter<a class="headerlink" href="#comparator-as-a-parameter" title="Permalink to this headline">¶</a></h2>
 <p>The following implementation of <code class="docutils literal notranslate"><span class="pre">generic_quick_sort</span></code> takes a <em>named</em> parameter <code class="docutils literal notranslate"><span class="pre">comp</span></code> (hence the syntax with <code class="docutils literal notranslate"><span class="pre">~</span></code>). It serves as a <em>comparator</em> — a function that takes an element of an array and returns an integer. The contract the implementation follows is that if <code class="docutils literal notranslate"><span class="pre">comp</span> <span class="pre">x</span> <span class="pre">y</span></code> returns a negative integer, it is interpreted as <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">y</span></code>, a positive integer means <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">y</span></code> and zero means <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">y</span></code>:</p>

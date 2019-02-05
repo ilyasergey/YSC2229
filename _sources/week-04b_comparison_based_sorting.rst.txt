@@ -3,18 +3,9 @@
 Generalising Comparison-Based Sorting
 =====================================
 
-So far we have seen a number of sorting algorithms that were useful on
-arrays of particular shape, such as filled with just integers, or
-pairs having integers as their first components. However, the only
-operation we required of a data inhabiting the array to provide is the
-ability to *compare* its elements with each other. Such an ability has
-been provided by means of comparing integers, but the very same
-algorithms can be used, e.g., for sorting arrays of lists (ordered
-via length) or strings (ordered lexicographically), or even arrays of
-arrays. 
+So far we have seen a number of sorting algorithms that were useful on arrays of particular shape, such as filled with just integers, or pairs having integers as their first components. However, the only operation we required of a data inhabiting the array to provide is the ability to *compare* its elements with each other. Such an ability has been provided by means of comparing integers, but the very same algorithms can be used, e.g., for sorting arrays of lists (ordered via length) or strings (ordered lexicographically), or even arrays of arrays.
 
-Let us generalise the latest introduced sorting algorithm, namely,
-Quicksort via two different mechanisms OCaml provides.
+Let us generalise the latest introduced sorting algorithm, namely, Quicksort via two different mechanisms OCaml provides.
 
 
 Comparator as a parameter
