@@ -16,8 +16,13 @@ Introductory Data Structures and Algorithms (YSC2229)
    YSC2229-lecture-notes-week-04
 
 
-Code from the Lectures
-======================
+OCaml Code from the Lectures
+============================
+
+* `Week 1 <./resources/2019/week_01.ml>`_
+* `Week 2 <./resources/2019/week_02.ml>`_
+* `Week 3 <./resources/2019/week_02.ml>`_
+* `Week 4 <./resources/2019/week_02.ml>`_
 
 
 ..
