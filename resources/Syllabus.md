@@ -22,12 +22,13 @@ Week 04b (Feb 4)
 Best-worst complexity for comparison-based sorting. Sorting in linear time: bucket sort and radix sort.
 
 Week 05a (Feb 11)
-Binary-search trees. AVL trees. 
+Binary heaps. Heap-sort and its complexity. Priority queues.
 Week 05b (Feb 11)
-Binary heaps. Connection between searching and sorting. Heap-sort and its complexity.
+Binary-search trees. AVL trees.
 
 Week 06a (Feb 18)
-Abstract data types and representation independence. OCaml records, objects, and mutability. Representing, manipulating, and testing queues and lists. Memory management and algorithms for garbage collection. Patterns of memory inefficiency.
+Abstract data types and representation independence. Representing, manipulating, and testing queues and lists. Memory management and algorithms for garbage collection. Patterns of memory inefficiency.
+
 Week 06b (Feb 18)
 Hash-functions and hash-tables.
 
