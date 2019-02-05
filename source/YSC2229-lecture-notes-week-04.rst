@@ -14,3 +14,7 @@ YSC2229 Lecture Notes, Week 04
   week-04b_linear_time
 
   week-04_exercises
+
+**Supplementary materials**
+
+* `Code from Week 4 <./resources/2019/week_04.ml>`_: quick sort, comparison-based sorrting and linear-time sorting.

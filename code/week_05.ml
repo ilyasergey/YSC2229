@@ -183,21 +183,23 @@ module Heaps (C : CompareAndPrint)  = struct
       let largest = ref (i, arr.(i)) in
       let l = left arr i in 
 
-      (* Shall we swap with the left child? *)
+      (* Shall we swap with the left child?.. *)
       if l <> None && 
          (fst (get_exn l)) < heap_size &&
          comp (snd (get_exn l)) (snd !largest) > 0 
       then largest := get_exn l;
 
 
-      (* Or with the right child? *)
+      (* May be the right child is even bigger? *)
       let r = right arr i in 
       if r <> None && 
          (fst (get_exn r)) < heap_size &&
          comp (snd (get_exn r)) (snd !largest) > 0
       then largest := get_exn r;
 
+
       if !largest <> (i, ai) 
+      (* Okay, there is a necessity to progress further... *)
       then 
          (swap arr i (fst !largest); 
           max_heapify heap_size arr (fst !largest))

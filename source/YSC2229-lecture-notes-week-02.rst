@@ -15,3 +15,6 @@ YSC2229 Lecture Notes, Week 02
   week-02b_sums
   week-02b_exercises
 
+**Supplementary materials**
+
+* `Code from Week 2 <./resources/2019/week_02.ml>`_: basic array sorting.
