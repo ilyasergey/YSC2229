@@ -42,8 +42,11 @@ module ArrayPrinter = functor (P : sig
 let to_list arr = 
   array_to_list 0 (Array.length arr) arr
     
-module SortChecker =  functor 
-  (C : sig type t val comp : t -> t -> int end) -> struct
+(* Checking whether an array is sorted *)
+module SortChecker = functor (C : sig 
+    type t 
+    val comp : t -> t -> int 
+  end) -> struct
   
   let rec sorted ls = 
     match ls with 
@@ -58,35 +61,23 @@ module SortChecker =  functor
   let array_sorted arr = 
     sub_array_sorted 0 (Array.length  arr) arr
 
-  let same_elems ls1 ls2 =
-    List.for_all (fun e ->
-        List.find_all (fun e' -> e = e') ls2 =
-        List.find_all (fun e' -> e = e') ls1
-      ) ls1 &&
-    List.for_all (fun e ->
-        List.find_all (fun e' -> e = e') ls2 =
-        List.find_all (fun e' -> e = e') ls1
-      ) ls2
-
   let sorted_spec arr1 arr2 = 
     array_sorted arr2 &&
     same_elems (to_list arr1) (to_list arr2)
       
 end
 
-module type CompareAndPrint = sig
-  type t
-  val comp : t -> t -> int
-  (* For pretty-printing *)
-  val pp : t -> string
-end
-
 (* Binary heaps as arrays *)
-module Heaps (C : CompareAndPrint)  = struct
+module Heaps (C : sig
+    type t
+    val comp : t -> t -> int
+    (* For pretty-printing *)
+    val pp : t -> string
+  end)  = struct
   include C
   include ArrayPrinter(C)
-
-
+      
+  
   (* 1. Main heap operations *)
   let parent arr i = 
     if i = 0 
@@ -144,31 +135,13 @@ module Heaps (C : CompareAndPrint)  = struct
                      comp this (snd (get_exn r)) >= 0 in
       res := !res && is_left && is_right;
       (if (not !res && print) then (
-         let Some(li, ll) = l in
-         let Some(ri, rr) = r in
+         let (li, ll) = get_exn l in
+         let (ri, rr) = get_exn r in
          printf "Out-of-order elements:\n";
          printf "Parent: (%d, %s)\n" !i (pp this);
          printf "Left: (%d, %s)\n" li (pp ll);
          printf "Right: (%d, %s)\n" ri (pp rr)
       ));
-      i := !i + 1
-    done;
-    !res
-
-
-  let is_heap_prefix arr ?(heap_size = Array.length arr) = 
-    let len = Array.length arr - 1 in 
-    let res = ref true in
-    let i = ref 0 in
-    while !i <= len / 2 - 1 && !res do
-      let this = arr.(!i) in 
-      let l = left arr !i in 
-      let r = right arr !i in 
-      let is_left = l = None || 
-                    comp this (snd (get_exn l)) >= 0 in
-      let is_right = l = None || 
-                     comp this (snd (get_exn r)) >= 0 in
-      res := !res && is_left && is_right;
       i := !i + 1
     done;
     !res
