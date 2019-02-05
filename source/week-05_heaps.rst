@@ -29,15 +29,15 @@ An example of a tree, represented by a heap (i.e., a specially arranged) array i
    :width: 750px
    :align: center
 
-The bottom part of the page is shown how the binary heap structure is packed into an array. If the indexing of an array was starting from 1, then for a node stored in an array withn an index :math:`i`, its children would be positiononed at locations with indices :math:`2i` (left) and :math:`2i + 1` (right). However, due to the fact that in OCaml (and also in C# and Java) arrays start from 0, not 1, we will have to use the different formula, reflected from in the definition below:
+The bottom part of the page is shown how the binary heap structure is packed into an array. If the indexing of an array was starting from 1, then for a node stored in an array with an index :math:`i`, its children would be positioned at locations with indices :math:`2i` (left) and :math:`2i + 1` (right). However, due to the fact that in OCaml (and also in C# and Java) arrays start from 0, not 1, we will have to use the different formula, reflected from in the definition below:
 
 .. admonition:: Definition 
 
   A binary heap is an array, such that for every element :math:`e_p` (referred to as *parent*) with a key :math:`k` stored in it with an index :math:`i`, the two elements, :math:`e_l` (left child) and :math:`e_r` (right child) stored with indices :math:`2(i + 1) - 1` and :math:`2(i + 1)` correspondingly, are such that their keys are smaller or equal than :math:`k` [#]_.
 
-Notice that, due to its representation, a binary heep, as atree is *almost complete*: some of the bottom-level nodes (*leaves*) might be missing, but the nodes on all other levels are present [#]_. Naturally, for a node with an index :math:`i > 0`, its parent can be obtained by taking an index :math:`(i + 1) / 2 - 1`
+Notice that, due to its representation, a binary heep, as a tree is *almost complete*: some of the bottom-level nodes (*leaves*) might be missing, but the nodes on all other levels are present [#]_. Naturally, for a node with an index :math:`i > 0`, its parent can be obtained by taking an index :math:`(i + 1) / 2 - 1`
 
-.. [#] You can remember the way chlidren are defined for 0-based arrays using the following ituition: *shift the current index + 1 to obtain the index as in 1-based array, compute the child index, and then subtract 1, to return back to 0-based indexing*.
+.. [#] You can remember the way children are defined for 0-based arrays using the following intuition: *shift the current index + 1 to obtain the index as in 1-based array, compute the child index, and then subtract 1, to return back to 0-based indexing*.
 
 .. [#] The term "heap" has been originally used to denote "almost-complete binary tree", but now is also used to refer to "garbage-collected runtime memory", such as provided by Java and C#. There is no relation between these two notions, and here and further by *heaps* we will mean binary trees.
 
@@ -118,11 +118,13 @@ We can do so by querying its contents::
  # parent test_heap 1;;
  - : int * (int * string) = (0, (16, "a"))
 
+Notice that, while not sorted (in an ascending or a descending order), the heap (as per its definition) always has the element with the greatest key in at the position 0 of the array.
+
 
 Checking that an array is a heap
 --------------------------------
 
-Next, we shall write a function that, taking an array, will determine whether it does havea heap structure or not. The following definition should be placed within the body of ``Heap`` functor::
+Next, we shall write a function that, taking an array, will determine whether it does have heap structure or not. The following definition should be placed within the body of ``Heap`` functor::
 
   open Printf
 
@@ -144,7 +146,7 @@ Next, we shall write a function that, taking an array, will determine whether it
     done;
     !res
 
-The main machinery of ``is_heap`` applies the definition given above, in a ``while``-loop for each element of the array ``arr``, relying on the copmarator ``comp``. Notice that the first loop condition ``!i <= len / 2 - 1`` makes it iterate only until the middle of the array. In fact, one does not need to check the second half of the array, as it *only contains leaves* (i.e., tree nodes with no children). This is a rather curious fact that is explained by the exponential nature of the binary tree growth: in a complete tree, half of all its nodes are leaves, and, thus, in a binary heap, only the first half of an array corresponds to nodes that might have children (but do not have to, as on the image above).
+The main machinery of ``is_heap`` applies the definition given above, in a ``while``-loop for each element of the array ``arr``, relying on the comparator ``comp``. Notice that the first loop condition ``!i <= len / 2 - 1`` makes it iterate only until the middle of the array. In fact, one does not need to check the second half of the array, as it *only contains leaves* (i.e., tree nodes with no children). This is a rather curious fact that is explained by the exponential nature of the binary tree growth: in a complete tree, half of all its nodes are leaves, and, thus, in a binary heap, only the first half of an array corresponds to nodes that might have children (but do not have to, as on the image above).
 
 We can now check that our array is indeed a heap::
 
