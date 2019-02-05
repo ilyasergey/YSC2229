@@ -68,3 +68,6 @@ Exercise 5
 ----------
 
 Reimplement the heapsort, so it would work with a min-heaps instead of max-heaps. For this, you might also reimplement or, better, generalise the prior definitions of the ``Heap`` module.
+
+
+.. Resizeable PQ 

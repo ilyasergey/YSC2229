@@ -151,7 +151,7 @@ module Heaps (C : CompareAndPrint)  = struct
   (* 3. Restoring the heap property for an element i *)
   let rec max_heapify heap_size arr i = 
     let len = Array.length arr in
-    assert (heap_size <= Array.length arr);
+    (* assert (heap_size <= Array.length arr); *)
     if i > (len - 1) / 2 then ()
     else
       let ai = arr.(i) in
@@ -338,9 +338,9 @@ let d = Array.copy c
 
 (* 6. Comparing heapsort, quicksort, and merge sort *)
 
-(* let x = generate_key_value_array 1000000
- * let y = Array.copy x
- * let z = Array.copy x *)
+let x = generate_key_value_array 10000
+let y = Array.copy x
+let z = Array.copy x
 
 let quicksort = kv_sort_asc
 
