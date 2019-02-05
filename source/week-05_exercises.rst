@@ -22,6 +22,12 @@ Mandatory exercises
 * :ref:`exercise-min-heap`
   Fun with min-heaps.
 
+* :ref:`exercise-resizeable`
+  Resizing a priority queue.
+
+* :ref:`exercise-delete`
+  Deleting an element from a priority queue
+
 
 Recommended exercises
 ---------------------
@@ -69,5 +75,16 @@ Exercise 5
 
 Reimplement the heapsort, so it would work with a min-heaps instead of max-heaps. For this, you might also reimplement or, better, generalise the prior definitions of the ``Heap`` module.
 
+.. _exercise-resizeable:
 
-.. Resizeable PQ 
+Exercise 6
+----------
+
+The way we implemented a priority queue in Section :ref:`sec-pq-impl` only allows for storing up to a fixed number of elements, with ``max_heap_insert`` raising an error when the size is exceeded. A way to overcome this would be to allow for the carrier array to increase resize once the capacity is reached. Work out an implementation of a resizeable priority queue and argue for the choice of your resizing strategy, explaining why it will not affect the asymptotic *average*-case complexity.
+
+.. _exercise-delete:
+
+Exercise 7
+----------
+
+The function ``max_heap_delete h i`` deletes the item in node with an indes ``i`` from the priority queue ``h``. Give an implementation of this function that runs in :math:`O(log n)` time for an :math:`n`-element priority queue based on a max-heap. 

@@ -73,12 +73,14 @@ Finally, the following construction allows to print out the contents of a priori
   let print_heap h =     
     P.print_array h.arr
 
+.. _sec-pq-impl:
+
 Operations on Priority Queues
 -----------------------------
 
 The first and the simplest operation on a priority queue ``h`` is to take its highest-ranked element (i.e., the one with the greatest priority, expressed by means of its key value)::
 
-  let heap_maxinum h = (h.arr).(0)
+  let heap_maximum h = (h.arr).(0)
 
 The next operation allows not just look at, but also extract (i.e., obtain and remove) the maximal element from the priority queue::
 
@@ -95,6 +97,108 @@ The next operation allows not just look at, but also extract (i.e., obtain and r
 
 The way ``heap_extract_max`` works for a non-empty heap is by taking its maximal element, and then putting one of the smallest elements (``a.(!(h.heap_size) - 1)``) to its place, reducing the heap size and restoring the heap shape via already familiar procedure ``max_heapify`` applied to the first element in the array (which is the only heap offender after swapping). 
 
+The following auxiliary function ``heap_increase_key`` is somewhat dual to ``max_heapify``. It inserts an element ``key`` into a position ``i``, assuming that its key is larger than what's currently at that position. It then restores the heap property (which might be broken if the parents in the chain are smaller) by "walking up" the chain of parents and performing swaps until the correct order is restored::
+
+  let heap_increase_key h i key =
+    let a = h.arr in
+    let c = comp key (a.(i)) >= 0 in
+    if not c then (
+      Printf.printf "A new ket is smaller than current key!";
+      assert false);
+    a.(i) <- key;
+    let j = ref i in
+    while !j > 0 && comp (snd (H.parent a (!j))) a.(!j) < 0 do
+      let pj = fst (H.parent a (!j)) in
+      swap a !j pj;
+      j := pj
+    done
+
+**Question:** What is the complexity of ``heap_increase_key``?
+
+Finally, the function ``max_heap_insert`` implements an insertion of a new element ``elem`` into a priority heap ``h``:: 
+
+  let max_heap_insert h elem = 
+    let hs = !(h.heap_size) in
+    if hs >= Array.length h.arr 
+    then raise (Failure "Maximal heap capacity reached!");
+    h.heap_size := hs + 1;
+    heap_increase_key h hs (Some elem)
+
+It only succeeds in the case if there is still vacant space in the queue (i.e., at the end of the array), which can be determined by examining the ``heap_size`` field of ``h``. If the space permits, the limit ``heap_size`` is increased. Since we know that ``None`` used to be installed to the vacant place (which is an invariant maintained by means of ``heap_size``), we can simply install the new element ``Some elem`` (which is guaranteed to be larger than ``None`` as per our defined comparator) and let the heap rebalance using ``heap_increase_key``.
+
+Given the complexity of ``max_heap_insert``, it is easy to show that the complexity of element insertion is :math:`O(n \log n)`. This brings us to an important property of priority queues implemented by means of heaps:
+
+.. admonition:: Complexity of priority queue operations
+
+  For a priority queue of size :math:`n`,
+
+  * Finding the largest element has complexity :math:`O(1)`,
+  * Extraction of the largest element has complexity :math:`O(n \log n)`,
+  * Insertion of a new element has complexity :math:`O(n \log n)`.
 
 Working with Priority Queues
 ----------------------------
+
+Let us see a priority queue in action. We start by creating it from a randomly generated array::
+
+  module PQ = PriorityQueue(KV)
+  open PQ
+  
+  let q = mk_queue (generate_key_value_array 10)
+
+Let us see what's inside::
+
+ # q;;
+ - : PQ.heap =
+ {heap_size = {contents = 10};
+  arr =
+   [|Some (6, "egkbs"); Some (4, "nugab"); Some (4, "xcwjg");
+     Some (4, "oxfyr"); Some (4, "opdhq"); Some (0, "huiuv");
+     Some (0, "sbcnl"); Some (2, "gzpyp"); Some (4, "hymnz");
+     Some (2, "yxzro")|]}
+
+We can proceed by checking the maximum::
+
+ # heap_maximum q;;
+ - : PQ.H.t = Some (6, "egkbs")
+ 
+ (* It is indeed a heap! *)
+ #  PQ.H.is_heap q.arr;; 
+ - : bool = true
+
+Let us extract several maximum elements::
+
+ # heap_extract_max q;;
+ - : PQ.H.t option = Some (Some (6, "egkbs"))
+ # heap_extract_max q;;
+ - : PQ.H.t option = Some (Some (4, "nugab"))
+ # heap_extract_max q;;
+ - : PQ.H.t option = Some (Some (4, "oxfyr"))
+ # heap_extract_max q;;
+ - : PQ.H.t option = Some (Some (4, "hymnz"))
+
+Is it still a heap?::
+
+ # q;;
+ - : PQ.heap =
+ {heap_size = {contents = 6};
+  arr =
+   [|Some (4, "opdhq"); Some (2, "yxzro"); Some (4, "xcwjg");
+     Some (0, "sbcnl"); Some (2, "gzpyp"); Some (0, "huiuv"); None; None;
+     None; None|]}
+ #  PQ.H.is_heap q.arr;;
+ - : bool = true
+
+Finally, let us insert a new element and check whether it is still a heap::
+
+ # max_heap_insert q (7, "abcde");;
+ - : unit = ()
+ # q;;
+ - : PQ.heap =
+ {heap_size = {contents = 7};
+  arr =
+   [|Some (7, "abcde"); Some (2, "yxzro"); Some (4, "opdhq");
+     Some (0, "sbcnl"); Some (2, "gzpyp"); Some (0, "huiuv");
+     Some (4, "xcwjg"); None; None; None|]}
+ # heap_maximum q;;
+ - : PQ.H.t = Some (7, "abcde")

@@ -405,7 +405,7 @@ module PriorityQueue(C: CompareAndPrint) = struct
     P.print_array h.arr
 
   (* Dereferencing the record *)
-  let heap_maxinum h = (h.arr).(0)
+  let heap_maximum h = (h.arr).(0)
                          
   let heap_extract_max h = 
     if !(h.heap_size) < 1 then None
@@ -437,7 +437,6 @@ module PriorityQueue(C: CompareAndPrint) = struct
     if hs >= Array.length h.arr 
     then raise (Failure "Maximal heap capacity reached!");
     h.heap_size := hs + 1;
-    h.arr.(hs) <- None;
     heap_increase_key h hs (Some elem)
 end
 
