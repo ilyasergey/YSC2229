@@ -1,4 +1,18 @@
-(* Loading previous modules withour compiling them *)
+(* Loading previous modules *)
+
+(* 
+
+To compile, run
+
+ocamlc week_02.ml week_03.ml
+
+To load to the REPL, run
+
+ocamlmktop -o mytoplevel week_02.cmo week_03.cmo
+
+and then invoke ./mytoplevel as a REPL command
+
+ *)
 
 open Week_02
 open Week_03
