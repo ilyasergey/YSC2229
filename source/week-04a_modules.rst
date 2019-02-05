@@ -3,12 +3,12 @@
 OCaml REPL and Multiple Files
 =============================
 
-On the previous week we have learned how to compile an OCaml file into a separate module and then use it in other files using the directives ``#load`` and ``open`` (see Section :ref:`sec-loading_modules`).  Unfortunately, when our project grows, the REPL directives (such as ``#load``) prevent regular compilation via OCaml Compiler (``ocamlc``), which complains about bad syntax. Therefore, they need to be commented out. For instance, in the past week's file, ``week_03.ml`` we have to comment out the following line, in order to compile it::
+On the previous week we have learned how to compile an OCaml file into a separate module and then use it in other files via the REPL directives ``#load`` and ``open`` (see Section :ref:`sec-loading_modules`).  Unfortunately, when our project grows, the REPL directives (such as ``#load``) prevent regular compilation via OCaml Compiler (``ocamlc``) from the terminal --- the compiler simply complains about bad syntax. Therefore, we need to commented out the REPL-related lines. For instance, in the past week's file, ``week_03.ml`` we have to comment out the following line, in order to compile it::
 
   (* #load "week_02.cmo";;  *)
   open Week_02
 
-Notice that the module ``Week_02`` is still recognised by Merlin highlighting in Emacs, as it's compiled and is in the same folder, and the directive has only served the purpose of informing REPL where to load the the contents of the module ``Week_02``.
+Notice that the module ``Week_02`` is still recognised by Merlin highlighting in Emacs/Aquamacs, as it is a compiled module and is in the same folder. The now commented directive has only served the purpose of informing REPL where to load the the contents of the module ``Week_02``.
 
 To inform REPL of this dependency more elegantly and in a reusable way, let us execute the following commands from the terminal first (assuming ``week_02.ml`` and ``week_03.ml`` are the files from the past weeks, that do not contain REPL directives, such as ``#load``)::
 
