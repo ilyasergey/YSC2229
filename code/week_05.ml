@@ -148,7 +148,7 @@ module Heaps (C : CompareAndPrint)  = struct
     done;
     !res
 
-  (* 3. Restoring the heap property: see heapify *)
+  (* 3. Restoring the heap property for an element i *)
   let rec max_heapify heap_size arr i = 
     let len = Array.length arr in
     assert (heap_size <= Array.length arr);
@@ -272,26 +272,27 @@ Right: (6, (3, g))
 
 (* 3. Restoring the heap property: see heapify *)
 
-(* val bad_heap : (int * string) array =
- *   [|(16, "a"); (14, "b"); (10, "c"); (8, "d"); (7, "e"); (11, "f"); (3, "g");
- *     (2, "h"); (4, "i"); (1, "j")|]
- * # is_heap bad_heap;;
- * - : bool = false
- * # is_heap_print ~print:true bad_heap;;
- * Out-of-order elements:
- * Parent: (2, (10, c))
- * Left: (5, (11, f))
- * Right: (6, (3, g))
- * - : bool = false
- * # max_heapify 10 bad_heap 2;;
- * - : unit = ()
- * # is_heap_print ~print:true bad_heap;;
- * - : bool = true
- * # bad_heap;;
- * - : (int * string) array =
- * [|(16, "a"); (14, "b"); (11, "f"); (8, "d"); (7, "e"); (10, "c"); (3, "g");
- *   (2, "h"); (4, "i"); (1, "j")|] 
- *)
+(*
+val bad_heap : (int * string) array =
+  [|(16, "a"); (14, "b"); (10, "c"); (8, "d"); (7, "e"); (11, "f"); (3, "g");
+    (2, "h"); (4, "i"); (1, "j")|]
+# is_heap bad_heap;;
+- : bool = false
+# is_heap_print ~print:true bad_heap;;
+Out-of-order elements:
+Parent: (2, (10, c))
+Left: (5, (11, f))
+Right: (6, (3, g))
+- : bool = false
+# max_heapify 10 bad_heap 2;;
+- : unit = ()
+# is_heap_print ~print:true bad_heap;;
+- : bool = true
+# bad_heap;;
+- : (int * string) array =
+[|(16, "a"); (14, "b"); (11, "f"); (8, "d"); (7, "e"); (10, "c"); (3, "g");
+  (2, "h"); (4, "i"); (1, "j")|] 
+*)
 
 (* 4: building a heap from an array *)
 

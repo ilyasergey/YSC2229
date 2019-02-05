@@ -3,8 +3,8 @@
 Binary Heaps
 ============
 
-Motivation: finding a mximum in a constantly changing array
------------------------------------------------------------
+Motivation: finding a maximum in a changing array
+-------------------------------------------------
 
 We have started this course from a simple exercise --- finding a minimal element in a list. While simple enough (and possible to implement in :math:`O(n)` operations) for a case when we need to find just one minimum just once, this operations quickly becomes tedious, if we require a second (and a third...) minimum. To solve this problem we have studied various ways to sort lists, and then arrays, culminating in a family of linearithmic (i.e., having complexity :math:`O(n \log n)`) algorithms --- merge sort and Quicksort. It is indeed very simple to find the first and the second minimum of a sorted array, but only under a condition that the array, since it has been sorted, never changes. 
 
@@ -36,10 +36,6 @@ The bottom part of the page is shown how the binary heap structure is packed int
   A binary heap is an array, such that for every element :math:`e_p` (referred to as *parent*) with a key :math:`k` stored in it with an index :math:`i`, the two elements, :math:`e_l` (left child) and :math:`e_r` (right child) stored with indices :math:`2(i + 1) - 1` and :math:`2(i + 1)` correspondingly, are such that their keys are smaller or equal than :math:`k` [#]_.
 
 Notice that, due to its representation, a binary heep, as a tree is *almost complete*: some of the bottom-level nodes (*leaves*) might be missing, but the nodes on all other levels are present [#]_. Naturally, for a node with an index :math:`i > 0`, its parent can be obtained by taking an index :math:`(i + 1) / 2 - 1`
-
-.. [#] You can remember the way children are defined for 0-based arrays using the following intuition: *shift the current index + 1 to obtain the index as in 1-based array, compute the child index, and then subtract 1, to return back to 0-based indexing*.
-
-.. [#] The term "heap" has been originally used to denote "almost-complete binary tree", but now is also used to refer to "garbage-collected runtime memory", such as provided by Java and C#. There is no relation between these two notions, and here and further by *heaps* we will mean binary trees.
 
 Let us now define a module that encapsulates all operations with binary heaps (represented via arrays), of which so far know three: finding a parent, a left and a right child of a node::
 
@@ -204,3 +200,8 @@ This checker features an *optional named* boolean parameter ``print`` (which by 
  Right: (6, (3, g))
 
  - : bool = false
+
+.. [#] You can remember the way children are defined for 0-based arrays using the following intuition: *shift the current index + 1 to obtain the index as in 1-based array, compute the child index, and then subtract 1, to return back to 0-based indexing*.
+
+.. [#] The term "heap" has been originally used to denote "almost-complete binary tree", but now is also used to refer to "garbage-collected runtime memory", such as provided by Java and C#. There is no relation between these two notions, and here and further by *heaps* we will mean binary trees.
+
