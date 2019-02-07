@@ -528,7 +528,7 @@ val hs : '_weak80 HashTableIntKey.hash_table = <abstr>
 (*******               Obsolete stuff below                 *****)
 (****************************************************************)
 
-module type EnhancedHashTableSig = functor 
+module type EnhancedHashTable = functor 
   (H : Hashable) -> sig
   type key = H.t
   type 'v hash_table
@@ -544,7 +544,7 @@ module type EnhancedHashTableSig = functor
 end
     
 module EnhancedListBasedHashTable 
-  : HashTableSig = functor 
+  : EnhancedHashTable = functor 
   (H : Hashable) -> struct
   type key = H.t
   type 'v entry = key * 'v
@@ -599,10 +599,3 @@ module EnhancedListBasedHashTable
     
 end 
 
-(* A simple hash-table with ints *)
-module HashTableIntKey = ListBasedHashTable 
-    (struct type t = int let hash i = i end)
-
-let a = generate_key_value_array 10
-
-let hs = HashTableIntKey.mk_new_table 8
