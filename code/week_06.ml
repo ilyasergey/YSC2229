@@ -409,7 +409,14 @@ let dq = mk_queue 0
 
 (* 6. Binary trees and their traversals *)
 
+(*
+- Tree definition
+- Tree traversal
+- Depth-first-search
+- Breadth-first-search
 
+
+*)
 
 
 (* X. Hash-tables *)
