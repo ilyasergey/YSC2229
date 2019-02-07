@@ -431,8 +431,11 @@ module type BinaryTree = functor(C: Comparable) -> sig
   val parent : 'e tree_node -> 'e tree_node option
 
   val get_root : 'e tree_node -> 'e tree_node
-
   val update_value : 'e tree_node -> 'e -> unit
+  val insert_element : C.t tree_node -> C.t -> unit
+
+  (* Traversals *)
+  val depth_first_search_rec : 'e tree_node -> 'e list 
 
 end
 
@@ -475,16 +478,14 @@ module BinaryTreeImpl : BinaryTree =
                  left = ref None;
                  right = ref None} in
         n.left := Some m;
-        m
-    else match left n with
+    else match right n with
       | Some m -> insert_element m e
       | None ->
         let m = {value = ref e;
                  parent = ref @@ Some n;
                  left = ref None;
                  right = ref None} in
-        n.right := Some m;
-        m
+        n.right := Some m
 
   open DLLBasedQueue
 
@@ -505,11 +506,15 @@ module BinaryTreeImpl : BinaryTree =
 end
 
 (* Comparator *)
-module KVComp : Comparable = struct
+module KVComp  = struct
   type t = int * string
   let comp (k1, _) (k2, _) = k1 - k2        
 end
 
+module KVTree = BinaryTreeImpl(KVComp)
+open KVTree
+
+let root = mk_root (0, "abcde")
 
 
 (*
