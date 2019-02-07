@@ -417,87 +417,110 @@ val dq : '_weak105 DLLBasedQueue.t = <abstr>
 
 *)
 
- (* 
- * (\* 6. Binary trees and their traversals *\)
- * 
- * module type BinaryTree = functor(C: Comparable) -> sig
- * 
- *   type 'e tree_node
- * 
- *   val value : 'e tree_node -> 'e
- *   val left : 'e tree_node -> 'e tree_node option
- *   val right : 'e tree_node -> 'e tree_node option
- *   val parent : 'e tree_node -> 'e tree_node option
- * 
- *   val get_root : 'e tree_node -> 'e tree_node
- * 
- *   val update_value : 'e tree_node -> 'e -> unit
- * 
- * end
- * 
- * module BinaryTreeImpl : BinaryTree = 
- *   functor (C: Comparable) -> struct
- * 
- *   type 'e tree_node = {
- *     value : 'e ref;
- *     parent  : 'e tree_node option ref;
- *     left  : 'e tree_node option ref;
- *     right  : 'e tree_node option ref;
- *   }
- * 
- *   let value n = !(n.value)
- *   let left n = !(n.left)
- *   let right n = !(n.right)
- *   let parent n = !(n.parent)
- * 
- *   let is_root n =  parent n = None
- *                    
- *   let rec get_root n = match parent n with
- *     | None -> n
- *     | Some m -> get_root m
- * 
- *   let update_value n v = n.value := v
- * 
- *   let rec insert_element n e = 
- *     if C.comp e (value n) < 0
- *     then match left n with
- *       | Some m -> insert_element m e
- *       | None ->
- *         let m = {value = ref e;
- *                  parent = ref @@ Some n;
- *                  left = ref None;
- *                  right = ref None} in
- *         n.left := Some m;
- *         m
- *     else match left n with
- *       | Some m -> insert_element m e
- *       | None ->
- *         let m = {value = ref e;
- *                  parent = ref @@ Some n;
- *                  left = ref None;
- *                  right = ref None} in
- *         n.right := Some m;
- *         m
- * 
- *   let dfs n = 
- *     let rec walk n acc = 
- *       let acc' = value n :: acc in
- *       
- * 
- *       
- * 
- * end
- * 
- * (\*
- * - Tree definition
- * - Tree traversal
- * - Depth-first-search
- * - Breadth-first-search
- * 
- * 
- * *\)
- * 
- *)
+ (* 6. Binary trees and their traversals *)
+
+module type BinaryTree = functor(C: Comparable) -> sig
+
+  type 'e tree_node
+
+  val mk_root : 'e -> 'e tree_node
+
+  val value : 'e tree_node -> 'e
+  val left : 'e tree_node -> 'e tree_node option
+  val right : 'e tree_node -> 'e tree_node option
+  val parent : 'e tree_node -> 'e tree_node option
+
+  val get_root : 'e tree_node -> 'e tree_node
+
+  val update_value : 'e tree_node -> 'e -> unit
+
+end
+
+module BinaryTreeImpl : BinaryTree = 
+  functor (C: Comparable) -> struct
+
+  type 'e tree_node = {
+    value : 'e ref;
+    parent  : 'e tree_node option ref;
+    left  : 'e tree_node option ref;
+    right  : 'e tree_node option ref;
+  }
+
+
+  let value n = !(n.value)
+  let left n = !(n.left)
+  let right n = !(n.right)
+  let parent n = !(n.parent)
+
+  let is_root n =  parent n = None
+
+  let mk_root e = {value = ref e;
+                   parent = ref None;
+                   left = ref None;
+                   right = ref None}
+                   
+  let rec get_root n = match parent n with
+    | None -> n
+    | Some m -> get_root m
+
+  let update_value n v = n.value := v
+
+  let rec insert_element n e = 
+    if C.comp e (value n) < 0
+    then match left n with
+      | Some m -> insert_element m e
+      | None ->
+        let m = {value = ref e;
+                 parent = ref @@ Some n;
+                 left = ref None;
+                 right = ref None} in
+        n.left := Some m;
+        m
+    else match left n with
+      | Some m -> insert_element m e
+      | None ->
+        let m = {value = ref e;
+                 parent = ref @@ Some n;
+                 left = ref None;
+                 right = ref None} in
+        n.right := Some m;
+        m
+
+  open DLLBasedQueue
+
+  let depth_first_search_rec n = 
+    let rec walk n q =
+      enqueue q (value n);
+      (match left n with
+       | Some l -> walk l q
+       | None -> ());
+      (match right n with
+       | Some r -> walk r q
+       | None -> ());
+    in
+    let acc = (mk_queue 0) in
+    walk (get_root n) acc;
+    queue_to_list acc
+
+end
+
+(* Comparator *)
+module KVComp : Comparable = struct
+  type t = int * string
+  let comp (k1, _) (k2, _) = k1 - k2        
+end
+
+
+
+(*
+- Tree definition
+- Tree traversal
+- Depth-first-search
+- Breadth-first-search
+
+
+*)
+
  
  (* X. Hash-tables *)
 
@@ -569,93 +592,13 @@ let hs = HashTableIntKey.mk_new_table 8
 
 (*
 
-val a : (int * string) array =
-  [|(0, "gyqzm"); (8, "ccurj"); (9, "hwupm"); (3, "ttvno"); (4, "bkyoh");
-    (6, "rcugr"); (1, "hlbhi"); (8, "quknb"); (0, "cbrsj"); (9, "jbhos")|]
-val hs : '_weak80 HashTableIntKey.hash_table = <abstr>
-# for i = 0 to 9 do HashTableIntKey.insert hs (fst a.(i)) a.(i) done;;
+for i = 0 to 9 do HashTableIntKey.insert hs (fst a.(i)) a.(i) done;;
 - : unit = ()
-#  HashTableIntKey.get hs 4;;
-- : (int * string) option = Some (4, "bkyoh")
+# HashTableIntKey.get hs 4;;
+- : (int * string) option = None
+# HashTableIntKey.get hs 2;;
+- : (int * string) option = Some (2, "xiptc")
 
 *)
 
-
-
-
-
-(****************************************************************)
-(*******               Obsolete stuff below                 *****)
-(****************************************************************)
-
-(* module type EnhancedHashTable = functor 
- *   (H : Hashable) -> sig
- *   type key = H.t
- *   type 'v hash_table
- *   val mk_new_table : int -> 'v hash_table 
- *   val insert : (key * 'v) hash_table -> key -> 'v -> unit
- *     val get : (key * 'v) hash_table -> key -> 'v option
- * 
- *   (\* An additional interface *\)
- *   type 'v entry
- *   val get_entry : (key * 'v) hash_table -> key -> 'v entry option
- *   val value : 'v entry -> 'v
- *   val remove : (key * 'v) hash_table -> 'v entry -> unit
- * end
- *     
- * module EnhancedListBasedHashTable 
- *   : EnhancedHashTable = functor 
- *   (H : Hashable) -> struct
- *   type key = H.t
- *   type 'v entry = key * 'v
- * 
- *   let value = snd
- * 
- *   type 'v hash_table = {
- *     buckets : 'v list array;
- *     size : int 
- *   }
- * 
- *   let mk_new_table size = 
- *     let buckets = Array.make size [] in
- *     {buckets = buckets;
- *      size = size}
- *   
- *   let insert ht k v = 
- *     let hs = H.hash k in
- *     let bnum = hs mod ht.size in 
- *     let bucket = ht.buckets.(bnum) in
- *     let clean_bucket = 
- *       List.filter (fun (k', v) -> k' <> k) bucket in
- *     ht.buckets.(bnum) <- (k, v) :: clean_bucket
- * 
- *   let get ht k = 
- *     let hs = H.hash k in
- *     let bnum = hs mod ht.size in 
- *     let bucket = ht.buckets.(bnum) in
- *     let res = List.find_opt (fun (k', _) -> k' = k) bucket in
- *     match res with 
- *     | Some (_, v) -> Some v
- *     | _ -> None
- * 
- *   let get_entry ht k = 
- *     let hs = H.hash k in
- *     let bnum = hs mod ht.size in 
- *     let bucket = ht.buckets.(bnum) in
- *     let res = List.find_opt (fun (k', _) -> k' = k) bucket in
- *     match res with 
- *     | Some (_, v) -> Some (k, v)
- *     | _ -> None
- * 
- * 
- *   (\* Slow remove - introduce for completeness *\)
- *   let remove ht e = 
- *     let hs = H.hash (fst e) in
- *     let bnum = hs mod ht.size in 
- *     let bucket = ht.buckets.(bnum) in
- *     let clean_bucket = 
- *       List.filter (fun (k', _) -> k' <> (fst e)) bucket in
- *     ht.buckets.(bnum) <- clean_bucket
- *     
- * end *)
 
