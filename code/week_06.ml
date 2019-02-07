@@ -44,11 +44,10 @@ module ListBasedStack : AbstractStack = struct
       | _ -> None
   end
 
-open ListBasedStack
 
 (* 
 
-# let s = mk_stack ();;
+# let s = ListBasedStack.mk_stack ();;
 val s : '_weak101 ListBasedStack.t = <abstr>
 # push s (4, "aaa");;
 - : unit = ()
@@ -212,7 +211,6 @@ module QueuePrinter(Q: Queue) = struct
   end
 
 
-open ArrayBasedQueue
 module ABQPrinter = QueuePrinter(ArrayBasedQueue)
 
 (* let pp e = match e with
@@ -226,7 +224,7 @@ let print_queue q = ABQPrinter.print_queue q pp
 (* Testing the array-based queue *)
 
 (*
-
+# open ArrayBasedQueue;;
 # let q = mk_queue 10;;
 val q : '_weak103 ArrayBasedQueue.t = <abstr>
 # for i = 0 to 9 do enqueue q a.(i) done;;
@@ -373,7 +371,6 @@ module DoubleLinkedList =
 
   end
 
-open DLLBasedQueue
 module DLQPrinter = QueuePrinter(DLLBasedQueue)
 
 (* let pp e = match e with
@@ -384,7 +381,7 @@ let pp (k, v) = Printf.sprintf "(%d, %s)" k v
 
 let print_queue q = DLQPrinter.print_queue q pp
 
-let dq = mk_queue 0
+let dq = DLLBasedQueue.mk_queue 0
 
 
 (* Experiments *)
@@ -417,7 +414,7 @@ val dq : '_weak105 DLLBasedQueue.t = <abstr>
 
 *)
 
- (* 6. Binary trees and their traversals *)
+(* 6. Binary trees and their traversals *)
 
 module type BinaryTree = functor(C: Comparable) -> sig
 
@@ -433,9 +430,12 @@ module type BinaryTree = functor(C: Comparable) -> sig
   val get_root : 'e tree_node -> 'e tree_node
   val update_value : 'e tree_node -> 'e -> unit
   val insert_element : C.t tree_node -> C.t -> unit
+  val find_node : C.t tree_node -> C.t -> C.t tree_node option
 
-  (* Traversals *)
-  val depth_first_search_rec : 'e tree_node -> 'e list 
+  (* Traversals, with dept *)
+  val depth_first_search_rec : 'e tree_node -> (int * 'e) list 
+  val depth_first_search_loop : 'e tree_node -> (int * 'e) list 
+  val breadth_first_search_loop : 'e tree_node -> (int * 'e) list 
 
 end
 
@@ -448,7 +448,6 @@ module BinaryTreeImpl : BinaryTree =
     left  : 'e tree_node option ref;
     right  : 'e tree_node option ref;
   }
-
 
   let value n = !(n.value)
   let left n = !(n.left)
@@ -489,18 +488,69 @@ module BinaryTreeImpl : BinaryTree =
 
   open DLLBasedQueue
 
+  let rec find_node n k = 
+    let nk = value n in 
+    if k = nk then Some n
+    else if C.comp k nk < 0 
+    then match left n with
+      | None -> None
+      | Some l -> find_node l k
+    else match right n with
+      | None -> None
+      | Some r -> find_node r k
+
   let depth_first_search_rec n = 
-    let rec walk n q =
-      enqueue q (value n);
+    let rec walk n q depth =
+      enqueue q (depth, value n);
       (match left n with
-       | Some l -> walk l q
+       | Some l -> walk l q (depth + 1)
        | None -> ());
       (match right n with
-       | Some r -> walk r q
+       | Some r -> walk r q (depth + 1)
        | None -> ());
     in
     let acc = (mk_queue 0) in
-    walk (get_root n) acc;
+    walk (get_root n) acc 0;
+    queue_to_list acc
+
+  let depth_first_search_loop n = 
+    let open ListBasedStack in
+    let loop stack q depth =
+      while not (is_empty stack) do
+        let (depth, n) = get_exn @@ pop stack in
+        enqueue q (depth, value n);
+        (match right n with
+         | Some r -> push stack (depth + 1, r)
+         | _ -> ());
+        (match left n with
+         | Some l -> push stack (depth + 1, l)
+         | _ -> ());
+      done
+    in
+    let acc = (mk_queue 0) in
+    let stack = mk_stack () in
+    push stack (0, get_root n);
+    loop stack acc 0;
+    queue_to_list acc
+
+  let breadth_first_search_loop n = 
+    let open DLLBasedQueue in
+    let loop wlist q depth =
+      while not (is_empty wlist) do
+        let (depth, n) = get_exn @@ dequeue wlist in
+        enqueue q (depth, value n);
+        (match left n with
+         | Some l -> enqueue wlist (depth + 1, l)
+         | _ -> ());
+        (match right n with
+         | Some r -> enqueue wlist (depth + 1, r)
+         | _ -> ());
+      done
+    in
+    let acc = (mk_queue 0) in
+    let wlist = mk_queue 0 in
+    enqueue wlist (0, get_root n);
+    loop wlist acc 0;
     queue_to_list acc
 
 end
@@ -512,22 +562,34 @@ module KVComp  = struct
 end
 
 module KVTree = BinaryTreeImpl(KVComp)
+
 open KVTree
 
-let root = mk_root (0, "abcde")
+let root = mk_root (5, "abcde")
 
+(* Experiments with threes *)
 
-(*
-- Tree definition
-- Tree traversal
-- Depth-first-search
-- Breadth-first-search
+(* # for i = 0 to 9 do KVTree.insert_element root a.(i) done;;
+ * - : unit = ()
+ * # depth_first_search_rec root;;
+ * - : (int * (int * string)) list =
+ * [(0, (5, "abcde")); (1, (0, "rartq")); (2, (1, "hpivx")); (3, (2, "lacrp"));
+ *  (4, (2, "dkuet")); (1, (7, "tlzqm")); (2, (5, "bjamg")); (3, (6, "uvfbv"));
+ *  (4, (6, "nsieb")); (2, (7, "kzfkk")); (3, (7, "qlziz"))]
+ * # depth_first_search_loop root;;
+ * - : (int * (int * string)) list =
+ * [(0, (5, "abcde")); (1, (0, "rartq")); (2, (1, "hpivx")); (3, (2, "lacrp"));
+ *  (4, (2, "dkuet")); (1, (7, "tlzqm")); (2, (5, "bjamg")); (3, (6, "uvfbv"));
+ *  (4, (6, "nsieb")); (2, (7, "kzfkk")); (3, (7, "qlziz"))]
+ * # breadth_first_search_loop root;;
+ * - : (int * (int * string)) list =
+ * [(0, (5, "abcde")); (1, (0, "rartq")); (1, (7, "tlzqm")); (2, (1, "hpivx"));
+ *  (2, (5, "bjamg")); (2, (7, "kzfkk")); (3, (2, "lacrp")); (3, (6, "uvfbv"));
+ *  (3, (7, "qlziz")); (4, (2, "dkuet")); (4, (6, "nsieb"))] *)
 
-
-*)
 
  
- (* X. Hash-tables *)
+(* 7. Hash-tables *)
 
 module type Hashable = sig
   type t
