@@ -19,20 +19,17 @@ open Week_05
 
 (* 1. Representing stacks and queues as arrays *)
 
-module type AbstractStack = 
-  functor(E: sig type elem end) -> sig
+module type AbstractStack = sig
     type 'e t
-    val mk_stack : unit -> E.elem t
-    val is_empty : E.elem t -> bool
-    val push : E.elem t -> E.elem -> unit
-    val pop : E.elem t -> E.elem option
+    val mk_stack : unit -> 'e t
+    val is_empty : 'e t -> bool
+    val push : 'e t -> 'e -> unit
+    val pop : 'e t -> 'e option
   end
 
 (* Stack based on lists *)
 
-module ListBasedStack : AbstractStack = 
-  functor (E: sig type elem end) ->
-  struct
+module ListBasedStack : AbstractStack = struct
     type 'e t = 'e list ref
     let mk_stack _ = ref []
     let is_empty s = match !s with
@@ -47,14 +44,12 @@ module ListBasedStack : AbstractStack =
       | _ -> None
   end
 
-module KVStack_LB = 
-  ListBasedStack(struct type elem = int * string end)
+open ListBasedStack
 
 (* 
 
-# open KVStack_LB;;
 # let s = mk_stack ();;
-val s : (int * string) KVStack_LB.t = <abstr>
+val s : '_weak101 ListBasedStack.t = <abstr>
 # push s (4, "aaa");;
 - : unit = ()
 # push s (5, "bbb");;
@@ -78,9 +73,7 @@ val s : (int * string) KVStack_LB.t = <abstr>
 
 (* 2. Stack based on arrays *)
 
-module ArrayBasedStack : AbstractStack = 
-  functor (E: sig type elem end) ->
-  struct
+module ArrayBasedStack : AbstractStack = struct
     type 'e t = {
       elems   : 'e option array;
       cur_pos : int ref 
@@ -110,14 +103,12 @@ module ArrayBasedStack : AbstractStack =
 
 (* Testing array-based stack *)
 
-module KVStack_AB = 
-  ArrayBasedStack(struct type elem = int * string end)
 
 (*
 
-# open KVStack_AB;;
+# open ArrayBasedStack;;
 # let s = mk_stack ();;
-val s : (int * string) KVStack_AB.t = <abstr>
+val s : '_weak102 ArrayBasedStack.t = <abstr>
 # push s (3, "aaa");;
 - : unit = ()
 # push s (5, "bbb");;
@@ -140,23 +131,19 @@ val s : (int * string) KVStack_AB.t = <abstr>
 (* 3. An abstract specification for a queue *)
 
 module type Queue = 
-  functor(E: sig type elem end)
-    (P: sig val pp : E.elem -> string end)-> 
   sig
     type 'e t
-    val mk_queue : int -> E.elem t
-    val is_empty : E.elem t -> bool
-    val is_full : E.elem t -> bool
-    val enqueue : E.elem t -> E.elem -> unit
-    val dequeue : E.elem t -> E.elem option
-    val print_queue : E.elem t -> unit    
+    val mk_queue : int -> 'e t
+    val is_empty : 'e t -> bool
+    val is_full : 'e t -> bool
+    val enqueue : 'e t -> 'e -> unit
+    val dequeue : 'e t -> 'e option
+    val queue_to_list : 'e t -> 'e list
   end
 
 (* 4. Queue based on arrays *)
 
 module ArrayBasedQueue : Queue = 
-  functor(E: sig type elem end)
-    (P: sig val pp : E.elem -> string end)->
   struct
     type 'e t = {
       elems : 'e option array;
@@ -201,72 +188,77 @@ module ArrayBasedQueue : Queue =
           else hd + 1);
         res)
 
-    let print_queue q = 
-      let module AP = ArrayPrinter(struct
-          type t = E.elem option
-          let pp s = match s with
-            | Some e -> P.pp e
-            | None -> "None"
-        end) in
-      AP.print_array q.elems
+    let queue_to_list q = 
+      let hd = !(q.head) in
+      let tl = !(q.tail) in
+      if is_empty q then [] 
+      else if hd < tl then
+        List.map get_exn (array_to_list hd (tl + 1) q.elems)
+      else 
+        let l1 = array_to_list hd q.size q.elems in
+        let l2 = array_to_list 0 tl q.elems in
+        List.map get_exn (l1 @ l2)
+
+end
+
+module QueuePrinter(Q: Queue) = struct
+
+  let print_queue q pp = 
+    Printf.printf "[";
+    List.iter (fun e ->
+      Printf.printf "%s; " (pp e))
+      (Q.queue_to_list q);
+    Printf.printf "]\n"
   end
 
-module KVQueue_Arr = 
-  ArrayBasedQueue(struct type elem = int * string end)(KV)
-open KVQueue_Arr
+
+open ArrayBasedQueue
+module ABQPrinter = QueuePrinter(ArrayBasedQueue)
+
+(* let pp e = match e with
+ *   | Some (k, v) -> Printf.sprintf "(%d, %s)" k v
+ *   | None -> "None" *)
+
+let pp (k, v) = Printf.sprintf "(%d, %s)" k v
+
+let print_queue q = ABQPrinter.print_queue q pp
 
 (* Testing the array-based queue *)
 
 (*
 
 # let q = mk_queue 10;;
-val q : '_weak16 KVQueue_Arr.t =
-  {elems = [|None; None; None; None; None; None; None; None; None; None|];
-   head = {contents = 0}; tail = {contents = 0}; size = 10}
+val q : '_weak103 ArrayBasedQueue.t = <abstr>
 # for i = 0 to 9 do enqueue q a.(i) done;;
 - : unit = ()
-# q;;
-- : (int * string) KVQueue_Arr.t =
-{elems =
-  [|Some (8, "kxnhw"); Some (5, "dfizp"); Some (2, "igxib");
-    Some (6, "pseae"); Some (6, "jpvey"); Some (1, "hmayz");
-    Some (7, "ieiig"); Some (1, "occuz"); Some (2, "qzitr");
-    Some (3, "jksmq")|];
- head = {contents = 0}; tail = {contents = 0}; size = 10}
+# print_queue q;;
+[(7, sapwd); (3, bsxoq); (0, lfckx); (7, nwztj); (5, voeed); (9, jtwrn); (8, zovuq); (4, hgiki); (8, yqnvq); (3, gjmfh); ]
+- : unit = ()
+# a;;
+- : (int * string) array =
+[|(7, "sapwd"); (3, "bsxoq"); (0, "lfckx"); (7, "nwztj"); (5, "voeed");
+  (9, "jtwrn"); (8, "zovuq"); (4, "hgiki"); (8, "yqnvq"); (3, "gjmfh")|]
 # is_full q;;
 - : bool = true
 # dequeue q;;
-- : (int * string) option = Some (8, "kxnhw")
+- : (int * string) option = Some (7, "sapwd")
 # dequeue q;;
-- : (int * string) option = Some (5, "dfizp")
-# is_full q;;
-- : bool = false
-# is_empty q;;
-- : bool = false
-# enqueue q (6, "qwerty");;
+- : (int * string) option = Some (3, "bsxoq")
+# dequeue q;;
+- : (int * string) option = Some (0, "lfckx")
+# print_queue q;;
+[(7, nwztj); (5, voeed); (9, jtwrn); (8, zovuq); (4, hgiki); (8, yqnvq); (3, gjmfh); ]
 - : unit = ()
-# q;;
-- : (int * string) KVQueue_Arr.t =
-{elems =
-  [|Some (6, "qwerty"); None; Some (2, "igxib"); Some (6, "pseae");
-    Some (6, "jpvey"); Some (1, "hmayz"); Some (7, "ieiig");
-    Some (1, "occuz"); Some (2, "qzitr"); Some (3, "jksmq")|];
- head = {contents = 2}; tail = {contents = 1}; size = 10}
+# enqueue q (13, "lololo");;
+- : unit = ()
+# print_queue q;;
+[(7, nwztj); (5, voeed); (9, jtwrn); (8, zovuq); (4, hgiki); (8, yqnvq); (3, gjmfh); (13, lololo); ]
+- : unit = ()
 # dequeue q;;
-- : (int * string) option = Some (2, "igxib")
-# dequeue q;;
-- : (int * string) option = Some (6, "pseae")
-# q;;
-- : (int * string) KVQueue_Arr.t =
-{elems =
-  [|Some (6, "qwerty"); None; None; None; Some (6, "jpvey");
-    Some (1, "hmayz"); Some (7, "ieiig"); Some (1, "occuz");
-    Some (2, "qzitr"); Some (3, "jksmq")|];
- head = {contents = 4}; tail = {contents = 1}; size = 10}
-
+- : (int * string) option = Some (7, "nwztj")
 *)
 
-(* 5. doubly-lined lists *)
+(* 5. doubly-linked lists *)
 
 module DoubleLinkedList = 
   struct
@@ -334,17 +326,10 @@ module DoubleLinkedList =
       | None -> ()
       | Some nxt -> nxt.prev := prev n);
 
-  end
+  end 
 
-(* module DoubleLinkedListInt = 
- *   DoubleLinkedList(struct type elem = int end)
- *     (struct let pp = string_of_int end)
- * open DoubleLinkedListInt *)
 
-module DLLBasedQueue : Queue = 
-  functor(E: sig type elem end)
-    (P: sig val pp : E.elem -> string end)->
-  struct
+ module DLLBasedQueue : Queue = struct
   open DoubleLinkedList
     
     type 'e t = {
@@ -382,63 +367,139 @@ module DLLBasedQueue : Queue =
         remove n; (* This is not necessary *)
         Some (value n)
 
-    let print_queue q = match !(q.head) with
-      | Some n -> 
-        let ls = to_list_from n in
-        let a = list_to_array ls in
-        let module AP = ArrayPrinter(struct
-            type t = E.elem
-            let pp = P.pp
-            end) in
-        AP.print_array a
-      | _ -> Printf.printf "Empty"
+    let queue_to_list q = match !(q.head) with
+      | None -> []
+      | Some n -> to_list_from n
 
   end
 
-module KVQueue_DLL = 
-  DLLBasedQueue(struct type elem = int * string end)(KV)
-open KVQueue_DLL
+open DLLBasedQueue
+module DLQPrinter = QueuePrinter(DLLBasedQueue)
+
+(* let pp e = match e with
+ *   | Some (k, v) -> Printf.sprintf "(%d, %s)" k v
+ *   | None -> "None" *)
+
+let pp (k, v) = Printf.sprintf "(%d, %s)" k v
+
+let print_queue q = DLQPrinter.print_queue q pp
 
 let dq = mk_queue 0
 
-(* Now an experiment with the queue *)
+
+(* Experiments *)
 
 (*
-val a : (int * string) array =
-  [|(1, "pjbqh"); (6, "dhpyo"); (3, "ulkuw"); (7, "bohfu"); (0, "myxoh");
-    (5, "ptlbv"); (7, "zmsaj"); (3, "amhja"); (7, "rxoai"); (2, "dhqma")|]
-val hs : '_weak82 HashTableIntKey.hash_table = <abstr>
+# let dq = mk_queue 0;;
+val dq : '_weak105 DLLBasedQueue.t = <abstr>
+# a;;
+- : (int * string) array =
+[|(7, "sapwd"); (3, "bsxoq"); (0, "lfckx"); (7, "nwztj"); (5, "voeed");
+  (9, "jtwrn"); (8, "zovuq"); (4, "hgiki"); (8, "yqnvq"); (3, "gjmfh")|]
 # for i = 0 to 9 do enqueue dq a.(i) done;;
+- : unit = ()
+# print_queue dq;;
+[(7, sapwd); (3, bsxoq); (0, lfckx); (7, nwztj); (5, voeed); (9, jtwrn); (8, zovuq); (4, hgiki); (8, yqnvq); (3, gjmfh); ]
 - : unit = ()
 # is_empty dq;;
 - : bool = false
 # dequeue dq;;
-- : (int * string) option = Some (1, "pjbqh")
+- : (int * string) option = Some (7, "sapwd")
 # dequeue dq;;
-- : (int * string) option = Some (6, "dhpyo")
+- : (int * string) option = Some (3, "bsxoq")
 # dequeue dq;;
-- : (int * string) option = Some (3, "ulkuw")
-# dequeue dq;;
-- : (int * string) option = Some (7, "bohfu")
+- : (int * string) option = Some (0, "lfckx")
+# enqueue dq (13, "lololo");;
+- : unit = ()
 # print_queue dq;;
-[| (0, myxoh); (5, ptlbv); (7, zmsaj); (3, amhja); (7, rxoai); (2, dhqma) |] - : unit = ()
+[(7, nwztj); (5, voeed); (9, jtwrn); (8, zovuq); (4, hgiki); (8, yqnvq); (3, gjmfh); (13, lololo); ]
+- : unit = ()
 
 *)
 
-
-(* 6. Binary trees and their traversals *)
-
-(*
-- Tree definition
-- Tree traversal
-- Depth-first-search
-- Breadth-first-search
-
-
-*)
-
-
-(* X. Hash-tables *)
+ (* 
+ * (\* 6. Binary trees and their traversals *\)
+ * 
+ * module type BinaryTree = functor(C: Comparable) -> sig
+ * 
+ *   type 'e tree_node
+ * 
+ *   val value : 'e tree_node -> 'e
+ *   val left : 'e tree_node -> 'e tree_node option
+ *   val right : 'e tree_node -> 'e tree_node option
+ *   val parent : 'e tree_node -> 'e tree_node option
+ * 
+ *   val get_root : 'e tree_node -> 'e tree_node
+ * 
+ *   val update_value : 'e tree_node -> 'e -> unit
+ * 
+ * end
+ * 
+ * module BinaryTreeImpl : BinaryTree = 
+ *   functor (C: Comparable) -> struct
+ * 
+ *   type 'e tree_node = {
+ *     value : 'e ref;
+ *     parent  : 'e tree_node option ref;
+ *     left  : 'e tree_node option ref;
+ *     right  : 'e tree_node option ref;
+ *   }
+ * 
+ *   let value n = !(n.value)
+ *   let left n = !(n.left)
+ *   let right n = !(n.right)
+ *   let parent n = !(n.parent)
+ * 
+ *   let is_root n =  parent n = None
+ *                    
+ *   let rec get_root n = match parent n with
+ *     | None -> n
+ *     | Some m -> get_root m
+ * 
+ *   let update_value n v = n.value := v
+ * 
+ *   let rec insert_element n e = 
+ *     if C.comp e (value n) < 0
+ *     then match left n with
+ *       | Some m -> insert_element m e
+ *       | None ->
+ *         let m = {value = ref e;
+ *                  parent = ref @@ Some n;
+ *                  left = ref None;
+ *                  right = ref None} in
+ *         n.left := Some m;
+ *         m
+ *     else match left n with
+ *       | Some m -> insert_element m e
+ *       | None ->
+ *         let m = {value = ref e;
+ *                  parent = ref @@ Some n;
+ *                  left = ref None;
+ *                  right = ref None} in
+ *         n.right := Some m;
+ *         m
+ * 
+ *   let dfs n = 
+ *     let rec walk n acc = 
+ *       let acc' = value n :: acc in
+ *       
+ * 
+ *       
+ * 
+ * end
+ * 
+ * (\*
+ * - Tree definition
+ * - Tree traversal
+ * - Depth-first-search
+ * - Breadth-first-search
+ * 
+ * 
+ * *\)
+ * 
+ *)
+ 
+ (* X. Hash-tables *)
 
 module type Hashable = sig
   type t
@@ -523,79 +584,78 @@ val hs : '_weak80 HashTableIntKey.hash_table = <abstr>
 
 
 
-
 (****************************************************************)
 (*******               Obsolete stuff below                 *****)
 (****************************************************************)
 
-module type EnhancedHashTable = functor 
-  (H : Hashable) -> sig
-  type key = H.t
-  type 'v hash_table
-  val mk_new_table : int -> 'v hash_table 
-  val insert : (key * 'v) hash_table -> key -> 'v -> unit
-    val get : (key * 'v) hash_table -> key -> 'v option
-
-  (* An additional interface *)
-  type 'v entry
-  val get_entry : (key * 'v) hash_table -> key -> 'v entry option
-  val value : 'v entry -> 'v
-  val remove : (key * 'v) hash_table -> 'v entry -> unit
-end
-    
-module EnhancedListBasedHashTable 
-  : EnhancedHashTable = functor 
-  (H : Hashable) -> struct
-  type key = H.t
-  type 'v entry = key * 'v
-
-  let value = snd
-
-  type 'v hash_table = {
-    buckets : 'v list array;
-    size : int 
-  }
-
-  let mk_new_table size = 
-    let buckets = Array.make size [] in
-    {buckets = buckets;
-     size = size}
-  
-  let insert ht k v = 
-    let hs = H.hash k in
-    let bnum = hs mod ht.size in 
-    let bucket = ht.buckets.(bnum) in
-    let clean_bucket = 
-      List.filter (fun (k', v) -> k' <> k) bucket in
-    ht.buckets.(bnum) <- (k, v) :: clean_bucket
-
-  let get ht k = 
-    let hs = H.hash k in
-    let bnum = hs mod ht.size in 
-    let bucket = ht.buckets.(bnum) in
-    let res = List.find_opt (fun (k', _) -> k' = k) bucket in
-    match res with 
-    | Some (_, v) -> Some v
-    | _ -> None
-
-  let get_entry ht k = 
-    let hs = H.hash k in
-    let bnum = hs mod ht.size in 
-    let bucket = ht.buckets.(bnum) in
-    let res = List.find_opt (fun (k', _) -> k' = k) bucket in
-    match res with 
-    | Some (_, v) -> Some (k, v)
-    | _ -> None
-
-
-  (* Slow remove - introduce for completeness *)
-  let remove ht e = 
-    let hs = H.hash (fst e) in
-    let bnum = hs mod ht.size in 
-    let bucket = ht.buckets.(bnum) in
-    let clean_bucket = 
-      List.filter (fun (k', _) -> k' <> (fst e)) bucket in
-    ht.buckets.(bnum) <- clean_bucket
-    
-end 
+(* module type EnhancedHashTable = functor 
+ *   (H : Hashable) -> sig
+ *   type key = H.t
+ *   type 'v hash_table
+ *   val mk_new_table : int -> 'v hash_table 
+ *   val insert : (key * 'v) hash_table -> key -> 'v -> unit
+ *     val get : (key * 'v) hash_table -> key -> 'v option
+ * 
+ *   (\* An additional interface *\)
+ *   type 'v entry
+ *   val get_entry : (key * 'v) hash_table -> key -> 'v entry option
+ *   val value : 'v entry -> 'v
+ *   val remove : (key * 'v) hash_table -> 'v entry -> unit
+ * end
+ *     
+ * module EnhancedListBasedHashTable 
+ *   : EnhancedHashTable = functor 
+ *   (H : Hashable) -> struct
+ *   type key = H.t
+ *   type 'v entry = key * 'v
+ * 
+ *   let value = snd
+ * 
+ *   type 'v hash_table = {
+ *     buckets : 'v list array;
+ *     size : int 
+ *   }
+ * 
+ *   let mk_new_table size = 
+ *     let buckets = Array.make size [] in
+ *     {buckets = buckets;
+ *      size = size}
+ *   
+ *   let insert ht k v = 
+ *     let hs = H.hash k in
+ *     let bnum = hs mod ht.size in 
+ *     let bucket = ht.buckets.(bnum) in
+ *     let clean_bucket = 
+ *       List.filter (fun (k', v) -> k' <> k) bucket in
+ *     ht.buckets.(bnum) <- (k, v) :: clean_bucket
+ * 
+ *   let get ht k = 
+ *     let hs = H.hash k in
+ *     let bnum = hs mod ht.size in 
+ *     let bucket = ht.buckets.(bnum) in
+ *     let res = List.find_opt (fun (k', _) -> k' = k) bucket in
+ *     match res with 
+ *     | Some (_, v) -> Some v
+ *     | _ -> None
+ * 
+ *   let get_entry ht k = 
+ *     let hs = H.hash k in
+ *     let bnum = hs mod ht.size in 
+ *     let bucket = ht.buckets.(bnum) in
+ *     let res = List.find_opt (fun (k', _) -> k' = k) bucket in
+ *     match res with 
+ *     | Some (_, v) -> Some (k, v)
+ *     | _ -> None
+ * 
+ * 
+ *   (\* Slow remove - introduce for completeness *\)
+ *   let remove ht e = 
+ *     let hs = H.hash (fst e) in
+ *     let bnum = hs mod ht.size in 
+ *     let bucket = ht.buckets.(bnum) in
+ *     let clean_bucket = 
+ *       List.filter (fun (k', _) -> k' <> (fst e)) bucket in
+ *     ht.buckets.(bnum) <- clean_bucket
+ *     
+ * end *)
 
