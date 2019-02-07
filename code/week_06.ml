@@ -16,7 +16,7 @@ open Week_05
 
 (* Linked objects *)
 
-(* 1. Representing stacks and queues *)
+(* 1. Representing stacks and queues as arrays *)
 
 module type AbstractStack = 
   functor(E: sig type elem end) -> sig
@@ -26,6 +26,8 @@ module type AbstractStack =
     val push : E.elem t -> E.elem -> unit
     val pop : E.elem t -> E.elem option
   end
+
+(* Stack based on lists *)
 
 module ListBasedStack : AbstractStack = 
   functor (E: sig type elem end) ->
@@ -72,6 +74,8 @@ val s : (int * string) KVStack_LB.t = <abstr>
 - : (int * string) option = None
 
 *)
+
+(* 2. Stack based on arrays *)
 
 module ArrayBasedStack : AbstractStack = 
   functor (E: sig type elem end) ->
@@ -132,6 +136,8 @@ val s : (int * string) KVStack_AB.t = <abstr>
 
 *)
 
+(* 3. An abstract specification for a queue *)
+
 module type Queue = 
   functor(E: sig type elem end)
     (P: sig val pp : E.elem -> string end)-> 
@@ -142,7 +148,10 @@ module type Queue =
     val is_full : E.elem t -> bool
     val enqueue : E.elem t -> E.elem -> unit
     val dequeue : E.elem t -> E.elem option
+    val print_queue : E.elem t -> unit    
   end
+
+(* 4. Queue based on arrays *)
 
 module ArrayBasedQueue : Queue = 
   functor(E: sig type elem end)
@@ -190,6 +199,15 @@ module ArrayBasedQueue : Queue =
           then 0 
           else hd + 1);
         res)
+
+    let print_queue q = 
+      let module AP = ArrayPrinter(struct
+          type t = E.elem option
+          let pp s = match s with
+            | Some e -> P.pp e
+            | None -> "None"
+        end) in
+      AP.print_array q.elems
   end
 
 module KVQueue_Arr = 
@@ -247,53 +265,64 @@ val q : '_weak16 KVQueue_Arr.t =
 
 *)
 
+(* 5. doubly-lined lists *)
 
 module DoubleLinkedList = 
   functor (E: sig type elem end)
     (P: sig val pp : E.elem -> string end)->
   struct
     type dll_node = {
-      value : E.elem;
-      prev  : dll_node ref option ref;
-      next  : dll_node ref option ref
+      value : E.elem ref;
+      prev  : dll_node option ref;
+      next  : dll_node option ref
     }
     type t = dll_node option
 
-    let mk_node e = ref {
-      value = e;
+    let mk_node e = {
+      value = ref e;
       prev = ref None;
       next = ref None
     }
 
-    let prev n =  !((!n).prev)
-    let next n =  !((!n).next)
-    let value n =  (!n).value
-    let set_value n v = {n with value = v}
+    let prev n =  !(n.prev)
+    let next n =  !(n.next)
+    let value n = !(n.value)
+    let set_value n v = n.value := v
 
     let insert_after n1 n2 = 
       let n3 = next n1 in
       (match n3 with 
-       | Some n -> (!n).prev := Some n2
+       | Some n -> n.prev := Some n2
        | _ -> ());
-      (!n2).next := n3;
-      (!n1).next := Some n2;
-      (!n2).prev := Some n1
+      n2.next := n3;
+      n1.next := Some n2;
+      n2.prev := Some n1
+
+    let rec move_to_head n = 
+      match prev n with
+      | None -> None
+      | Some m -> move_to_head m
+      
+    let rec move_to_tail n = 
+      match prev n with
+      | None -> None
+      | Some m -> move_to_head m
 
     let print_from n = 
       let iter = ref (Some n) in
       while !iter <> None do
         let node = (get_exn !iter) in
-        Printf.printf "Elem = %s\n" (P.pp !node.value);
+        Printf.printf "Elem = %s\n" (P.pp @@ value node);
         iter := next node  
       done
 
     let remove n = 
-      (match !(!n.prev) with
+      (match prev n with
       | None -> ()
-      | Some p -> (!p).next := !(!n.next));
-      (match !(!n.next) with
+      | Some p -> p.next := next n);
+      (match next n with
       | None -> ()
-      | Some nxt -> (!nxt).prev := !(!n.prev));
+      | Some nxt -> nxt.prev := prev n);
 
   end
 
@@ -310,8 +339,8 @@ module DLLBasedQueue : Queue =
   open DLL
     
     type 'e t = {
-      head : dll_node ref option ref;
-      tail : dll_node ref option ref;
+      head : dll_node option ref;
+      tail : dll_node option ref;
     }
 
     (* Tell about aliasing! *)
@@ -344,6 +373,10 @@ module DLLBasedQueue : Queue =
         remove n; (* This is not necessary *)
         Some (value n)
 
+    let print_queue q = match !(q.head) with
+      | Some n -> print_from n
+      | _ -> ()
+
   end
 
 module KVQueue_DLL = 
@@ -374,10 +407,12 @@ let dq = mk_queue 0
 *)
 
 
-(* Binary trees and their traversals *)
+(* 6. Binary trees and their traversals *)
 
 
-(* Hash-tables *)
+
+
+(* X. Hash-tables *)
 
 module type Hashable = sig
   type t
