@@ -12,6 +12,7 @@ Then just load ./mytoplevel as your REPL command (instead of ocaml).
 
 open Week_01
 open Week_03
+open Week_04
 open Week_05
 
 (* Linked objects *)
@@ -268,15 +269,13 @@ val q : '_weak16 KVQueue_Arr.t =
 (* 5. doubly-lined lists *)
 
 module DoubleLinkedList = 
-  functor (E: sig type elem end)
-    (P: sig val pp : E.elem -> string end)->
   struct
-    type dll_node = {
-      value : E.elem ref;
-      prev  : dll_node option ref;
-      next  : dll_node option ref
+    type 'e dll_node = {
+      value : 'e ref;
+      prev  : 'e dll_node option ref;
+      next  : 'e dll_node option ref
     }
-    type t = dll_node option
+    type 'e t = 'e dll_node option
 
     let mk_node e = {
       value = ref e;
@@ -298,6 +297,15 @@ module DoubleLinkedList =
       n1.next := Some n2;
       n2.prev := Some n1
 
+    let insert_before n1 n2 = 
+      let n0 = prev n2 in
+      (match n0 with 
+       | Some n -> n.next := Some n1
+       | _ -> ());
+      n1.prev := n0;
+      n1.next := Some n2;
+      n2.prev := Some n1
+
     let rec move_to_head n = 
       match prev n with
       | None -> None
@@ -308,13 +316,15 @@ module DoubleLinkedList =
       | None -> None
       | Some m -> move_to_head m
 
-    let print_from n = 
+    let to_list_from n = 
+      let res = ref [] in
       let iter = ref (Some n) in
       while !iter <> None do
         let node = (get_exn !iter) in
-        Printf.printf "Elem = %s\n" (P.pp @@ value node);
+        res := (value node) :: ! res;
         iter := next node  
-      done
+      done;
+      List.rev !res
 
     let remove n = 
       (match prev n with
@@ -335,12 +345,11 @@ module DLLBasedQueue : Queue =
   functor(E: sig type elem end)
     (P: sig val pp : E.elem -> string end)->
   struct
-  module DLL = DoubleLinkedList(E)(P)  
-  open DLL
+  open DoubleLinkedList
     
     type 'e t = {
-      head : dll_node option ref;
-      tail : dll_node option ref;
+      head : 'e dll_node option ref;
+      tail : 'e dll_node option ref;
     }
 
     (* Tell about aliasing! *)
@@ -374,8 +383,15 @@ module DLLBasedQueue : Queue =
         Some (value n)
 
     let print_queue q = match !(q.head) with
-      | Some n -> print_from n
-      | _ -> ()
+      | Some n -> 
+        let ls = to_list_from n in
+        let a = list_to_array ls in
+        let module AP = ArrayPrinter(struct
+            type t = E.elem
+            let pp = P.pp
+            end) in
+        AP.print_array a
+      | _ -> Printf.printf "Empty"
 
   end
 
@@ -388,21 +404,24 @@ let dq = mk_queue 0
 (* Now an experiment with the queue *)
 
 (*
-
+val a : (int * string) array =
+  [|(1, "pjbqh"); (6, "dhpyo"); (3, "ulkuw"); (7, "bohfu"); (0, "myxoh");
+    (5, "ptlbv"); (7, "zmsaj"); (3, "amhja"); (7, "rxoai"); (2, "dhqma")|]
+val hs : '_weak82 HashTableIntKey.hash_table = <abstr>
 # for i = 0 to 9 do enqueue dq a.(i) done;;
 - : unit = ()
-# a;;
-- : (int * string) array =
-[|(2, "ikmjz"); (5, "fqvxk"); (4, "xzpnl"); (8, "pjpja"); (1, "junoc");
-  (0, "moscp"); (2, "ctfbv"); (7, "lxalw"); (3, "qeoze"); (5, "uqvml")|]
 # is_empty dq;;
 - : bool = false
 # dequeue dq;;
-- : (int * string) option = Some (2, "ikmjz")
+- : (int * string) option = Some (1, "pjbqh")
 # dequeue dq;;
-- : (int * string) option = Some (5, "fqvxk")
+- : (int * string) option = Some (6, "dhpyo")
 # dequeue dq;;
-- : (int * string) option = Some (4, "xzpnl")
+- : (int * string) option = Some (3, "ulkuw")
+# dequeue dq;;
+- : (int * string) option = Some (7, "bohfu")
+# print_queue dq;;
+[| (0, myxoh); (5, ptlbv); (7, zmsaj); (3, amhja); (7, rxoai); (2, dhqma) |] - : unit = ()
 
 *)
 
@@ -426,22 +445,19 @@ module type Hashable = sig
   val hash : t -> int
 end
 
-module type HashTableSig = functor 
-  (H : Hashable) 
-  (P : sig val pp: H.t -> string end) -> sig
+module type HashTable = functor 
+  (H : Hashable) -> sig
   type key = H.t
   type 'v hash_table
   val mk_new_table : int -> 'v hash_table 
   val insert : (key * 'v) hash_table -> key -> 'v -> unit
   val get : (key * 'v) hash_table -> key -> 'v option
+  val remove : (key * 'v) hash_table -> key -> unit
 end
     
-module HashTable 
-  : HashTableSig = functor 
-  (H : Hashable) 
-  (P : sig
-     val pp: H.t -> string
-   end) -> struct
+module ListBasedHashTable 
+  : HashTable = functor 
+  (H : Hashable) -> struct
   type key = H.t
 
   type 'v hash_table = {
@@ -470,12 +486,122 @@ module HashTable
     match res with 
     | Some (_, v) -> Some v
     | _ -> None
+
+  (* Slow remove - introduce for completeness *)
+  let remove ht k = 
+    let hs = H.hash k in
+    let bnum = hs mod ht.size in 
+    let bucket = ht.buckets.(bnum) in
+    let clean_bucket = 
+      List.filter (fun (k', _) -> k' <> k) bucket in
+    ht.buckets.(bnum) <- clean_bucket
+    
 end 
 
 (* A simple hash-table with ints *)
-module HashTableIntKey = HashTable
+module HashTableIntKey = ListBasedHashTable 
     (struct type t = int let hash i = i end)
-    (struct let pp = string_of_int end)
+
+let a = generate_key_value_array 10
+
+let hs = HashTableIntKey.mk_new_table 8
+
+(*
+
+val a : (int * string) array =
+  [|(0, "gyqzm"); (8, "ccurj"); (9, "hwupm"); (3, "ttvno"); (4, "bkyoh");
+    (6, "rcugr"); (1, "hlbhi"); (8, "quknb"); (0, "cbrsj"); (9, "jbhos")|]
+val hs : '_weak80 HashTableIntKey.hash_table = <abstr>
+# for i = 0 to 9 do HashTableIntKey.insert hs (fst a.(i)) a.(i) done;;
+- : unit = ()
+#  HashTableIntKey.get hs 4;;
+- : (int * string) option = Some (4, "bkyoh")
+
+*)
+
+
+
+
+
+
+(****************************************************************)
+(*******               Obsolete stuff below                 *****)
+(****************************************************************)
+
+module type EnhancedHashTableSig = functor 
+  (H : Hashable) -> sig
+  type key = H.t
+  type 'v hash_table
+  val mk_new_table : int -> 'v hash_table 
+  val insert : (key * 'v) hash_table -> key -> 'v -> unit
+    val get : (key * 'v) hash_table -> key -> 'v option
+
+  (* An additional interface *)
+  type 'v entry
+  val get_entry : (key * 'v) hash_table -> key -> 'v entry option
+  val value : 'v entry -> 'v
+  val remove : (key * 'v) hash_table -> 'v entry -> unit
+end
+    
+module EnhancedListBasedHashTable 
+  : HashTableSig = functor 
+  (H : Hashable) -> struct
+  type key = H.t
+  type 'v entry = key * 'v
+
+  let value = snd
+
+  type 'v hash_table = {
+    buckets : 'v list array;
+    size : int 
+  }
+
+  let mk_new_table size = 
+    let buckets = Array.make size [] in
+    {buckets = buckets;
+     size = size}
+  
+  let insert ht k v = 
+    let hs = H.hash k in
+    let bnum = hs mod ht.size in 
+    let bucket = ht.buckets.(bnum) in
+    let clean_bucket = 
+      List.filter (fun (k', v) -> k' <> k) bucket in
+    ht.buckets.(bnum) <- (k, v) :: clean_bucket
+
+  let get ht k = 
+    let hs = H.hash k in
+    let bnum = hs mod ht.size in 
+    let bucket = ht.buckets.(bnum) in
+    let res = List.find_opt (fun (k', _) -> k' = k) bucket in
+    match res with 
+    | Some (_, v) -> Some v
+    | _ -> None
+
+  let get_entry ht k = 
+    let hs = H.hash k in
+    let bnum = hs mod ht.size in 
+    let bucket = ht.buckets.(bnum) in
+    let res = List.find_opt (fun (k', _) -> k' = k) bucket in
+    match res with 
+    | Some (_, v) -> Some (k, v)
+    | _ -> None
+
+
+  (* Slow remove - introduce for completeness *)
+  let remove ht e = 
+    let hs = H.hash (fst e) in
+    let bnum = hs mod ht.size in 
+    let bucket = ht.buckets.(bnum) in
+    let clean_bucket = 
+      List.filter (fun (k', _) -> k' <> (fst e)) bucket in
+    ht.buckets.(bnum) <- clean_bucket
+    
+end 
+
+(* A simple hash-table with ints *)
+module HashTableIntKey = ListBasedHashTable 
+    (struct type t = int let hash i = i end)
 
 let a = generate_key_value_array 10
 
