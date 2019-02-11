@@ -106,7 +106,7 @@ sorted sub-arrays::
    in 
    walk ls []
 
- let bucket_sort max ?(bnum = 1000) arr = 
+ let bucket_sort max ?(bnum = 10) arr = 
    let buckets = Array.make bnum [] in
    let len = Array.length arr in 
    for i = 0 to len - 1 do
