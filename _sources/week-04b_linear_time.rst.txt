@@ -106,13 +106,12 @@ sorted sub-arrays::
    in 
    walk ls []
 
-
- let bucket_sort max ?(bnum = 10) arr = 
+ let bucket_sort max ?(bnum = 1000) arr = 
    let buckets = Array.make bnum [] in
    let len = Array.length arr in 
    for i = 0 to len - 1 do
      let key = fst arr.(i) in
-     let bind = (key / max) * bnum in
+     let bind = key * bnum / max in
      let b = buckets.(bind) in
      buckets.(bind) <- arr.(i) :: b
    done;
@@ -135,14 +134,14 @@ segment) may end up in the same bucket, and additional sorting is
 required. This is what is done in the second ``for``-loop by means of
 ``kv_insert_sort``. Let us test this implementation::
 
- # let e = generate_key_value_array 1000;;
+ # let e = generate_key_value_array 10000;;
  val e : (int * string) array =
    [|(484, "xrhbk"); (559, "pvutw"); (874, "wgdxj"); (979, "ouofg");
      (361, "xnxlo"); (224, "vhxve"); (601, "xpfyi"); (488, "ntsnf");
      (72, "ysvjh"); (422, "lczdj"); (720, "vilpf"); (68, "ianve");
      (781, "ztrvz"); (574, "ubkss");
      (790, "xz"... (* string length 5; truncated *)); (760, ...); ...|]
- # bucket_sort 1000 e;;
+ # bucket_sort 10000 e;;
  - : (int * string) array =
  [|(1, "vcuch"); (2, "tldlv"); (3, "owbvp"); (4, "zejvp"); (5, "zaoyg");
    (8, "zgnsp"); (8, "geapp"); (9, "vkuvw"); (9, "givqp"); (10, "opcim");
