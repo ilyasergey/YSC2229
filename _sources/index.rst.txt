@@ -24,8 +24,8 @@ OCaml Code from the Lectures
 * `Week 2 <./resources/2019/week_02.ml>`_: basic array sorting.
 * `Week 3 <./resources/2019/week_03.ml>`_: binary search and merge sort.
 * `Week 4 <./resources/2019/week_04.ml>`_: quick sort, comparison-based sorrting and linear-time sorting.
-* `Week 4 <./resources/2019/week_04.ml>`_: quick sort, comparison-based sorrting and linear-time sorting.
-
+* `Week 5 <./resources/2019/week_05.ml>`_: heaps, heapsort, and priority queues
+ 
 ..
    Indices and tables
    ==================
