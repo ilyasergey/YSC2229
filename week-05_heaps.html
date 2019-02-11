@@ -1,0 +1,427 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5.2. Binary Heaps &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5.3. Maintaining Binary Heaps" href="week-05_heapify.html" />
+    <link rel="prev" title="5.1. Printing and Validating Generic Arrays" href="week-05_functors.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-05_functors.html">5.1. Printing and Validating Generic Arrays</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.2. Binary Heaps</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#motivation-finding-a-maximum-in-a-changing-array">5.2.1. Motivation: finding a maximum in a changing array</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#definition-of-a-binary-heap">5.2.2. Definition of a binary heap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#checking-that-an-array-is-a-heap">5.2.3. Checking that an array is a heap</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-05_heapify.html">5.3. Maintaining Binary Heaps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05_heapsort.html">5.4. Heapsort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05_priority.html">5.5. Priority Queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05_exercises.html">5.6. Exercises</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a> &raquo;</li>
+        
+      <li>5.2. Binary Heaps</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="binary-heaps">
+<h1>5.2. Binary Heaps<a class="headerlink" href="#binary-heaps" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="motivation-finding-a-maximum-in-a-changing-array">
+<h2>5.2.1. Motivation: finding a maximum in a changing array<a class="headerlink" href="#motivation-finding-a-maximum-in-a-changing-array" title="Permalink to this headline">¶</a></h2>
+<p>We have started this course from a simple exercise — finding a minimal element in a list. While simple enough (and possible to implement in <span class="math notranslate nohighlight">\(O(n)\)</span> operations) for a case when we need to find just one minimum just once, this operations quickly becomes tedious, if we require a second (and a third…) minimum. To solve this problem we have studied various ways to sort lists, and then arrays, culminating in a family of linearithmic (i.e., having complexity <span class="math notranslate nohighlight">\(O(n \log n)\)</span>) algorithms — merge sort and Quicksort. It is indeed very simple to find the first and the second minimum of a sorted array, but only under a condition that the array, since it has been sorted, never changes.</p>
+<p>But what if we keep updating the array, as we want to retrieve the minimal elements? This problem is easy to motivate from a pragmatic point of view. Imagine that the array contains the identifiers of applications currently active on your phone, and some of them need to be given extra priority when distributed the phone processor time. We can then store the identifiers of the applications (“Maps”, “Chrome”, “CandyCrushSaga”, etc) in an array, along with their <em>priorities</em>, which cna be treated as keys:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">[|</span> <span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="s2">&quot;Maps&quot;</span><span class="o">),</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="s2">&quot;Chrome&quot;</span><span class="o">),</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s2">&quot;CandyCrushSaga&quot;</span><span class="o">)</span> <span class="o">|]</span>
+</pre></div>
+</div>
+<p>This way, a <em>scheduler</em> — a special process that decides which application will have to run next for a short pereiod of time, can just pick the one with the highest priority and give it processor time.</p>
+<p>Now assume that we close the Maps app (which had the largest priority), and then open them again. There is a chance that, in the array of active applications (which has a way smaller size than the overall space of app identifiers), Maps will no longer be the first (imagine that it just replaced some other recently closed application), i.e., its position will not reflect its priority. Thefore, in order to restore the app priorities, we will have to sort the array <em>every time</em> some changes in its contents take place, thus, spending <span class="math notranslate nohighlight">\(O(n \log n)\)</span> operations.</p>
+</div>
+<div class="section" id="definition-of-a-binary-heap">
+<h2>5.2.2. Definition of a binary heap<a class="headerlink" href="#definition-of-a-binary-heap" title="Permalink to this headline">¶</a></h2>
+<p>This week we will learn how to solve the problem of retrieving the element with the biggest/smallest key from a constantly changing array in a more cheaper way than by sorting it every time. The key to a better solution is one of the most basic data structures, based on arrays, — <em>binary heaps</em>. A binary heap is a special representation of an array of elements holding some keys, which allows to read off a <em>tree</em> structure from it.</p>
+<p>An example of a tree, represented by a heap (i.e., a specially arranged) array is shown on the image below. The <em>root</em> of the tree (i.e., the top-most node) holds the element with the largest key. Its two <em>children</em>, left and right, hold elements with smaller or equal keys. This order repeats top-down: for each <em>node</em> of a tree, its children hold keys that are not greater.</p>
+<a class="reference internal image-reference" href="_images/heaps.png"><img alt="_images/heaps.png" class="align-center" src="_images/heaps.png" style="width: 750px;" /></a>
+<p>The bottom part of the page is shown how the binary heap structure is packed into an array. If the indexing of an array was starting from 1, then for a node stored in an array with an index <span class="math notranslate nohighlight">\(i\)</span>, its children would be positioned at locations with indices <span class="math notranslate nohighlight">\(2i\)</span> (left) and <span class="math notranslate nohighlight">\(2i + 1\)</span> (right). However, due to the fact that in OCaml (and also in C# and Java) arrays start from 0, not 1, we will have to use the different formula, reflected from in the definition below:</p>
+<div class="admonition-definition admonition">
+<p class="first admonition-title">Definition</p>
+<p class="last">A binary heap is an array, such that for every element <span class="math notranslate nohighlight">\(e_p\)</span> (referred to as <em>parent</em>) with a key <span class="math notranslate nohighlight">\(k\)</span> stored in it with an index <span class="math notranslate nohighlight">\(i\)</span>, the two elements, <span class="math notranslate nohighlight">\(e_l\)</span> (left child) and <span class="math notranslate nohighlight">\(e_r\)</span> (right child) stored with indices <span class="math notranslate nohighlight">\(2(i + 1) - 1\)</span> and <span class="math notranslate nohighlight">\(2(i + 1)\)</span> correspondingly, are such that their keys are smaller or equal than <span class="math notranslate nohighlight">\(k\)</span> <a class="footnote-reference" href="#id3" id="id1">[1]</a>.</p>
+</div>
+<p>Notice that, due to its representation, a binary heep, as a tree is <em>almost complete</em>: some of the bottom-level nodes (<em>leaves</em>) might be missing, but the nodes on all other levels are present <a class="footnote-reference" href="#id4" id="id2">[2]</a>. Naturally, for a node with an index <span class="math notranslate nohighlight">\(i &gt; 0\)</span>, its parent can be obtained by taking an index <span class="math notranslate nohighlight">\((i + 1) / 2 - 1\)</span></p>
+<p>Let us now define a module that encapsulates all operations with binary heaps (represented via arrays), of which so far know three: finding a parent, a left and a right child of a node:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">Heaps</span> <span class="o">(</span><span class="nc">C</span> <span class="o">:</span> <span class="nc">CompareAndPrint</span><span class="o">)</span>  <span class="o">=</span> <span class="k">struct</span>
+  <span class="k">include</span> <span class="nc">C</span>
+  <span class="k">include</span> <span class="nc">ArrayPrinter</span><span class="o">(</span><span class="nc">C</span><span class="o">)</span>
+
+
+  <span class="c">(* 1. Main heap operations *)</span>
+  <span class="k">let</span> <span class="n">parent</span> <span class="n">arr</span> <span class="n">i</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">then</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">arr</span><span class="o">.(</span><span class="n">i</span><span class="o">))</span>
+    <span class="k">else</span>
+      <span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">in</span>
+      <span class="o">(</span><span class="n">j</span><span class="o">,</span> <span class="n">arr</span><span class="o">.(</span><span class="n">j</span><span class="o">))</span>
+
+  <span class="k">let</span> <span class="n">left</span> <span class="n">arr</span> <span class="n">i</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">in</span>
+    <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">len</span>
+    <span class="k">then</span> <span class="nc">Some</span> <span class="o">(</span><span class="n">j</span><span class="o">,</span> <span class="n">arr</span><span class="o">.(</span><span class="n">j</span><span class="o">))</span>
+    <span class="k">else</span> <span class="nc">None</span>
+
+  <span class="k">let</span> <span class="n">right</span> <span class="n">arr</span> <span class="n">i</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">len</span>
+    <span class="k">then</span> <span class="nc">Some</span> <span class="o">(</span><span class="n">j</span><span class="o">,</span> <span class="n">arr</span><span class="o">.(</span><span class="n">j</span><span class="o">))</span>
+    <span class="k">else</span> <span class="nc">None</span>
+
+  <span class="c">(* More definitions to come here... *)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Notice that for a given index there might be no child, hence both <code class="docutils literal notranslate"><span class="pre">left</span></code> and <code class="docutils literal notranslate"><span class="pre">right</span></code> return an <code class="docutils literal notranslate"><span class="pre">option</span></code> type. We can instantiate the functor above to work with our familiar arrays of key-value pairs by supplying the following instance of <code class="docutils literal notranslate"><span class="pre">CompareAndPrint</span></code> parameter:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">KV</span> <span class="o">=</span> <span class="k">struct</span>
+  <span class="k">type</span> <span class="n">t</span> <span class="o">=</span> <span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span>
+  <span class="k">let</span> <span class="n">comp</span> <span class="o">=</span> <span class="n">key_order_asc</span>
+  <span class="k">let</span> <span class="n">pp</span> <span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">=</span> <span class="nn">Printf</span><span class="p">.</span><span class="n">sprintf</span> <span class="s2">&quot;(%d, %s)&quot;</span> <span class="n">k</span> <span class="n">v</span>
+<span class="k">end</span>
+
+<span class="k">module</span> <span class="nc">KVHeaps</span> <span class="o">=</span> <span class="nc">Heaps</span><span class="o">(</span><span class="nc">KV</span><span class="o">)</span>
+<span class="k">open</span> <span class="nc">KVHeaps</span>
+</pre></div>
+</div>
+<p>Let us now create our first binary heap and make sure that it follows the intution from the image above:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">test_heap</span> <span class="o">=</span>
+  <span class="o">[|(</span><span class="mi">16</span><span class="o">,</span> <span class="s2">&quot;a&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">14</span><span class="o">,</span> <span class="s2">&quot;b&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="s2">&quot;c&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="s2">&quot;d&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;e&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">9</span><span class="o">,</span> <span class="s2">&quot;f&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;g&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s2">&quot;h&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;i&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s2">&quot;j&quot;</span><span class="o">);|]</span>
+</pre></div>
+</div>
+<p>We can do so by querying its contents:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">right</span> <span class="n">test_heap</span> <span class="mi">0</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">))</span> <span class="n">option</span> <span class="o">=</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="s2">&quot;c&quot;</span><span class="o">))</span>
+<span class="o">#</span> <span class="n">left</span> <span class="n">test_heap</span> <span class="mi">1</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">))</span> <span class="n">option</span> <span class="o">=</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="s2">&quot;d&quot;</span><span class="o">))</span>
+<span class="o">#</span> <span class="n">right</span> <span class="n">test_heap</span> <span class="mi">1</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">))</span> <span class="n">option</span> <span class="o">=</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;e&quot;</span><span class="o">))</span>
+<span class="o">#</span> <span class="n">left</span> <span class="n">test_heap</span> <span class="mi">2</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">))</span> <span class="n">option</span> <span class="o">=</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="o">(</span><span class="mi">9</span><span class="o">,</span> <span class="s2">&quot;f&quot;</span><span class="o">))</span>
+<span class="o">#</span> <span class="n">right</span> <span class="n">test_heap</span> <span class="mi">2</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">))</span> <span class="n">option</span> <span class="o">=</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;g&quot;</span><span class="o">))</span>
+<span class="o">#</span> <span class="n">parent</span> <span class="n">test_heap</span> <span class="mi">9</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">*</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="o">=</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;e&quot;</span><span class="o">))</span>
+<span class="o">#</span> <span class="n">parent</span> <span class="n">test_heap</span> <span class="mi">4</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">*</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="o">=</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="o">(</span><span class="mi">14</span><span class="o">,</span> <span class="s2">&quot;b&quot;</span><span class="o">))</span>
+<span class="o">#</span> <span class="n">parent</span> <span class="n">test_heap</span> <span class="mi">1</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">*</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="o">=</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="o">(</span><span class="mi">16</span><span class="o">,</span> <span class="s2">&quot;a&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>Notice that, while not sorted (in an ascending or a descending order), the heap (as per its definition) always has the element with the greatest key in at the position 0 of the array.</p>
+<div class="admonition-definition admonition">
+<p class="first admonition-title">Definition</p>
+<p class="last">A heap defined as per the definition above (a parent is larger than children) is called <em>max-heap</em>. A heap, defined via the property (a parent is smaller than children) is called <em>min-heap</em>.</p>
+</div>
+</div>
+<div class="section" id="checking-that-an-array-is-a-heap">
+<h2>5.2.3. Checking that an array is a heap<a class="headerlink" href="#checking-that-an-array-is-a-heap" title="Permalink to this headline">¶</a></h2>
+<p>Next, we shall write a function that, taking an array, will determine whether it does have heap structure or not. The following definition should be placed within the body of <code class="docutils literal notranslate"><span class="pre">Heap</span></code> functor:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">Printf</span>
+
+<span class="c">(* 2. Testing whether something is a heap *)</span>
+<span class="k">let</span> <span class="n">is_heap</span> <span class="n">arr</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">ref</span> <span class="bp">true</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">i</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">0</span> <span class="k">in</span>
+  <span class="k">while</span> <span class="o">!</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">len</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">res</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="n">this</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.(!</span><span class="n">i</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">l</span> <span class="o">=</span> <span class="n">left</span> <span class="n">arr</span> <span class="o">!</span><span class="n">i</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="n">right</span> <span class="n">arr</span> <span class="o">!</span><span class="n">i</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">is_left</span> <span class="o">=</span> <span class="n">l</span> <span class="o">=</span> <span class="nc">None</span> <span class="o">||</span>
+                  <span class="n">comp</span> <span class="n">this</span> <span class="o">(</span><span class="n">snd</span> <span class="o">(</span><span class="n">get_exn</span> <span class="n">l</span><span class="o">))</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">is_right</span> <span class="o">=</span> <span class="n">l</span> <span class="o">=</span> <span class="nc">None</span> <span class="o">||</span>
+                   <span class="n">comp</span> <span class="n">this</span> <span class="o">(</span><span class="n">snd</span> <span class="o">(</span><span class="n">get_exn</span> <span class="n">r</span><span class="o">))</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">in</span>
+    <span class="n">res</span> <span class="o">:=</span> <span class="o">!</span><span class="n">res</span> <span class="o">&amp;&amp;</span> <span class="n">is_left</span> <span class="o">&amp;&amp;</span> <span class="n">is_right</span><span class="o">;</span>
+    <span class="n">i</span> <span class="o">:=</span> <span class="o">!</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="o">!</span><span class="n">res</span>
+</pre></div>
+</div>
+<p>The main machinery of <code class="docutils literal notranslate"><span class="pre">is_heap</span></code> applies the definition given above, in a <code class="docutils literal notranslate"><span class="pre">while</span></code>-loop for each element of the array <code class="docutils literal notranslate"><span class="pre">arr</span></code>, relying on the comparator <code class="docutils literal notranslate"><span class="pre">comp</span></code>. Notice that the first loop condition <code class="docutils literal notranslate"><span class="pre">!i</span> <span class="pre">&lt;=</span> <span class="pre">len</span> <span class="pre">/</span> <span class="pre">2</span> <span class="pre">-</span> <span class="pre">1</span></code> makes it iterate only until the middle of the array. In fact, one does not need to check the second half of the array, as it <em>only contains leaves</em> (i.e., tree nodes with no children). This is a rather curious fact that is explained by the exponential nature of the binary tree growth: in a complete tree, half of all its nodes are leaves, and, thus, in a binary heap, only the first half of an array corresponds to nodes that might have children (but do not have to, as on the image above).</p>
+<p>We can now check that our array is indeed a heap:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">is_heap</span> <span class="n">test_heap</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">true</span>
+</pre></div>
+</div>
+<p>Let us not create an array, which is <em>not</em> a heap (by the way, why it isn’t — please explain!):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">bad_heap</span> <span class="o">=</span>
+  <span class="o">[|(</span><span class="mi">16</span><span class="o">,</span> <span class="s2">&quot;a&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">14</span><span class="o">,</span> <span class="s2">&quot;b&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="s2">&quot;c&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="s2">&quot;d&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;e&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">11</span><span class="o">,</span> <span class="s2">&quot;f&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;g&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s2">&quot;h&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;i&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s2">&quot;j&quot;</span><span class="o">);|]</span>
+</pre></div>
+</div>
+<p>To make the checking more informative, let us introduce another version of the heap checker to the <code class="docutils literal notranslate"><span class="pre">Heap</span></code> functor:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">is_heap_print</span> <span class="o">?(</span><span class="n">print</span> <span class="o">=</span> <span class="bp">false</span><span class="o">)</span> <span class="n">arr</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">ref</span> <span class="bp">true</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">i</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">0</span> <span class="k">in</span>
+  <span class="k">while</span> <span class="o">!</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">len</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">res</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="n">this</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.(!</span><span class="n">i</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">l</span> <span class="o">=</span> <span class="n">left</span> <span class="n">arr</span> <span class="o">!</span><span class="n">i</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="n">right</span> <span class="n">arr</span> <span class="o">!</span><span class="n">i</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">is_left</span> <span class="o">=</span> <span class="n">l</span> <span class="o">=</span> <span class="nc">None</span> <span class="o">||</span>
+                  <span class="n">comp</span> <span class="n">this</span> <span class="o">(</span><span class="n">snd</span> <span class="o">(</span><span class="n">get_exn</span> <span class="n">l</span><span class="o">))</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">is_right</span> <span class="o">=</span> <span class="n">l</span> <span class="o">=</span> <span class="nc">None</span> <span class="o">||</span>
+                   <span class="n">comp</span> <span class="n">this</span> <span class="o">(</span><span class="n">snd</span> <span class="o">(</span><span class="n">get_exn</span> <span class="n">r</span><span class="o">))</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">in</span>
+    <span class="n">res</span> <span class="o">:=</span> <span class="o">!</span><span class="n">res</span> <span class="o">&amp;&amp;</span> <span class="n">is_left</span> <span class="o">&amp;&amp;</span> <span class="n">is_right</span><span class="o">;</span>
+    <span class="o">(</span><span class="k">if</span> <span class="o">(</span><span class="n">not</span> <span class="o">!</span><span class="n">res</span> <span class="o">&amp;&amp;</span> <span class="n">print</span><span class="o">)</span> <span class="k">then</span> <span class="o">(</span>
+       <span class="k">let</span> <span class="o">(</span><span class="n">li</span><span class="o">,</span> <span class="n">ll</span><span class="o">)</span> <span class="o">=</span> <span class="n">get_exn</span> <span class="n">l</span> <span class="k">in</span>
+       <span class="k">let</span> <span class="o">(</span><span class="n">ri</span><span class="o">,</span> <span class="n">rr</span><span class="o">)</span> <span class="o">=</span> <span class="n">get_exn</span> <span class="n">r</span> <span class="k">in</span>
+       <span class="n">printf</span> <span class="s2">&quot;Out-of-order elements:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">;</span>
+       <span class="n">printf</span> <span class="s2">&quot;Parent: (%d, %s)</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">!</span><span class="n">i</span> <span class="o">(</span><span class="n">pp</span> <span class="n">this</span><span class="o">);</span>
+       <span class="n">printf</span> <span class="s2">&quot;Left: (%d, %s)</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="n">li</span> <span class="o">(</span><span class="n">pp</span> <span class="n">ll</span><span class="o">);</span>
+       <span class="n">printf</span> <span class="s2">&quot;Right: (%d, %s)</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="n">ri</span> <span class="o">(</span><span class="n">pp</span> <span class="n">rr</span><span class="o">)</span>
+    <span class="o">));</span>
+    <span class="n">i</span> <span class="o">:=</span> <span class="o">!</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="o">!</span><span class="n">res</span>
+</pre></div>
+</div>
+<p>This checker features an <em>optional named</em> boolean parameter <code class="docutils literal notranslate"><span class="pre">print</span></code> (which by default is taken to be false) that can be omitted. This parameter determines whether the debug output has to be switched on. If it is the case and at a certain point the heap-y property breaks, an offending tiple of a parent and two children will be printed out (notice again that a named parameter is called with a tilde, i.e., <code class="docutils literal notranslate"><span class="pre">~print</span></code>):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">is_heap_print</span> <span class="o">~</span><span class="n">print</span><span class="o">:</span><span class="bp">true</span> <span class="n">bad_heap</span><span class="o">;;</span>
+
+<span class="nc">Out</span><span class="o">-</span><span class="k">of</span><span class="o">-</span><span class="n">order</span> <span class="n">elements</span><span class="o">:</span>
+<span class="nc">Parent</span><span class="o">:</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="n">c</span><span class="o">))</span>
+<span class="nc">Left</span><span class="o">:</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="o">(</span><span class="mi">11</span><span class="o">,</span> <span class="n">f</span><span class="o">))</span>
+<span class="nc">Right</span><span class="o">:</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">g</span><span class="o">))</span>
+
+<span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">false</span>
+</pre></div>
+</div>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>You can remember the way children are defined for 0-based arrays using the following intuition: <em>shift the current index + 1 to obtain the index as in 1-based array, compute the child index, and then subtract 1, to return back to 0-based indexing</em>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>The term “heap” has been originally used to denote “almost-complete binary tree”, but now is also used to refer to “garbage-collected runtime memory”, such as provided by Java and C#. There is no relation between these two notions, and here and further by <em>heaps</em> we will mean binary trees.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-05_heapify.html" class="btn btn-neutral float-right" title="5.3. Maintaining Binary Heaps" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-05_functors.html" class="btn btn-neutral" title="5.1. Printing and Validating Generic Arrays" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

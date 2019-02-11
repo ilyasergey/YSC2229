@@ -92,6 +92,7 @@
 <li class="toctree-l2"><a class="reference internal" href="week-04_exercises.html">4.7. Exercises</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
 </ul>
 
             
@@ -157,7 +158,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="ocaml-repl-and-multiple-files">
-<h1>4.1. OCaml REPL and Multiple Files<a class="headerlink" href="#ocaml-repl-and-multiple-files" title="Permalink to this headline">¶</a></h1>
+<span id="sec-repl-modules"></span><h1>4.1. OCaml REPL and Multiple Files<a class="headerlink" href="#ocaml-repl-and-multiple-files" title="Permalink to this headline">¶</a></h1>
 <p>On the previous week we have learned how to compile an OCaml file into a separate module and then use it in other files via the REPL directives <code class="docutils literal notranslate"><span class="pre">#load</span></code> and <code class="docutils literal notranslate"><span class="pre">open</span></code> (see Section <a class="reference internal" href="week-03a_array_generators.html#sec-loading-modules"><span class="std std-ref">Generating Arrays</span></a>).  Unfortunately, when our project grows, the REPL directives (such as <code class="docutils literal notranslate"><span class="pre">#load</span></code>) prevent regular compilation via OCaml Compiler (<code class="docutils literal notranslate"><span class="pre">ocamlc</span></code>) from the terminal — the compiler simply complains about bad syntax. Therefore, we need to commented out the REPL-related lines. For instance, in the past week’s file, <code class="docutils literal notranslate"><span class="pre">week_03.ml</span></code> we have to comment out the following line, in order to compile it:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* #load &quot;week_02.cmo&quot;;;  *)</span>
 <span class="k">open</span> <span class="nc">Week_02</span>

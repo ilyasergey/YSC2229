@@ -1,5 +1,7 @@
 .. -*- mode: rst -*-
 
+.. _sec-repl-modules:
+
 OCaml REPL and Multiple Files
 =============================
 
