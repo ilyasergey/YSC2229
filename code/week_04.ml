@@ -278,7 +278,7 @@ let bucket_sort max ?(bnum = 1000) arr =
   let len = Array.length arr in 
   for i = 0 to len - 1 do
     let key = fst arr.(i) in
-    let bind = (key / max) * bnum in
+    let bind = key * bnum / max in
     let b = buckets.(bind) in
     buckets.(bind) <- arr.(i) :: b
   done;
@@ -290,7 +290,7 @@ let bucket_sort max ?(bnum = 1000) arr =
   done;
   list_to_array !res
 
-let e = generate_key_value_array 1000
+let e = generate_key_value_array 10000
 
 (* Radix sort *)
 
