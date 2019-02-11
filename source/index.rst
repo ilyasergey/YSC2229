@@ -15,7 +15,7 @@ Introductory Data Structures and Algorithms (YSC2229)
    YSC2229-lecture-notes-week-03
    YSC2229-lecture-notes-week-04
    YSC2229-lecture-notes-week-05
-   YSC2229-lecture-notes-week-06
+..   YSC2229-lecture-notes-week-06
 
 OCaml Code from the Lectures
 ============================
@@ -23,6 +23,7 @@ OCaml Code from the Lectures
 * `Week 1 <./resources/2019/week_01.ml>`_: finding minimums and sorting lists.
 * `Week 2 <./resources/2019/week_02.ml>`_: basic array sorting.
 * `Week 3 <./resources/2019/week_03.ml>`_: binary search and merge sort.
+* `Week 4 <./resources/2019/week_04.ml>`_: quick sort, comparison-based sorrting and linear-time sorting.
 * `Week 4 <./resources/2019/week_04.ml>`_: quick sort, comparison-based sorrting and linear-time sorting.
 
 ..

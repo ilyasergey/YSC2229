@@ -87,4 +87,4 @@ The way we implemented a priority queue in Section :ref:`sec-pq-impl` only allow
 Exercise 7
 ----------
 
-The function ``max_heap_delete h i`` deletes the item in node with an indes ``i`` from the priority queue ``h``. Give an implementation of this function that runs in :math:`O(log n)` time for an :math:`n`-element priority queue based on a max-heap. 
+The function ``max_heap_delete h i`` deletes the item in node with an indes ``i`` from the priority queue ``h``. Give an implementation of this function that runs in :math:`O(\log n)` time for an :math:`n`-element priority queue based on a max-heap. 
