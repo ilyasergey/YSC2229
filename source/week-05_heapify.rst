@@ -88,7 +88,7 @@ The maximal number of steps required to reach a child in a tree is called a *hei
 Building a heap from an array
 -----------------------------
 
-We can now use ``max_heapify`` iteratively to turn an arbitrary array into a min-heap. The following code should be added to the ``Heap`` functor::
+We can now use ``max_heapify`` iteratively to turn an arbitrary array into a max-heap. The following code should be added to the ``Heap`` functor::
 
   (* 4: building a heap from an array *)
   let build_max_heap arr = 
