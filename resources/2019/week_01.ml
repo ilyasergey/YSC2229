@@ -1,170 +1,392 @@
-(* Week 01: Correctness of Algorithms, Recursion, and Loops *)
 
-(* 1. A function find_min that finds 
-      the smallest element in the list *)
+(* A function that finds the smallest element in the list *)
 
-let find_min ls =
-  let rec walk xs min = match xs with 
-    | [] -> min 
+let find_min ls = 
+  let rec walk xs min = 
+    match xs with
+    | [] -> min
     | h :: t ->
-      let new_min = if h < min then h else min 
-      in walk t new_min
-  in 
-  match ls with 
-  | [] -> None
+      let min' = if h < min then h else min in
+      walk t min'
+  in match ls with
   | h :: t -> 
-    let res = walk t h
-    in Some res
+    let min = walk t h in
+    Some min
+  | _ -> None
 
-(* 2. find_min specification: 
-      is_min, find_min_spec  *)
+(*  Let's start from some test *)
 
-let is_min ls min = 
-  List.for_all (fun e -> min <= e) ls
+(* This is a precise specification of the algorithm,
+   implemented by `find_min` *)
+
+(* Some testing *)
+let is_min ls m = 
+  List.for_all (fun e -> e >= m) ls &&
+  List.mem m ls
+                  
 
 let get_exn o = match o with
-  | Some x -> x
-  | None -> raise (Failure "No. Such. Element!")
+  | Some e -> e
+  | _ -> raise (Failure "Empty option!") 
 
-(* 3. testing find_min   *)
+let find_min_spec find_min_fun ls = 
+  let result = find_min_fun ls in
+  ls = [] && result = None ||
+  is_min ls (get_exn result) 
 
-let test_find_min ls = 
-  let min = get_exn @@ find_min ls
-  in is_min ls min
 
-let test_list0 = []
-let test_list1 = [3; 42; 1; 239]
-let test_list2 = [6; 6; 5; 5; 5; 1; 2; 3]
+let generic_test_find_min find_min = 
+  find_min_spec find_min [] &&
+  find_min_spec find_min [1; 2; 3] &&
+  find_min_spec find_min [31; 42; 239; 5; 100]
 
-(* 4. find_min: precondition and postcondition   *)
 
-let walk_post ls xs min res = 
+let test_find_min = 
+  generic_test_find_min find_min
+
+(* Now let's write an invariant for `find_min`'s `walk` *)
+(* Remember what an invariant is for:
+  * It constrains the parameters of the function
+  * It holds before every recursive  call the function 
+  * It holds at the end of every function invocation
+  * When we return from the function at the top level, 
+    it should give us the desired correctness property, i.e., 
+   `find_min_spec`
+ *)
+
+let find_min_walk_pre ls xs min = 
+  is_min ls min ||
+  List.exists (fun e -> e < min) xs
+
+let find_min_walk_post ls xs min res = 
   is_min ls res
 
-let rec remove_first ls n = 
-  if n <= 0 then ls
-  else match ls with 
-    | [] -> []
-    | h :: t -> remove_first t (n-1)
 
-let is_suffix xs ls = 
-  let n1 = List.length xs in
-  let n2 = List.length ls in
-  let diff = n2 - n1 in
-  if diff < 0 then false
-  else
-    let ls_tail = remove_first ls diff in
-    ls_tail = xs
+(* Let us instrument walk_with invariant *) 
 
-let walk_pre ls xs min = 
-  (is_min ls min ||
-   List.exists (fun e -> e < min) xs) &&
-  is_suffix xs ls  
-
-(* 5. find_min with invariants, assert with message   *)
-
-let find_min_with_inv ls =
+let find_min_with_invariant ls = 
   let rec walk xs min = 
-    (* walk_pre ls xs min *)
-    match xs with 
-    | [] -> min 
-    | h :: t ->
-      (* is_min ls min  || *)
-      (* exists (_ < min) (h :: t)  *)
-      let new_min = if h > min then h else min 
-      in 
-      assert (walk_pre ls t new_min);      
-      let res = walk t new_min in 
-      assert (walk_post ls t new_min res);
+    match xs with
+    | [] -> 
+      assert (find_min_walk_pre ls [] min);
+      let res = min in
+      assert (find_min_walk_post ls xs min res);
       res
-  in 
-  match ls with 
-  | [] -> None
+    | h :: t ->
+      let min' = if h < min then h else min in
+      assert (find_min_walk_pre ls t min');
+      let res = walk t min' in
+      assert (find_min_walk_post ls xs min res);
+      res
+
+  in match ls with
   | h :: t -> 
-    assert (walk_pre ls t h);
-    let res = walk t h
-    in 
-    assert (walk_post ls t h res);
+    assert (find_min_walk_pre ls t h);
+    let res = walk t h in
+    assert (find_min_walk_post ls t h res);
     Some res
+  | _ -> None
 
-(* 6. find_min with loops   *)
+(* let test_find_min2_with_inv = 
+ *   generic_test_find_min find_min_with_inv *)
 
-let find_min_loop ls =
-  let loop xs min = 
-    while !xs <> [] do
-      let h = List.hd !xs in
-      let t = List.tl !xs in
-      let new_min = if h < !min then h else !min in
-      min := new_min;
-      xs := t;
-    done;
-    !min
-  in 
-  match ls with 
-  | [] -> None
-  | h :: t -> 
-    let xs = ref t in
-    let min = ref h in
-    let res = loop xs min
-    in Some res
+(* 
 
+   What happens if we change the `h < min` to `h >= min` above? The
+   invariant will no longer hold, as we might have excluded the actual
+   minimum from the tail!
 
-(* 7. find_min with loops: invariant   *)
+ *)
 
-let walk_pre ls xs min = 
-  (is_min ls !min ||
-   List.exists (fun e -> e < !min) !xs) &&
-  is_suffix !xs ls  
+(* TODO: say about tail-recursive functions how to deal with
+   invariants for them. *)
 
-let find_min_loop_inv ls =
-  let loop xs min = 
-    while !xs <> [] do
-      let h = List.hd !xs in
-      let t = List.tl !xs in
-      let new_min = if h < !min then h else !min in
-      min := new_min;
-      xs := t;
-      assert (walk_pre ls xs min)
-    done;
-    !min
-  in 
-  match ls with 
-  | [] -> None
-  | h :: t -> 
-    let xs = ref t in
-    let min = ref h in
-    assert (walk_pre ls xs min);
-    let res = loop xs min
-    in Some res
+(* 
 
-(* 8. insertion sort   *)
+Exercise 1.
+-----------
 
-let print_list ls = 
-  Printf.printf "[";
-  List.fold_left 
-    (fun z e -> Printf.printf "%d; " e) () ls;
-  Printf.printf "]\n"
+ * Implement find_min2, which finds the second-to-min 
+ * Write tests for it
+ * Implement an invariant for it and check that it holds.
+
+Hint: Use the following definition:
+```
+let is_min2 ls m1 m2 = 
+  m1 <= m2 &&
+  List.for_all (fun e -> e == m1 || m2 <= e )ls
+```
+
+The invariant should inform you how to change m1 and m2.
+
+ *)          
+
+(* Solution to the exercise 1 *)
+
+let is_min2 ls m1 m2 = 
+  m1 < m2 &&
+  List.for_all (fun e -> e == m1 || m2 <= e ) ls &&
+  List.mem m2 ls
   
 
-let insert_sort ls =
-  let rec insert elem tail = match tail with
-    | [] -> [elem]
+let find_min2_walk_inv ls xs m1 m2 = 
+  is_min2 ls m1 m2 ||
+  List.exists (fun e -> e < m1 || m1 <= e && e < m2 && e <> m1) xs
+
+let find_min2 ls = 
+  let rec walk xs m1 m2 = 
+    match xs with
+    | [] -> m2
     | h :: t ->
-      if h < elem
-      then h :: (insert elem t)
-      else elem :: (h :: t)
-  in
-  let rec walk sorted_prefix xs = match xs with
-    | [] -> sorted_prefix
-    | h :: t ->
-      let new_prefix = insert h sorted_prefix in
-      print_list new_prefix;
-      walk new_prefix t
+      let m1' = min h m1 in
+      let m2' = if h < m1 then m1 else if h < m2 && h <> m1 then h else m2  in
+      Printf.printf "m1' = %d, m2' = %d, Inv: %b\n" 
+        m1' m2' (find_min2_walk_inv ls t m1' m2') ;
+      assert (find_min2_walk_inv ls t m1' m2');
+      walk t m1' m2'
+
+  in match ls with
+  | h1 :: h2 :: t ->
+    let m1 = min h1 h2 in
+    let m2 = max h1 h2 in
+    Printf.printf "Inv_init: %b\n" (find_min2_walk_inv ls t m1 m2);
+    assert (find_min2_walk_inv ls t m1 m2);
+    let r = walk t m1 m2 in
+    Some r
+  | _ -> None
+
+(* Going imperative *)
+
+let find_min_loop ls = 
+  
+  let loop cur_tail cur_min = 
+    while !cur_tail <> [] do
+      let xs = !cur_tail in
+      let h = List.hd xs in
+      let min = !cur_min in
+      cur_min := if h < min then h else min;
+      cur_tail := List.tl xs
+    done;
+    !cur_min
+
+  in match ls with
+  | h :: t -> 
+    let cur_tail = ref t in
+    let cur_min = ref h in
+    let min = loop cur_tail cur_min in
+    Some min
+  | _ -> None
+
+(*  Now we need to assign the loop invariant  *)
+
+let find_min_loop_inv ls = 
+  
+  let loop cur_tail cur_min = 
+    assert (find_min_walk_pre ls !cur_tail !cur_min);
+    while !cur_tail <> [] do
+      let xs = !cur_tail in
+      let h = List.hd xs in
+      let min = !cur_min in
+      cur_min := if h < min then h else min;
+      cur_tail := List.tl xs;
+      assert (find_min_walk_pre ls !cur_tail !cur_min);
+    done;
+    !cur_min
+
+  in match ls with
+  | h :: t -> 
+    let cur_tail = ref t in
+    let cur_min = ref h in
+    assert (find_min_walk_pre ls !cur_tail !cur_min);
+    let min = loop cur_tail cur_min in
+    assert (find_min_walk_post ls !cur_tail !cur_min min);
+    Some min
+  | _ -> None
+
+(* Now how about sorting? *)
+
+let insert_sort ls = 
+  let rec walk xs acc =
+    match xs with
+    | [] -> acc
+    | h :: t -> 
+      let rec insert elem remaining = 
+        match remaining with
+        | [] -> [elem]
+        | h :: t as l ->
+          if h < elem 
+          then h :: (insert elem t) else (elem :: l)
+      in
+      let acc' = insert h acc in
+      walk t acc'
   in 
-  walk [] ls
+  walk ls []
+
+
+let rec sorted ls = 
+  match ls with 
+  | [] -> true
+  | h :: t -> 
+    List.for_all (fun e -> e >= h) t && sorted t
     
-(* 9. sorting specifications   *)
+let same_elems ls1 ls2 =
+  List.for_all (fun e ->
+      List.find_all (fun e' -> e = e') ls2 =
+      List.find_all (fun e' -> e = e') ls1
+    ) ls1 &&
+  List.for_all (fun e ->
+      List.find_all (fun e' -> e = e') ls2 =
+      List.find_all (fun e' -> e = e') ls1
+    ) ls2
+
+let sorted_spec ls res = 
+  same_elems ls res && sorted res
+     
+let sort_test sorter ls = 
+  let res = sorter ls in
+  sorted_spec ls res
+
+(* Invariant for the outer loop *)
+let insert_sort_walk_inv ls xs acc = 
+  sorted acc &&
+  same_elems (acc @ xs) ls
+
+(* Tell about pre-postconditions and how they generalise invariants
+
+ *)
+  
+let insert_sort_insert_pre elem prefix  =  sorted prefix
+
+let insert_sort_insert_post res elem prefix  = 
+  sorted res &&
+  same_elems res (elem :: prefix)
+
+  let insert_sort_with_inv ls = 
+    let rec walk xs acc =
+      match xs with
+      | [] -> 
+        let res = acc in
+        (* walk's postcondition *)
+        assert (sorted_spec ls res); 
+        res
+      | h :: t -> 
+
+        let rec insert elem remaining = 
+          match remaining with
+          | [] -> 
+            (* insert's postcondition *)
+            assert (insert_sort_insert_post [elem] elem remaining);
+            [elem]
+          | h :: t as l ->
+            if h < elem 
+            then (
+              (* insert's precondition *)
+              assert (insert_sort_insert_pre elem t);
+              let res = insert elem t in
+              (* insert's postcondition *)
+              (assert (insert_sort_insert_post (h :: res) elem remaining);
+              h :: res))
+            else 
+              let res = elem :: l in
+              (* insert's postcondition *)
+              (assert (insert_sort_insert_post res elem remaining);
+               res)
+        in
+
+        let acc' = (
+           (* insert's precondition *)
+           assert (insert_sort_insert_pre h acc);
+           insert h acc) in
+        (* walk's precondition *) 
+        assert (insert_sort_walk_inv ls t acc');
+        walk t acc'
+    in 
+    assert (insert_sort_walk_inv ls ls []);
+    walk ls []
+    
+(* 
+Exercise 2.
+-----------
+
+Parametrise `insert_sort` by a comparison function, and use it to sort both in an asecnding and a descending order.
+
+Exercise 3.
+-----------
+
+Implement `insert_sort` without recursion, but using loops. 
+
+Hint: When implementing `insert`, you will need to "break" out of the loop in some case. Consider adding an additional boolean flag `over` to implement it.
+
+Start from the following version:
+
+```
+let insert_sort_tail ls = 
+  let rec insert elem processed prefix  = 
+    match prefix with
+    | [] -> processed @ [elem]
+    | h :: t as l ->
+      if h < elem 
+      then 
+        let processed' = processed @ [h] in
+        insert elem processed' t
+      else (elem :: l)
+  in
+  let rec walk xs acc =
+    match xs with
+    | [] -> acc
+    | h :: t -> 
+      let acc' = insert h [] acc in
+      walk t acc'
+  in 
+  walk ls []
+```
 
 
-(* 10. annotating insert_sort   *)
+Check the invariants at the beginning and the end of the loop.
 
+Exercise 4. 
+-----------
+Use `insert_sort` to implement find_min2.
+
+*)                                     
+
+let insert_inv prefix elem acc remaining run  = 
+  sorted acc &&
+  (if run
+   then same_elems (acc @ elem :: remaining) (elem :: prefix)
+   else same_elems acc (elem :: prefix))
+
+
+let insert_sort_tail_walk_inv ls xs acc = 
+  sorted acc &&
+  same_elems (acc @ xs) ls
+
+let insert_sort_tail ls = 
+  let rec walk xs prefix =
+    match xs with
+    | [] -> prefix
+    | h :: t -> 
+        let rec insert elem acc remaining run = 
+          if not run then acc
+          else match remaining with
+            | [] -> acc @ [elem]
+            | h :: t as l ->
+              if h < elem 
+              then 
+                let run' = true in
+                let acc' = acc @ [h] in
+                (* assert (insert_inv prefix elem acc' t run'); *)
+                insert elem acc' t run'
+              else 
+                let run' = false in
+                let acc' = acc @ (elem :: l) in
+                (* assert (insert_inv prefix elem acc' t run'); *)
+                insert elem acc' t run'
+        in
+
+        (* assert (insert_inv prefix h [] prefix true); *)
+        let acc' = insert h [] prefix true in
+        (* assert (insert_sort_tail_walk_inv ls t acc'); *)
+        walk t acc'
+  in 
+  walk ls []
