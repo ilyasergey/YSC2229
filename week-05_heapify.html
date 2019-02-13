@@ -238,7 +238,7 @@
 </div>
 <div class="section" id="building-a-heap-from-an-array">
 <span id="sec-build-heap"></span><h2>5.3.3. Building a heap from an array<a class="headerlink" href="#building-a-heap-from-an-array" title="Permalink to this headline">¶</a></h2>
-<p>We can now use <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> iteratively to turn an arbitrary array into a min-heap. The following code should be added to the <code class="docutils literal notranslate"><span class="pre">Heap</span></code> functor:</p>
+<p>We can now use <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> iteratively to turn an arbitrary array into a max-heap. The following code should be added to the <code class="docutils literal notranslate"><span class="pre">Heap</span></code> functor:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* 4: building a heap from an array *)</span>
 <span class="k">let</span> <span class="n">build_max_heap</span> <span class="n">arr</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
