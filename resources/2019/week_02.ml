@@ -1,211 +1,335 @@
-(* ## Sorting the lists (continued) *)
+(* Arrays and sorting of them *)
 
-(* TODO: installing merlin and company-mode *)
-
-(* <copied from the last week> *)
-
-let print_list ls = 
-  Printf.printf "[ ";
-  List.fold_left 
-    (fun z e -> Printf.printf "%d; " e) () ls;
-  Printf.printf "] "
-
-let test_list1 = [3; 42; 1; 239]
-let test_list2 = [6; 6; 5; 5; 5; 1; 2; 3]  
-
-let insert_sort ls =
-  let rec insert elem tail = match tail with
-    | [] -> [elem]
-    | h :: t ->
-      if h < elem
-      then h :: (insert elem t)
-      else elem :: (h :: t)
-  in
-  let rec walk sorted_prefix xs = match xs with
-    | [] -> sorted_prefix
-    | h :: t ->
-      print_list sorted_prefix;
-      print_list xs;
-      print_newline ();
-      let new_prefix = insert h sorted_prefix in     
-      walk new_prefix t
-  in
-  walk [] ls
-
-(* </copied from the last week> *)
-
-(* ## Sorting specifications   *)
-
-let rec is_sorted ls = match ls with
-  | [] -> true
-  | h :: t -> 
-    is_sorted t &&
-    List.for_all (fun e -> h <= e) t
-
-let have_same_elements ls1 ls2 = 
-  List.for_all (fun e ->
-      List.find_all (fun e' -> e = e') ls2 =
-      List.find_all (fun e' -> e = e') ls1
-    ) ls1 &&
-  List.for_all (fun e ->
-      List.find_all (fun e' -> e = e') ls2 =
-      List.find_all (fun e' -> e = e') ls1
-    ) ls2
-
-let sorting_spec ls res = 
-  is_sorted res &&
-  have_same_elements ls res
-
-let test_sort ls =
-  sorting_spec ls (insert_sort ls)
-
-(* ## Annotating insert_sort with invariants  *)
-
-let insert_sort_walk_pre ls prefix xs = 
-  is_sorted prefix &&
-  have_same_elements (prefix @ xs) ls
-
-let insert_sort_walk_post ls res = 
-  sorting_spec ls res
-
-let insert_pre elem tail =
-  is_sorted tail
-
-let insert_post elem tail res = 
-  is_sorted res &&
-  have_same_elements (tail @ [elem]) res
-
-let rec insert elem tail = match tail with
-  | [] -> [elem]
-  | h :: t ->
-    if h < elem
-    then h :: (insert elem t)
-    else elem :: (h :: t)
-
-let insert_sort_inv ls =
-  let rec walk sorted_prefix xs = match xs with
-    | [] -> sorted_prefix
-    | h :: t ->
-      assert (insert_pre h sorted_prefix);
-      let new_prefix = insert h sorted_prefix in     
-      assert(insert_post h sorted_prefix new_prefix);
-      (*
-      have_same_elements (sorted_prefix @ [h] @ t) ls
-
-      is_sorted new_prefix &&
-      have_same_elements 
-          (h :: sorted_prefix) new_prefix &&
-      
-      
-      ==> ?
-
-      is_sorted new_prefix &&
-      have_same_elements (new_prefix @ t) ls
-  
-       *)
-      assert (insert_sort_walk_pre ls new_prefix t);
-      walk new_prefix t
-  in
-  assert (insert_sort_walk_pre ls [] ls);
-  walk [] ls
-
-
-
-
-(********************************************)
-
-(* ## Operations with arrays: swapping, printing, sub-array, converting to list *)
+(* Swapping two elements in an array *)
 
 let swap arr i j = 
-  let len = Array.length arr in
-  assert (i < len && i >= 0);
-  assert (j < len && j >= 0);
   let tmp = arr.(i) in
   arr.(i) <- arr.(j);
   arr.(j) <- tmp
 
-(* ## An example array *)
-
-
-let a1 = [| 5; 2; 8; 3 |]
-         
-let sub_array_to_list l u arr = 
-  let ls = ref [] in
-  for i = u - 1 downto l do
-    ls := arr.(i) :: !ls
+let print_int_sub_array l u arr =
+  assert (l <= u);
+  assert (u <= Array.length arr);
+  Printf.printf "[| ";
+  for i = l to u - 1 do
+    Printf.printf "%d" arr.(i);
+    if i < u - 1
+    then Printf.printf "; "
+    else ()      
   done;
-  !ls
+  Printf.printf " |] "
 
-let array_to_list arr = 
+let print_int_array arr = 
   let len = Array.length arr in
-  sub_array_to_list 0 len arr
-  
-let print_sub_array l u arr = 
-  print_list (sub_array_to_list l u arr)
+  print_int_sub_array 0 (len - 1) arr
 
-let print_array arr = 
-  print_list (array_to_list arr)
+let a1 = [|6; 8; 5; 2; 3; 7; 0|]
 
-(* ## Insertion sort *)
 
+(* Tell about index out of bounds *)
+
+let a2 = Array.make 10 0
+
+(**********************************************)
+(*  Essence of the simple sorting             *)
+(*
+
+* Grow up the sorted array path
+* Adjust it as the new elements come by
+
+*)
+(**********************************************)
+
+(* Insert_sort: loop-based implementation *)
 let insert_sort arr = 
   let len = Array.length arr in
   for i = 0 to len - 1 do
-    let j = ref i in
-    while !j > 0 && 
-          arr.(!j) < arr.(!j - 1) do 
+    let j = ref i in 
+    while !j > 0 && arr.(!j) < arr.(!j - 1) do
       swap arr !j (!j - 1);
       j := !j - 1
     done
   done
 
-(* ## Termination of insertion *)
+let insert_sort_backwards arr = 
+  let len = Array.length arr in
+  for i = len - 1 downto 0 do
+    let j = ref i in 
+    while !j < len - 1 && arr.(!j) > arr.(!j + 1) do
+      swap arr !j (!j + 1);
+      j := !j + 1
+    done
+  done
 
-(* Done *)
 
-(* ##  InsertSort invariants and annotated *)
+(* Auxiliary functions for invariants *)
 
-let insert_sort_outer_inv i arr =
-  let prefix = sub_array_to_list 0 i arr in
-  is_sorted prefix &&
-  have_same_elements (array_to_list arr)
-    (prefix @
-     (sub_array_to_list i (Array.length arr) arr))
+let rec sorted ls = 
+  match ls with 
+  | [] -> true
+  | h :: t -> 
+    List.for_all (fun e -> e >= h) t && sorted t
 
-let larger_than m ls = 
-  List.for_all (fun e -> m <= e) ls
+let array_to_list l u arr = 
+  assert (l <= u);
+  let res = ref [] in
+  let i = ref (u - 1) in
+  while l <= !i do
+    res := arr.(!i) :: !res;
+    i := !i - 1             
+  done;
+  !res
+  
+let sub_array_sorted l u arr = 
+  let ls = array_to_list l u arr in 
+  sorted ls
 
-let insert_sort_inner_inv i j arr =
-  is_sorted (sub_array_to_list 0 !j arr) &&
-  is_sorted (sub_array_to_list (!j + 1) i arr) &&
-  larger_than arr.(!j) 
-    (sub_array_to_list (!j + 1) i arr)
+let array_sorted arr = 
+  sub_array_sorted 0 (Array.length  arr) arr
+
+let is_min ls min = 
+  List.for_all (fun e -> min <= e) ls
+
+let is_min_sub_array l u arr min = 
+  let ls = array_to_list l u arr in 
+  is_min ls min
+
+let print_offset _ = 
+  Printf.printf "  "
+
+(* reconstructing the invariant *)
+
+let insert_sort_print arr = 
+  let len = Array.length arr in
+  for i = 0 to len - 1 do
+    print_int_sub_array 0 i arr; 
+    print_int_sub_array i len arr;
+    print_newline ();
+    let j = ref i in 
+    while !j > 0 && arr.(!j) < arr.(!j - 1) do
+      print_offset ();
+      print_int_sub_array 0 (i + 1) arr;
+      print_int_sub_array (i + 1) len arr;
+      print_newline ();
+      swap arr !j (!j - 1);
+      j := !j - 1;
+    done;
+    print_int_sub_array 0 (i + 1) arr; 
+    print_int_sub_array (i + 1) len arr; 
+    print_newline (); print_newline ()
+  done
+
+let insert_sort_inner_loop_inv j i arr = 
+  is_min_sub_array !j i arr arr.(!j) &&
+  sub_array_sorted 0 !j arr && 
+  sub_array_sorted (!j + 1) (i + 1) arr
+
+let insert_sort_outer_loop_inv i arr = 
+  sub_array_sorted 0 i arr
 
 let insert_sort_inv arr = 
   let len = Array.length arr in
   for i = 0 to len - 1 do
-    assert (insert_sort_outer_inv i arr);
-    let j = ref i in
-    while !j > 0 && 
-          arr.(!j) < arr.(!j - 1) do 
-      assert (insert_sort_inner_inv i j arr);
+    assert (insert_sort_outer_loop_inv i arr);    
+    let j = ref i in 
+    while !j > 0 && arr.(!j) < arr.(!j - 1) do
+      assert (insert_sort_inner_loop_inv j i arr);
       swap arr !j (!j - 1);
       j := !j - 1;
-      assert (insert_sort_inner_inv i j arr);
+      assert (insert_sort_inner_loop_inv j i arr);
     done;
-    assert (insert_sort_outer_inv (i + 1) arr);
+    assert (insert_sort_outer_loop_inv (i + 1) arr)
   done
 
-(* ##  Select Sort *)
+
+(* Exercise:
+
+Rewrite insertion sort, so it would be starting not from the
+   beginning, but from the end of an array
+
+*)
+
+(* Print out partial arrays and try the loop invariant *)
 
 let select_sort arr = 
   let len = Array.length arr in
   for i = 0 to len - 1 do
     for j = i to len - 1 do
-      if arr.(i) > arr.(j)
+      if arr.(j) < arr.(i)
       then swap arr i j
       else ()
     done
   done
 
+let select_sort_print arr = 
+  let len = Array.length arr in
+  for i = 0 to len - 1 do
+    print_int_sub_array 0 i arr; 
+    print_int_sub_array i len arr;
+    print_newline ();
 
+    for j = i to len - 1 do
+      print_offset ();
+      Printf.printf "j = %d, a[j] = %d, a[i] = %d: " j arr.(j) arr.(i);
+      print_int_sub_array 0 i arr;
+      print_int_sub_array i len arr;
+      print_newline ();
+
+      if arr.(j) < arr.(i)
+      then swap arr i j
+      else ()
+    done;
+
+    print_int_sub_array 0 (i + 1) arr; 
+    print_int_sub_array (i + 1) len arr;
+    print_newline (); print_newline ();
+  done
+
+let suffix_larger_than_prefix i arr =
+  let len = Array.length arr in
+  let prefix = array_to_list 0 i arr in
+  let suffix = array_to_list i len arr in
+  List.for_all (fun e -> 
+      List.for_all (fun f -> e <= f)  suffix
+    ) prefix
+
+let select_sort_outer_inv i arr =
+  sub_array_sorted 0 i arr &&
+  suffix_larger_than_prefix i arr
+
+let select_sort_inner_inv j i arr = 
+  is_min_sub_array i j arr arr.(i) &&
+  sub_array_sorted 0 i arr &&
+  suffix_larger_than_prefix i arr
+
+
+let select_sort_inv arr = 
+  let len = Array.length arr in
+  for i = 0 to len - 1 do
+    assert (select_sort_outer_inv i arr);
+    for j = i to len - 1 do
+      assert (select_sort_inner_inv j i arr);
+      if arr.(j) < arr.(i)
+      then swap arr i j
+      else ();
+      assert (select_sort_inner_inv (j + 1) i arr);
+    done;
+    assert (select_sort_outer_inv (i + 1) arr);
+  done
+
+
+(* Invariant: a[i] holds the minimun wrt a[i ... j] *)
+
+
+let select_sort_general arr = 
+  print_int_array arr; print_newline ();
+  let len = Array.length arr in
+  for i = 0 to len - 1 do
+    Printf.printf "Sorted prefix: "; 
+    print_int_array (Array.sub arr 0 i); print_newline ();
+    (* Invariant: a[i] holds the minimun wrt a[i ... j] *)
+    for j = i to len - 1 do
+      if arr.(j) < arr.(i)
+      then 
+        (swap arr i j;
+         print_int_array arr; print_newline ())        
+      else ()
+    done
+  done
+
+let sum_matrix m n = 
+  let sum = ref 0 in
+  for i = 0 to n - 1 do
+    for j = 0 to n - 1 do
+       sum := !sum + m.(i).(j)
+    done
+  done;
+  !sum
+
+let m = [| [|1; 2; 3|]; [|4; 5; 6|]; [|7; 8; 9 |] |]
+
+
+(* Exercise:
+
+Rewrite selection sort, so it would be looking for a maximum rather
+   than a minimum.
+
+Generalise to take an arbitrary comparator. Sort an array of lists.
+
+*)
+
+(* Exercise: bubble sort invariant *)
+
+let bubble_sort arr = 
+  let len = Array.length arr in
+  for i = 0 to len - 1 do
+    print_int_sub_array 0 i arr; 
+    print_int_sub_array i len arr;
+    print_newline ();
+
+    let j = ref (len - 1) in
+    while !j > i do
+      if arr.(!j) < arr.(!j - 1) 
+      then swap arr !j (!j - 1)
+      else ();
+      j := !j - 1;
+    done;
+
+    print_int_sub_array 0 i arr; 
+    print_int_sub_array i len arr;
+    print_newline (); print_newline ();
+  done
+
+let bubble_sort_print arr = 
+  let len = Array.length arr in
+  for i = 0 to len - 1 do
+    print_int_sub_array 0 i arr; 
+    print_int_sub_array i len arr;
+    print_newline ();
+
+    let j = ref (len - 1) in
+    while !j > i do
+      print_offset ();
+      print_int_sub_array 0 i arr; 
+      print_int_sub_array i (!j) arr; 
+      print_int_sub_array (!j) len arr;
+      print_newline ();
+
+
+      if arr.(!j) < arr.(!j - 1) 
+      then swap arr !j (!j - 1)
+      else ();
+      j := !j - 1;
+    done;
+
+    print_int_sub_array 0 (i + 1) arr; 
+    print_int_sub_array (i + 1) len arr;
+    print_newline (); print_newline ();
+  done
+
+let bubble_sort_outer_inv i arr =
+  sub_array_sorted 0 i arr
+
+let bubble_sort_inner_inv i j arr =
+  let len = Array.length arr in
+  sub_array_sorted 0 i arr &&
+  j >= i &&  
+  is_min_sub_array j len arr arr.(j) &&
+  suffix_larger_than_prefix i arr
+
+
+let bubble_sort_inv arr = 
+  let len = Array.length arr in
+  (* Invariant: a[0 .. i] is sorted. *)  
+  for i = 0 to len - 1 do
+    assert (bubble_sort_outer_inv i arr);
+    (* Invariant: a[j] is the smallest in a[j ... len - 1] *)
+    for j = len - 1 downto i + 1 do
+      assert (bubble_sort_inner_inv i j arr);
+      if arr.(j) < arr.(j - 1) 
+      then swap arr j (j - 1)
+      else ();
+      assert (bubble_sort_inner_inv i (j - 1) arr)
+    done;
+    assert (bubble_sort_outer_inv i arr);
+  done
