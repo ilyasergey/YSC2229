@@ -274,14 +274,14 @@
 </pre></div>
 </div>
 <p>It only succeeds in the case if there is still vacant space in the queue (i.e., at the end of the array), which can be determined by examining the <code class="docutils literal notranslate"><span class="pre">heap_size</span></code> field of <code class="docutils literal notranslate"><span class="pre">h</span></code>. If the space permits, the limit <code class="docutils literal notranslate"><span class="pre">heap_size</span></code> is increased. Since we know that <code class="docutils literal notranslate"><span class="pre">None</span></code> used to be installed to the vacant place (which is an invariant maintained by means of <code class="docutils literal notranslate"><span class="pre">heap_size</span></code>), we can simply install the new element <code class="docutils literal notranslate"><span class="pre">Some</span> <span class="pre">elem</span></code> (which is guaranteed to be larger than <code class="docutils literal notranslate"><span class="pre">None</span></code> as per our defined comparator) and let the heap rebalance using <code class="docutils literal notranslate"><span class="pre">heap_increase_key</span></code>.</p>
-<p>Given the complexity of <code class="docutils literal notranslate"><span class="pre">max_heap_insert</span></code>, it is easy to show that the complexity of element insertion is <span class="math notranslate nohighlight">\(O(n \log n)\)</span>. This brings us to an important property of priority queues implemented by means of heaps:</p>
+<p>Given the complexity of <code class="docutils literal notranslate"><span class="pre">max_heap_insert</span></code>, it is easy to show that the complexity of element insertion is <span class="math notranslate nohighlight">\(O(\log n)\)</span>. This brings us to an important property of priority queues implemented by means of heaps:</p>
 <div class="admonition-complexity-of-priority-queue-operations admonition">
 <p class="first admonition-title">Complexity of priority queue operations</p>
 <p>For a priority queue of size <span class="math notranslate nohighlight">\(n\)</span>,</p>
 <ul class="last simple">
 <li>Finding the largest element has complexity <span class="math notranslate nohighlight">\(O(1)\)</span>,</li>
-<li>Extraction of the largest element has complexity <span class="math notranslate nohighlight">\(O(n \log n)\)</span>,</li>
-<li>Insertion of a new element has complexity <span class="math notranslate nohighlight">\(O(n \log n)\)</span>.</li>
+<li>Extraction of the largest element has complexity <span class="math notranslate nohighlight">\(O(\log n)\)</span>,</li>
+<li>Insertion of a new element has complexity <span class="math notranslate nohighlight">\(O(\log n)\)</span>.</li>
 </ul>
 </div>
 </div>
