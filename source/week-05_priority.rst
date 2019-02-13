@@ -126,15 +126,15 @@ Finally, the function ``max_heap_insert`` implements an insertion of a new eleme
 
 It only succeeds in the case if there is still vacant space in the queue (i.e., at the end of the array), which can be determined by examining the ``heap_size`` field of ``h``. If the space permits, the limit ``heap_size`` is increased. Since we know that ``None`` used to be installed to the vacant place (which is an invariant maintained by means of ``heap_size``), we can simply install the new element ``Some elem`` (which is guaranteed to be larger than ``None`` as per our defined comparator) and let the heap rebalance using ``heap_increase_key``.
 
-Given the complexity of ``max_heap_insert``, it is easy to show that the complexity of element insertion is :math:`O(n \log n)`. This brings us to an important property of priority queues implemented by means of heaps:
+Given the complexity of ``max_heap_insert``, it is easy to show that the complexity of element insertion is :math:`O(\log n)`. This brings us to an important property of priority queues implemented by means of heaps:
 
 .. admonition:: Complexity of priority queue operations
 
   For a priority queue of size :math:`n`,
 
   * Finding the largest element has complexity :math:`O(1)`,
-  * Extraction of the largest element has complexity :math:`O(n \log n)`,
-  * Insertion of a new element has complexity :math:`O(n \log n)`.
+  * Extraction of the largest element has complexity :math:`O(\log n)`,
+  * Insertion of a new element has complexity :math:`O(\log n)`.
 
 Working with Priority Queues
 ----------------------------
