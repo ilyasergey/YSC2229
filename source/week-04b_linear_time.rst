@@ -154,7 +154,7 @@ Stability of sorting
 
 An important property of a sorting algorithm is **stability**. A sorting
 algorithms is *stable* if it preserves the ordering between the elements
-with equali keys. 
+with equal keys in the initial array. 
 
 An example of a stable sorting algorithm is ``simple_bucket_sort``. As
 an example, consider its outcome above. The initial array has elements
