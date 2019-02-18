@@ -191,7 +191,7 @@ Recall the code of Quicksort::
    in
    sort arr 0 (Array.length arr)
 
-The complexity of:math:`t(n)` of the internal ``sort`` is combined from the following components:
+The complexity :math:`t(n)` of the internal ``sort`` is combined from the following components:
 
 * Partitioning the array into two sub-arrays (:math:`c \cdot n`), and 
 * Running two recursive sorting calls (:math:`2 \cdot t(n/2)`).
