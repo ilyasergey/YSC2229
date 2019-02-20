@@ -1,7 +1,7 @@
 .. -*- mode: rst -*-
 
-YSC2229 Lecture Notes: Mid-term Project
-=======================================
+YSC2229: Mid-term Project, Week 07
+==================================
 
 The mid-term project is composed of 3 mini-projects of different sizes.
 
