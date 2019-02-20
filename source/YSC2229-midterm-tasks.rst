@@ -7,7 +7,7 @@ The mid-term project is composed of 3 mini-projects of different sizes.
 
 Submit your solutions and the reports, as for usual assignments, via Canvas.
 
-Warm-up: Missing Non-Negative Integer
+Warm-up: missing non-negative integer
 -------------------------------------
 
 Given an array of integers, find the smallest non-negative integer that does not occur in this array.  (The array can be overwritten.) What is the complexity in time and in space of your solution?
