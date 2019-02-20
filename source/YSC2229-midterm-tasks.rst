@@ -1,9 +1,9 @@
 .. -*- mode: rst -*-
 
-YSC2229: Mid-term Project, Week 07
-==================================
+YSC2229: Midterm Project, Week 07
+=================================
 
-The mid-term project is composed of 3 mini-projects of different sizes.
+The midterm project is composed of 3 mini-projects of different sizes.
 
 Submit your solutions and the reports, as for usual assignments, via Canvas.
 
