@@ -3,21 +3,22 @@
 (* Version of Wed 20 Feb 2019 *)
 
 
-(* 
+(*
 
 The signature of the allocator module.
 
 Implement a concrete module that instantiates it and use this
-signature to provide it an interface for the clients to use.
+   signature to provide it an interface for the clients to use.
 
 * N.B.: The "heap" structure should internally keep track of "free"
-   memory segments; you can use a list (or lists) of pairs for
+   memory segments; you can use an OCaml list (or lists) of for
    tracking free slots in "memory" arrays.
-
-* N.B.: Ordinary pointers should be implemented as integers.
 
 * N.B.: All interaction with the heap goes through the signature of
    the Allocator module.
+
+* N.B.: Ordinary pointers can be implemented as integers (athough the
+   clients of the module may not know it).
 
 * N.B.: You will have to figure out how to "dispatch" pointers when
    they are dereferenced (via deref_as_* functions). That is you will
@@ -29,28 +30,28 @@ signature to provide it an interface for the clients to use.
 **)
 
 module type Allocator = sig
-  (* A type for dynamic storage *)
+  (* An abstract type for dynamic storage                                          *)
   type heap
-  (* A type for the pointer *)
+  (* An abstract type for the pointer (address in the dynamic storage)             *)
   type ptr
 
-  (* Create a new heap *)
+  (* Create a new heap.                                                            *)
   val make_heap : unit -> heap
 
-  (* Returns the "null" pointer, which cannot be assigned to anything *)
+  (* Returns the "null" pointer. Noting can be assigned to it.                     *)
   val null : heap -> ptr
   val is_null : heap -> ptr -> bool
 
-  (*** Operations with pointers ***)
-  (* All should throw exceptions for null *)  
+  (***                       Operations with pointers                            ***)
+  (* All should throw exceptions for if the pointer is_null                        *)  
 
-  (* Allocating a contiguous segment of dynamically-typed pointers in a heap *)
-  (* Throws an specific "Out-Of-Memory" error if no allocation is possible *)
+  (* Allocating a contiguous segment of dynamically-typed pointers in a heap.      *)
+  (* Throws an specific "Out-Of-Memory" error if no allocation is possible.        *)
   val alloc : heap -> int -> ptr
-  (* Frees the space in heap taken by the pointer *)
+  (* Frees the space in heap taken by the pointer.                                 *)
   val free : heap -> ptr -> int -> unit
 
-  (* Dereferencing a pointer with an offset [0 .. n] *)
+  (* Dereferencing a pointer with an offset [0 .. n].                              *)
 
   (* Dereference as an integer, throw an exception if the target is not an pointer *)  
   val deref_as_ptr : heap -> ptr -> ptr
@@ -59,10 +60,9 @@ module type Allocator = sig
   (* Dereference as an integer, throw an exception if the target is not an integer *)  
   val deref_as_string : heap -> ptr -> string
 
-
-  (* Assign values to a pointer with an offset *)
-  (* Should throw an exception if not possible to create a new value *)
-  (* The last argument is a value being assigned *)
+  (* Assigning values to a pointer with an offset.                                 *)
+  (* Should throw an "Out-Of-Memory" error if not possible to create a new value   *)
+  (* The last argument is a value being assigned (of the corresponding type)       *)
   val assign_ptr : heap -> ptr -> int -> ptr -> unit
   val assign_int : heap -> ptr -> int -> int -> unit
   val assign_string : heap -> ptr -> int -> int -> unit

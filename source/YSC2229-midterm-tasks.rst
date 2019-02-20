@@ -50,7 +50,7 @@ We can represent the collection of similar values (e.g., of type ``int`` or ``st
    :width: 800px
    :align: center
 
-Therefore, in order to work with a double-linked list represented, one should manipulate with the encoding of references in the arrays. 
+Therefore, in order to work with a double-linked list represented via three arrays, one should manipulate with the encoding of references in by means of changing the contents of those arrays. 
 
 In this project, you are expected to deliver the following artifacts:
 
