@@ -7,6 +7,8 @@ The mid-term project is composed of 3 mini-projects of different sizes.
 
 Submit your solutions and the reports, as for usual assignments, via Canvas.
 
+You are encouraged to use Git and GitHub to efficiently coordinate and synchronise your joint efforts. If not sure how to use GitHub, feel free to send me an email or drop by during office hours.
+
 Warm-up: missing non-negative integer
 -------------------------------------
 
