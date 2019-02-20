@@ -42,7 +42,7 @@ TODO
 An array-based memory allocator
 -------------------------------
 
-How do we implement references and pointers in languages that do not provide them? In this mini-project you will work on a solution for implementing linked data structure without an explicit ``ref`` type.
+How do we implement references and pointers in languages that do not provide them? In this mini-project you will work on a solution for implementing linked data structures without an explicit ``ref`` type, by means of implementing a custom memory allocator.
 
 We can represent the collection of similar values (e.g., of type ``int`` or ``string``) by packaging them into arrays, which will play the role of random-access memory. For instance, two consecutive nodes with the payloads ``(15, "a")`` and ``(42, "b")`` of a double-linked list containing pairs of integers can be represented by the following three arrays: one for pointer "addresses", one for integers and one for strings. The "node" (``dll_node``) is simply a segment of four consecutive entries in a pointer array, with the corresponding links to an integer and a string part of the payload:
 
