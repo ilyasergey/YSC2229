@@ -99,6 +99,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229 Lecture Notes: Mid-term Project</a></li>
 </ul>
 
             
@@ -320,7 +322,10 @@ Quicksort?</p>
 </div>
 <div class="section" id="radix-sort">
 <span id="sec-radix-sort"></span><h2>4.6.4. Radix Sort<a class="headerlink" href="#radix-sort" title="Permalink to this headline">¶</a></h2>
-<p>The stability comes into play, when one sorting algorithm uses another one as a black-box, relying on the fact that original order of elements partially-sorted arrays with “almost-same” keys will be preserved.</p>
+<p>The stability comes into play, when one sorting algorithm uses another
+one as a black-box, relying on the fact that original order of
+elements in partially-sorted arrays with “almost-same” keys will be
+preserved.</p>
 <p>As an example, radix sort is a linear-time sorting, building on the idea of bucket-sort, but making it scale logarithmically, which is necessary if the space of possible keys is too large (e.g., comparable with the length of an array, in which case bucket sort’s complexity becomes quadratic). It makes use of bucket sort as its component, applying it iteratively and sorting a list of integer-keyed elements <em>per key digit</em>, startgin from the smallest register:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">radix_sort</span> <span class="n">arr</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>

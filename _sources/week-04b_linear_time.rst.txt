@@ -169,7 +169,10 @@ Quicksort?
 Radix Sort
 ----------
 
-The stability comes into play, when one sorting algorithm uses another one as a black-box, relying on the fact that original order of elements partially-sorted arrays with "almost-same" keys will be preserved.
+The stability comes into play, when one sorting algorithm uses another
+one as a black-box, relying on the fact that original order of
+elements in partially-sorted arrays with "almost-same" keys will be
+preserved.
 
 As an example, radix sort is a linear-time sorting, building on the idea of bucket-sort, but making it scale logarithmically, which is necessary if the space of possible keys is too large (e.g., comparable with the length of an array, in which case bucket sort's complexity becomes quadratic). It makes use of bucket sort as its component, applying it iteratively and sorting a list of integer-keyed elements *per key digit*, startgin from the smallest register::
 
