@@ -44,17 +44,17 @@ An array-based memory allocator
 
 How do we implement references and pointers in languages that do not provide them? In this mini-project you will work on a solution for implementing linked data structures without an explicit ``ref`` type, by means of implementing a custom memory allocator.
 
-We can represent the collection of similar values (e.g., of type ``int`` or ``string``) by packaging them into arrays, which will play the role of random-access memory. For instance, two consecutive nodes with the payloads ``(15, "a")`` and ``(42, "b")`` of a double-linked list containing pairs of integers can be represented by the following three arrays: one for pointer "addresses", one for integers and one for strings. The "node" (``dll_node``) is simply a segment of four consecutive entries in a pointer array, with the corresponding links to an integer and a string part of the payload:
+In order to implement a machinery for dynamically allocating references, we notice that on can represent a collection of similar values (e.g., of type ``int`` or ``string``) by packaging them into arrays, so such arrays will play the role of random-access memory. For instance, two consecutive nodes with the payloads ``(15, "a")`` and ``(42, "b")`` of a double-linked list containing pairs of integers can be encoded by sub-segments of following three arrays: one for pointer "addresses", one for integers, and one for strings:
 
 .. image:: ../resources/alloc.png
    :width: 800px
    :align: center
 
-Therefore, in order to work with a double-linked list represented via three arrays, one should manipulate with the encoding of references in by means of changing the contents of those arrays. 
+A list "node" (``dll_node``) is simply a segment of four consecutive entries in a pointer array, with the corresponding links to an integer and a string part of the payload. Therefore, in order to work with a double-linked list represented via three arrays, one should manipulate with the encoding of references in by means of changing the contents of those arrays. 
 
-In this project, you are expected to deliver the following artifacts:
+In this project, you are expected to deliver the following artefacts:
 
-* An implementation of an array-based memory allocator that can provide storage (of a fixed limited capacity) for dynamically "allocated" pointers, integers, and strings, with a possibility of updating them. Similarly to languages without automatic memory management, such as C, it should be possible to both allocate and "free" consecutive pointer segments, making it possible to reuse the memory. The template code for the memory manager is available by `at this link <./resources/2019/memory_manager.ml>`_.
+* An implementation of an array-based memory allocator that can provide storage (of a *fixed limited* capacity) for dynamically "allocated" pointers, integers, and strings, with a possibility of updating them. Similarly to languages without automatic memory management, such as C, it should be possible to both allocate and "free" consecutive pointer segments, making it possible to reuse the memory. The template code for the memory manager is available by `at this link <./resources/2019/memory_manager.ml>`_.
 
 * An implementation of a double-linked list, built on top of the allocator interface via the abstract "heap" it provides and the operations for manipulating with the pointers. Feel free to extend the ``Allocator`` signature if you can think of more expressive operations with the heap.
 

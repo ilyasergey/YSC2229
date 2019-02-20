@@ -51,13 +51,13 @@ module type Allocator = sig
   (* Frees the space in heap taken by the pointer.                                 *)
   val free : heap -> ptr -> int -> unit
 
-  (* Dereferencing a pointer with an offset [0 .. n].                              *)
+  (* Dereferencing a pointer with an offset [0 .. n] obtainin a value it points to *)
 
-  (* Dereference as an integer, throw an exception if the target is not an pointer *)  
+  (* Dereference as an pointer, throw an exception if the target is not an pointer *)  
   val deref_as_ptr : heap -> ptr -> ptr
   (* Dereference as an integer, throw an exception if the target is not an integer *)  
   val deref_as_int : heap -> ptr -> int
-  (* Dereference as an integer, throw an exception if the target is not an integer *)  
+  (* Dereference as an integer, throw an exception if the target is not an string  *)  
   val deref_as_string : heap -> ptr -> string
 
   (* Assigning values to a pointer with an offset.                                 *)
