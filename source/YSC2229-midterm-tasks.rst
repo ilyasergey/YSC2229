@@ -58,7 +58,7 @@ In this project, you are expected to deliver the following artefacts:
 
 * An implementation of a double-linked list, built on top of the allocator interface via the abstract "heap" it provides and the operations for manipulating with the pointers. Feel free to extend the ``Allocator`` signature if you can think of more expressive operations with the heap.
 
-* An implementation of a queue, following the `Module Signature from Week 6 <./resources/2019/week_06.ml>`_ and tests it to behave like a queue.
+* An implementation of a queue data type, following the `Module Signature from Week 6 <./resources/2019/week_06.ml>`_ and tests for checking that it indeed behaves like a queue.
 
 The nature of the task imposes some restrictions and hints some observations:
 
@@ -66,7 +66,7 @@ The nature of the task imposes some restrictions and hints some observations:
 
 * As you remember, pointers and arrays are somewhat similar. Specifically, most of the pointer operations expect not just the pointer ``p`` value but also a non-negative integer "offset" ``o``, so that the considered value is located by the "address" ``p + o``.
 
-* The allocator only had to provide storage and the ability to manipulate references storing (a) integers, (b) strings, and (c) pointers which can point to either of the three kinds of values. You are not expected to support references to any other composite data types (such as, e.g., pairs). However, you might need to encode those data types using consecutive pointers with offsets.
+* The allocator only has to provide storage and the machinery to manipulate references storing (a) integers, (b) strings, and (c) pointers which can point to either of the three kinds of values. You are not expected to support references to any other composite data types (such as, e.g., pairs). However, you might need to encode those data types using consecutive pointers with offsets.
 
  
 
