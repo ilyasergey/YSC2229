@@ -38,9 +38,7 @@ Use the following code to test your solution (referred to as ``candidate``)::
 Array permutations
 ------------------
 
-1. Given an array ``a`` of values of arbitrary type ``'t``, implement a function ``permutations : 't array -> 't array list``, which generates the list of all possible permutations of the array ``a``. Write tests for this function to check that some particular "interesting" permutations are included. For instance, for an array ``a = [|1; 2; 3|]``, ``permutations a`` should return some permutation of the list::
-
-  [[|1; 2; 3|]; [|1; 3; 2|]; [|2; 1; 3|]; [|2; 3; 1|]; [|3; 1; 2|]; [|3; 2; 1|]]
+1. Given an array ``a`` of values of arbitrary type ``'t``, implement a function ``permutations : 't array -> 't array list``, which generates the list of all possible permutations of the array ``a``. Write tests for this function to check that some particular "interesting" permutations are included. For instance, for an array ``a = [|1; 2; 3|]``, ``permutations a`` should return some permutation of the list ``[[|1; 2; 3|]; [|1; 3; 2|]; [|2; 1; 3|]; [|2; 3; 1|]; [|3; 1; 2|]; [|3; 2; 1|]]``.
 
 2. Implement a function ``perm : 't array -> int -> 't array`` that, given an array ``a`` and a non-negative integer ``m``, returns the m-th permutation of the array. Explain how it works. You are at freedom to choose how permutations are enumerated. As an example, for ``a = [|1; 2; 3|]``, ``perm a 0`` should return ``[|1; 2; 3|]``, and ``perm a 1`` *might* return ``[|1; 3; 2|]`` or ``[|2; 1; 3|]``. Make sure that first returned ``n!`` permutations (where ``n`` is the array size) are all distinct, and if ``m > n!``, the initial array should not be modified. While expensive computationally, your function may only use constant amount of memory besides the size of the initial array (i.e., you cannot allocate new arrays). Explain the invariants of your function in writing.
 
