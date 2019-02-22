@@ -161,8 +161,8 @@ The same procedure, but with a loop instead of recursion, can be emulated via a 
     queue_to_list acc
 
 
-Breath-First Traversal
-----------------------
+Breadth-First Traversal
+-----------------------
 
 An alternative way to traverse a tree would be to go by "levels" rather than "deep down". This is known as "breadth-first-search". It can be easily obtained from depth-firrst traversal outlined above by replacing the stack with a queue::
 
