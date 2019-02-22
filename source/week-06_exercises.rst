@@ -12,7 +12,7 @@ Recommended exercises
 ---------------------
 
 * :ref:`exercise-queue`
-  A ppurely functional queue.
+  A purely functional queue.
 
 * :ref:`exercise-rev-dll`
   Reversing a doubly-linked list.
