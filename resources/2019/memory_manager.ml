@@ -65,7 +65,7 @@ module type Allocator = sig
   (* The last argument is a value being assigned (of the corresponding type)       *)
   val assign_ptr : heap -> ptr -> int -> ptr -> unit
   val assign_int : heap -> ptr -> int -> int -> unit
-  val assign_string : heap -> ptr -> int -> int -> unit
+  val assign_string : heap -> ptr -> int -> string -> unit
 
 end
 
