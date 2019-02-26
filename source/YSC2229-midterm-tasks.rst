@@ -69,7 +69,7 @@ In this project, you are expected to deliver the following artefacts:
 
 * An implementation of a double-linked list, built on top of the allocator interface via the abstract "heap" it provides and the operations for manipulating with the pointers. Feel free to extend the ``Allocator`` signature if you can think of more expressive operations with the heap.
 
-* An implementation of a queue data type, following the `Module Signature from Week 6 <./resources/2019/week_06.ml>`_ and tests for checking that it indeed behaves like a queue.
+* An implementation of a queue data type, following the `Module Signature from Week 6 <https://github.com/ilyasergey/ysc2229-part-one/blob/master/lib/week_06.ml#L144>`_ and tests for checking that it indeed behaves like a queue.
 
 The nature of the task imposes some restrictions and hints some observations:
 
