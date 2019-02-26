@@ -7,15 +7,9 @@ Queues
 The Queue pragmatics
 --------------------
 
-TODO
+Unlike stacks, in which the elements added the last, come out first (last-in-first-out, LIFO), *queues* implement a complementary adding/removal strategy, known as *first-in-first-out* (FIFO), allowing to process their elements in the order they come.
 
-Unlike stacks, in which the elements added the last, come out first
-(last-in-first-out, LIFO), *queues* implement a complementary
-adding/removal strategy, known as first-in-first-out (FIFO), allowing
-to process their elements in the order they come.
-
-An abstract data type for queues is described by the following OCaml
-module signature::
+We can define an abstract data type for queues by means the following OCaml module signature::
 
  module type Queue = 
    sig
@@ -28,13 +22,18 @@ module signature::
      val queue_to_list : 'e t -> 'e list
    end
 
+Indeed, one is at freedom to decide which functionality should be added to an ADT interface --- a point we demonstrate by making the queue signature a bit more expressive, in terms of functionality it provides, than a stack interface. 
+
+As in the example of stacks, a queue of elements of type ``'e`` is represented by an abstract parameterised type ``'e t``. Two methods, ``is_empty`` and ``is_full`` allow one to check whether it's empty or full, correspondingly. ``enqueue`` and ``dequeue`` provide the main FIFO functionality of the queue: the former adds elements to the "back" of the queue object, while the latter removes elements from its "front". Finally, the utility method ``queue_to_list`` transforms a current snapshot of the queue to an immutable OCaml list.
+
+Similarly, to the stack ADT, queues defined by means of the ``Queue`` signature are mutable, i.e., functions ``enqueue`` and ``dequeue`` modify the contents of a queue in-place rather than create a new queue.
 
 An Array-Based Queue
 --------------------
 
 The following module implements a queue based on a finite-size array::
 
- module ArrayBasedQueue : Queue = 
+ module ArrayBasedQueue : Queue =
    struct
      type 'e t = {
        elems : 'e option array;
@@ -48,12 +47,26 @@ The following module implements a queue based on a finite-size array::
        tail = ref 0;
        size = sz
      }
+
+     (* More functions come here *)
+
+ end
+
+Since a queue, unlike stack, can be changed on both sides, "front" and "back", the empty slots may appear both in the beginning and at the end of its carrier array.  In order to utilise the array efficiently, we will engineer our concrete implementation, so it would "wrap" around and use the empty array cells in the beginning. 
+
+In our representation the ``head`` pointer points to the next element to be removed via ``dequeue``, while ``tail`` points to the next array cell to install an element (unless the queue is full). This implementation requires some care in managing the head/tail references. For instance, both empty and fully packed queue are characterised by head and tail pointing to the same array cell::
+
      let is_empty q = 
        !(q.head) = !(q.tail) &&
        q.elems.(!(q.head)) = None
+
      let is_full q = 
        !(q.head) = !(q.tail) &&
        q.elems.(!(q.head)) <> None
+
+The only difference is that in the case of the queue being full that cell, at which both head and tail point is occupied some element (and, hence, is not ``None``), whereas it is ``None`` if the queue is empty.
+
+Adding and removing elements to/from the queue is implemented in a way that takes the "wrapping" around logic into the account. For instance, ``enqueue`` checks whether the queue is full and whether the ``tail`` reference has reached the end of the array. In case if it has, but the queue still has slots to add elements, it "wraps around" by setting ``tail`` to be 0 (i.e., point to the beginning of the array)::
 
      let enqueue q e = 
        if is_full q
@@ -65,6 +78,8 @@ The following module implements a queue based on a finite-size array::
            if tl = q.size - 1 
            then 0 
            else tl + 1)
+
+Similarly, ``dequeue`` operates with the head pointer, wrapping it around in the case when it reaches the upper boundary of the array, but the queue is not yet empty::
 
      let dequeue q = 
        if is_empty q
@@ -79,6 +94,12 @@ The following module implements a queue based on a finite-size array::
            else hd + 1);
          res)
 
+Finally, ``queue_to_list`` constructs the queue by considering two possibilities:
+
+* head reference points to the array slot less or equal than that of the tail reference, in which case it returns a sub-array enclosed between the two, and,
+
+* head reference points to the array slot greater than that of the tail reference, in which case it returns a concatenation of two sub-arrays, from the end and the beginning of the carrier array::
+
      let queue_to_list q = 
        let hd = !(q.head) in
        let tl = !(q.tail) in
@@ -90,7 +111,8 @@ The following module implements a queue based on a finite-size array::
          let l2 = array_to_list 0 tl q.elems in
          List.map get_exn (l1 @ l2)
 
- end
+Debugging queue implementations
+-------------------------------
 
 We can pring the content of a queue using the following module::
 
@@ -104,8 +126,7 @@ We can pring the content of a queue using the following module::
      Printf.printf "]\n"
    end
 
-For instance, it can be instantiated as follows for printing queues of
-pairs of type ``int * string``::
+For instance, it can be instantiated as follows for printing queues of pairs of type ``int * string``::
 
  module ABQPrinter = QueuePrinter(ArrayBasedQueue)
 
@@ -113,22 +134,29 @@ pairs of type ``int * string``::
 
  let print_queue q = ABQPrinter.print_queue q pp
 
-Let us experiment with the queue::
+Let us experiment with the queue by first creating it::
 
  # open ArrayBasedQueue;;
  # let q = mk_queue 10;;
  val q : '_weak103 ArrayBasedQueue.t = <abstr>
+
+We can then fill a queue from a randomly generater array ``a``::
+
+ # let a = generate_key_value_array 10
+ # a;;
+ - : (int * string) array =
+ [|(7, "sapwd"); (3, "bsxoq"); (0, "lfckx"); (7, "nwztj"); (5, "voeed");
+   (9, "jtwrn"); (8, "zovuq"); (4, "hgiki"); (8, "yqnvq"); (3, "gjmfh")|]
  # for i = 0 to 9 do enqueue q a.(i) done;;
  - : unit = ()
  # print_queue q;;
  [(7, sapwd); (3, bsxoq); (0, lfckx); (7, nwztj); (5, voeed); (9, jtwrn); (8, zovuq); (4, hgiki); (8, yqnvq); (3, gjmfh); ]
  - : unit = ()
- # a;;
- - : (int * string) array =
- [|(7, "sapwd"); (3, "bsxoq"); (0, "lfckx"); (7, "nwztj"); (5, "voeed");
-   (9, "jtwrn"); (8, "zovuq"); (4, "hgiki"); (8, "yqnvq"); (3, "gjmfh")|]
  # is_full q;;
  - : bool = true
+
+We can then start removing elements from the queue, checking that they come out in the same order as elements in the original array::
+
  # dequeue q;;
  - : (int * string) option = Some (7, "sapwd")
  # dequeue q;;
@@ -146,12 +174,12 @@ Let us experiment with the queue::
  # dequeue q;;
  - : (int * string) option = Some (7, "nwztj")
 
-
 Double Linked Lists
 -------------------
 
-To allow for the queue of an arbitrary size, we will need an auxiliary
-data structure, known as double-linked list.
+[TODO] Stopped here
+
+To allow for the queue of an arbitrary size, we will need an auxiliary data structure, known as double-linked list.
 
 Let us start the definition of a doubly-linked list by defining its
 signature::

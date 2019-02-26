@@ -25,6 +25,8 @@ Notice that the first type member (``type 'e t``) is what makes this data type a
 * ``push`` adds new element to the top of the stack
 * ``pop`` removes the latest added element ``e`` from the top of the stack and returns ``Some e``, if such element exists, or ``None`` if the stack is empty. The stack is then modified, so this element is removed.
 
+Unlike OCaml list, is an *mutable* structure. This means each "effectful" operation of it, such as push or pop, changes its contents, rather than returns a new copy, the result type of ``push`` is ``unit``. Both ``push`` and ``pop``, thus, modify the stack contents, in addition to returning a result (in the case of ``pop``).
+
 
 An List-Based Stack
 -------------------
