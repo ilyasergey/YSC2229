@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Stacks &mdash; YSC2229 2019</title>
+  <title>6.2. Stacks &mdash; YSC2229 2019</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="6.3. Queues" href="week-06_queues.html" />
+    <link rel="prev" title="6.1. Abstract Data Types" href="week-06_abstract_data_types.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,13 +78,25 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
-<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-06_abstract_data_types.html">6.1. Abstract Data Types</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6.2. Stacks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-stack-interface">6.2.1. The Stack interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#an-list-based-stack">6.2.2. An List-Based Stack</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#an-array-based-stack">6.2.3. An Array-Based Stack</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_queues.html">6.3. Queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_hash_tables.html">6.4. Hash-tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_exercises.html">6.5. Exercises</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
 </ul>
 
@@ -129,7 +143,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Stacks</li>
+          <li><a href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a> &raquo;</li>
+        
+      <li>6.2. Stacks</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -147,10 +163,10 @@
            <div itemprop="articleBody">
             
   <div class="section" id="stacks">
-<h1>Stacks<a class="headerlink" href="#stacks" title="Permalink to this headline">¶</a></h1>
+<h1>6.2. Stacks<a class="headerlink" href="#stacks" title="Permalink to this headline">¶</a></h1>
 <p>Stack is a good example of a simple abstract data type that implements a set (with possibly repeating elements) with a small number of operations for adding and removing elements. In doing so, stack provides two main operations <code class="docutils literal notranslate"><span class="pre">pop</span></code> and <code class="docutils literal notranslate"><span class="pre">push</span></code> that implement a discipline known as LIFO (last-in-first-out): an element added last is retrieved first.</p>
 <div class="section" id="the-stack-interface">
-<h2>The Stack interface<a class="headerlink" href="#the-stack-interface" title="Permalink to this headline">¶</a></h2>
+<h2>6.2.1. The Stack interface<a class="headerlink" href="#the-stack-interface" title="Permalink to this headline">¶</a></h2>
 <p>A simple stack interface is described by the following OCaml module signature:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="k">type</span> <span class="nc">AbstractStack</span> <span class="o">=</span> <span class="k">sig</span>
     <span class="k">type</span> <span class="k">&#39;</span><span class="n">e</span> <span class="n">t</span>
@@ -171,7 +187,7 @@
 <p>Unlike OCaml list, is an <em>mutable</em> structure. This means each “effectful” operation of it, such as push or pop, changes its contents, rather than returns a new copy, the result type of <code class="docutils literal notranslate"><span class="pre">push</span></code> is <code class="docutils literal notranslate"><span class="pre">unit</span></code>. Both <code class="docutils literal notranslate"><span class="pre">push</span></code> and <code class="docutils literal notranslate"><span class="pre">pop</span></code>, thus, modify the stack contents, in addition to returning a result (in the case of <code class="docutils literal notranslate"><span class="pre">pop</span></code>).</p>
 </div>
 <div class="section" id="an-list-based-stack">
-<h2>An List-Based Stack<a class="headerlink" href="#an-list-based-stack" title="Permalink to this headline">¶</a></h2>
+<h2>6.2.2. An List-Based Stack<a class="headerlink" href="#an-list-based-stack" title="Permalink to this headline">¶</a></h2>
 <p>Our first concrete implementation of a stack ADT exploits the fact that OCaml lists behave precisely like stacks, so we can build the following implementation almost effortlessly:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">ListBasedStack</span> <span class="o">:</span> <span class="nc">AbstractStack</span> <span class="o">=</span> <span class="k">struct</span>
     <span class="k">type</span> <span class="k">&#39;</span><span class="n">e</span> <span class="n">t</span> <span class="o">=</span> <span class="k">&#39;</span><span class="n">e</span> <span class="kt">list</span> <span class="n">ref</span>
@@ -225,7 +241,7 @@
 </div>
 </div>
 <div class="section" id="an-array-based-stack">
-<h2>An Array-Based Stack<a class="headerlink" href="#an-array-based-stack" title="Permalink to this headline">¶</a></h2>
+<h2>6.2.3. An Array-Based Stack<a class="headerlink" href="#an-array-based-stack" title="Permalink to this headline">¶</a></h2>
 <p>An alternative implementation of stacks uses an array of some size <code class="docutils literal notranslate"><span class="pre">n</span></code>, thus requiring constant-size memory. A natural shortcoming of such a solution is the fact that the stack can hold only up to <code class="docutils literal notranslate"><span class="pre">n</span></code> elements:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">ArrayBasedStack</span> <span class="o">:</span> <span class="nc">AbstractStack</span> <span class="o">=</span> <span class="k">struct</span>
     <span class="k">type</span> <span class="k">&#39;</span><span class="n">e</span> <span class="n">t</span> <span class="o">=</span> <span class="o">{</span>
@@ -300,6 +316,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-06_queues.html" class="btn btn-neutral float-right" title="6.3. Queues" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-06_abstract_data_types.html" class="btn btn-neutral" title="6.1. Abstract Data Types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="7. YSC2229: Midterm Project, Week 07" href="YSC2229-midterm-tasks.html" />
+    <link rel="next" title="6.1. Abstract Data Types" href="week-06_abstract_data_types.html" />
     <link rel="prev" title="5.6. Exercises" href="week-05_exercises.html" /> 
 
   
@@ -84,7 +84,12 @@
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">6. YSC2229 Lecture Notes, Week 06</a><ul class="simple">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">6. YSC2229 Lecture Notes, Week 06</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-06_abstract_data_types.html">6.1. Abstract Data Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_stacks.html">6.2. Stacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_queues.html">6.3. Queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_hash_tables.html">6.4. Hash-tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_exercises.html">6.5. Exercises</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
@@ -153,8 +158,41 @@
   <div class="section" id="ysc2229-lecture-notes-week-06">
 <h1>6. YSC2229 Lecture Notes, Week 06<a class="headerlink" href="#ysc2229-lecture-notes-week-06" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="week-06_abstract_data_types.html">6.1. Abstract Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-06_stacks.html">6.2. Stacks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-06_stacks.html#the-stack-interface">6.2.1. The Stack interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_stacks.html#an-list-based-stack">6.2.2. An List-Based Stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_stacks.html#an-array-based-stack">6.2.3. An Array-Based Stack</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-06_queues.html">6.3. Queues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-06_queues.html#the-queue-interface">6.3.1. The Queue interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_queues.html#an-array-based-queue">6.3.2. An Array-Based Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_queues.html#debugging-queue-implementations">6.3.3. Debugging queue implementations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_queues.html#doubly-linked-lists">6.3.4. Doubly Linked Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_queues.html#a-queue-based-on-doubly-linked-lists">6.3.5. A queue based on doubly linked lists</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-06_hash_tables.html">6.4. Hash-tables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-06_hash_tables.html#allocation-by-hashing-keys">6.4.1. Allocation by hashing keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_hash_tables.html#operations-on-hash-tables">6.4.2. Operations on hash-tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_hash_tables.html#implementing-hash-tables">6.4.3. Implementing hash-tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_hash_tables.html#hash-tables-in-action">6.4.4. Hash-tables in action</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-06_exercises.html">6.5. Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-06_exercises.html#mandatory-exercises">6.5.1. Mandatory exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_exercises.html#recommended-exercises">6.5.2. Recommended exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_exercises.html#exercise-1">6.5.3. Exercise 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_exercises.html#exercise-2">6.5.4. Exercise 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_exercises.html#exercise-3">6.5.5. Exercise 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_exercises.html#exercise-4">6.5.6. Exercise 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_exercises.html#exercise-5">6.5.7. Exercise 5</a></li>
+</ul>
+</li>
+</ul>
 </div>
-<p>Coming soon!</p>
 <p><strong>Supplementary materials</strong></p>
 <ul class="simple">
 <li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-one/blob/master/lib/week_06.ml">Code from Week 6</a>: linked data structures: stacks, queues, hash tables.</li>
@@ -169,7 +207,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="YSC2229-midterm-tasks.html" class="btn btn-neutral float-right" title="7. YSC2229: Midterm Project, Week 07" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="week-06_abstract_data_types.html" class="btn btn-neutral float-right" title="6.1. Abstract Data Types" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="week-05_exercises.html" class="btn btn-neutral" title="5.6. Exercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

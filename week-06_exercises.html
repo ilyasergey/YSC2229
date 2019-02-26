@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Exercises &mdash; YSC2229 2019</title>
+  <title>6.5. Exercises &mdash; YSC2229 2019</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="7. YSC2229: Midterm Project, Week 07" href="YSC2229-midterm-tasks.html" />
+    <link rel="prev" title="6.4. Hash-tables" href="week-06_hash_tables.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,13 +78,29 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
-<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-06_abstract_data_types.html">6.1. Abstract Data Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_stacks.html">6.2. Stacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_queues.html">6.3. Queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06_hash_tables.html">6.4. Hash-tables</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6.5. Exercises</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mandatory-exercises">6.5.1. Mandatory exercises</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#recommended-exercises">6.5.2. Recommended exercises</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-1">6.5.3. Exercise 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-2">6.5.4. Exercise 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-3">6.5.5. Exercise 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-4">6.5.6. Exercise 4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-5">6.5.7. Exercise 5</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
 </ul>
 
@@ -129,7 +147,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Exercises</li>
+          <li><a href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a> &raquo;</li>
+        
+      <li>6.5. Exercises</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -147,13 +167,13 @@
            <div itemprop="articleBody">
             
   <div class="section" id="exercises">
-<h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
+<h1>6.5. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mandatory-exercises">
-<h2>Mandatory exercises<a class="headerlink" href="#mandatory-exercises" title="Permalink to this headline">¶</a></h2>
+<h2>6.5.1. Mandatory exercises<a class="headerlink" href="#mandatory-exercises" title="Permalink to this headline">¶</a></h2>
 <p>None</p>
 </div>
 <div class="section" id="recommended-exercises">
-<h2>Recommended exercises<a class="headerlink" href="#recommended-exercises" title="Permalink to this headline">¶</a></h2>
+<h2>6.5.2. Recommended exercises<a class="headerlink" href="#recommended-exercises" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference internal" href="#exercise-stack-test"><span class="std std-ref">Exercise 1</span></a>
 Testing a stack.</li>
@@ -168,23 +188,23 @@ Resizable hash-map</li>
 </ul>
 </div>
 <div class="section" id="exercise-1">
-<span id="exercise-stack-test"></span><h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-stack-test"></span><h2>6.5.3. Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
 <p>Design and implement a randomised testing procedure for stacks, which would insert an arbitrary sequence of elements via <code class="docutils literal notranslate"><span class="pre">push</span></code>, extract them via <code class="docutils literal notranslate"><span class="pre">pop</span></code> and ensured that LIFO property holds.</p>
 </div>
 <div class="section" id="exercise-2">
-<span id="exercise-queue-test"></span><h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-queue-test"></span><h2>6.5.4. Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
 <p>Design and implement a randomised testing procedure for queues, which would insert an arbitrary sequence of elements via <code class="docutils literal notranslate"><span class="pre">enqueue</span></code>, extract them via <code class="docutils literal notranslate"><span class="pre">dequeue</span></code> and ensured that FIFO property holds.</p>
 </div>
 <div class="section" id="exercise-3">
-<span id="exercise-queue"></span><h2>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-queue"></span><h2>6.5.5. Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
 <p>Implement a queue data structure, which does not use OCaml arrays or double-linked lists, and at most two values of type <code class="docutils literal notranslate"><span class="pre">ref</span></code>. Make sure it satisfies the <code class="docutils literal notranslate"><span class="pre">Queue</span></code> interface. To do so, use two OCaml lists to represent the part for “enqueueing” and “dequeueing”. What happens if one of them gets empty? Argue that the average-case complexity for enqueue and dequeue operations of your implementation is linear.</p>
 </div>
 <div class="section" id="exercise-4">
-<span id="exercise-rev-dll"></span><h2>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-rev-dll"></span><h2>6.5.6. Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
 <p>Implement a procedure for “reversing” a doubly-linked list, starting from its arbitrary node (which might be at its beginning, end, or in the middle). Make sure that your procedure works in linear time.</p>
 </div>
 <div class="section" id="exercise-5">
-<span id="exercise-hash-map-resize"></span><h2>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-hash-map-resize"></span><h2>6.5.7. Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
 <p>Implement a hash map that automatically grows if a number of stored elements in buckets become too large. Explain your design choices and the average-case complexity of your implementation.</p>
 </div>
 </div>
@@ -194,6 +214,15 @@ Resizable hash-map</li>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="YSC2229-midterm-tasks.html" class="btn btn-neutral float-right" title="7. YSC2229: Midterm Project, Week 07" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-06_hash_tables.html" class="btn btn-neutral" title="6.4. Hash-tables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
