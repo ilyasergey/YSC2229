@@ -54,11 +54,11 @@ module type Allocator = sig
   (* Dereferencing a pointer with an offset [0 .. n] obtainin a value it points to *)
 
   (* Dereference as an pointer, throw an exception if the target is not an pointer *)  
-  val deref_as_ptr : heap -> ptr -> ptr
+  val deref_as_ptr : heap -> ptr -> int -> ptr
   (* Dereference as an integer, throw an exception if the target is not an integer *)  
-  val deref_as_int : heap -> ptr -> int
+  val deref_as_int : heap -> ptr -> int -> int
   (* Dereference as an integer, throw an exception if the target is not an string  *)  
-  val deref_as_string : heap -> ptr -> string
+  val deref_as_string : heap -> ptr -> int -> string
 
   (* Assigning values to a pointer with an offset.                                 *)
   (* Should throw an "Out-Of-Memory" error if not possible to create a new value   *)
