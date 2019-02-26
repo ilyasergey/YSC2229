@@ -148,22 +148,44 @@
             
   <div class="section" id="exercises">
 <h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
-</div>
-<div class="section" id="id1">
-<h1>Exercises<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mandatory-exercises">
 <h2>Mandatory exercises<a class="headerlink" href="#mandatory-exercises" title="Permalink to this headline">¶</a></h2>
+<p>None</p>
 </div>
 <div class="section" id="recommended-exercises">
 <h2>Recommended exercises<a class="headerlink" href="#recommended-exercises" title="Permalink to this headline">¶</a></h2>
-<p>None</p>
-<p>TODO:</p>
 <ul class="simple">
-<li>A purley functional queue</li>
-<li>Reverting a double-linked list</li>
-<li>Resizeable hash-map</li>
-<li>An n-leaf tree</li>
+<li><a class="reference internal" href="#exercise-stack-test"><span class="std std-ref">Exercise 1</span></a>
+Testing a stack.</li>
+<li><a class="reference internal" href="#exercise-stack-test"><span class="std std-ref">Exercise 1</span></a>
+Testing a queue.</li>
+<li><a class="reference internal" href="#exercise-queue"><span class="std std-ref">Exercise 3</span></a>
+A purely functional queue.</li>
+<li><a class="reference internal" href="#exercise-rev-dll"><span class="std std-ref">Exercise 4</span></a>
+Reversing a doubly-linked list.</li>
+<li><a class="reference internal" href="#exercise-hash-map-resize"><span class="std std-ref">Exercise 5</span></a>
+Resizable hash-map</li>
 </ul>
+</div>
+<div class="section" id="exercise-1">
+<span id="exercise-stack-test"></span><h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<p>Design and implement a randomised testing procedure for stacks, which would insert an arbitrary sequence of elements via <code class="docutils literal notranslate"><span class="pre">push</span></code>, extract them via <code class="docutils literal notranslate"><span class="pre">pop</span></code> and ensured that LIFO property holds.</p>
+</div>
+<div class="section" id="exercise-2">
+<span id="exercise-queue-test"></span><h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<p>Design and implement a randomised testing procedure for queues, which would insert an arbitrary sequence of elements via <code class="docutils literal notranslate"><span class="pre">enqueue</span></code>, extract them via <code class="docutils literal notranslate"><span class="pre">dequeue</span></code> and ensured that FIFO property holds.</p>
+</div>
+<div class="section" id="exercise-3">
+<span id="exercise-queue"></span><h2>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<p>Implement a queue data structure, which does not use OCaml arrays or double-linked lists, and at most two values of type <code class="docutils literal notranslate"><span class="pre">ref</span></code>. Make sure it satisfies the <code class="docutils literal notranslate"><span class="pre">Queue</span></code> interface. To do so, use two OCaml lists to represent the part for “enqueueing” and “dequeueing”. What happens if one of them gets empty? Argue that the average-case complexity for enqueue and dequeue operations of your implementation is linear.</p>
+</div>
+<div class="section" id="exercise-4">
+<span id="exercise-rev-dll"></span><h2>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
+<p>Implement a procedure for “reversing” a doubly-linked list, starting from its arbitrary node (which might be at its beginning, end, or in the middle). Make sure that your procedure works in linear time.</p>
+</div>
+<div class="section" id="exercise-5">
+<span id="exercise-hash-map-resize"></span><h2>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
+<p>Implement a hash map that automatically grows if a number of stored elements in buckets become too large. Explain your design choices and the average-case complexity of your implementation.</p>
 </div>
 </div>
 

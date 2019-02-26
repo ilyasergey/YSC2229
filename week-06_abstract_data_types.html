@@ -148,13 +148,10 @@
             
   <div class="section" id="abstract-data-types">
 <h1>Abstract Data Types<a class="headerlink" href="#abstract-data-types" title="Permalink to this headline">¶</a></h1>
-<p>TODO: tell that most of the tasks are about representing sets</p>
-<p>TODO: Why do we need them</p>
-<p>TODO</p>
-<div class="section" id="the-queue-interface">
-<h2>The Queue interface<a class="headerlink" href="#the-queue-interface" title="Permalink to this headline">¶</a></h2>
-<p>TODO</p>
-</div>
+<p><em>Data structures</em> provide an efficient way to represent information, facilitating access to it and its manipulation. However, it is not always desirable to let the client of a data structure know <em>how exactly</em> it is implemented. The mechanism for hiding the implementation details (or, alternatively <em>information hiding</em>) is typically referred to as <em>abstraction</em>, and different programming languages provide various mechanisms to define abstractions.</p>
+<p>A data structure, once it implementation details are hidden, becomes an <a class="reference external" href="https://en.wikipedia.org/wiki/Abstract_data_type">Abstract Data Type</a> (ADT) — a representation of information, which only allows to manipulate with it by means of a well-defined interface, without exposing the details of how the information is structured.</p>
+<p>Most of abstract data types in computer science are targeted to represent, in a certain way, a set of elements, providing different interfaces (i.e., sets of functions/methods) to access elements of a set, add and remove them. A choice of a particular ADT is usually dictated by the needs of a client program and the semantics of the ADT. For instance, some ADTs are designed to facilitate search of a particular element in a set (e.g., search trees), while the others provide a more efficient way to retrieve and element added most recently (e.g., stacks), and different applications might rely on either of those characteristic properties.</p>
+<p>In this chapter, we will study several basic abstract data types, learn their properties and applications and see how they can be implemented differently by means of data structures at hand.</p>
 </div>
 
 

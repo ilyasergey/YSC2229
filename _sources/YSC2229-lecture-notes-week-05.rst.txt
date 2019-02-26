@@ -14,4 +14,4 @@ YSC2229 Lecture Notes, Week 05
 
 **Supplementary materials**
 
-* `Code from Week 5 <./resources/2019/week_05.ml>`_: binary heaps and priority queues.
+* `Code from Week 5 <https://github.com/ilyasergey/ysc2229-part-one/blob/master/lib/week_05.ml>`_: binary heaps and priority queues.
