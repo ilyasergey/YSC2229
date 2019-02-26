@@ -3,11 +3,10 @@
 Queues
 ======
 
-
-The Queue pragmatics
---------------------
-
 Unlike stacks, in which the elements added the last, come out first (last-in-first-out, LIFO), *queues* implement a complementary adding/removal strategy, known as *first-in-first-out* (FIFO), allowing to process their elements in the order they come.
+
+The Queue interface
+-------------------
 
 We can define an abstract data type for queues by means the following OCaml module signature::
 
@@ -272,12 +271,11 @@ Defining a queue::
       tail : 'e dll_node option ref;
     }
 
-  (* More functions coming here *)
-
     let mk_queue _sz = 
       {head = ref None; 
        tail = ref None}
 
+    (* More functions coming here *)
 
  end
 
