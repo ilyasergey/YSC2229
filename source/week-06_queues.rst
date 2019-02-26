@@ -268,11 +268,7 @@ We can use a similar walking logic to conver the "tail" of a double linked list 
 A queue based on doubly linked lists
 ------------------------------------
 
-Let us now put doubly-linked lists to a good use and implement a queue that can grow arbitrarily large (or, at least, as large as one's computer memory permits).
-
-[TODO] Stopped here.
-
-Defining a queue::
+Let us now put doubly-linked lists to a good use and implement a queue that can grow arbitrarily large (or, at least, as large as one's computer memory permits)::
 
  module DLLBasedQueue : Queue = struct
   open DoublyLinkedList
@@ -286,18 +282,20 @@ Defining a queue::
       {head = ref None; 
        tail = ref None}
 
-    (* More functions coming here *)
+    (*  More functions coming here *)
 
  end
 
-Checking if empty of full::
+The queue is defined by means of holding two mutable references to (optional) nodes of a doubly-linked list, representing the head and the tail of the queue. The ``option`` accounts for the fact that the queue might be empty, which is the case for a freshly created instance (vai ``mk_queue _``).
+
+The emptyness of the queue can be checked by examining its head, and the ``is_full`` check now always returns ``false``, as the queue may grow infinitely::
 
     let is_empty q = 
       !(q.head) = None
       
     let is_full _q = false
 
-Enqueueing an element::
+Enqueueing an element is implemented by means of creating a new node and inserting it behind the tail (if it exists). Since ``mk_node`` always returns a new node, there is no risc of creating a circular DLL::
 
     let enqueue q e = 
       let n = mk_node e in
@@ -310,7 +308,7 @@ Enqueueing an element::
        | None -> ());
       q.tail := Some n 
 
-Dequeueing an element::
+Dequeueing an element simply returns the payload of the node pointed to by ``head`` and moves the references to its successor::
 
     let dequeue q =
       match !(q.head) with
@@ -318,18 +316,19 @@ Dequeueing an element::
       | Some n -> 
         let nxt = next n in
         q.head := nxt;
-        remove n; (* This is not necessary *)
+        remove n; (* This is not necessary, but helps GC *)
         Some (value n)
 
-Convering to list::
+The removal of an node ``n`` on the penultimate line of ``dequque`` is not necessary for the correctness of the data structure, but it helps to save the memory. To understand why it is essential, we need to know a bit about how *Tracing* `Garbage Collector <https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)>`_ works in OCaml. While the garbage collection and automated memory management are outside of the scope of this course, let us just notice that not removing the node will make OCaml runtime treat it as being in use (as it is *reachable* from its successor), and hence keep it in memory, which could be otherwise used for something else.
+
+A conversion to list is almost trivial, given the functionality of a doubly-linked list::
 
     let queue_to_list q = match !(q.head) with
       | None -> []
       | Some n -> to_list_from n
 
 
-Now, with this definition complete, we can do some experiments. First,
-as before, let us define a printer for the contents of the queue::
+Now, with this definition complete, we can do some experiments. First, as before, let us define a printer for the contents of the queue::
 
  module DLQPrinter = QueuePrinter(DLLBasedQueue)
 
@@ -345,11 +344,17 @@ Finally, let us put and remove some elements from the queue::
  - : (int * string) array =
  [|(7, "sapwd"); (3, "bsxoq"); (0, "lfckx"); (7, "nwztj"); (5, "voeed");
    (9, "jtwrn"); (8, "zovuq"); (4, "hgiki"); (8, "yqnvq"); (3, "gjmfh")|]
+
+Similarly to previous examples, we will up the queue from a randomly generated array::
+
  # for i = 0 to 9 do enqueue dq a.(i) done;;
  - : unit = ()
  # print_queue dq;;
  [(7, sapwd); (3, bsxoq); (0, lfckx); (7, nwztj); (5, voeed); (9, jtwrn); (8, zovuq); (4, hgiki); (8, yqnvq); (3, gjmfh); ]
  - : unit = ()
+
+We can then ensure that the elements come out in the order they were added::
+
  # is_empty dq;;
  - : bool = false
  # dequeue dq;;
