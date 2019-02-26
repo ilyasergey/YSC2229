@@ -15,4 +15,4 @@ YSC2229 Lecture Notes, Week 03
 
 **Supplementary materials**
 
-* `Code from Week 3 <./resources/2019/week_03.ml>`_: binary search and merge sort.
+* `Code from Week 3 <https://github.com/ilyasergey/ysc2229-part-one/blob/master/lib/week_03.ml>`_: binary search and merge sort.

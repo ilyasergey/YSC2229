@@ -17,4 +17,4 @@ YSC2229 Lecture Notes, Week 04
 
 **Supplementary materials**
 
-* `Code from Week 4 <./resources/2019/week_04.ml>`_: quick sort, comparison-based sorrting and linear-time sorting.
+* `Code from Week 4 <https://github.com/ilyasergey/ysc2229-part-one/blob/master/lib/week_04.ml>`_: quick sort, comparison-based sorrting and linear-time sorting.

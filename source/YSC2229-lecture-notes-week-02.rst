@@ -17,4 +17,4 @@ YSC2229 Lecture Notes, Week 02
 
 **Supplementary materials**
 
-* `Code from Week 2 <./resources/2019/week_02.ml>`_: basic array sorting.
+* `Code from Week 2 <https://github.com/ilyasergey/ysc2229-part-one/blob/master/lib/week_02.ml>`_: basic array sorting.
