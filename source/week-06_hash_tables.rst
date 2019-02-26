@@ -3,23 +3,50 @@
 Hash-tables
 ===========
 
+Hash-tables generalise the ideas of ordinary arrays and also (somewhat
+surprisingly) bucket-sort, providing an efficient way to store
+elements in a collection, addressed by their keys, with average
+:math:`O(1)` complexity for inserting, finding and removing elements
+from the collection.
+
 Allocation by hashing keys
 --------------------------
 
-TODO
-
-The crux of hash-tables is the following interface for hashing::
+At heart of hash-tables is the idea of a *hash-function* --- a mapping
+from elements of a certain type to randomly distributed integers. This
+functionality can be described by means of the following OCaml
+signature::
 
  module type Hashable = sig
    type t
    val hash : t -> int
  end
 
+Designing a good hash-function for an arbitrary data type (e.g., a
+string) is highly non-trivial and is outside of the scope of this
+course. The main complexity is to make it such that "similar" values
+(e.g., ``s1 = "aaa"`` and ``s2 = "aab"``) would have very different
+hashes (e.g., ``hash s1 = 12423512`` and ``s2 = 99887978``), thus
+providing a uniform distribution. It is not required for a
+hash-function to be injective (i.e., it *may* map different elements
+to the same integer value --- phenomenon known as *hash collision*).
+However, for most of the purposes of hash-functions, it is assumed
+that collisions are relatively rare.
 
 Operations on hash-tables
 -------------------------
 
-The following interface describes the types and operations over a hash table::
+As we remember, in arrays, elements are indexed by integers ranging
+form 0 to the size of the array minus one. Hash-tables provide an
+interface similar to arrays, with the only difference that *any* type
+``t`` can be used as keys for indexing elements (similarly to integers
+in an array), as long as there is an implementation of ``hash``
+available for it.
+
+An interface of a hash-table is thus parameterised by the hashing
+strategy, used for its implementation for a specific type of *keys*.
+The following module signature the types and operations over a hash
+table::
 
  module type HashTable = functor 
    (H : Hashable) -> sig
@@ -31,11 +58,51 @@ The following interface describes the types and operations over a hash table::
    val remove : (key * 'v) hash_table -> key -> unit
  end
 
+As announced ``key`` specifies the type of keys, used to refer to
+elements stored in a hash table. One can create a new hash-table of a
+predefined *size* (of type ``int``) via ``mk_new_table``. The next
+three functions provide the main interface for hash-table, allowing to
+insert and retrieve elements for a given key, as well as remove
+elements by key, thus, changing the state of the hash table (hence the
+return type of ``remove`` is ``unit``).
+
 
 Implementing hash-tables
 ------------------------
 
-Let us start by definind, as the following functor, a simple hash-table that uses lists to represent buckets::
+Implementations of hash-table build on a simple idea. In order to fit
+an arbitrary number of elements with different keys into a
+limited-size array, one can use a trick similar to bucket sort,
+enabled by the hashing function:
+
+* Compute ``(hash k) mod n`` to compute the slot (aka *bucket*) in an
+  array of size ``n`` for inserting an element with a key ``k``;
+* if there are already elements in this bucket, add the new one,
+  together with the old ones, storing them in a list.
+
+Then, when trying to retrieve an element with a key ``k``, one has to
+
+* Compute ``(hash k) mod n`` to compute the bucket where the element
+  is located;
+* Go through the bucket with a linear search, finding the element
+  whose key is precisely ``k``.
+
+That is, it is okay for elements with different keys to collude on the
+same bucket, as more elaborated search will be performed in each
+bucket.
+
+Why hash-tables are so efficient? As long as the size of the carrier
+array is greater or roughly the same as the number of inserted
+elements so far, and there were not many collusions, we can assume
+that each bucket has a very small number of elements (for which the
+collusions have happened while determining their bucket). Therefore,
+as long as the size of a bucket is limited by a certain constant, the
+search will boil down to (a) computing a bucket for a key in a
+constant time and (b) scanning the bucket for the right element, both
+operations yielding :math:`O(1)` complexity.
+
+Let us start by defining a simple hash-table that uses lists to
+represent buckets::
 
  module ListBasedHashTable 
    : HashTable = functor 
@@ -51,14 +118,16 @@ Let us start by definind, as the following functor, a simple hash-table that use
  
    end
 
-Making a new hash table::
+Making a new hash table can be done by simply allocating a new array::
 
   let mk_new_table size = 
     let buckets = Array.make size [] in
     {buckets = buckets;
      size = size}
 
-Inserting an element::
+Inserting an element follows the scenario described above.
+``List.filter`` is used to make sure that no elements with the same
+key are lingering in the same bucket::
 
   let insert ht k v = 
     let hs = H.hash k in
@@ -68,7 +137,10 @@ Inserting an element::
       List.filter (fun (k', _) -> k' <> k) bucket in
     ht.buckets.(bnum) <- (k, v) :: clean_bucket
 
-Retrieving an element by its key::
+Retrieving an element by its key is done by using ``List.filter_opt``
+for retrieving the desired element from the bucket. Even though
+``List.filter_opt`` has linear complexity, it will not hurt
+performance for small buckets::
 
   let get ht k = 
     let hs = H.hash k in
@@ -79,7 +151,7 @@ Retrieving an element by its key::
     | Some (_, v) -> Some v
     | _ -> None
 
-Finally, removing an element::
+Finally, removing an element is similar to inserting a new one::
 
   let remove ht k = 
     let hs = H.hash k in
@@ -93,7 +165,8 @@ Finally, removing an element::
 Hash-tables in action
 ---------------------
 
-Let us adopt the simplest possible strategy for hashing the integer keys::
+Let us adopt the simplest possible strategy for hashing the integer
+keys::
 
  module HashTableIntKey = ListBasedHashTable 
      (struct type t = int let hash i = i end)
@@ -119,5 +192,7 @@ We can now retrieve the values::
  # HashTableIntKey.get hs 10;;
  - : (int * string) option = None
 
-Notice that the latest occurrence of an element with the key ``8`` (i.e., ``(8, "yqnvq")``) has overriden an earlier element ``(8, "zovuq")`` in the hash-table.
+Notice that the latest occurrence of an element with the key ``8``
+(i.e., ``(8, "yqnvq")``) has overriden an earlier element ``(8,
+"zovuq")`` in the hash-table.
 
