@@ -173,17 +173,16 @@ We can then start removing elements from the queue, checking that they come out 
  # dequeue q;;
  - : (int * string) option = Some (7, "nwztj")
 
-Double Linked Lists
+Doubly Linked Lists
 -------------------
 
-[TODO] Stopped here
+The obvious limitation of an array-based queue is its limited capacity, bounded by the size of the carrier array. To allow for the queue of an arbitrary size, we will need an auxiliary data structure, known as *doubly-linked list*. 
 
-To allow for the queue of an arbitrary size, we will need an auxiliary data structure, known as double-linked list.
+A doubly-linked list is one of the most characteristic linked data structures, which aggressively employs OCaml's references as its main building component, and can be efficiently implemented in other imperative programming languages, such as C and Java. As they embrace mutability, the provide a variety of ways to modify their contents, as well as structure by simply manipulating with the references and exploiting the indirection, afforded by them.
 
-Let us start the definition of a doubly-linked list by defining its
-signature::
+Let us start the definition of a concrete module implementing the doubly-linked list data structure by defining its key components::
 
- module DoubleLinkedList = 
+ module DoublyLinkedList = 
    struct
      type 'e dll_node = {
        value : 'e ref;
@@ -201,15 +200,16 @@ signature::
      (* More of implementation comes here *)
    end 
 
+The "elements" of doubly linked list (DLL) are represented by the ``'e dll_node`` record type, which accounts for the possibility of them storing arbitrary data of type ``'e`` as "payload". In addition to payload, each node has references to other nodes, namely the "previous" and the "next" one in the list. As a node might not have a previous or a next one, and the predecessor/successor might change over time, the type of those fields is ``'e dll_node option ref`` (a reference to an option containing a node of element of type ``'e``).
 
-Some utility functions::
+The function ``mk_node e`` creates a new "detached" node that contains an payload ``e``, and has no designated predecessor/successor.  Some other utility functions, allowing to refer to elements of a node, as well as to change a node's payload, are as follows::
 
   let prev n =  !(n.prev)
   let next n =  !(n.next)
   let value n = !(n.value)
   let set_value n v = n.value := v
 
-Inserting new nodes::
+How do we construct a list our of disparate nodes? The following two functions allow to *insert* new nodes before and after some other existing nodes, thus, updating the linked structure::
   
      let insert_after n1 n2 = 
        let n3 = next n1 in
@@ -229,12 +229,31 @@ Inserting new nodes::
        n1.next := Some n2;
        n2.prev := Some n1
 
-Converting to an OCaml list:: 
+Specifically the function ``insert_after n1 n2`` inserts a node ``n2`` after a node ``n1``, "re-wiring" their both's references to a predecessor/successor. Similarly, ``insert_before n1 n2`` inserts ``n1`` before ``n2``. Using these two functions, one can update the structure of the list by inserting nodes in the middle of it (in contrast OCaml's immutable lists only allow to insert/remove nodes at the head).
+
+.. admonition:: Warning
+
+  Both functions ``insert_after`` and ``insert_before`` make some implicit assumptions about the topology of the nodes, i.e., the set-up of the links. Specifically, when using ``insert_before n1 n2``, one is assumed to be sure that ``n2`` is not yet transitively reachable from ``n1``, otherwise the resulting list might become circular. The same applies to ``insert_before n1 n2``.
+
+In a similar spirit, we can removing an arbitrary node from a DLL in :math:`O(1)` time --- something that would be impossible in an OCaml list (as it would require its traversal)::
+
+     let remove n = 
+       (match prev n with
+       | None -> ()
+       | Some p -> p.next := next n);
+       (match next n with
+       | None -> ()
+       | Some nxt -> nxt.prev := prev n);
+
+
+Given an arbitrary node of a DLL, we can now "walk" forward/backwards by its predecessors/successors, in order to reach both ends of the list::
 
     let rec move_to_head n = 
        match prev n with
        | None -> None
        | Some m -> move_to_head m
+
+We can use a similar walking logic to conver the "tail" of a double linked list to an ordinary OCaml list by walking by the successors::
 
      let to_list_from n = 
        let res = ref [] in
@@ -246,25 +265,17 @@ Converting to an OCaml list::
        done;
        List.rev !res
 
-Removing an element::
-
-     let remove n = 
-       (match prev n with
-       | None -> ()
-       | Some p -> p.next := next n);
-       (match next n with
-       | None -> ()
-       | Some nxt -> nxt.prev := prev n);
-
-
-
-A queue based on double linked lists
+A queue based on doubly linked lists
 ------------------------------------
+
+Let us now put doubly-linked lists to a good use and implement a queue that can grow arbitrarily large (or, at least, as large as one's computer memory permits).
+
+[TODO] Stopped here.
 
 Defining a queue::
 
  module DLLBasedQueue : Queue = struct
-  open DoubleLinkedList
+  open DoublyLinkedList
     
     type 'e t = {
       head : 'e dll_node option ref;
