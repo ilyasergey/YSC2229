@@ -99,15 +99,18 @@ An alternative implementation of stacks uses an array of some size ``n``, thus r
 
 The abstract type ``'e t`` is now defined quite differently --- it is a record that stores two fields. The first one is an array of options of elements of type ``'e`` (representing the elements of the stack in a desired order), while the second one is a pointer to the position ``cur_pos`` at which the next element of the stack must be added. Defining the stack this way, we agree on the following invariant: the "empty" elements in a stack are represented by ``None``, which the array, serving as a "carrier" for the stack will be filled with elements from its beginning, with ``cur_pos`` pointing to the next empty position to fill. For instance, a stack with the maximal capacity of 3 elements, with the elements ``"a"`` and ``"b"`` will be represented by the array ``[|Some "b"; Some "a"; None|]``, with ``cur_pos`` being ``2``, indicating the next slot to insert an element.
 
-[TODO: stopped here]
-
-Let us add the functions::
+In order to make a new stack, we create a fixed-length array, setting ``cur_ref`` to point to 0::
 
      let mk_stack _ = {
        elems = Array.make 10 None;
        cur_pos = ref 0
      }
+
+We can also use ``cur_pos`` to determine whether the stack is empty or not::
+
      let is_empty s = !(s.cur_pos) = 0
+
+Pushing a new element requires us to insert a new element into the next vacant position in the "carrier" array and then increment the current position. If the current position points outside of the scope of the array, it means that the stack is full and cannot accommodate more elements, so we just throw an exception::
 
      let push s e = 
        let pos = !(s.cur_pos) in 
@@ -115,6 +118,8 @@ Let us add the functions::
        then raise (Failure "Stack is full")
        else (s.elems.(pos) <- Some e;
              s.cur_pos := pos + 1)
+
+Similarly, ``pop`` returns an element (wrapped into ``Some``) right before ``cur_pos``, if ``cur_pos > 0``, or ``None`` otherwise::
 
      let pop s = 
        let pos = !(s.cur_pos) in
@@ -126,9 +131,7 @@ Let us add the functions::
          s.cur_pos := pos - 1;
          res)
 
-
-
-Let us test the implementation::
+Let us test the implementation to make sure that it indeed behaves as a stack::
 
  # open ArrayBasedStack;;
  # let s = mk_stack ();;
