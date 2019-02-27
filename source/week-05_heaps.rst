@@ -139,7 +139,7 @@ Next, we shall write a function that, taking an array, will determine whether it
       let r = right arr !i in 
       let is_left = l = None || 
                     comp this (snd (get_exn l)) >= 0 in
-      let is_right = l = None || 
+      let is_right = r = None || 
                      comp this (snd (get_exn r)) >= 0 in
       res := !res && is_left && is_right;
       i := !i + 1
@@ -179,7 +179,7 @@ To make the checking more informative, let us introduce another version of the h
       let r = right arr !i in 
       let is_left = l = None || 
                     comp this (snd (get_exn l)) >= 0 in
-      let is_right = l = None || 
+      let is_right = r = None || 
                      comp this (snd (get_exn r)) >= 0 in
       res := !res && is_left && is_right;
       (if (not !res && print) then (
