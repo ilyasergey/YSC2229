@@ -99,15 +99,19 @@ We can now use ``max_heapify`` iteratively to turn an arbitrary array into a max
 
 **Question:** Why does the ``for``-loop start only from ``i = (len - 1) / 2``, not from ``len - 1``?
 
-The complexity of ``build_max_heap`` can be obtained by analysing the complexity of each iteration of the ``while``-loop, and the number of the iteration it makes.
+The complexity of ``build_max_heap`` can be *over-approximated* by analysing the complexity of each iteration of the ``while``-loop, and the number of the iteration it makes. 
 
-Why does this procedure deliver a heap? This can be established by the following invariant, which we state in plain English (implementing it is a home exercise)::
+.. In fact, this can be done linearly.
+
+Why does this procedure deliver a heap? This can be established by the following invariant, which we state in plain English (implementing it is a home exercise):
 
 .. admonition:: Invariant
 
   At the start of each iteration of the ``for``-loop in ``build_max_heap``, each node ``i + 1``, ``i + 2``, ``len - 1`` is a root of a max-heap.
 
-**Question:** Why does this invariant holds for the elements from the second hald of the array?
+**Question:** Why does this invariant holds for the elements from the second half of the array?
+
+**Question:** What happens if we start building the heap from the beginning of the array, moving right. How correctness and performance will be affected? Justify your answer by talking about loop invariants.
 
 We can test our procedure on some random_arrays::
 

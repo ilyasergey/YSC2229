@@ -250,14 +250,14 @@
 </pre></div>
 </div>
 <p><strong>Question:</strong> Why does the <code class="docutils literal notranslate"><span class="pre">for</span></code>-loop start only from <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">=</span> <span class="pre">(len</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">/</span> <span class="pre">2</span></code>, not from <code class="docutils literal notranslate"><span class="pre">len</span> <span class="pre">-</span> <span class="pre">1</span></code>?</p>
-<p>The complexity of <code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code> can be obtained by analysing the complexity of each iteration of the <code class="docutils literal notranslate"><span class="pre">while</span></code>-loop, and the number of the iteration it makes.</p>
+<p>The complexity of <code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code> can be <em>over-approximated</em> by analysing the complexity of each iteration of the <code class="docutils literal notranslate"><span class="pre">while</span></code>-loop, and the number of the iteration it makes.</p>
 <p>Why does this procedure deliver a heap? This can be established by the following invariant, which we state in plain English (implementing it is a home exercise):</p>
-<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">admonition</span><span class="o">::</span> <span class="nc">Invariant</span>
-</pre></div>
+<div class="admonition-invariant admonition">
+<p class="first admonition-title">Invariant</p>
+<p class="last">At the start of each iteration of the <code class="docutils literal notranslate"><span class="pre">for</span></code>-loop in <code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code>, each node <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">+</span> <span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">+</span> <span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">len</span> <span class="pre">-</span> <span class="pre">1</span></code> is a root of a max-heap.</p>
 </div>
-<blockquote>
-<div>At the start of each iteration of the <code class="docutils literal notranslate"><span class="pre">for</span></code>-loop in <code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code>, each node <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">+</span> <span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">+</span> <span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">len</span> <span class="pre">-</span> <span class="pre">1</span></code> is a root of a max-heap.</div></blockquote>
-<p><strong>Question:</strong> Why does this invariant holds for the elements from the second hald of the array?</p>
+<p><strong>Question:</strong> Why does this invariant holds for the elements from the second half of the array?</p>
+<p><strong>Question:</strong> What happens if we start building the heap from the beginning of the array, moving right. How correctness and performance will be affected? Justify your answer by talking about loop invariants.</p>
 <p>We can test our procedure on some random_arrays:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">generate_key_value_array</span> <span class="mi">10</span><span class="o">;;</span>
 <span class="k">val</span> <span class="n">a</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="kt">array</span> <span class="o">=</span>

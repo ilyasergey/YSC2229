@@ -205,7 +205,7 @@ As an example, radix sort is a linear-time sorting, building on the idea of buck
 
 It starts by determining the largest key ``max_key`` in the initial array. Next, it creates an array ``combined``, which pairs all elements in the original array with their keys. In the ``while`` loop, it sorts elements, using ``simple_bucket_sort``, based on their digit.  It starts from the lowest register, and then keeps dividing the key component of each element, "attached" for the sorting purposes, by 10, repeating the bucket sort, until it runs out of registers.
 
-How many iterations the ``while``-loop will make? Notice that each time it divides the key space by 10, so it will only run for :math:`\log_{10}( \mathtt{max\_key})` iterations. This determines the complexity of the radix sort, which is, therefore :math:`O(n \log(\mathtt{max\_key}))`, i.e., it is linear if ``max\_key`` is considered as a constant.
+How many iterations the ``while``-loop will make? Notice that each time it divides the key space by 10, so it will only run for :math:`\log_{10}( \mathtt{max\_key})` iterations. This determines the complexity of the radix sort, which is, therefore :math:`O(n \log(\mathtt{max\_key}))`, i.e., it is linear if ``max_key`` is considered as a constant.
 
 One can test the implementation of radix sort using the following function::
 
