@@ -12,7 +12,7 @@ A simple stack interface is described by the following OCaml module signature::
 
  module type AbstractStack = sig
      type 'e t
-     val mk_stack : unit -> 'e t
+     val mk_stack : int -> 'e t
      val is_empty : 'e t -> bool
      val push : 'e t -> 'e -> unit
      val pop : 'e t -> 'e option
@@ -20,7 +20,7 @@ A simple stack interface is described by the following OCaml module signature::
 
 Notice that the first type member (``type 'e t``) is what makes this data type abstract. The type declaration stands for and "abstract type ``t`` of the stack storing elements of type ``'e``. In reality, the stack, as a data structure, can be implemented in vavrious way, but this type definition does not reveal those details. Instead, it provides four functions to manipulate with stacks --- and this is the only vocabulary for doing so. Specifically:
 
-* ``mk_stack`` creates a new empty stack (hence the output result is ``'e t``).
+* ``mk_stack`` creates a new empty stack (hence the output result is ``'e t``) with a suggested size ``n``
 * ``is_empty`` checks is the stack is empty
 * ``push`` adds new element to the top of the stack
 * ``pop`` removes the latest added element ``e`` from the top of the stack and returns ``Some e``, if such element exists, or ``None`` if the stack is empty. The stack is then modified, so this element is removed.
@@ -101,10 +101,10 @@ An alternative implementation of stacks uses an array of some size ``n``, thus r
 
 The abstract type ``'e t`` is now defined quite differently --- it is a record that stores two fields. The first one is an array of options of elements of type ``'e`` (representing the elements of the stack in a desired order), while the second one is a pointer to the position ``cur_pos`` at which the next element of the stack must be added. Defining the stack this way, we agree on the following invariant: the "empty" elements in a stack are represented by ``None``, which the array, serving as a "carrier" for the stack will be filled with elements from its beginning, with ``cur_pos`` pointing to the next empty position to fill. For instance, a stack with the maximal capacity of 3 elements, with the elements ``"a"`` and ``"b"`` will be represented by the array ``[|Some "b"; Some "a"; None|]``, with ``cur_pos`` being ``2``, indicating the next slot to insert an element.
 
-In order to make a new stack, we create a fixed-length array, setting ``cur_ref`` to point to 0::
+In order to make a new stack, we create a fixed-length array for size ``n``, setting ``cur_ref`` to point to 0::
 
-     let mk_stack _ = {
-       elems = Array.make 10 None;
+     let mk_stack n = {
+       elems = Array.make n None;
        cur_pos = ref 0
      }
 
@@ -136,7 +136,7 @@ Similarly, ``pop`` returns an element (wrapped into ``Some``) right before ``cur
 Let us test the implementation to make sure that it indeed behaves as a stack::
 
  # open ArrayBasedStack;;
- # let s = mk_stack ();;
+ # let s = mk_stack 10;;
  val s : '_weak102 ArrayBasedStack.t = <abstr>
  # push s (3, "aaa");;
  - : unit = ()
