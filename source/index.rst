@@ -17,6 +17,7 @@ Introductory Data Structures and Algorithms (YSC2229)
    YSC2229-lecture-notes-week-05
    YSC2229-lecture-notes-week-06
    YSC2229-midterm-tasks
+   YSC2229-lecture-notes-week-08
 
 OCaml Code from the Lectures
 ============================
