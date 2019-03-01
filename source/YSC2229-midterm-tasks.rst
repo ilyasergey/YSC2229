@@ -69,7 +69,18 @@ In this project, you are expected to deliver the following artefacts:
 
 * An implementation of a double-linked list, built on top of the allocator interface via the abstract "heap" it provides and the operations for manipulating with the pointers. Feel free to extend the ``Allocator`` signature if you can think of more expressive operations with the heap.
 
-* An implementation of a queue data type, following the `Module Signature from Week 6 <https://github.com/ilyasergey/ysc2229-part-one/blob/master/lib/week_06.ml#L144>`_ and tests for checking that it indeed behaves like a queue.
+* An implementation of a queue data type (taking ``int * string`` pairs), following the `Module Signature from Week 6 <https://github.com/ilyasergey/ysc2229-part-one/blob/master/lib/week_06.ml#L144>`_ and tests for checking that it indeed behaves like a queue. As your queue will only be able to accept elements of a specific type, it needs to implement a specialised signature::
+
+   module type Queue = 
+   sig
+     type t
+     val mk_queue : int -> t
+     val is_empty : t -> bool
+     val is_full :  t -> bool
+     val enqueue :  t -> (int * string) -> unit
+     val dequeue :  t -> (int * string) option
+     val queue_to_list : t -> (int * string) list
+   end
 
 The nature of the task imposes some restrictions and hints some observations:
 
