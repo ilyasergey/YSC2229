@@ -73,7 +73,7 @@ Testing an Abstract Data Type
 
 When possible, the lecture notes will now feature links to GitHub, with the implementations, denoted as follows:
 
-[`Code <https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_ArrayQueue.ml>`_]
+https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_ArrayQueue.ml
 
 Recall how Section :ref:`sec_queues`, we have defined an abstract signature for the queues as follows::
 
