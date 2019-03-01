@@ -52,7 +52,7 @@ TODO: Complexity: :math:`O(n \times m)`.
 Testing naive search
 --------------------
 
-https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_StringSearch.ml
+https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_Tests.ml
 
 See the following definitions::
 
