@@ -27,6 +27,9 @@ OCaml Code from the Lectures
   comilation and installation:
   https://github.com/ilyasergey/ysc2229-part-one
 
+* Code for Weeks 8-14:
+  https://github.com/ilyasergey/ysc2229-part-two
+
 * Examples on using the libraries from the lectures are avialble from
   the following repository:
   https://github.com/ilyasergey/ysc2229-examples
