@@ -2,31 +2,65 @@
 
 .. _sec_bloom:
 
+
 Bloom Filters and Their Applications
 ====================================
 
-TODO: Motivation and examples
+Hashing can be useful not just to distribute elements in an array for the sake of implementing hash-table. we can also employ it for compactly representing the in
 
-* Google Chrome web browser used to use a Bloom filter to identify
-  malicious URLs.
+formation of whether a certain element is or is not in a given set.
 
-* Bitcoin uses Bloom filters to speed up wallet synchronization.
+.. admonition:: True Negatives and False Positives
 
-* Medium uses Bloom filters to avoid recommending articles a user has
-  previously read.
+  Let us notice that some applications *do not* require to always have the correct answer to the question 
+
+  "Whether the element ``e`` is in the set ``s``"?  
+
+  Imagine that we have a data structure, such that 
+
+  * when the data structure answers "no" to the above question, it means "the element ``e`` is certainly not in the set ``s``", but
+
+  * when it answers "yes" the above question, it means that "the element ``e`` might or might not be in set ``s``".
+
+  This behaviour of the data structure is typicall called as "sound-but-incomplete". The first scenario (precise no-answer) is called "true negatives", while the case of the second scenario, in which the answer "yes" is given for a certain element *not* in the set is called "false positive" (if the element is in the set, it would be "true positive").
+
+Data structure that give false positives, but no false negatives (answer "no" is precise), while providing a compact representation, are very useful and are employed in applications, that might tolerate imprecise "yes"-answers, given conservatively.
+
+In this section, we will study one of such data structures called Bloom filter --- a compact representation of a "lossy" set that provides precisely this functionality. Bloom filters are widely used in practice:
+
+* `Google Chrome <https://www.google.com/chrome/>`_ web browser used to use a Bloom filter to identify malicious URLs.
+
+* `Medium <https://medium.com/>`_ uses Bloom filters to avoid recommending articles a user has previously read.
+
+* `Bitcoin <https://en.wikipedia.org/wiki/Bitcoin>`_ uses Bloom filters to speed up wallet synchronisation.
+
+High-level intuition
+--------------------
+
+Blom filter is a very simple data structure, which uses hashing. It is represented by a large boolean/bit array (you can think of it of an array of 0s and 1s) of size ``m``, and a finite number ``k`` of different hash functions, which map elements to be added to a set of interest to ``int`` (as usual). 
+
+For each new element to be added to the set, all ``k`` hash functions are used to determine specific bits, corresponding to this element in the array. The combination of those positions is the element's "image". For instance, the following image shows a Bloom filter with ``m = 15`` and ``k = 3``, with an example of three elements, X, Y, and Z, added to it.
+
+.. image:: ../resources/bloom.png
+   :width: 800px
+   :align: center
+
+To determine whether an element is in the set, one needs to compute its ``k`` hashes, and check the bits in the corresponding array in a constant time (:math:`O(k)`). Having more than 1 hash function reduces the risk of collision if the number of elements is smaller than the size of the filter, however, two or more different elements can indeed had all similar ``k`` hashes.
+
+Elements are never removed from a Bloom filter.
 
 
 Bloom filter signature
 ----------------------
 
-TODO::
+Let us first define the Bloom filter signature. It starts from the module describing the type of its elements and the list of hash functions::
 
  module type BloomHashing = sig
    type t
    val hash_functions : (t -> int) list  
  end
 
-TODO:: 
+The Bloom filter itself is a functor, parameterised by ``BloomHashing``::
 
  module type BloomFilter = functor
    (H: BloomHashing) -> sig
@@ -41,7 +75,7 @@ TODO::
 Implementing a Bloom filter
 ---------------------------
 
-TODO::
+The implementation of Bloom filter is simply an array of booleans (which we use to represent 0/1-bits) of a fixed size::
 
  module BloomFilterImpl : BloomFilter = functor
    (H: BloomHashing) -> struct
@@ -55,17 +89,21 @@ TODO::
    (* Functions come here *)    
  end
 
-Main functions::
+Creation of a Bloom filter is trivial::
 
   let mk_bloom_filter n = 
     let a = Array.make n false in
     {slots = a; size = n}
+
+Insertion amounts to computing all hashes for the element and setting the corresponding array bits to ``true``::
 
   let insert f e = 
     let n = f.size in
     List.iter (fun hash ->
         let h = (hash e) mod n in
         f.slots.(h) <- true) H.hash_functions
+
+and to check if an element is in the filter, we need to compute all its hashes and check the corresponding bits::
 
   let contains f e = 
     if H.hash_functions = [] then false
@@ -76,6 +114,8 @@ Main functions::
           let h = (hash e) mod n in
           res := !res && f.slots.(h)) H.hash_functions;
       !res
+
+We can implement a printer for the Bloom filter by means of one of the previous modules::
         
   module BP = Week_05.ArrayPrinter(struct
       type t = bool
@@ -89,7 +129,7 @@ Main functions::
 Experimenting with Bloom filters
 --------------------------------
 
-Specific hashing strategy::
+Let us fix a hashing strategy for our favourite data type ``int * string``::
 
  module IntStringHashing = struct
    type t = int * string
@@ -166,16 +206,19 @@ Testing for true negatives::
    done;
    true
 
-However, there can be also *false positives*.
+However, there can be also *false positives*, although we don't check for them.
 
 Improving Simple Hash-table with a Bloom filter
 -----------------------------------------------
 
-TODO: Ratinoale --- too much time spent on filtering buckets
+Let us put Bloom filter to some good use by improving our simple implementation of a hash table.
 
-TODO: Say that we cannot remove
+The way it has been implemented, it has spent too much on iterating through the buckets before adding or getting an element. This is something that can be improved with a Bloom filter: indeed if we known that there is *no* element with a certain key in the bucket (the answer that Bloom filter can answer precisely), we don't have to look for it.
 
-TODO::
+The price to pay for this speed-up is inability to remove elements from the hash-table (as one cannot remove elements from a Bloom filter).
+
+We start our hash-table from the following preamble. Its core data structure now gets enhanced with a Bloom filter::
+
 
  module BloomHashTable (K: BloomHashing) = struct 
    type key = K.t
@@ -192,7 +235,7 @@ TODO::
    (* Functions come here *)
  end
 
-Insertion also updates the filter::
+Insertion also updates the filter correspondingly::
 
   let insert ht k v = 
     let hs = Hashtbl.hash k in
@@ -223,7 +266,7 @@ Fetching consults the filter first::
       | _ -> None
     else None
 
-Removal is prohibited::
+As announced before, removal is prohibited::
 
   let remove _ _ = raise (Failure "Removal is deprecated!")
 
@@ -236,8 +279,7 @@ Let us instantiate the Bloom-table::
  module BHT = BloomHashTable(IntStringHashing)
  module BHTTester = HashTableTester(BHT)
 
-Similarly to methods for testing performance of previiously defined
-hash-tables, we implement the following function::
+Similarly to methods for testing performance of previiously defined hash-tables, we implement the following function::
 
  let insert_and_get_bulk_bloom a m = 
    Printf.printf "Creating Bloom hash table:\n";

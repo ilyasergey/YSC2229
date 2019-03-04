@@ -5,13 +5,13 @@ Hash-Tables, Revisited
 
 https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_HashTable.ml
 
-We have briefly considered hash-tables in Section :ref:`hash_tables`.  Given their ubiquity and importance, we arge going to elaborate on their construction in this lecture.
+We have briefly considered hash-tables in Section :ref:`hash_tables`.  Given their ubiquity and importance, we are going to further elaborate on their construction in this lecture.
 
 
 OCaml's universal hashing
 -------------------------
 
-As many other mainstream languages, OCaml provides a polymorphic function for hashing any values, no matter what type they have::
+As many other mainstream languages (such as Java and C#), OCaml provides a polymorphic function for hashing *any* values, no matter what type they have::
 
  utop # Hashtbl.hash;;
  - : 'a -> int = <fun>
@@ -22,7 +22,7 @@ As many other mainstream languages, OCaml provides a polymorphic function for ha
  utop # Hashtbl.hash 42;;
  - : int = 395478795
 
-This function, unfortunately, has some limitations for particularly deep data structures (such as, e.g., long lists). In particular, for list beyond certain length there will be collisions::
+This function, unfortunately, has some limitations for particularly deep data structures (such as, e.g., long immutable lists). In particular, for lists beyond certain length there will be collisions::
 
  utop # Hashtbl.hash [1;2;3;4;5;6;7;8;9;0];;
  - : int = 67023335
@@ -64,7 +64,9 @@ Before we re-define the hash-table, let us define a module for automated testing
    (* More functions will come here. *)
  end
 
-Notice that it is a functor that takes a hash-table implementation ``H``. The following function, which fill the hash-table from an array::
+Notice that it is a functor that takes an implementation of hash-table module ``H``, but requires the keys to be of a specific type ``int * string``. 
+
+The following function will fill the hash-table from an array::
 
 
   let mk_test_table_from_array_length a m = 
@@ -75,7 +77,7 @@ Notice that it is a functor that takes a hash-table implementation ``H``. The fo
     done;
     (ht, a)
 
-The following function takes a hash-table ``ht`` and an array ``a`` used for its creating and tests that all elements in the array are in hash-table (we optimistically assume that an array does not have repetitions)::
+The next function takes a hash-table ``ht`` and an array ``a`` used for filling it with elements, and tests that *all* elements in the array are also in the hash-table (we optimistically assume that an array does not have repetitions)::
 
   let test_table_get ht a = 
     let len = Array.length a in
@@ -161,7 +163,7 @@ As the last touch, we add the function to print the contents of the table::
         printf "%d -> [ %s]\n" i s)
     done
 
-Let us not instantiate the table to use pairs of type ``int * string`` as keys, as well as the corresponding testing framework::
+Let us now instantiate the table to use pairs of type ``int * string`` as keys, as well as the corresponding testing framework developed above::
 
  module IntString = struct type t = int * string end
  module SHT = SimpleListBasedHashTable(IntString)
@@ -190,7 +192,6 @@ We can now create a simple hash-table and observe its contents::
  7 -> [ ((5, rkolw), (5, rkolw)); ((6, ukobi), (6, ukobi)); ((1, qxcnk), (1, qxcnk)); ((6, kcrtm), (6, kcrtm)); ]
  8 -> [ ((4, ayuys), (4, ayuys)); ]
  9 -> [ ((4, nksfe), (4, nksfe)); ((2, uldju), (2, uldju)); ((10, hwsjs), (10, hwsjs)); ]
-
 
 As we can see, due to hash collisions some buckets are not used at all (e.g., ``3``), while others hold multiple values (e.g., ``9``).
 
@@ -270,7 +271,7 @@ Adding new elements by means of ``insert`` can now trigger the growth of the has
     ht.capacity := !(new_ht.capacity);
     ht.size := !(new_ht.size)
 
-Fetching elements from a resizable hash-table is not very different from doing so with a simple one::
+Fetching elements from a resizable hash-table is not very different from doing so with a simple hash table that does not re-size::
 
   let get ht k = 
     let hs = Hashtbl.hash k in
@@ -375,7 +376,7 @@ Which implementation of a hash-table behaves better in practice? We are going to
    Printf.printf "Fetching from resizable hash table on the array of size %d:\n" (Array.length a);
    let _ = Week_03.time ResizableHTTester.test_table_get ht a in ()
 
-The next function is going to run both of them on the same array (of a given size ``n``), creating two hash-tables of the initial size ``m`` and measuring
+The next function is going to run both ``insert_and_get_bulk_simple`` and ``insert_and_get_bulk_resizable`` on the same array (of a given size ``n``), creating two hash-tables of the initial size ``m`` and measuring
 
 * (a) How long does it take to fill up the table, and
 * (b) How long does it take to fetch the elements
@@ -413,5 +414,3 @@ However, for a number of buckets much smaller than the number of elements to be 
  Execution elapsed time: 0.020068 sec
  Fetching from resizable hash table on the array of size 25000:
  Execution elapsed time: 0.000000 sec
-
-

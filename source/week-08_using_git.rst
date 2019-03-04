@@ -3,7 +3,7 @@
 Managing and Testing OCaml Projects
 ===================================
 
-As our developments keeps growing, we will naturally build on the data structures and will reuse the algorithms developed and studied in the previous parts of this course. To do so smoothly, you are encouraged to master the `git` version control systems, and host your project provided by the `GitHub <https://github.com/>`_ site. For instance, all the data structures for Weeks 1-6 of this course, as well as an example project making use of them, are now available on GitHub:
+As our algorithmic development keeps growing, we will be building on the data structures and will reuse the algorithms developed and studied in the previous parts of this course. To do so smoothly, you are encouraged to master the `git` version control systems, and host your project provided by the `GitHub <https://github.com/>`_ site. For instance, all the data structures for Weeks 1-6 of this course, as well as an example project making use of them, are now available on GitHub:
 
 * Week 1-6 libraries: https://github.com/ilyasergey/ysc2229-part-one
 * Example project: https://github.com/ilyasergey/ysc2229-examples
@@ -19,7 +19,7 @@ All the repositories above come with the extensive documentation (by means of `R
 Testing OCaml Code
 ------------------
 
-In the previous lectures we have learned that testing as an important part of the software development process, which becomes particularly critical when designing and implementing intricate data structures and algorithms. 
+In the previous lectures we have learned that testing is an important part of the software development process, which becomes particularly critical when designing and implementing intricate data structures and algorithms. 
 
 In order to write tests more efficiently in quickly growing OCaml projects, the `dune` build-system provides a convenient way to write *in-line automated* tests immediately in your files.
 
@@ -28,7 +28,7 @@ For instance, consider the following `configuration file <https://github.com/ily
   (inline_tests)                
   (preprocess (pps ppx_inline_test ppx_expect))
 
-allow to write the tests immediately in your OCaml code (e.g., in a file ``fact.ml``), so they will be checked during the compilation of the project (you can do it via ``dune runtest`` or simply ``make``)::
+allow one to write the tests immediately in your OCaml code (e.g., in a file ``fact.ml``), so they will be checked during the compilation of the project (you can do it via ``dune runtest`` or simply ``make``)::
 
  let rec fact n = if n = 1 then 1 else n * fact (n - 1)
 
@@ -42,7 +42,7 @@ The macro-construction ``let%test ...`` defines a test, which will be run during
 
 That is, the first test (to which we gave no name via ``_``) has successfully passed, while the second one, called ``"Failing test"`` has failed.
 
-One can also write tests that, instead of expecting a boolean value (like the two tests above), match an output produced by the function being tested, agains some expected string. For instance, the following test will fail, as those strings are different::
+One can also write tests that, instead of expecting a boolean value (like the two tests above), match an output produced by the function being tested, against some expected string. For instance, the following test will fail, as the produced and the expected strings are different::
 
  let%expect_test "todo" =
    print_endline "Hello, world!";
