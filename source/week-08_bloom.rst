@@ -26,7 +26,7 @@ formation of whether a certain element is or is not in a given set.
 
 Data structure that give false positives, but no false negatives (answer "no" is precise), while providing a compact representation, are very useful and are employed in applications, that might tolerate imprecise "yes"-answers, given conservatively.
 
-In this section, we will study one of such data structures called Bloom filter --- a compact representation of a "lossy" set that provides precisely this functionality. Bloom filters are widely used in practice:
+In this section, we will study one of such data structures called `Bloom filter <https://en.wikipedia.org/wiki/Bloom_filter>`_ --- a compact representation of a "lossy" set that provides precisely this functionality. Bloom filters are widely used in practice:
 
 * `Google Chrome <https://www.google.com/chrome/>`_ web browser used to use a Bloom filter to identify malicious URLs.
 
