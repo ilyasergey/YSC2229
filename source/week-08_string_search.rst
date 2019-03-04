@@ -3,14 +3,18 @@
 Searching in Strings
 ====================
 
-TODO: Explain the problem
-
 https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_StringSearch.ml
+
+Hashing is also very useful for detecting patterns in substrings. 
+
+Imagine that you are searching for a word on a web page or a Word document. This problem is known and pattern search in a string, and in this lecture we will see several solutions for it. 
 
 Testing that a search procedure
 -------------------------------
 
-See the following::
+The procedure ``search`` takes a string ``s`` and a patern ``p`` and returns a result of type ``int option``, where ``Some i`` denotes the first index in the string ``s``, such that ``p`` starts from it and is fully contained within ``s``. If no such index exist (i.e., ``p`` is not in ``s``), ``search`` returns ``None``.
+
+Even before we implement the search procedure itself, we develop a test for it.  The first test function checkes if a pattern ``p`` is indeed in the string ``s``, as reported by the function ``search``::
 
  let test_pattern_in search s p =
    let index = Week_01.get_exn @@ search s p in
@@ -24,7 +28,7 @@ See the following::
 A naive search
 --------------
 
-As follows::
+We can implement a naive search as follows::
 
  let naive_search s p = 
    let n = String.length s in
@@ -46,15 +50,34 @@ As follows::
      done;
      !res
 
+It tries to identify the pattern starting from each position ``i``, checking the characters in the substring one by one. If it fails in the inner search, it simply tries the next position.
 
-TODO: Complexity: :math:`O(n \times m)`.
+**Question:** what is the worst-case complexity of this search in terms of sizes ``n`` and ``m`` of ``s`` and ``p`` correspondingly?
+
+.. TODO: Complexity: :math:`O(n \times m)`.
+
+Generating strings for testing search function
+----------------------------------------------
+
+How do we generate random strings for testing search? 
+
+This can be done using the function ``generate_words``, which we generated before. We simply  create a list of words and concatenate it to produce the string ``s``. We can also create the list of words that are (with a very hight probability) are not in the obtained string ``s``::
+
+ let generate_string_and_patterns n m = 
+   let ps_in = Week_03.generate_words n m in
+   let ps_not_in = 
+     List.filter (fun p -> not (List.mem p ps_in)) @@
+     Week_03.generate_words n m in
+   let s = String.concat "" (List.rev ps_in) in
+   (s, ps_in, ps_not_in)
+
 
 Testing naive search
 --------------------
 
 https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_Tests.ml
 
-See the following definitions::
+Let us construct a number of tests, starting from a simple one::
 
  open Week_08_StringSearch
 
@@ -65,6 +88,8 @@ See the following definitions::
  let%test "Naive Search Works" = 
    List.iter (fun p -> test_pattern_in naive_search big p) patterns;
    true
+
+We can also check, on a random string, that our search returns no false positives and no false negatives::
 
  let%test "Naive Search True Positives" = 
    let (s, ps, _) = generate_string_and_patterns 500 5 in
@@ -77,21 +102,10 @@ See the following definitions::
    true
 
 
-Generating strings for testing search function
-----------------------------------------------
-
-TODO::
-
- let generate_string_and_patterns n m = 
-   let ps_in = Week_03.generate_words n m in
-   let ps_not_in = 
-     List.filter (fun p -> not (List.mem p ps_in)) @@
-     Week_03.generate_words n m in
-   let s = String.concat "" (List.rev ps_in) in
-   (s, ps_in, ps_not_in)
-
 Rabin-Karp search
 -----------------
+
+The idea of Rabin-Karp algorithm is to speed up the ordinary search by means of computing the *rolling hash* of the sub-string currently being checked, and comparing it to the hash of the of the pattern.
 
 First, define a special hash::
 
@@ -102,7 +116,7 @@ First, define a special hash::
    done;
    !h
 
-The search procedure::
+The search procedure now takes advantage of it::
 
  let rabin_karp_search s p = 
    let n = String.length s in
@@ -129,20 +143,22 @@ The search procedure::
      done;
      !res
 
-Complexity: :math:`O(n)`
+**Question:** what is the complexity of Rabin-Karp search?
+
+.. Complexity: :math:`O(n)`
 
 Testing Rabin-Karp search::
 
- let%test "Rabin-Kapr Search Works" = 
+ let%test "Rabin-Karp Search Works" = 
    List.iter (fun p -> test_pattern_in rabin_karp_search big p) patterns;
    true
 
- let%test "Rabin-Kapr Search True Positives" = 
+ let%test "Rabin-Karp Search True Positives" = 
    let (s, ps, _) = generate_string_and_patterns 500 5 in
    List.iter (fun p -> test_pattern_in rabin_karp_search s p) ps;
    true
 
- let%test "Rabin-Kapr Search True Negatives" = 
+ let%test "Rabin-Karp Search True Negatives" = 
    let (s, _, pn) = generate_string_and_patterns 500 5 in
    List.iter (fun p -> test_pattern_not_in rabin_karp_search s p) pn;
    true
@@ -176,7 +192,7 @@ That does not show so much difference::
  [Rabin-Karp] Pattern in: Execution elapsed time: 1.112753 sec
  [Rabin-Karp] Pattern not in: Execution elapsed time: 2.155506 sec
 
-In fact, Rabin-Karp is even slower!
+In fact, Rabin-Karp is even a bit slower!
 
 Now, let us show when it shines. For this, let us create very
 repetitive strings::

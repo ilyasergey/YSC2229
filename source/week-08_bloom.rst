@@ -235,6 +235,17 @@ We start our hash-table from the following preamble. Its core data structure now
    (* Functions come here *)
  end
 
+For simplicity, upon creating a hash table, we make a Bloom filter with a fixed capacity::
+
+  let mk_new_table cap = 
+    let buckets = Array.make cap [] in
+    (* Pick reasonably large BF size *)
+    let filter = BF.mk_bloom_filter 15000 in
+    {buckets = buckets;
+     capacity = cap;
+     filter = filter}
+
+
 Insertion also updates the filter correspondingly::
 
   let insert ht k v = 
