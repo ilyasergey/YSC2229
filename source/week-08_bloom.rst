@@ -6,9 +6,7 @@
 Bloom Filters and Their Applications
 ====================================
 
-Hashing can be useful not just to distribute elements in an array for the sake of implementing hash-table. we can also employ it for compactly representing the in
-
-formation of whether a certain element is or is not in a given set.
+Hashing can be useful not just to distribute elements in an array for the sake of implementing hash-table. we can also employ it for compactly representing the in formation of whether a certain element is or is not in a given set.
 
 .. admonition:: True Negatives and False Positives
 
@@ -24,7 +22,7 @@ formation of whether a certain element is or is not in a given set.
 
   This behaviour of the data structure is typicall called as "sound-but-incomplete". The first scenario (precise no-answer) is called "true negatives", while the case of the second scenario, in which the answer "yes" is given for a certain element *not* in the set is called "false positive" (if the element is in the set, it would be "true positive").
 
-Data structure that give false positives, but no false negatives (answer "no" is precise), while providing a compact representation, are very useful and are employed in applications, that might tolerate imprecise "yes"-answers, given conservatively.
+Data structure that give false positives, but no false negatives (the answer "no" is precise), while providing a compact representation, are very useful and are employed in applications, that might tolerate imprecise "yes"-answers, given conservatively.
 
 In this section, we will study one of such data structures called `Bloom filter <https://en.wikipedia.org/wiki/Bloom_filter>`_ --- a compact representation of a "lossy" set that provides precisely this functionality. Bloom filters are widely used in practice:
 
@@ -47,8 +45,7 @@ For each new element to be added to the set, all ``k`` hash functions are used t
 
 To determine whether an element is in the set, one needs to compute its ``k`` hashes, and check the bits in the corresponding array in a constant time (:math:`O(k)`). Having more than 1 hash function reduces the risk of collision if the number of elements is smaller than the size of the filter, however, two or more different elements can indeed had all similar ``k`` hashes.
 
-Elements are never removed from a Bloom filter.
-
+Elements are **never** removed from a Bloom filter.
 
 Bloom filter signature
 ----------------------
