@@ -1,5 +1,7 @@
 .. -*- mode: rst -*-
 
+.. _sec_queues:
+
 Queues
 ======
 

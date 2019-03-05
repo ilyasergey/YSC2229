@@ -92,16 +92,14 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">6.5. Exercises</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#mandatory-exercises">6.5.1. Mandatory exercises</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#recommended-exercises">6.5.2. Recommended exercises</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#exercise-1">6.5.3. Exercise 1</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#exercise-2">6.5.4. Exercise 2</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#exercise-3">6.5.5. Exercise 3</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#exercise-4">6.5.6. Exercise 4</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#exercise-5">6.5.7. Exercise 5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-2">6.5.3. Exercise 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-3">6.5.4. Exercise 3</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
 </ul>
 
             
@@ -175,36 +173,24 @@
 <div class="section" id="recommended-exercises">
 <h2>6.5.2. Recommended exercises<a class="headerlink" href="#recommended-exercises" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="#exercise-stack-test"><span class="std std-ref">Exercise 1</span></a>
-Testing a stack.</li>
-<li><a class="reference internal" href="#exercise-stack-test"><span class="std std-ref">Exercise 1</span></a>
-Testing a queue.</li>
-<li><a class="reference internal" href="#exercise-queue"><span class="std std-ref">Exercise 3</span></a>
+<li><span class="xref std std-ref">exercise-queue</span>
 A purely functional queue.</li>
-<li><a class="reference internal" href="#exercise-rev-dll"><span class="std std-ref">Exercise 4</span></a>
+<li><a class="reference internal" href="#exercise-rev-dll"><span class="std std-ref">Exercise 2</span></a>
 Reversing a doubly-linked list.</li>
-<li><a class="reference internal" href="#exercise-hash-map-resize"><span class="std std-ref">Exercise 5</span></a>
+<li><a class="reference internal" href="#exercise-hash-map-resize"><span class="std std-ref">Exercise 3</span></a>
 Resizable hash-map</li>
 </ul>
-</div>
-<div class="section" id="exercise-1">
-<span id="exercise-stack-test"></span><h2>6.5.3. Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
-<p>Design and implement a randomised testing procedure for stacks, which would insert an arbitrary sequence of elements via <code class="docutils literal notranslate"><span class="pre">push</span></code>, extract them via <code class="docutils literal notranslate"><span class="pre">pop</span></code> and ensured that LIFO property holds.</p>
-</div>
-<div class="section" id="exercise-2">
-<span id="exercise-queue-test"></span><h2>6.5.4. Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
-<p>Design and implement a randomised testing procedure for queues, which would insert an arbitrary sequence of elements via <code class="docutils literal notranslate"><span class="pre">enqueue</span></code>, extract them via <code class="docutils literal notranslate"><span class="pre">dequeue</span></code> and ensured that FIFO property holds.</p>
-</div>
-<div class="section" id="exercise-3">
-<span id="exercise-queue"></span><h2>6.5.5. Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<blockquote id="exercise-queue">
+<div>Exercise 1</div></blockquote>
+<hr class="docutils" />
 <p>Implement a queue data structure, which does not use OCaml arrays or double-linked lists, and at most two values of type <code class="docutils literal notranslate"><span class="pre">ref</span></code>. Make sure it satisfies the <code class="docutils literal notranslate"><span class="pre">Queue</span></code> interface. To do so, use two OCaml lists to represent the part for “enqueueing” and “dequeueing”. What happens if one of them gets empty? Argue that the average-case complexity for enqueue and dequeue operations of your implementation is linear.</p>
 </div>
-<div class="section" id="exercise-4">
-<span id="exercise-rev-dll"></span><h2>6.5.6. Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-2">
+<span id="exercise-rev-dll"></span><h2>6.5.3. Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
 <p>Implement a procedure for “reversing” a doubly-linked list, starting from its arbitrary node (which might be at its beginning, end, or in the middle). Make sure that your procedure works in linear time.</p>
 </div>
-<div class="section" id="exercise-5">
-<span id="exercise-hash-map-resize"></span><h2>6.5.7. Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-3">
+<span id="exercise-hash-map-resize"></span><h2>6.5.4. Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
 <p>Implement a hash map that automatically grows if a number of stored elements in buckets become too large. Explain your design choices and the average-case complexity of your implementation.</p>
 </div>
 </div>

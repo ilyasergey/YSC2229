@@ -1,5 +1,7 @@
 .. -*- mode: rst -*-
 
+.. _hash_tables:
+
 Hash-tables
 ===========
 

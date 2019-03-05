@@ -1,0 +1,259 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>8. YSC2229 Lecture Notes, Week 08 &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="8.1. Managing and Testing OCaml Projects" href="week-08_using_git.html" />
+    <link rel="prev" title="7. YSC2229: Midterm Project, Week 07" href="YSC2229-midterm-tasks.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">8. YSC2229 Lecture Notes, Week 08</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-08_using_git.html">8.1. Managing and Testing OCaml Projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08_hash_tables_again.html">8.2. Hash-Tables, Revisited</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08_bloom.html">8.3. Bloom Filters and Their Applications</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>8. YSC2229 Lecture Notes, Week 08</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ysc2229-lecture-notes-week-08">
+<h1>8. YSC2229 Lecture Notes, Week 08<a class="headerlink" href="#ysc2229-lecture-notes-week-08" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="week-08_using_git.html">8.1. Managing and Testing OCaml Projects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-08_using_git.html#testing-ocaml-code">8.1.1. Testing OCaml Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08_using_git.html#testing-an-abstract-data-type">8.1.2. Testing an Abstract Data Type</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-08_hash_tables_again.html">8.2. Hash-Tables, Revisited</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-08_hash_tables_again.html#ocaml-s-universal-hashing">8.2.1. OCaml’s universal hashing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08_hash_tables_again.html#redefining-hash-table-signature">8.2.2. Redefining hash-table signature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08_hash_tables_again.html#a-framework-for-testing-hash-tables">8.2.3. A framework for testing hash-tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08_hash_tables_again.html#a-simple-list-based-hash-table">8.2.4. A simple list-based hash-table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08_hash_tables_again.html#testing-a-simple-hash-table">8.2.5. Testing a Simple Hash-Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08_hash_tables_again.html#a-resizable-hash-table">8.2.6. A Resizable hash-table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08_hash_tables_again.html#comparing-performance-of-different-implementations">8.2.7. Comparing performance of different implementations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-08_bloom.html">8.3. Bloom Filters and Their Applications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-08_bloom.html#high-level-intuition">8.3.1. High-level intuition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08_bloom.html#bloom-filter-signature">8.3.2. Bloom filter signature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08_bloom.html#implementing-a-bloom-filter">8.3.3. Implementing a Bloom filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08_bloom.html#experimenting-with-bloom-filters">8.3.4. Experimenting with Bloom filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08_bloom.html#testing-bloom-filters">8.3.5. Testing Bloom Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08_bloom.html#improving-simple-hash-table-with-a-bloom-filter">8.3.6. Improving Simple Hash-table with a Bloom filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08_bloom.html#comparing-performance">8.3.7. Comparing performance</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p><strong>Supplementary materials</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_ArrayQueue.ml">Revised ArrayQueue Implementation</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_ArrayTable.ml">Revised Hash-tables</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_BloomFilters.ml">Bloom filters</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_StringSearch.ml">Searching in strings</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_Tests.ml">Automated Tests</a></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-08_using_git.html" class="btn btn-neutral float-right" title="8.1. Managing and Testing OCaml Projects" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="YSC2229-midterm-tasks.html" class="btn btn-neutral" title="7. YSC2229: Midterm Project, Week 07" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

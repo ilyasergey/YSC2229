@@ -65,7 +65,7 @@ A list "node" (``dll_node``) is simply a segment of four consecutive entries in 
 
 In this project, you are expected to deliver the following artefacts:
 
-* An implementation of an array-based memory allocator that can provide storage (of a *fixed limited* capacity) for dynamically "allocated" pointers, integers, and strings, with a possibility of updating them. Similarly to languages without automatic memory management, such as C, it should be possible to both allocate and "free" consecutive pointer segments, making it possible to reuse the memory. The template code for the memory manager is available by `at this link <./resources/2019/memory_manager.ml>`_.
+* An implementation of an array-based memory allocator that can provide storage (of a *fixed limited* capacity) for dynamically "allocated" pointers, integers, and strings, with a possibility of updating them. Similarly to languages without automatic memory management, such as C, it should be possible to both allocate and "free" consecutive pointer segments, making it possible to reuse the memory. The template code for the memory manager is available `at this link <./resources/2019/memory_manager.ml>`_.
 
 * An implementation of a double-linked list, built on top of the allocator interface via the abstract "heap" it provides and the operations for manipulating with the pointers. Feel free to extend the ``Allocator`` signature if you can think of more expressive operations with the heap.
 

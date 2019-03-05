@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="8. YSC2229 Lecture Notes, Week 08" href="YSC2229-lecture-notes-week-08.html" />
     <link rel="prev" title="6.5. Exercises" href="week-06_exercises.html" /> 
 
   
@@ -90,6 +91,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#an-array-based-memory-allocator">7.3. An array-based memory allocator</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
 </ul>
 
             
@@ -203,7 +205,7 @@
 <p>A list “node” (<code class="docutils literal notranslate"><span class="pre">dll_node</span></code>) is simply a segment of four consecutive entries in a pointer array, with the corresponding links to an integer and a string part of the payload. Therefore, in order to work with a double-linked list represented via three arrays, one should manipulate with the encoding of references in by means of changing the contents of those arrays.</p>
 <p>In this project, you are expected to deliver the following artefacts:</p>
 <ul>
-<li><p class="first">An implementation of an array-based memory allocator that can provide storage (of a <em>fixed limited</em> capacity) for dynamically “allocated” pointers, integers, and strings, with a possibility of updating them. Similarly to languages without automatic memory management, such as C, it should be possible to both allocate and “free” consecutive pointer segments, making it possible to reuse the memory. The template code for the memory manager is available by <a class="reference external" href="./resources/2019/memory_manager.ml">at this link</a>.</p>
+<li><p class="first">An implementation of an array-based memory allocator that can provide storage (of a <em>fixed limited</em> capacity) for dynamically “allocated” pointers, integers, and strings, with a possibility of updating them. Similarly to languages without automatic memory management, such as C, it should be possible to both allocate and “free” consecutive pointer segments, making it possible to reuse the memory. The template code for the memory manager is available <a class="reference external" href="./resources/2019/memory_manager.ml">at this link</a>.</p>
 </li>
 <li><p class="first">An implementation of a double-linked list, built on top of the allocator interface via the abstract “heap” it provides and the operations for manipulating with the pointers. Feel free to extend the <code class="docutils literal notranslate"><span class="pre">Allocator</span></code> signature if you can think of more expressive operations with the heap.</p>
 </li>
@@ -238,6 +240,8 @@
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="YSC2229-lecture-notes-week-08.html" class="btn btn-neutral float-right" title="8. YSC2229 Lecture Notes, Week 08" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="week-06_exercises.html" class="btn btn-neutral" title="6.5. Exercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

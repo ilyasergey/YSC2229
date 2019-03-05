@@ -17,6 +17,7 @@ Introductory Data Structures and Algorithms (YSC2229)
    YSC2229-lecture-notes-week-05
    YSC2229-lecture-notes-week-06
    YSC2229-midterm-tasks
+   YSC2229-lecture-notes-week-08
 
 OCaml Code from the Lectures
 ============================
@@ -25,6 +26,9 @@ OCaml Code from the Lectures
   repository on GitHub, along with the instructions on their
   comilation and installation:
   https://github.com/ilyasergey/ysc2229-part-one
+
+* Code for Weeks 8-14:
+  https://github.com/ilyasergey/ysc2229-part-two
 
 * Examples on using the libraries from the lectures are avialble from
   the following repository:

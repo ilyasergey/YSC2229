@@ -1,0 +1,388 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>8.1. Managing and Testing OCaml Projects &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="8.2. Hash-Tables, Revisited" href="week-08_hash_tables_again.html" />
+    <link rel="prev" title="8. YSC2229 Lecture Notes, Week 08" href="YSC2229-lecture-notes-week-08.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">8.1. Managing and Testing OCaml Projects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#testing-ocaml-code">8.1.1. Testing OCaml Code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-an-abstract-data-type">8.1.2. Testing an Abstract Data Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-08_hash_tables_again.html">8.2. Hash-Tables, Revisited</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08_bloom.html">8.3. Bloom Filters and Their Applications</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a> &raquo;</li>
+        
+      <li>8.1. Managing and Testing OCaml Projects</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="managing-and-testing-ocaml-projects">
+<h1>8.1. Managing and Testing OCaml Projects<a class="headerlink" href="#managing-and-testing-ocaml-projects" title="Permalink to this headline">¶</a></h1>
+<p>As our algorithmic development keeps growing, we will be building on the data structures and will reuse the algorithms developed and studied in the previous parts of this course. To do so smoothly, you are encouraged to master the <cite>git</cite> version control systems, and host your project provided by the <a class="reference external" href="https://github.com/">GitHub</a> site. For instance, all the data structures for Weeks 1-6 of this course, as well as an example project making use of them, are now available on GitHub:</p>
+<ul class="simple">
+<li>Week 1-6 libraries: <a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-one">https://github.com/ilyasergey/ysc2229-part-one</a></li>
+<li>Example project: <a class="reference external" href="https://github.com/ilyasergey/ysc2229-examples">https://github.com/ilyasergey/ysc2229-examples</a></li>
+</ul>
+<p>The following repository will be gradually filled with the developments from the upcoming lectures:</p>
+<ul class="simple">
+<li>Week 8-14 libraries: <a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two">https://github.com/ilyasergey/ysc2229-part-two</a></li>
+</ul>
+<p>All the repositories above come with the extensive documentation (by means of <cite>README.md</cite> files) on how to use the code hosted in them.</p>
+<div class="section" id="testing-ocaml-code">
+<span id="sec-queue-test"></span><h2>8.1.1. Testing OCaml Code<a class="headerlink" href="#testing-ocaml-code" title="Permalink to this headline">¶</a></h2>
+<p>In the previous lectures we have learned that testing is an important part of the software development process, which becomes particularly critical when designing and implementing intricate data structures and algorithms.</p>
+<p>In order to write tests more efficiently in quickly growing OCaml projects, the <cite>dune</cite> build-system provides a convenient way to write <em>in-line automated</em> tests immediately in your files.</p>
+<p>For instance, consider the following <a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/dune">configuration file</a>, which defines dependencies of for the libraries of the second part of this course. THe following lines:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">(</span><span class="n">inline_tests</span><span class="o">)</span>
+<span class="o">(</span><span class="n">preprocess</span> <span class="o">(</span><span class="n">pps</span> <span class="n">ppx_inline_test</span> <span class="n">ppx_expect</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>allow one to write the tests immediately in your OCaml code (e.g., in a file <code class="docutils literal notranslate"><span class="pre">fact.ml</span></code>), so they will be checked during the compilation of the project (you can do it via <code class="docutils literal notranslate"><span class="pre">dune</span> <span class="pre">runtest</span></code> or simply <code class="docutils literal notranslate"><span class="pre">make</span></code>):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">fact</span> <span class="n">n</span> <span class="o">=</span> <span class="k">if</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">then</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">n</span> <span class="o">*</span> <span class="n">fact</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span>
+
+<span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="o">_</span> <span class="o">=</span> <span class="n">fact</span> <span class="mi">5</span> <span class="o">=</span> <span class="mi">120</span>
+
+<span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;Failing test&quot;</span> <span class="o">=</span> <span class="n">fact</span> <span class="mi">5</span> <span class="o">=</span> <span class="mi">121</span>
+</pre></div>
+</div>
+<p>The macro-construction <code class="docutils literal notranslate"><span class="pre">let%test</span> <span class="pre">...</span></code> defines a test, which will be run during the build. Now executing <cite>dune runtest</cite> on this project, we will get:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="nc">File</span> <span class="s2">&quot;fact.ml&quot;</span><span class="o">,</span> <span class="n">line</span> <span class="mi">93</span><span class="o">,</span> <span class="n">characters</span> <span class="mi">1</span><span class="o">-</span><span class="mi">39</span><span class="o">:</span> <span class="nc">Failing</span> <span class="n">test</span> <span class="n">is</span> <span class="bp">false</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>That is, the first test (to which we gave no name via <code class="docutils literal notranslate"><span class="pre">_</span></code>) has successfully passed, while the second one, called <code class="docutils literal notranslate"><span class="pre">&quot;Failing</span> <span class="pre">test&quot;</span></code> has failed.</p>
+<p>One can also write tests that, instead of expecting a boolean value (like the two tests above), match an output produced by the function being tested, against some expected string. For instance, the following test will fail, as the produced and the expected strings are different:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="o">%</span><span class="n">expect_test</span> <span class="s2">&quot;todo&quot;</span> <span class="o">=</span>
+  <span class="n">print_endline</span> <span class="s2">&quot;Hello, world!&quot;</span><span class="o">;</span>
+  <span class="o">[%</span><span class="n">expect</span><span class="o">{|</span>
+    <span class="nc">Hello</span><span class="o">,</span> <span class="n">world</span><span class="o">?</span>
+  <span class="o">|}]</span>
+</pre></div>
+</div>
+<p>The result will be the following output, pointing out the discrepancy between the produced output and the expectations:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">---</span> <span class="n">file</span><span class="o">.</span><span class="n">ml</span>    <span class="mi">2019</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">01</span> <span class="mi">20</span><span class="o">:</span><span class="mi">29</span><span class="o">:</span><span class="mi">39</span><span class="o">.</span><span class="mi">000000000</span> <span class="o">+</span><span class="mi">0800</span>
+<span class="o">+++</span> <span class="n">file</span><span class="o">.</span><span class="n">ml</span><span class="o">.</span><span class="n">corrected</span>  <span class="mi">2019</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">01</span> <span class="mi">20</span><span class="o">:</span><span class="mi">29</span><span class="o">:</span><span class="mi">39</span><span class="o">.</span><span class="mi">000000000</span> <span class="o">+</span><span class="mi">0800</span>
+<span class="o">@@</span> <span class="o">-</span><span class="mi">103</span><span class="o">,</span><span class="mi">7</span> <span class="o">+</span><span class="mi">103</span><span class="o">,</span><span class="mi">7</span> <span class="o">@@</span>
+ <span class="k">let</span><span class="o">%</span><span class="n">expect_test</span> <span class="s2">&quot;todo&quot;</span> <span class="o">=</span>
+   <span class="n">print_endline</span> <span class="s2">&quot;Hello, world!&quot;</span><span class="o">;</span>
+   <span class="o">[%</span><span class="n">expect</span><span class="o">{|</span>
+<span class="o">-</span>    <span class="nc">Hello</span><span class="o">,</span> <span class="n">world</span><span class="o">?</span>
+<span class="o">+</span>    <span class="nc">Hello</span><span class="o">,</span> <span class="n">world</span><span class="o">!</span>
+   <span class="o">|}]</span>
+</pre></div>
+</div>
+<p>The following file contains more examples of tests for our project, discussed later in these notes:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_Tests.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_Tests.ml</a></li>
+</ul>
+<p>Finally, <a class="reference external" href="https://dune.readthedocs.io/en/latest/tests.html">this page</a> contains a detailed tutorial on writing automated tests for OCaml.</p>
+</div>
+<div class="section" id="testing-an-abstract-data-type">
+<h2>8.1.2. Testing an Abstract Data Type<a class="headerlink" href="#testing-an-abstract-data-type" title="Permalink to this headline">¶</a></h2>
+<p>When possible, the lecture notes will now feature links to GitHub, with the implementations, denoted as follows:</p>
+<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_ArrayQueue.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_ArrayQueue.ml</a></p>
+<p>Recall how Section <a class="reference internal" href="week-06_queues.html#sec-queues"><span class="std std-ref">Queues</span></a>, we have defined an abstract signature for the queues as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="k">type</span> <span class="nc">Queue</span> <span class="o">=</span>
+  <span class="k">sig</span>
+    <span class="k">type</span> <span class="k">&#39;</span><span class="n">e</span> <span class="n">t</span>
+    <span class="k">val</span> <span class="n">mk_queue</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="n">e</span> <span class="n">t</span>
+    <span class="k">val</span> <span class="n">is_empty</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">e</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="kt">bool</span>
+    <span class="k">val</span> <span class="n">is_full</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">e</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="kt">bool</span>
+    <span class="k">val</span> <span class="n">enqueue</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">e</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="n">e</span> <span class="o">-&gt;</span> <span class="kt">unit</span>
+    <span class="k">val</span> <span class="n">dequeue</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">e</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="n">e</span> <span class="n">option</span>
+    <span class="k">val</span> <span class="n">queue_to_list</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">e</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="n">e</span> <span class="kt">list</span>
+  <span class="k">end</span>
+</pre></div>
+</div>
+<p>As a particular implementation of a queue, we have considered an array-based queue, implemented as shown below (we reuse the definitions from modules <cite>Week_01</cite> etc which are available through dependencies from the <a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-one">Part One Libraries</a>):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">Week_01</span>
+<span class="k">open</span> <span class="nc">Week_03</span>
+<span class="k">open</span> <span class="nc">Week_06</span>
+
+<span class="k">module</span> <span class="nc">ArrayQueue</span> <span class="o">:</span> <span class="nc">Queue</span> <span class="o">=</span>
+  <span class="k">struct</span>
+    <span class="k">type</span> <span class="k">&#39;</span><span class="n">e</span> <span class="n">t</span> <span class="o">=</span> <span class="o">{</span>
+      <span class="n">elems</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">e</span> <span class="n">option</span> <span class="kt">array</span><span class="o">;</span>
+      <span class="n">head</span> <span class="o">:</span> <span class="kt">int</span> <span class="n">ref</span><span class="o">;</span>
+      <span class="n">tail</span> <span class="o">:</span> <span class="kt">int</span> <span class="n">ref</span><span class="o">;</span>
+      <span class="n">size</span> <span class="o">:</span> <span class="kt">int</span>
+    <span class="o">}</span>
+    <span class="k">let</span> <span class="n">mk_queue</span> <span class="n">sz</span> <span class="o">=</span> <span class="o">{</span>
+      <span class="n">elems</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">sz</span> <span class="nc">None</span><span class="o">;</span>
+      <span class="n">head</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">0</span><span class="o">;</span>
+      <span class="n">tail</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">0</span><span class="o">;</span>
+      <span class="n">size</span> <span class="o">=</span> <span class="n">sz</span>
+    <span class="o">}</span>
+    <span class="k">let</span> <span class="n">is_empty</span> <span class="n">q</span> <span class="o">=</span>
+      <span class="o">!(</span><span class="n">q</span><span class="o">.</span><span class="n">head</span><span class="o">)</span> <span class="o">=</span> <span class="o">!(</span><span class="n">q</span><span class="o">.</span><span class="n">tail</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+      <span class="n">q</span><span class="o">.</span><span class="n">elems</span><span class="o">.(!(</span><span class="n">q</span><span class="o">.</span><span class="n">head</span><span class="o">))</span> <span class="o">=</span> <span class="nc">None</span>
+
+    <span class="k">let</span> <span class="n">is_full</span> <span class="n">q</span> <span class="o">=</span>
+      <span class="o">!(</span><span class="n">q</span><span class="o">.</span><span class="n">head</span><span class="o">)</span> <span class="o">=</span> <span class="o">!(</span><span class="n">q</span><span class="o">.</span><span class="n">tail</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+      <span class="n">q</span><span class="o">.</span><span class="n">elems</span><span class="o">.(!(</span><span class="n">q</span><span class="o">.</span><span class="n">head</span><span class="o">))</span> <span class="o">&lt;&gt;</span> <span class="nc">None</span>
+
+    <span class="k">let</span> <span class="n">enqueue</span> <span class="n">q</span> <span class="n">e</span> <span class="o">=</span>
+      <span class="k">if</span> <span class="n">is_full</span> <span class="n">q</span>
+      <span class="k">then</span> <span class="k">raise</span> <span class="o">(</span><span class="nc">Failure</span> <span class="s2">&quot;The queue is full!&quot;</span><span class="o">)</span>
+      <span class="k">else</span> <span class="o">(</span>
+        <span class="k">let</span> <span class="n">tl</span> <span class="o">=</span> <span class="o">!(</span><span class="n">q</span><span class="o">.</span><span class="n">tail</span><span class="o">)</span> <span class="k">in</span>
+        <span class="n">q</span><span class="o">.</span><span class="n">elems</span><span class="o">.(</span><span class="n">tl</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="nc">Some</span> <span class="n">e</span><span class="o">;</span>
+        <span class="n">q</span><span class="o">.</span><span class="n">tail</span> <span class="o">:=</span>
+          <span class="k">if</span> <span class="n">tl</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span>
+          <span class="k">then</span> <span class="mi">0</span>
+          <span class="k">else</span> <span class="n">tl</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+
+    <span class="k">let</span> <span class="n">dequeue</span> <span class="n">q</span> <span class="o">=</span>
+      <span class="k">if</span> <span class="n">is_empty</span> <span class="n">q</span>
+      <span class="k">then</span> <span class="nc">None</span>
+      <span class="k">else</span> <span class="o">(</span>
+        <span class="k">let</span> <span class="n">hd</span> <span class="o">=</span> <span class="o">!(</span><span class="n">q</span><span class="o">.</span><span class="n">head</span><span class="o">)</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">elems</span><span class="o">.(</span><span class="n">hd</span><span class="o">)</span> <span class="k">in</span>
+        <span class="n">q</span><span class="o">.</span><span class="n">elems</span><span class="o">.(</span><span class="n">hd</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="nc">None</span><span class="o">;</span>
+        <span class="n">q</span><span class="o">.</span><span class="n">head</span> <span class="o">:=</span>
+          <span class="o">(</span><span class="k">if</span> <span class="n">hd</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span>
+          <span class="k">then</span> <span class="mi">0</span>
+          <span class="k">else</span> <span class="n">hd</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
+        <span class="n">res</span><span class="o">)</span>
+
+    <span class="k">let</span> <span class="n">queue_to_list</span> <span class="n">q</span> <span class="o">=</span>
+      <span class="k">let</span> <span class="n">hd</span> <span class="o">=</span> <span class="o">!(</span><span class="n">q</span><span class="o">.</span><span class="n">head</span><span class="o">)</span> <span class="k">in</span>
+      <span class="k">let</span> <span class="n">tl</span> <span class="o">=</span> <span class="o">!(</span><span class="n">q</span><span class="o">.</span><span class="n">tail</span><span class="o">)</span> <span class="k">in</span>
+      <span class="k">if</span> <span class="n">is_empty</span> <span class="n">q</span> <span class="k">then</span> <span class="bp">[]</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="n">hd</span> <span class="o">&lt;</span> <span class="n">tl</span> <span class="k">then</span>
+        <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="n">get_exn</span> <span class="o">(</span><span class="n">array_to_list</span> <span class="n">hd</span> <span class="o">(</span><span class="n">tl</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">q</span><span class="o">.</span><span class="n">elems</span><span class="o">)</span>
+      <span class="k">else</span>
+        <span class="k">let</span> <span class="n">l1</span> <span class="o">=</span> <span class="n">array_to_list</span> <span class="n">hd</span> <span class="n">q</span><span class="o">.</span><span class="n">size</span> <span class="n">q</span><span class="o">.</span><span class="n">elems</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="n">l2</span> <span class="o">=</span> <span class="n">array_to_list</span> <span class="mi">0</span> <span class="n">tl</span> <span class="n">q</span><span class="o">.</span><span class="n">elems</span> <span class="k">in</span>
+        <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="n">get_exn</span> <span class="o">(</span><span class="n">l1</span> <span class="o">@</span> <span class="n">l2</span><span class="o">)</span>
+
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Let us implement some tests for this version of the queue. For instance, we can set-up a new queue by filling it from an array:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">ArrayQueue</span>
+
+<span class="c">(* Make a test_queue *)</span>
+<span class="k">let</span> <span class="n">mk_test_q</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">q</span> <span class="o">=</span> <span class="n">mk_queue</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">generate_key_value_array</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span> <span class="n">enqueue</span> <span class="n">q</span> <span class="n">a</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="k">done</span><span class="o">;</span>
+  <span class="o">(</span><span class="n">q</span><span class="o">,</span> <span class="n">a</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>A natural thing to check then would be that the first element to be dequeued of such a queue is the same as the first element of the array:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;dequeue-first&quot;</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">q</span><span class="o">,</span> <span class="n">a</span><span class="o">)</span> <span class="o">=</span> <span class="n">mk_test_q</span> <span class="mi">10</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">first</span> <span class="o">=</span> <span class="n">get_exn</span> <span class="o">@@</span> <span class="n">dequeue</span> <span class="n">q</span> <span class="k">in</span>
+  <span class="n">first</span> <span class="o">=</span> <span class="n">a</span><span class="o">.(</span><span class="mi">0</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The Section <a class="reference internal" href="week-08_exercises.html#exercises-8"><span class="std std-ref">Exercises</span></a> suggests more tests that can be written in a similar vein for the previously studied data structures.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-08_hash_tables_again.html" class="btn btn-neutral float-right" title="8.2. Hash-Tables, Revisited" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="YSC2229-lecture-notes-week-08.html" class="btn btn-neutral" title="8. YSC2229 Lecture Notes, Week 08" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
