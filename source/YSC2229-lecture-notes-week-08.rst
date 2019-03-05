@@ -15,6 +15,5 @@ YSC2229 Lecture Notes, Week 08
 * `Revised ArrayQueue Implementation <https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_ArrayQueue.ml>`_
 * `Revised Hash-tables <https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_ArrayTable.ml>`_
 * `Bloom filters <https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_BloomFilters.ml>`_
-* `Searching in strings <https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_StringSearch.ml>`_
 * `Automated Tests <https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_Tests.ml>`_
 
