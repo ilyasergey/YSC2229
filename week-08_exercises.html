@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Exercises &mdash; YSC2229 2019</title>
+  <title>8.4. Exercises &mdash; YSC2229 2019</title>
   
 
   
@@ -27,7 +27,8 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="8.3. Bloom Filters and Their Applications" href="week-08_bloom.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,7 +77,7 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
@@ -84,7 +85,21 @@
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
-<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-08_using_git.html">8.1. Managing and Testing OCaml Projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08_hash_tables_again.html">8.2. Hash-Tables, Revisited</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08_bloom.html">8.3. Bloom Filters and Their Applications</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">8.4. Exercises</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mandatory-exercises">8.4.1. Mandatory exercises</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#recommended-exercises">8.4.2. Recommended exercises</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-1">8.4.3. Exercise 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-2">8.4.4. Exercise 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-3">8.4.5. Exercise 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-4">8.4.6. Exercise 4</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
             
@@ -130,7 +145,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Exercises</li>
+          <li><a href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a> &raquo;</li>
+        
+      <li>8.4. Exercises</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -148,13 +165,13 @@
            <div itemprop="articleBody">
             
   <div class="section" id="exercises">
-<span id="exercises-8"></span><h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
+<span id="exercises-8"></span><h1>8.4. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mandatory-exercises">
-<h2>Mandatory exercises<a class="headerlink" href="#mandatory-exercises" title="Permalink to this headline">¶</a></h2>
+<h2>8.4.1. Mandatory exercises<a class="headerlink" href="#mandatory-exercises" title="Permalink to this headline">¶</a></h2>
 <p>None</p>
 </div>
 <div class="section" id="recommended-exercises">
-<h2>Recommended exercises<a class="headerlink" href="#recommended-exercises" title="Permalink to this headline">¶</a></h2>
+<h2>8.4.2. Recommended exercises<a class="headerlink" href="#recommended-exercises" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference internal" href="#exercise-queue-test"><span class="std std-ref">Exercise 1</span></a>
 Testing a stack.</li>
@@ -167,19 +184,19 @@ Implementing a URL shortener.</li>
 </ul>
 </div>
 <div class="section" id="exercise-1">
-<span id="exercise-queue-test"></span><h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-queue-test"></span><h2>8.4.3. Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
 <p>Following the design from Section <a class="reference internal" href="week-08_using_git.html#sec-queue-test"><span class="std std-ref">Testing OCaml Code</span></a>, design and implement an in-line randomised testing procedure for stacks, which would insert an arbitrary sequence of elements via <code class="docutils literal notranslate"><span class="pre">push</span></code>, extract them via <code class="docutils literal notranslate"><span class="pre">pop</span></code> and ensured that LIFO property holds.</p>
 </div>
 <div class="section" id="exercise-2">
-<span id="exercise-stack-test"></span><h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-stack-test"></span><h2>8.4.4. Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
 <p>Design and implement a randomised testing procedure for queues, which would insert an arbitrary sequence of elements via <code class="docutils literal notranslate"><span class="pre">enqueue</span></code>, extract them via <code class="docutils literal notranslate"><span class="pre">dequeue</span></code> and ensured that FIFO property holds.</p>
 </div>
 <div class="section" id="exercise-3">
-<span id="exercise-resize-bloom"></span><h2>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-resize-bloom"></span><h2>8.4.5. Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
 <p>Implement a resizable insert-only hash-table with a bloom filter.  Compare its performance to a regular resizable hash-table.</p>
 </div>
 <div class="section" id="exercise-4">
-<span id="exercise-url-shortener"></span><h2>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-url-shortener"></span><h2>8.4.6. Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
 <p>How to shorten the URL? You can imagine a service (a function with a state) run on a server, to which you make a call and it generates a fresh random URL and sends it back. But how does it check for uniqueness of the fresh URL? Implement such a structure by useing a Bloom filter to tell if this short URL has already been generated earlier, and keep generating new ones unti it returns false. As the filter is in memory, this will be cheaper than querying a database of previously generated URLs.</p>
 </div>
 </div>
@@ -189,6 +206,13 @@ Implementing a URL shortener.</li>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="week-08_bloom.html" class="btn btn-neutral" title="8.3. Bloom Filters and Their Applications" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
