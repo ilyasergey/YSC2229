@@ -53,6 +53,8 @@ Elements are never removed from a Bloom filter.
 Bloom filter signature
 ----------------------
 
+https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_08_BloomFilters.ml
+
 Let us first define the Bloom filter signature. It starts from the module describing the type of its elements and the list of hash functions::
 
  module type BloomHashing = sig
