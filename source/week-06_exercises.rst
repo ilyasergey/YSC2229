@@ -22,7 +22,7 @@ Recommended exercises
 
 .. _exercise-queue:
 
- Exercise 1
+Exercise 1
 ----------
 
 Implement a queue data structure, which does not use OCaml arrays or double-linked lists, and at most two values of type ``ref``. Make sure it satisfies the ``Queue`` interface. To do so, use two OCaml lists to represent the part for "enqueueing" and "dequeueing". What happens if one of them gets empty? Argue that the average-case complexity for enqueue and dequeue operations of your implementation is linear.
