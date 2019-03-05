@@ -8,7 +8,6 @@ YSC2229 Lecture Notes, Week 08
    week-08_using_git 
    week-08_hash_tables_again
    week-08_bloom
-..   week-08_string_search
    week-08_exercises
 
 **Supplementary materials**
