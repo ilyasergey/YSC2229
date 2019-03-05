@@ -6,7 +6,7 @@
 Bloom Filters and Their Applications
 ====================================
 
-Hashing can be useful not just to distribute elements in an array for the sake of implementing hash-table. we can also employ it for compactly representing the in formation of whether a certain element is or is not in a given set.
+Hashing can be useful for other applications besides distributing elements in an array when implementing a hash-table. for instance, we can also employ hashing for compactly representing the information of whether a certain element is or is not in a given set. to do so, let us first the introduce the following notion dealing with algorithms and data structures giving occasionally "wrong" answers.
 
 .. admonition:: True Negatives and False Positives
 
