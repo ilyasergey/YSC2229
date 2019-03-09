@@ -170,8 +170,8 @@ As the goal of calling ``search pattern m text k 0 (k - j + 1)`` in the code abo
    in
    global_search search
 
-Exploiting the Prefix Similarity
---------------------------------
+Exploiting the Prefix Equality
+------------------------------
 
 From the explanations above, recall that the sub-strings ``sub pattern 0 j`` and ``sub text (k - j) j`` are equal. Therefore, the sub-call ``search pattern m text k 0 (k - j + 1)`` searches for the pattern (or, rather, the interrupt index) within (a prefix of a suffix of) the pattern itself. Therefore, we can remove ``text`` from there, thus making this call work exclusively on a pattern::
 
@@ -215,7 +215,7 @@ If we had a table like this, we could forumlate ``search`` as the following tail
 
 To populate such a table, however, we will need the search procedure itself. However, the size of the pattern ``m`` is typically much smaller than the size of the text, so creating this table pays off. Int the following implementation the inner procedure ``loop_search`` defines the standard ``search`` (as before) and uses to populate the table, which is the used for the main matching procedure::
 
- let search_with_enifficient_init =
+ let search_with_inefficient_init =
 
    let loop_search pattern _ text n j k = 
      let rec search pattern m text n j k =
