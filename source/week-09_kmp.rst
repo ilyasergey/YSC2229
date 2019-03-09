@@ -10,6 +10,74 @@ It is known as one of the most non-trivial basic algorithms, and is commonly jus
 The material of this chapter is based on `this blog article <http://gallium.inria.fr/blog/kmp/>`_, which, in its turn is based on `this research paper <https://www.brics.dk/RS/02/32/BRICS-RS-02-32.pdf>`_ by `Prof. Olivier Danvy <https://www.yale-nus.edu.sg/about/faculty/olivier-danvy/>`_ and his co-authors.
 
 
+Revisiting the naive algorithm
+------------------------------
+
+Let us start by re-implementing the naive research algorithm with a single loop that handles both indices ``k`` and ``j``, soe the former ranges over the text ,and the latter goes over the pattern::
+
+ let naive_search_one_loop text pattern = 
+   let n = length text in
+   let m = length pattern in
+   if n < m then None
+   else
+     let k = ref 0 in
+     let j = ref 0 in
+     let stop = ref false in
+     let res = ref None in
+     while !k <= n && not !stop do
+       if !j = m
+       then (
+         res := Some (!k - !j);
+         stop := true)
+       else if !k = n then (stop := true)
+       else if text.[!k] = pattern.[!j]
+       then (
+         k := !k + 1;
+         j := !j + 1)
+       else  (
+         k := !k - !j + 1;
+         j := 0)
+     done;
+     !res
+
+If a mismatch occurs at a certain position of ``k`` and ``j`` (``text.[!k] = pattern.[!j]``), then ``k`` is set up for ``j`` positions back, plus one (to move forward), while ``j`` is restarted from 0. That is, the variant of the loop is still ``k``.
+
+Returning the Failure Index
+---------------------------
+
+Let us refactor the code of ``naive_search_one_loop`` into a recursive procedure ``search``. While doing so, we also make a dedicated data type `search_result` that either returns an index where the pattern begins (``Found i``) or a position ``j`` at a pattern, at which the text string has ended (``Interrupted j``):: 
+
+ type search_result = 
+   | Found of int
+   | Interrupted of int
+
+The result is than processed by a generic function ``global_search`` that converts it to a value of the option type::
+
+ let global_search search text pattern = 
+   let n = length text in
+   let m = length pattern in
+   let res = search pattern m text n 0 0 in
+   match res with 
+   | Found x -> Some x
+   | _ -> None
+
+ let search_rec = 
+   let rec search pattern m text n j k =
+     if j = m then
+       Found (k - j)
+     else if k = n then
+       Interrupted j
+     else if pattern.[j] = text.[k] then
+       search pattern m text n (j + 1) (k + 1)
+     else
+       search pattern m text n 0 (k - j + 1)
+   in
+   global_search search
+
+So far, we don't make any interesting use of a failure index ``j`` in the case when the inner ``search`` returns ``Interrupted j``
+
+Relating Matched Text and the pattern.
+
 
 
 Comparing performance, again

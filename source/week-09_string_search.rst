@@ -1,7 +1,7 @@
 .. -*- mode: rst -*-
 
-Searching Patterns in Strings
-=============================
+Substring Search
+================
 
 https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_09_StringSearch.ml
 
