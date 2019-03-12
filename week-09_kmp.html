@@ -1,0 +1,560 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>9.3. Knuth–Morris–Pratt Algorithm &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="9.4. Exercises" href="week-09_exercises.html" />
+    <link rel="prev" title="9.2. Rabin-Karp Search" href="week-09_rabin_karp.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-09_string_search.html">9.1. Substring Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_rabin_karp.html">9.2. Rabin-Karp Search</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">9.3. Knuth–Morris–Pratt Algorithm</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#revisiting-the-naive-algorithm">9.3.1. Revisiting the naive algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#returning-the-interrupt-index">9.3.2. Returning the Interrupt Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#relating-matched-text-and-the-pattern">9.3.3. Relating Matched Text and the pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fast-forwarding-search-using-interrupt-index">9.3.4. Fast-Forwarding Search using Interrupt Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extracting-the-interrupt-index">9.3.5. Extracting the Interrupt Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exploiting-the-prefix-equality">9.3.6. Exploiting the Prefix Equality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tabulating-the-interrupt-indices">9.3.7. Tabulating the interrupt indices</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#boot-strapping-the-table">9.3.8. Boot-strapping the table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#comparing-performance-again">9.3.9. Comparing performance, again</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_exercises.html">9.4. Exercises</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a> &raquo;</li>
+        
+      <li>9.3. Knuth–Morris–Pratt Algorithm</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="knuthmorrispratt-algorithm">
+<h1>9.3. Knuth–Morris–Pratt Algorithm<a class="headerlink" href="#knuthmorrispratt-algorithm" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_09_KMP.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_09_KMP.ml</a></p>
+<p>This is the first algorithm for string matching in <span class="math notranslate nohighlight">\(O(n)\)</span>, where <span class="math notranslate nohighlight">\(n\)</span> is the size of the text where the search takes place). It has been independently invented by Donald Knuth and Vaughan Pratt, and James H. Morris, who published it together in a joint paper.</p>
+<p>It is known as one of the most non-trivial basic algorithms, and is commonly just presented as-is, with explanations of its pragmatics and the complexity. In this chapter, we will take a look at a systematic derivation of the algorithm from a naive string search, eventually touching upon a very interesting (although somewhat non-obvious) idea — <em>interrupted partial matches can be used to optimise the search in the rest of the text by “fast-forwarding” through several positions</em>, without re-matching completely starting from the next character.</p>
+<p>The material of this chapter is based on <a class="reference external" href="http://gallium.inria.fr/blog/kmp/">this blog article</a>, which, in its turn is based on <a class="reference external" href="https://www.brics.dk/RS/02/32/BRICS-RS-02-32.pdf">this research paper</a> by <a class="reference external" href="https://www.yale-nus.edu.sg/about/faculty/olivier-danvy/">Prof. Olivier Danvy</a> and his co-authors.</p>
+<div class="section" id="revisiting-the-naive-algorithm">
+<h2>9.3.1. Revisiting the naive algorithm<a class="headerlink" href="#revisiting-the-naive-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>Let us start by re-implementing the naive research algorithm with a single loop that handles both indices <code class="docutils literal notranslate"><span class="pre">k</span></code> and <code class="docutils literal notranslate"><span class="pre">j</span></code>, soe the former ranges over the text ,and the latter goes over the pattern:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">naive_search_one_loop</span> <span class="n">text</span> <span class="n">pattern</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="n">length</span> <span class="n">text</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="n">length</span> <span class="n">pattern</span> <span class="k">in</span>
+  <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="k">then</span> <span class="nc">None</span>
+  <span class="k">else</span>
+    <span class="k">let</span> <span class="n">k</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">0</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">0</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">stop</span> <span class="o">=</span> <span class="n">ref</span> <span class="bp">false</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">ref</span> <span class="nc">None</span> <span class="k">in</span>
+    <span class="k">while</span> <span class="o">!</span><span class="n">k</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">&amp;&amp;</span> <span class="n">not</span> <span class="o">!</span><span class="n">stop</span> <span class="k">do</span>
+      <span class="k">if</span> <span class="o">!</span><span class="n">j</span> <span class="o">=</span> <span class="n">m</span>
+      <span class="k">then</span> <span class="o">(</span>
+        <span class="n">res</span> <span class="o">:=</span> <span class="nc">Some</span> <span class="o">(!</span><span class="n">k</span> <span class="o">-</span> <span class="o">!</span><span class="n">j</span><span class="o">);</span>
+        <span class="n">stop</span> <span class="o">:=</span> <span class="bp">true</span><span class="o">)</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="o">!</span><span class="n">k</span> <span class="o">=</span> <span class="n">n</span> <span class="k">then</span> <span class="o">(</span><span class="n">stop</span> <span class="o">:=</span> <span class="bp">true</span><span class="o">)</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="n">text</span><span class="o">.[!</span><span class="n">k</span><span class="o">]</span> <span class="o">=</span> <span class="n">pattern</span><span class="o">.[!</span><span class="n">j</span><span class="o">]</span>
+      <span class="k">then</span> <span class="o">(</span>
+        <span class="n">k</span> <span class="o">:=</span> <span class="o">!</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="n">j</span> <span class="o">:=</span> <span class="o">!</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+      <span class="k">else</span>  <span class="o">(</span>
+        <span class="n">k</span> <span class="o">:=</span> <span class="o">!</span><span class="n">k</span> <span class="o">-</span> <span class="o">!</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="n">j</span> <span class="o">:=</span> <span class="mi">0</span><span class="o">)</span>
+    <span class="k">done</span><span class="o">;</span>
+    <span class="o">!</span><span class="n">res</span>
+</pre></div>
+</div>
+<p>If a mismatch occurs at a certain position of <code class="docutils literal notranslate"><span class="pre">k</span></code> and <code class="docutils literal notranslate"><span class="pre">j</span></code> (<code class="docutils literal notranslate"><span class="pre">text.[!k]</span> <span class="pre">=</span> <span class="pre">pattern.[!j]</span></code>), then <code class="docutils literal notranslate"><span class="pre">k</span></code> is set up for <code class="docutils literal notranslate"><span class="pre">j</span></code> positions back, plus one (to move forward), while <code class="docutils literal notranslate"><span class="pre">j</span></code> is restarted from 0. That is, the variant of the loop is still <code class="docutils literal notranslate"><span class="pre">k</span></code>.</p>
+</div>
+<div class="section" id="returning-the-interrupt-index">
+<h2>9.3.2. Returning the Interrupt Index<a class="headerlink" href="#returning-the-interrupt-index" title="Permalink to this headline">¶</a></h2>
+<p>Let us refactor the code of <code class="docutils literal notranslate"><span class="pre">naive_search_one_loop</span></code> into a recursive procedure <code class="docutils literal notranslate"><span class="pre">search</span></code>. While doing so, we also make a dedicated data type <cite>search_result</cite> that either returns an index where the pattern begins (<code class="docutils literal notranslate"><span class="pre">Found</span> <span class="pre">i</span></code>) or a position <code class="docutils literal notranslate"><span class="pre">j</span></code> at a pattern, at which the text string has ended (<code class="docutils literal notranslate"><span class="pre">Interrupted</span> <span class="pre">j</span></code>):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">search_result</span> <span class="o">=</span>
+  <span class="o">|</span> <span class="nc">Found</span> <span class="k">of</span> <span class="kt">int</span>
+  <span class="o">|</span> <span class="nc">Interrupted</span> <span class="k">of</span> <span class="kt">int</span>
+</pre></div>
+</div>
+<p>The result is than processed by a generic function <code class="docutils literal notranslate"><span class="pre">global_search</span></code> that converts it to a value of the option type:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">global_search</span> <span class="n">search</span> <span class="n">text</span> <span class="n">pattern</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="n">length</span> <span class="n">text</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="n">length</span> <span class="n">pattern</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="mi">0</span> <span class="mi">0</span> <span class="k">in</span>
+  <span class="k">match</span> <span class="n">res</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">Found</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="nc">Some</span> <span class="n">x</span>
+  <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="nc">None</span>
+
+<span class="k">let</span> <span class="n">search_rec</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="n">j</span> <span class="n">k</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="n">m</span> <span class="k">then</span>
+      <span class="nc">Found</span> <span class="o">(</span><span class="n">k</span> <span class="o">-</span> <span class="n">j</span><span class="o">)</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="n">k</span> <span class="o">=</span> <span class="n">n</span> <span class="k">then</span>
+      <span class="nc">Interrupted</span> <span class="n">j</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="n">pattern</span><span class="o">.[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">text</span><span class="o">.[</span><span class="n">k</span><span class="o">]</span> <span class="k">then</span>
+      <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="o">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+    <span class="k">else</span>
+      <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="mi">0</span> <span class="o">(</span><span class="n">k</span> <span class="o">-</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+  <span class="k">in</span>
+  <span class="n">global_search</span> <span class="n">search</span>
+</pre></div>
+</div>
+<p>The signature of th inner <code class="docutils literal notranslate"><span class="pre">search</span></code> seems to verbose, but it is important for the derivation, which is coming: the first three parameters are the pattern, its size <code class="docutils literal notranslate"><span class="pre">m</span></code> and the text; <code class="docutils literal notranslate"><span class="pre">n</span></code> stands for the size of the text, but it also limits the search range on the right (and will be a subject to manipulation in the future). Finally, <code class="docutils literal notranslate"><span class="pre">j</span></code> and <code class="docutils literal notranslate"><span class="pre">k</span></code> are the current (and also initial for the first run) values of the running indices within <code class="docutils literal notranslate"><span class="pre">pattern</span></code> and <code class="docutils literal notranslate"><span class="pre">text</span></code>, correspondingly.</p>
+<p>So far, we don’t make any interesting use of a interrupt index <code class="docutils literal notranslate"><span class="pre">j</span></code> in the case when the inner <code class="docutils literal notranslate"><span class="pre">search</span></code> returns <code class="docutils literal notranslate"><span class="pre">Interrupted</span> <span class="pre">j</span></code></p>
+</div>
+<div class="section" id="relating-matched-text-and-the-pattern">
+<h2>9.3.3. Relating Matched Text and the pattern<a class="headerlink" href="#relating-matched-text-and-the-pattern" title="Permalink to this headline">¶</a></h2>
+<p>Let us notice the first interesting detail: at any moment, the positions of <code class="docutils literal notranslate"><span class="pre">j</span></code> and <code class="docutils literal notranslate"><span class="pre">k</span></code> relate the <strong>prefix</strong> of the <code class="docutils literal notranslate"><span class="pre">pattern</span></code> and a substring of <code class="docutils literal notranslate"><span class="pre">text</span></code> that fully match. This can be reinforced by the following invariants, instrumenting the <code class="docutils literal notranslate"><span class="pre">search</span></code> body:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">search_inv</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="n">j</span> <span class="n">k</span> <span class="o">=</span>
+    <span class="k">assert</span> <span class="o">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">j</span> <span class="o">&amp;&amp;</span> <span class="n">j</span> <span class="o">&lt;=</span> <span class="n">m</span><span class="o">);</span>
+    <span class="k">assert</span> <span class="o">(</span><span class="n">j</span> <span class="o">&lt;=</span> <span class="n">k</span> <span class="o">&amp;&amp;</span> <span class="n">k</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="o">);</span>
+    <span class="k">assert</span> <span class="o">(</span><span class="n">sub</span> <span class="n">pattern</span> <span class="mi">0</span> <span class="n">j</span> <span class="o">=</span> <span class="n">sub</span> <span class="n">text</span> <span class="o">(</span><span class="n">k</span> <span class="o">-</span> <span class="n">j</span><span class="o">)</span> <span class="n">j</span><span class="o">);</span>
+
+    <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="n">m</span> <span class="k">then</span>
+      <span class="nc">Found</span> <span class="o">(</span><span class="n">k</span> <span class="o">-</span> <span class="n">j</span><span class="o">)</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="n">k</span> <span class="o">=</span> <span class="n">n</span> <span class="k">then</span>
+      <span class="nc">Interrupted</span> <span class="n">j</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="n">pattern</span><span class="o">.[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">text</span><span class="o">.[</span><span class="n">k</span><span class="o">]</span> <span class="k">then</span>
+      <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="o">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+    <span class="k">else</span>
+      <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="mi">0</span> <span class="o">(</span><span class="n">k</span> <span class="o">-</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+  <span class="k">in</span>
+  <span class="n">global_search</span> <span class="n">search</span>
+</pre></div>
+</div>
+<p>Therefore, at the last call <code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">pattern</span> <span class="pre">m</span> <span class="pre">text</span> <span class="pre">n</span> <span class="pre">0</span> <span class="pre">(k</span> <span class="pre">-</span> <span class="pre">j</span> <span class="pre">+</span> <span class="pre">1)</span></code> we might be dropping essential information – the fact that the interval <code class="docutils literal notranslate"><span class="pre">[k</span> <span class="pre">−</span> <span class="pre">j,</span> <span class="pre">k)</span></code> of the text matches the interval <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">j)</span></code> of the pattern.</p>
+</div>
+<div class="section" id="fast-forwarding-search-using-interrupt-index">
+<h2>9.3.4. Fast-Forwarding Search using Interrupt Index<a class="headerlink" href="#fast-forwarding-search-using-interrupt-index" title="Permalink to this headline">¶</a></h2>
+<p>To exploit the information about already-matched prefix of the pattern, let us split the search, after the interruption, in the shifted range <code class="docutils literal notranslate"><span class="pre">[k</span> <span class="pre">−</span> <span class="pre">j</span> <span class="pre">+</span> <span class="pre">1,</span> <span class="pre">n)</span></code> into the search in the intervals <code class="docutils literal notranslate"><span class="pre">[k</span> <span class="pre">−</span> <span class="pre">j</span> <span class="pre">+</span> <span class="pre">1,</span> <span class="pre">k)</span></code> and <code class="docutils literal notranslate"><span class="pre">[k,</span> <span class="pre">n)</span></code>.</p>
+<p>This is possible due to the following fact. For any <code class="docutils literal notranslate"><span class="pre">l</span></code>, such that <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">k</span> <span class="pre">&lt;=</span> <span class="pre">l</span> <span class="pre">&lt;=</span> <span class="pre">n</span></code>, the call <code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">pattern</span> <span class="pre">m</span> <span class="pre">text</span> <span class="pre">n</span> <span class="pre">j</span> <span class="pre">k</span></code> is equivalent to:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">l</span> <span class="n">j</span> <span class="n">k</span> <span class="k">in</span>
+ <span class="k">match</span> <span class="n">result</span> <span class="k">with</span>
+ <span class="o">|</span> <span class="nc">Found</span> <span class="o">_</span> <span class="o">-&gt;</span>
+     <span class="n">result</span>
+ <span class="o">|</span> <span class="nc">Interrupted</span> <span class="n">j&#39;</span> <span class="o">-&gt;</span>
+     <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="n">j&#39;</span> <span class="n">l</span>
+</pre></div>
+</div>
+<p>That is, we can search up to <code class="docutils literal notranslate"><span class="pre">l</span></code>, and, if interrupted, start from searching <code class="docutils literal notranslate"><span class="pre">l</span></code> from an fast-forwarded position <code class="docutils literal notranslate"><span class="pre">j'</span></code>. That is due to the fact that we have managed to reach <code class="docutils literal notranslate"><span class="pre">l</span></code> and got <code class="docutils literal notranslate"><span class="pre">Interrupted</span> <span class="pre">j'</span></code>, so there is no need to re-check the first <code class="docutils literal notranslate"><span class="pre">j'</span> <span class="pre">-</span> <span class="pre">1</span></code> pattern characters as they match the suffix <code class="docutils literal notranslate"><span class="pre">[k,</span> <span class="pre">l)</span></code> of <code class="docutils literal notranslate"><span class="pre">text</span></code>.</p>
+<p>By using this observation, we can split the last call in the previous version of <code class="docutils literal notranslate"><span class="pre">search</span></code> into the case <code class="docutils literal notranslate"><span class="pre">j</span> <span class="pre">=</span> <span class="pre">0</span></code> (which is simple to handle by just incrementing <code class="docutils literal notranslate"><span class="pre">k</span></code>), and the case of <code class="docutils literal notranslate"><span class="pre">j</span> <span class="pre">&lt;&gt;</span> <span class="pre">0</span></code>, in which case we will calculate the interruption index for computing the search starting at <code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">-</span> <span class="pre">j</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">search_with_shift</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="n">j</span> <span class="n">k</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="n">m</span> <span class="k">then</span>
+    <span class="nc">Found</span> <span class="o">(</span><span class="n">k</span> <span class="o">-</span> <span class="n">j</span><span class="o">)</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">k</span> <span class="o">=</span> <span class="n">n</span> <span class="k">then</span>
+    <span class="nc">Interrupted</span> <span class="n">j</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">pattern</span><span class="o">.[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">text</span><span class="o">.[</span><span class="n">k</span><span class="o">]</span> <span class="k">then</span>
+    <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="o">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
+    <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="mi">0</span> <span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+  <span class="k">else</span>
+    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">k</span> <span class="mi">0</span> <span class="o">(</span><span class="n">k</span> <span class="o">-</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">match</span> <span class="n">result</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">Found</span> <span class="o">_</span> <span class="o">-&gt;</span>
+        <span class="n">result</span>
+    <span class="o">|</span> <span class="nc">Interrupted</span> <span class="n">j&#39;</span> <span class="o">-&gt;</span> <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="n">j&#39;</span> <span class="n">k</span>
+  <span class="k">in</span>
+  <span class="n">global_search</span> <span class="n">search</span>
+</pre></div>
+</div>
+<p>Let us notice that the search <code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">pattern</span> <span class="pre">m</span> <span class="pre">text</span> <span class="pre">k</span> <span class="pre">0</span> <span class="pre">(k</span> <span class="pre">-</span> <span class="pre">j</span> <span class="pre">+</span> <span class="pre">1)</span></code> is deemed to fail, as it searches in the range <code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">-</span> <span class="pre">(k</span> <span class="pre">-</span> <span class="pre">j</span> <span class="pre">+</span> <span class="pre">1)</span> <span class="pre">=</span> <span class="pre">j</span> <span class="pre">-</span> <span class="pre">1</span> <span class="pre">&lt;</span> <span class="pre">m</span></code>. However, when it fails, it will give us <code class="docutils literal notranslate"><span class="pre">j'</span></code>, such that it can be used as an initial position in a pattern when starting at <code class="docutils literal notranslate"><span class="pre">k</span></code>.</p>
+<p>Notice that there is some nicely hidden dependency there: the call to <code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">pattern</span> <span class="pre">m</span> <span class="pre">text</span> <span class="pre">k</span> <span class="pre">0</span> <span class="pre">(k</span> <span class="pre">-</span> <span class="pre">j</span> <span class="pre">+</span> <span class="pre">1)</span></code> might run multiple smaller searches recursively, eventually hitting the right end of the range (i.e., <code class="docutils literal notranslate"><span class="pre">k</span></code>). As <code class="docutils literal notranslate"><span class="pre">Interrupted</span> <span class="pre">j'</span></code> is only returned when it happens, we can be sure that this is correct answer to the question “which position” should I start from processing the pattern, when I start processing the text from <code class="docutils literal notranslate"><span class="pre">k</span></code>. It might very well be the case that <code class="docutils literal notranslate"><span class="pre">j'</span> <span class="pre">=</span> <span class="pre">0</span></code>.</p>
+</div>
+<div class="section" id="extracting-the-interrupt-index">
+<h2>9.3.5. Extracting the Interrupt Index<a class="headerlink" href="#extracting-the-interrupt-index" title="Permalink to this headline">¶</a></h2>
+<p>As the goal of calling <code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">pattern</span> <span class="pre">m</span> <span class="pre">text</span> <span class="pre">k</span> <span class="pre">0</span> <span class="pre">(k</span> <span class="pre">-</span> <span class="pre">j</span> <span class="pre">+</span> <span class="pre">1)</span></code> in the code above is only to extract the fast-forwarding information, and it always fails, we can now make use of this information and eliminate some administrative “boilerplate” code:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">assertInterrupted</span> <span class="o">=</span> <span class="k">function</span>
+  <span class="o">|</span> <span class="nc">Found</span> <span class="o">_</span>       <span class="o">-&gt;</span> <span class="k">assert</span> <span class="bp">false</span>
+  <span class="o">|</span> <span class="nc">Interrupted</span> <span class="n">j</span> <span class="o">-&gt;</span> <span class="n">j</span>
+
+
+<span class="k">let</span> <span class="n">search_assert</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="n">j</span> <span class="n">k</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="n">m</span> <span class="k">then</span>
+    <span class="nc">Found</span> <span class="o">(</span><span class="n">k</span> <span class="o">-</span> <span class="n">j</span><span class="o">)</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">k</span> <span class="o">=</span> <span class="n">n</span> <span class="k">then</span>
+    <span class="nc">Interrupted</span> <span class="n">j</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">pattern</span><span class="o">.[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">text</span><span class="o">.[</span><span class="n">k</span><span class="o">]</span> <span class="k">then</span>
+    <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="o">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
+    <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="mi">0</span> <span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+  <span class="k">else</span>
+    <span class="k">let</span> <span class="n">j&#39;</span> <span class="o">=</span> <span class="n">assertInterrupted</span> <span class="o">@@</span> <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">k</span> <span class="mi">0</span> <span class="o">(</span><span class="n">k</span> <span class="o">-</span> <span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="k">in</span>
+    <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="n">j&#39;</span> <span class="n">k</span>
+  <span class="k">in</span>
+  <span class="n">global_search</span> <span class="n">search</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exploiting-the-prefix-equality">
+<h2>9.3.6. Exploiting the Prefix Equality<a class="headerlink" href="#exploiting-the-prefix-equality" title="Permalink to this headline">¶</a></h2>
+<p>From the explanations above, recall that the sub-strings <code class="docutils literal notranslate"><span class="pre">sub</span> <span class="pre">pattern</span> <span class="pre">0</span> <span class="pre">j</span></code> and <code class="docutils literal notranslate"><span class="pre">sub</span> <span class="pre">text</span> <span class="pre">(k</span> <span class="pre">-</span> <span class="pre">j)</span> <span class="pre">j</span></code> are equal. Therefore, the sub-call <code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">pattern</span> <span class="pre">m</span> <span class="pre">text</span> <span class="pre">k</span> <span class="pre">0</span> <span class="pre">(k</span> <span class="pre">-</span> <span class="pre">j</span> <span class="pre">+</span> <span class="pre">1)</span></code> searches for the pattern (or, rather, the interrupt index) within (a prefix of a suffix of) the pattern itself. Therefore, we can remove <code class="docutils literal notranslate"><span class="pre">text</span></code> from there, thus making this call work exclusively on a pattern:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">search_via_pattern</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="n">j</span> <span class="n">k</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="n">m</span> <span class="k">then</span>
+    <span class="nc">Found</span> <span class="o">(</span><span class="n">k</span> <span class="o">-</span> <span class="n">j</span><span class="o">)</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">k</span> <span class="o">=</span> <span class="n">n</span> <span class="k">then</span>
+    <span class="nc">Interrupted</span> <span class="n">j</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">pattern</span><span class="o">.[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">text</span><span class="o">.[</span><span class="n">k</span><span class="o">]</span> <span class="k">then</span>
+    <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="o">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
+    <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="mi">0</span> <span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+  <span class="k">else</span>
+    <span class="c">(* So we&#39;re looking in our own prefix *)</span>
+    <span class="k">let</span> <span class="n">j&#39;</span> <span class="o">=</span> <span class="n">assertInterrupted</span> <span class="o">@@</span> <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">pattern</span> <span class="n">j</span> <span class="mi">0</span> <span class="mi">1</span> <span class="k">in</span>
+    <span class="k">assert</span> <span class="o">(</span><span class="n">j&#39;</span> <span class="o">&lt;</span> <span class="n">j</span><span class="o">);</span>
+    <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="n">j&#39;</span> <span class="n">k</span>
+
+  <span class="k">in</span>
+  <span class="n">global_search</span> <span class="n">search</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tabulating-the-interrupt-indices">
+<h2>9.3.7. Tabulating the interrupt indices<a class="headerlink" href="#tabulating-the-interrupt-indices" title="Permalink to this headline">¶</a></h2>
+<p>Since the information about interruptions and fast-forwarding can be calculating only using the <code class="docutils literal notranslate"><span class="pre">pattern</span></code>, without <code class="docutils literal notranslate"><span class="pre">text</span></code> involved, we might want to pre-compiled it and tabulate before running the search, obtaining a <code class="docutils literal notranslate"><span class="pre">table</span> <span class="pre">:</span> <span class="pre">int</span> <span class="pre">array</span></code> with this inforations. In other words the value <code class="docutils literal notranslate"><span class="pre">j'</span> <span class="pre">=</span> <span class="pre">table.(j)</span></code> answers a question: how many positions <code class="docutils literal notranslate"><span class="pre">j'</span></code> of the pattern can I skip when starting to look in a text, that begins with my pattern’s substring <code class="docutils literal notranslate"><span class="pre">pattern[1</span> <span class="pre">..</span> <span class="pre">j]</span></code> (i.e., precisely the value <code class="docutils literal notranslate"><span class="pre">search</span> <span class="pre">pattern</span> <span class="pre">m</span> <span class="pre">pattern</span> <span class="pre">j</span> <span class="pre">0</span> <span class="pre">1</span></code>).</p>
+<p>If we had a table like this, we could forumlate <code class="docutils literal notranslate"><span class="pre">search</span></code> as the following tail-recursive procedure:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">loop</span> <span class="n">table</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="n">j</span> <span class="n">k</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="n">m</span> <span class="k">then</span>
+    <span class="nc">Found</span> <span class="o">(</span><span class="n">k</span> <span class="o">-</span> <span class="n">j</span><span class="o">)</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">k</span> <span class="o">=</span> <span class="n">n</span> <span class="k">then</span>
+    <span class="nc">Interrupted</span> <span class="n">j</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">pattern</span><span class="o">.[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">text</span><span class="o">.[</span><span class="n">k</span><span class="o">]</span> <span class="k">then</span>
+    <span class="n">loop</span> <span class="n">table</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="o">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
+    <span class="n">loop</span> <span class="n">table</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="mi">0</span> <span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+  <span class="k">else</span>
+    <span class="n">loop</span> <span class="n">table</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="n">table</span><span class="o">.(</span><span class="n">j</span><span class="o">)</span> <span class="n">k</span>
+</pre></div>
+</div>
+<p>To populate such a table, however, we will need the search procedure itself. However, the size of the pattern <code class="docutils literal notranslate"><span class="pre">m</span></code> is typically much smaller than the size of the text, so creating this table pays off. Int the following implementation the inner procedure <code class="docutils literal notranslate"><span class="pre">loop_search</span></code> defines the standard <code class="docutils literal notranslate"><span class="pre">search</span></code> (as before) and uses to populate the table, which is the used for the main matching procedure:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">search_with_inefficient_init</span> <span class="o">=</span>
+
+  <span class="k">let</span> <span class="n">loop_search</span> <span class="n">pattern</span> <span class="o">_</span> <span class="n">text</span> <span class="n">n</span> <span class="n">j</span> <span class="n">k</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="k">rec</span> <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="n">j</span> <span class="n">k</span> <span class="o">=</span>
+      <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="n">m</span> <span class="k">then</span>
+        <span class="nc">Found</span> <span class="o">(</span><span class="n">k</span> <span class="o">-</span> <span class="n">j</span><span class="o">)</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="n">k</span> <span class="o">=</span> <span class="n">n</span> <span class="k">then</span>
+        <span class="nc">Interrupted</span> <span class="n">j</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="n">pattern</span><span class="o">.[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">text</span><span class="o">.[</span><span class="n">k</span><span class="o">]</span> <span class="k">then</span>
+        <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="o">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
+        <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="mi">0</span> <span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+      <span class="k">else</span>
+        <span class="c">(* So we&#39;re looking in our own prefix *)</span>
+        <span class="k">let</span> <span class="n">j&#39;</span> <span class="o">=</span> <span class="n">assertInterrupted</span> <span class="o">@@</span> <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">pattern</span> <span class="n">j</span> <span class="mi">0</span> <span class="mi">1</span> <span class="k">in</span>
+        <span class="k">assert</span> <span class="o">(</span><span class="n">j&#39;</span> <span class="o">&lt;</span> <span class="n">j</span><span class="o">);</span>
+        <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="n">j&#39;</span> <span class="n">k</span>
+    <span class="k">in</span>
+
+    <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="n">length</span> <span class="n">pattern</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">table</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">m</span> <span class="mi">0</span> <span class="k">in</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">to</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+      <span class="n">table</span><span class="o">.(</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">assertInterrupted</span> <span class="o">@@</span> <span class="n">search</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">pattern</span> <span class="n">j</span> <span class="mi">0</span> <span class="mi">1</span>
+    <span class="k">done</span><span class="o">;</span>
+
+    <span class="k">let</span> <span class="k">rec</span> <span class="n">loop</span> <span class="n">table</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="n">j</span> <span class="n">k</span> <span class="o">=</span>
+      <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="n">m</span> <span class="k">then</span>
+        <span class="nc">Found</span> <span class="o">(</span><span class="n">k</span> <span class="o">-</span> <span class="n">j</span><span class="o">)</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="n">k</span> <span class="o">=</span> <span class="n">n</span> <span class="k">then</span>
+        <span class="nc">Interrupted</span> <span class="n">j</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="n">pattern</span><span class="o">.[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">text</span><span class="o">.[</span><span class="n">k</span><span class="o">]</span> <span class="k">then</span>
+        <span class="n">loop</span> <span class="n">table</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="o">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
+        <span class="n">loop</span> <span class="n">table</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="mi">0</span> <span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+      <span class="k">else</span>
+        <span class="n">loop</span> <span class="n">table</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="n">table</span><span class="o">.(</span><span class="n">j</span><span class="o">)</span> <span class="n">k</span>
+    <span class="k">in</span>
+
+    <span class="n">loop</span> <span class="n">table</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="n">j</span> <span class="n">k</span>
+  <span class="k">in</span>
+
+  <span class="n">global_search</span> <span class="n">loop_search</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="boot-strapping-the-table">
+<h2>9.3.8. Boot-strapping the table<a class="headerlink" href="#boot-strapping-the-table" title="Permalink to this headline">¶</a></h2>
+<p>We can rewrite the code in a more efficient manner by using the same <code class="docutils literal notranslate"><span class="pre">loop</span></code> function to populate the table. To do so, let us notice the two following intricate observation.</p>
+<p>The value <code class="docutils literal notranslate"><span class="pre">table.(j)</span></code> can be computed in terms of the tabulated values at <code class="docutils literal notranslate"><span class="pre">j</span> <span class="pre">-</span> <span class="pre">1</span></code> and smaller. The base case is <code class="docutils literal notranslate"><span class="pre">j</span> <span class="pre">=</span> <span class="pre">1</span></code> corresponds to an empty interval, so <code class="docutils literal notranslate"><span class="pre">table.(j)</span> <span class="pre">=</span> <span class="pre">0</span></code>, and we can start populating the table from <code class="docutils literal notranslate"><span class="pre">j</span> <span class="pre">=</span> <span class="pre">2</span></code>. With this in mind, we can rewrite the search as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">search_kmp</span> <span class="o">=</span>
+
+  <span class="k">let</span> <span class="n">loop_search</span> <span class="n">pattern</span> <span class="o">_</span> <span class="n">text</span> <span class="n">n</span> <span class="n">j</span> <span class="n">k</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="k">rec</span> <span class="n">loop</span> <span class="n">table</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="n">j</span> <span class="n">k</span> <span class="o">=</span>
+      <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="n">m</span> <span class="k">then</span>
+        <span class="nc">Found</span> <span class="o">(</span><span class="n">k</span> <span class="o">-</span> <span class="n">j</span><span class="o">)</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="n">k</span> <span class="o">=</span> <span class="n">n</span> <span class="k">then</span>
+        <span class="nc">Interrupted</span> <span class="n">j</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="n">pattern</span><span class="o">.[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">text</span><span class="o">.[</span><span class="n">k</span><span class="o">]</span> <span class="k">then</span>
+        <span class="n">loop</span> <span class="n">table</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="o">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span>
+        <span class="n">loop</span> <span class="n">table</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="mi">0</span> <span class="o">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+      <span class="k">else</span>
+        <span class="n">loop</span> <span class="n">table</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="n">table</span><span class="o">.(</span><span class="n">j</span><span class="o">)</span> <span class="n">k</span>
+    <span class="k">in</span>
+    <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="n">length</span> <span class="n">pattern</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">table</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">m</span> <span class="mi">0</span> <span class="k">in</span>
+
+    <span class="c">(*  In the case of j = 1, j&#39; is 0 *)</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">to</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+      <span class="n">table</span><span class="o">.(</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">assertInterrupted</span> <span class="o">@@</span>
+        <span class="n">loop</span> <span class="n">table</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">pattern</span> <span class="n">j</span> <span class="n">table</span><span class="o">.(</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span>
+    <span class="k">done</span><span class="o">;</span>
+    <span class="n">loop</span> <span class="n">table</span> <span class="n">pattern</span> <span class="n">m</span> <span class="n">text</span> <span class="n">n</span> <span class="n">j</span> <span class="n">k</span>
+  <span class="k">in</span>
+
+  <span class="n">global_search</span> <span class="n">loop_search</span>
+</pre></div>
+</div>
+<p>Notice that the mutual dependency between <code class="docutils literal notranslate"><span class="pre">loop</span></code> and <code class="docutils literal notranslate"><span class="pre">table</span></code> is resolved, as <code class="docutils literal notranslate"><span class="pre">table</span></code> is mutable, hence it can be altered by <code class="docutils literal notranslate"><span class="pre">loop</span></code> a-posteriori (the trick known and Landin’s knot – A technique named after <a class="reference external" href="https://en.wikipedia.org/wiki/Peter_Landin">Pater Landin</a> for implementing recursive functions using mutable state).</p>
+<p>This concludes our derivation of the Knuth-Morris-Pratt (KMP) algorithm, whose main idea is to <em>pre-compute</em> the table of fast-forwarding shifts for a given pattern, which is then used to avoid redundant work for re-matching already observed parts and the corresponding back-tracking.</p>
+<p>The fact that the lookup in the table takes constant and the main iteration through <code class="docutils literal notranslate"><span class="pre">text</span></code> always progresses without backtracking, yields the linear complexity result <span class="math notranslate nohighlight">\(O(n)\)</span> for the final algorithm.</p>
+</div>
+<div class="section" id="comparing-performance-again">
+<h2>9.3.9. Comparing performance, again<a class="headerlink" href="#comparing-performance-again" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_09_Comparison.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_09_Comparison.ml</a></p>
+<p>Let us compare the three studies string matching algorithms on regular and repetitive strings:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">compare_string_search</span> <span class="n">n</span> <span class="n">m</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">ps</span><span class="o">,</span> <span class="n">pn</span><span class="o">)</span> <span class="o">=</span> <span class="n">generate_string_and_patterns</span> <span class="n">n</span> <span class="n">m</span> <span class="k">in</span>
+  <span class="n">evaluate_search</span> <span class="n">naive_search</span> <span class="s2">&quot;Naive&quot;</span> <span class="n">s</span> <span class="n">ps</span> <span class="n">pn</span><span class="o">;</span>
+  <span class="n">evaluate_search</span> <span class="n">rabin_karp_search</span> <span class="s2">&quot;Rabin-Karp&quot;</span> <span class="n">s</span> <span class="n">ps</span> <span class="n">pn</span><span class="o">;</span>
+  <span class="n">evaluate_search</span> <span class="n">search_kmp</span> <span class="s2">&quot;Knuth-Morris-Pratt&quot;</span>  <span class="n">s</span> <span class="n">ps</span> <span class="n">pn</span>
+
+<span class="k">let</span> <span class="n">compare_string_search_repetitive</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">ps</span><span class="o">,</span> <span class="n">pn</span><span class="o">)</span> <span class="o">=</span> <span class="n">repetitive_string</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="n">evaluate_search</span> <span class="n">naive_search</span>  <span class="s2">&quot;Naive&quot;</span>  <span class="n">s</span> <span class="n">ps</span> <span class="n">pn</span><span class="o">;</span>
+  <span class="n">evaluate_search</span> <span class="n">rabin_karp_search</span> <span class="s2">&quot;Rabin-Karp&quot;</span>  <span class="n">s</span> <span class="n">ps</span> <span class="n">pn</span><span class="o">;</span>
+  <span class="n">evaluate_search</span> <span class="n">search_kmp</span> <span class="s2">&quot;Knuth-Morris-Pratt&quot;</span>  <span class="n">s</span> <span class="n">ps</span> <span class="n">pn</span>
+</pre></div>
+</div>
+<p>Here’s the result for repetitive strings, showing that RK and KMP are very close:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="n">compare_string_search_repetitive</span> <span class="mi">50000</span><span class="o">;;</span>
+
+<span class="o">[</span><span class="nc">Naive</span><span class="o">]</span> <span class="nc">Pattern</span> <span class="k">in</span><span class="o">:</span> <span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">1</span><span class="o">.</span><span class="mi">310680</span> <span class="n">sec</span>
+<span class="o">[</span><span class="nc">Naive</span><span class="o">]</span> <span class="nc">Pattern</span> <span class="n">not</span> <span class="k">in</span><span class="o">:</span> <span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">1</span><span class="o">.</span><span class="mi">312447</span> <span class="n">sec</span>
+
+<span class="o">[</span><span class="nc">Rabin</span><span class="o">-</span><span class="nc">Karp</span><span class="o">]</span> <span class="nc">Pattern</span> <span class="k">in</span><span class="o">:</span> <span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">060640</span> <span class="n">sec</span>
+<span class="o">[</span><span class="nc">Rabin</span><span class="o">-</span><span class="nc">Karp</span><span class="o">]</span> <span class="nc">Pattern</span> <span class="n">not</span> <span class="k">in</span><span class="o">:</span> <span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">059571</span> <span class="n">sec</span>
+
+<span class="o">[</span><span class="nc">Knuth</span><span class="o">-</span><span class="nc">Morris</span><span class="o">-</span><span class="nc">Pratt</span><span class="o">]</span> <span class="nc">Pattern</span> <span class="k">in</span><span class="o">:</span> <span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">078809</span> <span class="n">sec</span>
+<span class="o">[</span><span class="nc">Knuth</span><span class="o">-</span><span class="nc">Morris</span><span class="o">-</span><span class="nc">Pratt</span><span class="o">]</span> <span class="nc">Pattern</span> <span class="n">not</span> <span class="k">in</span><span class="o">:</span> <span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">077379</span> <span class="n">sec</span>
+</pre></div>
+</div>
+<p>And here’s the result for arbitrary strings, showing the superiority of KMP on randomised inputs:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span>  <span class="n">compare_string_search</span> <span class="mi">20000</span> <span class="mi">50</span><span class="o">;;</span>
+
+<span class="o">[</span><span class="nc">Naive</span><span class="o">]</span> <span class="nc">Pattern</span> <span class="k">in</span><span class="o">:</span> <span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">1</span><span class="o">.</span><span class="mi">027522</span> <span class="n">sec</span>
+<span class="o">[</span><span class="nc">Naive</span><span class="o">]</span> <span class="nc">Pattern</span> <span class="n">not</span> <span class="k">in</span><span class="o">:</span> <span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">2</span><span class="o">.</span><span class="mi">001959</span> <span class="n">sec</span>
+
+<span class="o">[</span><span class="nc">Rabin</span><span class="o">-</span><span class="nc">Karp</span><span class="o">]</span> <span class="nc">Pattern</span> <span class="k">in</span><span class="o">:</span> <span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">1</span><span class="o">.</span><span class="mi">106642</span> <span class="n">sec</span>
+<span class="o">[</span><span class="nc">Rabin</span><span class="o">-</span><span class="nc">Karp</span><span class="o">]</span> <span class="nc">Pattern</span> <span class="n">not</span> <span class="k">in</span><span class="o">:</span> <span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">2</span><span class="o">.</span><span class="mi">166105</span> <span class="n">sec</span>
+
+<span class="o">[</span><span class="nc">Knuth</span><span class="o">-</span><span class="nc">Morris</span><span class="o">-</span><span class="nc">Pratt</span><span class="o">]</span> <span class="nc">Pattern</span> <span class="k">in</span><span class="o">:</span> <span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">762785</span> <span class="n">sec</span>
+<span class="o">[</span><span class="nc">Knuth</span><span class="o">-</span><span class="nc">Morris</span><span class="o">-</span><span class="nc">Pratt</span><span class="o">]</span> <span class="nc">Pattern</span> <span class="n">not</span> <span class="k">in</span><span class="o">:</span> <span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">1</span><span class="o">.</span><span class="mi">421093</span> <span class="n">sec</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-09_exercises.html" class="btn btn-neutral float-right" title="9.4. Exercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-09_rabin_karp.html" class="btn btn-neutral" title="9.2. Rabin-Karp Search" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

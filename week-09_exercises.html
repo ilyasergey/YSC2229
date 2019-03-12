@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>9.4. Exercises &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="9.3. Knuth–Morris–Pratt Algorithm" href="week-09_kmp.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-09_string_search.html">9.1. Substring Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_rabin_karp.html">9.2. Rabin-Karp Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_kmp.html">9.3. Knuth–Morris–Pratt Algorithm</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">9.4. Exercises</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mandatory-exercises">9.4.1. Mandatory exercises</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#recommended-exercises">9.4.2. Recommended exercises</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-1">9.4.3. Exercise 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-2">9.4.4. Exercise 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-3">9.4.5. Exercise 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-4">9.4.6. Exercise 4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-5">9.4.7. Exercise 5</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a> &raquo;</li>
+        
+      <li>9.4. Exercises</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="exercises">
+<span id="exercises-9"></span><h1>9.4. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="mandatory-exercises">
+<h2>9.4.1. Mandatory exercises<a class="headerlink" href="#mandatory-exercises" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="#exercise-url-shortener"><span class="std std-ref">Exercise 1</span></a>
+Implementing a URL shortener.</li>
+<li><a class="reference internal" href="#exercise-find-all"><span class="std std-ref">Exercise 2</span></a>
+Finding all pattern occurrences.</li>
+<li><a class="reference internal" href="#exercise-cyclic-rotation-check"><span class="std std-ref">Exercise 3</span></a>
+Cyclic rotation check.</li>
+<li><a class="reference internal" href="#exercise-right-to-left"><span class="std std-ref">Exercise 4</span></a>
+Processing a pattern right-to-left</li>
+</ul>
+</div>
+<div class="section" id="recommended-exercises">
+<h2>9.4.2. Recommended exercises<a class="headerlink" href="#recommended-exercises" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="#exercise-palindrome"><span class="std std-ref">Exercise 5</span></a>
+Detecting palindromes using hashing.</li>
+</ul>
+</div>
+<div class="section" id="exercise-1">
+<span id="exercise-url-shortener"></span><h2>9.4.3. Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<p>How to shorten the URL? You can imagine a service (a function with a state) run on a server, to which you make a call and it generates a fresh random URL and sends it back. But how does it check for uniqueness of the fresh URL? Implement such an abstract data type with a method <code class="docutils literal notranslate"><span class="pre">generate_fresh_url</span> <span class="pre">:</span> <span class="pre">unit</span> <span class="pre">-&gt;</span> <span class="pre">string</span></code> by employing a Bloom filter to tell if this short URL has already been generated earlier, and keep generating new ones unti it returns false. As the filter is in memory, this will be cheaper than querying a database of previously generated URLs.</p>
+</div>
+<div class="section" id="exercise-2">
+<span id="exercise-find-all"></span><h2>9.4.4. Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<p>Modify a naive pattern search and Rabin-Karp search (either loop-based or recursive) so they would return a list of all occurrences of a pattern in a string (including overlapping ones). Design an automated randomised test suite for those procedures in the style of the ones shown in this lecture.</p>
+</div>
+<div class="section" id="exercise-3">
+<span id="exercise-cyclic-rotation-check"></span><h2>9.4.5. Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<p>Write a program that, given two strings, determins whether one is a cyclic rotation of the other. For instance it should identify <code class="docutils literal notranslate"><span class="pre">lenusya</span></code> as a cyclic rotation of <code class="docutils literal notranslate"><span class="pre">yalenus</span></code>. Design automated randomised tests for this program.</p>
+</div>
+<div class="section" id="exercise-4">
+<span id="exercise-right-to-left"></span><h2>9.4.6. Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
+<p>Implement a pattern search in a text, os it would explore the pattern right-to-left, but the main text left-to-right. Try to think of optimisations based on the characters in the pattern to optimise your search and explain them in your report. Use the randomised automated tests to validate your implementation.</p>
+</div>
+<div class="section" id="exercise-5">
+<span id="exercise-palindrome"></span><h2>9.4.7. Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
+<p>Using the idea of a rolling hash from Rabin-Karp algorithm, implement the procedure for efficiently finding a smallest number <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">&gt;</span> <span class="pre">1</span></code> of a string <code class="docutils literal notranslate"><span class="pre">s</span></code>, such that that the substring <code class="docutils literal notranslate"><span class="pre">s[0</span> <span class="pre">..</span> <span class="pre">i]</span></code> is a palindrome. For instance, for <code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">=</span> <span class="pre">&quot;abcbadef</span></code>, the result is <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">=</span> <span class="pre">Some</span> <span class="pre">5</span></code>, and for <code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">=</span> <span class="pre">&quot;abcbgdef</span></code> the result is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="week-09_kmp.html" class="btn btn-neutral" title="9.3. Knuth–Morris–Pratt Algorithm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

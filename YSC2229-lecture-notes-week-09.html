@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>9. YSC2229 Lecture Notes, Week 09 &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="9.1. Substring Search" href="week-09_string_search.html" />
+    <link rel="prev" title="8.4. Exercises" href="week-08_exercises.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">9. YSC2229 Lecture Notes, Week 09</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-09_string_search.html">9.1. Substring Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_rabin_karp.html">9.2. Rabin-Karp Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_kmp.html">9.3. Knuth–Morris–Pratt Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_exercises.html">9.4. Exercises</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>9. YSC2229 Lecture Notes, Week 09</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ysc2229-lecture-notes-week-09">
+<h1>9. YSC2229 Lecture Notes, Week 09<a class="headerlink" href="#ysc2229-lecture-notes-week-09" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="week-09_string_search.html">9.1. Substring Search</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-09_string_search.html#testing-a-search-procedure">9.1.1. Testing a search procedure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_string_search.html#a-naive-search">9.1.2. A naive search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_string_search.html#a-recursive-version-of-the-naive-search">9.1.3. A recursive version of the naive search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_string_search.html#generating-strings-for-testing-search-function">9.1.4. Generating strings for testing search function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_string_search.html#testing-naive-search">9.1.5. Testing naive search</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-09_rabin_karp.html">9.2. Rabin-Karp Search</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-09_rabin_karp.html#recursive-version-of-rabin-karp-search">9.2.1. Recursive version of Rabin-Karp search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_rabin_karp.html#comparing-performance-of-search-procedures">9.2.2. Comparing performance of search procedures</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-09_kmp.html">9.3. Knuth–Morris–Pratt Algorithm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-09_kmp.html#revisiting-the-naive-algorithm">9.3.1. Revisiting the naive algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_kmp.html#returning-the-interrupt-index">9.3.2. Returning the Interrupt Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_kmp.html#relating-matched-text-and-the-pattern">9.3.3. Relating Matched Text and the pattern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_kmp.html#fast-forwarding-search-using-interrupt-index">9.3.4. Fast-Forwarding Search using Interrupt Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_kmp.html#extracting-the-interrupt-index">9.3.5. Extracting the Interrupt Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_kmp.html#exploiting-the-prefix-equality">9.3.6. Exploiting the Prefix Equality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_kmp.html#tabulating-the-interrupt-indices">9.3.7. Tabulating the interrupt indices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_kmp.html#boot-strapping-the-table">9.3.8. Boot-strapping the table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_kmp.html#comparing-performance-again">9.3.9. Comparing performance, again</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-09_exercises.html">9.4. Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-09_exercises.html#mandatory-exercises">9.4.1. Mandatory exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_exercises.html#recommended-exercises">9.4.2. Recommended exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_exercises.html#exercise-1">9.4.3. Exercise 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_exercises.html#exercise-2">9.4.4. Exercise 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_exercises.html#exercise-3">9.4.5. Exercise 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_exercises.html#exercise-4">9.4.6. Exercise 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09_exercises.html#exercise-5">9.4.7. Exercise 5</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p><strong>Supplementary materials</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_09_StringSearch.ml">Naive String Search</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_09_RabinKarp.ml">Rabin-Karp algorithm</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_09_KMP.ml">Knuth-Morris-Pratt algorithm</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_09_Comparison.ml">Comparison of performance</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_09_Tests.ml">Automated Tests</a></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-09_string_search.html" class="btn btn-neutral float-right" title="9.1. Substring Search" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-08_exercises.html" class="btn btn-neutral" title="8.4. Exercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="9. YSC2229 Lecture Notes, Week 09" href="YSC2229-lecture-notes-week-09.html" />
     <link rel="prev" title="8.3. Bloom Filters and Their Applications" href="week-08_bloom.html" /> 
 
   
@@ -95,11 +96,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#exercise-1">8.4.3. Exercise 1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#exercise-2">8.4.4. Exercise 2</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#exercise-3">8.4.5. Exercise 3</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#exercise-4">8.4.6. Exercise 4</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a></li>
 </ul>
 
             
@@ -179,8 +180,6 @@ Testing a stack.</li>
 Testing a queue.</li>
 <li><a class="reference internal" href="#exercise-resize-bloom"><span class="std std-ref">Exercise 3</span></a>
 A resizable insert-only hash-table with a Bloom filter.</li>
-<li><a class="reference internal" href="#exercise-url-shortener"><span class="std std-ref">Exercise 4</span></a>
-Implementing a URL shortener.</li>
 </ul>
 </div>
 <div class="section" id="exercise-1">
@@ -195,10 +194,6 @@ Implementing a URL shortener.</li>
 <span id="exercise-resize-bloom"></span><h2>8.4.5. Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
 <p>Implement a resizable insert-only hash-table with a bloom filter.  Compare its performance to a regular resizable hash-table.</p>
 </div>
-<div class="section" id="exercise-4">
-<span id="exercise-url-shortener"></span><h2>8.4.6. Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
-<p>How to shorten the URL? You can imagine a service (a function with a state) run on a server, to which you make a call and it generates a fresh random URL and sends it back. But how does it check for uniqueness of the fresh URL? Implement such a structure by useing a Bloom filter to tell if this short URL has already been generated earlier, and keep generating new ones unti it returns false. As the filter is in memory, this will be cheaper than querying a database of previously generated URLs.</p>
-</div>
 </div>
 
 
@@ -208,6 +203,8 @@ Implementing a URL shortener.</li>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="YSC2229-lecture-notes-week-09.html" class="btn btn-neutral float-right" title="9. YSC2229 Lecture Notes, Week 09" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="week-08_bloom.html" class="btn btn-neutral" title="8.3. Bloom Filters and Their Applications" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
