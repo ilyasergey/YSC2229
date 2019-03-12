@@ -3,6 +3,8 @@
 Knuth–Morris–Pratt Algorithm
 ============================
 
+https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_09_KMP.ml
+
 This is the first algorithm for string matching in :math:`O(n)`, where :math:`n` is the size of the text where the search takes place). It has been independently invented by Donald Knuth and Vaughan Pratt, and James H. Morris, who published it together in a joint paper. 
 
 It is known as one of the most non-trivial basic algorithms, and is commonly just presented as-is, with explanations of its pragmatics and the complexity. In this chapter, we will take a look at a systematic derivation of the algorithm from a naive string search, eventually touching upon a very interesting (although somewhat non-obvious) idea --- *interrupted partial matches can be used to optimise the search in the rest of the text by "fast-forwarding" through several positions*, without re-matching completely starting from the next character.
