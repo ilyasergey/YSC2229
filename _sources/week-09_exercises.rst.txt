@@ -31,28 +31,30 @@ Recommended exercises
 Exercise 1
 ----------
 
-How to shorten the URL? You can imagine a service (a function with a state) run on a server, to which you make a call and it generates a fresh random URL and sends it back. But how does it check for uniqueness of the fresh URL? Implement such an abstract data type with a method ``generate_fresh_url : unit -> string`` by employing a Bloom filter to tell if this short URL has already been generated earlier, and keep generating new ones unti it returns false. As the filter is in memory, this will be cheaper than querying a database of previously generated URLs.
+How to shorten a URL? One can imagine a service (a function with a state) invoked on a server, to which you make a call and it generates a fresh random URL and sends it back. But how can it efficiently check for uniqueness of the fresh URL? 
+
+Implement such an abstract data type with a method ``generate_fresh_url : unit -> string`` by employing a Bloom filter to tell if this short URL has already been generated earlier, and keep generating new ones unti it returns false. As the filter is in memory, this will be cheaper than querying a database of previously generated URLs.
 
 .. _exercise-find-all:
 
 Exercise 2
 ----------
 
-Modify a naive pattern search and Rabin-Karp search (either loop-based or recursive) so they would return a list of all occurrences of a pattern in a string (including overlapping ones). Design an automated randomised test suite for those procedures in the style of the ones shown in this lecture.
+Modify a naive pattern search and Rabin-Karp search (either loop-based or recursive) so they would return a list of *all* occurrences of a pattern in a string (including overlapping ones, such as ``"aba"`` in ``"ababa"``). Design an automated randomised test suite for those procedures in the style of the ones shown in the lecture.
 
 .. _exercise-cyclic-rotation-check:
 
 Exercise 3
 ----------
 
-Write a program that, given two strings, determins whether one is a cyclic rotation of the other. For instance it should identify ``lenusya`` as a cyclic rotation of ``yalenus``. Design automated randomised tests for this program.
+Write a program that, given two strings, determines whether one is a cyclic rotation of the other. For instance it should identify ``lenusya`` as a cyclic rotation of ``yalenus``. Design automated randomised tests for this algorithm.
 
 .. _exercise-right-to-left:
 
 Exercise 4
 ----------
 
-Implement a pattern search in a text, os it would explore the pattern right-to-left, but the main text left-to-right. Try to think of optimisations based on the characters in the pattern to optimise your search and explain them in your report. Use the randomised automated tests to validate your implementation.
+Implement a pattern search in a text, so it would explore the pattern *right-to-left*, but the main text *left-to-right*. Try to think of optimisations based on the characters in the pattern to speed-up your search and explain them in your report. Use the randomised automated tests from the lecture (or design new ones) to validate your implementation.
 
 .. _exercise-palindrome:
 

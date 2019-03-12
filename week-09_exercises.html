@@ -190,19 +190,20 @@ Detecting palindromes using hashing.</li>
 </div>
 <div class="section" id="exercise-1">
 <span id="exercise-url-shortener"></span><h2>9.4.3. Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
-<p>How to shorten the URL? You can imagine a service (a function with a state) run on a server, to which you make a call and it generates a fresh random URL and sends it back. But how does it check for uniqueness of the fresh URL? Implement such an abstract data type with a method <code class="docutils literal notranslate"><span class="pre">generate_fresh_url</span> <span class="pre">:</span> <span class="pre">unit</span> <span class="pre">-&gt;</span> <span class="pre">string</span></code> by employing a Bloom filter to tell if this short URL has already been generated earlier, and keep generating new ones unti it returns false. As the filter is in memory, this will be cheaper than querying a database of previously generated URLs.</p>
+<p>How to shorten a URL? One can imagine a service (a function with a state) invoked on a server, to which you make a call and it generates a fresh random URL and sends it back. But how can it efficiently check for uniqueness of the fresh URL?</p>
+<p>Implement such an abstract data type with a method <code class="docutils literal notranslate"><span class="pre">generate_fresh_url</span> <span class="pre">:</span> <span class="pre">unit</span> <span class="pre">-&gt;</span> <span class="pre">string</span></code> by employing a Bloom filter to tell if this short URL has already been generated earlier, and keep generating new ones unti it returns false. As the filter is in memory, this will be cheaper than querying a database of previously generated URLs.</p>
 </div>
 <div class="section" id="exercise-2">
 <span id="exercise-find-all"></span><h2>9.4.4. Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
-<p>Modify a naive pattern search and Rabin-Karp search (either loop-based or recursive) so they would return a list of all occurrences of a pattern in a string (including overlapping ones). Design an automated randomised test suite for those procedures in the style of the ones shown in this lecture.</p>
+<p>Modify a naive pattern search and Rabin-Karp search (either loop-based or recursive) so they would return a list of <em>all</em> occurrences of a pattern in a string (including overlapping ones, such as <code class="docutils literal notranslate"><span class="pre">&quot;aba&quot;</span></code> in <code class="docutils literal notranslate"><span class="pre">&quot;ababa&quot;</span></code>). Design an automated randomised test suite for those procedures in the style of the ones shown in the lecture.</p>
 </div>
 <div class="section" id="exercise-3">
 <span id="exercise-cyclic-rotation-check"></span><h2>9.4.5. Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
-<p>Write a program that, given two strings, determins whether one is a cyclic rotation of the other. For instance it should identify <code class="docutils literal notranslate"><span class="pre">lenusya</span></code> as a cyclic rotation of <code class="docutils literal notranslate"><span class="pre">yalenus</span></code>. Design automated randomised tests for this program.</p>
+<p>Write a program that, given two strings, determines whether one is a cyclic rotation of the other. For instance it should identify <code class="docutils literal notranslate"><span class="pre">lenusya</span></code> as a cyclic rotation of <code class="docutils literal notranslate"><span class="pre">yalenus</span></code>. Design automated randomised tests for this algorithm.</p>
 </div>
 <div class="section" id="exercise-4">
 <span id="exercise-right-to-left"></span><h2>9.4.6. Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
-<p>Implement a pattern search in a text, os it would explore the pattern right-to-left, but the main text left-to-right. Try to think of optimisations based on the characters in the pattern to optimise your search and explain them in your report. Use the randomised automated tests to validate your implementation.</p>
+<p>Implement a pattern search in a text, so it would explore the pattern <em>right-to-left</em>, but the main text <em>left-to-right</em>. Try to think of optimisations based on the characters in the pattern to speed-up your search and explain them in your report. Use the randomised automated tests from the lecture (or design new ones) to validate your implementation.</p>
 </div>
 <div class="section" id="exercise-5">
 <span id="exercise-palindrome"></span><h2>9.4.7. Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
