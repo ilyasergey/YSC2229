@@ -39,7 +39,7 @@ The tree-based analogy and back-tracking is widely applicable for solving NP-com
 
 We will consider some of these problems later in this class, but in this section focus on a simpler (and less practically useful problem) solved by backtracking, namely *N-Queens problem*.
 
-N-queens problem
+N-Queens problem
 ----------------
 
 Assume you are given an ``n`` by ``n`` chessboard so that no two queens threaten each other; thus, a solution requires that no two queens share the same row, column, or diagonal. We are going to discover this solution iteratively, via back-tracking, by considering it a CSP.
