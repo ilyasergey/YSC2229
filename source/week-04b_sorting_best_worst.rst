@@ -1,5 +1,7 @@
 .. -*- mode: rst -*-
 
+.. _best_worst:
+
 Best-Worst Case for Comparison-Based Sorting
 ============================================
 

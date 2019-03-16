@@ -30,14 +30,14 @@ None
 Exercise 1
 ----------
 
-Implement a version of a solver for the Knapsack problem (finding a list of items to include) by using the function ``perm`` for enumerating all permutations of an array, implemented as a part of your midterm project. Implement randomised testing for the Knapsack solvers and use it to test your implementation with respect to the one implemented in the lecture.
+Implement a version of a solver for the Knapsack Problem (finding a list of items to include) by using the function ``perm`` for enumerating all permutations of an array, implemented as a part of your midterm project. Implement randomised testing for the Knapsack solvers and use it to test your implementation with respect to the one implemented in the lecture.
 
 .. _exercise-knapsack-backtracking:
 
 Exercise 2
 ----------
 
-Implement a version of a solver for the Knapsack problem using the back-tracking technique (similarly to how n-queens problem has been solved), by selecting subsets of items, optimising for the weight and maximising the price. Test your solution as in :ref:`exercise-knapsack-permutations`.
+Implement a version of a solver for the Knapsack Problem using the back-tracking technique (similarly to how n-queens problem has been solved), by selecting subsets of items, optimising for the weight and maximising the price. Test your solution as in :ref:`exercise-knapsack-permutations`.
 
 .. _exercise-rle-decoder:
 
