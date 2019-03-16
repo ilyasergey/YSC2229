@@ -1,5 +1,7 @@
 .. -*- mode: rst -*-
 
+.. _priority_queues:
+
 Priority Queues
 ===============
 
