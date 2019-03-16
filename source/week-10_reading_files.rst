@@ -5,6 +5,8 @@
 File Input and Output in OCaml
 ==============================
 
+https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_ReadingFiles.ml
+
 Any realistic program interacts with an outside world by either getting an input from the user via textual or graphical interface, or reading/writing from/to files. 
 
 Input/Output (IO) with files in OCaml can be implemented in multiple ways, and we will employ some of the state-of-the art libraries that provide convenient mechanisms to do so. In order to compile and run the rest of this lecture, please make sure that your have packages ``core`` and ``batteries`` installed via ``opam``::
@@ -83,7 +85,7 @@ Representing Strings
 
 One can think of files as of sequences of 0 and 1 stored in a computer's memory. How can one tell that a file stores "text" or it is "binary"? 
 
-The textual files are identified acording to the *encoding* used to represent text in them. One of the most common encoding `ASCII <https://en.wikipedia.org/wiki/ASCII>`_, uses 8-bit sequences (known as bytes or OCaml type ``char``) to encode 256 characters, including upper/lowercase letters of the latin alphabet, numbers and some punctuation marks. Another encoding UTF-16 uses 16-bit seequence, which allows it to encode 65536 symbols, so it includes all of ASCII plus the letters of most of existing alphabets. OCaml strings are treated as sequences of bytes (represented by the data type ``char``). Therefore, the characters from ASCII are represented by ``char`` accurately, while ``UTF-16`` characters are broken into two bytes, when considering them as string components. The difference can be observed via the following example::
+The text files are identified (usually empirically) according to the *encoding* used to represent text in them. One of the most common encoding `ASCII <https://en.wikipedia.org/wiki/ASCII>`_, uses 8-bit sequences (known as bytes or OCaml type ``char``) to encode 256 characters, including upper/lowercase letters of the latin alphabet, numbers and some punctuation marks. Another encoding UTF-16 uses 16-bit sequence, which allows it to encode 65536 symbols, so it includes all of ASCII plus the letters of most of existing alphabets. OCaml strings are treated as sequences of bytes (represented by the data type ``char``). Therefore, the characters from ASCII are represented by ``char`` accurately, while ``UTF-16`` characters are broken into two bytes, when considering them as string components. The difference can be observed via the following example::
 
  utop # let ascii_string = "ATR";;
  val ascii_string : string = "ATR"
@@ -92,7 +94,7 @@ The textual files are identified acording to the *encoding* used to represent te
  utop # ascii_string.[2];;
  - : char = 'R'
 
-Let us try a string that has a Cyrrilic character from UTF-16 encoding::
+Let us try a string that has a Cyrillic character from UTF-16 encoding::
 
  utop # let utf16_string = "ATЯ";;
  val utf16_string : string = "ATЯ"

@@ -5,6 +5,8 @@
 Optimisation Problems and Dynamic Programming
 =============================================
 
+https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_DynamicProgramming.ml
+
 *Dynamic programming* is a method for optimising the expensive algorithms by *memoising* the intermediate results of repetitive computations. Such repetitive computations most often appear in the context of applications that requires back-tracking (when one back-tracks, they might re-compute a result already obtained, which is undesirable). The essense of dynamic programming is to store (or, occasionally *tabulate*) the results of the recursive algorithm obtained for "smaller" inputs, so they could be used when computing the result for larger inputs. 
 
 The term `"dynamic programming" <https://en.wikipedia.org/wiki/Dynamic_programming>`_ was originally used in the 1940s by Richard Bellman to describe the process of solving problems where one needs to find the best decisions one after another.
@@ -110,7 +112,7 @@ Now assume that we want to first solve a simpler problem: what is the maximal cu
 
 The main bulk of work is done by the function ``solver`` that computes an optimal price for by using only a subset of *first* ``n`` items from the list, while not exceeding the weight ``w``. It does so via back-tracking by computing, at each recursive step (the last ``else``-clause) the maximum of the maximal price with the first ``(n - 1)`` items excluding the last one (``solver (n - 1) w``) or by including the last one and thus increasing the price while reducing the maximal allotted weight (``pn + solver (n - 1) (w - wn)``).
 
-**Question** What is going to be the result of ``knapsack_max_price 4 fruit_sack``?
+**Question:** What is going to be the result of ``knapsack_max_price 4 fruit_sack``?
 
 Solving Knapsack Problem via Dynamic Programming
 ------------------------------------------------
