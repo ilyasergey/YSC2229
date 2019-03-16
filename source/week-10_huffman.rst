@@ -9,15 +9,15 @@ https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_HuffmanCo
 
 All the compression algorithms we explored so far did not really exploit any specifics of the file they are working on in order to adapt the compression scheme itself. 
 
-The idea of `Huffman coding <https://en.wikipedia.org/wiki/Huffman_coding>`_ (named after its inventor David A. Huffman) is to encode a text by assigning longer bit sequences to more rare charaters in it, while giving shorter codes (bit sequences) to more frequent characters. It builds on several simple but powerful ideas, which we will consider further below:
+The idea of `Huffman coding <https://en.wikipedia.org/wiki/Huffman_coding>`_ (named after its inventor David A. Huffman) is to encode a text by assigning longer bit sequences to more rare characters in it, while giving shorter codes (bit sequences) to more frequent characters. It builds on several simple but powerful ideas, which we will consider further below:
 
-* Huffman tree of charactes
+* Huffman tree of characters
 * Character frequency analysis
 
 Assigning Codes via Character Trees
 -----------------------------------
 
-Huffman tree is a binary tree that has characters in its leaves. It gives a simple way to assigne unique binary codes (bit sequences) to individual charactes by following paths in the tree. The key characterising of a Huffman tree is that no code for any character is a prefix of a code of another character. This makes it possible to use the tree for both encoding and decoding without any overhead from under-used encodings (as was the case with RLE).
+Huffman tree is a binary tree that has characters in its leaves. It gives a simple way to assigne unique binary codes (bit sequences) to individual characters by following paths in the tree. The key characterising of a Huffman tree is that no code for any character is a prefix of a code of another character. This makes it possible to use the tree for both encoding and decoding without any overhead from under-used encodings (as was the case with RLE).
 
 The binary tree can be represented by the following OCaml type::
 
@@ -113,7 +113,7 @@ Using this information, we are going to build the Huffman tree iteratively, by "
    done;
    ftrees
  
-To build the tree from those leaves, we are going to use a familiar structure min-priority queue. It can be definined by instantiating a functor from Chapter :ref:`priority_queues` with the following comparator::
+To build the tree from those leaves, we are going to use a familiar structure min-priority queue. It can be defined by instantiating a functor from Chapter :ref:`priority_queues` with the following comparator::
 
  module CF = struct
    type t = char tree * int
@@ -262,3 +262,47 @@ We can test Huffman compression similarly to previous encoding algorithms::
    let s' = decompress_file filename in
    Sys.remove filename;
    s = s'
+
+The developed compression/decompression algorithms are so useful that we should deliver them as standalone runnable programs.
+
+https://github.com/ilyasergey/ysc2229-part-two/blob/master/runners/compress_text.ml
+
+The following file defines the runnable that executes Huffman compression on a given file (first runtime argument) and outputs the result into a file named as a second argument::
+
+ open Printf
+ open Week_10_HuffmanCodes
+ open Week_03
+
+ let () =
+   if Array.length (Sys.argv) < 3 
+   then begin
+     print_endline "No input or output file name provided!";
+     print_endline "Format: compress input_file archive_name"
+   end
+   else begin
+     let input = Sys.argv.(1) in   
+     let archive = Sys.argv.(2) in 
+     print_endline "Compressing...";
+     time (compress_file input) archive;
+     print_endline "Compression complete."   
+   end
+
+Once compiled, let us try to run it on some large text, such as `Leo Tolstoy's "War and Peace" <https://en.wikipedia.org/wiki/War_and_Peace>`_ taken from `Project Gutenberg <https://en.wikipedia.org/wiki/Project_Gutenberg>`_ (located in the ``resources`` folder of the project)::
+
+ > bin/compress resources/war-and-peace.txt resources/war-and-peace.huf
+ Compressing...
+ Execution elapsed time: 0.171870 sec
+ Compression complete.
+  
+As the result, as file ``war-and-piece.huf`` has been produced under ``resources``. Let us compare the sizes of the compressed and the original::
+
+ 1960786 war-and-peace.huf
+ 3359545 war-and-peace.txt
+
+That is the compression rate is ``1960786 / 3359545 = 58%``.
+
+The original file can be obtained by running, e.g.:: 
+
+ bin/decompress resources/war-and-peace.huf resources/war-and-peace-copy.txt
+
+It is easy to check (via ``md5`` of ``cksum``) that ``war-and-peace-copy.txt`` is identical to ``war-and-peace.txt``
