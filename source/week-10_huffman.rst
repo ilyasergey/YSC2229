@@ -299,7 +299,7 @@ As the result, as file ``war-and-piece.huf`` has been produced under ``resources
  1960786 war-and-peace.huf
  3359545 war-and-peace.txt
 
-That is the compression rate is ``1960786 / 3359545 = 58%``.
+That is the compression rate is 1960786 / 3359545 = 58%.
 
 The original file can be obtained by running, e.g.:: 
 
