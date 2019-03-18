@@ -14,11 +14,11 @@ Mandatory exercises
 * :ref:`exercise-knapsack-backtracking`
   Implementing a solution for Knapsack problem via backtracking.
 
-* :ref:`exercise-rle-decoder`
-  RLE decoder.
+* :ref:`exercise-sat`
+  SAT-solver
 
-* :ref:`exercise-fixed-length`
-  Fixed-length code
+* :ref:`exercise-dna-encoding`
+  Better DNA-encoding.
 
 Recommended exercises
 ---------------------
@@ -39,20 +39,30 @@ Exercise 2
 
 Implement a version of a solver for the Knapsack Problem using the back-tracking technique (similarly to how n-queens problem has been solved), by selecting subsets of items, optimising for the weight and maximising the price. Test your solution as in :ref:`exercise-knapsack-permutations`.
 
-.. _exercise-rle-decoder:
+.. _exercise-sat:
 
 Exercise 3
 ----------
 
-Implement a decoder for the binary compression based on Run-Length Evaluation described in Section :ref:`week-10-rle`. Test it by composing it with the binary compression/decompression of DNA strings as follows: DNA -> Binary DNA -> RLE compression -> RLE Decompression -> Binary DNA -> DNA to ensure that the initial input and the final output are identical.
+In this exercise you will be asked to implement a solver for `Boolean satisfiability problem <https://en.wikipedia.org/wiki/Boolean_satisfiability_problem>`_ using the backtracking technique. Take the following data type defining boolean formulae::
 
-Implement a pair of standalone compression runners for RLE-based compression of binaries, similarly to what has been implemented in Section :ref:`week-10-huffman`.
+ type formula = 
+   | Var of string
+   | And of formula * formula
+   | Or  of formula * formula
+   | Not of formula
 
-.. _exercise-fixed-length:
+Implement thew following functions:
+
+* ``eval : formula -> (string * bool) list -> bool`` for evaluating the boolean value of a formula (``true`` or ``false``) given the list of bindings, mapping the variables occurring in the formula to their boolean values.
+* ``generate_random_formula : string list -> int -> formula`` for creating a random formula featuring variables from a given list of names, as well as other connectives. Use the ``int`` parameter to control the size of the forumla.
+* ``solve_brute_force : formula -> (string * bool) list option`` -- a function for finding a list of substitutions from variable names that make the given formula evaluate to ``true`` or ``None`` if no such list exists. Do it by enumerating all possible assignments to variables. 
+* ``solve_backtracking : formula -> (string * bool) list option`` -- the same solver as before, but implemented by means of back-tracking, assigning individual values to the forumla and partially simplifying it (as in the class).
+* Test both solvers using ``generate_random_formula`` and compare their performance on large formulae.
+
+.. _exercise-dna-encoding:
 
 Exercise 4
 ----------
 
-Implement a variation of RLE (see Section :ref:`week-10-rle`) that uses fixed-length encoding (i.e., all lengths are encoded via a code of a fixed size) to compress ASCII (8-bit character) strings that have relatively few different characters with many repetitions, such as ``AAAAAAAAAAAAAAACCCBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAEEEEEE``.
-
-Design the encoding for representing the alphabet (relevant characters in the encoded string), used to associate characters with lengths of the occurrences (you might not need to account for all ASCII characters, but only for those that occur in your string). Store this alphabet representation along with the encoded string, so it could be used for decoding. Implement a randomised test generator producing strings, on which this compression will work well and use it for automated testing of your compression/decompression procedure.
+Improve the encoding format of DNA strings so instead of storing the overall length (and wasting 30 bits) in the beginning, it would store a 2-bit number ``N``, indicating how many of 2-bit sequences (0-3) will be appended for padding at the end. Notice that ``N`` will depend on the length of the DNA sequence, and storing ``N`` will impact the value of ``N``, as it consumes 2 additional bits. Read ``N`` when deserializing and then Use the same trick as reading ASCII strings for reading a DNA from the rest of the file. As added ``N`` 0-sequences would contribute "junk" ``A`` symbols at the end, use the stored information to get rid of them in a deserialized DNA string.
