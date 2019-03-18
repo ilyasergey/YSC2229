@@ -97,6 +97,7 @@
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a></li>
 </ul>
 
             
@@ -162,7 +163,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="best-worst-case-for-comparison-based-sorting">
-<h1>4.5. Best-Worst Case for Comparison-Based Sorting<a class="headerlink" href="#best-worst-case-for-comparison-based-sorting" title="Permalink to this headline">¶</a></h1>
+<span id="best-worst"></span><h1>4.5. Best-Worst Case for Comparison-Based Sorting<a class="headerlink" href="#best-worst-case-for-comparison-based-sorting" title="Permalink to this headline">¶</a></h1>
 <p>A strength and a weakness of Comparison-Based Sorting is the fact that the only operation it relies in its implementation is a primitive to compare two elements. This makes it very generic and applicable to diverse classes of data, but also puts a theoretical limit on how fast (in the asymptotic big-O sence) we can sort arrays <em>if we use only comparison</em>.</p>
 <p>Let us se what is this theoretical limit. Quicksort, Insertion sort, Merge sort are all comparison-based sorting algorithms: they compare elements pairwise. An “ideal” algorithm will always perform no more than <span class="math notranslate nohighlight">\(t(n)\)</span> comparisons, for the worst possible case on an array of size <span class="math notranslate nohighlight">\(n\)</span>. What is then <span class="math notranslate nohighlight">\(t(n)\)</span>?</p>
 <p>Let us think in the following way. What a sorting delivers is a permutation of an initial array, which is also sorted. A number of possible permutations of <span class="math notranslate nohighlight">\(n\)</span> elements is <span class="math notranslate nohighlight">\(n!\)</span>, and such an algorithm should find “the right one” by following a path in a binary decision tree, where each node corresponds to comparing just two elements.</p>

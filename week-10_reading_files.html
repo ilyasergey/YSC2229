@@ -1,0 +1,332 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>10.3. File Input and Output in OCaml &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="10.4. Binary Encoding of Data" href="week-10_binary_encondings.html" />
+    <link rel="prev" title="10.2. Optimisation Problems and Dynamic Programming" href="week-10_dynamic_programming.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-10_backtracking.html">10.1. Constraint Solving via Backtracking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_dynamic_programming.html">10.2. Optimisation Problems and Dynamic Programming</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">10.3. File Input and Output in OCaml</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#reading-and-writing-with-channels">10.3.1. Reading and Writing with Channels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#copying-files">10.3.2. Copying Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#representing-strings">10.3.3. Representing Strings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_binary_encondings.html">10.4. Binary Encoding of Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_exercises.html">10.5. Exercises</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a> &raquo;</li>
+        
+      <li>10.3. File Input and Output in OCaml</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="file-input-and-output-in-ocaml">
+<span id="week-10-file-io"></span><h1>10.3. File Input and Output in OCaml<a class="headerlink" href="#file-input-and-output-in-ocaml" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_ReadingFiles.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_ReadingFiles.ml</a></p>
+<p>Any realistic program interacts with an outside world by either getting an input from the user via textual or graphical interface, or reading/writing from/to files.</p>
+<p>Input/Output (IO) with files in OCaml can be implemented in multiple ways, and we will employ some of the state-of-the art libraries that provide convenient mechanisms to do so. In order to compile and run the rest of this lecture, please make sure that your have packages <code class="docutils literal notranslate"><span class="pre">core</span></code> and <code class="docutils literal notranslate"><span class="pre">batteries</span></code> installed via <code class="docutils literal notranslate"><span class="pre">opam</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">opam</span> <span class="n">install</span> <span class="n">core</span> <span class="n">batteries</span>
+</pre></div>
+</div>
+<p>Amongst other things, <code class="docutils literal notranslate"><span class="pre">core</span></code> redefines and enhances some of the familiar modules, which we used before, such as <code class="docutils literal notranslate"><span class="pre">List</span></code> and <code class="docutils literal notranslate"><span class="pre">Array</span></code>. Specifically, it heavily uses <em>named</em> arguments for functions. Such arguments require a specific <code class="docutils literal notranslate"><span class="pre">name</span></code> to be provided before the value passed (in a form <code class="docutils literal notranslate"><span class="pre">~name:value</span></code>). With such, they can be placed at any position in the parameter list. As an example, the following expression:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="nn">List</span><span class="p">.</span><span class="n">filter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">[</span><span class="mi">1</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">];;</span>
+</pre></div>
+</div>
+<p>can be written, using a version of <code class="docutils literal notranslate"><span class="pre">List</span></code> by <code class="docutils literal notranslate"><span class="pre">core</span></code> as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="nn">List</span><span class="p">.</span><span class="n">filter</span> <span class="o">~</span><span class="n">f</span><span class="o">:(</span><span class="k">fun</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">[</span><span class="mi">1</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">];;</span>
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="nn">List</span><span class="p">.</span><span class="n">filter</span> <span class="o">[</span><span class="mi">1</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">]</span> <span class="o">~</span><span class="n">f</span><span class="o">:(</span><span class="k">fun</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="o">);;</span>
+</pre></div>
+</div>
+<p>Since the parameter <code class="docutils literal notranslate"><span class="pre">f</span></code> is named, it can be located at any position.</p>
+<div class="section" id="reading-and-writing-with-channels">
+<h2>10.3.1. Reading and Writing with Channels<a class="headerlink" href="#reading-and-writing-with-channels" title="Permalink to this headline">¶</a></h2>
+<p>In an operational system, files can be concurrently accessed for reading/writing by multiple applications. Because of this, the access to then needs to be controlled. OCaml enables this via <em>channels</em> — an abstraction that guarantees that no one is modifying the file, from which reading is done, and no one is reading from a file, to which we write.</p>
+<p>A channel for reading can be used as in the following example that reads all lines from a file with the path <code class="docutils literal notranslate"><span class="pre">filename</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">read_file_to_strings</span> <span class="n">filename</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">file</span> <span class="o">=</span> <span class="nn">In_channel</span><span class="p">.</span><span class="n">create</span> <span class="n">filename</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">strings</span> <span class="o">=</span> <span class="nn">In_channel</span><span class="p">.</span><span class="n">input_lines</span> <span class="n">file</span> <span class="k">in</span>
+  <span class="nn">In_channel</span><span class="p">.</span><span class="n">close</span> <span class="n">file</span><span class="o">;</span>
+  <span class="n">strings</span>
+</pre></div>
+</div>
+<p>Notice that before the function returns its result, it has to close the channel, thus giving up the read-acces to it, so other applications could use it. If it is not done, no other program (including the same one) will be able to get an access to this file (an attempt of doing so will result in a runtime error).</p>
+<p>In OCaml, the pattern of reading from a file and closing the channel after completing the optation can be done using the <code class="docutils literal notranslate"><span class="pre">with_file</span></code> function which takes a file name an a function that tells <code class="docutils literal notranslate"><span class="pre">f</span></code> how to obtain a result from the input channel <code class="docutils literal notranslate"><span class="pre">input</span></code> of the file:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">read_file_to_single_string</span> <span class="n">filename</span> <span class="o">=</span>
+  <span class="nn">In_channel</span><span class="p">.</span><span class="n">with_file</span> <span class="n">filename</span> <span class="o">~</span><span class="n">f</span><span class="o">:(</span><span class="k">fun</span> <span class="n">input</span> <span class="o">-&gt;</span>
+      <span class="nn">In_channel</span><span class="p">.</span><span class="n">input_all</span> <span class="n">input</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Writing from the files is done similarly, although the corresponding functions for manipulating with write-channels take some additional parameters:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">write_string_to_file</span> <span class="n">filename</span> <span class="n">text</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">outc</span> <span class="o">=</span> <span class="nn">Out_channel</span><span class="p">.</span><span class="n">create</span> <span class="o">~</span><span class="n">append</span><span class="o">:</span><span class="bp">false</span> <span class="n">filename</span> <span class="k">in</span>
+  <span class="nn">Out_channel</span><span class="p">.</span><span class="n">output_string</span> <span class="n">outc</span> <span class="n">text</span><span class="o">;</span>
+  <span class="nn">Out_channel</span><span class="p">.</span><span class="n">close</span> <span class="n">outc</span>
+
+<span class="k">let</span> <span class="n">write_strings_to_file</span> <span class="n">filename</span> <span class="n">lines</span> <span class="o">=</span>
+  <span class="nn">Out_channel</span><span class="p">.</span><span class="n">with_file</span> <span class="o">~</span><span class="n">append</span><span class="o">:</span><span class="bp">false</span> <span class="o">~</span><span class="n">fail_if_exists</span><span class="o">:</span><span class="bp">false</span>
+    <span class="n">filename</span> <span class="o">~</span><span class="n">f</span><span class="o">:(</span><span class="k">fun</span> <span class="n">out</span> <span class="o">-&gt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="n">lines</span> <span class="o">~</span><span class="n">f</span><span class="o">:(</span><span class="k">fun</span> <span class="n">s</span> <span class="o">-&gt;</span> <span class="nn">Out_channel</span><span class="p">.</span><span class="n">fprintf</span> <span class="n">out</span> <span class="s2">&quot;%s</span><span class="se">\r\n</span><span class="s2">&quot;</span> <span class="n">s</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>For instance, both <code class="docutils literal notranslate"><span class="pre">Out_channel.create</span></code> and <code class="docutils literal notranslate"><span class="pre">Out_channel.with_file</span></code> take optional parameters (that come with default values) <code class="docutils literal notranslate"><span class="pre">~append</span></code> and <code class="docutils literal notranslate"><span class="pre">~fail_if_exists</span></code> that determine the corresponding behaviour in the case if the file already exists. For instance, by passing <code class="docutils literal notranslate"><span class="pre">~append:false</span></code> we indicate that the contents of the file needs to be rewritten, rather than appended to.</p>
+</div>
+<div class="section" id="copying-files">
+<h2>10.3.2. Copying Files<a class="headerlink" href="#copying-files" title="Permalink to this headline">¶</a></h2>
+<p>We can use the functions above to copy files:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">copy_file</span> <span class="n">old_file</span> <span class="n">new_file</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">contents</span> <span class="o">=</span> <span class="n">read_file_to_single_string</span> <span class="n">old_file</span> <span class="k">in</span>
+  <span class="n">write_string_to_file</span> <span class="n">new_file</span> <span class="n">contents</span>
+</pre></div>
+</div>
+<p>Any Unix-like system comes with hash utilities to ensure that the contents of a file are intact by computing its checksum or hash. This can be done for a file <code class="docutils literal notranslate"><span class="pre">filename</span></code> using either:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">cksum</span> <span class="n">filename</span>
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">md5</span> <span class="n">filename</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="representing-strings">
+<h2>10.3.3. Representing Strings<a class="headerlink" href="#representing-strings" title="Permalink to this headline">¶</a></h2>
+<p>One can think of files as of sequences of 0 and 1 stored in a computer’s memory. How can one tell that a file stores “text” or it is “binary”?</p>
+<p>The text files are identified (usually empirically) according to the <em>encoding</em> used to represent text in them. One of the most common encoding <a class="reference external" href="https://en.wikipedia.org/wiki/ASCII">ASCII</a>, uses 8-bit sequences (known as bytes or OCaml type <code class="docutils literal notranslate"><span class="pre">char</span></code>) to encode 256 characters, including upper/lowercase letters of the latin alphabet, numbers and some punctuation marks. Another encoding UTF-16 uses 16-bit sequence, which allows it to encode 65536 symbols, so it includes all of ASCII plus the letters of most of existing alphabets. OCaml strings are treated as sequences of bytes (represented by the data type <code class="docutils literal notranslate"><span class="pre">char</span></code>). Therefore, the characters from ASCII are represented by <code class="docutils literal notranslate"><span class="pre">char</span></code> accurately, while <code class="docutils literal notranslate"><span class="pre">UTF-16</span></code> characters are broken into two bytes, when considering them as string components. The difference can be observed via the following example:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">ascii_string</span> <span class="o">=</span> <span class="s2">&quot;ATR&quot;</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">ascii_string</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">=</span> <span class="s2">&quot;ATR&quot;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="nn">String</span><span class="p">.</span><span class="n">length</span> <span class="n">ascii_string</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">ascii_string</span><span class="o">.[</span><span class="mi">2</span><span class="o">];;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">char</span> <span class="o">=</span> <span class="sc">&#39;R&#39;</span>
+</pre></div>
+</div>
+<p>Let us try a string that has a Cyrillic character from UTF-16 encoding:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">utf16_string</span> <span class="o">=</span> <span class="s2">&quot;ATЯ&quot;</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">utf16_string</span> <span class="o">:</span> <span class="kt">string</span> <span class="o">=</span> <span class="s2">&quot;ATЯ&quot;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="nn">String</span><span class="p">.</span><span class="n">length</span> <span class="n">utf16_string</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">utf16_string</span><span class="o">.[</span><span class="mi">2</span><span class="o">];;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">char</span> <span class="o">=</span> <span class="sc">&#39;\208&#39;</span>
+</pre></div>
+</div>
+<p>When working with strings the following functions implemented via <code class="docutils literal notranslate"><span class="pre">core</span></code> machinery will come useful:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">trimmer</span> <span class="o">=</span> <span class="nn">String</span><span class="p">.</span><span class="n">strip</span>
+    <span class="o">~</span><span class="n">drop</span><span class="o">:(</span><span class="k">fun</span> <span class="n">c</span> <span class="o">-&gt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">mem</span> <span class="o">[</span><span class="sc">&#39;\n&#39;</span><span class="o">;</span> <span class="sc">&#39; &#39;</span><span class="o">;</span> <span class="sc">&#39;\r&#39;</span><span class="o">]</span>
+              <span class="n">c</span> <span class="o">~</span><span class="n">equal</span><span class="o">:(</span><span class="k">fun</span> <span class="n">a</span> <span class="n">b</span> <span class="o">-&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="n">b</span><span class="o">))</span>
+
+<span class="k">let</span> <span class="n">splitter</span> <span class="n">s</span> <span class="o">=</span>
+  <span class="nn">String</span><span class="p">.</span><span class="n">split_on_chars</span> <span class="o">~</span><span class="n">on</span><span class="o">:[</span><span class="sc">&#39;\n&#39;</span><span class="o">;</span> <span class="sc">&#39; &#39;</span><span class="o">;</span> <span class="sc">&#39;\r&#39;</span><span class="o">]</span> <span class="n">s</span> <span class="o">|&gt;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">filter</span> <span class="o">~</span><span class="n">f</span><span class="o">:(</span><span class="k">fun</span> <span class="n">s</span> <span class="o">-&gt;</span> <span class="n">not</span> <span class="o">@@</span> <span class="nn">String</span><span class="p">.</span><span class="n">is_empty</span> <span class="n">s</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-10_binary_encondings.html" class="btn btn-neutral float-right" title="10.4. Binary Encoding of Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-10_dynamic_programming.html" class="btn btn-neutral" title="10.2. Optimisation Problems and Dynamic Programming" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,5 +1,7 @@
 .. -*- mode: rst -*-
 
+.. _section_kmp:
+
 Knuth–Morris–Pratt Algorithm
 ============================
 

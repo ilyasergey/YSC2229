@@ -1,0 +1,284 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Run-Length Encoding &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Run-Length Encoding</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="run-length-encoding">
+<span id="week-10-rle"></span><h1>Run-Length Encoding<a class="headerlink" href="#run-length-encoding" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_RunLengthEncoding.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_RunLengthEncoding.ml</a></p>
+<p>Run-length encoding is a compression methods that works well with bit-strings with large contiguous segments of repeating 0s and 1s by encoding the lengths of such segments in the interleaved fashion, starting from 0. For instance, the following string:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="mi">0000000000000001111111000000011111111111</span>
+</pre></div>
+</div>
+<p>Can be encoded via 4 4-bit integer representation as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="mi">1111011101111011</span>
+</pre></div>
+</div>
+<p>Tis would ben that we have 15 (1111 in binary) 0s, then 7 (0111 in binary) 1s, then 7 0s and finally 11 (0111) ones.</p>
+<div class="section" id="design-considerations">
+<h2>Design Considerations<a class="headerlink" href="#design-considerations" title="Permalink to this headline">¶</a></h2>
+<p>In order to turn this example into an effective data compression method, we need to answer the following questions:</p>
+<ul class="simple">
+<li>How many bits do we use for representing the counts?</li>
+<li>What if we encounter a sequence longer that a maximal value of a counter encoding permits?</li>
+<li>What to do about short runs that under-use the length encoding?</li>
+</ul>
+<p>We resolve those questions in the following way</p>
+<ul class="simple">
+<li>Counts are between 0 and 255, so we use 8-bit representations.</li>
+<li>We make all run lengths less than 256 by including runs of length 0 if needed</li>
+<li>We encode short runs even though doing so might lengthen the output encoding.</li>
+</ul>
+</div>
+<div class="section" id="implementation">
+<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<p>The resulting encoding procedure, which makes use of the previously implemented queue data type, is as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">Core</span>
+<span class="k">open</span> <span class="nn">Extlib</span><span class="p">.</span><span class="nc">IO</span>
+<span class="k">open</span> <span class="nc">Week_06</span>
+<span class="k">open</span> <span class="nc">DLLBasedQueue</span>
+<span class="k">open</span> <span class="nc">Week_10_BinaryEncodings</span>
+
+<span class="k">let</span> <span class="n">read_next_bit</span> <span class="n">input</span> <span class="o">=</span> <span class="k">try</span>
+    <span class="k">let</span> <span class="n">bit</span> <span class="o">=</span> <span class="n">read_bits</span> <span class="n">input</span> <span class="mi">1</span> <span class="k">in</span>
+    <span class="nc">Some</span> <span class="n">bit</span>
+  <span class="k">with</span> <span class="nn">BatInnerIO</span><span class="p">.</span><span class="nc">No_more_input</span> <span class="o">-&gt;</span> <span class="nc">None</span>
+</pre></div>
+</div>
+<p>It starts by reading the lengths of contiguous interleaving bit sequences from the file <code class="docutils literal notranslate"><span class="pre">input</span></code> to a queue:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">compute_lengths</span> <span class="n">input</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">256</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">q</span> <span class="o">=</span> <span class="n">mk_queue</span> <span class="mi">100</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">read_segments</span> <span class="n">acc</span> <span class="n">b</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="n">acc</span> <span class="o">&gt;=</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">then</span> <span class="k">begin</span>
+      <span class="n">enqueue</span> <span class="n">q</span> <span class="n">acc</span><span class="o">;</span>
+      <span class="n">read_segments</span> <span class="mi">0</span> <span class="o">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">b</span><span class="o">)</span>
+    <span class="k">end</span>
+    <span class="k">else</span> <span class="k">match</span> <span class="n">read_next_bit</span> <span class="n">input</span> <span class="k">with</span>
+      <span class="o">|</span> <span class="nc">Some</span> <span class="n">x</span> <span class="o">-&gt;</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">=</span> <span class="n">b</span>
+        <span class="k">then</span> <span class="n">read_segments</span> <span class="o">(</span><span class="n">acc</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">b</span>
+        <span class="k">else</span> <span class="k">begin</span>
+          <span class="n">enqueue</span> <span class="n">q</span> <span class="n">acc</span><span class="o">;</span>
+          <span class="n">read_segments</span> <span class="mi">1</span> <span class="o">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">b</span><span class="o">)</span>
+        <span class="k">end</span>
+      <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="n">enqueue</span> <span class="n">q</span> <span class="n">acc</span>
+  <span class="k">in</span>
+  <span class="n">read_segments</span> <span class="mi">0</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="n">queue_to_list</span> <span class="n">q</span>
+</pre></div>
+</div>
+<p>The obtained list is then used to write the corresponding bytes to the output channel:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">compress_binary_via_rle</span> <span class="n">binary</span> <span class="n">new_binary</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">segments</span> <span class="o">=</span> <span class="n">read_from_binary</span> <span class="n">compute_lengths</span> <span class="n">binary</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">loop</span> <span class="n">out</span> <span class="n">segs</span> <span class="o">=</span> <span class="k">match</span> <span class="n">segs</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="bp">()</span>
+    <span class="o">|</span> <span class="n">h</span> <span class="o">::</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="n">write_bits</span> <span class="n">out</span> <span class="o">~</span><span class="n">nbits</span><span class="o">:</span><span class="mi">8</span> <span class="n">h</span><span class="o">;</span>
+                 <span class="n">loop</span> <span class="n">out</span> <span class="n">t</span><span class="o">)</span>
+  <span class="k">in</span>
+  <span class="n">write_to_binary</span> <span class="n">loop</span> <span class="n">new_binary</span> <span class="n">segments</span>
+</pre></div>
+</div>
+<p>We leave the implementation of the RLE decoder and the corresponding testing procedure as a homework <a class="reference internal" href="week-11_exercises.html#exercise-rle-decoder"><span class="std std-ref">Exercise 1</span></a>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,274 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>10. YSC2229 Lecture Notes, Week 10 &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="10.1. Constraint Solving via Backtracking" href="week-10_backtracking.html" />
+    <link rel="prev" title="9.4. Exercises" href="week-09_exercises.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">10. YSC2229 Lecture Notes, Week 10</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-10_backtracking.html">10.1. Constraint Solving via Backtracking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_dynamic_programming.html">10.2. Optimisation Problems and Dynamic Programming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_reading_files.html">10.3. File Input and Output in OCaml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_binary_encondings.html">10.4. Binary Encoding of Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_exercises.html">10.5. Exercises</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>10. YSC2229 Lecture Notes, Week 10</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ysc2229-lecture-notes-week-10">
+<h1>10. YSC2229 Lecture Notes, Week 10<a class="headerlink" href="#ysc2229-lecture-notes-week-10" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="week-10_backtracking.html">10.1. Constraint Solving via Backtracking</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-10_backtracking.html#constraint-solving-by-backtracking">10.1.1. Constraint Solving by Backtracking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_backtracking.html#computing-solutions-with-backtracking">10.1.2. Computing Solutions with Backtracking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_backtracking.html#examples-of-csp-solved-by-backtracking">10.1.3. Examples of CSP solved by Backtracking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_backtracking.html#n-queens-problem">10.1.4. N-Queens problem</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-10_dynamic_programming.html">10.2. Optimisation Problems and Dynamic Programming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-10_dynamic_programming.html#implementing-fibonacci-numbers">10.2.1. Implementing Fibonacci numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_dynamic_programming.html#knapsack-problem">10.2.2. Knapsack Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_dynamic_programming.html#determining-the-maximal-price">10.2.3. Determining the Maximal Price</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_dynamic_programming.html#solving-knapsack-problem-via-dynamic-programming">10.2.4. Solving Knapsack Problem via Dynamic Programming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_dynamic_programming.html#restoring-the-optimal-list-of-items">10.2.5. Restoring the Optimal List of Items</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-10_reading_files.html">10.3. File Input and Output in OCaml</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-10_reading_files.html#reading-and-writing-with-channels">10.3.1. Reading and Writing with Channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_reading_files.html#copying-files">10.3.2. Copying Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_reading_files.html#representing-strings">10.3.3. Representing Strings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-10_binary_encondings.html">10.4. Binary Encoding of Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-10_binary_encondings.html#writing-and-reading-binary-files">10.4.1. Writing and Reading Binary Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_binary_encondings.html#writing-and-reading-ocaml-strings">10.4.2. Writing and Reading OCaml Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_binary_encondings.html#compressing-dna-sequences">10.4.3. Compressing DNA Sequences</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-10_exercises.html">10.5. Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-10_exercises.html#mandatory-exercises">10.5.1. Mandatory exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_exercises.html#recommended-exercises">10.5.2. Recommended exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_exercises.html#exercise-1">10.5.3. Exercise 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_exercises.html#exercise-2">10.5.4. Exercise 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_exercises.html#exercise-3">10.5.5. Exercise 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_exercises.html#exercise-4">10.5.6. Exercise 4</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p><strong>Supplementary materials</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_09_week_10_Backtracking.ml">Backtracking</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_DynamicProgramming.ml">Dynamic Programming</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_ReadingFiles.ml">File Input/Output</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_BinaryEncodings.ml">Binary Enconding of Data</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_Tests.ml">Automated Tests</a></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-10_backtracking.html" class="btn btn-neutral float-right" title="10.1. Constraint Solving via Backtracking" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-09_exercises.html" class="btn btn-neutral" title="9.4. Exercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

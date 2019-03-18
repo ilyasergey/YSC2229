@@ -105,6 +105,7 @@
 <li class="toctree-l2"><a class="reference internal" href="week-09_exercises.html">9.4. Exercises</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a></li>
 </ul>
 
             
@@ -170,7 +171,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="knuthmorrispratt-algorithm">
-<h1>9.3. Knuth–Morris–Pratt Algorithm<a class="headerlink" href="#knuthmorrispratt-algorithm" title="Permalink to this headline">¶</a></h1>
+<span id="section-kmp"></span><h1>9.3. Knuth–Morris–Pratt Algorithm<a class="headerlink" href="#knuthmorrispratt-algorithm" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_09_KMP.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_09_KMP.ml</a></p>
 <p>This is the first algorithm for string matching in <span class="math notranslate nohighlight">\(O(n)\)</span>, where <span class="math notranslate nohighlight">\(n\)</span> is the size of the text where the search takes place). It has been independently invented by Donald Knuth and Vaughan Pratt, and James H. Morris, who published it together in a joint paper.</p>
 <p>It is known as one of the most non-trivial basic algorithms, and is commonly just presented as-is, with explanations of its pragmatics and the complexity. In this chapter, we will take a look at a systematic derivation of the algorithm from a naive string search, eventually touching upon a very interesting (although somewhat non-obvious) idea — <em>interrupted partial matches can be used to optimise the search in the rest of the text by “fast-forwarding” through several positions</em>, without re-matching completely starting from the next character.</p>

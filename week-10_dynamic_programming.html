@@ -1,0 +1,399 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>10.2. Optimisation Problems and Dynamic Programming &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="10.3. File Input and Output in OCaml" href="week-10_reading_files.html" />
+    <link rel="prev" title="10.1. Constraint Solving via Backtracking" href="week-10_backtracking.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-10_backtracking.html">10.1. Constraint Solving via Backtracking</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">10.2. Optimisation Problems and Dynamic Programming</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#implementing-fibonacci-numbers">10.2.1. Implementing Fibonacci numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#knapsack-problem">10.2.2. Knapsack Problem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#determining-the-maximal-price">10.2.3. Determining the Maximal Price</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#solving-knapsack-problem-via-dynamic-programming">10.2.4. Solving Knapsack Problem via Dynamic Programming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#restoring-the-optimal-list-of-items">10.2.5. Restoring the Optimal List of Items</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_reading_files.html">10.3. File Input and Output in OCaml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_binary_encondings.html">10.4. Binary Encoding of Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10_exercises.html">10.5. Exercises</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a> &raquo;</li>
+        
+      <li>10.2. Optimisation Problems and Dynamic Programming</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="optimisation-problems-and-dynamic-programming">
+<span id="week-10-dp"></span><h1>10.2. Optimisation Problems and Dynamic Programming<a class="headerlink" href="#optimisation-problems-and-dynamic-programming" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_DynamicProgramming.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_DynamicProgramming.ml</a></p>
+<p><em>Dynamic programming</em> is a method for optimising the expensive algorithms by <em>memoising</em> the intermediate results of repetitive computations. Such repetitive computations most often appear in the context of applications that requires back-tracking (when one back-tracks, they might re-compute a result already obtained, which is undesirable). The essense of dynamic programming is to store (or, occasionally <em>tabulate</em>) the results of the recursive algorithm obtained for “smaller” inputs, so they could be used when computing the result for larger inputs.</p>
+<p>The term <a class="reference external" href="https://en.wikipedia.org/wiki/Dynamic_programming">“dynamic programming”</a> was originally used in the 1940s by Richard Bellman to describe the process of solving problems where one needs to find the best decisions one after another.</p>
+<p>A similar idea has been already demonstrated in the implementation of <a class="reference internal" href="week-09_kmp.html#section-kmp"><span class="std std-ref">Knuth–Morris–Pratt Algorithm</span></a>.</p>
+<div class="section" id="implementing-fibonacci-numbers">
+<h2>10.2.1. Implementing Fibonacci numbers<a class="headerlink" href="#implementing-fibonacci-numbers" title="Permalink to this headline">¶</a></h2>
+<p>Let us demonstrate the main idea of dynamic programming on a toy example: efficiently computing <a class="reference external" href="https://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci numbers</a>.</p>
+<p>One can implement the definition of Fibonacci numbers is implemented as a program naively as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">naive_fib</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="k">then</span> <span class="mi">1</span>
+  <span class="k">else</span> <span class="n">naive_fib</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">+</span> <span class="n">naive_fib</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>This implementation is horribly inefficient: notice that for <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">4</span></code> the value <code class="docutils literal notranslate"><span class="pre">naive_fib</span> <span class="pre">2</span></code> will be (recursively) computed twice, while <code class="docutils literal notranslate"><span class="pre">naive_fib</span> <span class="pre">1</span></code> will be computed 4 times. This is exactly the repeating computations that dynamic programming can help to get rid of.</p>
+<p>A somewhat non-obvious trick when applying the DP technique is to restructure the problem, so it would be solved bottom-up, rather than top-down (as in the example above). Typically, it means replacing top-down recursion with bottom-up iteration, and requires some ingenuity. In the case of Fibonacci numbers, let us notice that the result for <code class="docutils literal notranslate"><span class="pre">n</span></code> number can be computed from the results for <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">-</span> <span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">-</span> <span class="pre">2</span></code>, hence we only need to store them and use for each iteration. This results in the following efficient implementation:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">memo_fib</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="k">then</span> <span class="mi">1</span>
+  <span class="k">else</span> <span class="k">begin</span>
+    <span class="k">let</span> <span class="n">fib</span> <span class="o">=</span> <span class="n">ref</span>  <span class="mi">1</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">fib_prev</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">1</span> <span class="k">in</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">to</span> <span class="n">n</span> <span class="k">do</span>
+      <span class="k">let</span> <span class="n">tmp</span> <span class="o">=</span> <span class="o">!</span><span class="n">fib_prev</span> <span class="k">in</span>
+      <span class="n">fib_prev</span> <span class="o">:=</span> <span class="o">!</span><span class="n">fib</span><span class="o">;</span>
+      <span class="n">fib</span> <span class="o">:=</span> <span class="n">tmp</span> <span class="o">+</span> <span class="o">!</span><span class="n">fib</span><span class="o">;</span>
+    <span class="k">done</span><span class="o">;</span>
+    <span class="o">!</span><span class="n">fib</span>
+  <span class="k">end</span>
+</pre></div>
+</div>
+<p>We can now test that our implementation is equivalent to the naive one:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">test_fib</span> <span class="n">fib_fun</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="k">do</span>
+    <span class="k">assert</span> <span class="o">(</span><span class="n">fib_fun</span> <span class="n">n</span> <span class="o">=</span> <span class="n">naive_fib</span> <span class="n">n</span><span class="o">)</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="bp">true</span>
+</pre></div>
+</div>
+<p>Let us compare the performance of the two implementation on medium-size inputs:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="k">open</span> <span class="nc">Week_03</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">time</span> <span class="n">naive_fib</span> <span class="mi">38</span><span class="o">;;</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">1</span><span class="o">.</span><span class="mi">433646</span> <span class="n">sec</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">63245986</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">time</span> <span class="n">memo_fib</span> <span class="mi">38</span><span class="o">;;</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">000008</span> <span class="n">sec</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">63245986</span>
+</pre></div>
+</div>
+<p>As it is easy to show, the complexity of <code class="docutils literal notranslate"><span class="pre">naive_fib</span></code> is <span class="math notranslate nohighlight">\(O(2^n)\)</span>, while the complexity of <code class="docutils literal notranslate"><span class="pre">memo_fib</span></code> is <span class="math notranslate nohighlight">\(O(n)\)</span>.</p>
+</div>
+<div class="section" id="knapsack-problem">
+<h2>10.2.2. Knapsack Problem<a class="headerlink" href="#knapsack-problem" title="Permalink to this headline">¶</a></h2>
+<p><em>Knapsack Problem</em> (KP) is a very famous instance of a CSP, combined with an <em>optimisation problem</em>. This means that not only we need to find a solution that satisfies the given constraints, but also such that it maximises certain target function.</p>
+<p>The classical formulation of KP is as follows. Given a set of items, each with a weight and a value, determine the number of each item to include in a collection so that the total weight is less than or equal to a given limit and the total value is as large as possible. It derives its name from the problem faced by someone who is constrained by a fixed-size knapsack and must fill it with the most valuable items.</p>
+<p>For instance, we can encode our items (each available in a singe instance) in a form of an array, coupling their descriptions with their weight and price:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* name * weight * price *)</span>
+<span class="k">let</span> <span class="n">fruit_sack</span> <span class="o">=</span> <span class="o">[|</span>
+  <span class="o">(</span><span class="s2">&quot;apple&quot;</span><span class="o">,</span>  <span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+  <span class="o">(</span><span class="s2">&quot;melon&quot;</span><span class="o">,</span>  <span class="mi">2</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
+  <span class="o">(</span><span class="s2">&quot;kiwi&quot;</span><span class="o">,</span>   <span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
+  <span class="o">(</span><span class="s2">&quot;durian&quot;</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+<span class="o">|]</span>
+
+<span class="c">(* Utility functions *)</span>
+<span class="k">let</span> <span class="n">weight</span> <span class="n">items</span> <span class="n">i</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="o">(_,</span> <span class="n">w</span><span class="o">,</span> <span class="o">_)</span> <span class="o">=</span> <span class="n">items</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="k">in</span> <span class="n">w</span>
+
+<span class="k">let</span> <span class="n">price</span> <span class="n">items</span> <span class="n">i</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="o">(_,</span> <span class="o">_,</span> <span class="n">p</span><span class="o">)</span> <span class="o">=</span> <span class="n">items</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="k">in</span> <span class="n">p</span>
+</pre></div>
+</div>
+<p>That is, we have a selection of 4 fruit, of different weight and price. For instance, the weight of kiwi is 1 while its cost is 2. Two additional functions are defined to retrieve the corresponding item characteristics.</p>
+</div>
+<div class="section" id="determining-the-maximal-price">
+<h2>10.2.3. Determining the Maximal Price<a class="headerlink" href="#determining-the-maximal-price" title="Permalink to this headline">¶</a></h2>
+<p>Now assume that we want to first solve a simpler problem: what is the maximal cumulative price of the items we can carry in the knapsack, without exceeding the weight limit. The following program provides such a solution:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">knapsack_max_price</span> <span class="n">max_weight</span> <span class="n">items</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">num_items</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">items</span> <span class="k">in</span>
+  <span class="c">(* n - currently observed item</span>
+<span class="c">     w - remaining weight        *)</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">solver</span> <span class="n">n</span> <span class="n">w</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">w</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">then</span> <span class="mi">0</span>
+    <span class="k">else</span>
+      <span class="k">let</span> <span class="n">wn</span> <span class="o">=</span> <span class="n">weight</span> <span class="n">items</span> <span class="n">n</span> <span class="k">in</span>
+      <span class="k">if</span> <span class="n">wn</span> <span class="o">&gt;</span> <span class="n">w</span>
+      <span class="k">then</span> <span class="n">solver</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="n">w</span>
+      <span class="k">else</span>
+        <span class="k">let</span> <span class="n">option1</span> <span class="o">=</span> <span class="n">solver</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="n">w</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="n">pn</span> <span class="o">=</span> <span class="n">price</span> <span class="n">items</span> <span class="n">n</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="n">option2</span> <span class="o">=</span> <span class="n">pn</span> <span class="o">+</span> <span class="n">solver</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">w</span> <span class="o">-</span> <span class="n">wn</span><span class="o">)</span> <span class="k">in</span>
+        <span class="n">max</span> <span class="n">option1</span> <span class="n">option2</span>
+  <span class="k">in</span>
+  <span class="n">solver</span> <span class="o">(</span><span class="n">num_items</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="n">max_weight</span>
+</pre></div>
+</div>
+<p>The main bulk of work is done by the function <code class="docutils literal notranslate"><span class="pre">solver</span></code> that computes an optimal price for by using only a subset of <em>first</em> <code class="docutils literal notranslate"><span class="pre">n</span></code> items from the list, while not exceeding the weight <code class="docutils literal notranslate"><span class="pre">w</span></code>. It does so via back-tracking by computing, at each recursive step (the last <code class="docutils literal notranslate"><span class="pre">else</span></code>-clause) the maximum of the maximal price with the first <code class="docutils literal notranslate"><span class="pre">(n</span> <span class="pre">-</span> <span class="pre">1)</span></code> items excluding the last one (<code class="docutils literal notranslate"><span class="pre">solver</span> <span class="pre">(n</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">w</span></code>) or by including the last one and thus increasing the price while reducing the maximal allotted weight (<code class="docutils literal notranslate"><span class="pre">pn</span> <span class="pre">+</span> <span class="pre">solver</span> <span class="pre">(n</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">(w</span> <span class="pre">-</span> <span class="pre">wn)</span></code>).</p>
+<p><strong>Question:</strong> What is going to be the result of <code class="docutils literal notranslate"><span class="pre">knapsack_max_price</span> <span class="pre">4</span> <span class="pre">fruit_sack</span></code>?</p>
+</div>
+<div class="section" id="solving-knapsack-problem-via-dynamic-programming">
+<h2>10.2.4. Solving Knapsack Problem via Dynamic Programming<a class="headerlink" href="#solving-knapsack-problem-via-dynamic-programming" title="Permalink to this headline">¶</a></h2>
+<p>The implementation <code class="docutils literal notranslate"><span class="pre">knapsack_max_price</span></code> has the same problems as the naive implementation of Fibonacci numbers. For instance, it’s not difficult to see that <code class="docutils literal notranslate"><span class="pre">solver</span> <span class="pre">(n</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">w</span></code> is going to be called multiple times for the same <code class="docutils literal notranslate"><span class="pre">n</span></code>. This is a good candidate for using DP memoisation technique.</p>
+<p>We are going to implement the said memoisation by computing, bottom-up, the table <code class="docutils literal notranslate"><span class="pre">m</span></code> as a two-dimensional array, where <code class="docutils literal notranslate"><span class="pre">m.(i).(w)</span></code> stores the maximal price achievable by taking only <code class="docutils literal notranslate"><span class="pre">i</span></code> first items while not exceeding the weight <code class="docutils literal notranslate"><span class="pre">w</span></code>. Having the maximal weight specified, we can populate our table by iterating through all prefixes of the item list, and all weights from 0 to the maximal given one, thus tabulating all the results. The implementation is as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">knapsack_max_price_dynamic</span> <span class="n">max_weight</span> <span class="n">items</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">num_items</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">items</span> <span class="k">in</span>
+
+  <span class="c">(* Make array of maximal prices</span>
+<span class="c">     m.(i).(w) = max price when taking up to i items</span>
+<span class="c">                 with max weight w *)</span>
+
+  <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="o">(</span><span class="n">num_items</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">[||]</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">num_items</span> <span class="k">do</span>
+    <span class="n">m</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="o">(</span><span class="n">max_weight</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="mi">0</span>
+  <span class="k">done</span><span class="o">;</span>
+
+  <span class="c">(* Main operation *)</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">to</span> <span class="n">num_items</span> <span class="k">do</span>
+      <span class="k">for</span> <span class="n">w</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">to</span> <span class="n">max_weight</span> <span class="k">do</span>
+        <span class="k">if</span> <span class="n">weight</span> <span class="n">items</span> <span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">&lt;=</span> <span class="n">w</span>
+        <span class="k">then</span>
+          <span class="k">let</span> <span class="n">p</span> <span class="o">=</span> <span class="n">price</span> <span class="n">items</span> <span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="k">in</span>
+          <span class="n">m</span><span class="o">.(</span><span class="n">i</span><span class="o">).(</span><span class="n">w</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">max</span>
+              <span class="o">(</span><span class="n">m</span><span class="o">.(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">).(</span><span class="n">w</span><span class="o">))</span>
+              <span class="o">(</span><span class="n">m</span><span class="o">.(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">).(</span><span class="n">w</span> <span class="o">-</span> <span class="n">weight</span> <span class="n">items</span> <span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">))</span> <span class="o">+</span> <span class="n">p</span><span class="o">)</span>
+        <span class="k">else</span> <span class="n">m</span><span class="o">.(</span><span class="n">i</span><span class="o">).(</span><span class="n">w</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">m</span><span class="o">.(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">).(</span><span class="n">w</span><span class="o">)</span>
+      <span class="k">done</span>
+  <span class="k">done</span><span class="o">;</span>
+
+  <span class="o">(</span><span class="n">m</span><span class="o">.(</span><span class="n">num_items</span><span class="o">).(</span><span class="n">max_weight</span><span class="o">),</span> <span class="n">m</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The implementation of <code class="docutils literal notranslate"><span class="pre">knapsack_max_price_dynamic</span></code>, in its two nested loops, fills the table <code class="docutils literal notranslate"><span class="pre">m</span></code> bottom-up. As the result, it returns the maximal possible weight <code class="docutils literal notranslate"><span class="pre">m.(num_items).(max_weight)</span></code>, as well as the table <code class="docutils literal notranslate"><span class="pre">m</span></code> itself. We can render them to observe the results:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">n</span>  <span class="n">item</span>    <span class="n">w</span>  <span class="n">p</span> <span class="o">|</span>
+<span class="o">--------------------------------</span>
+<span class="mi">0</span>  <span class="n">apple</span>   <span class="mi">1</span>  <span class="mi">1</span> <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>  <span class="mi">1</span>
+<span class="mi">1</span>  <span class="n">melon</span>   <span class="mi">2</span>  <span class="mi">2</span> <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">3</span>
+<span class="mi">2</span>  <span class="n">kiwi</span>    <span class="mi">1</span>  <span class="mi">2</span> <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">4</span>  <span class="mi">5</span>
+<span class="mi">3</span>  <span class="n">durian</span>  <span class="mi">2</span>  <span class="mi">3</span> <span class="o">|</span>  <span class="mi">0</span>  <span class="mi">2</span>  <span class="mi">3</span>  <span class="mi">5</span>  <span class="mi">6</span>
+</pre></div>
+</div>
+<p><strong>Question:</strong> what is the complexity of <code class="docutils literal notranslate"><span class="pre">knapsack_max_price_dynamic</span></code> in terms of <code class="docutils literal notranslate"><span class="pre">n</span></code> and <code class="docutils literal notranslate"><span class="pre">max_weight</span></code>? How come that it does not contradict the NP-completeness of the Knapsack Problem?</p>
+</div>
+<div class="section" id="restoring-the-optimal-list-of-items">
+<h2>10.2.5. Restoring the Optimal List of Items<a class="headerlink" href="#restoring-the-optimal-list-of-items" title="Permalink to this headline">¶</a></h2>
+<p>As the final step, let us obtain the actual items that deliver the optimal price. This can be done by walking the resulting memoisation table from the bottom-right cornet up and left. Specifically, if the price is not reduced by going, bottom-up in the same column, from an element <code class="docutils literal notranslate"><span class="pre">n</span></code> of the list, then the element <code class="docutils literal notranslate"><span class="pre">n</span></code> has not been taken. However, if the price is reduced, this means that means that wee need to include element number <code class="docutils literal notranslate"><span class="pre">n</span></code> to the list of taken items, subtract its weight, obtaining the new column to consult and repeat the process. The following program implement this logic:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">knapsack_obtain_items</span> <span class="n">max_weight</span> <span class="n">items</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">num_items</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">items</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="o">(_,</span> <span class="n">m</span><span class="o">)</span> <span class="o">=</span> <span class="n">knapsack_max_price_dynamic</span> <span class="n">max_weight</span> <span class="n">items</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">ref</span> <span class="bp">[]</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">w</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">max_weight</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="n">num_items</span> <span class="k">downto</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">if</span> <span class="n">m</span><span class="o">.(</span><span class="n">i</span><span class="o">).(!</span><span class="n">w</span><span class="o">)</span> <span class="o">=</span> <span class="n">m</span><span class="o">.(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">).(!</span><span class="n">w</span><span class="o">)</span> <span class="k">then</span> <span class="bp">()</span>
+    <span class="k">else</span> <span class="k">begin</span>
+      <span class="n">w</span> <span class="o">:=</span> <span class="o">!</span><span class="n">w</span> <span class="o">-</span> <span class="n">weight</span> <span class="n">items</span> <span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+      <span class="n">res</span> <span class="o">:=</span>  <span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">::</span> <span class="o">!</span><span class="n">res</span>
+    <span class="k">end</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="o">!</span><span class="n">res</span>
+</pre></div>
+</div>
+<p>As an example, in the table above we start from <code class="docutils literal notranslate"><span class="pre">max_weight</span> <span class="pre">=</span> <span class="pre">4</span></code> and <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">3</span></code>, thus obtaining <code class="docutils literal notranslate"><span class="pre">6</span></code>. We then notice that the third item (i.e., durian has been taken). We subtract its weight (<code class="docutils literal notranslate"><span class="pre">2</span></code>) and go to the column (<code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">=</span> <span class="pre">4</span> <span class="pre">-</span> <span class="pre">2</span></code>), repeating the process. In the same way we realise that kiwi was included, but not melon. Finally, apple was also included. As the result, we get the following list of included fruit:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="n">knapsack_obtain_items</span> <span class="mi">4</span> <span class="n">fruit_sack</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="kt">list</span> <span class="o">=</span> <span class="o">[</span><span class="mi">0</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-10_reading_files.html" class="btn btn-neutral float-right" title="10.3. File Input and Output in OCaml" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-10_backtracking.html" class="btn btn-neutral" title="10.1. Constraint Solving via Backtracking" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
