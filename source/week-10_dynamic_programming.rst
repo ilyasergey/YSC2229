@@ -87,8 +87,8 @@ For instance, we can encode our items (each available in a singe instance) in a 
 
 That is, we have a selection of 4 fruit, of different weight and price. For instance, the weight of kiwi is 1 while its cost is 2. Two additional functions are defined to retrieve the corresponding item characteristics.
 
-Determining the Maximal Weight
-------------------------------
+Determining the Maximal Price
+-----------------------------
 
 Now assume that we want to first solve a simpler problem: what is the maximal cumulative price of the items we can carry in the knapsack, without exceeding the weight limit. The following program provides such a solution::
 
