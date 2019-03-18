@@ -67,4 +67,4 @@ Exercise 4
 
 Improve the encoding format of DNA strings so instead of storing the overall length (and wasting 30 bits) in the beginning, it would store a 2-bit number ``N``, indicating how many of 2-bit sequences (0-3) will be appended for padding at the end. Notice that ``N`` will depend on the length of the DNA sequence, and storing ``N`` will impact the value of ``N``, as it consumes 2 additional bits. 
 
-Read ``N`` when deserializing and then use the same trick as when reading ASCII strings for reading a DNA from the rest of the file. As added ``N`` 0-sequences (for padding) at the end would contribute "junk" ``A`` symbols at the end of the decoded DNA, use the stored information to strip them in a deserialized DNA string.
+Read ``N`` when deserializing and then use the same trick as when reading ASCII strings for reading a DNA from the rest of the file. As added ``N`` 2-bit 0-sequences (for padding) at the end would contribute "junk" ``A`` symbols at the end of the decoded DNA, use the stored information to strip them in a deserialized DNA string.
