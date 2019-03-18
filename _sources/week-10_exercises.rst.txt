@@ -57,7 +57,7 @@ Implement thew following functions:
 * ``eval : formula -> (string * bool) list -> bool`` for evaluating the boolean value of a formula (``true`` or ``false``) given the list of bindings, mapping the variables occurring in the formula to their boolean values.
 * ``generate_random_formula : string list -> int -> formula`` for creating a random formula featuring variables from a given list of names, as well as other connectives. Use the ``int`` parameter to control the size of the forumla.
 * ``solve_brute_force : formula -> (string * bool) list option`` -- a function for finding a list of substitutions from variable names that make the given formula evaluate to ``true`` or ``None`` if no such list exists. Do it by enumerating all possible assignments to variables. 
-* ``solve_backtracking : formula -> (string * bool) list option`` -- the same solver as before, but implemented by means of back-tracking, assigning individual values to the forumla and partially simplifying it (as in the class).
+* ``solve_backtracking : formula -> (string * bool) list option`` -- the same solver as before, but implemented by means of back-tracking, assigning individual values to the involved variables and partially simplifying the forumla as it goes (as discussed in the class).
 * Test both solvers using ``generate_random_formula`` and compare their performance on large formulae.
 
 .. _exercise-dna-encoding:
