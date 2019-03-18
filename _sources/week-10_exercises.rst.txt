@@ -44,7 +44,7 @@ Implement a version of a solver for the Knapsack Problem using the back-tracking
 Exercise 3
 ----------
 
-In this exercise you will be asked to implement a solver for `Boolean satisfiability problem <https://en.wikipedia.org/wiki/Boolean_satisfiability_problem>`_ using the backtracking technique. Take the following data type defining boolean formulae::
+In this exercise you will be asked to implement a solver for `Boolean satisfiability problem <https://en.wikipedia.org/wiki/Boolean_satisfiability_problem>`_ using both the brute-force and the backtracking technique. Take the following data type defining boolean formulae::
 
  type formula = 
    | Var of string

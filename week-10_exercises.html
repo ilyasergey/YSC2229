@@ -196,7 +196,7 @@ Better DNA-encoding.</li>
 </div>
 <div class="section" id="exercise-3">
 <span id="exercise-sat"></span><h2>10.5.5. Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
-<p>In this exercise you will be asked to implement a solver for <a class="reference external" href="https://en.wikipedia.org/wiki/Boolean_satisfiability_problem">Boolean satisfiability problem</a> using the backtracking technique. Take the following data type defining boolean formulae:</p>
+<p>In this exercise you will be asked to implement a solver for <a class="reference external" href="https://en.wikipedia.org/wiki/Boolean_satisfiability_problem">Boolean satisfiability problem</a> using both the brute-force and the backtracking technique. Take the following data type defining boolean formulae:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">formula</span> <span class="o">=</span>
   <span class="o">|</span> <span class="nc">Var</span> <span class="k">of</span> <span class="kt">string</span>
   <span class="o">|</span> <span class="nc">And</span> <span class="k">of</span> <span class="n">formula</span> <span class="o">*</span> <span class="n">formula</span>
