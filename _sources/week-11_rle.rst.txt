@@ -1,6 +1,6 @@
 .. -*- mode: rst -*-
 
-.. _week-10-rle:
+.. _week-11-rle:
 
 Run-Length Encoding
 ===================

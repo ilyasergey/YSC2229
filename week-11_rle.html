@@ -150,7 +150,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="run-length-encoding">
-<span id="week-10-rle"></span><h1>Run-Length Encoding<a class="headerlink" href="#run-length-encoding" title="Permalink to this headline">¶</a></h1>
+<span id="week-11-rle"></span><h1>Run-Length Encoding<a class="headerlink" href="#run-length-encoding" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_RunLengthEncoding.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_RunLengthEncoding.ml</a></p>
 <p>Run-length encoding is a compression methods that works well with bit-strings with large contiguous segments of repeating 0s and 1s by encoding the lengths of such segments in the interleaved fashion, starting from 0. For instance, the following string:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="mi">0000000000000001111111000000011111111111</span>
@@ -225,7 +225,7 @@
   <span class="n">write_to_binary</span> <span class="n">loop</span> <span class="n">new_binary</span> <span class="n">segments</span>
 </pre></div>
 </div>
-<p>We leave the implementation of the RLE decoder and the corresponding testing procedure as a homework <span class="xref std std-ref">exercise-rle-decoder</span>.</p>
+<p>We leave the implementation of the RLE decoder and the corresponding testing procedure as a homework <a class="reference internal" href="week-11_exercises.html#exercise-rle-decoder"><span class="std std-ref">Exercise 1</span></a>.</p>
 </div>
 </div>
 
