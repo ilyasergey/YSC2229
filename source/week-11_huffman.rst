@@ -1,6 +1,6 @@
 .. -*- mode: rst -*-
 
-.. _week-10-huffman:
+.. _week-11-huffman:
 
 Huffman Encoding
 ================
