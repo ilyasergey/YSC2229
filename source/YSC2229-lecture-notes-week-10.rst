@@ -13,7 +13,7 @@ YSC2229 Lecture Notes, Week 10
 
 **Supplementary materials**
 
-* `Backtracking <https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_09_week_10_Backtracking.ml>`_
+* `Backtracking <https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_Backtracking.ml>`_
 * `Dynamic Programming <https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_DynamicProgramming.ml>`_
 * `File Input/Output <https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_ReadingFiles.ml>`_
 * `Binary Enconding of Data <https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_BinaryEncodings.ml>`_
