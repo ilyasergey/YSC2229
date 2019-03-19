@@ -52,9 +52,8 @@ In this exercise you will be asked to implement a solver for `Boolean satisfiabi
    | Or  of formula * formula
    | Not of formula
 
-For instance, OCaml's value ``f = not x && (y || not z)`` can be encoded as follows::
+For instance, OCaml's value ``not x && (y || not z)`` can be encoded as follows::
 
- let f = 
    And (Not (Var "x"), 
         Or (Var "y", 
             Not (Var "z")))
