@@ -18,7 +18,7 @@ Mandatory exercises
   SAT-solver
 
 * :ref:`exercise-dna-encoding`
-  Better DNA-encoding.
+  Better DNA encoding
 
 Recommended exercises
 ---------------------
