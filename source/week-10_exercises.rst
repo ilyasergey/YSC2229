@@ -37,20 +37,27 @@ Implement a version of a solver for the Knapsack Problem (finding a list of item
 Exercise 2
 ----------
 
-Implement a version of a solver for the Knapsack Problem using the back-tracking technique (similarly to how n-queens problem has been solved), by selecting subsets of items, optimising for the weight and maximising the price. Test your solution as in :ref:`exercise-knapsack-permutations`.
+Implement a version of a solver for the Knapsack Problem using the back-tracking technique (similarly to how n-queens problem has been solved), by progressively selecting subsets of items, optimising for the weight and recording the maximal price the price (and the set of elements that delivered it). Test your solution as in :ref:`exercise-knapsack-permutations`.
 
 .. _exercise-sat:
 
 Exercise 3
 ----------
 
-In this exercise you will be asked to implement a solver for `Boolean satisfiability problem <https://en.wikipedia.org/wiki/Boolean_satisfiability_problem>`_ using both the brute-force and the backtracking technique. Take the following data type defining boolean formulae::
+In this exercise you will be asked to implement a solver for `Boolean satisfiability problem <https://en.wikipedia.org/wiki/Boolean_satisfiability_problem>`_ using both the brute-force and the backtracking technique. Take the following data type defining syntax for boolean formulae::
 
  type formula = 
    | Var of string
    | And of formula * formula
    | Or  of formula * formula
    | Not of formula
+
+For instance, OCaml's value ``f = not x && (y || not z)`` can be encoded as follows::
+
+ let f = 
+   And (Not (Var "x"), 
+        Or (Var "y", 
+            Not (Var "z")))
 
 Implement thew following functions:
 
