@@ -192,16 +192,23 @@ Better DNA-encoding.</li>
 </div>
 <div class="section" id="exercise-2">
 <span id="exercise-knapsack-backtracking"></span><h2>10.5.4. Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
-<p>Implement a version of a solver for the Knapsack Problem using the back-tracking technique (similarly to how n-queens problem has been solved), by selecting subsets of items, optimising for the weight and maximising the price. Test your solution as in <a class="reference internal" href="#exercise-knapsack-permutations"><span class="std std-ref">Exercise 1</span></a>.</p>
+<p>Implement a version of a solver for the Knapsack Problem using the back-tracking technique (similarly to how n-queens problem has been solved), by progressively selecting subsets of items, optimising for the weight and recording the maximal price the price (and the set of elements that delivered it). Test your solution as in <a class="reference internal" href="#exercise-knapsack-permutations"><span class="std std-ref">Exercise 1</span></a>.</p>
 </div>
 <div class="section" id="exercise-3">
 <span id="exercise-sat"></span><h2>10.5.5. Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
-<p>In this exercise you will be asked to implement a solver for <a class="reference external" href="https://en.wikipedia.org/wiki/Boolean_satisfiability_problem">Boolean satisfiability problem</a> using both the brute-force and the backtracking technique. Take the following data type defining boolean formulae:</p>
+<p>In this exercise you will be asked to implement a solver for <a class="reference external" href="https://en.wikipedia.org/wiki/Boolean_satisfiability_problem">Boolean satisfiability problem</a> using both the brute-force and the backtracking technique. Take the following data type defining syntax for boolean formulae:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">formula</span> <span class="o">=</span>
   <span class="o">|</span> <span class="nc">Var</span> <span class="k">of</span> <span class="kt">string</span>
   <span class="o">|</span> <span class="nc">And</span> <span class="k">of</span> <span class="n">formula</span> <span class="o">*</span> <span class="n">formula</span>
   <span class="o">|</span> <span class="nc">Or</span>  <span class="k">of</span> <span class="n">formula</span> <span class="o">*</span> <span class="n">formula</span>
   <span class="o">|</span> <span class="nc">Not</span> <span class="k">of</span> <span class="n">formula</span>
+</pre></div>
+</div>
+<p>For instance, OCaml’s value <code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">=</span> <span class="pre">not</span> <span class="pre">x</span> <span class="pre">&amp;&amp;</span> <span class="pre">(y</span> <span class="pre">||</span> <span class="pre">not</span> <span class="pre">z)</span></code> can be encoded as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">f</span> <span class="o">=</span>
+  <span class="nc">And</span> <span class="o">(</span><span class="nc">Not</span> <span class="o">(</span><span class="nc">Var</span> <span class="s2">&quot;x&quot;</span><span class="o">),</span>
+       <span class="nc">Or</span> <span class="o">(</span><span class="nc">Var</span> <span class="s2">&quot;y&quot;</span><span class="o">,</span>
+           <span class="nc">Not</span> <span class="o">(</span><span class="nc">Var</span> <span class="s2">&quot;z&quot;</span><span class="o">)))</span>
 </pre></div>
 </div>
 <p>Implement thew following functions:</p>
