@@ -7,10 +7,22 @@ Representing Sets via Binary Search Trees
 
 https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_BinaryTree.ml
 
-A Data Type for Binary-Search Trees
------------------------------------
+Binary search trees (BST) are one of the most versatile representations of mutable sets, supporting a variety of operations, such as insertion, deletion, checking membership, finding minimums, maximums, predecessors and successors. 
 
-TODO::
+The key to this expressivity is the invariant of a tree-shaped data structure, that mandates that, for any node,
+
+* any element in its left subtree is less or equal than the element in the node itself, and
+* any element in its right subtree is greater or equal than the element in the node itself.
+
+This invariant is maintained by all operations that modify the set, and is relied upon by all queries. 
+
+
+A Data Structure for Binary-Search Trees
+----------------------------------------
+
+We start by defining a linked in-memory data structure for BSTs in its own module. 
+
+The tree is populated by nodes, each of which carries a value (immutable), and also maintains references (mutable) to its left/right children and a parent, which can be either absent or some other nodes::
 
  open Week_01
  open Week_06
@@ -32,31 +44,197 @@ TODO::
 
  end
 
+For convenience, we define several operations to dereference various components of a tree and its nodes::
+
+  let left n = !(n.left)
+  let right n = !(n.right)
+  let parent n = !(n.parent)
+  let get_root t = !(t.root)
+
+  let mk_node e = 
+    {value = e;
+     parent = ref None;
+     left = ref None;
+     right = ref None}
+    
+  let mk_tree _ = {root = ref None}    
+    
+Finally, since nodes are represented by an ``option`` type, we introduce the following combinator, simplifying working with ``option``-wrapped values::
+
+  let map_option o f z = match o with
+    | None -> z
+    | Some n -> f n
+
+In words ``map_option`` returns applies ``f`` to the value ``n`` within ``o``, if ``o = Some n``, or returns ``z`` otherwise.
 
 Inserting an element into a BST
 -------------------------------
 
-TODO
+The defined above ``mk_tree`` function creates an empty tree. Let us now implement a procedure for populating it with elements by inserting them one by one::
+
+  let insert t e =       
+    let rec insert_element n e = 
+      let m = mk_node e in
+      if e < n.value
+      then match left n with
+        | Some m -> insert_element m e
+        | None ->
+          m.parent := Some n;
+          n.left := Some m;
+      else match right n with
+        | Some m -> insert_element m e
+        | None ->
+          m.parent := Some n;
+          n.right := Some m
+    in
+    match !(t.root) with
+    | None -> t.root := Some (mk_node e)
+    | Some n -> insert_element n e
+
+Notice that the main working routine ``insert_element`` is respectful with respect to the BST property defined above: it positions the node ``m`` with the element ``e``, so it would be in the right subtree (smaller-left/greater-right) with respect to its parent nodes.
 
 Binary-Search-Tree Invariant
 ----------------------------
 
-TODO
+Let us now assert tree-manipulating operations such as ``insert`` indeed preserve the BST property. For this, let us define the BST invariant in the form of the following function::
 
-Searching Elements
-------------------
+  let check_bst_inv t = 
+    let rec walk node p = 
+      (p node.value) &&
+      let res_left = match left node with
+        | None -> true
+        | Some l -> walk l (fun w -> p w && w <= node.value)
+      in
+      let res_right = match right node with
+        | None -> true
+        | Some r -> walk r (fun w -> p w && w >= node.value)
+      in
+      res_left && res_right
+    in
+    match !(t.root) with
+    | None -> true
+    | Some n -> walk n (fun _ -> true)
 
-TODO
+The main recursive sub-function ``wal`` works by "growing" a predicate ``p`` that applies to each node further down the tree, making sure that it is correctly positioned with regard to all its parents. At the top level ``p`` is instantiated with ``(fun _ -> true)``, as there are no restrictions imposed for the root of the tree, but more and more conjuncts added, as the checking proceeds recursively.
+
+
+Testing Tree Operations
+-----------------------
+
+https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_Tests.ml
+
+Let us put or invariant to work by using it to test the correctness of ``insert``.
+
+We do so by frist defining a function for generating random trees from random arrays via insertion::
+
+ open Week_01
+ open Week_03
+ open Week_11_BinaryTree
+
+ open BinarySearchTree
+
+ let mk_tree_of_size n =
+   let t = mk_tree () in
+   let a = generate_key_value_array n in
+   for i = 0 to n - 1 do 
+     insert t a.(i)
+   done;
+   t
+
+Next, we check that the generated trees indeed satisfy the BST property::
+
+ let%test "Testing insertion" = 
+   let n = 1000 in
+   let t = mk_tree_of_size n in
+   check_bst_inv t
 
 Printing a Tree
 ---------------
 
-TODO
+It would be very nice if we could not only test but also visualise our binary search trees.
+
+Unfortunately, printing a tree in a standard top-down fashion requires quite a bit of book-keeping of tree-specific information (implementation of a this procedure in a particular case is left to you as a homework assignment). Printing a tree left-to-right is, however, can be doen quite easily as follows::
+
+  let print_tree pp snum t = 
+    let print_node_with_spaces l s = 
+      for i = 0 to s - 1 do 
+        Printf.printf " "
+      done;
+      print_endline (pp l.value);
+    in
+
+    let rec walk s node = match node with
+      | None -> ()
+      | Some n -> begin
+          walk (s + snum) (right n);
+          print_node_with_spaces n s;
+          walk (s + snum) (left n);
+        end      
+
+    in
+    map_option (get_root t) (fun n -> walk 0 (Some n)) ()
+
+The first auxiliary function  ``print_node_with_spaces`` Prints a string of ``s`` spaces and the value of a node ``l``. 
+
+The second function ``walk`` traverses the tree recursively, accumulating the "offset" proportionally to the depth of the tree node. It first prints the right sub-tree, then the node itself and then the left sub-tree, making use of the accumulated offset for printing the necessary number of spaces. Finally, it runs ``walk`` for the top-level root node, if it exists.
+
+Let us observe the effect of ``print_tree`` by instantiating it to print trees of key-value pairs::
+
+  let print_kv_tree = print_tree 
+      (fun (k, v) -> Printf.sprintf "(%d, %s)" k v) 12
+
+We can now use ``utop`` to experiment with it::
+
+ utop # open Week_11_BinaryTree;;
+ utop # open BinarySearchTree;;
+ utop # let t = mk_tree ();;
+ val t : '_weak1 tree = {root = {contents = None}}
+ utop # let a = Week_03.generate_key_value_array 10;;
+ val a : (int * string) array =
+   [|(4, "ayuys"); (7, "cdrhf"); (4, "ukobi"); (5, "hwsjs"); (8, "uyrla");
+     (0, "uldju"); (3, "rkolw"); (7, "gnzzo"); (7, "nksfe"); (4, "geevu")|]
+ utop # for i = 0 to 9 do insert t a.(i) done;;
+ - : unit = ()
+ utop # print_kv_tree t;;
+                         (8, uyrla)
+                                                 (7, nksfe)
+                                     (7, gnzzo)
+             (7, cdrhf)
+                                     (5, hwsjs)
+                         (4, ukobi)
+                                     (4, geevu)
+ (4, ayuys)
+                         (3, rkolw)
+             (0, uldju)
+ - : unit = ()
+
+That is, on can see that ``(4, "ayuys")`` is the root of the tree, and the whole structure satisfies the BST property.
+
+Searching Elements
+------------------
+
+We define the ``search`` function so it would return not just the element, but also the node that contains it. It does so by recursively traversing the tree, while relying on its BST property::
+
+  let search t k = 
+    let rec walk k n = 
+      let nk = n.value in 
+      if k = nk then Some n
+      else if k < nk
+      then match left n with
+        | None -> None
+        | Some l -> walk k l
+      else match right n with
+        | None -> None
+        | Some r -> walk k r
+    in
+    map_option (get_root t) (walk k) None
+
+In the absence of the abstract module signature, it is quite dangerous to return a node (node just its value), as one can break the BST properties, by checking its mutable components. However, returning a node also simplifies the implementation of various testing and manipulation procedures, specifically, deletion of tree nodes. 
 
 Tree Traversals
 ---------------
 
-TODO
+
 
 More BST operations
 -------------------
@@ -77,7 +255,7 @@ For instance, finding the minimal element of a subtree starting from a node ``n`
 Deleting a node from BST
 ------------------------
 
-Deletion of a node from a BST is the most comlicated operation, as it requires significant restructuring of the tree in order to maintain its invariant.
+Deletion of a node from a BST is the most complicated operation, as it requires significant restructuring of the tree in order to maintain its invariant.
 
 Deletion of a non-leaf node from a tree will require some other nod to take its place. This can be achieved by the following operation for performing "transplantation" of one node by another::
 
