@@ -7,10 +7,9 @@ YSC2229 Lecture Notes, Week 11
 
    week-11_rle
    week-11_huffman
-..   week-10_union_find
-..   week-10_balanced_trees
-..   week-10_avl
-..   week-11_exercises
+   week-11_union_find
+   week-11_bst
+   week-11_exercises
 
 **Supplementary materials**
 

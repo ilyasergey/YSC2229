@@ -5,7 +5,7 @@
 Huffman Encoding
 ================
 
-https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_HuffmanCodes.ml
+https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_HuffmanCodes.ml
 
 All the compression algorithms we explored so far did not really exploit any specifics of the file they are working on in order to adapt the compression scheme itself. 
 
