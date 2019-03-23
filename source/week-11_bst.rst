@@ -234,7 +234,123 @@ In the absence of the abstract module signature, it is quite dangerous to return
 Tree Traversals
 ---------------
 
+There are multiple ways to flatten a tree into a list, which can be convenient for the sake of testing and other inspections. 
 
+The simples way to do it is via an accumulator (implemented as a mutable queue) and a procedure, known as Depth-First-Search (DFS), which traverses the tree recursively, following its shape::
+
+  open DLLBasedQueue
+
+  let depth_first_search_rec t = 
+    let rec walk q n =
+      enqueue q n.value;
+      (match left n with
+       | Some l -> walk q l
+       | None -> ());
+      (match right n with
+       | Some r -> walk q r
+       | None -> ());
+    in
+    let acc = (mk_queue 0) in
+    map_option (get_root t) (walk acc) ();
+    queue_to_list acc
+
+Keeping in mind the correspondence between implicit call stack and explicit call stack, we can rewrite this procedure without relying on recursion, but using an explicit stack instead::
+
+  let depth_first_search_loop t = 
+    let open ListBasedStack in
+    let loop stack q depth =
+      while not (is_empty stack) do
+        let n = get_exn @@ pop stack in
+        enqueue q n.value;
+        (match right n with
+         | Some r -> push stack r
+         | _ -> ());
+        (match left n with
+         | Some l -> push stack l
+         | _ -> ());
+      done
+    in
+    let acc = (mk_queue 0) in
+    let stack = mk_stack 0 in
+    (match get_root t with
+    | None -> ()
+    | Some n -> begin
+        push stack n;
+        loop stack acc 0;
+      end);      
+    queue_to_list acc
+
+With the stack (implicit or explicit), DFS traverses the tree in a Last-In-First-Out mode (LIFO). By replacing the stack with a mutable queue (First-In-First-Out, FIFO), we can obtain an alternative traversal, known as Breadth-First-Search (BFS), so it would accumulate tree elements by following its "layers"::
+
+
+  let breadth_first_search_loop t = 
+
+    let loop wlist q depth =
+      while not (is_empty wlist) do
+        let n = get_exn @@ dequeue wlist in
+        enqueue q n.value;
+        (match left n with
+         | Some l -> enqueue wlist l
+         | _ -> ());
+        (match right n with
+         | Some r -> enqueue wlist r
+         | _ -> ());
+      done
+    in
+    let acc = (mk_queue 0) in
+    let wlist = mk_queue 0 in
+    (match get_root t with
+    | None -> ()
+    | Some n -> begin
+        enqueue wlist n;
+        loop wlist acc 0;
+      end);      
+    queue_to_list acc
+
+Notice that the code of ``depth_first_search_loop`` and ``breadth_first_search_loop`` is almost identical, modulo the used container data structure and its operations (e.g., ``enqueue``/``push`` and ``dequeue``/``pop``).
+
+Testing Element Retrieval and Tree Traversals
+---------------------------------------------
+
+As we know well how to work with lists, we can use traversals to test each other, as well as the ``search`` function::
+
+ (******************************************)
+ (*          Testing traversals            *)
+ (******************************************)
+
+ let check_elem_in_tree t e = 
+   let n = search t e in
+   (get_exn @@ n).value = e
+
+ let%test "Testing DFS" = 
+   let n = 1000 in
+   let t = mk_tree_of_size n in
+   let l1 = depth_first_search_rec t in
+   let l2 = depth_first_search_loop t in
+   List.length l1 = n && l1 = l2 &&
+   List.for_all (fun e -> check_elem_in_tree t e) l1
+
+ let%test "Testing BFS" = 
+   let n = 1000 in
+   let t = mk_tree_of_size n in
+   let l1 = depth_first_search_rec t in
+   let l2 = breadth_first_search_loop t in
+   List.length l1 = n && 
+   List.for_all (fun e -> List.mem e l2) l1 &&
+   List.for_all (fun e -> List.mem e l1) l2
+
+ (******************************************)
+ (*          Testing retrieval             *)
+ (******************************************)
+
+ let%test "Testing retrieval" = 
+   let n = 1000 in
+   let t = mk_tree_of_size n in
+   let m = Random.int n in
+   let l = breadth_first_search_loop t in
+   let e = List.nth l m in
+   let z = search t e in
+   z <> None
 
 More BST operations
 -------------------
