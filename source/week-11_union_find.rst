@@ -108,7 +108,7 @@ We can observe the evolution of equivalence classes in Union-Find by implementin
 Let us run some experiments using ``utop``::
 
  utop # open Week_11_UnionFind;;
- ─( 21:41:39 )─< command 1 utop # open UnionFind;;
+ utop # open UnionFind;;
  utop # let uf = mk_UF 10;;
  val uf : t = {count = {contents = 10}; id = [|0; 1; 2; 3; 4; 5; 6; 7; 8; 9|]}
  utop # print_uf uf;;
