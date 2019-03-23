@@ -7,15 +7,56 @@ Representing Sets via Binary Search Trees
 
 https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_BinaryTree.ml
 
-Binary-Search-Tree invariant
+A Data Type for Binary-Search Trees
+-----------------------------------
+
+TODO::
+
+ open Week_01
+ open Week_06
+
+ module BinarySearchTree = struct
+
+   type 'e tree_node = {
+     value : 'e;
+     parent  : 'e tree_node option ref;
+     left  : 'e tree_node option ref;
+     right  : 'e tree_node option ref;
+   }
+
+   type 'e tree = {
+     root : 'e tree_node option ref
+   }
+
+   (* More definitions coming here *)
+
+ end
+
+
+Inserting an element into a BST
+-------------------------------
+
+TODO
+
+Binary-Search-Tree Invariant
 ----------------------------
 
-Inserting a node to a BST
--------------------------
+TODO
+
+Searching Elements
+------------------
+
+TODO
+
+Printing a Tree
+---------------
+
+TODO
 
 Tree Traversals
 ---------------
 
+TODO
 
 More BST operations
 -------------------
