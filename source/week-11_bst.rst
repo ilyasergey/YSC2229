@@ -258,7 +258,7 @@ Keeping in mind the correspondence between implicit call stack and explicit call
 
   let depth_first_search_loop t = 
     let open ListBasedStack in
-    let loop stack q depth =
+    let loop stack q =
       while not (is_empty stack) do
         let n = get_exn @@ pop stack in
         enqueue q n.value;
@@ -276,7 +276,7 @@ Keeping in mind the correspondence between implicit call stack and explicit call
     | None -> ()
     | Some n -> begin
         push stack n;
-        loop stack acc 0;
+        loop stack acc;
       end);      
     queue_to_list acc
 
