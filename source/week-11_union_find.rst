@@ -61,7 +61,7 @@ Working with Sets via Union-Find
 
 The Union-Find structure is going to rely on an old trick --- encoding certain information about elements in an array via their locations. In this particular case, once created, each location in a UF "carrier" array determines an equivalence class, represented by an element itself. That is, for instance creating a UF structure via ``mk_UF 10`` we create an equivalance relation with 10 classes, where each element is only connected to itself.
 
-However, in the future the class of an element might change, which will be reflected by changing the value in the corresponding array cell. More specifically, the dependencies in the arrays will be forming *chains* ending with an element that is in its own position. Keeping this fact --- that all element-position chains eventuall reach a fixpoint, we can implement a procedure by determining the equivalance class of an element, as a fixpoing in the corresdpongin chain::
+However, in the future the class of an element might change, which will be reflected by changing the value in the corresponding array cell. More specifically, the dependencies in the arrays will be forming *chains* ending with a *root* --- an element that is in its own position. Keeping this fact in mind --- that all element-position chains eventually reach a fixpoint (root), we can implement a procedure by determining the equivalance class of an element, as a fixpoing in the corresdpongin chain::
 
   let find uf p = 
     let r = ref p in 
@@ -73,7 +73,7 @@ However, in the future the class of an element might change, which will be refle
   let connected uf p q =
     find uf p = find uf q
 
-That is, to determine the class of an element ``p``, the function ``find`` follows the chain that starts from it, via array indices, until it reaches a "fixpoint", which corresponds to the "canonical element" of ``p``'s equivalence class.
+That is, to determine the class of an element ``p``, the function ``find`` follows the chain that starts from it, via array indices, until it reaches a root, which corresponds to the "canonical element" of ``p``'s equivalence class.
 
 The intuition behind ``find`` becomes more clear once we see how ``union`` is implemented::
 

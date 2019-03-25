@@ -14,11 +14,11 @@ Mandatory exercises
 * :ref:`exercise-fixed-length`
   Fixed-length code
 
+* :ref:`exercise-uf-compression`
+  Union-Find with path compression
+
 * :ref:`exercise-tree-prev`
   Finding a predecessort in a BST
-
-* :ref:`exercise-tree-print`
-  Natural printing of a tree of digits
 
 * :ref:`exercise-right-rotate`
   Fun with BST rotations
@@ -26,7 +26,8 @@ Mandatory exercises
 Recommended exercises
 ---------------------
 
-None
+* :ref:`exercise-tree-print`
+  Natural printing of a tree of digits
 
 .. _exercise-rle-decoder:
 
@@ -51,11 +52,21 @@ Design the encoding for representing the alphabet (relevant characters in the en
 Exercise 3
 ----------
 
-Implement a procedure ``find_prev`` for finding a predecessor for an element ``e`` from the BST. It should return ``None`` if ``e`` is not present in the tree, or if it is the smallest element in it. Implemnt automated randomised tests for your procedure.
+Implement a procedure ``find_prev`` for finding a predecessor for an
+element ``e`` from the BST. It should return ``None`` if ``e`` is not
+present in the tree, or if it is the smallest element in it. Implemnt
+automated randomised tests for your procedure.
+
+.. _exercise-uf-compression:
+
+Exercise 4
+----------
+
+Implement a version of Union-Find to include *path compression*, by adding a code to ``find`` that links every element on the path from ``p`` to the root. Give a sequence of inputs that causes thie function to produce a path of length 4 (and compress it). *Note*: The amortised cost per operation for this algorithm is known to be logarithmic.
 
 .. _exercise-tree-print:
 
-Exercise 4
+Exercise 5
 ----------
 
 Using the idea of ``breadth_first_search_loop``, implement a procedure for printing the tree of 1-digit integers "vertically" (i.e., as we normally draw them on a white board). 
@@ -83,7 +94,7 @@ As a bonus (for additional points), try to generalise your printing algorithm fo
 
 .. _exercise-right-rotate:
 
-Exercise 5
+Exercise 6
 ----------
 
 In a BST, *left and right rotations* exchange the node with its right/left child (if present), corresdpondingly. Diagrammatically, this can be represented by the following picture:
@@ -93,7 +104,7 @@ In a BST, *left and right rotations* exchange the node with its right/left child
    :align: center
 
 
-That is, via left rotation, :math:`y` becomse a parent of :math:`x` and vice versa. The implementation of left rotation of a node :math:`x` in a tree :math:`T` is given below::
+That is, via left rotation, :math:`y` becomes a parent of :math:`x` and vice versa. The implementation of left rotation of a node :math:`x` in a tree :math:`T` is given below::
 
   let left_rotate t x = 
     match right x with
