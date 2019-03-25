@@ -5,7 +5,7 @@
 Equivalance Classes and Union-Find
 ==================================
 
-https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_UnioniFind.ml
+https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_UnionFind.ml
 
 An equivalance class is a set of elements related by a relation :math:`R`, such that :math:`R` is 
 
