@@ -1,0 +1,361 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>11.3. Equivalance Classes and Union-Find &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="11.4. Exercises" href="week-11_exercises.html" />
+    <link rel="prev" title="11.2. Huffman Encoding" href="week-11_huffman.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-11.html">11. YSC2229 Lecture Notes, Week 11</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-11_rle.html">11.1. Run-Length Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_huffman.html">11.2. Huffman Encoding</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11.3. Equivalance Classes and Union-Find</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#union-find-structure">11.3.1. Union-Find Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#working-with-sets-via-union-find">11.3.2. Working with Sets via Union-Find</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-union-find">11.3.3. Testing Union-Find</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_exercises.html">11.4. Exercises</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="YSC2229-lecture-notes-week-11.html">11. YSC2229 Lecture Notes, Week 11</a> &raquo;</li>
+        
+      <li>11.3. Equivalance Classes and Union-Find</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="equivalance-classes-and-union-find">
+<span id="union-find"></span><h1>11.3. Equivalance Classes and Union-Find<a class="headerlink" href="#equivalance-classes-and-union-find" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_UnionFind.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_UnionFind.ml</a></p>
+<p>An equivalance class is a set of elements related by a relation <span class="math notranslate nohighlight">\(R\)</span>, such that <span class="math notranslate nohighlight">\(R\)</span> is</p>
+<ol class="loweralpha simple">
+<li>reflexive (any element is related to itself)</li>
+<li>symmetric (if <span class="math notranslate nohighlight">\(p\)</span> is related to <span class="math notranslate nohighlight">\(q\)</span>, then <span class="math notranslate nohighlight">\(q\)</span> is related to <span class="math notranslate nohighlight">\(p\)</span>), and</li>
+<li>transitice (if <span class="math notranslate nohighlight">\(p\)</span> is related to <span class="math notranslate nohighlight">\(q\)</span> and <span class="math notranslate nohighlight">\(q\)</span> is related to <span class="math notranslate nohighlight">\(r\)</span>, then <span class="math notranslate nohighlight">\(p\)</span> is related to <span class="math notranslate nohighlight">\(r\)</span>).</li>
+</ol>
+<p>Reasoning about inclusion of an element into a certain equivalence class within a set is a common problem in computing. For instance, it appears in the following domains:</p>
+<ul class="simple">
+<li>Checking if a computer node is in a certain network segment</li>
+<li>Checking whether two variables in the same program are equivalent (aliases)</li>
+<li>Reasoning about mathematical sets.</li>
+</ul>
+<p>We are going to refer to equivalent elements (according to a certain equivalence relation) as to <em>connected</em> ones.</p>
+<div class="section" id="union-find-structure">
+<h2>11.3.1. Union-Find Structure<a class="headerlink" href="#union-find-structure" title="Permalink to this headline">¶</a></h2>
+<p><em>Union-Find</em> is a data structure that allows to efficiently represent a finite set of <code class="docutils literal notranslate"><span class="pre">n</span></code> elements (encoded by a segment of integers <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">...</span> <span class="pre">n</span></code>) with a possibility to answer the following questions:</p>
+<ul class="simple">
+<li>Are elements <code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">j</span></code> connected?</li>
+<li>What is an equivalence class of an element <code class="docutils literal notranslate"><span class="pre">i</span></code>?</li>
+<li>How many equivalence classes are there in the given relation?</li>
+</ul>
+<p>In addition to that it allows to modify the current equivalence relation by taking a union of two classes, corresponding by elements <code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">j</span></code>, therefore, possibly affecting the answers to the questions above.</p>
+<p>The definition of the Union-Find structure is very simple:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">UnionFind</span> <span class="o">=</span> <span class="k">struct</span>
+
+  <span class="k">type</span> <span class="n">t</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">count</span> <span class="o">:</span> <span class="kt">int</span> <span class="n">ref</span><span class="o">;</span>
+    <span class="n">id</span> <span class="o">:</span> <span class="kt">int</span> <span class="kt">array</span>
+  <span class="o">}</span>
+
+  <span class="c">(* More definitions come here *)</span>
+
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>That is, it only stores a count of equivalence classes and an array, representing the elements. We can create a union-find for <code class="docutils literal notranslate"><span class="pre">n</span></code> elements by relying to the previously defined machinery from past lectures:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">mk_UF</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">ints</span> <span class="o">=</span>
+    <span class="nn">Week_04</span><span class="p">.</span><span class="n">list_to_array</span> <span class="o">(</span><span class="nn">Week_03</span><span class="p">.</span><span class="n">iota</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">))</span> <span class="k">in</span>
+  <span class="o">{</span> <span class="n">count</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">n</span><span class="o">;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">ints</span> <span class="o">}</span>
+
+<span class="k">let</span> <span class="n">get_count</span> <span class="n">uf</span> <span class="o">=</span> <span class="o">!(</span><span class="n">uf</span><span class="o">.</span><span class="n">count</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="working-with-sets-via-union-find">
+<h2>11.3.2. Working with Sets via Union-Find<a class="headerlink" href="#working-with-sets-via-union-find" title="Permalink to this headline">¶</a></h2>
+<p>The Union-Find structure is going to rely on an old trick — encoding certain information about elements in an array via their locations. In this particular case, once created, each location in a UF “carrier” array determines an equivalence class, represented by an element itself. That is, for instance creating a UF structure via <code class="docutils literal notranslate"><span class="pre">mk_UF</span> <span class="pre">10</span></code> we create an equivalance relation with 10 classes, where each element is only connected to itself.</p>
+<p>However, in the future the class of an element might change, which will be reflected by changing the value in the corresponding array cell. More specifically, the dependencies in the arrays will be forming <em>chains</em> ending with a <em>root</em> — an element that is in its own position. Keeping this fact in mind — that all element-position chains eventually reach a fixpoint (root), we can implement a procedure by determining the equivalance class of an element, as a fixpoing in the corresdpongin chain:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">find</span> <span class="n">uf</span> <span class="n">p</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">p</span> <span class="k">in</span>
+  <span class="k">while</span> <span class="o">(!</span><span class="n">r</span> <span class="o">&lt;&gt;</span> <span class="n">uf</span><span class="o">.</span><span class="n">id</span><span class="o">.(!</span><span class="n">r</span><span class="o">))</span> <span class="k">do</span>
+    <span class="n">r</span> <span class="o">:=</span> <span class="n">uf</span><span class="o">.</span><span class="n">id</span><span class="o">.(!</span><span class="n">r</span><span class="o">)</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="o">!</span><span class="n">r</span>
+
+<span class="k">let</span> <span class="n">connected</span> <span class="n">uf</span> <span class="n">p</span> <span class="n">q</span> <span class="o">=</span>
+  <span class="n">find</span> <span class="n">uf</span> <span class="n">p</span> <span class="o">=</span> <span class="n">find</span> <span class="n">uf</span> <span class="n">q</span>
+</pre></div>
+</div>
+<p>That is, to determine the class of an element <code class="docutils literal notranslate"><span class="pre">p</span></code>, the function <code class="docutils literal notranslate"><span class="pre">find</span></code> follows the chain that starts from it, via array indices, until it reaches a root, which corresponds to the “canonical element” of <code class="docutils literal notranslate"><span class="pre">p</span></code>’s equivalence class.</p>
+<p>The intuition behind <code class="docutils literal notranslate"><span class="pre">find</span></code> becomes more clear once we see how <code class="docutils literal notranslate"><span class="pre">union</span></code> is implemented:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">union</span> <span class="n">uf</span> <span class="n">p</span> <span class="n">q</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">i</span> <span class="o">=</span> <span class="n">find</span> <span class="n">uf</span> <span class="n">p</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="n">find</span> <span class="n">uf</span> <span class="n">q</span> <span class="k">in</span>
+  <span class="k">if</span> <span class="n">i</span> <span class="o">=</span> <span class="n">j</span> <span class="k">then</span> <span class="bp">()</span>
+  <span class="k">else</span> <span class="k">begin</span>
+    <span class="n">uf</span><span class="o">.</span><span class="n">id</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">j</span><span class="o">;</span>
+    <span class="n">uf</span><span class="o">.</span><span class="n">count</span> <span class="o">:=</span> <span class="o">!(</span><span class="n">uf</span><span class="o">.</span><span class="n">count</span><span class="o">)</span> <span class="o">-</span> <span class="mi">1</span>
+  <span class="k">end</span>
+</pre></div>
+</div>
+<p>If two elements belong to different classes (their canonical elements are different), then one’s canonical element is “attached” to another. So now all chain for elements that used to lead to <code class="docutils literal notranslate"><span class="pre">i</span></code>, will be extended to go to <code class="docutils literal notranslate"><span class="pre">j</span></code>, hence they will end up in the same equivalence class! To emphasise, recall that initially every element’s canonical representation is itself, but this is what changes via <code class="docutils literal notranslate"><span class="pre">union</span></code>.</p>
+</div>
+<div class="section" id="testing-union-find">
+<h2>11.3.3. Testing Union-Find<a class="headerlink" href="#testing-union-find" title="Permalink to this headline">¶</a></h2>
+<p>We can observe the evolution of equivalence classes in Union-Find by implementing the following printing machinery:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">print_uf</span> <span class="n">uf</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">uf</span><span class="o">.</span><span class="n">id</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ids</span> <span class="o">=</span> <span class="nn">Week_03</span><span class="p">.</span><span class="n">iota</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="n">connected</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">find_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span> <span class="n">find</span> <span class="n">uf</span> <span class="n">e</span> <span class="o">=</span> <span class="n">i</span><span class="o">)</span> <span class="n">ids</span> <span class="k">in</span>
+    <span class="k">if</span> <span class="n">connected</span> <span class="o">&lt;&gt;</span> <span class="bp">[]</span> <span class="k">then</span> <span class="k">begin</span>
+      <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&quot;Class %d: [&quot;</span> <span class="n">i</span><span class="o">;</span>
+      <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">j</span> <span class="o">-&gt;</span> <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&quot;%d; &quot;</span> <span class="n">j</span><span class="o">)</span> <span class="n">connected</span><span class="o">;</span>
+      <span class="n">print_endline</span> <span class="s2">&quot;]&quot;</span>
+    <span class="k">end</span>
+  <span class="k">done</span>
+</pre></div>
+</div>
+<p>Let us run some experiments using <code class="docutils literal notranslate"><span class="pre">utop</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="k">open</span> <span class="nc">Week_11_UnionFind</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">open</span> <span class="nc">UnionFind</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">uf</span> <span class="o">=</span> <span class="n">mk_UF</span> <span class="mi">10</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">uf</span> <span class="o">:</span> <span class="n">t</span> <span class="o">=</span> <span class="o">{</span><span class="n">count</span> <span class="o">=</span> <span class="o">{</span><span class="n">contents</span> <span class="o">=</span> <span class="mi">10</span><span class="o">};</span> <span class="n">id</span> <span class="o">=</span> <span class="o">[|</span><span class="mi">0</span><span class="o">;</span> <span class="mi">1</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">4</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">9</span><span class="o">|]}</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">print_uf</span> <span class="n">uf</span><span class="o">;;</span>
+<span class="nc">Class</span> <span class="mi">0</span><span class="o">:</span> <span class="o">[</span><span class="mi">0</span><span class="o">;</span> <span class="o">]</span>
+<span class="nc">Class</span> <span class="mi">1</span><span class="o">:</span> <span class="o">[</span><span class="mi">1</span><span class="o">;</span> <span class="o">]</span>
+<span class="nc">Class</span> <span class="mi">2</span><span class="o">:</span> <span class="o">[</span><span class="mi">2</span><span class="o">;</span> <span class="o">]</span>
+<span class="nc">Class</span> <span class="mi">3</span><span class="o">:</span> <span class="o">[</span><span class="mi">3</span><span class="o">;</span> <span class="o">]</span>
+<span class="nc">Class</span> <span class="mi">4</span><span class="o">:</span> <span class="o">[</span><span class="mi">4</span><span class="o">;</span> <span class="o">]</span>
+<span class="nc">Class</span> <span class="mi">5</span><span class="o">:</span> <span class="o">[</span><span class="mi">5</span><span class="o">;</span> <span class="o">]</span>
+<span class="nc">Class</span> <span class="mi">6</span><span class="o">:</span> <span class="o">[</span><span class="mi">6</span><span class="o">;</span> <span class="o">]</span>
+<span class="nc">Class</span> <span class="mi">7</span><span class="o">:</span> <span class="o">[</span><span class="mi">7</span><span class="o">;</span> <span class="o">]</span>
+<span class="nc">Class</span> <span class="mi">8</span><span class="o">:</span> <span class="o">[</span><span class="mi">8</span><span class="o">;</span> <span class="o">]</span>
+<span class="nc">Class</span> <span class="mi">9</span><span class="o">:</span> <span class="o">[</span><span class="mi">9</span><span class="o">;</span> <span class="o">]</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
+</pre></div>
+</div>
+<p>Now let us merge some equivalence classes:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span>   <span class="n">union</span> <span class="n">uf</span> <span class="mi">0</span> <span class="mi">1</span><span class="o">;</span> <span class="n">union</span> <span class="n">uf</span> <span class="mi">2</span> <span class="mi">3</span><span class="o">;</span> <span class="n">union</span> <span class="n">uf</span> <span class="mi">4</span> <span class="mi">5</span><span class="o">;</span> <span class="n">union</span> <span class="n">uf</span> <span class="mi">6</span> <span class="mi">7</span><span class="o">;</span> <span class="n">union</span> <span class="n">uf</span> <span class="mi">8</span> <span class="mi">9</span><span class="o">;</span> <span class="n">union</span> <span class="n">uf</span> <span class="mi">1</span> <span class="mi">8</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">connected</span> <span class="mi">0</span> <span class="mi">9</span><span class="o">;;</span>
+<span class="nc">Error</span><span class="o">:</span> <span class="nc">This</span> <span class="n">expression</span> <span class="n">has</span> <span class="k">type</span> <span class="kt">int</span> <span class="n">but</span> <span class="n">an</span> <span class="n">expression</span> <span class="n">was</span> <span class="n">expected</span> <span class="k">of</span> <span class="k">type</span> <span class="n">t</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">connected</span> <span class="n">uf</span> <span class="mi">0</span> <span class="mi">9</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">true</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">print_uf</span> <span class="n">uf</span><span class="o">;;</span>
+<span class="nc">Class</span> <span class="mi">3</span><span class="o">:</span> <span class="o">[</span><span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="o">]</span>
+<span class="nc">Class</span> <span class="mi">5</span><span class="o">:</span> <span class="o">[</span><span class="mi">4</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="o">]</span>
+<span class="nc">Class</span> <span class="mi">7</span><span class="o">:</span> <span class="o">[</span><span class="mi">6</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="o">]</span>
+<span class="nc">Class</span> <span class="mi">9</span><span class="o">:</span> <span class="o">[</span><span class="mi">0</span><span class="o">;</span> <span class="mi">1</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">9</span><span class="o">;</span> <span class="o">]</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
+</pre></div>
+</div>
+<p>We will make active use of the Union-Find structure in the future lectures.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-11_exercises.html" class="btn btn-neutral float-right" title="11.4. Exercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-11_huffman.html" class="btn btn-neutral" title="11.2. Huffman Encoding" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

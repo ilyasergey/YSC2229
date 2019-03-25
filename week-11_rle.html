@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Run-Length Encoding &mdash; YSC2229 2019</title>
+  <title>11.1. Run-Length Encoding &mdash; YSC2229 2019</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="11.2. Huffman Encoding" href="week-11_huffman.html" />
+    <link rel="prev" title="11. YSC2229 Lecture Notes, Week 11" href="YSC2229-lecture-notes-week-11.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,7 +78,7 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
@@ -87,6 +89,17 @@
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-11.html">11. YSC2229 Lecture Notes, Week 11</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11.1. Run-Length Encoding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#design-considerations">11.1.1. Design Considerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implementation">11.1.2. Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_huffman.html">11.2. Huffman Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_union_find.html">11.3. Equivalance Classes and Union-Find</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_exercises.html">11.4. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -132,7 +145,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Run-Length Encoding</li>
+          <li><a href="YSC2229-lecture-notes-week-11.html">11. YSC2229 Lecture Notes, Week 11</a> &raquo;</li>
+        
+      <li>11.1. Run-Length Encoding</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -150,8 +165,8 @@
            <div itemprop="articleBody">
             
   <div class="section" id="run-length-encoding">
-<span id="week-11-rle"></span><h1>Run-Length Encoding<a class="headerlink" href="#run-length-encoding" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_RunLengthEncoding.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_RunLengthEncoding.ml</a></p>
+<span id="week-11-rle"></span><h1>11.1. Run-Length Encoding<a class="headerlink" href="#run-length-encoding" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_RunLengthEncoding.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_RunLengthEncoding.ml</a></p>
 <p>Run-length encoding is a compression methods that works well with bit-strings with large contiguous segments of repeating 0s and 1s by encoding the lengths of such segments in the interleaved fashion, starting from 0. For instance, the following string:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="mi">0000000000000001111111000000011111111111</span>
 </pre></div>
@@ -162,7 +177,7 @@
 </div>
 <p>Tis would ben that we have 15 (1111 in binary) 0s, then 7 (0111 in binary) 1s, then 7 0s and finally 11 (0111) ones.</p>
 <div class="section" id="design-considerations">
-<h2>Design Considerations<a class="headerlink" href="#design-considerations" title="Permalink to this headline">¶</a></h2>
+<h2>11.1.1. Design Considerations<a class="headerlink" href="#design-considerations" title="Permalink to this headline">¶</a></h2>
 <p>In order to turn this example into an effective data compression method, we need to answer the following questions:</p>
 <ul class="simple">
 <li>How many bits do we use for representing the counts?</li>
@@ -177,7 +192,7 @@
 </ul>
 </div>
 <div class="section" id="implementation">
-<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<h2>11.1.2. Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
 <p>The resulting encoding procedure, which makes use of the previously implemented queue data type, is as follows:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">Core</span>
 <span class="k">open</span> <span class="nn">Extlib</span><span class="p">.</span><span class="nc">IO</span>
@@ -234,6 +249,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-11_huffman.html" class="btn btn-neutral float-right" title="11.2. Huffman Encoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="YSC2229-lecture-notes-week-11.html" class="btn btn-neutral" title="11. YSC2229 Lecture Notes, Week 11" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

@@ -1,0 +1,642 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Representing Sets via Binary Search Trees &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-11.html">11. YSC2229 Lecture Notes, Week 11</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Representing Sets via Binary Search Trees</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="representing-sets-via-binary-search-trees">
+<span id="bst"></span><h1>Representing Sets via Binary Search Trees<a class="headerlink" href="#representing-sets-via-binary-search-trees" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_BinaryTree.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_BinaryTree.ml</a></p>
+<p>Binary search trees (BST) are one of the most versatile representations of mutable sets, supporting a variety of operations, such as insertion, deletion, checking membership, finding minimums, maximums, predecessors and successors.</p>
+<p>The key to this expressivity is the invariant of a tree-shaped data structure, that mandates that, for any node,</p>
+<ul class="simple">
+<li>any element in its left subtree is less or equal than the element in the node itself, and</li>
+<li>any element in its right subtree is greater or equal than the element in the node itself.</li>
+</ul>
+<p>This invariant is maintained by all operations that modify the set, and is relied upon by all queries.</p>
+<div class="section" id="a-data-structure-for-binary-search-trees">
+<h2>A Data Structure for Binary-Search Trees<a class="headerlink" href="#a-data-structure-for-binary-search-trees" title="Permalink to this headline">¶</a></h2>
+<p>We start by defining a linked in-memory data structure for BSTs in its own module.</p>
+<p>The tree is populated by nodes, each of which carries a value (immutable), and also maintains references (mutable) to its left/right children and a parent, which can be either absent or some other nodes:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">Week_01</span>
+<span class="k">open</span> <span class="nc">Week_06</span>
+
+<span class="k">module</span> <span class="nc">BinarySearchTree</span> <span class="o">=</span> <span class="k">struct</span>
+
+  <span class="k">type</span> <span class="k">&#39;</span><span class="n">e</span> <span class="n">tree_node</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="k">value</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">e</span><span class="o">;</span>
+    <span class="n">parent</span>  <span class="o">:</span> <span class="k">&#39;</span><span class="n">e</span> <span class="n">tree_node</span> <span class="n">option</span> <span class="n">ref</span><span class="o">;</span>
+    <span class="n">left</span>  <span class="o">:</span> <span class="k">&#39;</span><span class="n">e</span> <span class="n">tree_node</span> <span class="n">option</span> <span class="n">ref</span><span class="o">;</span>
+    <span class="n">right</span>  <span class="o">:</span> <span class="k">&#39;</span><span class="n">e</span> <span class="n">tree_node</span> <span class="n">option</span> <span class="n">ref</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="k">type</span> <span class="k">&#39;</span><span class="n">e</span> <span class="n">tree</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">root</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">e</span> <span class="n">tree_node</span> <span class="n">option</span> <span class="n">ref</span>
+  <span class="o">}</span>
+
+  <span class="c">(* More definitions coming here *)</span>
+
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>For convenience, we define several operations to dereference various components of a tree and its nodes:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">left</span> <span class="n">n</span> <span class="o">=</span> <span class="o">!(</span><span class="n">n</span><span class="o">.</span><span class="n">left</span><span class="o">)</span>
+<span class="k">let</span> <span class="n">right</span> <span class="n">n</span> <span class="o">=</span> <span class="o">!(</span><span class="n">n</span><span class="o">.</span><span class="n">right</span><span class="o">)</span>
+<span class="k">let</span> <span class="n">parent</span> <span class="n">n</span> <span class="o">=</span> <span class="o">!(</span><span class="n">n</span><span class="o">.</span><span class="n">parent</span><span class="o">)</span>
+<span class="k">let</span> <span class="n">get_root</span> <span class="n">t</span> <span class="o">=</span> <span class="o">!(</span><span class="n">t</span><span class="o">.</span><span class="n">root</span><span class="o">)</span>
+
+<span class="k">let</span> <span class="n">mk_node</span> <span class="n">e</span> <span class="o">=</span>
+  <span class="o">{</span><span class="k">value</span> <span class="o">=</span> <span class="n">e</span><span class="o">;</span>
+   <span class="n">parent</span> <span class="o">=</span> <span class="n">ref</span> <span class="nc">None</span><span class="o">;</span>
+   <span class="n">left</span> <span class="o">=</span> <span class="n">ref</span> <span class="nc">None</span><span class="o">;</span>
+   <span class="n">right</span> <span class="o">=</span> <span class="n">ref</span> <span class="nc">None</span><span class="o">}</span>
+
+<span class="k">let</span> <span class="n">mk_tree</span> <span class="o">_</span> <span class="o">=</span> <span class="o">{</span><span class="n">root</span> <span class="o">=</span> <span class="n">ref</span> <span class="nc">None</span><span class="o">}</span>
+</pre></div>
+</div>
+<p>Finally, since nodes are represented by an <code class="docutils literal notranslate"><span class="pre">option</span></code> type, we introduce the following combinator, simplifying working with <code class="docutils literal notranslate"><span class="pre">option</span></code>-wrapped values:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">map_option</span> <span class="n">o</span> <span class="n">f</span> <span class="n">z</span> <span class="o">=</span> <span class="k">match</span> <span class="n">o</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="n">z</span>
+  <span class="o">|</span> <span class="nc">Some</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">f</span> <span class="n">n</span>
+</pre></div>
+</div>
+<p>In words <code class="docutils literal notranslate"><span class="pre">map_option</span></code> returns applies <code class="docutils literal notranslate"><span class="pre">f</span></code> to the value <code class="docutils literal notranslate"><span class="pre">n</span></code> within <code class="docutils literal notranslate"><span class="pre">o</span></code>, if <code class="docutils literal notranslate"><span class="pre">o</span> <span class="pre">=</span> <span class="pre">Some</span> <span class="pre">n</span></code>, or returns <code class="docutils literal notranslate"><span class="pre">z</span></code> otherwise.</p>
+</div>
+<div class="section" id="inserting-an-element-into-a-bst">
+<h2>Inserting an element into a BST<a class="headerlink" href="#inserting-an-element-into-a-bst" title="Permalink to this headline">¶</a></h2>
+<p>The defined above <code class="docutils literal notranslate"><span class="pre">mk_tree</span></code> function creates an empty tree. Let us now implement a procedure for populating it with elements by inserting them one by one:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert</span> <span class="n">t</span> <span class="n">e</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">insert_element</span> <span class="n">n</span> <span class="n">e</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="n">mk_node</span> <span class="n">e</span> <span class="k">in</span>
+    <span class="k">if</span> <span class="n">e</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">.</span><span class="k">value</span>
+    <span class="k">then</span> <span class="k">match</span> <span class="n">left</span> <span class="n">n</span> <span class="k">with</span>
+      <span class="o">|</span> <span class="nc">Some</span> <span class="n">m</span> <span class="o">-&gt;</span> <span class="n">insert_element</span> <span class="n">m</span> <span class="n">e</span>
+      <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">parent</span> <span class="o">:=</span> <span class="nc">Some</span> <span class="n">n</span><span class="o">;</span>
+        <span class="n">n</span><span class="o">.</span><span class="n">left</span> <span class="o">:=</span> <span class="nc">Some</span> <span class="n">m</span><span class="o">;</span>
+    <span class="k">else</span> <span class="k">match</span> <span class="n">right</span> <span class="n">n</span> <span class="k">with</span>
+      <span class="o">|</span> <span class="nc">Some</span> <span class="n">m</span> <span class="o">-&gt;</span> <span class="n">insert_element</span> <span class="n">m</span> <span class="n">e</span>
+      <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">parent</span> <span class="o">:=</span> <span class="nc">Some</span> <span class="n">n</span><span class="o">;</span>
+        <span class="n">n</span><span class="o">.</span><span class="n">right</span> <span class="o">:=</span> <span class="nc">Some</span> <span class="n">m</span>
+  <span class="k">in</span>
+  <span class="k">match</span> <span class="o">!(</span><span class="n">t</span><span class="o">.</span><span class="n">root</span><span class="o">)</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">root</span> <span class="o">:=</span> <span class="nc">Some</span> <span class="o">(</span><span class="n">mk_node</span> <span class="n">e</span><span class="o">)</span>
+  <span class="o">|</span> <span class="nc">Some</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">insert_element</span> <span class="n">n</span> <span class="n">e</span>
+</pre></div>
+</div>
+<p>Notice that the main working routine <code class="docutils literal notranslate"><span class="pre">insert_element</span></code> is respectful with respect to the BST property defined above: it positions the node <code class="docutils literal notranslate"><span class="pre">m</span></code> with the element <code class="docutils literal notranslate"><span class="pre">e</span></code>, so it would be in the right subtree (smaller-left/greater-right) with respect to its parent nodes.</p>
+</div>
+<div class="section" id="binary-search-tree-invariant">
+<h2>Binary-Search-Tree Invariant<a class="headerlink" href="#binary-search-tree-invariant" title="Permalink to this headline">¶</a></h2>
+<p>Let us now assert tree-manipulating operations such as <code class="docutils literal notranslate"><span class="pre">insert</span></code> indeed preserve the BST property. For this, let us define the BST invariant in the form of the following function:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">check_bst_inv</span> <span class="n">t</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">node</span> <span class="n">p</span> <span class="o">=</span>
+    <span class="o">(</span><span class="n">p</span> <span class="n">node</span><span class="o">.</span><span class="k">value</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+    <span class="k">let</span> <span class="n">res_left</span> <span class="o">=</span> <span class="k">match</span> <span class="n">left</span> <span class="n">node</span> <span class="k">with</span>
+      <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="bp">true</span>
+      <span class="o">|</span> <span class="nc">Some</span> <span class="n">l</span> <span class="o">-&gt;</span> <span class="n">walk</span> <span class="n">l</span> <span class="o">(</span><span class="k">fun</span> <span class="n">w</span> <span class="o">-&gt;</span> <span class="n">p</span> <span class="n">w</span> <span class="o">&amp;&amp;</span> <span class="n">w</span> <span class="o">&lt;=</span> <span class="n">node</span><span class="o">.</span><span class="k">value</span><span class="o">)</span>
+    <span class="k">in</span>
+    <span class="k">let</span> <span class="n">res_right</span> <span class="o">=</span> <span class="k">match</span> <span class="n">right</span> <span class="n">node</span> <span class="k">with</span>
+      <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="bp">true</span>
+      <span class="o">|</span> <span class="nc">Some</span> <span class="n">r</span> <span class="o">-&gt;</span> <span class="n">walk</span> <span class="n">r</span> <span class="o">(</span><span class="k">fun</span> <span class="n">w</span> <span class="o">-&gt;</span> <span class="n">p</span> <span class="n">w</span> <span class="o">&amp;&amp;</span> <span class="n">w</span> <span class="o">&gt;=</span> <span class="n">node</span><span class="o">.</span><span class="k">value</span><span class="o">)</span>
+    <span class="k">in</span>
+    <span class="n">res_left</span> <span class="o">&amp;&amp;</span> <span class="n">res_right</span>
+  <span class="k">in</span>
+  <span class="k">match</span> <span class="o">!(</span><span class="n">t</span><span class="o">.</span><span class="n">root</span><span class="o">)</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="bp">true</span>
+  <span class="o">|</span> <span class="nc">Some</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">walk</span> <span class="n">n</span> <span class="o">(</span><span class="k">fun</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">true</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The main recursive sub-function <code class="docutils literal notranslate"><span class="pre">wal</span></code> works by “growing” a predicate <code class="docutils literal notranslate"><span class="pre">p</span></code> that applies to each node further down the tree, making sure that it is correctly positioned with regard to all its parents. At the top level <code class="docutils literal notranslate"><span class="pre">p</span></code> is instantiated with <code class="docutils literal notranslate"><span class="pre">(fun</span> <span class="pre">_</span> <span class="pre">-&gt;</span> <span class="pre">true)</span></code>, as there are no restrictions imposed for the root of the tree, but more and more conjuncts added, as the checking proceeds recursively.</p>
+</div>
+<div class="section" id="testing-tree-operations">
+<h2>Testing Tree Operations<a class="headerlink" href="#testing-tree-operations" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_Tests.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_Tests.ml</a></p>
+<p>Let us put or invariant to work by using it to test the correctness of <code class="docutils literal notranslate"><span class="pre">insert</span></code>.</p>
+<p>We do so by frist defining a function for generating random trees from random arrays via insertion:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">Week_01</span>
+<span class="k">open</span> <span class="nc">Week_03</span>
+<span class="k">open</span> <span class="nc">Week_11_BinaryTree</span>
+
+<span class="k">open</span> <span class="nc">BinarySearchTree</span>
+
+<span class="k">let</span> <span class="n">mk_tree_of_size</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="n">mk_tree</span> <span class="bp">()</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">generate_key_value_array</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="n">insert</span> <span class="n">t</span> <span class="n">a</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="n">t</span>
+</pre></div>
+</div>
+<p>Next, we check that the generated trees indeed satisfy the BST property:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;Testing insertion&quot;</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="n">mk_tree_of_size</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="n">check_bst_inv</span> <span class="n">t</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="printing-a-tree">
+<h2>Printing a Tree<a class="headerlink" href="#printing-a-tree" title="Permalink to this headline">¶</a></h2>
+<p>It would be very nice if we could not only test but also visualise our binary search trees.</p>
+<p>Unfortunately, printing a tree in a standard top-down fashion requires quite a bit of book-keeping of tree-specific information (implementation of a this procedure in a particular case is left to you as a homework assignment). Printing a tree left-to-right is, however, can be doen quite easily as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">print_tree</span> <span class="n">pp</span> <span class="n">snum</span> <span class="n">t</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">print_node_with_spaces</span> <span class="n">l</span> <span class="n">s</span> <span class="o">=</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">s</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+      <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&quot; &quot;</span>
+    <span class="k">done</span><span class="o">;</span>
+    <span class="n">print_endline</span> <span class="o">(</span><span class="n">pp</span> <span class="n">l</span><span class="o">.</span><span class="k">value</span><span class="o">);</span>
+  <span class="k">in</span>
+
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">s</span> <span class="n">node</span> <span class="o">=</span> <span class="k">match</span> <span class="n">node</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="bp">()</span>
+    <span class="o">|</span> <span class="nc">Some</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="k">begin</span>
+        <span class="n">walk</span> <span class="o">(</span><span class="n">s</span> <span class="o">+</span> <span class="n">snum</span><span class="o">)</span> <span class="o">(</span><span class="n">right</span> <span class="n">n</span><span class="o">);</span>
+        <span class="n">print_node_with_spaces</span> <span class="n">n</span> <span class="n">s</span><span class="o">;</span>
+        <span class="n">walk</span> <span class="o">(</span><span class="n">s</span> <span class="o">+</span> <span class="n">snum</span><span class="o">)</span> <span class="o">(</span><span class="n">left</span> <span class="n">n</span><span class="o">);</span>
+      <span class="k">end</span>
+
+  <span class="k">in</span>
+  <span class="n">map_option</span> <span class="o">(</span><span class="n">get_root</span> <span class="n">t</span><span class="o">)</span> <span class="o">(</span><span class="k">fun</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">walk</span> <span class="mi">0</span> <span class="o">(</span><span class="nc">Some</span> <span class="n">n</span><span class="o">))</span> <span class="bp">()</span>
+</pre></div>
+</div>
+<p>The first auxiliary function  <code class="docutils literal notranslate"><span class="pre">print_node_with_spaces</span></code> Prints a string of <code class="docutils literal notranslate"><span class="pre">s</span></code> spaces and the value of a node <code class="docutils literal notranslate"><span class="pre">l</span></code>.</p>
+<p>The second function <code class="docutils literal notranslate"><span class="pre">walk</span></code> traverses the tree recursively, accumulating the “offset” proportionally to the depth of the tree node. It first prints the right sub-tree, then the node itself and then the left sub-tree, making use of the accumulated offset for printing the necessary number of spaces. Finally, it runs <code class="docutils literal notranslate"><span class="pre">walk</span></code> for the top-level root node, if it exists.</p>
+<p>Let us observe the effect of <code class="docutils literal notranslate"><span class="pre">print_tree</span></code> by instantiating it to print trees of key-value pairs:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">print_kv_tree</span> <span class="o">=</span> <span class="n">print_tree</span>
+    <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nn">Printf</span><span class="p">.</span><span class="n">sprintf</span> <span class="s2">&quot;(%d, %s)&quot;</span> <span class="n">k</span> <span class="n">v</span><span class="o">)</span> <span class="mi">12</span>
+</pre></div>
+</div>
+<p>We can now use <code class="docutils literal notranslate"><span class="pre">utop</span></code> to experiment with it:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="k">open</span> <span class="nc">Week_11_BinaryTree</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">open</span> <span class="nc">BinarySearchTree</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="n">mk_tree</span> <span class="bp">()</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">t</span> <span class="o">:</span> <span class="k">&#39;</span><span class="o">_</span><span class="n">weak1</span> <span class="n">tree</span> <span class="o">=</span> <span class="o">{</span><span class="n">root</span> <span class="o">=</span> <span class="o">{</span><span class="n">contents</span> <span class="o">=</span> <span class="nc">None</span><span class="o">}}</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="nn">Week_03</span><span class="p">.</span><span class="n">generate_key_value_array</span> <span class="mi">10</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">a</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="kt">array</span> <span class="o">=</span>
+  <span class="o">[|(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;ayuys&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;cdrhf&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;ukobi&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="s2">&quot;hwsjs&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="s2">&quot;uyrla&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="s2">&quot;uldju&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;rkolw&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;gnzzo&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;nksfe&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;geevu&quot;</span><span class="o">)|]</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="mi">9</span> <span class="k">do</span> <span class="n">insert</span> <span class="n">t</span> <span class="n">a</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="k">done</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">print_kv_tree</span> <span class="n">t</span><span class="o">;;</span>
+                        <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="n">uyrla</span><span class="o">)</span>
+                                                <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="n">nksfe</span><span class="o">)</span>
+                                    <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="n">gnzzo</span><span class="o">)</span>
+            <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="n">cdrhf</span><span class="o">)</span>
+                                    <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">hwsjs</span><span class="o">)</span>
+                        <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">ukobi</span><span class="o">)</span>
+                                    <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">geevu</span><span class="o">)</span>
+<span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">ayuys</span><span class="o">)</span>
+                        <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">rkolw</span><span class="o">)</span>
+            <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">uldju</span><span class="o">)</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
+</pre></div>
+</div>
+<p>That is, on can see that <code class="docutils literal notranslate"><span class="pre">(4,</span> <span class="pre">&quot;ayuys&quot;)</span></code> is the root of the tree, and the whole structure satisfies the BST property.</p>
+</div>
+<div class="section" id="searching-elements">
+<h2>Searching Elements<a class="headerlink" href="#searching-elements" title="Permalink to this headline">¶</a></h2>
+<p>We define the <code class="docutils literal notranslate"><span class="pre">search</span></code> function so it would return not just the element, but also the node that contains it. It does so by recursively traversing the tree, while relying on its BST property:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">search</span> <span class="n">t</span> <span class="n">k</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">k</span> <span class="n">n</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">nk</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="k">value</span> <span class="k">in</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">=</span> <span class="n">nk</span> <span class="k">then</span> <span class="nc">Some</span> <span class="n">n</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">nk</span>
+    <span class="k">then</span> <span class="k">match</span> <span class="n">left</span> <span class="n">n</span> <span class="k">with</span>
+      <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="nc">None</span>
+      <span class="o">|</span> <span class="nc">Some</span> <span class="n">l</span> <span class="o">-&gt;</span> <span class="n">walk</span> <span class="n">k</span> <span class="n">l</span>
+    <span class="k">else</span> <span class="k">match</span> <span class="n">right</span> <span class="n">n</span> <span class="k">with</span>
+      <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="nc">None</span>
+      <span class="o">|</span> <span class="nc">Some</span> <span class="n">r</span> <span class="o">-&gt;</span> <span class="n">walk</span> <span class="n">k</span> <span class="n">r</span>
+  <span class="k">in</span>
+  <span class="n">map_option</span> <span class="o">(</span><span class="n">get_root</span> <span class="n">t</span><span class="o">)</span> <span class="o">(</span><span class="n">walk</span> <span class="n">k</span><span class="o">)</span> <span class="nc">None</span>
+</pre></div>
+</div>
+<p>In the absence of the abstract module signature, it is quite dangerous to return a node (node just its value), as one can break the BST properties, by checking its mutable components. However, returning a node also simplifies the implementation of various testing and manipulation procedures, specifically, deletion of tree nodes.</p>
+</div>
+<div class="section" id="tree-traversals">
+<h2>Tree Traversals<a class="headerlink" href="#tree-traversals" title="Permalink to this headline">¶</a></h2>
+<p>There are multiple ways to flatten a tree into a list, which can be convenient for the sake of testing and other inspections.</p>
+<p>The simples way to do it is via an accumulator (implemented as a mutable queue) and a procedure, known as Depth-First-Search (DFS), which traverses the tree recursively, following its shape:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">DLLBasedQueue</span>
+
+<span class="k">let</span> <span class="n">depth_first_search_rec</span> <span class="n">t</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">q</span> <span class="n">n</span> <span class="o">=</span>
+    <span class="n">enqueue</span> <span class="n">q</span> <span class="n">n</span><span class="o">.</span><span class="k">value</span><span class="o">;</span>
+    <span class="o">(</span><span class="k">match</span> <span class="n">left</span> <span class="n">n</span> <span class="k">with</span>
+     <span class="o">|</span> <span class="nc">Some</span> <span class="n">l</span> <span class="o">-&gt;</span> <span class="n">walk</span> <span class="n">q</span> <span class="n">l</span>
+     <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="bp">()</span><span class="o">);</span>
+    <span class="o">(</span><span class="k">match</span> <span class="n">right</span> <span class="n">n</span> <span class="k">with</span>
+     <span class="o">|</span> <span class="nc">Some</span> <span class="n">r</span> <span class="o">-&gt;</span> <span class="n">walk</span> <span class="n">q</span> <span class="n">r</span>
+     <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="bp">()</span><span class="o">);</span>
+  <span class="k">in</span>
+  <span class="k">let</span> <span class="n">acc</span> <span class="o">=</span> <span class="o">(</span><span class="n">mk_queue</span> <span class="mi">0</span><span class="o">)</span> <span class="k">in</span>
+  <span class="n">map_option</span> <span class="o">(</span><span class="n">get_root</span> <span class="n">t</span><span class="o">)</span> <span class="o">(</span><span class="n">walk</span> <span class="n">acc</span><span class="o">)</span> <span class="bp">()</span><span class="o">;</span>
+  <span class="n">queue_to_list</span> <span class="n">acc</span>
+</pre></div>
+</div>
+<p>Keeping in mind the correspondence between implicit call stack and explicit call stack, we can rewrite this procedure without relying on recursion, but using an explicit stack instead:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">depth_first_search_loop</span> <span class="n">t</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">ListBasedStack</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">loop</span> <span class="n">stack</span> <span class="n">q</span> <span class="o">=</span>
+    <span class="k">while</span> <span class="n">not</span> <span class="o">(</span><span class="n">is_empty</span> <span class="n">stack</span><span class="o">)</span> <span class="k">do</span>
+      <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="n">get_exn</span> <span class="o">@@</span> <span class="n">pop</span> <span class="n">stack</span> <span class="k">in</span>
+      <span class="n">enqueue</span> <span class="n">q</span> <span class="n">n</span><span class="o">.</span><span class="k">value</span><span class="o">;</span>
+      <span class="o">(</span><span class="k">match</span> <span class="n">right</span> <span class="n">n</span> <span class="k">with</span>
+       <span class="o">|</span> <span class="nc">Some</span> <span class="n">r</span> <span class="o">-&gt;</span> <span class="n">push</span> <span class="n">stack</span> <span class="n">r</span>
+       <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">()</span><span class="o">);</span>
+      <span class="o">(</span><span class="k">match</span> <span class="n">left</span> <span class="n">n</span> <span class="k">with</span>
+       <span class="o">|</span> <span class="nc">Some</span> <span class="n">l</span> <span class="o">-&gt;</span> <span class="n">push</span> <span class="n">stack</span> <span class="n">l</span>
+       <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">()</span><span class="o">);</span>
+    <span class="k">done</span>
+  <span class="k">in</span>
+  <span class="k">let</span> <span class="n">acc</span> <span class="o">=</span> <span class="o">(</span><span class="n">mk_queue</span> <span class="mi">0</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">stack</span> <span class="o">=</span> <span class="n">mk_stack</span> <span class="mi">0</span> <span class="k">in</span>
+  <span class="o">(</span><span class="k">match</span> <span class="n">get_root</span> <span class="n">t</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="bp">()</span>
+  <span class="o">|</span> <span class="nc">Some</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="k">begin</span>
+      <span class="n">push</span> <span class="n">stack</span> <span class="n">n</span><span class="o">;</span>
+      <span class="n">loop</span> <span class="n">stack</span> <span class="n">acc</span><span class="o">;</span>
+    <span class="k">end</span><span class="o">);</span>
+  <span class="n">queue_to_list</span> <span class="n">acc</span>
+</pre></div>
+</div>
+<p>With the stack (implicit or explicit), DFS traverses the tree in a Last-In-First-Out mode (LIFO). By replacing the stack with a mutable queue (First-In-First-Out, FIFO), we can obtain an alternative traversal, known as Breadth-First-Search (BFS), so it would accumulate tree elements by following its “layers”:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">breadth_first_search_loop</span> <span class="n">t</span> <span class="o">=</span>
+
+  <span class="k">let</span> <span class="n">loop</span> <span class="n">wlist</span> <span class="n">q</span> <span class="n">depth</span> <span class="o">=</span>
+    <span class="k">while</span> <span class="n">not</span> <span class="o">(</span><span class="n">is_empty</span> <span class="n">wlist</span><span class="o">)</span> <span class="k">do</span>
+      <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="n">get_exn</span> <span class="o">@@</span> <span class="n">dequeue</span> <span class="n">wlist</span> <span class="k">in</span>
+      <span class="n">enqueue</span> <span class="n">q</span> <span class="n">n</span><span class="o">.</span><span class="k">value</span><span class="o">;</span>
+      <span class="o">(</span><span class="k">match</span> <span class="n">left</span> <span class="n">n</span> <span class="k">with</span>
+       <span class="o">|</span> <span class="nc">Some</span> <span class="n">l</span> <span class="o">-&gt;</span> <span class="n">enqueue</span> <span class="n">wlist</span> <span class="n">l</span>
+       <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">()</span><span class="o">);</span>
+      <span class="o">(</span><span class="k">match</span> <span class="n">right</span> <span class="n">n</span> <span class="k">with</span>
+       <span class="o">|</span> <span class="nc">Some</span> <span class="n">r</span> <span class="o">-&gt;</span> <span class="n">enqueue</span> <span class="n">wlist</span> <span class="n">r</span>
+       <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">()</span><span class="o">);</span>
+    <span class="k">done</span>
+  <span class="k">in</span>
+  <span class="k">let</span> <span class="n">acc</span> <span class="o">=</span> <span class="o">(</span><span class="n">mk_queue</span> <span class="mi">0</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">wlist</span> <span class="o">=</span> <span class="n">mk_queue</span> <span class="mi">0</span> <span class="k">in</span>
+  <span class="o">(</span><span class="k">match</span> <span class="n">get_root</span> <span class="n">t</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="bp">()</span>
+  <span class="o">|</span> <span class="nc">Some</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="k">begin</span>
+      <span class="n">enqueue</span> <span class="n">wlist</span> <span class="n">n</span><span class="o">;</span>
+      <span class="n">loop</span> <span class="n">wlist</span> <span class="n">acc</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="k">end</span><span class="o">);</span>
+  <span class="n">queue_to_list</span> <span class="n">acc</span>
+</pre></div>
+</div>
+<p>Notice that the code of <code class="docutils literal notranslate"><span class="pre">depth_first_search_loop</span></code> and <code class="docutils literal notranslate"><span class="pre">breadth_first_search_loop</span></code> is almost identical, modulo the used container data structure and its operations (e.g., <code class="docutils literal notranslate"><span class="pre">enqueue</span></code>/<code class="docutils literal notranslate"><span class="pre">push</span></code> and <code class="docutils literal notranslate"><span class="pre">dequeue</span></code>/<code class="docutils literal notranslate"><span class="pre">pop</span></code>).</p>
+</div>
+<div class="section" id="testing-element-retrieval-and-tree-traversals">
+<h2>Testing Element Retrieval and Tree Traversals<a class="headerlink" href="#testing-element-retrieval-and-tree-traversals" title="Permalink to this headline">¶</a></h2>
+<p>As we know well how to work with lists, we can use traversals to test each other, as well as the <code class="docutils literal notranslate"><span class="pre">search</span></code> function:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(******************************************)</span>
+<span class="c">(*          Testing traversals            *)</span>
+<span class="c">(******************************************)</span>
+
+<span class="k">let</span> <span class="n">check_elem_in_tree</span> <span class="n">t</span> <span class="n">e</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="n">search</span> <span class="n">t</span> <span class="n">e</span> <span class="k">in</span>
+  <span class="o">(</span><span class="n">get_exn</span> <span class="o">@@</span> <span class="n">n</span><span class="o">).</span><span class="k">value</span> <span class="o">=</span> <span class="n">e</span>
+
+<span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;Testing DFS&quot;</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="n">mk_tree_of_size</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">l1</span> <span class="o">=</span> <span class="n">depth_first_search_rec</span> <span class="n">t</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">l2</span> <span class="o">=</span> <span class="n">depth_first_search_loop</span> <span class="n">t</span> <span class="k">in</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">length</span> <span class="n">l1</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&amp;&amp;</span> <span class="n">l1</span> <span class="o">=</span> <span class="n">l2</span> <span class="o">&amp;&amp;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span> <span class="n">check_elem_in_tree</span> <span class="n">t</span> <span class="n">e</span><span class="o">)</span> <span class="n">l1</span>
+
+<span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;Testing BFS&quot;</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="n">mk_tree_of_size</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">l1</span> <span class="o">=</span> <span class="n">depth_first_search_rec</span> <span class="n">t</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">l2</span> <span class="o">=</span> <span class="n">breadth_first_search_loop</span> <span class="n">t</span> <span class="k">in</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">length</span> <span class="n">l1</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&amp;&amp;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">mem</span> <span class="n">e</span> <span class="n">l2</span><span class="o">)</span> <span class="n">l1</span> <span class="o">&amp;&amp;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">mem</span> <span class="n">e</span> <span class="n">l1</span><span class="o">)</span> <span class="n">l2</span>
+
+<span class="c">(******************************************)</span>
+<span class="c">(*          Testing retrieval             *)</span>
+<span class="c">(******************************************)</span>
+
+<span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;Testing retrieval&quot;</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1000</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="n">mk_tree_of_size</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="nn">Random</span><span class="p">.</span><span class="n">int</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">l</span> <span class="o">=</span> <span class="n">breadth_first_search_loop</span> <span class="n">t</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">e</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">nth</span> <span class="n">l</span> <span class="n">m</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">z</span> <span class="o">=</span> <span class="n">search</span> <span class="n">t</span> <span class="n">e</span> <span class="k">in</span>
+  <span class="n">z</span> <span class="o">&lt;&gt;</span> <span class="nc">None</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="more-bst-operations">
+<h2>More BST operations<a class="headerlink" href="#more-bst-operations" title="Permalink to this headline">¶</a></h2>
+<p>Thanks to its invariant, a BST makes it almost trivial to implement operations, such as</p>
+<ul class="simple">
+<li>Getting minimum/maximum element in a set representing by a tree</li>
+<li>Find a successor/predecessor of an element</li>
+</ul>
+<p>For instance, finding the minimal element of a subtree starting from a node <code class="docutils literal notranslate"><span class="pre">n</span></code> can be achieved by the following operation:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">find_min_node</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">match</span> <span class="n">left</span> <span class="n">n</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">Some</span> <span class="n">m</span> <span class="o">-&gt;</span> <span class="n">find_min_node</span> <span class="n">m</span>
+  <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="n">n</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deleting-a-node-from-bst">
+<h2>Deleting a node from BST<a class="headerlink" href="#deleting-a-node-from-bst" title="Permalink to this headline">¶</a></h2>
+<p>Deletion of a node from a BST is the most complicated operation, as it requires significant restructuring of the tree in order to maintain its invariant.</p>
+<p>Deletion of a non-leaf node from a tree will require some other nod to take its place. This can be achieved by the following operation for performing “transplantation” of one node by another:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Replacing node U by (optional) node V in T. *)</span>
+<span class="k">let</span> <span class="n">transplant</span> <span class="n">t</span> <span class="n">u</span> <span class="n">v</span> <span class="o">=</span>
+  <span class="o">(</span><span class="k">match</span> <span class="n">parent</span> <span class="n">u</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">root</span> <span class="o">:=</span> <span class="n">v</span>
+  <span class="o">|</span> <span class="nc">Some</span> <span class="n">p</span> <span class="o">-&gt;</span>
+    <span class="k">match</span> <span class="n">left</span> <span class="n">p</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">Some</span> <span class="n">l</span> <span class="k">when</span> <span class="n">u</span> <span class="o">==</span> <span class="n">l</span> <span class="o">-&gt;</span> <span class="n">p</span><span class="o">.</span><span class="n">left</span> <span class="o">:=</span> <span class="n">v</span>
+    <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="n">p</span><span class="o">.</span><span class="n">right</span> <span class="o">:=</span> <span class="n">v</span><span class="o">);</span>
+  <span class="c">(* Update parent of v *)</span>
+  <span class="k">match</span> <span class="n">v</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">Some</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span><span class="o">.</span><span class="n">parent</span> <span class="o">:=</span> <span class="n">parent</span> <span class="n">u</span>
+  <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">()</span>
+</pre></div>
+</div>
+<p>Let us now discuss possible scenarios for removing a node <code class="docutils literal notranslate"><span class="pre">z</span></code> from the tree <code class="docutils literal notranslate"><span class="pre">T</span></code> by preserving the BST property.</p>
+<ol class="loweralpha simple">
+<li>The simplest case is when <code class="docutils literal notranslate"><span class="pre">z</span></code> is a leaf, so we can simply remove it.</li>
+<li>The node <code class="docutils literal notranslate"><span class="pre">z</span></code> has no left child. In this case, we can simply replace it by its right child (argue, why this is correct) as on the picture below:</li>
+</ol>
+<a class="reference internal image-reference" href="_images/delete-b.png"><img alt="_images/delete-b.png" class="align-center" src="_images/delete-b.png" style="width: 700px;" /></a>
+<ol class="loweralpha simple" start="3">
+<li>A similar situation takes place when <code class="docutils literal notranslate"><span class="pre">z</span></code> has only the left child, which replaces it (via <code class="docutils literal notranslate"><span class="pre">transplant</span></code>):</li>
+</ol>
+<a class="reference internal image-reference" href="_images/delete-c.png"><img alt="_images/delete-c.png" class="align-center" src="_images/delete-c.png" style="width: 700px;" /></a>
+<ol class="loweralpha simple" start="4">
+<li>In the case when <code class="docutils literal notranslate"><span class="pre">z</span></code> has two children, we need to look up for the node that corresponds to its successor in the ordering of elements. In this particular case, such a successor, <code class="docutils literal notranslate"><span class="pre">y</span></code>, is the immediate right child of <code class="docutils literal notranslate"><span class="pre">z</span></code> that has no left child itself (convince yourself that in this case <code class="docutils literal notranslate"><span class="pre">y</span></code> is indeed a successor of <code class="docutils literal notranslate"><span class="pre">z</span></code>), therefore we can transplate <code class="docutils literal notranslate"><span class="pre">y</span></code> to replace <code class="docutils literal notranslate"><span class="pre">z</span></code>:</li>
+</ol>
+<a class="reference internal image-reference" href="_images/delete-d.png"><img alt="_images/delete-d.png" class="align-center" src="_images/delete-d.png" style="width: 700px;" /></a>
+<ol class="loweralpha simple" start="5">
+<li>Finally, in the most nasty case, <code class="docutils literal notranslate"><span class="pre">y</span></code>, the successor of <code class="docutils literal notranslate"><span class="pre">z</span></code>, is deep below <code class="docutils literal notranslate"><span class="pre">z</span></code>, and potentially hasa right child (but no left child, otherwise it wouldn’t be the successor of <code class="docutils literal notranslate"><span class="pre">z</span></code>) . In this case we need to make to perform the transformation as follows:</li>
+</ol>
+<a class="reference internal image-reference" href="_images/delete-e.png"><img alt="_images/delete-e.png" class="align-center" src="_images/delete-e.png" style="width: 700px;" /></a>
+<p>Specifically, in the last case we first transplant <code class="docutils literal notranslate"><span class="pre">y</span></code> and its right child <code class="docutils literal notranslate"><span class="pre">x</span></code> and then make <code class="docutils literal notranslate"><span class="pre">r</span></code>, the former right child of <code class="docutils literal notranslate"><span class="pre">z</span></code> to be the right child of <code class="docutils literal notranslate"><span class="pre">y</span></code>. After that we simply transplant <code class="docutils literal notranslate"><span class="pre">y</span></code> to the place of <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p>
+<p>The full code of deletion is as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">delete_node</span> <span class="n">t</span> <span class="n">z</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="n">left</span> <span class="n">z</span> <span class="o">=</span> <span class="nc">None</span>
+  <span class="k">then</span> <span class="n">transplant</span> <span class="n">t</span> <span class="n">z</span> <span class="o">(</span><span class="n">right</span> <span class="n">z</span><span class="o">)</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">right</span> <span class="n">z</span> <span class="o">=</span> <span class="nc">None</span>
+  <span class="k">then</span> <span class="n">transplant</span> <span class="n">t</span> <span class="n">z</span> <span class="o">(</span><span class="n">left</span> <span class="n">z</span><span class="o">)</span>
+  <span class="k">else</span>
+    <span class="c">(* Finding the successor of `z` *)</span>
+    <span class="k">let</span> <span class="n">z_right_child</span> <span class="o">=</span> <span class="o">(</span><span class="n">get_exn</span> <span class="o">@@</span> <span class="n">right</span> <span class="n">z</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="n">find_min_node</span> <span class="n">z_right_child</span> <span class="k">in</span>
+    <span class="c">(* Fact: `y` has no left child *)</span>
+
+    <span class="o">(</span><span class="k">if</span> <span class="n">parent</span> <span class="n">y</span> <span class="o">&lt;&gt;</span> <span class="nc">Some</span> <span class="n">z</span>
+     <span class="k">then</span>
+    <span class="c">(*  If y is not immediately under z,</span>
+<span class="c">        replace y by its right subtree *)</span>
+       <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="n">right</span> <span class="n">y</span> <span class="k">in</span>
+       <span class="o">(</span><span class="n">transplant</span> <span class="n">t</span> <span class="n">y</span> <span class="n">x</span><span class="o">;</span>
+        <span class="n">y</span><span class="o">.</span><span class="n">right</span> <span class="o">:=</span> <span class="n">right</span> <span class="n">z</span><span class="o">;</span>
+        <span class="o">(</span><span class="n">get_exn</span> <span class="o">@@</span> <span class="n">right</span> <span class="n">y</span><span class="o">).</span><span class="n">parent</span> <span class="o">:=</span> <span class="nc">Some</span> <span class="n">y</span><span class="o">));</span>
+
+    <span class="c">(* Now `y` replaces `z` at its position *)</span>
+    <span class="n">transplant</span> <span class="n">t</span> <span class="n">z</span> <span class="o">(</span><span class="nc">Some</span> <span class="n">y</span><span class="o">);</span>
+    <span class="n">y</span><span class="o">.</span><span class="n">left</span> <span class="o">:=</span> <span class="o">!(</span><span class="n">z</span><span class="o">.</span><span class="n">left</span><span class="o">);</span>
+    <span class="o">(</span><span class="n">get_exn</span> <span class="o">@@</span> <span class="n">left</span> <span class="n">y</span><span class="o">).</span><span class="n">parent</span> <span class="o">:=</span> <span class="nc">Some</span> <span class="n">y</span>
+</pre></div>
+</div>
+<p>How would we test deletion? We can do so by generating a random BST, choosing a random node in it <code class="docutils literal notranslate"><span class="pre">z</span></code>, and then checking the following properties for the modified tree after the deletion of <code class="docutils literal notranslate"><span class="pre">z</span></code>:</p>
+<ul class="simple">
+<li>The tree still satisfies the BST invariant;</li>
+<li>It has the same number of elements;</li>
+<li>All elements from the modified tree plus the deleted one are the elements of the old tree.</li>
+</ul>
+<p>These checks can be automatically performed by the following function, parameterised by the size of the tree:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">test_delete</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="n">mk_tree_of_size</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="nn">Random</span><span class="p">.</span><span class="n">int</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">l</span> <span class="o">=</span> <span class="n">breadth_first_search_loop</span> <span class="n">t</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">e</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">nth</span> <span class="n">l</span> <span class="n">m</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">z</span> <span class="o">=</span> <span class="n">get_exn</span> <span class="o">@@</span> <span class="n">search</span> <span class="n">t</span> <span class="n">e</span> <span class="k">in</span>
+  <span class="n">delete_node</span> <span class="n">t</span> <span class="n">z</span><span class="o">;</span>
+  <span class="c">(* Checkign the tree invariant *)</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">check_bst_inv</span> <span class="n">t</span><span class="o">);</span>
+
+  <span class="c">(* Checkign the tree size *)</span>
+  <span class="k">let</span> <span class="n">ld</span> <span class="o">=</span> <span class="n">breadth_first_search_loop</span> <span class="n">t</span> <span class="k">in</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">length</span> <span class="n">ld</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+
+  <span class="c">(* Checking integrity *)</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">mem</span> <span class="n">x</span> <span class="n">ld</span> <span class="o">||</span> <span class="n">x</span> <span class="o">==</span> <span class="n">e</span><span class="o">)</span> <span class="n">l</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

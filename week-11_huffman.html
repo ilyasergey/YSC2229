@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Huffman Encoding &mdash; YSC2229 2019</title>
+  <title>11.2. Huffman Encoding &mdash; YSC2229 2019</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="11.3. Equivalance Classes and Union-Find" href="week-11_union_find.html" />
+    <link rel="prev" title="11.1. Run-Length Encoding" href="week-11_rle.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,7 +78,7 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
@@ -87,6 +89,22 @@
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-11.html">11. YSC2229 Lecture Notes, Week 11</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-11_rle.html">11.1. Run-Length Encoding</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11.2. Huffman Encoding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#assigning-codes-via-character-trees">11.2.1. Assigning Codes via Character Trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#serializing-huffman-trees">11.2.2. Serializing Huffman Trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#constructing-huffman-tree-from-frequencies">11.2.3. Constructing Huffman tree from Frequencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#computing-relative-frequencies">11.2.4. Computing Relative Frequencies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#encoding-and-writing-the-compressed-text">11.2.5. Encoding and Writing the Compressed Text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#decompression">11.2.6. Decompression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-and-running-huffman-compression">11.2.7. Testing and Running Huffman Compression</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_union_find.html">11.3. Equivalance Classes and Union-Find</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_exercises.html">11.4. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -132,7 +150,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Huffman Encoding</li>
+          <li><a href="YSC2229-lecture-notes-week-11.html">11. YSC2229 Lecture Notes, Week 11</a> &raquo;</li>
+        
+      <li>11.2. Huffman Encoding</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -150,8 +170,8 @@
            <div itemprop="articleBody">
             
   <div class="section" id="huffman-encoding">
-<span id="week-11-huffman"></span><h1>Huffman Encoding<a class="headerlink" href="#huffman-encoding" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_HuffmanCodes.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_HuffmanCodes.ml</a></p>
+<span id="week-11-huffman"></span><h1>11.2. Huffman Encoding<a class="headerlink" href="#huffman-encoding" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_HuffmanCodes.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_HuffmanCodes.ml</a></p>
 <p>All the compression algorithms we explored so far did not really exploit any specifics of the file they are working on in order to adapt the compression scheme itself.</p>
 <p>The idea of <a class="reference external" href="https://en.wikipedia.org/wiki/Huffman_coding">Huffman coding</a> (named after its inventor David A. Huffman) is to encode a text by assigning longer bit sequences to more rare characters in it, while giving shorter codes (bit sequences) to more frequent characters. It builds on several simple but powerful ideas, which we will consider further below:</p>
 <ul class="simple">
@@ -159,7 +179,7 @@
 <li>Character frequency analysis</li>
 </ul>
 <div class="section" id="assigning-codes-via-character-trees">
-<h2>Assigning Codes via Character Trees<a class="headerlink" href="#assigning-codes-via-character-trees" title="Permalink to this headline">¶</a></h2>
+<h2>11.2.1. Assigning Codes via Character Trees<a class="headerlink" href="#assigning-codes-via-character-trees" title="Permalink to this headline">¶</a></h2>
 <p>Huffman tree is a binary tree that has characters in its leaves. It gives a simple way to assigne unique binary codes (bit sequences) to individual characters by following paths in the tree. The key characterising of a Huffman tree is that no code for any character is a prefix of a code of another character. This makes it possible to use the tree for both encoding and decoding without any overhead from under-used encodings (as was the case with RLE).</p>
 <p>The binary tree can be represented by the following OCaml type:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">tree</span> <span class="o">=</span>
@@ -193,7 +213,7 @@
 <p>It is easy to see that none of the codes is a prefix of another one, thus, using this particular Huffman tree, we can unambiguously restore the string <code class="docutils literal notranslate"><span class="pre">&quot;acd&quot;</span></code> from its code <code class="docutils literal notranslate"><span class="pre">0100111</span></code>.</p>
 </div>
 <div class="section" id="serializing-huffman-trees">
-<h2>Serializing Huffman Trees<a class="headerlink" href="#serializing-huffman-trees" title="Permalink to this headline">¶</a></h2>
+<h2>11.2.2. Serializing Huffman Trees<a class="headerlink" href="#serializing-huffman-trees" title="Permalink to this headline">¶</a></h2>
 <p>It is very easy to serialize the tree recursively by writing its characters for the leaves, or recursively serializing subtrees for nodes:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">write_tree</span> <span class="n">out</span> <span class="n">t</span> <span class="o">=</span>
   <span class="k">match</span> <span class="n">t</span> <span class="k">with</span>
@@ -237,7 +257,7 @@
 </div>
 </div>
 <div class="section" id="constructing-huffman-tree-from-frequencies">
-<h2>Constructing Huffman tree from Frequencies<a class="headerlink" href="#constructing-huffman-tree-from-frequencies" title="Permalink to this headline">¶</a></h2>
+<h2>11.2.3. Constructing Huffman tree from Frequencies<a class="headerlink" href="#constructing-huffman-tree-from-frequencies" title="Permalink to this headline">¶</a></h2>
 <p>Naturally, we want to assign shorter codes to more common characters and longer codes to more rare ones. For now, assume that we know relative frequencies of the characters in our text, encoded, e.g., by the following array:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">cfreqs1</span> <span class="o">=</span> <span class="o">[|(</span><span class="sc">&#39;a&#39;</span><span class="o">,</span> <span class="mi">45</span><span class="o">);</span> <span class="o">(</span><span class="sc">&#39;b&#39;</span><span class="o">,</span> <span class="mi">13</span><span class="o">);</span> <span class="o">(</span><span class="sc">&#39;c&#39;</span><span class="o">,</span> <span class="mi">12</span><span class="o">);</span>
                 <span class="o">(</span><span class="sc">&#39;d&#39;</span><span class="o">,</span> <span class="mi">16</span><span class="o">);</span> <span class="o">(</span><span class="sc">&#39;e&#39;</span><span class="o">,</span> <span class="mi">9</span><span class="o">);</span> <span class="o">(</span><span class="sc">&#39;f&#39;</span><span class="o">,</span> <span class="mi">5</span><span class="o">)|]</span>
@@ -287,7 +307,7 @@
 </div>
 </div>
 <div class="section" id="computing-relative-frequencies">
-<h2>Computing Relative Frequencies<a class="headerlink" href="#computing-relative-frequencies" title="Permalink to this headline">¶</a></h2>
+<h2>11.2.4. Computing Relative Frequencies<a class="headerlink" href="#computing-relative-frequencies" title="Permalink to this headline">¶</a></h2>
 <p>For large texts, we can assume that any ASCII character occurs there, hence we can allocate a 256-slot array and fill it with frequencies by traversing the string:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">compute_freqs</span> <span class="n">s</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">String</span><span class="p">.</span><span class="n">length</span> <span class="n">s</span> <span class="k">in</span>
@@ -306,7 +326,7 @@
 </div>
 </div>
 <div class="section" id="encoding-and-writing-the-compressed-text">
-<h2>Encoding and Writing the Compressed Text<a class="headerlink" href="#encoding-and-writing-the-compressed-text" title="Permalink to this headline">¶</a></h2>
+<h2>11.2.5. Encoding and Writing the Compressed Text<a class="headerlink" href="#encoding-and-writing-the-compressed-text" title="Permalink to this headline">¶</a></h2>
 <p>Having a tree, we can produce a table of Huffman codes by traversing it recursively, filling up a table of 256 characters:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">build_table</span> <span class="n">t</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">256</span> <span class="k">in</span>
@@ -360,7 +380,7 @@
 </div>
 </div>
 <div class="section" id="decompression">
-<h2>Decompression<a class="headerlink" href="#decompression" title="Permalink to this headline">¶</a></h2>
+<h2>11.2.6. Decompression<a class="headerlink" href="#decompression" title="Permalink to this headline">¶</a></h2>
 <p>In order to decompress a file, we need to know how to interpret the stream of bits via the Huffman tree. This can be done via the procedure that reads bits as long as there is a tree to walk by, and returns a character once it encounters a leaf:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">read_char_via_tree</span> <span class="n">t</span> <span class="n">input</span> <span class="o">=</span>
   <span class="k">match</span> <span class="n">t</span> <span class="k">with</span>
@@ -392,7 +412,7 @@
 </div>
 </div>
 <div class="section" id="testing-and-running-huffman-compression">
-<h2>Testing and Running Huffman Compression<a class="headerlink" href="#testing-and-running-huffman-compression" title="Permalink to this headline">¶</a></h2>
+<h2>11.2.7. Testing and Running Huffman Compression<a class="headerlink" href="#testing-and-running-huffman-compression" title="Permalink to this headline">¶</a></h2>
 <p>We can test Huffman compression similarly to previous encoding algorithms:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">huffman_test</span> <span class="n">s</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;archive.huf&quot;</span> <span class="k">in</span>
@@ -450,6 +470,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-11_union_find.html" class="btn btn-neutral float-right" title="11.3. Equivalance Classes and Union-Find" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-11_rle.html" class="btn btn-neutral" title="11.1. Run-Length Encoding" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

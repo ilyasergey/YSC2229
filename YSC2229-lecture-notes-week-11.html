@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>YSC2229 Lecture Notes, Week 11 &mdash; YSC2229 2019</title>
+  <title>11. YSC2229 Lecture Notes, Week 11 &mdash; YSC2229 2019</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="11.1. Run-Length Encoding" href="week-11_rle.html" />
+    <link rel="prev" title="10.5. Exercises" href="week-10_exercises.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,7 +78,7 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
@@ -87,6 +89,13 @@
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">11. YSC2229 Lecture Notes, Week 11</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-11_rle.html">11.1. Run-Length Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_huffman.html">11.2. Huffman Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_union_find.html">11.3. Equivalance Classes and Union-Find</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_exercises.html">11.4. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -132,7 +141,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>YSC2229 Lecture Notes, Week 11</li>
+      <li>11. YSC2229 Lecture Notes, Week 11</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -150,22 +159,37 @@
            <div itemprop="articleBody">
             
   <div class="section" id="ysc2229-lecture-notes-week-11">
-<h1>YSC2229 Lecture Notes, Week 11<a class="headerlink" href="#ysc2229-lecture-notes-week-11" title="Permalink to this headline">¶</a></h1>
+<h1>11. YSC2229 Lecture Notes, Week 11<a class="headerlink" href="#ysc2229-lecture-notes-week-11" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="week-11_rle.html">Run-Length Encoding</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-11_rle.html#design-considerations">Design Considerations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11_rle.html#implementation">Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-11_rle.html">11.1. Run-Length Encoding</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-11_rle.html#design-considerations">11.1.1. Design Considerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_rle.html#implementation">11.1.2. Implementation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-11_huffman.html">Huffman Encoding</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-11_huffman.html#assigning-codes-via-character-trees">Assigning Codes via Character Trees</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11_huffman.html#serializing-huffman-trees">Serializing Huffman Trees</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11_huffman.html#constructing-huffman-tree-from-frequencies">Constructing Huffman tree from Frequencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11_huffman.html#computing-relative-frequencies">Computing Relative Frequencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11_huffman.html#encoding-and-writing-the-compressed-text">Encoding and Writing the Compressed Text</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11_huffman.html#decompression">Decompression</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11_huffman.html#testing-and-running-huffman-compression">Testing and Running Huffman Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-11_huffman.html">11.2. Huffman Encoding</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-11_huffman.html#assigning-codes-via-character-trees">11.2.1. Assigning Codes via Character Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_huffman.html#serializing-huffman-trees">11.2.2. Serializing Huffman Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_huffman.html#constructing-huffman-tree-from-frequencies">11.2.3. Constructing Huffman tree from Frequencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_huffman.html#computing-relative-frequencies">11.2.4. Computing Relative Frequencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_huffman.html#encoding-and-writing-the-compressed-text">11.2.5. Encoding and Writing the Compressed Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_huffman.html#decompression">11.2.6. Decompression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_huffman.html#testing-and-running-huffman-compression">11.2.7. Testing and Running Huffman Compression</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-11_union_find.html">11.3. Equivalance Classes and Union-Find</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-11_union_find.html#union-find-structure">11.3.1. Union-Find Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_union_find.html#working-with-sets-via-union-find">11.3.2. Working with Sets via Union-Find</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_union_find.html#testing-union-find">11.3.3. Testing Union-Find</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-11_exercises.html">11.4. Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-11_exercises.html#mandatory-exercises">11.4.1. Mandatory exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_exercises.html#recommended-exercises">11.4.2. Recommended exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_exercises.html#exercise-1">11.4.3. Exercise 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_exercises.html#exercise-2">11.4.4. Exercise 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_exercises.html#exercise-3">11.4.5. Exercise 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_exercises.html#exercise-4">11.4.6. Exercise 4</a></li>
 </ul>
 </li>
 </ul>
@@ -174,6 +198,7 @@
 <ul class="simple">
 <li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_RunLengthEncoding.ml">Run-Length Encoding</a></li>
 <li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_HuffmanCodes.ml">Huffman codes</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_UnionFind.ml">Union-Find</a></li>
 <li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_Tests.ml">Automated Tests</a></li>
 </ul>
 </div>
@@ -183,6 +208,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-11_rle.html" class="btn btn-neutral float-right" title="11.1. Run-Length Encoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-10_exercises.html" class="btn btn-neutral" title="10.5. Exercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

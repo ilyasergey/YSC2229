@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Exercises &mdash; YSC2229 2019</title>
+  <title>11.4. Exercises &mdash; YSC2229 2019</title>
   
 
   
@@ -27,7 +27,8 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="11.3. Equivalance Classes and Union-Find" href="week-11_union_find.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,7 +77,7 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
@@ -87,6 +88,21 @@
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-11.html">11. YSC2229 Lecture Notes, Week 11</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-11_rle.html">11.1. Run-Length Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_huffman.html">11.2. Huffman Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11_union_find.html">11.3. Equivalance Classes and Union-Find</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11.4. Exercises</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mandatory-exercises">11.4.1. Mandatory exercises</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#recommended-exercises">11.4.2. Recommended exercises</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-1">11.4.3. Exercise 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-2">11.4.4. Exercise 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-3">11.4.5. Exercise 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-4">11.4.6. Exercise 4</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
             
@@ -132,7 +148,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Exercises</li>
+          <li><a href="YSC2229-lecture-notes-week-11.html">11. YSC2229 Lecture Notes, Week 11</a> &raquo;</li>
+        
+      <li>11.4. Exercises</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -150,29 +168,41 @@
            <div itemprop="articleBody">
             
   <div class="section" id="exercises">
-<span id="exercises-11"></span><h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
+<span id="exercises-11"></span><h1>11.4. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mandatory-exercises">
-<h2>Mandatory exercises<a class="headerlink" href="#mandatory-exercises" title="Permalink to this headline">¶</a></h2>
+<h2>11.4.1. Mandatory exercises<a class="headerlink" href="#mandatory-exercises" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference internal" href="#exercise-rle-decoder"><span class="std std-ref">Exercise 1</span></a>
-RLE decoder.</li>
+RLE decoder</li>
 <li><a class="reference internal" href="#exercise-fixed-length"><span class="std std-ref">Exercise 2</span></a>
 Fixed-length code</li>
+<li><a class="reference internal" href="#exercise-uf-linear"><span class="std std-ref">Exercise 3</span></a>
+Constant-time find in Union-Find</li>
+<li><a class="reference internal" href="#exercise-uf-compression"><span class="std std-ref">Exercise 4</span></a>
+Union-Find with path compression</li>
 </ul>
 </div>
 <div class="section" id="recommended-exercises">
-<h2>Recommended exercises<a class="headerlink" href="#recommended-exercises" title="Permalink to this headline">¶</a></h2>
+<h2>11.4.2. Recommended exercises<a class="headerlink" href="#recommended-exercises" title="Permalink to this headline">¶</a></h2>
 <p>None</p>
 </div>
 <div class="section" id="exercise-1">
-<span id="exercise-rle-decoder"></span><h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
-<p>Implement a decoder for the binary compression based on Run-Length Evaluation described in Section <span class="xref std std-ref">week-10-rle</span>. Test it by composing it with the binary compression/decompression of DNA strings as follows: DNA -&gt; Binary DNA -&gt; RLE compression -&gt; RLE Decompression -&gt; Binary DNA -&gt; DNA to ensure that the initial input and the final output are identical.</p>
+<span id="exercise-rle-decoder"></span><h2>11.4.3. Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<p>Implement a decoder for the binary compression based on Run-Length Evaluation described in Section <a class="reference internal" href="week-11_rle.html#week-11-rle"><span class="std std-ref">Run-Length Encoding</span></a>. Test it by composing it with the binary compression/decompression of DNA strings as follows: DNA -&gt; Binary DNA -&gt; RLE compression -&gt; RLE Decompression -&gt; Binary DNA -&gt; DNA to ensure that the initial input and the final output are identical.</p>
 <p>Implement a pair of standalone compression runners for RLE-based compression of binaries, similarly to what has been implemented in Section <a class="reference internal" href="week-11_huffman.html#week-11-huffman"><span class="std std-ref">Huffman Encoding</span></a>.</p>
 </div>
 <div class="section" id="exercise-2">
-<span id="exercise-fixed-length"></span><h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
-<p>Implement a variation of RLE (see Section <a class="reference internal" href="week-11_rle.html#week-11-rle"><span class="std std-ref">Run-Length Encoding</span></a>) that uses fixed-length encoding (i.e., all lengths are encoded via a code of a fixed size) to compress ASCII (8-bit character) strings that have relatively few different characters with many repetitions, such as <code class="docutils literal notranslate"><span class="pre">AAAAAAAAAAAAAAACCCBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAEEEEEE</span></code>.</p>
+<span id="exercise-fixed-length"></span><h2>11.4.4. Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<p>Implement a variation of RLE (see Section <a class="reference internal" href="week-11_rle.html#week-11-rle"><span class="std std-ref">Run-Length Encoding</span></a>) that uses fixed-length encoding (i.e., all lengths are encoded via a code of a fixed size) to compress ASCII (8-bit character) strings that have relatively few different characters with many contiguous repetitions, such as <code class="docutils literal notranslate"><span class="pre">AAAAAAAAAAAAAAACCCBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAEEEEEE</span></code>.</p>
 <p>Design the encoding for representing the alphabet (relevant characters in the encoded string), used to associate characters with lengths of the occurrences (you might not need to account for all ASCII characters, but only for those that occur in your string). Store this alphabet representation along with the encoded string, so it could be used for decoding. Implement a randomised test generator producing strings, on which this compression will work well and use it for automated testing of your compression/decompression procedure.</p>
+</div>
+<div class="section" id="exercise-3">
+<span id="exercise-uf-linear"></span><h2>11.4.5. Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<p>Implement a version of Union-Find, such that <code class="docutils literal notranslate"><span class="pre">union</span></code> has <span class="math notranslate nohighlight">\(O(n)\)</span> complexity (doing more massive update than the version from the lecture), but the <code class="docutils literal notranslate"><span class="pre">find</span></code> has only <span class="math notranslate nohighlight">\(O(1)\)</span> complexity.</p>
+</div>
+<div class="section" id="exercise-4">
+<span id="exercise-uf-compression"></span><h2>11.4.6. Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
+<p>Implement a version of Union-Find to include <em>path compression</em>, by adding a code to <code class="docutils literal notranslate"><span class="pre">find</span></code> that links every element on the path from <code class="docutils literal notranslate"><span class="pre">p</span></code> to the root (thus making a short-cut for the path). Give a sequence of inputs that causes thie function to produce a path of length 4 (and compress it). <em>Note</em>: The amortised cost per operation for this algorithm is known to be logarithmic.</p>
 </div>
 </div>
 
@@ -181,6 +211,13 @@ Fixed-length code</li>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="week-11_union_find.html" class="btn btn-neutral" title="11.3. Equivalance Classes and Union-Find" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

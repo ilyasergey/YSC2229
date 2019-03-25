@@ -5,7 +5,7 @@
 Run-Length Encoding
 ===================
 
-https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_10_RunLengthEncoding.ml
+https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_RunLengthEncoding.ml
 
 Run-length encoding is a compression methods that works well with bit-strings with large contiguous segments of repeating 0s and 1s by encoding the lengths of such segments in the interleaved fashion, starting from 0. For instance, the following string::
 
