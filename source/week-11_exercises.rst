@@ -52,17 +52,14 @@ Design the encoding for representing the alphabet (relevant characters in the en
 Exercise 3
 ----------
 
-Implement a procedure ``find_prev`` for finding a predecessor for an
-element ``e`` from the BST. It should return ``None`` if ``e`` is not
-present in the tree, or if it is the smallest element in it. Implemnt
-automated randomised tests for your procedure.
+Implement a procedure ``find_prev`` for finding a predecessor for an element ``e`` from the BST. It should return ``None`` if ``e`` is not present in the tree, or if it is the smallest element in it. Implement automated randomised tests for your procedure.
 
 .. _exercise-uf-compression:
 
 Exercise 4
 ----------
 
-Implement a version of Union-Find to include *path compression*, by adding a code to ``find`` that links every element on the path from ``p`` to the root. Give a sequence of inputs that causes thie function to produce a path of length 4 (and compress it). *Note*: The amortised cost per operation for this algorithm is known to be logarithmic.
+Implement a version of Union-Find to include *path compression*, by adding a code to ``find`` that links every element on the path from ``p`` to the root (thus making a short-cut for the path). Give a sequence of inputs that causes thie function to produce a path of length 4 (and compress it). *Note*: The amortised cost per operation for this algorithm is known to be logarithmic.
 
 .. _exercise-tree-print:
 
