@@ -112,13 +112,155 @@ For instance, taking the ``g`` to be the medium-size graph from the end of the p
    :align: center
 
 
-
-
-
 Depth-First Traversal
 ---------------------
 
-TODO
+It is possible to split graph into a set of trees with dedicated roots, so that each subtree is reachable from its root. One way to do it is using the Depth-First Search (DFS) procedure.
+
+The procedure is similar to reachability checking implemented above, but employs a more efficient way to detect cycles via the "colouring" technique. In essence, it maintains an additional hash table, assigning the colors as attributes to the nodes, to indicate whether the have not yet, are inte processed, or have been fully processed::
+
+  open NodeTable 
+  open Week_01
+
+  type color = White | Gray | Black
+
+The main procedure is again implemented via back-tracking::
+
+  let rec dfs g = 
+    let color_map = mk_new_table (v_size g) in
+    let tree_map = mk_new_table (v_size g) in
+    let time_map = mk_new_table (v_size g) in
+    let has_cycles = ref false in
+    let roots = ref [] in
+    let all_nodes = get_nodes g in
+
+    (* Make all nodes white *)
+    List.iter (fun n -> insert color_map n White) all_nodes;
+    (* Insert all nodes to the tree *)
+    List.iter (fun n -> insert tree_map n []) all_nodes;
+
+    let time = ref 0 in 
+
+
+    let rec dfs_visit u = 
+      time := !time + 1;
+      let u_in = !time in
+      insert color_map u Gray;
+      get_succ g u |> List.iter (fun v -> 
+          let v_color = get_exn @@ get color_map v in
+          if v_color = White
+          then begin
+            let siblings = get_exn @@ get tree_map u in
+            insert tree_map u (v :: siblings);
+            dfs_visit v
+          end 
+          else if v_color = Gray 
+          then has_cycles := true) ;
+      insert color_map u Black;
+      time := !time + 1;
+      let u_out = !time in
+      insert time_map u (u_in, u_out)
+    in
+
+    List.iter (fun n -> 
+        if get_exn @@ get color_map n = White
+        then begin
+          (* Record roots *)
+          roots := n :: !roots;
+          dfs_visit n
+        end) 
+      all_nodes;
+
+      (!roots, tree_map, time_map, !has_cycles)  
+
+It starts by assigning all nodes the ``White`` colour, and then creates an empty tree for each node. It also keeps track of ``time`` (a natural number) of "entering" and "exiting" the node. The "roots" of the trees are all collected in the mutable list ``roots``, and the variable ``has_cycles`` determines whether a cycle has been witnessed.
+
+**Question:** How would you characterise the period during which a node is painted ``Gray`` during the DFS traversal?
+
+**Question:** If ``u`` is a parent of ``v`` in a DFS-tree, what is the relation between their timestamps?
+
+We can render the result of DFS via the following procedure, using the tree to retrieve the edge attributes::
+
+  (* Visualise with DFS *)
+  let graphviz_with_dfs g out = 
+  let (_, tree, _, _) = dfs g in 
+  let eattrib (s, d) = match get tree s with
+    | None -> ""
+    | Some p -> 
+      if List.mem d p 
+      then bold_edge
+      else ""
+  in
+  let open Week_10_ReadingFiles in
+  let ag = LinkedGraphs.to_adjacency_graph g in
+  let s = graphviz_string_of_graph "digraph" " -> " 
+      string_of_int eattrib ag in
+  write_string_to_file out s
+
+For instance, for our working graph we get the following image, indicating two trees, rooted at nodes 0 and 2, correspondingly:
+
+.. image:: ../resources/dfs.png
+   :width: 500px
+   :align: center
+
+DFS and Reachability
+--------------------
+
+Let us define the following procedure, checking the reachability via DFS::
+
+  let is_reachable_via_dfs g init final = 
+    let (roots, tree, _, _) = dfs g in
+    let rec walk n = 
+      if n = final then true
+      else 
+        get tree n |> 
+        Week_01.get_exn |>
+        List.exists (fun v -> walk v)
+    in
+    if List.mem init roots 
+    then walk init
+    else false
+
+**Question:** Is initial notion of reachability equivalent to DFS-reachability?
+
+The differences aside, we can still use it to teste DFS using the following observations::
+
+
+ let test_dfs g = 
+   let all_nodes = LinkedGraphs.get_nodes g in 
+   let (dfs_roots, _, _, _) = GraphDFS.dfs g in
+
+   (* Any node DFS-reachable from a root r is reachable from r *)
+   let fact1 = 
+     List.for_all dfs_roots ~f:(fun u ->
+         List.for_all all_nodes ~f:(fun v ->
+             if GraphDFS.is_reachable_via_dfs g u v
+             then is_reachable g u v
+             else true)) 
+   in
+
+   (* Any node is reachable from some root r *)
+   let fact2 = 
+     List.for_all all_nodes ~f:(fun u ->
+         List.exists dfs_roots
+           ~f:(fun r -> GraphDFS.is_reachable_via_dfs g r u)) in
+
+   fact1 && fact2
+
+DFS an Cycle Detection
+----------------------
+
+As a byproduct, our DFS has detected if a given graph has a cycle in it. We can now test it as follows::
+
+ let%test _ =  
+   let g = LinkedGraphs.parse_linked_int_graph small_graph_shape in
+   let (_, _, _, c) = GraphDFS.dfs g in
+   c
+
+ let%test _ =  
+   let g = LinkedGraphs.parse_linked_int_graph medium_graph_shape in
+   let (_, _, _, c) = GraphDFS.dfs g in
+   not c
 
 
 Topological Sort
