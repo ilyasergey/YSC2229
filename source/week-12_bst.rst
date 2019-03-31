@@ -5,7 +5,7 @@
 Representing Sets via Binary Search Trees
 =========================================
 
-https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_11_BinaryTree.ml
+https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_12_BST.ml
 
 Binary search trees (BST) are one of the most versatile representations of mutable sets, supporting a variety of operations, such as insertion, deletion, checking membership, finding minimums, maximums, predecessors and successors. 
 
@@ -37,7 +37,8 @@ The tree is populated by nodes, each of which carries a value (immutable), and a
    }
 
    type 'e tree = {
-     root : 'e tree_node option ref
+     root : 'e tree_node option ref;
+     size : int ref    
    }
 
    (* More definitions coming here *)
@@ -50,6 +51,7 @@ For convenience, we define several operations to dereference various components 
   let right n = !(n.right)
   let parent n = !(n.parent)
   let get_root t = !(t.root)
+  let get_size t = !(t.size)
 
   let mk_node e = 
     {value = e;
@@ -57,7 +59,7 @@ For convenience, we define several operations to dereference various components 
      left = ref None;
      right = ref None}
     
-  let mk_tree _ = {root = ref None}    
+  let mk_tree _ = {root = ref None; size = ref 0}    
     
 Finally, since nodes are represented by an ``option`` type, we introduce the following combinator, simplifying working with ``option``-wrapped values::
 
@@ -81,17 +83,27 @@ The defined above ``mk_tree`` function creates an empty tree. Let us now impleme
         | None ->
           m.parent := Some n;
           n.left := Some m;
-      else match right n with
+          true
+      else if e > n.value
+      then match right n with
         | Some m -> insert_element m e
         | None ->
           m.parent := Some n;
-          n.right := Some m
+          n.right := Some m;
+          true
+      else false
     in
     match !(t.root) with
-    | None -> t.root := Some (mk_node e)
-    | Some n -> insert_element n e
+    | None -> (
+        t.root := Some (mk_node e);
+        t.size := 1;
+        true)
+    | Some n -> 
+      if insert_element n e
+      then (t.size := !(t.size) + 1; true)
+      else false
 
-Notice that the main working routine ``insert_element`` is respectful with respect to the BST property defined above: it positions the node ``m`` with the element ``e``, so it would be in the right subtree (smaller-left/greater-right) with respect to its parent nodes.
+Notice that the main working routine ``insert_element`` is respectful with respect to the BST property defined above: it positions the node ``m`` with the element ``e``, so it would be in the right subtree (smaller-left/greater-right) with respect to its parent nodes.  Finally, ``insert_element`` returns a boolean to indicate whether the element has been indeed added (``true``) or ignored as duplicated (``false``). In the former case the size of the tree is increased, in the latter it remains the same.
 
 Binary-Search-Tree Invariant
 ----------------------------
