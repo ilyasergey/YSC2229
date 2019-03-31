@@ -262,8 +262,118 @@ As a byproduct, our DFS has detected if a given graph has a cycle in it. We can 
    let (_, _, _, c) = GraphDFS.dfs g in
    not c
 
-
 Topological Sort
 ----------------
 
-TODO: Say what a DAG is
+Assume our graph has no cycles (i.e., it is a so-called *Directed Acyclic Graph*, or *DAG*). In this case it is possible to enumerate its nodes (i.e., put them to an ordered list) in a way that all edges will be going from nodes "left-to-right". This operation is called *Topological Sort* and is very useful for processing dependencies in an order, implicitly imposed by a graph.
+
+As an example of Topological Sort, you can think of compiling multiple OCaml files. Dependencies between files introduce a DAG (as there are no cycles), but the compiler need to process them in an order so that the dependant files would be compiled after their dependencies. This is where Topological Sort comes to the rescue.
+
+Another (somewhat more lively) example is a professor who dresses every morning, having the following dependencies between his clothes to put on:
+
+.. image:: ../resources/clothes.png
+   :width: 600px
+   :align: center
+
+The graph of those dependencies can be encoded as follows::
+  
+ let clothes_graph = [
+   "9";
+   "0 8";
+   "0 2";
+   "8 2";
+   "8 1";
+   "8 7";
+   "3 7";
+   "3 4";
+   "4 5";
+   "7 5";
+   "6 2";
+ ]
+
+while the payloads (i.e., the items of clothes) are given by the following array::
+
+ let clothes = 
+   [|  
+     "underpants";
+     "phone";
+     "shoes";
+     "shirt";
+     "tie";
+     "jacket";
+     "socks";
+     "belt";
+     "trousers";
+   |]
+
+The image is thus produced by the following procedure::
+
+ let graphviz_with_payload g values out = 
+   let eattrib e = "" in
+   let vattrib n = values.(n) in
+   let open Week_10_ReadingFiles in
+   let ag = LinkedGraphs.to_adjacency_graph g in
+   let s = graphviz_string_of_graph "digraph" " -> " 
+       vattrib eattrib ag in
+   write_string_to_file out s
+
+
+The procedure of the topological sort exploits the time-stamps recorded during DFS. The intuition is as follows: in the absence of cycles, the nodes with the later "exit" timestamp ``u_out`` are the "topological predecessors" of those with smaller timestamps, and, hence, the former should be put earlier in the list. Another way to think of it is that DFS introduces a "parenthesised structure"  on the subtrees of the graph, and the nodes up the tree have exit timestamps, corresponding to a parenthesis more "to the right".
+
+The implementation of the topological sort, thus, simply sorts the nodes in the decreasing order of the exit timestamp::
+
+ module TopologicalSort = struct
+
+   open Week_01
+   open NodeTable 
+
+   let get_last_time m n = get_exn @@ get m n
+
+   let topo_sort g = 
+     let (_, _, time_map, _) = GraphDFS.dfs g in
+     get_nodes g |>
+     List.sort (fun n1 n2 ->
+         let (_, t1) = get_last_time time_map n1 in
+         let (_, t2) = get_last_time time_map n2 in
+         if t1 < t2 then 1
+         else if t1 > t2 then -1
+         else 0)
+
+ end
+
+For the graph of professor clothes, the topological sort returns the following sequence (which is coherent with the picture above)::
+
+ utop # let g = LinkedGraphs.parse_linked_int_graph clothes_graph;;
+ utop # let l = TopologicalSort.topo_sort g;;
+ utop # List.iter (fun i -> Printf.printf "%s\n" clothes.(i)) l;;
+
+ socks
+ shirt
+ tie
+ underpants
+ trousers
+ belt
+ jacket
+ phone
+ shoes
+
+
+Testing Topological Sort
+------------------------
+
+A simple property to check of a topological sort is that for all subsequently positioned nodes ``(u, v)`` in its result, the node ``u`` is not reachable from ``v``::
+
+ let rec all_pairs ls = match ls with
+   | [] -> []
+   | _ :: [] -> []
+   | h1 :: h2 :: t -> (h1, h2) :: (all_pairs (h2 :: t))    
+
+ let%test _ =  
+   let g = LinkedGraphs.parse_linked_int_graph medium_graph_shape in
+   let pairs = TopologicalSort.topo_sort g |> all_pairs in
+   List.for_all pairs ~f:(fun (s, d) -> not (is_reachable g d s))
+
+ let%test _ =  
+   let g = LinkedGraphs.parse_linked_int_graph clothes_graph in
+   let pairs = TopologicalSort.topo_sort g |> all_pairs in
+   List.for_all pairs ~f:(fun (s, d) -> not (is_reachable g d s))
