@@ -321,6 +321,10 @@ With the stack (implicit or explicit), DFS traverses the tree in a Last-In-First
 
 Notice that the code of ``depth_first_search_loop`` and ``breadth_first_search_loop`` is almost identical, modulo the used container data structure and its operations (e.g., ``enqueue``/``push`` and ``dequeue``/``pop``).
 
+We can also define all elements of the set in terms of the traversal::
+
+  let elements t = breadth_first_search_loop t
+
 Testing Element Retrieval and Tree Traversals
 ---------------------------------------------
 
