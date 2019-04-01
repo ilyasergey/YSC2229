@@ -1,0 +1,554 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Reachability and Graph Traversals &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-11.html">11. YSC2229 Lecture Notes, Week 11</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-12.html">12. YSC2229 Lecture Notes, Week 12</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Reachability and Graph Traversals</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="reachability-and-graph-traversals">
+<span id="reachability"></span><h1>Reachability and Graph Traversals<a class="headerlink" href="#reachability-and-graph-traversals" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_12_Reachability.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_12_Reachability.ml</a></p>
+<p>Having the graphs defined, let us now do something interesting with them. In this chapter, we will be looking at the questions of <em>reachability</em> between nodes, as allowed by a given graph’s topology. In all algorithms, we will be relying on the linked representation:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">Week_12_Graphs</span>
+<span class="k">open</span> <span class="nc">LinkedGraphs</span>
+</pre></div>
+</div>
+<div class="section" id="checking-reachability-in-a-graph">
+<h2>Checking Reachability in a Graph<a class="headerlink" href="#checking-reachability-in-a-graph" title="Permalink to this headline">¶</a></h2>
+<p>Given a graph <code class="docutils literal notranslate"><span class="pre">g</span></code> and two its nodes <code class="docutils literal notranslate"><span class="pre">init</span></code> and <code class="docutils literal notranslate"><span class="pre">final</span></code>, let us define a procedure that determines whether we can get from <code class="docutils literal notranslate"><span class="pre">init</span></code> to <code class="docutils literal notranslate"><span class="pre">final</span></code> by following the edges of <code class="docutils literal notranslate"><span class="pre">g</span></code>, and if so, return the list of those edges:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">reachable</span> <span class="n">g</span> <span class="n">init</span> <span class="n">final</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">path</span> <span class="n">visited</span> <span class="n">n</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">=</span> <span class="n">final</span>
+    <span class="k">then</span> <span class="nc">Some</span> <span class="n">path</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="nn">List</span><span class="p">.</span><span class="n">mem</span> <span class="n">n</span> <span class="n">visited</span>
+    <span class="k">then</span> <span class="nc">None</span>
+    <span class="k">else</span>
+      <span class="c">(* Try successors *)</span>
+      <span class="k">let</span> <span class="n">node</span> <span class="o">=</span> <span class="n">get_node</span> <span class="n">g</span> <span class="n">n</span> <span class="k">in</span>
+      <span class="k">let</span> <span class="n">successors</span> <span class="o">=</span> <span class="n">get_next</span> <span class="n">node</span> <span class="k">in</span>
+      <span class="k">let</span> <span class="n">visited&#39;</span> <span class="o">=</span> <span class="n">n</span> <span class="o">::</span> <span class="n">visited</span> <span class="k">in</span>
+      <span class="k">let</span> <span class="k">rec</span> <span class="n">iter</span> <span class="o">=</span> <span class="k">function</span>
+        <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="nc">None</span>
+        <span class="o">|</span> <span class="n">h</span> <span class="o">::</span> <span class="n">t</span> <span class="o">-&gt;</span>
+          <span class="k">let</span> <span class="n">path&#39;</span> <span class="o">=</span> <span class="o">(</span><span class="n">n</span><span class="o">,</span> <span class="n">h</span><span class="o">)</span> <span class="o">::</span> <span class="n">path</span> <span class="k">in</span>
+          <span class="k">match</span> <span class="n">walk</span> <span class="n">path&#39;</span> <span class="n">visited&#39;</span> <span class="n">h</span> <span class="k">with</span>
+          <span class="o">|</span> <span class="nc">Some</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="nc">Some</span> <span class="n">p</span>
+          <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="n">iter</span> <span class="n">t</span>
+      <span class="k">in</span>
+      <span class="n">iter</span> <span class="n">successors</span>
+  <span class="k">in</span>
+  <span class="k">match</span> <span class="n">walk</span> <span class="bp">[]</span> <span class="bp">[]</span> <span class="n">init</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">Some</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="nc">Some</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">rev</span> <span class="n">p</span><span class="o">)</span>
+  <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="nc">None</span>
+</pre></div>
+</div>
+<p>The implementation of <code class="docutils literal notranslate"><span class="pre">reachable</span></code> employs the backtracking technique (see the Chapter <a class="reference internal" href="week-10_backtracking.html#week-10-backtracking"><span class="std std-ref">Constraint Solving via Backtracking</span></a>), which is implemented by means of an interplay of the two functions: <code class="docutils literal notranslate"><span class="pre">walk</span></code> and <code class="docutils literal notranslate"><span class="pre">iter</span></code>. The former also checks that we do not hit a <em>cycle</em> in a graph, hence it contains the list of <code class="docutils literal notranslate"><span class="pre">visited</span></code> nodes. Finally, the <code class="docutils literal notranslate"><span class="pre">path</span></code> accumulates the edges (in a reversed) on the way to destination, and is returned at the end, if the path is found.</p>
+<p><strong>Question:</strong> What is the complexity of <code class="docutils literal notranslate"><span class="pre">reachable</span></code> in terms of sizes of <code class="docutils literal notranslate"><span class="pre">g.V</span></code> and <code class="docutils literal notranslate"><span class="pre">g.E</span></code>. What would it be if we don’t take the complexity of <code class="docutils literal notranslate"><span class="pre">List.mem</span> <span class="pre">n</span> <span class="pre">visited</span></code> into the account?</p>
+<p>We can define the reachability predicate as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">is_reachable</span> <span class="n">g</span> <span class="n">init</span> <span class="n">final</span> <span class="o">=</span>
+  <span class="n">reachable</span> <span class="n">g</span> <span class="n">init</span> <span class="n">final</span> <span class="o">&lt;&gt;</span> <span class="nc">None</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-reachability">
+<h2>Testing Reachability<a class="headerlink" href="#testing-reachability" title="Permalink to this headline">¶</a></h2>
+<p>The following are the tests for the specific two graphs we have seen, designed with a human intuition in mind:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">Week_12_Reachability</span>
+
+<span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="o">_</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">g</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">parse_linked_int_graph</span> <span class="n">small_graph_shape</span> <span class="k">in</span>
+  <span class="c">(* True statements *)</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">is_reachable</span> <span class="n">g</span> <span class="mi">0</span> <span class="mi">5</span><span class="o">);</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">is_reachable</span> <span class="n">g</span> <span class="mi">5</span> <span class="mi">1</span><span class="o">);</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">is_reachable</span> <span class="n">g</span> <span class="mi">5</span> <span class="mi">5</span><span class="o">);</span>
+
+  <span class="c">(* False statements *)</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">not</span> <span class="o">(</span><span class="n">is_reachable</span> <span class="n">g</span> <span class="mi">4</span> <span class="mi">5</span><span class="o">));</span>
+  <span class="bp">true</span>
+
+<span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="o">_</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">g</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">parse_linked_int_graph</span> <span class="n">medium_graph_shape</span> <span class="k">in</span>
+  <span class="c">(* True statements *)</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">is_reachable</span> <span class="n">g</span> <span class="mi">2</span> <span class="mi">4</span><span class="o">);</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">is_reachable</span> <span class="n">g</span> <span class="mi">8</span> <span class="mi">12</span><span class="o">);</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">is_reachable</span> <span class="n">g</span> <span class="mi">0</span> <span class="mi">10</span><span class="o">);</span>
+
+  <span class="c">(* False statements *)</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">not</span> <span class="o">(</span><span class="n">is_reachable</span> <span class="n">g</span> <span class="mi">5</span> <span class="mi">9</span><span class="o">));</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">not</span> <span class="o">(</span><span class="n">is_reachable</span> <span class="n">g</span> <span class="mi">11</span> <span class="mi">7</span><span class="o">));</span>
+  <span class="bp">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rendering-paths-in-a-graph">
+<h2>Rendering Paths in a Graph<a class="headerlink" href="#rendering-paths-in-a-graph" title="Permalink to this headline">¶</a></h2>
+<p>We can use the same machinery for interactive with GraphViz to highlight the reachable paths in a graph:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">bold_edge</span> <span class="o">=</span> <span class="s2">&quot;[color=red,penwidth=3.0]&quot;</span>
+
+<span class="k">let</span> <span class="n">graphviz_with_path</span> <span class="n">g</span> <span class="n">init</span> <span class="n">final</span> <span class="n">out</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="n">reachable</span> <span class="n">g</span> <span class="n">init</span> <span class="n">final</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">attrib</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span> <span class="o">=</span> <span class="k">match</span> <span class="n">r</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="s2">&quot;&quot;</span>
+    <span class="o">|</span> <span class="nc">Some</span> <span class="n">p</span> <span class="o">-&gt;</span>
+      <span class="k">if</span> <span class="nn">List</span><span class="p">.</span><span class="n">mem</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span> <span class="n">p</span>
+      <span class="k">then</span> <span class="n">bold_edge</span>
+      <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+  <span class="k">in</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">Week_10_ReadingFiles</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ag</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">to_adjacency_graph</span> <span class="n">g</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="n">graphviz_string_of_graph</span> <span class="s2">&quot;digraph&quot;</span> <span class="s2">&quot; -&gt; &quot;</span>
+      <span class="n">string_of_int</span> <span class="n">attrib</span> <span class="n">ag</span> <span class="k">in</span>
+  <span class="n">write_string_to_file</span> <span class="n">out</span> <span class="n">s</span>
+</pre></div>
+</div>
+<p>For instance, taking the <code class="docutils literal notranslate"><span class="pre">g</span></code> to be the medium-size graph from the end of the previous chapter, we can render the result of <code class="docutils literal notranslate"><span class="pre">graphviz_with_path</span> <span class="pre">g</span> <span class="pre">2</span> <span class="pre">12</span> <span class="pre">&quot;filename.out&quot;</span></code> to the following picture:</p>
+<a class="reference internal image-reference" href="_images/path1.png"><img alt="_images/path1.png" class="align-center" src="_images/path1.png" style="width: 500px;" /></a>
+</div>
+<div class="section" id="depth-first-traversal">
+<h2>Depth-First Traversal<a class="headerlink" href="#depth-first-traversal" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to split graph into a set of trees with dedicated roots, so that each subtree is reachable from its root. One way to do it is using the Depth-First Search (DFS) procedure.</p>
+<p>The procedure is similar to reachability checking implemented above, but employs a more efficient way to detect cycles via the “colouring” technique. In essence, it maintains an additional hash table, assigning the colors as attributes to the nodes, to indicate whether the have not yet, are inte processed, or have been fully processed:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">NodeTable</span>
+<span class="k">open</span> <span class="nc">Week_01</span>
+
+<span class="k">type</span> <span class="n">color</span> <span class="o">=</span> <span class="nc">White</span> <span class="o">|</span> <span class="nc">Gray</span> <span class="o">|</span> <span class="nc">Black</span>
+</pre></div>
+</div>
+<p>The main procedure is again implemented via back-tracking:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">dfs</span> <span class="n">g</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">color_map</span> <span class="o">=</span> <span class="n">mk_new_table</span> <span class="o">(</span><span class="n">v_size</span> <span class="n">g</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">tree_map</span> <span class="o">=</span> <span class="n">mk_new_table</span> <span class="o">(</span><span class="n">v_size</span> <span class="n">g</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">time_map</span> <span class="o">=</span> <span class="n">mk_new_table</span> <span class="o">(</span><span class="n">v_size</span> <span class="n">g</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">has_cycles</span> <span class="o">=</span> <span class="n">ref</span> <span class="bp">false</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">roots</span> <span class="o">=</span> <span class="n">ref</span> <span class="bp">[]</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">all_nodes</span> <span class="o">=</span> <span class="n">get_nodes</span> <span class="n">g</span> <span class="k">in</span>
+
+  <span class="c">(* Make all nodes white *)</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">insert</span> <span class="n">color_map</span> <span class="n">n</span> <span class="nc">White</span><span class="o">)</span> <span class="n">all_nodes</span><span class="o">;</span>
+  <span class="c">(* Insert all nodes to the tree *)</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">insert</span> <span class="n">tree_map</span> <span class="n">n</span> <span class="bp">[]</span><span class="o">)</span> <span class="n">all_nodes</span><span class="o">;</span>
+
+  <span class="k">let</span> <span class="n">time</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">0</span> <span class="k">in</span>
+
+
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">dfs_visit</span> <span class="n">u</span> <span class="o">=</span>
+    <span class="n">time</span> <span class="o">:=</span> <span class="o">!</span><span class="n">time</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="k">let</span> <span class="n">u_in</span> <span class="o">=</span> <span class="o">!</span><span class="n">time</span> <span class="k">in</span>
+    <span class="n">insert</span> <span class="n">color_map</span> <span class="n">u</span> <span class="nc">Gray</span><span class="o">;</span>
+    <span class="n">get_succ</span> <span class="n">g</span> <span class="n">u</span> <span class="o">|&gt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">v</span> <span class="o">-&gt;</span>
+        <span class="k">let</span> <span class="n">v_color</span> <span class="o">=</span> <span class="n">get_exn</span> <span class="o">@@</span> <span class="n">get</span> <span class="n">color_map</span> <span class="n">v</span> <span class="k">in</span>
+        <span class="k">if</span> <span class="n">v_color</span> <span class="o">=</span> <span class="nc">White</span>
+        <span class="k">then</span> <span class="k">begin</span>
+          <span class="k">let</span> <span class="n">siblings</span> <span class="o">=</span> <span class="n">get_exn</span> <span class="o">@@</span> <span class="n">get</span> <span class="n">tree_map</span> <span class="n">u</span> <span class="k">in</span>
+          <span class="n">insert</span> <span class="n">tree_map</span> <span class="n">u</span> <span class="o">(</span><span class="n">v</span> <span class="o">::</span> <span class="n">siblings</span><span class="o">);</span>
+          <span class="n">dfs_visit</span> <span class="n">v</span>
+        <span class="k">end</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="n">v_color</span> <span class="o">=</span> <span class="nc">Gray</span>
+        <span class="k">then</span> <span class="n">has_cycles</span> <span class="o">:=</span> <span class="bp">true</span><span class="o">)</span> <span class="o">;</span>
+    <span class="n">insert</span> <span class="n">color_map</span> <span class="n">u</span> <span class="nc">Black</span><span class="o">;</span>
+    <span class="n">time</span> <span class="o">:=</span> <span class="o">!</span><span class="n">time</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="k">let</span> <span class="n">u_out</span> <span class="o">=</span> <span class="o">!</span><span class="n">time</span> <span class="k">in</span>
+    <span class="n">insert</span> <span class="n">time_map</span> <span class="n">u</span> <span class="o">(</span><span class="n">u_in</span><span class="o">,</span> <span class="n">u_out</span><span class="o">)</span>
+  <span class="k">in</span>
+
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">n</span> <span class="o">-&gt;</span>
+      <span class="k">if</span> <span class="n">get_exn</span> <span class="o">@@</span> <span class="n">get</span> <span class="n">color_map</span> <span class="n">n</span> <span class="o">=</span> <span class="nc">White</span>
+      <span class="k">then</span> <span class="k">begin</span>
+        <span class="c">(* Record roots *)</span>
+        <span class="n">roots</span> <span class="o">:=</span> <span class="n">n</span> <span class="o">::</span> <span class="o">!</span><span class="n">roots</span><span class="o">;</span>
+        <span class="n">dfs_visit</span> <span class="n">n</span>
+      <span class="k">end</span><span class="o">)</span>
+    <span class="n">all_nodes</span><span class="o">;</span>
+
+    <span class="o">(!</span><span class="n">roots</span><span class="o">,</span> <span class="n">tree_map</span><span class="o">,</span> <span class="n">time_map</span><span class="o">,</span> <span class="o">!</span><span class="n">has_cycles</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>It starts by assigning all nodes the <code class="docutils literal notranslate"><span class="pre">White</span></code> colour, and then creates an empty tree for each node. It also keeps track of <code class="docutils literal notranslate"><span class="pre">time</span></code> (a natural number) of “entering” and “exiting” the node. The “roots” of the trees are all collected in the mutable list <code class="docutils literal notranslate"><span class="pre">roots</span></code>, and the variable <code class="docutils literal notranslate"><span class="pre">has_cycles</span></code> determines whether a cycle has been witnessed.</p>
+<p><strong>Question:</strong> How would you characterise the period during which a node is painted <code class="docutils literal notranslate"><span class="pre">Gray</span></code> during the DFS traversal?</p>
+<p><strong>Question:</strong> If <code class="docutils literal notranslate"><span class="pre">u</span></code> is a parent of <code class="docutils literal notranslate"><span class="pre">v</span></code> in a DFS-tree, what is the relation between their timestamps?</p>
+<p>We can render the result of DFS via the following procedure, using the tree to retrieve the edge attributes:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Visualise with DFS *)</span>
+<span class="k">let</span> <span class="n">graphviz_with_dfs</span> <span class="n">g</span> <span class="n">out</span> <span class="o">=</span>
+<span class="k">let</span> <span class="o">(_,</span> <span class="n">tree</span><span class="o">,</span> <span class="o">_,</span> <span class="o">_)</span> <span class="o">=</span> <span class="n">dfs</span> <span class="n">g</span> <span class="k">in</span>
+<span class="k">let</span> <span class="n">eattrib</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span> <span class="o">=</span> <span class="k">match</span> <span class="n">get</span> <span class="n">tree</span> <span class="n">s</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="s2">&quot;&quot;</span>
+  <span class="o">|</span> <span class="nc">Some</span> <span class="n">p</span> <span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="nn">List</span><span class="p">.</span><span class="n">mem</span> <span class="n">d</span> <span class="n">p</span>
+    <span class="k">then</span> <span class="n">bold_edge</span>
+    <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+<span class="k">in</span>
+<span class="k">let</span> <span class="k">open</span> <span class="nc">Week_10_ReadingFiles</span> <span class="k">in</span>
+<span class="k">let</span> <span class="n">ag</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">to_adjacency_graph</span> <span class="n">g</span> <span class="k">in</span>
+<span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="n">graphviz_string_of_graph</span> <span class="s2">&quot;digraph&quot;</span> <span class="s2">&quot; -&gt; &quot;</span>
+    <span class="n">string_of_int</span> <span class="n">eattrib</span> <span class="n">ag</span> <span class="k">in</span>
+<span class="n">write_string_to_file</span> <span class="n">out</span> <span class="n">s</span>
+</pre></div>
+</div>
+<p>For instance, for our working graph we get the following image, indicating two trees, rooted at nodes 0 and 2, correspondingly:</p>
+<a class="reference internal image-reference" href="_images/dfs.png"><img alt="_images/dfs.png" class="align-center" src="_images/dfs.png" style="width: 500px;" /></a>
+</div>
+<div class="section" id="dfs-and-reachability">
+<h2>DFS and Reachability<a class="headerlink" href="#dfs-and-reachability" title="Permalink to this headline">¶</a></h2>
+<p>Let us define the following procedure, checking the reachability via DFS:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">is_reachable_via_dfs</span> <span class="n">g</span> <span class="n">init</span> <span class="n">final</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">roots</span><span class="o">,</span> <span class="n">tree</span><span class="o">,</span> <span class="o">_,</span> <span class="o">_)</span> <span class="o">=</span> <span class="n">dfs</span> <span class="n">g</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">n</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">=</span> <span class="n">final</span> <span class="k">then</span> <span class="bp">true</span>
+    <span class="k">else</span>
+      <span class="n">get</span> <span class="n">tree</span> <span class="n">n</span> <span class="o">|&gt;</span>
+      <span class="nn">Week_01</span><span class="p">.</span><span class="n">get_exn</span> <span class="o">|&gt;</span>
+      <span class="nn">List</span><span class="p">.</span><span class="n">exists</span> <span class="o">(</span><span class="k">fun</span> <span class="n">v</span> <span class="o">-&gt;</span> <span class="n">walk</span> <span class="n">v</span><span class="o">)</span>
+  <span class="k">in</span>
+  <span class="k">if</span> <span class="nn">List</span><span class="p">.</span><span class="n">mem</span> <span class="n">init</span> <span class="n">roots</span>
+  <span class="k">then</span> <span class="n">walk</span> <span class="n">init</span>
+  <span class="k">else</span> <span class="bp">false</span>
+</pre></div>
+</div>
+<p><strong>Question:</strong> Is initial notion of reachability equivalent to DFS-reachability?</p>
+<p>The differences aside, we can still use it to teste DFS using the following observations:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">test_dfs</span> <span class="n">g</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">all_nodes</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">get_nodes</span> <span class="n">g</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">dfs_roots</span><span class="o">,</span> <span class="o">_,</span> <span class="o">_,</span> <span class="o">_)</span> <span class="o">=</span> <span class="nn">GraphDFS</span><span class="p">.</span><span class="n">dfs</span> <span class="n">g</span> <span class="k">in</span>
+
+  <span class="c">(* Any node DFS-reachable from a root r is reachable from r *)</span>
+  <span class="k">let</span> <span class="n">fact1</span> <span class="o">=</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="n">dfs_roots</span> <span class="o">~</span><span class="n">f</span><span class="o">:(</span><span class="k">fun</span> <span class="n">u</span> <span class="o">-&gt;</span>
+        <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="n">all_nodes</span> <span class="o">~</span><span class="n">f</span><span class="o">:(</span><span class="k">fun</span> <span class="n">v</span> <span class="o">-&gt;</span>
+            <span class="k">if</span> <span class="nn">GraphDFS</span><span class="p">.</span><span class="n">is_reachable_via_dfs</span> <span class="n">g</span> <span class="n">u</span> <span class="n">v</span>
+            <span class="k">then</span> <span class="n">is_reachable</span> <span class="n">g</span> <span class="n">u</span> <span class="n">v</span>
+            <span class="k">else</span> <span class="bp">true</span><span class="o">))</span>
+  <span class="k">in</span>
+
+  <span class="c">(* Any node is reachable from some root r *)</span>
+  <span class="k">let</span> <span class="n">fact2</span> <span class="o">=</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="n">all_nodes</span> <span class="o">~</span><span class="n">f</span><span class="o">:(</span><span class="k">fun</span> <span class="n">u</span> <span class="o">-&gt;</span>
+        <span class="nn">List</span><span class="p">.</span><span class="n">exists</span> <span class="n">dfs_roots</span>
+          <span class="o">~</span><span class="n">f</span><span class="o">:(</span><span class="k">fun</span> <span class="n">r</span> <span class="o">-&gt;</span> <span class="nn">GraphDFS</span><span class="p">.</span><span class="n">is_reachable_via_dfs</span> <span class="n">g</span> <span class="n">r</span> <span class="n">u</span><span class="o">))</span> <span class="k">in</span>
+
+  <span class="n">fact1</span> <span class="o">&amp;&amp;</span> <span class="n">fact2</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dfs-an-cycle-detection">
+<h2>DFS an Cycle Detection<a class="headerlink" href="#dfs-an-cycle-detection" title="Permalink to this headline">¶</a></h2>
+<p>As a byproduct, our DFS has detected if a given graph has a cycle in it. We can now test it as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="o">_</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">g</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">parse_linked_int_graph</span> <span class="n">small_graph_shape</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="o">(_,</span> <span class="o">_,</span> <span class="o">_,</span> <span class="n">c</span><span class="o">)</span> <span class="o">=</span> <span class="nn">GraphDFS</span><span class="p">.</span><span class="n">dfs</span> <span class="n">g</span> <span class="k">in</span>
+  <span class="n">c</span>
+
+<span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="o">_</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">g</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">parse_linked_int_graph</span> <span class="n">medium_graph_shape</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="o">(_,</span> <span class="o">_,</span> <span class="o">_,</span> <span class="n">c</span><span class="o">)</span> <span class="o">=</span> <span class="nn">GraphDFS</span><span class="p">.</span><span class="n">dfs</span> <span class="n">g</span> <span class="k">in</span>
+  <span class="n">not</span> <span class="n">c</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="topological-sort">
+<h2>Topological Sort<a class="headerlink" href="#topological-sort" title="Permalink to this headline">¶</a></h2>
+<p>Assume our graph has no cycles (i.e., it is a so-called <em>Directed Acyclic Graph</em>, or <em>DAG</em>). In this case it is possible to enumerate its nodes (i.e., put them to an ordered list) in a way that all edges will be going from nodes “left-to-right”. This operation is called <em>Topological Sort</em> and is very useful for processing dependencies in an order, implicitly imposed by a graph.</p>
+<p>As an example of Topological Sort, you can think of compiling multiple OCaml files. Dependencies between files introduce a DAG (as there are no cycles), but the compiler need to process them in an order so that the dependant files would be compiled after their dependencies. This is where Topological Sort comes to the rescue.</p>
+<p>Another (somewhat more lively) example is a professor who dresses every morning, having the following dependencies between his clothes to put on:</p>
+<a class="reference internal image-reference" href="_images/clothes.png"><img alt="_images/clothes.png" class="align-center" src="_images/clothes.png" style="width: 600px;" /></a>
+<p>The graph of those dependencies can be encoded as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">clothes_graph</span> <span class="o">=</span> <span class="o">[</span>
+  <span class="s2">&quot;9&quot;</span><span class="o">;</span>
+  <span class="s2">&quot;0 8&quot;</span><span class="o">;</span>
+  <span class="s2">&quot;0 2&quot;</span><span class="o">;</span>
+  <span class="s2">&quot;8 2&quot;</span><span class="o">;</span>
+  <span class="s2">&quot;8 1&quot;</span><span class="o">;</span>
+  <span class="s2">&quot;8 7&quot;</span><span class="o">;</span>
+  <span class="s2">&quot;3 7&quot;</span><span class="o">;</span>
+  <span class="s2">&quot;3 4&quot;</span><span class="o">;</span>
+  <span class="s2">&quot;4 5&quot;</span><span class="o">;</span>
+  <span class="s2">&quot;7 5&quot;</span><span class="o">;</span>
+  <span class="s2">&quot;6 2&quot;</span><span class="o">;</span>
+<span class="o">]</span>
+</pre></div>
+</div>
+<p>while the payloads (i.e., the items of clothes) are given by the following array:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">clothes</span> <span class="o">=</span>
+  <span class="o">[|</span>
+    <span class="s2">&quot;underpants&quot;</span><span class="o">;</span>
+    <span class="s2">&quot;phone&quot;</span><span class="o">;</span>
+    <span class="s2">&quot;shoes&quot;</span><span class="o">;</span>
+    <span class="s2">&quot;shirt&quot;</span><span class="o">;</span>
+    <span class="s2">&quot;tie&quot;</span><span class="o">;</span>
+    <span class="s2">&quot;jacket&quot;</span><span class="o">;</span>
+    <span class="s2">&quot;socks&quot;</span><span class="o">;</span>
+    <span class="s2">&quot;belt&quot;</span><span class="o">;</span>
+    <span class="s2">&quot;trousers&quot;</span><span class="o">;</span>
+  <span class="o">|]</span>
+</pre></div>
+</div>
+<p>The image is thus produced by the following procedure:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">graphviz_with_payload</span> <span class="n">g</span> <span class="n">values</span> <span class="n">out</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">eattrib</span> <span class="n">e</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">vattrib</span> <span class="n">n</span> <span class="o">=</span> <span class="n">values</span><span class="o">.(</span><span class="n">n</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">Week_10_ReadingFiles</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ag</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">to_adjacency_graph</span> <span class="n">g</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="n">graphviz_string_of_graph</span> <span class="s2">&quot;digraph&quot;</span> <span class="s2">&quot; -&gt; &quot;</span>
+      <span class="n">vattrib</span> <span class="n">eattrib</span> <span class="n">ag</span> <span class="k">in</span>
+  <span class="n">write_string_to_file</span> <span class="n">out</span> <span class="n">s</span>
+</pre></div>
+</div>
+<p>The procedure of the topological sort exploits the time-stamps recorded during DFS. The intuition is as follows: in the absence of cycles, the nodes with the later “exit” timestamp <code class="docutils literal notranslate"><span class="pre">u_out</span></code> are the “topological predecessors” of those with smaller timestamps, and, hence, the former should be put earlier in the list. Another way to think of it is that DFS introduces a “parenthesised structure”  on the subtrees of the graph, and the nodes up the tree have exit timestamps, corresponding to a parenthesis more “to the right”.</p>
+<p>The implementation of the topological sort, thus, simply sorts the nodes in the decreasing order of the exit timestamp:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">TopologicalSort</span> <span class="o">=</span> <span class="k">struct</span>
+
+  <span class="k">open</span> <span class="nc">Week_01</span>
+  <span class="k">open</span> <span class="nc">NodeTable</span>
+
+  <span class="k">let</span> <span class="n">get_last_time</span> <span class="n">m</span> <span class="n">n</span> <span class="o">=</span> <span class="n">get_exn</span> <span class="o">@@</span> <span class="n">get</span> <span class="n">m</span> <span class="n">n</span>
+
+  <span class="k">let</span> <span class="n">topo_sort</span> <span class="n">g</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="o">(_,</span> <span class="o">_,</span> <span class="n">time_map</span><span class="o">,</span> <span class="o">_)</span> <span class="o">=</span> <span class="nn">GraphDFS</span><span class="p">.</span><span class="n">dfs</span> <span class="n">g</span> <span class="k">in</span>
+    <span class="n">get_nodes</span> <span class="n">g</span> <span class="o">|&gt;</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">sort</span> <span class="o">(</span><span class="k">fun</span> <span class="n">n1</span> <span class="n">n2</span> <span class="o">-&gt;</span>
+        <span class="k">let</span> <span class="o">(_,</span> <span class="n">t1</span><span class="o">)</span> <span class="o">=</span> <span class="n">get_last_time</span> <span class="n">time_map</span> <span class="n">n1</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="o">(_,</span> <span class="n">t2</span><span class="o">)</span> <span class="o">=</span> <span class="n">get_last_time</span> <span class="n">time_map</span> <span class="n">n2</span> <span class="k">in</span>
+        <span class="k">if</span> <span class="n">t1</span> <span class="o">&lt;</span> <span class="n">t2</span> <span class="k">then</span> <span class="mi">1</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="n">t1</span> <span class="o">&gt;</span> <span class="n">t2</span> <span class="k">then</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">else</span> <span class="mi">0</span><span class="o">)</span>
+
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>For the graph of professor clothes, the topological sort returns the following sequence (which is coherent with the picture above):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">g</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">parse_linked_int_graph</span> <span class="n">clothes_graph</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">l</span> <span class="o">=</span> <span class="nn">TopologicalSort</span><span class="p">.</span><span class="n">topo_sort</span> <span class="n">g</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">i</span> <span class="o">-&gt;</span> <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&quot;%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="n">clothes</span><span class="o">.(</span><span class="n">i</span><span class="o">))</span> <span class="n">l</span><span class="o">;;</span>
+
+<span class="n">socks</span>
+<span class="n">shirt</span>
+<span class="n">tie</span>
+<span class="n">underpants</span>
+<span class="n">trousers</span>
+<span class="n">belt</span>
+<span class="n">jacket</span>
+<span class="n">phone</span>
+<span class="n">shoes</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-topological-sort">
+<h2>Testing Topological Sort<a class="headerlink" href="#testing-topological-sort" title="Permalink to this headline">¶</a></h2>
+<p>A simple property to check of a topological sort is that for all subsequently positioned nodes <code class="docutils literal notranslate"><span class="pre">(u,</span> <span class="pre">v)</span></code> in its result, the node <code class="docutils literal notranslate"><span class="pre">u</span></code> is not reachable from <code class="docutils literal notranslate"><span class="pre">v</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">all_pairs</span> <span class="n">ls</span> <span class="o">=</span> <span class="k">match</span> <span class="n">ls</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="bp">[]</span>
+  <span class="o">|</span> <span class="o">_</span> <span class="o">::</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="bp">[]</span>
+  <span class="o">|</span> <span class="n">h1</span> <span class="o">::</span> <span class="n">h2</span> <span class="o">::</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="n">h1</span><span class="o">,</span> <span class="n">h2</span><span class="o">)</span> <span class="o">::</span> <span class="o">(</span><span class="n">all_pairs</span> <span class="o">(</span><span class="n">h2</span> <span class="o">::</span> <span class="n">t</span><span class="o">))</span>
+
+<span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="o">_</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">g</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">parse_linked_int_graph</span> <span class="n">medium_graph_shape</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">pairs</span> <span class="o">=</span> <span class="nn">TopologicalSort</span><span class="p">.</span><span class="n">topo_sort</span> <span class="n">g</span> <span class="o">|&gt;</span> <span class="n">all_pairs</span> <span class="k">in</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="n">pairs</span> <span class="o">~</span><span class="n">f</span><span class="o">:(</span><span class="k">fun</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">not</span> <span class="o">(</span><span class="n">is_reachable</span> <span class="n">g</span> <span class="n">d</span> <span class="n">s</span><span class="o">))</span>
+
+<span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="o">_</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">g</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">parse_linked_int_graph</span> <span class="n">clothes_graph</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">pairs</span> <span class="o">=</span> <span class="nn">TopologicalSort</span><span class="p">.</span><span class="n">topo_sort</span> <span class="n">g</span> <span class="o">|&gt;</span> <span class="n">all_pairs</span> <span class="k">in</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="n">pairs</span> <span class="o">~</span><span class="n">f</span><span class="o">:(</span><span class="k">fun</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">not</span> <span class="o">(</span><span class="n">is_reachable</span> <span class="n">g</span> <span class="n">d</span> <span class="n">s</span><span class="o">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
