@@ -13,11 +13,11 @@ A graph is commonly represented in mathematics by a pair :math:`G = (V, E)`, whe
 
 As some graph exampes, :math:`V` and :math:`E` can represent correspondingly:
 
-* cities and roads between them
-* routers in the networks and connections between them
-* statements in a program and a control-flow transitions
-* control states of a machine and transitions between them
-* etc.
+* Cities and roads between them
+* Routers in the networks and connections between them
+* Statements in a program and a control-flow transitions
+* Control states of a machine and transitions between them
+* "Friendship" relations between users of a social network
 
 It is commont to think of :math:`V` to be represented by a segment :math:`\{0 ... (n - 1)\}` of natural numbers for some :math:`n` (so that :math:`n` is the size of the set of vertices). However, if the nodes carry additional meaning (e.g., the name of the city), one can define their payload as a function :math:`\{0 ... (n - 1)\} \rightarrow P` for some set of payload values :math:`P`. Edges can be also given labels in a similar way by defining a function :math:`E \rightarrow L` for some label set :math:`L`.
 
