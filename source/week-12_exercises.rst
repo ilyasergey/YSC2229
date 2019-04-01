@@ -52,14 +52,9 @@ Here are some ideas on what you can try:
 
 * Use BFS-like traversal to associate the "level" with each node.
 
-* Consider keeping a structure with counters for each level to keep track
-  of the "missing" left/right children, so they could be renderred as
-  white spaces.
+* Consider keeping a structure with counters for each level to keep track of the "missing" left/right children, so they could be renderred as white spaces.
 
-* You might want to compute the expected number of leaves at the
-  bottom level (which depends on the height of the tree) to calculate
-  the initial offset and the spacing between nodes at each of the
-  higher levels.
+* You might want to compute the expected number of leaves at the bottom level (which depends on the height of the tree) to calculate the initial offset and the spacing between nodes at each of the higher levels.
 
 As a bonus (for additional points), try to generalise your printing algorithm for arbitrary strings produced from the values stored in the nodes.
 
@@ -115,7 +110,7 @@ Following Depth-First Search for a graph as an example, implement a procedure ``
 * a hash-map, representing the children of a node in a tree (similar to DFS)
 * a hash map that for each node ``u`` returnds an integer "distance" ``d``, corresponding to the length of the path to ``u`` from the root of the tree that it is in.
 
-In your implementation, make use of the queue structure, as well as the idea of White-Gray-Black coloring of a node. Design and implement tests for ``bfs`` (preferrably using randomly generated graphs).
+In your implementation, make use of the queue structure, as well as the idea of White-Gray-Black coloring of a node. Design and implement tests for ``bfs`` (preferrably using randomly generated graphs). Explain the relation between the colouring scheme and the behaviour of the traversal in your report.
 
 Which properties ``dfs`` and ``bfs`` have in common? Please, reflect them in your tests.
 
