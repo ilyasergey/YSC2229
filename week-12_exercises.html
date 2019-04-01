@@ -98,6 +98,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#exercise-1">12.3.3. Exercise 1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#exercise-2">12.3.4. Exercise 2</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#exercise-3">12.3.5. Exercise 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-4">12.3.6. Exercise 4</a></li>
 </ul>
 </li>
 </ul>
@@ -177,6 +178,8 @@ Finding a predecessor in a BST</li>
 Fun with BST rotations</li>
 <li><a class="reference internal" href="#exercise-tree-print"><span class="std std-ref">Exercise 2</span></a>
 Natural printing of a tree of single digits</li>
+<li><a class="reference internal" href="#exercise-graph-transpose"><span class="std std-ref">Exercise 4</span></a>
+Transposing a graph</li>
 </ul>
 </div>
 <div class="section" id="recommended-exercises">
@@ -238,6 +241,10 @@ Natural printing of a tree of single digits</li>
 <li>Implement a randomised testing procedure for both <code class="docutils literal notranslate"><span class="pre">left-rotate</span></code> and <code class="docutils literal notranslate"><span class="pre">right-rotate</span></code> and check its effect on the tree, as in the examples from the lecture.</li>
 <li>Implement a randomized test that picks two nodes, subject to <code class="docutils literal notranslate"><span class="pre">left-rotate</span></code> and <code class="docutils literal notranslate"><span class="pre">right-rotate</span></code>, and demonstrates that composing <code class="docutils literal notranslate"><span class="pre">left-rotate</span></code> with <code class="docutils literal notranslate"><span class="pre">right-rotate</span></code> (as well as <code class="docutils literal notranslate"><span class="pre">right-rotate</span></code> and <code class="docutils literal notranslate"><span class="pre">left-rotate</span></code>) with the corresponding arguments does not change the initial tree. To assess this, you might need to implement a procedure for copying a tree first.</li>
 </ul>
+</div>
+<div class="section" id="exercise-4">
+<span id="exercise-graph-transpose"></span><h2>12.3.6. Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>transpose</strong> of a directed graph <span class="math notranslate nohighlight">\(G = (V, E)\)</span> is the graph <span class="math notranslate nohighlight">\(G^T = (V, E^T)\)</span>, where <span class="math notranslate nohighlight">\(E^T = \{(v, u) \in V \times V: (u, v) \in E\}\)</span>. Thus, <span class="math notranslate nohighlight">\(G^T\)</span> is <span class="math notranslate nohighlight">\(G\)</span> with all its edges reversed. Implement (efficient) procedures for computing <span class="math notranslate nohighlight">\(G^T\)</span> from <span class="math notranslate nohighlight">\(G\)</span> for mod the adjacency-list and linked representations of <span class="math notranslate nohighlight">\(G\)</span>. Analysed their complexity in terms of size of <span class="math notranslate nohighlight">\(G.V\)</span> and <span class="math notranslate nohighlight">\(G.E\)</span>. Implement automated tests for them.</p>
 </div>
 </div>
 

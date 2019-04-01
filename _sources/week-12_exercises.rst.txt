@@ -17,6 +17,9 @@ Mandatory exercises
 * :ref:`exercise-tree-print`
   Natural printing of a tree of single digits
 
+* :ref:`exercise-graph-transpose`
+  Transposing a graph  
+
 Recommended exercises
 ---------------------
 
@@ -92,3 +95,10 @@ As a part of your homework assignment:
 * Implement ``right-rotate`` and demonstrate how it works on simple examples.
 * Implement a randomised testing procedure for both ``left-rotate`` and ``right-rotate`` and check its effect on the tree, as in the examples from the lecture.
 * Implement a randomized test that picks two nodes, subject to ``left-rotate`` and ``right-rotate``, and demonstrates that composing ``left-rotate`` with ``right-rotate`` (as well as ``right-rotate`` and ``left-rotate``) with the corresponding arguments does not change the initial tree. To assess this, you might need to implement a procedure for copying a tree first.
+
+.. _exercise-graph-transpose:
+
+Exercise 4
+----------
+
+The **transpose** of a directed graph :math:`G = (V, E)` is the graph :math:`G^T = (V, E^T)`, where :math:`E^T = \{(v, u) \in V \times V: (u, v) \in E\}`. Thus, :math:`G^T` is :math:`G` with all its edges reversed. Implement (efficient) procedures for computing :math:`G^T` from :math:`G` for mod the adjacency-list and linked representations of :math:`G`. Analysed their complexity in terms of size of :math:`G.V` and :math:`G.E`. Implement automated tests for them.
