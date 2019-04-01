@@ -103,7 +103,7 @@ The defined above ``mk_tree`` function creates an empty tree. Let us now impleme
       then (t.size := !(t.size) + 1; true)
       else false
 
-Notice that the main working routine ``insert_element`` is respectful with respect to the BST property defined above: it positions the node ``m`` with the element ``e``, so it would be in the right subtree (smaller-left/greater-right) with respect to its parent nodes.  Finally, ``insert_element`` returns a boolean to indicate whether the element has been indeed added (``true``) or ignored as duplicated (``false``). In the former case the size of the tree is increased, in the latter it remains the same.
+Notice that the main working routine ``insert_element`` is careful with respect to the BST property defined above: it positions the node ``m`` with the element ``e``, so it would be in the right subtree (smaller-left/greater-right) with respect to its parent nodes.  Finally, ``insert_element`` returns a boolean to indicate whether the element has been indeed added (``true``) or ignored as duplicated (``false``). In the former case the size of the tree is increased, in the latter it remains the same.
 
 Binary-Search-Tree Invariant
 ----------------------------
