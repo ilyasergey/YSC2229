@@ -79,6 +79,8 @@ That is, via left rotation, :math:`y` becomes a parent of :math:`x` and vice ver
        then (get_exn @@ left y).parent := Some x);
 
       (* link x's parent to y *)
+      y.parent := parent x;
+  
       (if parent x = None 
        then t.root := Some y
       else if Some x = left (get_exn @@ parent x) 
