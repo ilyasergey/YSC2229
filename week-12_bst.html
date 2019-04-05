@@ -572,6 +572,7 @@
 <p>Specifically, in the last case we first transplant <code class="docutils literal notranslate"><span class="pre">y</span></code> and its right child <code class="docutils literal notranslate"><span class="pre">x</span></code> and then make <code class="docutils literal notranslate"><span class="pre">r</span></code>, the former right child of <code class="docutils literal notranslate"><span class="pre">z</span></code> to be the right child of <code class="docutils literal notranslate"><span class="pre">y</span></code>. After that we simply transplant <code class="docutils literal notranslate"><span class="pre">y</span></code> to the place of <code class="docutils literal notranslate"><span class="pre">z</span></code>.</p>
 <p>The full code of deletion is as follows:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">delete_node</span> <span class="n">t</span> <span class="n">z</span> <span class="o">=</span>
+  <span class="n">t</span><span class="o">.</span><span class="n">size</span> <span class="o">:=</span> <span class="o">!(</span><span class="n">t</span><span class="o">.</span><span class="n">size</span><span class="o">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
   <span class="k">if</span> <span class="n">left</span> <span class="n">z</span> <span class="o">=</span> <span class="nc">None</span>
   <span class="k">then</span> <span class="n">transplant</span> <span class="n">t</span> <span class="n">z</span> <span class="o">(</span><span class="n">right</span> <span class="n">z</span><span class="o">)</span>
   <span class="k">else</span> <span class="k">if</span> <span class="n">right</span> <span class="n">z</span> <span class="o">=</span> <span class="nc">None</span>
@@ -582,7 +583,8 @@
     <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="n">find_min_node</span> <span class="n">z_right_child</span> <span class="k">in</span>
     <span class="c">(* Fact: `y` has no left child *)</span>
 
-    <span class="o">(</span><span class="k">if</span> <span class="n">parent</span> <span class="n">y</span> <span class="o">&lt;&gt;</span> <span class="nc">Some</span> <span class="n">z</span>
+    <span class="o">(</span><span class="k">if</span> <span class="n">parent</span> <span class="n">y</span> <span class="o">&lt;&gt;</span> <span class="nc">None</span> <span class="o">&amp;&amp;</span>
+        <span class="n">z</span> <span class="o">!=</span> <span class="n">get_exn</span> <span class="o">@@</span> <span class="n">parent</span> <span class="n">y</span>
      <span class="k">then</span>
     <span class="c">(*  If y is not immediately under z,</span>
 <span class="c">        replace y by its right subtree *)</span>
