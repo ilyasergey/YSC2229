@@ -68,25 +68,25 @@ In a BST, *left and right rotations* exchange the node with its right/left child
 
 That is, via left rotation, :math:`y` becomes a parent of :math:`x` and vice versa. The implementation of left rotation of a node :math:`x` in a tree :math:`T` is given below::
 
-  let left_rotate t x = 
+  let left_rotate t x =
     match right x with
     | None -> ()
     | Some y ->
-
+      
       (* turn y's left subtree into x's right subtree *)
       x.right := left y;
       (if left y <> None
        then (get_exn @@ left y).parent := Some x);
-
+      
       (* link x's parent to y *)
       y.parent := parent x;
-  
-      (if parent x = None 
+      
+      (if parent x = None
        then t.root := Some y
-      else if Some x = left (get_exn @@ parent x) 
-      then (get_exn @@ parent x).left := Some y
-      else (get_exn @@ parent x).right := Some y);
-
+       else if x == get_exn @@ left (get_exn @@ parent x)
+       then (get_exn @@ parent x).left := Some y
+       else (get_exn @@ parent x).right := Some y);
+      
       (* Make x the left child of y *)
       y.left := Some x;
       x.parent := Some y
