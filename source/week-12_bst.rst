@@ -437,6 +437,7 @@ Specifically, in the last case we first transplant ``y`` and its right child ``x
 The full code of deletion is as follows::
 
   let delete_node t z = 
+    t.size := !(t.size) - 1;
     if left z = None
     then transplant t z (right z)
     else if right z = None
@@ -447,7 +448,8 @@ The full code of deletion is as follows::
       let y = find_min_node z_right_child in
       (* Fact: `y` has no left child *)
 
-      (if parent y <> Some z
+      (if parent y <> None &&
+          z != get_exn @@ parent y
        then 
       (*  If y is not immediately under z,
           replace y by its right subtree *)
