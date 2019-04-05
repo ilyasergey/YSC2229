@@ -225,28 +225,6 @@ Transposing a graph</li>
     <span class="c">(* link x&#39;s parent to y *)</span>
     <span class="n">y</span><span class="o">.</span><span class="n">parent</span> <span class="o">:=</span> <span class="n">parent</span> <span class="n">x</span><span class="o">;</span>
 
-    <span class="o">(</span><span class="k">if</span> <span class="n">parent</span> <span class="n">x</span> <span class="o">=</span> <span class="nc">None</span>
-     <span class="k">then</span> <span class="n">t</span><span class="o">.</span><span class="n">root</span> <span class="o">:=</span> <span class="nc">Some</span> <span class="n">y</span>
-     <span class="k">else</span> <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="n">get_exn</span> <span class="o">@@</span> <span class="n">left</span> <span class="o">(</span><span class="n">get_exn</span> <span class="o">@@</span> <span class="n">parent</span> <span class="n">x</span><span class="o">)</span>
-     <span class="k">then</span> <span class="o">(</span><span class="n">get_exn</span> <span class="o">@@</span> <span class="n">parent</span> <span class="n">x</span><span class="o">).</span><span class="n">left</span> <span class="o">:=</span> <span class="nc">Some</span> <span class="n">y</span>
-     <span class="k">else</span> <span class="o">(</span><span class="n">get_exn</span> <span class="o">@@</span> <span class="n">parent</span> <span class="n">x</span><span class="o">).</span><span class="n">right</span> <span class="o">:=</span> <span class="nc">Some</span> <span class="n">y</span><span class="o">);</span>
-
-    <span class="c">(* Make x the left child of y *)</span>
-    <span class="n">y</span><span class="o">.</span><span class="n">left</span> <span class="o">:=</span> <span class="nc">Some</span> <span class="n">x</span><span class="o">;</span>
-    <span class="n">x</span><span class="o">.</span><span class="n">parent</span> <span class="o">:=</span> <span class="nc">Some</span> <span class="n">y</span>
-<span class="k">let</span> <span class="n">left_rotate</span> <span class="n">t</span> <span class="n">x</span> <span class="o">=</span>
-  <span class="k">match</span> <span class="n">right</span> <span class="n">x</span> <span class="k">with</span>
-  <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="bp">()</span>
-  <span class="o">|</span> <span class="nc">Some</span> <span class="n">y</span> <span class="o">-&gt;</span>
-
-    <span class="c">(* turn y&#39;s left subtree into x&#39;s right subtree *)</span>
-    <span class="n">x</span><span class="o">.</span><span class="n">right</span> <span class="o">:=</span> <span class="n">left</span> <span class="n">y</span><span class="o">;</span>
-    <span class="o">(</span><span class="k">if</span> <span class="n">left</span> <span class="n">y</span> <span class="o">&lt;&gt;</span> <span class="nc">None</span>
-     <span class="k">then</span> <span class="o">(</span><span class="n">get_exn</span> <span class="o">@@</span> <span class="n">left</span> <span class="n">y</span><span class="o">).</span><span class="n">parent</span> <span class="o">:=</span> <span class="nc">Some</span> <span class="n">x</span><span class="o">);</span>
-
-    <span class="c">(* link x&#39;s parent to y *)</span>
-    <span class="n">y</span><span class="o">.</span><span class="n">parent</span> <span class="o">:=</span> <span class="n">parent</span> <span class="n">x</span><span class="o">;</span>
-
     <span class="o">(</span><span class="k">match</span> <span class="n">parent</span> <span class="n">x</span> <span class="k">with</span>
      <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="n">root</span> <span class="o">:=</span> <span class="nc">Some</span> <span class="n">y</span>
      <span class="o">|</span> <span class="nc">Some</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="k">match</span> <span class="n">left</span> <span class="n">p</span> <span class="k">with</span>
