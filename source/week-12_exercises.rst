@@ -90,6 +90,30 @@ That is, via left rotation, :math:`y` becomes a parent of :math:`x` and vice ver
       (* Make x the left child of y *)
       y.left := Some x;
       x.parent := Some y
+  let left_rotate t x =
+    match right x with
+    | None -> ()
+    | Some y ->
+      
+      (* turn y's left subtree into x's right subtree *)
+      x.right := left y;
+      (if left y <> None
+       then (get_exn @@ left y).parent := Some x);
+      
+      (* link x's parent to y *)
+      y.parent := parent x;
+
+      (match parent x with 
+       | None -> t.root := Some y
+       | Some p -> match left p with
+         | Some l when x == l ->
+           p.left := Some y
+         | _ ->
+           p.right := Some y);
+            
+      (* Make x the left child of y *)
+      y.left := Some x;
+      x.parent := Some y      
 
 As a part of your homework assignment:
 
