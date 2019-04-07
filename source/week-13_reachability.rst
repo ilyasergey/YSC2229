@@ -275,20 +275,19 @@ Another (somewhat more lively) example is a professor who dresses every morning,
    :width: 600px
    :align: center
 
-The graph of those dependencies can be encoded as follows::
+The graph with those dependencies can be encoded as follows::
   
- let clothes_graph = [
-   "9";
-   "0 8";
-   "0 2";
-   "8 2";
-   "8 1";
-   "8 7";
-   "3 7";
-   "3 4";
-   "4 5";
-   "7 5";
-   "6 2";
+ let clothes_edges = [
+   (0, 8);
+   (0, 2);
+   (8, 2);
+   (8, 1);
+   (8, 7);
+   (3, 7);
+   (3, 4);
+   (4, 5);
+   (7, 5);
+   (6, 2);
  ]
 
 while the payloads (i.e., the items of clothes) are given by the following array::
@@ -306,7 +305,24 @@ while the payloads (i.e., the items of clothes) are given by the following array
      "trousers";
    |]
 
-The image is thus produced by the following procedure::
+We can now instantiate the linked-structure-based graph via the following function::
+
+ let read_graph_and_payloads size nvalue elist elabels = 
+   let open AdjacencyGraphs in 
+   let g = mk_graph size in
+   for i = 0 to g.size - 1 do
+     set_payload g i nvalue.(i) 
+   done;  
+   List.iter (fun (s, d) -> add_edge g s d) elist;
+   List.iter (fun (s, d, l) -> set_edge_label g s d l) elabels;
+   LinkedGraphs.from_simple_adjacency_graph g
+
+
+ let clothes_graph = 
+   read_graph_and_payloads 9 clothes clothes_edges 
+     ([] : (int * int * unit) list)
+
+The image can produced by the following procedure::
 
  let graphviz_with_payload g values out = 
    let eattrib e = "" in
@@ -343,8 +359,7 @@ The implementation of the topological sort, thus, simply sorts the nodes in the 
 
 For the graph of professor clothes, the topological sort returns the following sequence (which is coherent with the picture above)::
 
- utop # let g = LinkedGraphs.parse_linked_int_graph clothes_graph;;
- utop # let l = TopologicalSort.topo_sort g;;
+ utop # let l = TopologicalSort.topo_sort clothes_graph;;
  utop # List.iter (fun i -> Printf.printf "%s\n" clothes.(i)) l;;
 
  socks
@@ -374,6 +389,6 @@ A simple property to check of a topological sort is that for all subsequently po
    List.for_all pairs ~f:(fun (s, d) -> not (is_reachable g d s))
 
  let%test _ =  
-   let g = LinkedGraphs.parse_linked_int_graph clothes_graph in
+   let g = clothes_graph in
    let pairs = TopologicalSort.topo_sort g |> all_pairs in
    List.for_all pairs ~f:(fun (s, d) -> not (is_reachable g d s))
