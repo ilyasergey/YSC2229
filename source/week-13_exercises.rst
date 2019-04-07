@@ -14,10 +14,16 @@ Mandatory exercises
 * :ref:`exercise-chess`
   Movements of a chess knight
 
+* TODO: Something with shortest paths
+
+* :ref:`exercise-testing-msp`
+  Testing minimal spanning trees
+
 Recommended exercises
 ---------------------
 
 None
+
 
 .. _exercise-graph-bfs:
 
@@ -46,3 +52,11 @@ Model an ``8x8`` chess board via a ``64``-node graph, where each node correspond
 * Encode and automatically populate this graph using the linked graph data structure from the lecture.
 * Using the graph encoding, implement a function ``knight_path g init final``, which, for given two positions on a board, initial and final, encoded as strings (e.g., ``a3`` and ``d8``), returns a path (represented a list of pairs of positions) for reaching the final position from the initial one.
 * Test your implementation using random queries.
+
+
+.. _exercise-testing-msp:
+
+Exercise 3
+----------
+
+Testing minimal spanning trees.
