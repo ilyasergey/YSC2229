@@ -5,7 +5,7 @@
 Reachability and Graph Traversals
 =================================
 
-https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_12_Reachability.ml
+https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_13_Reachability.ml
 
 Having the graphs defined, let us now do something interesting with them. In this chapter, we will be looking at the questions of *reachability* between nodes, as allowed by a given graph's topology. In all algorithms, we will be relying on the linked representation::
 

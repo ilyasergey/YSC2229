@@ -106,5 +106,5 @@ Exercise 5
 Implement a procedure that constructs random spanning trees (checking
 that those are indeed trees) of a connected weighted undirected graph
 (represented via a linked structure), and tests that the weights of
-those is not smaller than the one of an MSP, returned by Kruskal's
+those is not smaller than the one of an MST, returned by Kruskal's
 algorithm.
