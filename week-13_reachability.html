@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Reachability and Graph Traversals &mdash; YSC2229 2019</title>
+  <title>13.1. Reachability and Graph Traversals &mdash; YSC2229 2019</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="13.2. Single-Source Shortest Paths" href="week-13_paths.html" />
+    <link rel="prev" title="13. YSC2229 Lecture Notes, Week 13" href="YSC2229-lecture-notes-week-13.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,7 +78,7 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
@@ -89,6 +91,23 @@
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-11.html">11. YSC2229 Lecture Notes, Week 11</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-12.html">12. YSC2229 Lecture Notes, Week 12</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-13.html">13. YSC2229 Lecture Notes, Week 13</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">13.1. Reachability and Graph Traversals</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#checking-reachability-in-a-graph">13.1.1. Checking Reachability in a Graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-reachability">13.1.2. Testing Reachability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rendering-paths-in-a-graph">13.1.3. Rendering Paths in a Graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#depth-first-traversal">13.1.4. Depth-First Traversal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dfs-and-reachability">13.1.5. DFS and Reachability</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dfs-and-cycle-detection">13.1.6. DFS and Cycle Detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#topological-sort">13.1.7. Topological Sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-topological-sort">13.1.8. Testing Topological Sort</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_paths.html">13.2. Single-Source Shortest Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_spanning.html">13.3. Minimal Spanning Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_exercises.html">13.4. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -134,7 +153,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Reachability and Graph Traversals</li>
+          <li><a href="YSC2229-lecture-notes-week-13.html">13. YSC2229 Lecture Notes, Week 13</a> &raquo;</li>
+        
+      <li>13.1. Reachability and Graph Traversals</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -152,15 +173,15 @@
            <div itemprop="articleBody">
             
   <div class="section" id="reachability-and-graph-traversals">
-<span id="reachability"></span><h1>Reachability and Graph Traversals<a class="headerlink" href="#reachability-and-graph-traversals" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_12_Reachability.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_12_Reachability.ml</a></p>
+<span id="reachability"></span><h1>13.1. Reachability and Graph Traversals<a class="headerlink" href="#reachability-and-graph-traversals" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_13_Reachability.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_13_Reachability.ml</a></p>
 <p>Having the graphs defined, let us now do something interesting with them. In this chapter, we will be looking at the questions of <em>reachability</em> between nodes, as allowed by a given graph’s topology. In all algorithms, we will be relying on the linked representation:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">Week_12_Graphs</span>
 <span class="k">open</span> <span class="nc">LinkedGraphs</span>
 </pre></div>
 </div>
 <div class="section" id="checking-reachability-in-a-graph">
-<h2>Checking Reachability in a Graph<a class="headerlink" href="#checking-reachability-in-a-graph" title="Permalink to this headline">¶</a></h2>
+<h2>13.1.1. Checking Reachability in a Graph<a class="headerlink" href="#checking-reachability-in-a-graph" title="Permalink to this headline">¶</a></h2>
 <p>Given a graph <code class="docutils literal notranslate"><span class="pre">g</span></code> and two its nodes <code class="docutils literal notranslate"><span class="pre">init</span></code> and <code class="docutils literal notranslate"><span class="pre">final</span></code>, let us define a procedure that determines whether we can get from <code class="docutils literal notranslate"><span class="pre">init</span></code> to <code class="docutils literal notranslate"><span class="pre">final</span></code> by following the edges of <code class="docutils literal notranslate"><span class="pre">g</span></code>, and if so, return the list of those edges:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">reachable</span> <span class="n">g</span> <span class="n">init</span> <span class="n">final</span> <span class="o">=</span>
   <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">path</span> <span class="n">visited</span> <span class="n">n</span> <span class="o">=</span>
@@ -197,7 +218,7 @@
 </div>
 </div>
 <div class="section" id="testing-reachability">
-<h2>Testing Reachability<a class="headerlink" href="#testing-reachability" title="Permalink to this headline">¶</a></h2>
+<h2>13.1.2. Testing Reachability<a class="headerlink" href="#testing-reachability" title="Permalink to this headline">¶</a></h2>
 <p>The following are the tests for the specific two graphs we have seen, designed with a human intuition in mind:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">Week_12_Reachability</span>
 
@@ -227,7 +248,7 @@
 </div>
 </div>
 <div class="section" id="rendering-paths-in-a-graph">
-<h2>Rendering Paths in a Graph<a class="headerlink" href="#rendering-paths-in-a-graph" title="Permalink to this headline">¶</a></h2>
+<h2>13.1.3. Rendering Paths in a Graph<a class="headerlink" href="#rendering-paths-in-a-graph" title="Permalink to this headline">¶</a></h2>
 <p>We can use the same machinery for interactive with GraphViz to highlight the reachable paths in a graph:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">bold_edge</span> <span class="o">=</span> <span class="s2">&quot;[color=red,penwidth=3.0]&quot;</span>
 
@@ -251,7 +272,7 @@
 <a class="reference internal image-reference" href="_images/path1.png"><img alt="_images/path1.png" class="align-center" src="_images/path1.png" style="width: 500px;" /></a>
 </div>
 <div class="section" id="depth-first-traversal">
-<h2>Depth-First Traversal<a class="headerlink" href="#depth-first-traversal" title="Permalink to this headline">¶</a></h2>
+<h2>13.1.4. Depth-First Traversal<a class="headerlink" href="#depth-first-traversal" title="Permalink to this headline">¶</a></h2>
 <p>It is possible to split graph into a set of trees with dedicated roots, so that each subtree is reachable from its root. One way to do it is using the Depth-First Search (DFS) procedure.</p>
 <p>The procedure is similar to reachability checking implemented above, but employs a more efficient way to detect cycles via the “colouring” technique. In essence, it maintains an additional hash table, assigning the colors as attributes to the nodes, to indicate whether the have not yet, are inte processed, or have been fully processed:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">NodeTable</span>
@@ -334,7 +355,7 @@
 <a class="reference internal image-reference" href="_images/dfs.png"><img alt="_images/dfs.png" class="align-center" src="_images/dfs.png" style="width: 500px;" /></a>
 </div>
 <div class="section" id="dfs-and-reachability">
-<h2>DFS and Reachability<a class="headerlink" href="#dfs-and-reachability" title="Permalink to this headline">¶</a></h2>
+<h2>13.1.5. DFS and Reachability<a class="headerlink" href="#dfs-and-reachability" title="Permalink to this headline">¶</a></h2>
 <p>Let us define the following procedure, checking the reachability via DFS:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">is_reachable_via_dfs</span> <span class="n">g</span> <span class="n">init</span> <span class="n">final</span> <span class="o">=</span>
   <span class="k">let</span> <span class="o">(</span><span class="n">roots</span><span class="o">,</span> <span class="n">tree</span><span class="o">,</span> <span class="o">_,</span> <span class="o">_)</span> <span class="o">=</span> <span class="n">dfs</span> <span class="n">g</span> <span class="k">in</span>
@@ -375,8 +396,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="dfs-an-cycle-detection">
-<h2>DFS an Cycle Detection<a class="headerlink" href="#dfs-an-cycle-detection" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="dfs-and-cycle-detection">
+<h2>13.1.6. DFS and Cycle Detection<a class="headerlink" href="#dfs-and-cycle-detection" title="Permalink to this headline">¶</a></h2>
 <p>As a byproduct, our DFS has detected if a given graph has a cycle in it. We can now test it as follows:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="o">_</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">g</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">parse_linked_int_graph</span> <span class="n">small_graph_shape</span> <span class="k">in</span>
@@ -391,24 +412,23 @@
 </div>
 </div>
 <div class="section" id="topological-sort">
-<h2>Topological Sort<a class="headerlink" href="#topological-sort" title="Permalink to this headline">¶</a></h2>
+<h2>13.1.7. Topological Sort<a class="headerlink" href="#topological-sort" title="Permalink to this headline">¶</a></h2>
 <p>Assume our graph has no cycles (i.e., it is a so-called <em>Directed Acyclic Graph</em>, or <em>DAG</em>). In this case it is possible to enumerate its nodes (i.e., put them to an ordered list) in a way that all edges will be going from nodes “left-to-right”. This operation is called <em>Topological Sort</em> and is very useful for processing dependencies in an order, implicitly imposed by a graph.</p>
 <p>As an example of Topological Sort, you can think of compiling multiple OCaml files. Dependencies between files introduce a DAG (as there are no cycles), but the compiler need to process them in an order so that the dependant files would be compiled after their dependencies. This is where Topological Sort comes to the rescue.</p>
 <p>Another (somewhat more lively) example is a professor who dresses every morning, having the following dependencies between his clothes to put on:</p>
 <a class="reference internal image-reference" href="_images/clothes.png"><img alt="_images/clothes.png" class="align-center" src="_images/clothes.png" style="width: 600px;" /></a>
-<p>The graph of those dependencies can be encoded as follows:</p>
-<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">clothes_graph</span> <span class="o">=</span> <span class="o">[</span>
-  <span class="s2">&quot;9&quot;</span><span class="o">;</span>
-  <span class="s2">&quot;0 8&quot;</span><span class="o">;</span>
-  <span class="s2">&quot;0 2&quot;</span><span class="o">;</span>
-  <span class="s2">&quot;8 2&quot;</span><span class="o">;</span>
-  <span class="s2">&quot;8 1&quot;</span><span class="o">;</span>
-  <span class="s2">&quot;8 7&quot;</span><span class="o">;</span>
-  <span class="s2">&quot;3 7&quot;</span><span class="o">;</span>
-  <span class="s2">&quot;3 4&quot;</span><span class="o">;</span>
-  <span class="s2">&quot;4 5&quot;</span><span class="o">;</span>
-  <span class="s2">&quot;7 5&quot;</span><span class="o">;</span>
-  <span class="s2">&quot;6 2&quot;</span><span class="o">;</span>
+<p>The graph with those dependencies can be encoded as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">clothes_edges</span> <span class="o">=</span> <span class="o">[</span>
+  <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">8</span><span class="o">);</span>
+  <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
+  <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
+  <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+  <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="mi">7</span><span class="o">);</span>
+  <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">7</span><span class="o">);</span>
+  <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span>
+  <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
+  <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span>
+  <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
 <span class="o">]</span>
 </pre></div>
 </div>
@@ -427,7 +447,24 @@
   <span class="o">|]</span>
 </pre></div>
 </div>
-<p>The image is thus produced by the following procedure:</p>
+<p>We can now instantiate the linked-structure-based graph via the following function:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">read_graph_and_payloads</span> <span class="n">size</span> <span class="n">nvalue</span> <span class="n">elist</span> <span class="n">elabels</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">AdjacencyGraphs</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">g</span> <span class="o">=</span> <span class="n">mk_graph</span> <span class="n">size</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">g</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="n">set_payload</span> <span class="n">g</span> <span class="n">i</span> <span class="n">nvalue</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">add_edge</span> <span class="n">g</span> <span class="n">s</span> <span class="n">d</span><span class="o">)</span> <span class="n">elist</span><span class="o">;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">d</span><span class="o">,</span> <span class="n">l</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">set_edge_label</span> <span class="n">g</span> <span class="n">s</span> <span class="n">d</span> <span class="n">l</span><span class="o">)</span> <span class="n">elabels</span><span class="o">;</span>
+  <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">from_simple_adjacency_graph</span> <span class="n">g</span>
+
+
+<span class="k">let</span> <span class="n">clothes_graph</span> <span class="o">=</span>
+  <span class="n">read_graph_and_payloads</span> <span class="mi">9</span> <span class="n">clothes</span> <span class="n">clothes_edges</span>
+    <span class="o">(</span><span class="bp">[]</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">int</span> <span class="o">*</span> <span class="kt">unit</span><span class="o">)</span> <span class="kt">list</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The image can produced by the following procedure:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">graphviz_with_payload</span> <span class="n">g</span> <span class="n">values</span> <span class="n">out</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">eattrib</span> <span class="n">e</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="k">in</span>
   <span class="k">let</span> <span class="n">vattrib</span> <span class="n">n</span> <span class="o">=</span> <span class="n">values</span><span class="o">.(</span><span class="n">n</span><span class="o">)</span> <span class="k">in</span>
@@ -461,8 +498,7 @@
 </pre></div>
 </div>
 <p>For the graph of professor clothes, the topological sort returns the following sequence (which is coherent with the picture above):</p>
-<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">g</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">parse_linked_int_graph</span> <span class="n">clothes_graph</span><span class="o">;;</span>
-<span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">l</span> <span class="o">=</span> <span class="nn">TopologicalSort</span><span class="p">.</span><span class="n">topo_sort</span> <span class="n">g</span><span class="o">;;</span>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">l</span> <span class="o">=</span> <span class="nn">TopologicalSort</span><span class="p">.</span><span class="n">topo_sort</span> <span class="n">clothes_graph</span><span class="o">;;</span>
 <span class="n">utop</span> <span class="o">#</span> <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">i</span> <span class="o">-&gt;</span> <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&quot;%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="n">clothes</span><span class="o">.(</span><span class="n">i</span><span class="o">))</span> <span class="n">l</span><span class="o">;;</span>
 
 <span class="n">socks</span>
@@ -478,7 +514,7 @@
 </div>
 </div>
 <div class="section" id="testing-topological-sort">
-<h2>Testing Topological Sort<a class="headerlink" href="#testing-topological-sort" title="Permalink to this headline">¶</a></h2>
+<h2>13.1.8. Testing Topological Sort<a class="headerlink" href="#testing-topological-sort" title="Permalink to this headline">¶</a></h2>
 <p>A simple property to check of a topological sort is that for all subsequently positioned nodes <code class="docutils literal notranslate"><span class="pre">(u,</span> <span class="pre">v)</span></code> in its result, the node <code class="docutils literal notranslate"><span class="pre">u</span></code> is not reachable from <code class="docutils literal notranslate"><span class="pre">v</span></code>:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">all_pairs</span> <span class="n">ls</span> <span class="o">=</span> <span class="k">match</span> <span class="n">ls</span> <span class="k">with</span>
   <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="bp">[]</span>
@@ -491,7 +527,7 @@
   <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="n">pairs</span> <span class="o">~</span><span class="n">f</span><span class="o">:(</span><span class="k">fun</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">not</span> <span class="o">(</span><span class="n">is_reachable</span> <span class="n">g</span> <span class="n">d</span> <span class="n">s</span><span class="o">))</span>
 
 <span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="o">_</span> <span class="o">=</span>
-  <span class="k">let</span> <span class="n">g</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">parse_linked_int_graph</span> <span class="n">clothes_graph</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">g</span> <span class="o">=</span> <span class="n">clothes_graph</span> <span class="k">in</span>
   <span class="k">let</span> <span class="n">pairs</span> <span class="o">=</span> <span class="nn">TopologicalSort</span><span class="p">.</span><span class="n">topo_sort</span> <span class="n">g</span> <span class="o">|&gt;</span> <span class="n">all_pairs</span> <span class="k">in</span>
   <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="n">pairs</span> <span class="o">~</span><span class="n">f</span><span class="o">:(</span><span class="k">fun</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">not</span> <span class="o">(</span><span class="n">is_reachable</span> <span class="n">g</span> <span class="n">d</span> <span class="n">s</span><span class="o">))</span>
 </pre></div>
@@ -504,6 +540,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-13_paths.html" class="btn btn-neutral float-right" title="13.2. Single-Source Shortest Paths" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="YSC2229-lecture-notes-week-13.html" class="btn btn-neutral" title="13. YSC2229 Lecture Notes, Week 13" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

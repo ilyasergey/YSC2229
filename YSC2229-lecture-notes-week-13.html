@@ -1,0 +1,281 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>13. YSC2229 Lecture Notes, Week 13 &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="13.1. Reachability and Graph Traversals" href="week-13_reachability.html" />
+    <link rel="prev" title="12.3. Exercises" href="week-12_exercises.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-11.html">11. YSC2229 Lecture Notes, Week 11</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-12.html">12. YSC2229 Lecture Notes, Week 12</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">13. YSC2229 Lecture Notes, Week 13</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-13_reachability.html">13.1. Reachability and Graph Traversals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_paths.html">13.2. Single-Source Shortest Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_spanning.html">13.3. Minimal Spanning Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_exercises.html">13.4. Exercises</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>13. YSC2229 Lecture Notes, Week 13</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ysc2229-lecture-notes-week-13">
+<h1>13. YSC2229 Lecture Notes, Week 13<a class="headerlink" href="#ysc2229-lecture-notes-week-13" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="week-13_reachability.html">13.1. Reachability and Graph Traversals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-13_reachability.html#checking-reachability-in-a-graph">13.1.1. Checking Reachability in a Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_reachability.html#testing-reachability">13.1.2. Testing Reachability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_reachability.html#rendering-paths-in-a-graph">13.1.3. Rendering Paths in a Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_reachability.html#depth-first-traversal">13.1.4. Depth-First Traversal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_reachability.html#dfs-and-reachability">13.1.5. DFS and Reachability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_reachability.html#dfs-and-cycle-detection">13.1.6. DFS and Cycle Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_reachability.html#topological-sort">13.1.7. Topological Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_reachability.html#testing-topological-sort">13.1.8. Testing Topological Sort</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-13_paths.html">13.2. Single-Source Shortest Paths</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-13_paths.html#weighted-graphs">13.2.1. Weighted Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_paths.html#some-properties-of-paths">13.2.2. Some Properties of Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_paths.html#representing-shortest-paths">13.2.3. Representing Shortest Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_paths.html#representing-distance">13.2.4. Representing Distance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_paths.html#initialisation-and-relaxation">13.2.5. Initialisation and Relaxation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_paths.html#bellman-ford-algorithm">13.2.6. Bellman-Ford Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_paths.html#rendering-minimal-paths">13.2.7. Rendering Minimal Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_paths.html#dijkstra-s-algorithm">13.2.8. Dijkstra’s Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_paths.html#testing-shortest-path-algorithms">13.2.9. Testing Shortest-Path Algorithms</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-13_spanning.html">13.3. Minimal Spanning Trees</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-13_spanning.html#representing-undirected-graphs">13.3.1. Representing Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_spanning.html#trees-in-undirected-connected-graphs">13.3.2. Trees in Undirected Connected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_spanning.html#id1">13.3.3. Minimal Spanning Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_spanning.html#kruskal-s-algorithm">13.3.4. Kruskal’s Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_spanning.html#testing-mst-construction">13.3.5. Testing MST Construction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_spanning.html#other-mst-algorithms">13.3.6. Other MST Algorithms</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-13_exercises.html">13.4. Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-13_exercises.html#mandatory-exercises">13.4.1. Mandatory exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_exercises.html#recommended-exercises">13.4.2. Recommended exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_exercises.html#exercise-1">13.4.3. Exercise 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_exercises.html#exercise-2">13.4.4. Exercise 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_exercises.html#exercise-3">13.4.5. Exercise 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_exercises.html#exercise-4">13.4.6. Exercise 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_exercises.html#exercise-5">13.4.7. Exercise 5</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p><strong>Supplementary materials</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_13_Reachability.ml">Reachability in Directed Graphs</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_13_Paths.ml">Single-Source Shortest Paths</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_13_Spanning.ml">Minimal Spanning Trees</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_13_Tests.ml">Automated Tests</a></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-13_reachability.html" class="btn btn-neutral float-right" title="13.1. Reachability and Graph Traversals" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-12_exercises.html" class="btn btn-neutral" title="12.3. Exercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

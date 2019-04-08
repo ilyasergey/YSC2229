@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Exercises &mdash; YSC2229 2019</title>
+  <title>13.4. Exercises &mdash; YSC2229 2019</title>
   
 
   
@@ -27,7 +27,8 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="13.3. Minimal Spanning Trees" href="week-13_spanning.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,7 +77,7 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
@@ -89,6 +90,22 @@
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-11.html">11. YSC2229 Lecture Notes, Week 11</a></li>
 <li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-12.html">12. YSC2229 Lecture Notes, Week 12</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-13.html">13. YSC2229 Lecture Notes, Week 13</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-13_reachability.html">13.1. Reachability and Graph Traversals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_paths.html">13.2. Single-Source Shortest Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_spanning.html">13.3. Minimal Spanning Trees</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">13.4. Exercises</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mandatory-exercises">13.4.1. Mandatory exercises</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#recommended-exercises">13.4.2. Recommended exercises</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-1">13.4.3. Exercise 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-2">13.4.4. Exercise 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-3">13.4.5. Exercise 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-4">13.4.6. Exercise 4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-5">13.4.7. Exercise 5</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
             
@@ -134,7 +151,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Exercises</li>
+          <li><a href="YSC2229-lecture-notes-week-13.html">13. YSC2229 Lecture Notes, Week 13</a> &raquo;</li>
+        
+      <li>13.4. Exercises</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -152,40 +171,92 @@
            <div itemprop="articleBody">
             
   <div class="section" id="exercises">
-<span id="exercises-13"></span><h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
+<span id="exercises-13"></span><h1>13.4. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="mandatory-exercises">
-<h2>Mandatory exercises<a class="headerlink" href="#mandatory-exercises" title="Permalink to this headline">¶</a></h2>
+<h2>13.4.1. Mandatory exercises<a class="headerlink" href="#mandatory-exercises" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference internal" href="#exercise-graph-bfs"><span class="std std-ref">Exercise 1</span></a>
 Breadth-first search in a graph</li>
 <li><a class="reference internal" href="#exercise-chess"><span class="std std-ref">Exercise 2</span></a>
 Movements of a chess knight</li>
+<li><a class="reference internal" href="#exercise-monotonic"><span class="std std-ref">Exercise 3</span></a>
+Monotonic shortest path</li>
+<li><a class="reference internal" href="#exercise-testing-msp"><span class="std std-ref">Exercise 5</span></a>
+Testing minimal spanning trees</li>
 </ul>
 </div>
 <div class="section" id="recommended-exercises">
-<h2>Recommended exercises<a class="headerlink" href="#recommended-exercises" title="Permalink to this headline">¶</a></h2>
-<p>None</p>
+<h2>13.4.2. Recommended exercises<a class="headerlink" href="#recommended-exercises" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference internal" href="#exercise-bitonic"><span class="std std-ref">Exercise 4</span></a>
+Bitonic shortest path</li>
+</ul>
 </div>
 <div class="section" id="exercise-1">
-<span id="exercise-graph-bfs"></span><h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
-<p>Following Depth-First Search for a graph as an example, implement a procedure <code class="docutils literal notranslate"><span class="pre">bfs</span></code> for breadth-first traversal of a graph. It should return a tuple with the following components:</p>
+<span id="exercise-graph-bfs"></span><h2>13.4.3. Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<p>Following Depth-First Search for a graph as an example, implement a
+procedure <code class="docutils literal notranslate"><span class="pre">bfs</span></code> for breadth-first traversal of a graph. It should
+return a tuple with the following components:</p>
 <ul class="simple">
 <li>a list of roots of the trees (similarly to DFS)</li>
-<li>a hash-map, representing the children of a node in a tree (similar to DFS)</li>
-<li>a hash map that for each node <code class="docutils literal notranslate"><span class="pre">u</span></code> returnds an integer “distance” <code class="docutils literal notranslate"><span class="pre">d</span></code>, corresponding to the length of the path to <code class="docutils literal notranslate"><span class="pre">u</span></code> from the root of the tree that it is in.</li>
+<li>a hash-map, representing the children of a node in a tree (similar
+to DFS)</li>
+<li>a hash map that for each node <code class="docutils literal notranslate"><span class="pre">u</span></code> returns an integer “distance”
+<code class="docutils literal notranslate"><span class="pre">d</span></code>, corresponding to the length of the path to <code class="docutils literal notranslate"><span class="pre">u</span></code> from the
+root of the tree that it is in.</li>
 </ul>
-<p>In your implementation, make use of the queue structure, as well as the idea of White-Gray-Black coloring of a node. Design and implement tests for <code class="docutils literal notranslate"><span class="pre">bfs</span></code> (preferrably using randomly generated graphs). Explain the relation between the colouring scheme and the behaviour of the traversal in your report.</p>
-<p>Which properties <code class="docutils literal notranslate"><span class="pre">dfs</span></code> and <code class="docutils literal notranslate"><span class="pre">bfs</span></code> have in common? Please, reflect them in your tests.</p>
-<p>Finally, implement a function for rendering the resulting trees of a graph via GraphViz.</p>
+<p>In your implementation, make use of the queue structure, as well as
+the idea of White-Gray-Black colouring of a node. Design and implement
+tests for <code class="docutils literal notranslate"><span class="pre">bfs</span></code> (preferably using randomly generated graphs).
+Explain the relation between the colouring scheme and the behaviour of
+the traversal in your report.</p>
+<p>Which properties <code class="docutils literal notranslate"><span class="pre">dfs</span></code> and <code class="docutils literal notranslate"><span class="pre">bfs</span></code> have in common? Please, reflect
+them in your tests.</p>
+<p>Finally, implement a function for rendering the resulting trees of a
+graph via GraphViz.</p>
 </div>
 <div class="section" id="exercise-2">
-<span id="exercise-chess"></span><h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
-<p>Model an <code class="docutils literal notranslate"><span class="pre">8x8</span></code> chess board via a <code class="docutils literal notranslate"><span class="pre">64</span></code>-node graph, where each node corresponds to a square. For instance, you can encode <code class="docutils literal notranslate"><span class="pre">a1</span></code> as <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">b3</span></code> as <code class="docutils literal notranslate"><span class="pre">11</span></code> etc. The edges then represent one-time movements of knight figure.</p>
+<span id="exercise-chess"></span><h2>13.4.4. Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<p>Model an <code class="docutils literal notranslate"><span class="pre">8x8</span></code> chess board via a <code class="docutils literal notranslate"><span class="pre">64</span></code>-node graph, where each node
+corresponds to a square. For instance, you can encode <code class="docutils literal notranslate"><span class="pre">a1</span></code> as <code class="docutils literal notranslate"><span class="pre">0</span></code>,
+<code class="docutils literal notranslate"><span class="pre">b3</span></code> as <code class="docutils literal notranslate"><span class="pre">11</span></code> etc. The edges then represent one-time movements of
+knight figure.</p>
 <ul class="simple">
-<li>Encode and automatically populate this graph using the linked graph data structure from the lecture.</li>
-<li>Using the graph encoding, implement a function <code class="docutils literal notranslate"><span class="pre">knight_path</span> <span class="pre">g</span> <span class="pre">init</span> <span class="pre">final</span></code>, which, for given two positions on a board, initial and final, encoded as strings (e.g., <code class="docutils literal notranslate"><span class="pre">a3</span></code> and <code class="docutils literal notranslate"><span class="pre">d8</span></code>), returns a path (represented a list of pairs of positions) for reaching the final position from the initial one.</li>
+<li>Encode and automatically populate this graph using the linked graph
+data structure from the lecture.</li>
+<li>Using the graph encoding, implement a function <code class="docutils literal notranslate"><span class="pre">knight_path</span> <span class="pre">g</span> <span class="pre">init</span>
+<span class="pre">final</span></code>, which, for given two positions on a board, initial and
+final, encoded as strings (e.g., <code class="docutils literal notranslate"><span class="pre">a3</span></code> and <code class="docutils literal notranslate"><span class="pre">d8</span></code>), returns a path
+(represented a list of pairs of positions) for reaching the final
+position from the initial one.</li>
 <li>Test your implementation using random queries.</li>
 </ul>
+</div>
+<div class="section" id="exercise-3">
+<span id="exercise-monotonic"></span><h2>13.4.5. Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<p>Given a weighted directed graph, implement an algorithm to find a
+monotonic shortest path from a node <code class="docutils literal notranslate"><span class="pre">s</span></code> to any other node. A path is
+monotonic if the weight of its edges are either strictly increasing or
+strictly decreasing. <strong>Hint:</strong> think about the <em>order</em> in which the
+edges need to be relaxed. Implement tests for your algorithm and argue
+about its asymptotic complexity.</p>
+</div>
+<div class="section" id="exercise-4">
+<span id="exercise-bitonic"></span><h2>13.4.6. Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
+<p>Given a weighted directed graph, implement an algorithm to find a
+<em>bitonic</em> shortest path from a node <code class="docutils literal notranslate"><span class="pre">s</span></code> to any other node. A path is
+bitonic if there is an intermediate node <code class="docutils literal notranslate"><span class="pre">v</span></code> in it such that the
+weight of the edges on the path from <code class="docutils literal notranslate"><span class="pre">s</span></code> to <code class="docutils literal notranslate"><span class="pre">v</span></code> are strictly
+increasing and the weight on edges from <code class="docutils literal notranslate"><span class="pre">v</span></code> to <code class="docutils literal notranslate"><span class="pre">t</span></code> (final path of
+a node) are strictly decreasing.</p>
+</div>
+<div class="section" id="exercise-5">
+<span id="exercise-testing-msp"></span><h2>13.4.7. Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
+<p>Implement a procedure that constructs random spanning trees (checking
+that those are indeed trees) of a connected weighted undirected graph
+(represented via a linked structure), and tests that the weights of
+those is not smaller than the one of an MST, returned by Kruskal’s
+algorithm.</p>
 </div>
 </div>
 
@@ -194,6 +265,13 @@ Movements of a chess knight</li>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="week-13_spanning.html" class="btn btn-neutral" title="13.3. Minimal Spanning Trees" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

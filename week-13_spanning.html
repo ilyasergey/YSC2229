@@ -1,0 +1,388 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>13.3. Minimal Spanning Trees &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="13.4. Exercises" href="week-13_exercises.html" />
+    <link rel="prev" title="13.2. Single-Source Shortest Paths" href="week-13_paths.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-11.html">11. YSC2229 Lecture Notes, Week 11</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-12.html">12. YSC2229 Lecture Notes, Week 12</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-13.html">13. YSC2229 Lecture Notes, Week 13</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-13_reachability.html">13.1. Reachability and Graph Traversals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_paths.html">13.2. Single-Source Shortest Paths</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">13.3. Minimal Spanning Trees</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#representing-undirected-graphs">13.3.1. Representing Undirected Graphs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trees-in-undirected-connected-graphs">13.3.2. Trees in Undirected Connected Graphs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">13.3.3. Minimal Spanning Trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kruskal-s-algorithm">13.3.4. Kruskal’s Algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-mst-construction">13.3.5. Testing MST Construction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other-mst-algorithms">13.3.6. Other MST Algorithms</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-13_exercises.html">13.4. Exercises</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="YSC2229-lecture-notes-week-13.html">13. YSC2229 Lecture Notes, Week 13</a> &raquo;</li>
+        
+      <li>13.3. Minimal Spanning Trees</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="minimal-spanning-trees">
+<span id="spanning"></span><h1>13.3. Minimal Spanning Trees<a class="headerlink" href="#minimal-spanning-trees" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_13_Spanning.ml">https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_13_Spanning.ml</a></p>
+<p>So far we have only looked at directed graphs, where each edge, besides the pair of connected nodes, also identified a <em>direction</em>. It is uncommon, however, to consider <em>undirected</em> graphs, where each edge establishes a symmetric link between two nodes.</p>
+<div class="section" id="representing-undirected-graphs">
+<h2>13.3.1. Representing Undirected Graphs<a class="headerlink" href="#representing-undirected-graphs" title="Permalink to this headline">¶</a></h2>
+<p>Undirected graphs can be encoded in the same way as directed ones, using the same data structures with either</p>
+<ul class="simple">
+<li>certain amount of duplication, i.e., for each edge <code class="docutils literal notranslate"><span class="pre">(u,</span> <span class="pre">v)</span></code> ensuring that <code class="docutils literal notranslate"><span class="pre">(v,</span> <span class="pre">u)</span></code> is also prsent, or</li>
+<li>some elaborate conventions in how the the topology is treated. For instance, when considering only successors for a directed graph, one should consider also predesessors.</li>
+</ul>
+<p>If the second way is adopted (this is what we are going to do), then one also needs to ensure that only one edge out of <code class="docutils literal notranslate"><span class="pre">(u,</span> <span class="pre">v)</span></code> or <code class="docutils literal notranslate"><span class="pre">(v,</span> <span class="pre">u)</span></code> is present. The standard practice is to store the edge that is smaller lexicographically.</p>
+<p>For instance, consider the following weighted undirected graph:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">undirected_example_nodes</span> <span class="o">=</span>
+  <span class="o">[|</span><span class="s2">&quot;a&quot;</span><span class="o">;</span> <span class="s2">&quot;b&quot;</span><span class="o">;</span> <span class="s2">&quot;c&quot;</span><span class="o">;</span> <span class="s2">&quot;d&quot;</span><span class="o">;</span> <span class="s2">&quot;e&quot;</span><span class="o">;</span> <span class="s2">&quot;f&quot;</span><span class="o">;</span> <span class="s2">&quot;g&quot;</span><span class="o">;</span> <span class="s2">&quot;h&quot;</span><span class="o">;</span> <span class="s2">&quot;i&quot;</span><span class="o">|]</span>
+
+<span class="k">let</span> <span class="n">undirected_example_edges</span> <span class="o">=</span>
+  <span class="o">[(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">7</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">7</span><span class="o">);</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">8</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span>
+   <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="mi">6</span><span class="o">);</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="mi">7</span><span class="o">);</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="mi">8</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="mi">8</span><span class="o">)]</span>
+
+<span class="k">let</span> <span class="n">undirected_example_labels</span> <span class="o">=</span>
+  <span class="o">[(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">7</span><span class="o">,</span> <span class="mi">8</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">8</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">7</span><span class="o">,</span> <span class="mi">11</span><span class="o">);</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">7</span><span class="o">);</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">8</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span>
+   <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">9</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">14</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="mi">6</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="mi">7</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="mi">8</span><span class="o">,</span> <span class="mi">6</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="mi">8</span><span class="o">,</span> <span class="mi">7</span><span class="o">)]</span>
+
+<span class="k">let</span> <span class="n">example_graph_undirected</span> <span class="o">=</span>
+  <span class="n">read_graph_and_payloads</span> <span class="mi">9</span> <span class="n">undirected_example_nodes</span>
+    <span class="n">undirected_example_edges</span> <span class="n">undirected_example_labels</span>
+</pre></div>
+</div>
+<p>We can render it via the following procedure:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">graphviz_with_weights_undirected</span> <span class="n">g</span> <span class="n">out</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">Week_10_ReadingFiles</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">AdjacencyGraphs</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ag</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">to_adjacency_graph</span> <span class="n">g</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">vattrib</span> <span class="o">=</span> <span class="n">get_ag_node_payload</span> <span class="n">ag</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">eattrib</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">l</span> <span class="o">=</span> <span class="n">get_ag_edge_label</span> <span class="n">ag</span> <span class="n">s</span> <span class="n">d</span> <span class="o">|&gt;</span> <span class="n">string_of_int</span> <span class="k">in</span>
+    <span class="nn">Printf</span><span class="p">.</span><span class="n">sprintf</span> <span class="s2">&quot;[label=</span><span class="se">\&quot;</span><span class="s2">%s</span><span class="se">\&quot;</span><span class="s2">, weight=</span><span class="se">\&quot;</span><span class="s2">%s</span><span class="se">\&quot;</span><span class="s2">]&quot;</span> <span class="n">l</span> <span class="n">l</span>
+  <span class="k">in</span>
+  <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="n">graphviz_string_of_graph</span> <span class="s2">&quot;graph&quot;</span> <span class="s2">&quot; -- &quot;</span>
+      <span class="n">vattrib</span> <span class="n">eattrib</span> <span class="n">ag</span> <span class="k">in</span>
+  <span class="n">write_string_to_file</span> <span class="n">out</span> <span class="n">s</span>
+</pre></div>
+</div>
+<p>obtaining this beautiful plot:</p>
+<a class="reference internal image-reference" href="_images/04-ud.png"><img alt="_images/04-ud.png" class="align-center" src="_images/04-ud.png" style="width: 300px;" /></a>
+</div>
+<div class="section" id="trees-in-undirected-connected-graphs">
+<h2>13.3.2. Trees in Undirected Connected Graphs<a class="headerlink" href="#trees-in-undirected-connected-graphs" title="Permalink to this headline">¶</a></h2>
+<p>Fully connected undirected graph (i.e., graphs in which each node is reachable from another) are frequently used describe network topologies or electronic circuit layout. It is sometime convenient to find the minimal connected graph <span class="math notranslate nohighlight">\(G'\)</span> that spans the entire set <span class="math notranslate nohighlight">\(G.V\)</span> of nodes of the “main” graph <span class="math notranslate nohighlight">\(G\)</span>, while covering only a subset of the edges from <span class="math notranslate nohighlight">\(G.E\)</span>.</p>
+<p>This sub-graph turns out to be a <em>tree</em>, and can be characterised by ether of the following definitions:</p>
+<ul class="simple">
+<li>A minimal (in terms of a number of edges) connected subgraph <span class="math notranslate nohighlight">\(G'\)</span> of <span class="math notranslate nohighlight">\(G\)</span></li>
+<li>A connected subgraph <span class="math notranslate nohighlight">\(G'\)</span> of  <span class="math notranslate nohighlight">\(G\)</span>, such that <span class="math notranslate nohighlight">\(G'\)</span> has no cycles</li>
+<li>A connected subgraph <span class="math notranslate nohighlight">\(G'\)</span> of <span class="math notranslate nohighlight">\(G\)</span> such that <span class="math notranslate nohighlight">\(|G'.E| = |G'.V| - 1\)</span></li>
+</ul>
+<p>The last observation is important: tree is a very <em>sparse</em> graph, where the number of edges is a number of nodes minus one. However, other definitions are useful, too.</p>
+</div>
+<div class="section" id="id1">
+<h2>13.3.3. Minimal Spanning Trees<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Given a weighted undirected graph <span class="math notranslate nohighlight">\(G\)</span>, we are interested in finding its Minimal Spanning Tree (MST), which is defined as follows:</p>
+<div class="admonition-definition-minimal-spanning-tree admonition">
+<p class="first admonition-title">Definition (Minimal Spanning Tree)</p>
+<p class="last">Minimal Spanning Tree <span class="math notranslate nohighlight">\(T\)</span> of a graph <span class="math notranslate nohighlight">\(G\)</span> is a subset <span class="math notranslate nohighlight">\(T \subseteq G.E\)</span>, such that:
+* All nodes <span class="math notranslate nohighlight">\(G.V\)</span> are connected by edges in <span class="math notranslate nohighlight">\(T\)</span>
+* The sum of the weights of edges in <span class="math notranslate nohighlight">\(T\)</span> is minimal (among other possible analogous subsets), and
+* <span class="math notranslate nohighlight">\(T\)</span> has no cycles, that is, it is a tree</p>
+</div>
+<p>Minimal spanning trees find many applications in:</p>
+<ul class="simple">
+<li>Telecommunication networks design</li>
+<li>Electronic circuit layout</li>
+<li>Image segmentation</li>
+</ul>
+<p><em>Question:</em> For any graph, is MST always unique?</p>
+</div>
+<div class="section" id="kruskal-s-algorithm">
+<h2>13.3.4. Kruskal’s Algorithm<a class="headerlink" href="#kruskal-s-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>Kruskal’s algorithm returns the result tree <span class="math notranslate nohighlight">\(T\)</span> as a list of edges (a corresponding undirected graph can be restored in linear time). The key step of the algorithm is sorting edges by their weight.</p>
+<p>The algorithm relies on the Union-Find structure for disjoint sets (cf. Chapter <a class="reference internal" href="week-11_union_find.html#union-find"><span class="std std-ref">Equivalance Classes and Union-Find</span></a>).</p>
+<p>The algorithm first sorts all edges in an ascending other according to their weights. It then progressively fetches the edges and connectes the corresponding disjoint graphs. The following progression illustrates the main procedure on a simple graph example:</p>
+<a class="reference internal image-reference" href="_images/kruskal.png"><img alt="_images/kruskal.png" class="align-center" src="_images/kruskal.png" style="width: 800px;" /></a>
+<p>The listing of the algorithm is given below:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">mst_kruskal</span> <span class="n">g</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">UnionFind</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">forest</span> <span class="o">=</span> <span class="n">mk_UF</span> <span class="o">(</span><span class="n">v_size</span> <span class="n">g</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">tree</span> <span class="o">=</span> <span class="n">ref</span> <span class="bp">[]</span> <span class="k">in</span>
+
+  <span class="k">let</span> <span class="n">edges_sorted</span> <span class="o">=</span>
+    <span class="nn">Set</span><span class="p">.</span><span class="n">elements</span> <span class="n">g</span><span class="o">.</span><span class="n">edges</span> <span class="o">|&gt;</span>
+      <span class="nn">List</span><span class="p">.</span><span class="n">sort</span> <span class="o">~</span><span class="n">compare</span><span class="o">:(</span><span class="k">fun</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">-&gt;</span>
+        <span class="k">let</span> <span class="n">w1</span> <span class="o">=</span> <span class="n">get_linked_edge_label</span> <span class="n">g</span> <span class="n">a</span> <span class="n">b</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="n">w2</span> <span class="o">=</span> <span class="n">get_linked_edge_label</span> <span class="n">g</span> <span class="n">x</span> <span class="n">y</span> <span class="k">in</span>
+        <span class="k">if</span> <span class="n">w1</span> <span class="o">&lt;</span> <span class="n">w2</span> <span class="k">then</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="k">if</span> <span class="n">w1</span> <span class="o">&gt;</span> <span class="n">w2</span> <span class="k">then</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span><span class="o">)</span> <span class="k">in</span>
+
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="n">edges_sorted</span> <span class="o">~</span><span class="n">f</span><span class="o">:(</span><span class="k">fun</span> <span class="o">(</span><span class="n">u</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span>
+      <span class="k">let</span> <span class="n">su</span> <span class="o">=</span> <span class="n">find</span> <span class="n">forest</span> <span class="n">u</span> <span class="k">in</span>
+      <span class="k">let</span> <span class="n">sv</span> <span class="o">=</span> <span class="n">find</span> <span class="n">forest</span> <span class="n">v</span> <span class="k">in</span>
+      <span class="k">if</span> <span class="n">su</span> <span class="o">&lt;&gt;</span> <span class="n">sv</span>
+      <span class="k">then</span> <span class="k">begin</span>
+        <span class="n">tree</span> <span class="o">:=</span> <span class="o">(</span><span class="n">u</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">::</span> <span class="o">!</span><span class="n">tree</span><span class="o">;</span>
+        <span class="n">union</span> <span class="n">forest</span> <span class="n">u</span> <span class="n">v</span>
+      <span class="k">end</span><span class="o">);</span>
+
+  <span class="o">!</span><span class="n">tree</span>
+</pre></div>
+</div>
+<p><em>Question:</em> What is the complexity of the algorithm?</p>
+<p>For our example above the algorithms results in the following output, obtained with the procedure <code class="docutils literal notranslate"><span class="pre">graphviz_with_mst</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">graphviz_with_mst</span> <span class="n">algo</span> <span class="n">g</span> <span class="n">out</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="n">algo</span> <span class="n">g</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">attrib</span> <span class="o">(</span><span class="n">u</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">l</span> <span class="o">=</span> <span class="n">get_linked_edge_label</span> <span class="n">g</span> <span class="n">u</span> <span class="n">v</span> <span class="o">|&gt;</span> <span class="n">string_of_int</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">exists</span> <span class="n">t</span>
+        <span class="o">~</span><span class="n">f</span><span class="o">:(</span><span class="k">fun</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">u</span> <span class="o">&amp;&amp;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">v</span> <span class="o">||</span> <span class="n">x</span> <span class="o">=</span> <span class="n">v</span> <span class="o">&amp;&amp;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">u</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">if</span> <span class="n">b</span> <span class="k">then</span>
+      <span class="nn">Printf</span><span class="p">.</span><span class="n">sprintf</span> <span class="s2">&quot;[label=</span><span class="se">\&quot;</span><span class="s2">%s</span><span class="se">\&quot;</span><span class="s2">, color=red,penwidth=3.0]&quot;</span> <span class="n">l</span>
+    <span class="k">else</span>
+      <span class="nn">Printf</span><span class="p">.</span><span class="n">sprintf</span> <span class="s2">&quot;[label=</span><span class="se">\&quot;</span><span class="s2">%s</span><span class="se">\&quot;</span><span class="s2">]&quot;</span> <span class="n">l</span>
+  <span class="k">in</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">Week_10_ReadingFiles</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ag</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">to_adjacency_graph</span> <span class="n">g</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="n">graphviz_string_of_graph</span> <span class="s2">&quot;graph&quot;</span> <span class="s2">&quot; -- &quot;</span>
+      <span class="o">(</span><span class="n">get_linked_node_payload</span> <span class="n">g</span><span class="o">)</span> <span class="n">attrib</span> <span class="n">ag</span> <span class="k">in</span>
+  <span class="n">write_string_to_file</span> <span class="n">out</span> <span class="n">s</span>
+
+<span class="k">let</span> <span class="n">graphviz_with_kruskal</span> <span class="o">=</span>
+  <span class="n">graphviz_with_mst</span> <span class="n">mst_kruskal</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/05-ud.png"><img alt="_images/05-ud.png" class="align-center" src="_images/05-ud.png" style="width: 300px;" /></a>
+</div>
+<div class="section" id="testing-mst-construction">
+<h2>13.3.5. Testing MST Construction<a class="headerlink" href="#testing-mst-construction" title="Permalink to this headline">¶</a></h2>
+<p>The following simple tests checks one of the properties of the constructed MST:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">Week_13_Spanning</span>
+
+<span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;Testing MST size&quot;</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="n">mst_kruskal</span> <span class="n">example_graph_undirected</span> <span class="k">in</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">length</span> <span class="n">t</span> <span class="o">=</span> <span class="n">v_size</span> <span class="n">example_graph_undirected</span> <span class="o">-</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Other properties are left for you to establish as a home exercise.</p>
+</div>
+<div class="section" id="other-mst-algorithms">
+<h2>13.3.6. Other MST Algorithms<a class="headerlink" href="#other-mst-algorithms" title="Permalink to this headline">¶</a></h2>
+<p>In the interest of time, we only mention other popular MST algorithms:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://en.wikipedia.org/wiki/Prim%27s_algorithm">Prim’s algorithm</a></li>
+<li><a class="reference external" href="https://en.wikipedia.org/wiki/Bor%C5%AFvka%27s_algorithm">Boruvka’s algorithm</a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-13_exercises.html" class="btn btn-neutral float-right" title="13.4. Exercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-13_paths.html" class="btn btn-neutral" title="13.2. Single-Source Shortest Paths" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
