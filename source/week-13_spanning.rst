@@ -79,9 +79,9 @@ Given a weighted undirected graph :math:`G`, we are interested in finding its Mi
 .. admonition:: Definition (Minimal Spanning Tree)
 
    Minimal Spanning Tree :math:`T` of a graph :math:`G` is a subset :math:`T \subseteq G.E`, such that:
-   * All nodes :math:`G.V` are connected by edges in :math:`T`
-   * The sum of the weights of edges in :math:`T` is minimal (among other possible analogous subsets), and 
-   * :math:`T` has no cycles, that is, it is a tree
+   (1) All nodes :math:`G.V` are connected by edges in :math:`T`,
+   (2) The sum of the weights of edges in :math:`T` is minimal (among other possible analogous subsets), and 
+   (3) :math:`T` has no cycles, that is, it is a tree
 
 Minimal spanning trees find many applications in:
 
