@@ -247,8 +247,8 @@ The differences aside, we can still use it to teste DFS using the following obse
 
    fact1 && fact2
 
-DFS an Cycle Detection
-----------------------
+DFS and Cycle Detection
+-----------------------
 
 As a byproduct, our DFS has detected if a given graph has a cycle in it. We can now test it as follows::
 
