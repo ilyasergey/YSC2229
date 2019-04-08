@@ -446,7 +446,7 @@
   <span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span>
 </pre></div>
 </div>
-<p><strong>Question:</strong> The complexity of out implementation of <code class="docutils literal notranslate"><span class="pre">dijkstra</span></code> is <span class="math notranslate nohighlight">\(O(|G.V|^2 + |E|)\)</span>. Can you explain it?</p>
+<p><strong>Question:</strong> The complexity of out implementation of <code class="docutils literal notranslate"><span class="pre">dijkstra</span></code> is <span class="math notranslate nohighlight">\(O(|g.V|^2 + |g.E|)\)</span>. Can you explain it?</p>
 <p>Dijkstra crucially relies on all weights on edges being <em>non-negative</em>. This way, adding an edge to a path can never make a it shorter (which is not the case with negative edges). This is why taking the shortest candidate edge (local optimality) always ends up being correct (global optimality). If that is not the case, the “frontier” of candidate edges does not send the right signals; a cheap edge might lure you down a path with positive weights while an expensive one hides a path with negative weights.</p>
 <p>We can experiment with Dijkstra’s algorithm on the following graph:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">graphviz_with_dijkstra</span> <span class="o">=</span>

@@ -302,7 +302,7 @@ Dijkstra's Algorithm
    done;
    (p, d)
 
-**Question:** The complexity of out implementation of ``dijkstra`` is :math:`O(|G.V|^2 + |E|)`. Can you explain it?
+**Question:** The complexity of out implementation of ``dijkstra`` is :math:`O(|g.V|^2 + |g.E|)`. Can you explain it?
 
 Dijkstra crucially relies on all weights on edges being *non-negative*. This way, adding an edge to a path can never make a it shorter (which is not the case with negative edges). This is why taking the shortest candidate edge (local optimality) always ends up being correct (global optimality). If that is not the case, the "frontier" of candidate edges does not send the right signals; a cheap edge might lure you down a path with positive weights while an expensive one hides a path with negative weights.
 
