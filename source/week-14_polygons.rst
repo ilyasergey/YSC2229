@@ -214,7 +214,7 @@ Another property to check of two fixed polygons, is whether they intersect, whic
      List.exists (fun e2 -> 
            segments_intersect e1 e2) es2) es1
 
-Intermezzo: Rays and intersections
+Intermezzo: rays and intersections
 ----------------------------------
 
 The procedure above only checks for intersection of edges, but what is one polygon is fully within another polygon? How can we determine that? To answer this question, we would need to be able to determine whether a certain *point* is within a given polygon. But for this we would need to make a small detour and talk about another geometric construction: rays.
@@ -238,7 +238,7 @@ Given a ray :math:`R = (p, \phi)` and a point :math:`p` that belongs to the line
    let u = dot_product (p -- q) r in
    u >=~ 0.
 
-Notice that here we encode all points of :math:`R` via the equation :math:`q + u r`, where :math:`r` is a "directional" vector of the ray and :math:`0 \leq u`. We then solve the vector equation :math:`p = q + u r`, by multiplying both parts by :math:`r` via scalar product, and also noticing that :math:`r \cdot r = 0`. Finally, we check if :math:`u \geq 0`.
+Notice that here we encode all points of :math:`R` via the equation :math:`q + u r`, where :math:`r` is a "directional" vector of the ray and :math:`0 \leq u`. We then solve the vector equation :math:`p = q + u r`, by multiplying both parts by :math:`r` via scalar product, and also noticing that :math:`r \cdot r = 0`. Finally, we check if :math:`u \geq 0`, to make sure that :math:`p` is not lying "behind" the ray.
 
 
 
