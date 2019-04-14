@@ -29,6 +29,13 @@ To work with them, we will require a couple of auxiliary functions::
      assert (List.length ls >= 3);
      walk ls
 
+   (* Remove duplicates *)
+   let uniq lst =
+     let seen = Hashtbl.create (List.length lst) in
+     List.filter (fun x -> let tmp = not (Hashtbl.mem seen x) in
+                           Hashtbl.replace seen x ();
+                           tmp) lst
+
 Encoding and rendering polygons
 -------------------------------
 
@@ -240,8 +247,128 @@ Given a ray :math:`R = (p, \phi)` and a point :math:`p` that belongs to the line
 
 Notice that here we encode all points of :math:`R` via the equation :math:`q + u r`, where :math:`r` is a "directional" vector of the ray and :math:`0 \leq u`. We then solve the vector equation :math:`p = q + u r`, by multiplying both parts by :math:`r` via scalar product, and also noticing that :math:`r \cdot r = 0`. Finally, we check if :math:`u \geq 0`, to make sure that :math:`p` is not lying "behind" the ray.
 
+Now, we can find an intersection of a ray and a segment, in a way similar to how that was done in Section :ref:`points`::
 
+ let ray_segment_intersection ray seg = 
+   let (p, p') = seg in
+   let (q, phi) = ray in
+   (* Segment's direction *)
+   let s = Point (get_x p' -. get_x p, get_y p' -. get_y p) in
+   (* Ray's direction *)
+   let r = Point (cos phi, sin phi) in
+
+   if cross_product s r =~= 0. then
+     if cross_product (p -- q) r =~= 0.
+     then if point_on_ray ray p then Some p 
+       else if point_on_ray ray p' then Some p'
+       else None
+     else None
+   else begin
+     (* Point on segment *)
+     let t = (cross_product (q -- p) r) /. (cross_product s r) in
+     (* Point on ray *)
+     let u = (cross_product (p -- q) s) /. (cross_product r s) in
+     if u >=~ 0. && t >=~ 0. && t <=~ 1. 
+     then
+       let Point (sx, sy) = s in
+       let z = p ++ (sx *. t, sy *. t) in
+       Some z
+     else
+       None
+   end
+ 
+Specifically, if the ray and the segment are collinear than we can try to find if one of the end points of the segment is on the ray.
+
+Otherwise, if they are not collinear, we express them both in the vector form and solve two equations, wrt. the scalar parameters ``t`` and ``u``. Finally, we check that ``u`` and ``t`` are in the allowed ranges, and use one of them to calculate the intersection point.
 
 
 Point within an polygon
 -----------------------
+
+A simple way to determine whether a point is within a polygon if to draw a ray (in an arbitrary direction) from it and count how many times it intersect the edges of the polygon. If this number is odd, the point is within the polygon, otherwise it is outside. This is done by the procedure ``point_within_polygon`` defined below, along with several auxiliary functions::
+
+ (* Get neightbors of a vertex *)
+ let get_vertex_neighbours pol v = 
+   assert (List.mem v pol);
+
+   let arr = Array.of_list pol in
+   let n = Array.length arr in
+   assert (Array.length arr >= 3);
+
+   if v = arr.(0) then (arr.(n - 1), arr.(1))
+   else if v = arr.(n - 1) then (arr.(n - 2), arr.(0))
+   else let rec walk i = 
+          if i = n - 1 then (arr.(n - 2), arr.(0))
+          else if v = arr.(i) 
+          then (arr.(i - 1), arr.(i + 1))
+          else walk (i + 1)
+     in walk 1
+
+ (* Get neightbors of a vertex *)
+ let neighbours_on_different_sides ray pol p =
+   if not (List.mem p pol) then true
+   else
+     let (a, b) = get_vertex_neighbours pol p in
+     let (r, d) = ray in 
+     let s = r ++ (cos d, sin d) in
+     let dir1 = direction r s a in
+     let dir2 = direction r s b in
+     dir1 <> dir2
+
+
+ (* Point within a polygon *)
+
+ let point_within_polygon pol p = 
+   let ray = (p, 0.) in
+   let es = edges pol in
+   if List.mem p pol ||
+      List.exists (fun e -> point_on_segment e p) es then true
+   else
+     begin
+       let n = 
+         edges pol |> 
+         List.map (fun e -> ray_segment_intersection ray e) |>
+         List.filter (fun r -> r <> None) |>
+         List.map (fun r -> Week_01.get_exn r) |>
+
+         (* Touching edges *)
+         uniq |>
+
+         (* Touching vertices *)
+         List.filter (neighbours_on_different_sides ray pol) |>
+
+         (* Compute length *)
+         List.length
+       in
+       n mod 2 = 1
+     end
+
+A few corner cases have to be taken into the account:
+
+(a) A ray may "touch" a sharp vertex --- in this case this intersection should not count. However, if a ray "passes" through a vertex (as opposed to touching it), this should count as an intersection. 
+
+(b) A ray may also contain the entire edge of the polygon.
+
+The case (b) can be detected if the lest of intersection of a ray with edges contains duplicate nodes (a node counts). In this case, such duplicates need to be removed, hence the use of ``uniq``.
+
+The case (a) can be detected by checking whether two adjacent edges to the node suspected in "touching" lie on the single side or on two opposite sides of the ray. Only the second case (detected via ``neighbours_on_different_sides``) needs to be accounted.
+
+We can test our procedure on the following polygon::
+
+ utop # let pol = TestPolygons.sand4;;
+ utop # let p = Point (-150., 10.);; 
+ utop # let q = Point (50., 10.);;
+ utop # let r = Point (-150., 70.);; 
+ utop # let s = Point (120., 70.);;
+ utop # point_within_polygon pol p;;
+ - : bool = false
+ utop # point_within_polygon pol q;;
+ - : bool = true
+ utop # point_within_polygon pol r;;
+ - : bool = false
+ utop # point_within_polygon pol s;;
+ - : bool = false
+
+.. image:: ../resources/cg09.png
+   :width: 700px
+   :align: center
