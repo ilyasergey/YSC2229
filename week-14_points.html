@@ -1,0 +1,631 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>14.2. Points, Segments and their Properties &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="14.3. Working with Polygons" href="week-14_polygons.html" />
+    <link rel="prev" title="14.1. Basics of Computational Geometry" href="week-14_geometry.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-11.html">11. YSC2229 Lecture Notes, Week 11</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-12.html">12. YSC2229 Lecture Notes, Week 12</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-13.html">13. YSC2229 Lecture Notes, Week 13</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-14.html">14. YSC2229 Lecture Notes, Week 14</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-14_geometry.html">14.1. Basics of Computational Geometry</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">14.2. Points, Segments and their Properties</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#on-precision-and-epsilon-equality">14.2.1. On precision and epsilon-equality</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#points-on-a-two-dimensional-plane">14.2.2. Points on a two-dimensional plane</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#points-as-vectors">14.2.3. Points as vectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scalar-product-of-vectors">14.2.4. Scalar product of vectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#polar-coordinate-system">14.2.5. Polar coordinate system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vector-product-and-its-properties">14.2.6. Vector product and its properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#segments-on-a-plane">14.2.7. Segments on a plane</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generating-random-points-on-a-segment">14.2.8. Generating random points on a segment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#collinearity-of-segments">14.2.9. Collinearity of segments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#checking-for-intersections">14.2.10. Checking for intersections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#finding-intersections">14.2.11. Finding intersections</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_polygons.html">14.3. Working with Polygons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_convex_hulls.html">14.4. Convex Hulls</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="YSC2229-lecture-notes-week-14.html">14. YSC2229 Lecture Notes, Week 14</a> &raquo;</li>
+        
+      <li>14.2. Points, Segments and their Properties</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="points-segments-and-their-properties">
+<span id="points"></span><h1>14.2. Points, Segments and their Properties<a class="headerlink" href="#points-segments-and-their-properties" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-geometry/blob/master/lib/Points.ml">https://github.com/ilyasergey/ysc2229-geometry/blob/master/lib/Points.ml</a></p>
+<div class="section" id="on-precision-and-epsilon-equality">
+<h2>14.2.1. On precision and epsilon-equality<a class="headerlink" href="#on-precision-and-epsilon-equality" title="Permalink to this headline">¶</a></h2>
+<p>Geometrical objects in a cartesian 2-dimensional space are represented by the pairs of their coordinates <span class="math notranslate nohighlight">\(x, y \in \mathbb{R}\)</span>, which can be encoded in OCaml using the data type <code class="docutils literal notranslate"><span class="pre">float</span></code>. As the name suggests, this is the type for floating-point numbers, which can encode mathematical numbers with a finite precision. This is why ordinary equality should not be used on them.</p>
+<p>For instance, as a result of a numeric computation, we can obtain two numbers <code class="docutils literal notranslate"><span class="pre">0.3333333333</span></code> and <code class="docutils literal notranslate"><span class="pre">0.3333333334</span></code>, both “encoding” <span class="math notranslate nohighlight">\(\frac{1}{3}\)</span>, but somewhat approxiamting it in the former case and over-approxiamting it in a latter case. It is considered a usual practice to use an <span class="math notranslate nohighlight">\(\varepsilon\)</span>-equality, when comparing floating-point numbers for equality. The following operations allow us to achieve this:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">eps</span> <span class="o">=</span> <span class="mi">0</span><span class="o">.</span><span class="mi">0000001</span>
+
+<span class="k">let</span> <span class="o">(=~=)</span> <span class="n">x</span> <span class="n">y</span> <span class="o">=</span> <span class="n">abs_float</span> <span class="o">(</span><span class="n">x</span> <span class="o">-.</span> <span class="n">y</span><span class="o">)</span> <span class="o">&lt;</span> <span class="n">eps</span>
+
+<span class="k">let</span> <span class="o">(&lt;=~)</span> <span class="n">x</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">=~=</span> <span class="n">y</span> <span class="o">||</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">y</span>
+
+<span class="k">let</span> <span class="o">(&gt;=~)</span> <span class="n">x</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">=~=</span> <span class="n">y</span> <span class="o">||</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span>
+
+<span class="k">let</span> <span class="n">is_zero</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">=~=</span> <span class="mi">0</span><span class="o">.</span><span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="points-on-a-two-dimensional-plane">
+<h2>14.2.2. Points on a two-dimensional plane<a class="headerlink" href="#points-on-a-two-dimensional-plane" title="Permalink to this headline">¶</a></h2>
+<p>A point is simiply a pair of two floats, wrapped to a constructor to avoid possible confusions:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">point</span> <span class="o">=</span> <span class="nc">Point</span> <span class="k">of</span> <span class="kt">float</span> <span class="o">*</span> <span class="kt">float</span>
+
+<span class="k">let</span> <span class="n">get_x</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">))</span> <span class="o">=</span> <span class="n">x</span>
+<span class="k">let</span> <span class="n">get_y</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">))</span> <span class="o">=</span> <span class="n">y</span>
+</pre></div>
+</div>
+<p>We can draw a point as a small cicrcle (let’s say, with a radius of 3 pixesl) using OCaml’s graphics capacities, via the following function:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">include</span> <span class="nc">GraphicUtil</span>
+
+<span class="k">let</span> <span class="n">draw_point</span> <span class="o">?</span><span class="n">color</span><span class="o">:(</span><span class="n">color</span> <span class="o">=</span> <span class="nn">Graphics</span><span class="p">.</span><span class="n">black</span><span class="o">)</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">))</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">Graphics</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">=</span> <span class="n">current_point</span> <span class="bp">()</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ix</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="n">x</span> <span class="o">+</span> <span class="n">fst</span> <span class="n">origin</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">iy</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="n">y</span> <span class="o">+</span> <span class="n">snd</span> <span class="n">origin</span> <span class="k">in</span>
+  <span class="n">moveto</span> <span class="n">ix</span> <span class="n">iy</span><span class="o">;</span>
+  <span class="n">set_color</span> <span class="n">color</span><span class="o">;</span>
+  <span class="n">fill_circle</span> <span class="n">ix</span> <span class="n">iy</span> <span class="mi">3</span><span class="o">;</span>
+  <span class="n">moveto</span> <span class="n">a</span> <span class="n">b</span><span class="o">;</span>
+  <span class="n">set_color</span> <span class="n">black</span>
+</pre></div>
+</div>
+<p>Let us take some of the predefined points from this module:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">TestPoints</span> <span class="o">=</span> <span class="k">struct</span>
+
+  <span class="k">let</span> <span class="n">p</span> <span class="o">=</span> <span class="nc">Point</span> <span class="o">(</span><span class="mi">100</span><span class="o">.,</span> <span class="mi">150</span><span class="o">.)</span>
+  <span class="k">let</span> <span class="n">q</span> <span class="o">=</span> <span class="nc">Point</span> <span class="o">(-</span><span class="mi">50</span><span class="o">.,</span> <span class="mi">75</span><span class="o">.)</span>
+  <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="nc">Point</span> <span class="o">(</span><span class="mi">50</span><span class="o">.,</span> <span class="mi">30</span><span class="o">.)</span>
+  <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nc">Point</span> <span class="o">(</span><span class="mi">75</span><span class="o">.,</span> <span class="mi">60</span><span class="o">.)</span>
+  <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="nc">Point</span> <span class="o">(</span><span class="mi">75</span><span class="o">.,</span> <span class="mi">90</span><span class="o">.)</span>
+
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Drawing them as followins results in a picture below:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="k">open</span> <span class="nc">Points</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">open</span> <span class="nc">TestPoints</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">mk_screen</span> <span class="bp">()</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">draw_point</span> <span class="n">p</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">draw_point</span> <span class="n">q</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">draw_point</span> <span class="n">r</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">draw_point</span> <span class="n">s</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">draw_point</span> <span class="n">t</span><span class="o">;;</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/cg02.png"><img alt="_images/cg02.png" class="align-center" src="_images/cg02.png" style="width: 700px;" /></a>
+<p>A very common operation is moving a point to a given direction, by adding ceertain x- and y-coordinates to it:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="o">(++)</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">))</span> <span class="o">(</span><span class="n">dx</span><span class="o">,</span> <span class="n">dy</span><span class="o">)</span> <span class="o">=</span>
+  <span class="nc">Point</span> <span class="o">(</span><span class="n">x</span> <span class="o">+.</span> <span class="n">dx</span><span class="o">,</span> <span class="n">y</span> <span class="o">+.</span> <span class="n">dy</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="points-as-vectors">
+<h2>14.2.3. Points as vectors<a class="headerlink" href="#points-as-vectors" title="Permalink to this headline">¶</a></h2>
+<p>It is common to think of 2-dminesional points oas of <em>vectors</em> — directed segments, connecting the beginning of the coordinates with the point. We reflect it via the function that renders points as vectors:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">draw_vector</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">))</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">ix</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="n">x</span> <span class="o">+</span> <span class="n">fst</span> <span class="n">origin</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">iy</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="n">y</span> <span class="o">+</span> <span class="n">snd</span> <span class="n">origin</span> <span class="k">in</span>
+  <span class="n">go_to_origin</span> <span class="bp">()</span><span class="o">;</span>
+  <span class="nn">Graphics</span><span class="p">.</span><span class="n">lineto</span> <span class="n">ix</span> <span class="n">iy</span><span class="o">;</span>
+  <span class="n">go_to_origin</span> <span class="bp">()</span>
+</pre></div>
+</div>
+<p>Notice that, in order to position correctly the vector, we keep “shifting” the point coordinates relatively to the grahical “origin”. We do so by adding <code class="docutils literal notranslate"><span class="pre">fst</span> <span class="pre">origin</span></code> and <code class="docutils literal notranslate"><span class="pre">snd</span> <span class="pre">origin</span></code> to the x/y coordinate of the point, correspondingly.</p>
+<p>The length of the vector induced by the point with the coordinates <span class="math notranslate nohighlight">\((x, y)\)</span> can be obtained as <span class="math notranslate nohighlight">\(|(x, y)| = \sqrt{x^2 + y^2}\)</span>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">vec_length</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">))</span> <span class="o">=</span>
+  <span class="n">sqrt</span> <span class="o">(</span><span class="n">x</span> <span class="o">*.</span> <span class="n">x</span> <span class="o">+.</span> <span class="n">y</span> <span class="o">*.</span> <span class="n">y</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Another common operation is to subtract one vector from another ot obtain the vector that connects their ends:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="o">(--)</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x1</span><span class="o">,</span> <span class="n">y1</span><span class="o">))</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x2</span><span class="o">,</span> <span class="n">y2</span><span class="o">))</span> <span class="o">=</span>
+   <span class="nc">Point</span> <span class="o">(</span><span class="n">x1</span> <span class="o">-.</span> <span class="n">x2</span><span class="o">,</span> <span class="n">y1</span> <span class="o">-.</span> <span class="n">y2</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scalar-product-of-vectors">
+<h2>14.2.4. Scalar product of vectors<a class="headerlink" href="#scalar-product-of-vectors" title="Permalink to this headline">¶</a></h2>
+<p>Imagine that we want to “turn” one vector in the direction of another. For this, we need to answer three questions:</p>
+<ol class="loweralpha simple">
+<li>How can we calculate the value of the angle?</li>
+<li>How to perform the rotation?</li>
+<li>Which direction to turn?</li>
+</ol>
+<p>The question (a) can be answered by computing the <em>scalar product</em> (often referred ) of the two points/vectors. By definition <span class="math notranslate nohighlight">\((x_1, y_1) \cdot (x_2, y_2) = |(x_1, y_1) (x_2, y_2)|\cos{\theta} = x_1 \times x_2 + y_1 \times y_2\)</span>, where <span class="math notranslate nohighlight">\(\theta\)</span> is the smaller angle between <cite>(x_1, y_1)</cite> and <span class="math notranslate nohighlight">\((x_2, y_2)\)</span>.</p>
+<p>Therefore, we can calculate the scalar product as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">dot_product</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x1</span><span class="o">,</span> <span class="n">y1</span><span class="o">))</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x2</span><span class="o">,</span> <span class="n">y2</span><span class="o">))</span> <span class="o">=</span>
+  <span class="n">x1</span> <span class="o">*.</span> <span class="n">x2</span> <span class="o">+.</span> <span class="n">y1</span> <span class="o">*.</span> <span class="n">y2</span>
+</pre></div>
+</div>
+<p>Assuming neither of the two vectors is zero, we can calculate the angle using the function <code class="docutils literal notranslate"><span class="pre">acos</span></code> from OCaml’s library:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">angle_between</span> <span class="n">v1</span> <span class="n">v2</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">l1</span> <span class="o">=</span> <span class="n">vec_length</span> <span class="n">v1</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">l2</span> <span class="o">=</span> <span class="n">vec_length</span> <span class="n">v2</span> <span class="k">in</span>
+  <span class="k">if</span> <span class="n">is_zero</span> <span class="n">l1</span> <span class="o">||</span> <span class="n">is_zero</span> <span class="n">l2</span> <span class="k">then</span> <span class="mi">0</span><span class="o">.</span><span class="mi">0</span>
+  <span class="k">else</span>
+    <span class="k">let</span> <span class="n">p</span> <span class="o">=</span> <span class="n">dot_product</span> <span class="n">v1</span> <span class="n">v2</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">p</span> <span class="o">/.</span> <span class="o">(</span><span class="n">l1</span> <span class="o">*.</span> <span class="n">l2</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">assert</span> <span class="o">(</span><span class="n">abs_float</span> <span class="n">a</span> <span class="o">&lt;=~</span> <span class="mi">1</span><span class="o">.);</span>
+    <span class="n">acos</span> <span class="n">a</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="polar-coordinate-system">
+<h2>14.2.5. Polar coordinate system<a class="headerlink" href="#polar-coordinate-system" title="Permalink to this headline">¶</a></h2>
+<p>Rotations are very awkward to handle in the cartesian represntation of points and vectors. They are much more convenient to peerform in the <em>polar</em> coordinate system, where each point/vector is represented by (i) the length <span class="math notranslate nohighlight">\(r\)</span> of the vector, and (ii) the radial angle <span class="math notranslate nohighlight">\(-\pi &lt; \phi \leq \pi\)</span>.</p>
+<p>In OCaml, the value of <span class="math notranslate nohighlight">\(\pi\)</span> can be obtained as from the arctangent of 1, which is equal <span class="math notranslate nohighlight">\(\pi / 4\)</span>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">pi</span> <span class="o">=</span> <span class="mi">4</span><span class="o">.</span> <span class="o">*.</span> <span class="n">atan</span> <span class="mi">1</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>We encode polar point representations using a new datatype:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">polar</span> <span class="o">=</span> <span class="nc">Polar</span> <span class="k">of</span> <span class="o">(</span><span class="kt">float</span> <span class="o">*</span> <span class="kt">float</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The following two conversions follow from the correspondence between cartesian and polar coordinates:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">polar_of_cartesian</span> <span class="o">((</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">))</span> <span class="k">as</span> <span class="n">p</span><span class="o">)</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="n">vec_length</span> <span class="n">p</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">phi</span> <span class="o">=</span> <span class="n">atan2</span> <span class="n">y</span> <span class="n">x</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">phi&#39;</span> <span class="o">=</span> <span class="k">if</span> <span class="n">phi</span> <span class="o">=~=</span> <span class="o">~-.</span><span class="n">pi</span> <span class="k">then</span> <span class="n">phi</span> <span class="o">+.</span> <span class="n">pi</span> <span class="o">*.</span> <span class="mi">2</span><span class="o">.</span> <span class="k">else</span> <span class="n">phi</span> <span class="k">in</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">phi&#39;</span> <span class="o">&gt;</span> <span class="o">~-.</span><span class="n">pi</span> <span class="o">&amp;&amp;</span> <span class="n">phi&#39;</span> <span class="o">&lt;=~</span> <span class="n">pi</span><span class="o">);</span>
+  <span class="nc">Polar</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">phi&#39;</span><span class="o">)</span>
+
+<span class="k">let</span> <span class="n">cartesian_of_polar</span> <span class="o">(</span><span class="nc">Polar</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">phi</span><span class="o">))</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*.</span> <span class="n">cos</span> <span class="n">phi</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*.</span> <span class="n">sin</span> <span class="n">phi</span> <span class="k">in</span>
+  <span class="nc">Point</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Finally, we can express rotation by conversion from cartesian to polar coordinates and back:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">rotate_by_angle</span> <span class="n">p</span> <span class="n">a</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="nc">Polar</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">phi</span><span class="o">)</span> <span class="o">=</span> <span class="n">polar_of_cartesian</span> <span class="n">p</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">p&#39;</span> <span class="o">=</span> <span class="nc">Polar</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">phi</span> <span class="o">+.</span> <span class="n">a</span><span class="o">)</span> <span class="k">in</span>
+  <span class="n">cartesian_of_polar</span> <span class="n">p&#39;</span>
+</pre></div>
+</div>
+<p>We can use this machinery to rotate by 90 degrees (i.e., <span class="math notranslate nohighlight">\(\pi/2\)</span>) the vector <code class="docutils literal notranslate"><span class="pre">p</span></code> to point in the new direction:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="n">clear_screen</span> <span class="bp">()</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">draw_point</span> <span class="n">p</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">p&#39;</span> <span class="o">=</span> <span class="n">rotate_by_angle</span> <span class="n">p</span> <span class="o">(</span><span class="n">pi</span> <span class="o">/.</span> <span class="mi">2</span><span class="o">.);;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">draw_point</span> <span class="o">~</span><span class="n">color</span><span class="o">:</span><span class="nn">Graphics</span><span class="p">.</span><span class="n">red</span> <span class="n">p&#39;</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">draw_vector</span> <span class="n">p</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">draw_vector</span> <span class="n">p&#39;</span><span class="o">;;</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/cg03.png"><img alt="_images/cg03.png" class="align-center" src="_images/cg03.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="vector-product-and-its-properties">
+<h2>14.2.6. Vector product and its properties<a class="headerlink" href="#vector-product-and-its-properties" title="Permalink to this headline">¶</a></h2>
+<p><em>Vector product</em> of two vectors (also known as <em>cross-product</em>) of two vectors <span class="math notranslate nohighlight">\(v_1 = (x_1, y_1)\)</span> and <span class="math notranslate nohighlight">\(v_2 = (x_2, y_2)\)</span> is formally defined as <span class="math notranslate nohighlight">\((x_1, y_1) \times (x_2, y_2) = |(x_1, y_1) (x_2, y_2)|\sin{\theta} = x_1 \times y_2 - x_2 \times y_1\)</span>, where <span class="math notranslate nohighlight">\(\theta\)</span> is an angle between the two vectors:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">cross_product</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x1</span><span class="o">,</span> <span class="n">y1</span><span class="o">))</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x2</span><span class="o">,</span> <span class="n">y2</span><span class="o">))</span> <span class="o">=</span>
+  <span class="n">x1</span> <span class="o">*.</span> <span class="n">y2</span> <span class="o">-.</span> <span class="n">x2</span> <span class="o">*.</span> <span class="n">y1</span>
+</pre></div>
+</div>
+<p>As the cross-product it operates with a sine rather than cosine, it allows to determine the “direction”, in which in which one needs to rotate <span class="math notranslate nohighlight">\(v_2\)</span> to approach <span class="math notranslate nohighlight">\(v_1\)</span> in the closest way. Specifically, if the result of the cross-product is positive then, one should move in the clock-wise fashion, while if it is negative, <span class="math notranslate nohighlight">\(v_1\)</span> is in the counter-clockwise direction from <cite>v_2</cite>. Finally, if the product is zeor, the two vectors are parallel and point in the same or the opposite directions:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">sign</span> <span class="n">p</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="n">p</span> <span class="o">=~=</span> <span class="mi">0</span><span class="o">.</span> <span class="k">then</span> <span class="mi">0</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">.</span> <span class="k">then</span> <span class="o">-</span><span class="mi">1</span>
+  <span class="k">else</span> <span class="mi">1</span>
+
+<span class="c">(* Where should we turning p *)</span>
+<span class="k">let</span> <span class="n">dir_clock</span> <span class="n">p1</span> <span class="n">p2</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">prod</span> <span class="o">=</span> <span class="n">cross_product</span> <span class="n">p1</span> <span class="n">p2</span> <span class="k">in</span>
+  <span class="n">sign</span> <span class="n">prod</span>
+</pre></div>
+</div>
+<p>We can now employ the cross-product to know in which direction to rotate on vector to another:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">rotate_to</span> <span class="n">p1</span> <span class="n">p2</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">angle_between</span> <span class="n">p1</span> <span class="n">p2</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">d</span> <span class="o">=</span> <span class="n">dir_clock</span> <span class="n">p1</span> <span class="n">p2</span> <span class="o">|&gt;</span> <span class="n">float_of_int</span> <span class="k">in</span>
+  <span class="n">rotate_by_angle</span> <span class="n">p1</span> <span class="o">(</span><span class="n">a</span> <span class="o">*.</span> <span class="n">d</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Finally, given three points, <code class="docutils literal notranslate"><span class="pre">p0</span></code>, <code class="docutils literal notranslate"><span class="pre">p1</span></code> and <code class="docutils literal notranslate"><span class="pre">p2</span></code>, one can use the operations of vector subtractions to determine in which direction the chain <code class="docutils literal notranslate"><span class="pre">[p0;</span> <span class="pre">p1;</span> <span class="pre">p2]</span></code> turns:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">direction</span> <span class="n">p0</span> <span class="n">p1</span> <span class="n">p2</span> <span class="o">=</span>
+  <span class="n">cross_product</span> <span class="o">(</span><span class="n">p2</span> <span class="o">--</span> <span class="n">p0</span><span class="o">)</span> <span class="o">(</span><span class="n">p1</span> <span class="o">--</span> <span class="n">p0</span><span class="o">)</span> <span class="o">|&gt;</span> <span class="n">sign</span>
+</pre></div>
+</div>
+<p>The direction depends on the result of of the function above:</p>
+<ul class="simple">
+<li>If it is 1, the chain is turning turning right (clock-wise);</li>
+<li>If it -1, it is turning left  (counter-clock-wise);</li>
+<li>0 means there is no turn.</li>
+</ul>
+<p>For example, for the following image, the result of <code class="docutils literal notranslate"><span class="pre">direction</span> <span class="pre">q</span> <span class="pre">r</span> <span class="pre">p</span></code> is <code class="docutils literal notranslate"><span class="pre">-1</span></code>:</p>
+<a class="reference internal image-reference" href="_images/cg05.png"><img alt="_images/cg05.png" class="align-center" src="_images/cg05.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="segments-on-a-plane">
+<h2>14.2.7. Segments on a plane<a class="headerlink" href="#segments-on-a-plane" title="Permalink to this headline">¶</a></h2>
+<p>From individual points on a plain, we transition to segments, are simply the pairs of points:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">segment</span> <span class="o">=</span> <span class="n">point</span> <span class="o">*</span> <span class="n">point</span>
+</pre></div>
+</div>
+<p>The following definitions allow to draw segments using our plotting frameworks, and also provide some default segments to experiment with:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Draw a segment *)</span>
+<span class="k">let</span> <span class="n">draw_segment</span> <span class="o">?</span><span class="n">color</span><span class="o">:(</span><span class="n">color</span> <span class="o">=</span> <span class="nn">Graphics</span><span class="p">.</span><span class="n">black</span><span class="o">)</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">Graphics</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">ax</span><span class="o">,</span> <span class="n">ay</span><span class="o">))</span> <span class="o">=</span> <span class="n">a</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">bx</span><span class="o">,</span> <span class="n">by</span><span class="o">))</span> <span class="o">=</span> <span class="n">b</span> <span class="k">in</span>
+  <span class="n">draw_point</span> <span class="o">~</span><span class="n">color</span><span class="o">:</span><span class="n">color</span> <span class="n">a</span><span class="o">;</span>
+  <span class="n">draw_point</span> <span class="o">~</span><span class="n">color</span><span class="o">:</span><span class="n">color</span> <span class="n">b</span><span class="o">;</span>
+  <span class="k">let</span> <span class="n">iax</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="n">ax</span> <span class="o">+</span> <span class="n">fst</span> <span class="n">origin</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">iay</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="n">ay</span> <span class="o">+</span> <span class="n">snd</span> <span class="n">origin</span> <span class="k">in</span>
+  <span class="n">moveto</span> <span class="n">iax</span> <span class="n">iay</span><span class="o">;</span>
+  <span class="n">set_color</span> <span class="n">color</span><span class="o">;</span>
+  <span class="k">let</span> <span class="n">ibx</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="n">bx</span> <span class="o">+</span> <span class="n">fst</span> <span class="n">origin</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">iby</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="n">by</span> <span class="o">+</span> <span class="n">snd</span> <span class="n">origin</span> <span class="k">in</span>
+  <span class="n">lineto</span> <span class="n">ibx</span> <span class="n">iby</span><span class="o">;</span>
+  <span class="n">go_to_origin</span> <span class="bp">()</span>
+
+<span class="k">module</span> <span class="nc">TestSegments</span> <span class="o">=</span> <span class="k">struct</span>
+  <span class="k">include</span> <span class="nc">TestPoints</span>
+  <span class="k">let</span> <span class="n">s0</span> <span class="o">=</span> <span class="o">(</span><span class="n">q</span><span class="o">,</span> <span class="n">p</span><span class="o">)</span>
+  <span class="k">let</span> <span class="n">s1</span> <span class="o">=</span> <span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="n">s</span><span class="o">)</span>
+  <span class="k">let</span> <span class="n">s2</span> <span class="o">=</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">s</span><span class="o">)</span>
+  <span class="k">let</span> <span class="n">s3</span> <span class="o">=</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">t</span><span class="o">)</span>
+  <span class="k">let</span> <span class="n">s4</span> <span class="o">=</span> <span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">p</span><span class="o">)</span>
+  <span class="k">let</span> <span class="n">s5</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(-</span><span class="mi">100</span><span class="o">.,</span> <span class="o">-</span><span class="mi">100</span><span class="o">.),</span> <span class="nc">Point</span> <span class="o">(</span><span class="mi">100</span><span class="o">.,</span> <span class="mi">100</span><span class="o">.))</span>
+  <span class="k">let</span> <span class="n">s6</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(-</span><span class="mi">100</span><span class="o">.,</span> <span class="mi">100</span><span class="o">.),</span> <span class="nc">Point</span> <span class="o">(</span><span class="mi">100</span><span class="o">.,</span> <span class="o">-</span><span class="mi">100</span><span class="o">.))</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="generating-random-points-on-a-segment">
+<h2>14.2.8. Generating random points on a segment<a class="headerlink" href="#generating-random-points-on-a-segment" title="Permalink to this headline">¶</a></h2>
+<p>It is easy to generate random points and segments within a given range <code class="docutils literal notranslate"><span class="pre">f</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">gen_random_point</span> <span class="n">f</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">ax</span> <span class="o">=</span> <span class="nn">Random</span><span class="p">.</span><span class="n">float</span> <span class="n">f</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ay</span> <span class="o">=</span> <span class="nn">Random</span><span class="p">.</span><span class="n">float</span> <span class="n">f</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">o</span> <span class="o">=</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">f</span> <span class="o">/.</span> <span class="mi">2</span><span class="o">.,</span> <span class="n">f</span> <span class="o">/.</span> <span class="mi">2</span><span class="o">.)</span> <span class="k">in</span>
+  <span class="nc">Point</span> <span class="o">(</span><span class="n">ax</span><span class="o">,</span> <span class="n">ay</span><span class="o">)</span> <span class="o">--</span> <span class="n">o</span>
+
+<span class="k">let</span> <span class="n">gen_random_segment</span> <span class="n">f</span> <span class="o">=</span>
+  <span class="o">(</span><span class="n">gen_random_point</span> <span class="n">f</span><span class="o">,</span> <span class="n">gen_random_point</span> <span class="n">f</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>We can exploit the fact that an point <span class="math notranslate nohighlight">\(z\)</span> on a segment <span class="math notranslate nohighlight">\([p_1, p_2]\)</span> and be obtained as <span class="math notranslate nohighlight">\(z = p_1 + t (p_2 - p_1)\)</span> for some <span class="math notranslate nohighlight">\(0 \leq t \leq 1\)</span>. here, both addition and subtraction are vector operations, encoded by <code class="docutils literal notranslate"><span class="pre">(++)</span></code> and <code class="docutils literal notranslate"><span class="pre">(--)</span></code> correspondingly:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">gen_random_point_on_segment</span> <span class="n">seg</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">p1</span><span class="o">,</span> <span class="n">p2</span><span class="o">)</span> <span class="o">=</span> <span class="n">seg</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">dx</span><span class="o">,</span> <span class="n">dy</span><span class="o">)</span> <span class="o">=</span> <span class="n">p2</span> <span class="o">--</span> <span class="n">p1</span>  <span class="k">in</span>
+  <span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="nn">Random</span><span class="p">.</span><span class="n">float</span> <span class="mi">1</span><span class="o">.</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">p</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">++</span> <span class="o">(</span><span class="n">dx</span> <span class="o">*.</span> <span class="n">f</span><span class="o">,</span> <span class="n">dy</span>  <span class="o">*.</span> <span class="n">f</span><span class="o">)</span> <span class="k">in</span>
+  <span class="n">p</span>
+</pre></div>
+</div>
+<p>Let us experiment:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="n">clear_screen</span> <span class="bp">()</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(-</span><span class="mi">300</span><span class="o">.,</span> <span class="o">-</span><span class="mi">200</span><span class="o">.),</span> <span class="nc">Point</span> <span class="o">(</span><span class="mi">200</span><span class="o">.,</span> <span class="mi">248</span><span class="o">.));;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">z</span> <span class="o">=</span> <span class="n">gen_random_point_on_segment</span> <span class="n">s</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">z</span> <span class="o">:</span> <span class="n">point</span> <span class="o">=</span> <span class="nc">Point</span> <span class="o">(</span><span class="mi">51</span><span class="o">.</span><span class="mi">3295884528682222</span><span class="o">,</span> <span class="mi">114</span><span class="o">.</span><span class="mi">791311253769891</span><span class="o">)</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">draw_segment</span> <span class="n">s</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">draw_point</span> <span class="o">~</span><span class="n">color</span><span class="o">:</span><span class="nn">Graphics</span><span class="p">.</span><span class="n">red</span> <span class="n">z</span><span class="o">;;</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/cg04.png"><img alt="_images/cg04.png" class="align-center" src="_images/cg04.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="collinearity-of-segments">
+<h2>14.2.9. Collinearity of segments<a class="headerlink" href="#collinearity-of-segments" title="Permalink to this headline">¶</a></h2>
+<p>Two segments are <em>collinear</em> (ie., belong to the same straing line), if each of the points of one segment forms a 0-turn (i.e., neither left, nor right) with the two points of another segment. Therefore, we can check the collinearity of two segments <code class="docutils literal notranslate"><span class="pre">s1</span></code> and <code class="docutils literal notranslate"><span class="pre">s2</span></code> as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Checking if segments are collinear *)</span>
+<span class="k">let</span> <span class="n">collinear</span> <span class="n">s1</span> <span class="n">s2</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">p1</span><span class="o">,</span> <span class="n">p2</span><span class="o">)</span> <span class="o">=</span> <span class="n">s1</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">p3</span><span class="o">,</span> <span class="n">p4</span><span class="o">)</span> <span class="o">=</span> <span class="n">s2</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">d1</span> <span class="o">=</span> <span class="n">direction</span> <span class="n">p3</span> <span class="n">p4</span> <span class="n">p1</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">d2</span> <span class="o">=</span> <span class="n">direction</span> <span class="n">p3</span> <span class="n">p4</span> <span class="n">p2</span> <span class="k">in</span>
+  <span class="n">d1</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">d2</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>A point <code class="docutils literal notranslate"><span class="pre">p</span></code> is on a segment <code class="docutils literal notranslate"><span class="pre">[a,</span> <span class="pre">b]</span></code> iff <code class="docutils literal notranslate"><span class="pre">[a,</span> <span class="pre">p]</span></code> and <code class="docutils literal notranslate"><span class="pre">[p,</span> <span class="pre">b]</span></code> are collinear, and both coordinates of <code class="docutils literal notranslate"><span class="pre">p</span></code> lie between the coordinates of <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code>. Let us leverage thins insight using in the following checker:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Checking if a point is on a segment *)</span>
+<span class="k">let</span> <span class="n">point_on_segment</span> <span class="n">s</span> <span class="n">p</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">=</span> <span class="n">s</span> <span class="k">in</span>
+  <span class="k">if</span> <span class="n">not</span> <span class="o">(</span><span class="n">collinear</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">p</span><span class="o">)</span> <span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="n">b</span><span class="o">))</span>
+  <span class="k">then</span> <span class="bp">false</span>
+  <span class="k">else</span>
+    <span class="k">let</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">ax</span><span class="o">,</span> <span class="n">ay</span><span class="o">)</span> <span class="o">=</span> <span class="n">a</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">bx</span><span class="o">,</span> <span class="n">by</span><span class="o">)</span> <span class="o">=</span> <span class="n">b</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">px</span><span class="o">,</span> <span class="n">py</span><span class="o">)</span> <span class="o">=</span> <span class="n">p</span> <span class="k">in</span>
+    <span class="n">min</span> <span class="n">ax</span> <span class="n">bx</span> <span class="o">&lt;=~</span> <span class="n">px</span> <span class="o">&amp;&amp;</span>
+    <span class="n">px</span> <span class="o">&lt;=~</span> <span class="n">max</span> <span class="n">ax</span> <span class="n">bx</span> <span class="o">&amp;&amp;</span>
+    <span class="n">min</span> <span class="n">ay</span> <span class="n">by</span> <span class="o">&lt;=~</span> <span class="n">py</span> <span class="o">&amp;&amp;</span>
+    <span class="n">py</span> <span class="o">&lt;=~</span> <span class="n">max</span> <span class="n">ay</span> <span class="n">by</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="checking-for-intersections">
+<h2>14.2.10. Checking for intersections<a class="headerlink" href="#checking-for-intersections" title="Permalink to this headline">¶</a></h2>
+<p>Two segments <code class="docutils literal notranslate"><span class="pre">s1</span></code> and <code class="docutils literal notranslate"><span class="pre">s2</span></code> intersect if they</p>
+<ol class="loweralpha simple">
+<li>collinear and have common points, or</li>
+<li>intersect on one point precisely.</li>
+</ol>
+<p>The first case (a) can be checked by the following function:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">intersect_as_collinear</span> <span class="n">s1</span> <span class="n">s2</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="n">not</span> <span class="o">(</span><span class="n">collinear</span> <span class="n">s1</span> <span class="n">s2</span><span class="o">)</span> <span class="k">then</span> <span class="bp">false</span>
+  <span class="k">else</span>
+    <span class="k">let</span> <span class="o">(</span><span class="n">p1</span><span class="o">,</span> <span class="n">p2</span><span class="o">)</span> <span class="o">=</span> <span class="n">s1</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="o">(</span><span class="n">p3</span><span class="o">,</span> <span class="n">p4</span><span class="o">)</span> <span class="o">=</span> <span class="n">s2</span> <span class="k">in</span>
+    <span class="o">(</span><span class="n">point_on_segment</span> <span class="n">s1</span> <span class="n">p3</span> <span class="o">||</span> <span class="n">point_on_segment</span> <span class="n">s1</span> <span class="n">p4</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+    <span class="o">(</span><span class="n">point_on_segment</span> <span class="n">s2</span> <span class="n">p1</span> <span class="o">||</span> <span class="n">point_on_segment</span> <span class="n">s2</span> <span class="n">p2</span><span class="o">)</span>
+    <span class="o">||</span>
+    <span class="o">(</span><span class="n">point_on_segment</span> <span class="n">s2</span> <span class="n">p1</span> <span class="o">||</span> <span class="n">point_on_segment</span> <span class="n">s2</span> <span class="n">p2</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+    <span class="o">(</span><span class="n">point_on_segment</span> <span class="n">s1</span> <span class="n">p3</span> <span class="o">||</span> <span class="n">point_on_segment</span> <span class="n">s1</span> <span class="n">p4</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The case (b) is more tricky, and we use the following insight. Two segments intersect if each one of them <em>straddles</em> the line that another segment lies on. A segment <code class="docutils literal notranslate"><span class="pre">[p1;</span> <span class="pre">p2]</span></code> straddles a line if point <code class="docutils literal notranslate"><span class="pre">p1</span></code> lies on one side of this line, whereas <code class="docutils literal notranslate"><span class="pre">p2</span></code> lies on another side. We can check this by using the mechanism for determining turn directions, developed before:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Checking if two segments intersect *)</span>
+<span class="k">let</span> <span class="n">segments_intersect</span> <span class="n">s1</span> <span class="n">s2</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="n">collinear</span> <span class="n">s1</span> <span class="n">s2</span>
+  <span class="k">then</span> <span class="n">intersect_as_collinear</span> <span class="n">s1</span> <span class="n">s2</span>
+  <span class="k">else</span>
+    <span class="k">let</span> <span class="o">(</span><span class="n">p1</span><span class="o">,</span> <span class="n">p2</span><span class="o">)</span> <span class="o">=</span> <span class="n">s1</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="o">(</span><span class="n">p3</span><span class="o">,</span> <span class="n">p4</span><span class="o">)</span> <span class="o">=</span> <span class="n">s2</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">d1</span> <span class="o">=</span> <span class="n">direction</span> <span class="n">p3</span> <span class="n">p4</span> <span class="n">p1</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">d2</span> <span class="o">=</span> <span class="n">direction</span> <span class="n">p3</span> <span class="n">p4</span> <span class="n">p2</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">d3</span> <span class="o">=</span> <span class="n">direction</span> <span class="n">p1</span> <span class="n">p2</span> <span class="n">p3</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">d4</span> <span class="o">=</span> <span class="n">direction</span> <span class="n">p1</span> <span class="n">p2</span> <span class="n">p4</span> <span class="k">in</span>
+    <span class="o">(</span><span class="n">d1</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">d2</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">d1</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">d2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+    <span class="o">(</span><span class="n">d3</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">d4</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">d3</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">d4</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="finding-intersections">
+<h2>14.2.11. Finding intersections<a class="headerlink" href="#finding-intersections" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes we need to find the exact points where two sedments intersect.</p>
+<p>In the case of collinear segments that intersect this is reduced to the enumeration of four possible options (at least one end of some segment should belong to another seegment).</p>
+<p>The case of non-collinear segments <code class="docutils literal notranslate"><span class="pre">[p1;</span> <span class="pre">p2]</span></code> and <code class="docutils literal notranslate"><span class="pre">[p3;</span> <span class="pre">p4]</span></code> can be solved if each is represented in a form <span class="math notranslate nohighlight">\(p_1 + t r\)</span> and <span class="math notranslate nohighlight">\(p_3 + u s\)</span>, where <span class="math notranslate nohighlight">\(t\)</span> and <span class="math notranslate nohighlight">\(s\)</span> are the vectors connecting the end-points of each segment correspondingnly, and <span class="math notranslate nohighlight">\(t\)</span> and <span class="math notranslate nohighlight">\(u\)</span> are scalar values ranging from 0 to 1. We need to find <span class="math notranslate nohighlight">\(t\)</span> and <cite>u</cite> such that <span class="math notranslate nohighlight">\(p_1 + t r = p_3 + u s\)</span>. To solve this equation (which has two variables), we need to multiple both sides by, using the cross-product, by either <span class="math notranslate nohighlight">\(r\)</span> or <span class="math notranslate nohighlight">\(s\)</span>. In the former case we get <span class="math notranslate nohighlight">\((p_1 + t r) \times s = (p_3 + u s) \times s\)</span>. Since <span class="math notranslate nohighlight">\(s \times s\)</span> is a zero vector, we can get rid of the variable <span class="math notranslate nohighlight">\(u\)</span>, and find the desired <span class="math notranslate nohighlight">\(t\)</span> as in the implementation below:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">find_intersection</span> <span class="n">s1</span> <span class="n">s2</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">p1</span><span class="o">,</span> <span class="n">p2</span><span class="o">)</span> <span class="o">=</span> <span class="n">s1</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">p3</span><span class="o">,</span> <span class="n">p4</span><span class="o">)</span> <span class="o">=</span> <span class="n">s2</span> <span class="k">in</span>
+
+  <span class="k">if</span> <span class="n">not</span> <span class="o">(</span><span class="n">segments_intersect</span> <span class="n">s1</span> <span class="n">s2</span><span class="o">)</span> <span class="k">then</span> <span class="nc">None</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">collinear</span> <span class="n">s1</span> <span class="n">s2</span>
+  <span class="k">then</span>
+    <span class="k">if</span> <span class="n">point_on_segment</span> <span class="n">s1</span> <span class="n">p3</span> <span class="k">then</span> <span class="nc">Some</span> <span class="n">p3</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="n">point_on_segment</span> <span class="n">s1</span> <span class="n">p4</span> <span class="k">then</span> <span class="nc">Some</span> <span class="n">p4</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="n">point_on_segment</span> <span class="n">s2</span> <span class="n">p1</span> <span class="k">then</span> <span class="nc">Some</span> <span class="n">p1</span>
+    <span class="k">else</span> <span class="nc">Some</span> <span class="n">p2</span>
+  <span class="k">else</span>
+    <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">get_x</span> <span class="n">p2</span> <span class="o">-.</span> <span class="n">get_x</span> <span class="n">p1</span><span class="o">,</span> <span class="n">get_y</span> <span class="n">p2</span> <span class="o">-.</span> <span class="n">get_y</span> <span class="n">p1</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">get_x</span> <span class="n">p4</span> <span class="o">-.</span> <span class="n">get_x</span> <span class="n">p3</span><span class="o">,</span> <span class="n">get_y</span> <span class="n">p4</span> <span class="o">-.</span> <span class="n">get_y</span> <span class="n">p3</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">assert</span> <span class="o">(</span><span class="n">not</span> <span class="o">@@</span> <span class="n">is_zero</span> <span class="o">@@</span> <span class="n">cross_product</span> <span class="n">r</span> <span class="n">s</span><span class="o">);</span>
+
+    <span class="c">(*</span>
+<span class="c">     (p1 + t r) × s = (p3 + u s) × s,</span>
+
+<span class="c">      s x s = 0, hence</span>
+
+<span class="c">      t = (p3 − p1) × s / (r × s)</span>
+<span class="c">    *)</span>
+
+    <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="o">(</span><span class="n">cross_product</span> <span class="o">(</span><span class="n">p3</span> <span class="o">--</span> <span class="n">p1</span><span class="o">)</span> <span class="n">s</span><span class="o">)</span> <span class="o">/.</span> <span class="o">(</span><span class="n">cross_product</span> <span class="n">r</span> <span class="n">s</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">rx</span><span class="o">,</span> <span class="n">ry</span><span class="o">)</span> <span class="o">=</span> <span class="n">r</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">p</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">++</span> <span class="o">(</span><span class="n">rx</span> <span class="o">*.</span> <span class="n">t</span><span class="o">,</span> <span class="n">ry</span> <span class="o">*.</span> <span class="n">t</span><span class="o">)</span> <span class="k">in</span>
+    <span class="nc">Some</span> <span class="n">p</span>
+</pre></div>
+</div>
+<p>We can graphically validate the result:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">s1</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="mi">113</span><span class="o">.</span><span class="mi">756053827471192</span><span class="o">,</span> <span class="o">-</span><span class="mi">175</span><span class="o">.</span><span class="mi">292497988606272</span><span class="o">),</span>
+ <span class="nc">Point</span> <span class="o">(</span><span class="mi">18</span><span class="o">.</span><span class="mi">0694083766823042</span><span class="o">,</span> <span class="mi">124</span><span class="o">.</span><span class="mi">535770332375932</span><span class="o">));;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">s2</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="mi">59</span><span class="o">.</span><span class="mi">0722072343553464</span><span class="o">,</span> <span class="o">-</span><span class="mi">171</span><span class="o">.</span><span class="mi">91124390306868</span><span class="o">),</span>
+   <span class="nc">Point</span> <span class="o">(</span><span class="mi">139</span><span class="o">.</span><span class="mi">282462974003465</span><span class="o">,</span> <span class="mi">20</span><span class="o">.</span><span class="mi">2804812244832249</span><span class="o">));;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">draw_segment</span> <span class="n">s1</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">draw_segment</span> <span class="n">s2</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">z</span> <span class="o">=</span> <span class="nn">Week_01</span><span class="p">.</span><span class="n">get_exn</span> <span class="o">@@</span> <span class="n">find_intersection</span> <span class="n">s1</span> <span class="n">s2</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">draw_point</span> <span class="o">~</span><span class="n">color</span><span class="o">:</span><span class="nn">Graphics</span><span class="p">.</span><span class="n">red</span> <span class="n">z</span><span class="o">;;</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/cg06.png"><img alt="_images/cg06.png" class="align-center" src="_images/cg06.png" style="width: 700px;" /></a>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-14_polygons.html" class="btn btn-neutral float-right" title="14.3. Working with Polygons" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-14_geometry.html" class="btn btn-neutral" title="14.1. Basics of Computational Geometry" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,273 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>14. YSC2229 Lecture Notes, Week 14 &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="14.1. Basics of Computational Geometry" href="week-14_geometry.html" />
+    <link rel="prev" title="13.4. Exercises" href="week-13_exercises.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-11.html">11. YSC2229 Lecture Notes, Week 11</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-12.html">12. YSC2229 Lecture Notes, Week 12</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-13.html">13. YSC2229 Lecture Notes, Week 13</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">14. YSC2229 Lecture Notes, Week 14</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-14_geometry.html">14.1. Basics of Computational Geometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_points.html">14.2. Points, Segments and their Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_polygons.html">14.3. Working with Polygons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_convex_hulls.html">14.4. Convex Hulls</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>14. YSC2229 Lecture Notes, Week 14</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ysc2229-lecture-notes-week-14">
+<h1>14. YSC2229 Lecture Notes, Week 14<a class="headerlink" href="#ysc2229-lecture-notes-week-14" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="week-14_geometry.html">14.1. Basics of Computational Geometry</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-14_geometry.html#working-with-graphics-in-ocaml">14.1.1. Working with graphics in OCaml</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-14_points.html">14.2. Points, Segments and their Properties</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-14_points.html#on-precision-and-epsilon-equality">14.2.1. On precision and epsilon-equality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_points.html#points-on-a-two-dimensional-plane">14.2.2. Points on a two-dimensional plane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_points.html#points-as-vectors">14.2.3. Points as vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_points.html#scalar-product-of-vectors">14.2.4. Scalar product of vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_points.html#polar-coordinate-system">14.2.5. Polar coordinate system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_points.html#vector-product-and-its-properties">14.2.6. Vector product and its properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_points.html#segments-on-a-plane">14.2.7. Segments on a plane</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_points.html#generating-random-points-on-a-segment">14.2.8. Generating random points on a segment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_points.html#collinearity-of-segments">14.2.9. Collinearity of segments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_points.html#checking-for-intersections">14.2.10. Checking for intersections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_points.html#finding-intersections">14.2.11. Finding intersections</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-14_polygons.html">14.3. Working with Polygons</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-14_polygons.html#encoding-and-rendering-polygons">14.3.1. Encoding and rendering polygons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_polygons.html#some-useful-polygons">14.3.2. Some useful polygons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_polygons.html#basic-polygon-manipulations">14.3.3. Basic polygon manipulations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_polygons.html#queries-about-polygons">14.3.4. Queries about polygons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_polygons.html#intermezzo-rays-and-intersections">14.3.5. Intermezzo: rays and intersections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_polygons.html#point-within-an-polygon">14.3.6. Point within an polygon</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-14_convex_hulls.html">14.4. Convex Hulls</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-14_convex_hulls.html#plane-sweeping-algorithm">14.4.1. Plane-sweeping algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_convex_hulls.html#graham-scan-invariant">14.4.2. Graham scan invariant</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p><strong>Supplementary materials</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-geometry/blob/master/lib/GraphicUtil.ml">Working with graphics in OCaml</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-geometry/blob/master/lib/Points.ml">Points and Segments</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-geometry/blob/master/lib/Polygons.ml">Polygons and operations on them</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-geometry/blob/master/lib/ConvexHulls.ml">Convex Hulls</a></li>
+<li><a class="reference external" href="https://github.com/ilyasergey/ysc2229-geometry/blob/master/lib/Tests.ml">Automated Tests</a></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-14_geometry.html" class="btn btn-neutral float-right" title="14.1. Basics of Computational Geometry" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-13_exercises.html" class="btn btn-neutral" title="13.4. Exercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

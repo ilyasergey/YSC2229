@@ -1,0 +1,286 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>14.1. Basics of Computational Geometry &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="14.2. Points, Segments and their Properties" href="week-14_points.html" />
+    <link rel="prev" title="14. YSC2229 Lecture Notes, Week 14" href="YSC2229-lecture-notes-week-14.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-11.html">11. YSC2229 Lecture Notes, Week 11</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-12.html">12. YSC2229 Lecture Notes, Week 12</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-13.html">13. YSC2229 Lecture Notes, Week 13</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-14.html">14. YSC2229 Lecture Notes, Week 14</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">14.1. Basics of Computational Geometry</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#working-with-graphics-in-ocaml">14.1.1. Working with graphics in OCaml</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_points.html">14.2. Points, Segments and their Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_polygons.html">14.3. Working with Polygons</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_convex_hulls.html">14.4. Convex Hulls</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="YSC2229-lecture-notes-week-14.html">14. YSC2229 Lecture Notes, Week 14</a> &raquo;</li>
+        
+      <li>14.1. Basics of Computational Geometry</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="basics-of-computational-geometry">
+<span id="geometry"></span><h1>14.1. Basics of Computational Geometry<a class="headerlink" href="#basics-of-computational-geometry" title="Permalink to this headline">¶</a></h1>
+<p>Computational geometry (CG) is a sub-area of computer sicence that studies data structures and algorithms for solving geometric problems, which are common in computer vision, metallurgy, manufacturing, forestry, and navigation.</p>
+<p>Those problem as we know them from the high school, often have a “continuous” nature, so the main task of computational geometry is to reduce them to familiar abstractions, in terms of the data structures that we have already studies. In this last chapter of this course, we will take a look at some basic constructions of CG and will learn how to represent them graphically, as well as how to compute some of their intrinsic properties.</p>
+<div class="section" id="working-with-graphics-in-ocaml">
+<h2>14.1.1. Working with graphics in OCaml<a class="headerlink" href="#working-with-graphics-in-ocaml" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-geometry/blob/master/lib/GraphicUtil.ml">https://github.com/ilyasergey/ysc2229-geometry/blob/master/lib/GraphicUtil.ml</a></p>
+<p>It is not so much to talk about geometric problems without being able to visualise them.</p>
+<p>To render the shapes and the results of the algorithms, we will employ OCaml’s <code class="docutils literal notranslate"><span class="pre">Graphics</span></code> package, which providese very primitive (yet sufficient for oour needs) support for rendering two-dimensional shapes.</p>
+<p>The detailed instructions on how to install and run the functions from the <code class="docutils literal notranslate"><span class="pre">Graphics</span></code> package are given in <a class="reference external" href="https://github.com/ilyasergey/ocaml-graphics-demo">this demo repository</a>.</p>
+<p>It is quite easy to start working with graphics. For instance running the following command opens a window that is 800 pixels wide and 600 tall:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">Graphics</span><span class="o">;;</span>
+
+<span class="n">open_graph</span> <span class="s2">&quot; 800x600&quot;</span>
+</pre></div>
+</div>
+<p>The axes of the window start in the bottom left corner, and go right and up. It is more convenient to have our layour “centered” around the actual center of the image, so we could make us of the negative parts of the axes as well. This is why, when rendering our figures, we will always shift them with respect to a certain origin, which we choose to be the center of our <code class="docutils literal notranslate"><span class="pre">800x600</span></code> pixels window:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">origin</span> <span class="o">=</span> <span class="o">(</span><span class="mi">400</span><span class="o">,</span> <span class="mi">300</span><span class="o">)</span>
+
+<span class="k">let</span> <span class="n">go_to_origin</span> <span class="o">_</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="n">fst</span> <span class="n">origin</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="n">snd</span> <span class="n">origin</span> <span class="k">in</span>
+  <span class="n">moveto</span> <span class="n">x</span> <span class="n">y</span><span class="o">;</span>
+  <span class="n">set_color</span> <span class="n">black</span>
+</pre></div>
+</div>
+<p>In the function <code class="docutils literal notranslate"><span class="pre">go_to_origin</span></code>, the command <code class="docutils literal notranslate"><span class="pre">moveto</span></code> transfeers the “invisible” pointer to the origin, and sets the default drawing color to be <code class="docutils literal notranslate"><span class="pre">Graphics.black</span></code> (other collors are possible and can be set up using the RGB scheme).</p>
+<p>Using the following function we can draw a “grid” of the two axes, to help the orientation:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">draw_axes</span> <span class="o">_</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="n">fst</span> <span class="n">origin</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="n">snd</span> <span class="n">origin</span> <span class="k">in</span>
+  <span class="n">set_color</span> <span class="n">green</span><span class="o">;</span>
+  <span class="n">moveto</span> <span class="mi">0</span> <span class="n">y</span><span class="o">;</span>
+  <span class="n">lineto</span> <span class="o">(</span><span class="n">x</span> <span class="o">*</span> <span class="mi">2</span><span class="o">)</span> <span class="n">y</span><span class="o">;</span>
+  <span class="n">moveto</span> <span class="n">x</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="n">lineto</span> <span class="n">x</span> <span class="o">(</span><span class="n">y</span> <span class="o">*</span> <span class="mi">2</span><span class="o">);</span>
+  <span class="n">moveto</span> <span class="n">x</span> <span class="n">y</span><span class="o">;</span>
+  <span class="n">set_color</span> <span class="n">black</span>
+</pre></div>
+</div>
+<p>Using it, we can create a new window with the axes allready drawn:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">mk_screen</span> <span class="o">_</span> <span class="o">=</span>
+  <span class="n">open_graph</span> <span class="s2">&quot; 800x600&quot;</span><span class="o">;</span>
+  <span class="n">draw_axes</span> <span class="bp">()</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/cg01.png"><img alt="_images/cg01.png" class="align-center" src="_images/cg01.png" style="width: 700px;" /></a>
+<p>Finally, we can remove everything but the axes by running the following function:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">clear_screen</span> <span class="o">_</span> <span class="o">=</span>
+  <span class="n">clear_graph</span> <span class="bp">()</span><span class="o">;</span>
+  <span class="n">draw_axes</span> <span class="bp">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-14_points.html" class="btn btn-neutral float-right" title="14.2. Points, Segments and their Properties" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="YSC2229-lecture-notes-week-14.html" class="btn btn-neutral" title="14. YSC2229 Lecture Notes, Week 14" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

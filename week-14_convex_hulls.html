@@ -1,0 +1,363 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>14.4. Convex Hulls &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="14.3. Working with Polygons" href="week-14_polygons.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-01.html">1. YSC2229 Lecture Notes, Week 01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-02.html">2. YSC2229 Lecture Notes, Week 02</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-03.html">3. YSC2229 Lecture Notes, Week 03</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-04.html">4. YSC2229 Lecture Notes, Week 04</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-05.html">5. YSC2229 Lecture Notes, Week 05</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-06.html">6. YSC2229 Lecture Notes, Week 06</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-midterm-tasks.html">7. YSC2229: Midterm Project, Week 07</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-08.html">8. YSC2229 Lecture Notes, Week 08</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-09.html">9. YSC2229 Lecture Notes, Week 09</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-10.html">10. YSC2229 Lecture Notes, Week 10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-11.html">11. YSC2229 Lecture Notes, Week 11</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-12.html">12. YSC2229 Lecture Notes, Week 12</a></li>
+<li class="toctree-l1"><a class="reference internal" href="YSC2229-lecture-notes-week-13.html">13. YSC2229 Lecture Notes, Week 13</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="YSC2229-lecture-notes-week-14.html">14. YSC2229 Lecture Notes, Week 14</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-14_geometry.html">14.1. Basics of Computational Geometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_points.html">14.2. Points, Segments and their Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-14_polygons.html">14.3. Working with Polygons</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">14.4. Convex Hulls</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#plane-sweeping-algorithm">14.4.1. Plane-sweeping algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#graham-scan-invariant">14.4.2. Graham scan invariant</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="YSC2229-lecture-notes-week-14.html">14. YSC2229 Lecture Notes, Week 14</a> &raquo;</li>
+        
+      <li>14.4. Convex Hulls</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="convex-hulls">
+<span id="convex"></span><h1>14.4. Convex Hulls<a class="headerlink" href="#convex-hulls" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://github.com/ilyasergey/ysc2229-geometry/blob/master/lib/ConvexHulls.ml">https://github.com/ilyasergey/ysc2229-geometry/blob/master/lib/ConvexHulls.ml</a></p>
+<p>In the last chapter of our brief introduction to problems, techniques, and algorithms of computational geometry, we take a look at a very simple yet practically relevant problem: constructing a convex hull of a set of points. A convex hull for a set of points <span class="math notranslate nohighlight">\(S\)</span> is a smalles polygon (in terms of are) such that all points from <span class="math notranslate nohighlight">\(S\)</span> are contained within it, or are lying on its boundary.</p>
+<p>The definition implies that the vertices of the polygons are some points from <span class="math notranslate nohighlight">\(S\)</span>.</p>
+<p>The image below shows an example of a convex hull for a set of 50 points:</p>
+<a class="reference internal image-reference" href="_images/cg10.png"><img alt="_images/cg10.png" class="align-center" src="_images/cg10.png" style="width: 700px;" /></a>
+<div class="section" id="plane-sweeping-algorithm">
+<h2>14.4.1. Plane-sweeping algorithm<a class="headerlink" href="#plane-sweeping-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>Let us study the following elegant algorithm, known as <a class="reference external" href="https://en.wikipedia.org/wiki/Graham_scan">Graham scan</a>, for computing a convex hull fora set of two-dimensional points.</p>
+<p>The algorithm relies on sorting and implements a “plane-sweeping” intuition by considering all points in a certain sequence, making sure to include only those to the hull-in-construction, that do not disrupt the convexity property.</p>
+<p>Our construction of a convex hull will rely on imperative stacks, which we will extend with the following definitions:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">include</span> <span class="nc">Polygons</span>
+<span class="k">open</span> <span class="nc">Week_06</span>
+
+<span class="k">module</span> <span class="nc">StackX</span> <span class="o">(</span><span class="nc">S</span><span class="o">:</span> <span class="nc">AbstractStack</span><span class="o">)</span> <span class="o">=</span> <span class="k">struct</span>
+  <span class="k">include</span> <span class="nc">S</span>
+
+  <span class="k">let</span> <span class="n">top</span> <span class="n">s</span> <span class="o">=</span> <span class="k">match</span> <span class="n">pop</span> <span class="n">s</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="nc">None</span>
+    <span class="o">|</span> <span class="nc">Some</span> <span class="n">x</span> <span class="o">-&gt;</span>
+      <span class="n">push</span> <span class="n">s</span> <span class="n">x</span><span class="o">;</span>
+      <span class="nc">Some</span> <span class="n">x</span>
+
+  <span class="k">let</span> <span class="n">next_to_top</span> <span class="n">s</span> <span class="o">=</span> <span class="k">match</span> <span class="n">pop</span> <span class="n">s</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="nc">None</span>
+    <span class="o">|</span> <span class="nc">Some</span> <span class="n">x</span> <span class="o">-&gt;</span>
+      <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="n">top</span> <span class="n">s</span> <span class="k">in</span>
+      <span class="n">push</span> <span class="n">s</span> <span class="n">x</span><span class="o">;</span>
+      <span class="n">y</span>
+
+  <span class="k">let</span> <span class="n">list_of_stack</span> <span class="n">s</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">ref</span> <span class="bp">[]</span> <span class="k">in</span>
+    <span class="k">while</span> <span class="n">not</span> <span class="o">(</span><span class="n">is_empty</span> <span class="n">s</span><span class="o">)</span> <span class="k">do</span>
+      <span class="k">let</span> <span class="n">e</span> <span class="o">=</span> <span class="nn">Week_01</span><span class="p">.</span><span class="n">get_exn</span> <span class="o">@@</span> <span class="n">pop</span> <span class="n">s</span> <span class="k">in</span>
+      <span class="n">res</span> <span class="o">:=</span> <span class="n">e</span> <span class="o">::</span> <span class="o">!</span><span class="n">res</span>
+    <span class="k">done</span><span class="o">;</span>
+    <span class="o">!</span><span class="n">res</span>
+
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>The crux of the algorithm is to sort the set of points twice, using different comparisons:</p>
+<ol class="loweralpha simple">
+<li>The first sort is done by <span class="math notranslate nohighlight">\(y\)</span>-coordinate;</li>
+<li>The second sort is done by a radial angle from the point <span class="math notranslate nohighlight">\(p_0\)</span> with a smallest <span class="math notranslate nohighlight">\(y\)</span> coordinate (and leftmost of points with the smallest <span class="math notranslate nohighlight">\(y\)</span>-coordinate).</li>
+</ol>
+<p>For these sortins, we will need the following two procedures:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Sort by axis Y *)</span>
+<span class="k">let</span> <span class="n">axis_y_sorter</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x1</span><span class="o">,</span> <span class="n">y1</span><span class="o">))</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x2</span><span class="o">,</span> <span class="n">y2</span><span class="o">))</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="n">y1</span> <span class="o">&lt;</span> <span class="n">y2</span> <span class="k">then</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="k">if</span> <span class="n">y1</span> <span class="o">&gt;</span> <span class="n">y2</span> <span class="k">then</span> <span class="mi">1</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">x1</span> <span class="o">&lt;</span> <span class="n">x2</span> <span class="k">then</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="k">if</span> <span class="n">x1</span> <span class="o">&gt;</span> <span class="n">x1</span> <span class="k">then</span> <span class="mi">1</span>
+  <span class="k">else</span> <span class="mi">0</span>
+
+<span class="c">(* Sort by polar angle wrt p0 *)</span>
+<span class="k">let</span> <span class="n">polar_angle_sorter</span> <span class="n">p0</span> <span class="n">p1</span> <span class="n">p2</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="nc">Polar</span> <span class="o">(</span><span class="n">r1</span><span class="o">,</span> <span class="n">a1</span><span class="o">)</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">--</span> <span class="n">p0</span> <span class="o">|&gt;</span> <span class="n">polar_of_cartesian</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="nc">Polar</span> <span class="o">(</span><span class="n">r2</span><span class="o">,</span> <span class="n">a2</span><span class="o">)</span> <span class="o">=</span> <span class="n">p2</span> <span class="o">--</span> <span class="n">p0</span> <span class="o">|&gt;</span> <span class="n">polar_of_cartesian</span> <span class="k">in</span>
+  <span class="k">if</span> <span class="n">a1</span> <span class="o">&lt;</span> <span class="n">a2</span> <span class="k">then</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="k">if</span> <span class="n">a1</span> <span class="o">&gt;</span> <span class="n">a2</span> <span class="k">then</span> <span class="mi">1</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">r1</span> <span class="o">&lt;</span> <span class="n">r2</span> <span class="k">then</span> <span class="o">-</span><span class="mi">1</span> <span class="k">else</span> <span class="k">if</span> <span class="n">r1</span> <span class="o">&gt;</span> <span class="n">r2</span> <span class="k">then</span> <span class="mi">1</span>
+  <span class="k">else</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>The main Graham algorithm is as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Graham&#39;s Scan *)</span>
+<span class="k">let</span> <span class="n">convex_hull</span> <span class="n">points</span> <span class="o">=</span>
+  <span class="c">(* At least three points *)</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">length</span> <span class="n">points</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="o">);</span>
+
+  <span class="k">let</span> <span class="n">y_sorted</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">sort</span> <span class="n">axis_y_sorter</span> <span class="n">points</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">p0</span> <span class="o">=</span> <span class="n">y_sorted</span> <span class="o">|&gt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">hd</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">p1</span> <span class="o">::</span> <span class="n">p2</span> <span class="o">::</span> <span class="n">rest</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">tl</span> <span class="n">y_sorted</span> <span class="o">|&gt;</span>
+                         <span class="nn">List</span><span class="p">.</span><span class="n">sort</span> <span class="o">(</span><span class="n">polar_angle_sorter</span> <span class="n">p0</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">CHStack</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">Week_01</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="n">mk_stack</span> <span class="mi">0</span> <span class="k">in</span>
+  <span class="n">push</span> <span class="n">s</span> <span class="n">p0</span><span class="o">;</span>
+  <span class="n">push</span> <span class="n">s</span> <span class="n">p1</span><span class="o">;</span>
+  <span class="n">push</span> <span class="n">s</span> <span class="n">p2</span><span class="o">;</span>
+
+  <span class="k">let</span> <span class="n">non_left_turn</span> <span class="n">p</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">q1</span> <span class="o">=</span> <span class="n">next_to_top</span> <span class="n">s</span> <span class="o">|&gt;</span> <span class="n">get_exn</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">q2</span> <span class="o">=</span> <span class="n">top</span> <span class="n">s</span> <span class="o">|&gt;</span> <span class="n">get_exn</span> <span class="k">in</span>
+    <span class="n">direction</span> <span class="n">q1</span> <span class="n">q2</span> <span class="n">p</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+  <span class="k">in</span>
+
+  <span class="c">(* Main loop *)</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span>
+      <span class="k">while</span> <span class="n">non_left_turn</span> <span class="n">p</span> <span class="k">do</span>
+        <span class="k">let</span> <span class="o">_</span> <span class="o">=</span> <span class="n">pop</span> <span class="n">s</span> <span class="k">in</span> <span class="bp">()</span>
+      <span class="k">done</span><span class="o">;</span>
+      <span class="n">push</span> <span class="n">s</span> <span class="n">p</span><span class="o">)</span> <span class="n">rest</span><span class="o">;</span>
+
+  <span class="n">list_of_stack</span> <span class="n">s</span>
+</pre></div>
+</div>
+<p>The main loop checks all the vertices in the order of the increasing angle from <code class="docutils literal notranslate"><span class="pre">p0</span></code>, making sure that the currently build convex hull for a subset is convex. It removes the points that violat this invariants from the</p>
+<p><em>Question:</em> What is the complexity of the procedure in terms of the size <code class="docutils literal notranslate"><span class="pre">n</span></code> of the set of points?</p>
+</div>
+<div class="section" id="graham-scan-invariant">
+<h2>14.4.2. Graham scan invariant<a class="headerlink" href="#graham-scan-invariant" title="Permalink to this headline">¶</a></h2>
+<p>A moment from the middle of Graham scan is shown on a picture below:</p>
+<a class="reference internal image-reference" href="_images/cg11.png"><img alt="_images/cg11.png" class="align-center" src="_images/cg11.png" style="width: 700px;" /></a>
+<p>It is easy to see that the invariant of the main loop is that all points in the stack <code class="docutils literal notranslate"><span class="pre">s</span></code> always correspond to a convex polygon containing all the points observed so far. Hence, by induction, the resulting polygon is also convex.</p>
+<p>Since we have ways to check both these properties (convexity and containment of a point in a polygon, we can engineer the following tests for Graham scan).</p>
+<p>First, let us generate a set of random points of a fixed size <code class="docutils literal notranslate"><span class="pre">n</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">gen_random_points</span> <span class="o">?</span><span class="n">dim</span><span class="o">:(</span><span class="n">dim</span> <span class="o">=</span> <span class="mi">550</span><span class="o">.)</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">ref</span> <span class="bp">[]</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="o">_</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="n">p</span> <span class="o">=</span> <span class="n">gen_random_point</span> <span class="n">dim</span> <span class="k">in</span>
+    <span class="n">res</span> <span class="o">:=</span> <span class="n">p</span> <span class="o">::</span> <span class="o">!</span><span class="n">res</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="o">!</span><span class="n">res</span>
+</pre></div>
+</div>
+<p>Second, let us use it in a randomised test:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">ConvexHulls</span>
+
+<span class="k">let</span> <span class="n">test_random_ch</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">ps</span> <span class="o">=</span> <span class="n">gen_random_points</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ch</span> <span class="o">=</span> <span class="n">convex_hull</span> <span class="n">ps</span> <span class="k">in</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">is_convex</span> <span class="n">ch</span><span class="o">);</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="o">(</span><span class="n">point_within_polygon</span> <span class="n">ch</span><span class="o">)</span> <span class="n">ps</span><span class="o">)</span>
+
+
+<span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="o">_</span> <span class="o">=</span>
+  <span class="k">for</span> <span class="o">_</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="mi">100</span> <span class="k">do</span>
+    <span class="n">test_random_ch</span> <span class="mi">50</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="bp">true</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="week-14_polygons.html" class="btn btn-neutral" title="14.3. Working with Polygons" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
