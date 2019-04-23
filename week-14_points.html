@@ -493,11 +493,10 @@
   <span class="k">else</span>
     <span class="k">let</span> <span class="o">(</span><span class="n">p1</span><span class="o">,</span> <span class="n">p2</span><span class="o">)</span> <span class="o">=</span> <span class="n">s1</span> <span class="k">in</span>
     <span class="k">let</span> <span class="o">(</span><span class="n">p3</span><span class="o">,</span> <span class="n">p4</span><span class="o">)</span> <span class="o">=</span> <span class="n">s2</span> <span class="k">in</span>
-    <span class="o">(</span><span class="n">point_on_segment</span> <span class="n">s1</span> <span class="n">p3</span> <span class="o">||</span> <span class="n">point_on_segment</span> <span class="n">s1</span> <span class="n">p4</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
-    <span class="o">(</span><span class="n">point_on_segment</span> <span class="n">s2</span> <span class="n">p1</span> <span class="o">||</span> <span class="n">point_on_segment</span> <span class="n">s2</span> <span class="n">p2</span><span class="o">)</span>
-    <span class="o">||</span>
-    <span class="o">(</span><span class="n">point_on_segment</span> <span class="n">s2</span> <span class="n">p1</span> <span class="o">||</span> <span class="n">point_on_segment</span> <span class="n">s2</span> <span class="n">p2</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
-    <span class="o">(</span><span class="n">point_on_segment</span> <span class="n">s1</span> <span class="n">p3</span> <span class="o">||</span> <span class="n">point_on_segment</span> <span class="n">s1</span> <span class="n">p4</span><span class="o">)</span>
+    <span class="n">point_on_segment</span> <span class="n">s1</span> <span class="n">p3</span> <span class="o">||</span>
+    <span class="n">point_on_segment</span> <span class="n">s1</span> <span class="n">p4</span> <span class="o">||</span>
+    <span class="n">point_on_segment</span> <span class="n">s2</span> <span class="n">p1</span> <span class="o">||</span>
+    <span class="n">point_on_segment</span> <span class="n">s2</span> <span class="n">p2</span>
 </pre></div>
 </div>
 <p>The case (b) is more tricky, and we use the following insight. Two segments intersect if each one of them <em>straddles</em> the line that another segment lies on. A segment <code class="docutils literal notranslate"><span class="pre">[p1;</span> <span class="pre">p2]</span></code> straddles a line if point <code class="docutils literal notranslate"><span class="pre">p1</span></code> lies on one side of this line, whereas <code class="docutils literal notranslate"><span class="pre">p2</span></code> lies on another side. We can check this by using the mechanism for determining turn directions, developed before:</p>
@@ -512,8 +511,18 @@
     <span class="k">let</span> <span class="n">d2</span> <span class="o">=</span> <span class="n">direction</span> <span class="n">p3</span> <span class="n">p4</span> <span class="n">p2</span> <span class="k">in</span>
     <span class="k">let</span> <span class="n">d3</span> <span class="o">=</span> <span class="n">direction</span> <span class="n">p1</span> <span class="n">p2</span> <span class="n">p3</span> <span class="k">in</span>
     <span class="k">let</span> <span class="n">d4</span> <span class="o">=</span> <span class="n">direction</span> <span class="n">p1</span> <span class="n">p2</span> <span class="n">p4</span> <span class="k">in</span>
-    <span class="o">(</span><span class="n">d1</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">d2</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">d1</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">d2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
-    <span class="o">(</span><span class="n">d3</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">d4</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">d3</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">d4</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">d1</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">d2</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">d1</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">d2</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+       <span class="o">(</span><span class="n">d3</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">d4</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">d3</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">d4</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">)</span>
+    <span class="k">then</span> <span class="bp">true</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="n">d1</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">point_on_segment</span> <span class="n">s2</span> <span class="n">p1</span>
+    <span class="k">then</span> <span class="bp">true</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="n">d2</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">point_on_segment</span> <span class="n">s2</span> <span class="n">p3</span>
+    <span class="k">then</span> <span class="bp">true</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="n">d3</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">point_on_segment</span> <span class="n">s1</span> <span class="n">p3</span>
+    <span class="k">then</span> <span class="bp">true</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="n">d4</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">point_on_segment</span> <span class="n">s1</span> <span class="n">p4</span>
+    <span class="k">then</span> <span class="bp">true</span>
+    <span class="k">else</span> <span class="bp">false</span>
 </pre></div>
 </div>
 </div>

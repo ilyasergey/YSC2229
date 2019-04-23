@@ -341,11 +341,10 @@ The first case (a) can be checked by the following function::
    else
      let (p1, p2) = s1 in
      let (p3, p4) = s2 in
-     (point_on_segment s1 p3 || point_on_segment s1 p4) &&
-     (point_on_segment s2 p1 || point_on_segment s2 p2)
-     ||
-     (point_on_segment s2 p1 || point_on_segment s2 p2) && 
-     (point_on_segment s1 p3 || point_on_segment s1 p4)
+     point_on_segment s1 p3 ||
+     point_on_segment s1 p4 ||
+     point_on_segment s2 p1 ||
+     point_on_segment s2 p2
 
 The case (b) is more tricky, and we use the following insight. Two segments intersect if each one of them *straddles* the line that another segment lies on. A segment ``[p1; p2]`` straddles a line if point ``p1`` lies on one side of this line, whereas ``p2`` lies on another side. We can check this by using the mechanism for determining turn directions, developed before::
 
@@ -360,8 +359,18 @@ The case (b) is more tricky, and we use the following insight. Two segments inte
      let d2 = direction p3 p4 p2 in
      let d3 = direction p1 p2 p3 in
      let d4 = direction p1 p2 p4 in
-     (d1 < 0 && d2 > 0 || d1 > 0 && d2 < 0) &&
-     (d3 < 0 && d4 > 0 || d3 > 0 && d4 < 0)
+     if (d1 < 0 && d2 > 0 || d1 > 0 && d2 < 0) &&
+        (d3 < 0 && d4 > 0 || d3 > 0 && d4 < 0)
+     then true
+     else if d1 = 0 && point_on_segment s2 p1
+     then true
+     else if d2 = 0 && point_on_segment s2 p3
+     then true
+     else if d3 = 0 && point_on_segment s1 p3
+     then true
+     else if d4 = 0 && point_on_segment s1 p4
+     then true
+     else false
 
 Finding intersections
 ---------------------
