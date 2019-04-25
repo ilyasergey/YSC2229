@@ -466,12 +466,34 @@
     <span class="k">let</span> <span class="n">dir1</span> <span class="o">=</span> <span class="n">direction</span> <span class="n">r</span> <span class="n">s</span> <span class="n">a</span> <span class="k">in</span>
     <span class="k">let</span> <span class="n">dir2</span> <span class="o">=</span> <span class="n">direction</span> <span class="n">r</span> <span class="n">s</span> <span class="n">b</span> <span class="k">in</span>
     <span class="n">dir1</span> <span class="o">&lt;&gt;</span> <span class="n">dir2</span>
-
-
-<span class="c">(* Point within a polygon *)</span>
+</pre></div>
+</div>
+<p>To avoid conrer cases, it makes sense to choose the ray, so it would
+not be collinear with any of the edges. For this, we will need the
+following function:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">choose_ray_angle</span> <span class="n">pol</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">edge_angles</span> <span class="o">=</span>
+    <span class="n">edges</span> <span class="n">pol</span> <span class="o">|&gt;</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x1</span><span class="o">,</span> <span class="n">y1</span><span class="o">),</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">x2</span><span class="o">,</span> <span class="n">y2</span><span class="o">))</span> <span class="o">-&gt;</span>
+        <span class="k">let</span> <span class="n">dx</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">-.</span> <span class="n">x1</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">-.</span> <span class="n">y1</span> <span class="k">in</span>
+        <span class="n">atan2</span> <span class="n">dy</span> <span class="n">dx</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">length</span> <span class="n">pol</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">candidate_angles</span> <span class="o">=</span>
+    <span class="nn">Week_03</span><span class="p">.</span><span class="n">iota</span> <span class="o">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">|&gt;</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">fun</span> <span class="n">i</span> <span class="o">-&gt;</span>
+      <span class="o">(</span><span class="n">float_of_int</span> <span class="n">i</span><span class="o">)</span> <span class="o">*.</span> <span class="n">pi</span> <span class="o">/.</span> <span class="o">(</span><span class="n">float_of_int</span> <span class="n">n</span><span class="o">))</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">phi</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">find</span> <span class="o">(</span><span class="k">fun</span> <span class="n">c</span> <span class="o">-&gt;</span>  <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span>
+                          <span class="o">(</span><span class="k">fun</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">not</span> <span class="o">(</span><span class="n">a</span> <span class="o">=~=</span> <span class="n">c</span><span class="o">))</span>
+                          <span class="n">edge_angles</span><span class="o">)</span> <span class="n">candidate_angles</span> <span class="k">in</span>
+  <span class="n">phi</span>
+</pre></div>
+</div>
+<p>Now, we can determine whether the point is within the polygon:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Point within a polygon *)</span>
 
 <span class="k">let</span> <span class="n">point_within_polygon</span> <span class="n">pol</span> <span class="n">p</span> <span class="o">=</span>
-  <span class="k">let</span> <span class="n">ray</span> <span class="o">=</span> <span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="mi">0</span><span class="o">.)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ray</span> <span class="o">=</span> <span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="o">(</span><span class="n">choose_ray_angle</span> <span class="n">pol</span><span class="o">))</span> <span class="k">in</span>
   <span class="k">let</span> <span class="n">es</span> <span class="o">=</span> <span class="n">edges</span> <span class="n">pol</span> <span class="k">in</span>
   <span class="k">if</span> <span class="nn">List</span><span class="p">.</span><span class="n">mem</span> <span class="n">p</span> <span class="n">pol</span> <span class="o">||</span>
      <span class="nn">List</span><span class="p">.</span><span class="n">exists</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span> <span class="n">point_on_segment</span> <span class="n">e</span> <span class="n">p</span><span class="o">)</span> <span class="n">es</span> <span class="k">then</span> <span class="bp">true</span>
