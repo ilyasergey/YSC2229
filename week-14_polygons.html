@@ -505,7 +505,7 @@ following function:</p>
         <span class="nn">List</span><span class="p">.</span><span class="n">filter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">r</span> <span class="o">-&gt;</span> <span class="n">r</span> <span class="o">&lt;&gt;</span> <span class="nc">None</span><span class="o">)</span> <span class="o">|&gt;</span>
         <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">fun</span> <span class="n">r</span> <span class="o">-&gt;</span> <span class="nn">Week_01</span><span class="p">.</span><span class="n">get_exn</span> <span class="n">r</span><span class="o">)</span> <span class="o">|&gt;</span>
 
-        <span class="c">(* Touching edges *)</span>
+        <span class="c">(* Intersecting a vertex *)</span>
         <span class="n">uniq</span> <span class="o">|&gt;</span>
 
         <span class="c">(* Touching vertices *)</span>
@@ -520,11 +520,20 @@ following function:</p>
 </div>
 <p>A few corner cases have to be taken into the account:</p>
 <ol class="loweralpha simple">
-<li>A ray may “touch” a sharp vertex — in this case this intersection should not count. However, if a ray “passes” through a vertex (as opposed to touching it), this should count as an intersection.</li>
-<li>A ray may also contain the entire edge of the polygon.</li>
+<li>A ray may contain the entire edge of the polygon.</li>
+<li>A ray may “touch” a sharp vertex — in this case this
+intersection should not count. However, if a ray “passes” through
+a vertex (as opposed to touching it), this should count as an
+intersection.</li>
 </ol>
-<p>The case (b) can be detected if the lest of intersection of a ray with edges contains duplicate nodes (a node counts). In this case, such duplicates need to be removed, hence the use of <code class="docutils literal notranslate"><span class="pre">uniq</span></code>.</p>
-<p>The case (a) can be detected by checking whether two adjacent edges to the node suspected in “touching” lie on the single side or on two opposite sides of the ray. Only the second case (detected via <code class="docutils literal notranslate"><span class="pre">neighbours_on_different_sides</span></code>) needs to be accounted.</p>
+<p>The case (a) does not happen, as we have chosen the ray to be not
+collinear with any of th edges.</p>
+<p>In the case (b) case, duplicating intersections need to be removed
+first, hence the use of <code class="docutils literal notranslate"><span class="pre">uniq</span></code>. The configuration can be detected by
+checking whether two adjacent edges to the node suspected in
+“touching” lie on the single side or on two opposite sides of the ray.
+Only the second case (detected via <code class="docutils literal notranslate"><span class="pre">neighbours_on_different_sides</span></code>)
+needs to be accounted.</p>
 <p>We can test our procedure on the following polygon:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">pol</span> <span class="o">=</span> <span class="nn">TestPolygons</span><span class="p">.</span><span class="n">sand4</span><span class="o">;;</span>
 <span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">p</span> <span class="o">=</span> <span class="nc">Point</span> <span class="o">(-</span><span class="mi">150</span><span class="o">.,</span> <span class="mi">10</span><span class="o">.);;</span>

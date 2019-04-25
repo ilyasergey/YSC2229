@@ -354,7 +354,7 @@ Now, we can determine whether the point is within the polygon::
          List.filter (fun r -> r <> None) |>
          List.map (fun r -> Week_01.get_exn r) |>
 
-         (* Touching edges *)
+         (* Intersecting a vertex *)
          uniq |>
 
          (* Touching vertices *)
@@ -368,13 +368,22 @@ Now, we can determine whether the point is within the polygon::
 
 A few corner cases have to be taken into the account:
 
-(a) A ray may "touch" a sharp vertex --- in this case this intersection should not count. However, if a ray "passes" through a vertex (as opposed to touching it), this should count as an intersection. 
+(a) A ray may contain the entire edge of the polygon.
 
-(b) A ray may also contain the entire edge of the polygon.
+(b) A ray may "touch" a sharp vertex --- in this case this
+    intersection should not count. However, if a ray "passes" through
+    a vertex (as opposed to touching it), this should count as an
+    intersection.
 
-The case (b) can be detected if the lest of intersection of a ray with edges contains duplicate nodes (a node counts). In this case, such duplicates need to be removed, hence the use of ``uniq``.
+The case (a) does not happen, as we have chosen the ray to be not
+collinear with any of th edges.
 
-The case (a) can be detected by checking whether two adjacent edges to the node suspected in "touching" lie on the single side or on two opposite sides of the ray. Only the second case (detected via ``neighbours_on_different_sides``) needs to be accounted.
+In the case (b) case, duplicating intersections need to be removed
+first, hence the use of ``uniq``. The configuration can be detected by
+checking whether two adjacent edges to the node suspected in
+"touching" lie on the single side or on two opposite sides of the ray.
+Only the second case (detected via ``neighbours_on_different_sides``)
+needs to be accounted.
 
 We can test our procedure on the following polygon::
 
