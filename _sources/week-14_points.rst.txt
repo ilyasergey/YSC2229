@@ -364,7 +364,7 @@ The case (b) is more tricky, and we use the following insight. Two segments inte
      then true
      else if d1 = 0 && point_on_segment s2 p1
      then true
-     else if d2 = 0 && point_on_segment s2 p3
+     else if d2 = 0 && point_on_segment s2 p2
      then true
      else if d3 = 0 && point_on_segment s1 p3
      then true
