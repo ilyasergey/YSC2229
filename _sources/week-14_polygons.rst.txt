@@ -22,7 +22,7 @@ To work with them, we will require a couple of auxiliary functions::
    let rec all_triples ls = 
      let (a, b) = (List.hd ls, List.hd @@ List.tl ls) in
      let rec walk l = match l with
-       | x :: y :: [] -> [(x, y, a); (x, a, b)]
+       | x :: y :: [] -> [(x, y, a); (y, a, b)]
        | x :: y :: z :: t -> (x, y, z) :: (walk (y :: z :: t))    
        | _ -> []
      in
