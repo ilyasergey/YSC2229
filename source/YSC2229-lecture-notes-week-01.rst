@@ -16,4 +16,4 @@ YSC2229 Lecture Notes, Week 01
 **Supplementary materials**
 
 * `Code from Week 1 <https://github.com/ilyasergey/ysc2229-part-one/blob/master/lib/week_01.ml>`_: finding minimums and sorting lists.
-* `Intro slides <./resources/2019 Week-01-Intro.pdf>`_
+* `Intro slides <./resources/2019/Week-01-Intro.pdf>`_
