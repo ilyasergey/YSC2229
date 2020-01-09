@@ -171,10 +171,11 @@ fully functional Linux distribution installed on your machine.</p>
 <ol class="arabic simple">
 <li>First, let us enable WSL and install a Linux distribution. The
 detailed steps are given in <a class="reference external" href="https://solarianprogrammer.com/2017/04/15/install-wsl-windows-subsystem-for-linux/">this online tutorial</a>.
-Don’t forget your the Linux account password you’ve just created: you will need it to install some software.
-At the end of this step, you should be able to run a “bare-bone”
-Ubuntu Linux terminal as an application on your Windows system. In
-my case, it looks as follows.</li>
+Don’t forget the password for the Linux account you’ve just
+created: you will need it to install some software. At the end of
+this step, you should be able to run a “bare-bone” Ubuntu Linux
+terminal as an application within your Windows system. In my case, it
+looks as follows.</li>
 </ol>
 <a class="reference internal image-reference" href="_images/ubuntu.png"><img alt="_images/ubuntu.png" class="align-center" src="_images/ubuntu.png" style="width: 820px;" /></a>
 <ol class="arabic" start="2">
@@ -184,7 +185,7 @@ name. It is convenient to make a symbolic link for it, so you could
 access it quickly, for instance, calling it <code class="docutils literal notranslate"><span class="pre">home</span></code>. This is how
 you create such a link:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~</span>
-<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">c</span><span class="o">/</span><span class="nc">Users</span><span class="o">/</span><span class="n">yncsi</span><span class="o">/</span> <span class="n">home</span>
+<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">c</span><span class="o">/</span><span class="nc">Users</span><span class="o">/</span><span class="nc">YOURNAME</span><span class="o">/</span> <span class="n">home</span>
 </pre></div>
 </div>
 <p>Now you can navigate to you Windows home folder via <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">~/home</span></code> and to
@@ -199,15 +200,15 @@ comments:</p>
 <ul class="simple">
 <li>You don’t have to install Firefox in WSL Linux, as you can use
 your Windows browser instead.</li>
-<li>The required graphical XServer shell needs to be downloaded from
-<a class="reference external" href="https://sourceforge.net/projects/vcxsrv/">this resource</a>.</li>
+<li>The required graphical XServer shell (run separately from
+Windows) can be downloaded from <a class="reference external" href="https://sourceforge.net/projects/vcxsrv/">this resource</a>.</li>
 <li>To run Linux with the graphical mode, you will <cite>always</cite> have to
 first run the XServer, and then the Ubuntu shell, in which you
 will have to type <code class="docutils literal notranslate"><span class="pre">xfce4-session</span></code>. The Ubuntu window will have
 to stay running as long as you use Linux.</li>
 </ul>
 </li>
-<li><p class="first">If the Linux image appears to be blurred, here’s how to fix it:</p>
+<li><p class="first">If the Linux image appears to be somewhat “blurred”, here’s how to fix it:</p>
 <ul>
 <li><p class="first">First, add the following lines at the end of the file
 <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> in your Linux home folder:</p>
@@ -231,7 +232,7 @@ changing the settings:</p>
 </ol>
 <a class="reference internal image-reference" href="_images/blur.png"><img alt="_images/blur.png" class="align-center" src="_images/blur.png" style="width: 820px;" /></a>
 <ol class="arabic simple" start="4">
-<li>Once you have done all of this, you can run terminal within the
+<li>Once you have done all of this, you can run Linux terminal within the
 graphical XFCE shell and execute all commands from it, rather than
 from a Windows-started Ubuntu terminal. In my case, it looks
 as follows:</li>
