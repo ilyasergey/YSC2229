@@ -21,10 +21,11 @@ fully functional Linux distribution installed on your machine.
 1. First, let us enable WSL and install a Linux distribution. The
    detailed steps are given in `this online tutorial
    <https://solarianprogrammer.com/2017/04/15/install-wsl-windows-subsystem-for-linux/>`_.
-   Don't forget your the Linux account password you've just created: you will need it to install some software.
-   At the end of this step, you should be able to run a "bare-bone"
-   Ubuntu Linux terminal as an application on your Windows system. In
-   my case, it looks as follows.
+   Don't forget the password for the Linux account you've just
+   created: you will need it to install some software. At the end of
+   this step, you should be able to run a "bare-bone" Ubuntu Linux
+   terminal as an application within your Windows system. In my case, it
+   looks as follows.
 
 .. image:: ../resources/howto/ubuntu.png
    :width: 820px
@@ -37,7 +38,7 @@ fully functional Linux distribution installed on your machine.
    you create such a link::
 
      cd ~
-     ln -s /mnt/c/Users/yncsi/ home
+     ln -s /mnt/c/Users/YOURNAME/ home
 
    Now you can navigate to you Windows home folder via ``cd ~/home`` and to
    your Linux home folder via ``cd ~``.
@@ -51,15 +52,16 @@ fully functional Linux distribution installed on your machine.
    * You don't have to install Firefox in WSL Linux, as you can use
      your Windows browser instead.
 
-   * The required graphical XServer shell needs to be downloaded from
-     `this resource <https://sourceforge.net/projects/vcxsrv/>`_.
+   * The required graphical XServer shell (run separately from
+     Windows) can be downloaded from `this resource
+     <https://sourceforge.net/projects/vcxsrv/>`_.
 
    * To run Linux with the graphical mode, you will `always` have to
      first run the XServer, and then the Ubuntu shell, in which you
      will have to type ``xfce4-session``. The Ubuntu window will have
      to stay running as long as you use Linux.
      
-3. If the Linux image appears to be blurred, here's how to fix it:
+3. If the Linux image appears to be somewhat "blurred", here's how to fix it:
 
    * First, add the following lines at the end of the file
      ``~/.bashrc`` in your Linux home folder::
@@ -82,7 +84,7 @@ fully functional Linux distribution installed on your machine.
    :width: 820px
    :align: center
 
-4. Once you have done all of this, you can run terminal within the
+4. Once you have done all of this, you can run Linux terminal within the
    graphical XFCE shell and execute all commands from it, rather than
    from a Windows-started Ubuntu terminal. In my case, it looks
    as follows:
