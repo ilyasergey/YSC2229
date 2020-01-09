@@ -63,7 +63,7 @@ invoke ``utop`` by running::
 Now we can load modules defined in the project (eg., ``GraphicsUtil``)
 and play with the definitions. Use ``Esc + Left/Right/Down`` arrows to
 navigate between auto-completion options and choose one. An example is
-showon the screenshot below:
+shown in the screenshot below:
 
 .. image:: ../resources/howto/utop.png
    :width: 820px

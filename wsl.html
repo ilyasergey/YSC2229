@@ -161,7 +161,7 @@
 <div class="section" id="microsoft-windows-10">
 <h2>2.1.1. Microsoft Windows 10<a class="headerlink" href="#microsoft-windows-10" title="Permalink to this headline">¶</a></h2>
 <p>Unfortunately, the OCaml infrastructure is not supported well on
-Windows (natively), therefore developping large multi-file projects in
+Windows (natively), therefore developing large multi-file projects in
 it is problematic. To circumvent this issue, we will be running OCaml
 and the related software using <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Windows Subsystem for Linux</a>, a
 utility that allows to run a distribution of Linux within your Windows
@@ -178,7 +178,7 @@ my case, it looks as follows.</li>
 </ol>
 <a class="reference internal image-reference" href="_images/ubuntu.png"><img alt="_images/ubuntu.png" class="align-center" src="_images/ubuntu.png" style="width: 820px;" /></a>
 <ol class="arabic" start="2">
-<li><p class="first">You can access your Windows home foled from WSL Linux via tha path
+<li><p class="first">You can access your Windows home folder from WSL Linux via tha path
 <code class="docutils literal notranslate"><span class="pre">/mnt/c/Users/YOURNAME/</span></code> where <code class="docutils literal notranslate"><span class="pre">YOURNAME</span></code> is your Windows user
 name. It is convenient to make a symbolic link for it, so you could
 access it quickly, for instance, calling it <code class="docutils literal notranslate"><span class="pre">home</span></code>. This is how
@@ -193,7 +193,7 @@ your Linux home folder via <code class="docutils literal notranslate"><span clas
 </ol>
 <ol class="arabic" start="2">
 <li><p class="first">Next, we need to install a graphical shell for the Linux
-distrubittion running in WSL. <a class="reference external" href="https://solarianprogrammer.com/2017/04/16/windows-susbsystem-for-linux-xfce-4/">This article</a>
+distribution running in WSL. <a class="reference external" href="https://solarianprogrammer.com/2017/04/16/windows-susbsystem-for-linux-xfce-4/">This article</a>
 provides detailed instructions on how to do so. Here are some
 comments:</p>
 <ul class="simple">
@@ -241,7 +241,7 @@ as follows:</li>
 <li><p class="first">Next, we will install Emacs. It is fairly straightforward and can
 be done using the instructions given <a class="reference external" href="https://solarianprogrammer.com/2017/05/18/emacs-windows-subsystem-linux/">in this article</a>.</p>
 <p>To use Emacs comfortably with Windows-like shortcuts, you will need to enable the <a class="reference external" href="https://www.emacswiki.org/emacs/CuaMode">Cua mode</a> for it.
-To enable Cua mode, create the file <code class="docutils literal notranslate"><span class="pre">.emacs</span></code> in you Linux home folder (i.e., it shoudl be located under <code class="docutils literal notranslate"><span class="pre">~/.emacs</span></code>) and add the following lines to it (or just append them to the file if it already exists):</p>
+To enable Cua mode, create the file <code class="docutils literal notranslate"><span class="pre">.emacs</span></code> in you Linux home folder (i.e., it should be located under <code class="docutils literal notranslate"><span class="pre">~/.emacs</span></code>) and add the following lines to it (or just append them to the file if it already exists):</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">(</span><span class="n">cua</span><span class="o">-</span><span class="n">mode</span> <span class="n">t</span><span class="o">)</span>
 <span class="o">(</span><span class="n">setq</span> <span class="n">cua</span><span class="o">-</span><span class="n">auto</span><span class="o">-</span><span class="n">tabify</span><span class="o">-</span><span class="n">rectangles</span> <span class="n">nil</span><span class="o">)</span> <span class="o">;;</span> <span class="nc">Don&#39;t</span> <span class="n">tabify</span> <span class="n">after</span> <span class="n">rectangle</span> <span class="n">commands</span>
 <span class="o">(</span><span class="n">transient</span><span class="o">-</span><span class="n">mark</span><span class="o">-</span><span class="n">mode</span> <span class="mi">1</span><span class="o">)</span> <span class="o">;;</span> <span class="nc">No</span> <span class="n">region</span> <span class="k">when</span> <span class="n">it</span> <span class="n">is</span> <span class="n">not</span> <span class="n">highlighted</span>
@@ -254,7 +254,7 @@ First, we need to install a number of Linux packages that OCaml needs. Run the f
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">make</span> <span class="n">m4</span> <span class="n">gcc</span> <span class="n">pkg</span><span class="o">-</span><span class="n">config</span> <span class="n">libx11</span><span class="o">-</span><span class="n">dev</span>
 </pre></div>
 </div>
-<p>Don’t forget to enter the passrod you’ve created for your Linux account, it might be different from your Windows one. Be patient: installing those packages will take quite some time.</p>
+<p>Don’t forget to enter the password you’ve created for your Linux account, it might be different from your Windows one. Be patient: installing those packages will take quite some time.</p>
 </li>
 <li><p class="first">Next, we will install the <code class="docutils literal notranslate"><span class="pre">opam</span></code> package manager for managing different OCaml libraries. Execute the following lines from Linux terminal:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">opam</span>
@@ -303,7 +303,7 @@ First, we need to install a number of Linux packages that OCaml needs. Run the f
 </div>
 <div class="section" id="linux">
 <h2>2.1.2. Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
-<p>If you’re using Linux, the setup is similar to the one for Windows 10 WSL described previously. Just follow the points above starting from the step 5. If you’re using a distributoin different from Ubuntu, make sure to use the corresponding package manager (instead of <code class="docutils literal notranslate"><span class="pre">apt</span></code>) to get the system packages in the step 6.</p>
+<p>If you’re using Linux, the setup is similar to the one for Windows 10 WSL described previously. Just follow the points above starting from the step 5. If you’re using a distribution different from Ubuntu, make sure to use the corresponding package manager (instead of <code class="docutils literal notranslate"><span class="pre">apt</span></code>) to get the system packages in the step 6.</p>
 </div>
 <div class="section" id="mac-os-x">
 <h2>2.1.3. Mac OS X<a class="headerlink" href="#mac-os-x" title="Permalink to this headline">¶</a></h2>
