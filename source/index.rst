@@ -10,43 +10,36 @@ Introductory Data Structures and Algorithms
    :numbered:
    :maxdepth: 2
 
-   YSC2229-lecture-notes-week-01
-   YSC2229-lecture-notes-week-02
-   YSC2229-lecture-notes-week-03
+   syllabus
+   prerequisites
 
-   YSC2229-lecture-notes-week-04
-   YSC2229-lecture-notes-week-05
-   YSC2229-lecture-notes-week-06
-   YSC2229-midterm-tasks
-   YSC2229-lecture-notes-week-08
-   YSC2229-lecture-notes-week-09
-   YSC2229-lecture-notes-week-10
-   YSC2229-lecture-notes-week-11
-   YSC2229-lecture-notes-week-12
-   YSC2229-lecture-notes-week-13
-   YSC2229-lecture-notes-week-14
+..   YSC2229-lecture-notes-week-01
+..   YSC2229-lecture-notes-week-02
+..   YSC2229-lecture-notes-week-03
+..   YSC2229-lecture-notes-week-04
+..   YSC2229-lecture-notes-week-05
+..   YSC2229-lecture-notes-week-06
+..   YSC2229-midterm-tasks
+..   YSC2229-lecture-notes-week-08
+..   YSC2229-lecture-notes-week-09
+..   YSC2229-lecture-notes-week-10
+..   YSC2229-lecture-notes-week-11
+..   YSC2229-lecture-notes-week-12
+..   YSC2229-lecture-notes-week-13
+..   YSC2229-lecture-notes-week-14
 
-OCaml Code from the Lectures
-============================
 
-* Code for Weeks 1-6 is available as libraries from the open-source
-  repository on GitHub, along with the instructions on their
-  comilation and installation:
-  https://github.com/ilyasergey/ysc2229-part-one
+Supplementary Materials
+-----------------------
 
-* Code for Weeks 8-13:
-  https://github.com/ilyasergey/ysc2229-part-two
+* `Example OCaml project with graphics
+  <https://github.com/ysc2229/ocaml-graphics-demo>`_ 
+* `GitHub Organisation <https://github.com/ysc2229/>`_ 
 
-* Code for Week 14:
-  https://github.com/ilyasergey/ysc2229-geometry
+Textbooks
+---------
 
-* Examples on using the libraries from the lectures are avialble from
-  the following repository:
-  https://github.com/ilyasergey/ysc2229-examples
- 
-* OCaml graphics demo:
-  https://github.com/ilyasergey/ocaml-graphics-demo
-
+1. `Introduction to Algorithms <https://mitpress.mit.edu/books/introduction-algorithms-third-edition>`_ by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein
 
 ..
    Indices and tables
@@ -54,3 +47,4 @@ OCaml Code from the Lectures
 
    * :ref:`genindex`
    * :ref:`search`
+
