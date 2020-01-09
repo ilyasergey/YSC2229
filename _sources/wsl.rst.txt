@@ -115,12 +115,9 @@ fully functional Linux distribution installed on your machine.
 7. Next, we will install the ``opam`` package manager for managing different OCaml libraries. Execute the following lines from Linux terminal::
 
     sudo apt install opam
-    opam init --disable-sandboxing
-    opam switch create 4.07.1
+    opam init -y --compiler=4.07.1 --disable-sandboxing
     eval $(opam env)
     opam install dune core batteries utop graphics
-
-   When prompted, just choose ``Yes`` as an answer to the installation questions.
 
    Once done, add the following line to your ``~/.bashrc`` file::
 
@@ -188,12 +185,9 @@ OCaml is well supported in Mac OS X, so the installation process is fairly strai
 5. Next, we will install the ``opam`` package manager for managing different OCaml libraries. Execute the following lines from Linux terminal::
 
     brew install opam
-    opam init
-    opam switch create 4.07.1
+    opam init -y --compiler=4.07.1
     eval $(opam env)
     opam install dune core batteries utop graphics
-
-   When prompted, just choose ``Yes`` as an answer to the installation questions.
 
    After that, close your terminal window and start a new one.
 
