@@ -9,7 +9,7 @@ Microsoft Windows 10
 --------------------
 
 Unfortunately, the OCaml infrastructure is not supported well on
-Windows (natively), therefore developping large multi-file projects in
+Windows (natively), therefore developing large multi-file projects in
 it is problematic. To circumvent this issue, we will be running OCaml
 and the related software using `Windows Subsystem for Linux
 <https://docs.microsoft.com/en-us/windows/wsl/install-win10>`_, a
@@ -30,7 +30,7 @@ fully functional Linux distribution installed on your machine.
    :width: 820px
    :align: center
 
-2. You can access your Windows home foled from WSL Linux via tha path
+2. You can access your Windows home folder from WSL Linux via tha path
    ``/mnt/c/Users/YOURNAME/`` where ``YOURNAME`` is your Windows user
    name. It is convenient to make a symbolic link for it, so you could
    access it quickly, for instance, calling it ``home``. This is how
@@ -43,7 +43,7 @@ fully functional Linux distribution installed on your machine.
    your Linux home folder via ``cd ~``.
 
 2. Next, we need to install a graphical shell for the Linux
-   distrubittion running in WSL. `This article
+   distribution running in WSL. `This article
    <https://solarianprogrammer.com/2017/04/16/windows-susbsystem-for-linux-xfce-4/>`_
    provides detailed instructions on how to do so. Here are some
    comments:
@@ -96,7 +96,7 @@ fully functional Linux distribution installed on your machine.
    <https://solarianprogrammer.com/2017/05/18/emacs-windows-subsystem-linux/>`_.
 
    To use Emacs comfortably with Windows-like shortcuts, you will need to enable the `Cua mode <https://www.emacswiki.org/emacs/CuaMode>`_ for it. 
-   To enable Cua mode, create the file ``.emacs`` in you Linux home folder (i.e., it shoudl be located under ``~/.emacs``) and add the following lines to it (or just append them to the file if it already exists)::
+   To enable Cua mode, create the file ``.emacs`` in you Linux home folder (i.e., it should be located under ``~/.emacs``) and add the following lines to it (or just append them to the file if it already exists)::
 
     (cua-mode t)
     (setq cua-auto-tabify-rectangles nil) ;; Don't tabify after rectangle commands
@@ -108,7 +108,7 @@ fully functional Linux distribution installed on your machine.
 
     sudo apt install make m4 gcc pkg-config libx11-dev
 
-   Don't forget to enter the passrod you've created for your Linux account, it might be different from your Windows one. Be patient: installing those packages will take quite some time.
+   Don't forget to enter the password you've created for your Linux account, it might be different from your Windows one. Be patient: installing those packages will take quite some time.
 
 7. Next, we will install the ``opam`` package manager for managing different OCaml libraries. Execute the following lines from Linux terminal::
 
@@ -163,7 +163,7 @@ fully functional Linux distribution installed on your machine.
 Linux
 -----
 
-If you're using Linux, the setup is similar to the one for Windows 10 WSL described previously. Just follow the points above starting from the step 5. If you're using a distributoin different from Ubuntu, make sure to use the corresponding package manager (instead of ``apt``) to get the system packages in the step 6.
+If you're using Linux, the setup is similar to the one for Windows 10 WSL described previously. Just follow the points above starting from the step 5. If you're using a distribution different from Ubuntu, make sure to use the corresponding package manager (instead of ``apt``) to get the system packages in the step 6.
 
 Mac OS X
 --------

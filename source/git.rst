@@ -12,7 +12,7 @@ To work with GitHub comfortably, you will need to set up your SSH keys. To do so
   ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 
 After that, run ``cat ~/.ssh/id_rsa.pub`` and copy all the text starting with ``ssh-rsa`` and ending with your email.
-
+ 
 Follow `these instructions <https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account>`_ to add this text as your public SSH key to your GitHub entry.
 
 Finally, execute the following commands from terminal, providing your email address and name correspondingly::
