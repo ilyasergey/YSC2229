@@ -183,7 +183,7 @@ OCaml is well supported in Mac OS X, so the installation process is fairly strai
 5. Next, we will install the ``opam`` package manager for managing different OCaml libraries. Execute the following lines from Linux terminal::
 
     brew install opam
-    opam init --disable-sandboxing
+    opam init
     opam switch create 4.07.1
     eval $(opam env)
     opam install dune core batteries utop graphics
