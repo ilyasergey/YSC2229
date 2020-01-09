@@ -330,6 +330,13 @@ First, we need to install a number of Linux packages that OCaml needs. Run the f
 </div>
 <p>When prompted, just choose <code class="docutils literal notranslate"><span class="pre">Yes</span></code> as an answer to the installation questions.</p>
 <p>After that, close your terminal window and start a new one.</p>
+<p>Notice that if you had some <code class="docutils literal notranslate"><span class="pre">opam</span></code> installation before completing
+step 4, the installation of the <code class="docutils literal notranslate"><span class="pre">graphics</span></code> package will fail. To
+avoid it, please, run this line first before installing the listed
+above packages:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">opam</span> <span class="n">switch</span> <span class="n">reinstall</span> <span class="mi">4</span><span class="o">.</span><span class="mi">07</span><span class="o">.</span><span class="mi">1</span>
+</pre></div>
+</div>
 <p>To check that your OCaml is correctly installed, run <code class="docutils literal notranslate"><span class="pre">ocamlc</span> <span class="pre">--version</span></code> from the terminal. You should get the following output:</p>
 </li>
 </ol>
