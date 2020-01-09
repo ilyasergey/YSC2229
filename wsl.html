@@ -1,0 +1,436 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2.1. Installing OCaml Libraries and setting up Emacs &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2.2. Installing and using Git" href="git.html" />
+    <link rel="prev" title="2. Software Prerequisites" href="prerequisites.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.1. Installing OCaml Libraries and setting up Emacs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#microsoft-windows-10">2.1.1. Microsoft Windows 10</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#linux">2.1.2. Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mac-os-x">2.1.3. Mac OS X</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="git.html">2.2. Installing and using Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html">2.3. Checking your setup</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="prerequisites.html">2. Software Prerequisites</a> &raquo;</li>
+        
+      <li>2.1. Installing OCaml Libraries and setting up Emacs</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installing-ocaml-libraries-and-setting-up-emacs">
+<h1>2.1. Installing OCaml Libraries and setting up Emacs<a class="headerlink" href="#installing-ocaml-libraries-and-setting-up-emacs" title="Permalink to this headline">¶</a></h1>
+<p>First, we need to install all the software necessary for fully fledged OCaml development. The instructions on how to do so are provided below.</p>
+<div class="section" id="microsoft-windows-10">
+<h2>2.1.1. Microsoft Windows 10<a class="headerlink" href="#microsoft-windows-10" title="Permalink to this headline">¶</a></h2>
+<p>Unfortunately, the OCaml infrastructure is not supported well on
+Windows (natively), therefore developping large multi-file projects in
+it is problematic. To circumvent this issue, we will be running OCaml
+and the related software using <a class="reference external" href="https://docs.microsoft.com/en-us/windows/wsl/install-win10">Windows Subsystem for Linux</a>, a
+utility that allows to run a distribution of Linux within your Windows
+10 system. This set up takes a large number of steps, but once you’re
+done with it, you’ll have a premium support for OCaml, and also a
+fully functional Linux distribution installed on your machine.</p>
+<ol class="arabic simple">
+<li>First, let us enable WSL and install a Linux distribution. The
+detailed steps are given in <a class="reference external" href="https://solarianprogrammer.com/2017/04/15/install-wsl-windows-subsystem-for-linux/">this online tutorial</a>.
+Don’t forget your the Linux account password you’ve just created: you will need it to install some software.
+At the end of this step, you should be able to run a “bare-bone”
+Ubuntu Linux terminal as an application on your Windows system. In
+my case, it looks as follows.</li>
+</ol>
+<a class="reference internal image-reference" href="_images/ubuntu.png"><img alt="_images/ubuntu.png" class="align-center" src="_images/ubuntu.png" style="width: 820px;" /></a>
+<ol class="arabic" start="2">
+<li><p class="first">You can access your Windows home foled from WSL Linux via tha path
+<code class="docutils literal notranslate"><span class="pre">/mnt/c/Users/YOURNAME/</span></code> where <code class="docutils literal notranslate"><span class="pre">YOURNAME</span></code> is your Windows user
+name. It is convenient to make a symbolic link for it, so you could
+access it quickly, for instance, calling it <code class="docutils literal notranslate"><span class="pre">home</span></code>. This is how
+you create such a link:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~</span>
+<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">c</span><span class="o">/</span><span class="nc">Users</span><span class="o">/</span><span class="n">yncsi</span><span class="o">/</span> <span class="n">home</span>
+</pre></div>
+</div>
+<p>Now you can navigate to you Windows home folder via <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">~/home</span></code> and to
+your Linux home folder via <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">~</span></code>.</p>
+</li>
+</ol>
+<ol class="arabic" start="2">
+<li><p class="first">Next, we need to install a graphical shell for the Linux
+distrubittion running in WSL. <a class="reference external" href="https://solarianprogrammer.com/2017/04/16/windows-susbsystem-for-linux-xfce-4/">This article</a>
+provides detailed instructions on how to do so. Here are some
+comments:</p>
+<ul class="simple">
+<li>You don’t have to install Firefox in WSL Linux, as you can use
+your Windows browser instead.</li>
+<li>The required graphical XServer shell needs to be downloaded from
+<a class="reference external" href="https://sourceforge.net/projects/vcxsrv/">this resource</a>.</li>
+<li>To run Linux with the graphical mode, you will <cite>always</cite> have to
+first run the XServer, and then the Ubuntu shell, in which you
+will have to type <code class="docutils literal notranslate"><span class="pre">xfce4-session</span></code>. The Ubuntu window will have
+to stay running as long as you use Linux.</li>
+</ul>
+</li>
+<li><p class="first">If the Linux image appears to be blurred, here’s how to fix it:</p>
+<ul>
+<li><p class="first">First, add the following lines at the end of the file
+<code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> in your Linux home folder:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="nc">GDK_SCALE</span><span class="o">=</span><span class="mi">0</span><span class="o">.</span><span class="mi">5</span>
+<span class="n">export</span> <span class="nc">GDK_DPI_SCALE</span><span class="o">=</span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>This can be done using the <code class="docutils literal notranslate"><span class="pre">nano</span></code> editor, similarly to how it
+is done in  <a class="reference external" href="https://solarianprogrammer.com/2017/04/16/windows-susbsystem-for-linux-xfce-4/">this tutorial</a>.</p>
+</li>
+<li><p class="first">Next, close any running instance of that X server (VcxSrv). Open
+the folder where you have installed it (e.g., <code class="docutils literal notranslate"><span class="pre">C:\Program</span>
+<span class="pre">Files\VcXsrv</span></code>),
+right click on <code class="docutils literal notranslate"><span class="pre">vcxsrv.exe</span></code>. Choose <cite>Properties &gt; Compatibility tab &gt; Change high DPI
+settings &gt; Enable Override high DPI scaling</cite> and change it to
+<code class="docutils literal notranslate"><span class="pre">Application</span></code> option. Here is the screenshot looks like after
+changing the settings:</p>
+</li>
+</ul>
+</li>
+</ol>
+<a class="reference internal image-reference" href="_images/blur.png"><img alt="_images/blur.png" class="align-center" src="_images/blur.png" style="width: 820px;" /></a>
+<ol class="arabic simple" start="4">
+<li>Once you have done all of this, you can run terminal within the
+graphical XFCE shell and execute all commands from it, rather than
+from a Windows-started Ubuntu terminal. In my case, it looks
+as follows:</li>
+</ol>
+<a class="reference internal image-reference" href="_images/xfce.png"><img alt="_images/xfce.png" class="align-center" src="_images/xfce.png" style="width: 820px;" /></a>
+<ol class="arabic" start="5">
+<li><p class="first">Next, we will install Emacs. It is fairly straightforward and can
+be done using the instructions given <a class="reference external" href="https://solarianprogrammer.com/2017/05/18/emacs-windows-subsystem-linux/">in this article</a>.</p>
+<p>To use Emacs comfortably with Windows-like shortcuts, you will need to enable the <a class="reference external" href="https://www.emacswiki.org/emacs/CuaMode">Cua mode</a> for it.
+To enable Cua mode, create the file <code class="docutils literal notranslate"><span class="pre">.emacs</span></code> in you Linux home folder (i.e., it shoudl be located under <code class="docutils literal notranslate"><span class="pre">~/.emacs</span></code>) and add the following lines to it (or just append them to the file if it already exists):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">(</span><span class="n">cua</span><span class="o">-</span><span class="n">mode</span> <span class="n">t</span><span class="o">)</span>
+<span class="o">(</span><span class="n">setq</span> <span class="n">cua</span><span class="o">-</span><span class="n">auto</span><span class="o">-</span><span class="n">tabify</span><span class="o">-</span><span class="n">rectangles</span> <span class="n">nil</span><span class="o">)</span> <span class="o">;;</span> <span class="nc">Don&#39;t</span> <span class="n">tabify</span> <span class="n">after</span> <span class="n">rectangle</span> <span class="n">commands</span>
+<span class="o">(</span><span class="n">transient</span><span class="o">-</span><span class="n">mark</span><span class="o">-</span><span class="n">mode</span> <span class="mi">1</span><span class="o">)</span> <span class="o">;;</span> <span class="nc">No</span> <span class="n">region</span> <span class="k">when</span> <span class="n">it</span> <span class="n">is</span> <span class="n">not</span> <span class="n">highlighted</span>
+<span class="o">(</span><span class="n">setq</span> <span class="n">cua</span><span class="o">-</span><span class="n">keep</span><span class="o">-</span><span class="n">region</span><span class="o">-</span><span class="n">after</span><span class="o">-</span><span class="n">copy</span> <span class="n">t</span><span class="o">)</span> <span class="o">;;</span> <span class="nc">Standard</span> <span class="nc">Windows</span> <span class="n">behaviour</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">So far so good, now we have a running Linux and Emacs in it, so it’s time to install OCaml libraries.
+First, we need to install a number of Linux packages that OCaml needs. Run the following lines from Linux terminal (it can be done both from within graphical shell, or from within a separate Ubuntu terminal run as a Windows applications):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">make</span> <span class="n">m4</span> <span class="n">gcc</span> <span class="n">pkg</span><span class="o">-</span><span class="n">config</span> <span class="n">libx11</span><span class="o">-</span><span class="n">dev</span>
+</pre></div>
+</div>
+<p>Don’t forget to enter the passrod you’ve created for your Linux account, it might be different from your Windows one. Be patient: installing those packages will take quite some time.</p>
+</li>
+<li><p class="first">Next, we will install the <code class="docutils literal notranslate"><span class="pre">opam</span></code> package manager for managing different OCaml libraries. Execute the following lines from Linux terminal:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">opam</span>
+<span class="n">opam</span> <span class="n">init</span> <span class="o">--</span><span class="n">disable</span><span class="o">-</span><span class="n">sandboxing</span>
+<span class="n">opam</span> <span class="n">switch</span> <span class="n">create</span> <span class="mi">4</span><span class="o">.</span><span class="mi">07</span><span class="o">.</span><span class="mi">1</span>
+<span class="n">eval</span> <span class="o">$(</span><span class="n">opam</span> <span class="n">env</span><span class="o">)</span>
+<span class="n">opam</span> <span class="n">install</span> <span class="n">dune</span> <span class="n">core</span> <span class="n">batteries</span> <span class="n">utop</span> <span class="n">graphics</span>
+</pre></div>
+</div>
+<p>When prompted, just choose <code class="docutils literal notranslate"><span class="pre">Yes</span></code> as an answer to the installation questions.</p>
+<p>Once done, add the following line to your <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> file:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">eval</span> <span class="o">$(</span><span class="n">opam</span> <span class="n">env</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>After that, close your terminal window and start a new one.</p>
+<p>To check that your OCaml is correctly installed, run <code class="docutils literal notranslate"><span class="pre">ocamlc</span> <span class="pre">--version</span></code> from the terminal. You should get the following output:</p>
+</li>
+</ol>
+<a class="reference internal image-reference" href="_images/ocaml.png"><img alt="_images/ocaml.png" class="align-center" src="_images/ocaml.png" style="width: 820px;" /></a>
+<ol class="arabic" start="8">
+<li><p class="first">We’re nearly there. Now we need to install the OCaml support for Emacs. Execute the following from terminal:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">opam</span> <span class="n">install</span> <span class="n">tuareg</span> <span class="n">user</span><span class="o">-</span><span class="n">setup</span> <span class="n">merlin</span>
+<span class="n">opam</span> <span class="n">user</span><span class="o">-</span><span class="n">setup</span> <span class="n">install</span>
+</pre></div>
+</div>
+<p>The last touch is to add the code completion feature to Emacs. Open Emacs and execute
+<cite>Alt-X package-list-packages</cite>. From the list choose <cite>company -&gt; Install -&gt; Yes</cite>:</p>
+</li>
+</ol>
+<a class="reference internal image-reference" href="_images/company.png"><img alt="_images/company.png" class="align-center" src="_images/company.png" style="width: 820px;" /></a>
+<ol class="arabic" start="9">
+<li><p class="first">Add the following lines to your <code class="docutils literal notranslate"><span class="pre">~/.emacs</span></code> configuration:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">;</span> <span class="nc">Make</span> <span class="n">company</span> <span class="n">aware</span> <span class="k">of</span> <span class="n">merlin</span>
+<span class="o">(</span><span class="k">with</span><span class="o">-</span><span class="n">eval</span><span class="o">-</span><span class="n">after</span><span class="o">-</span><span class="n">load</span> <span class="k">&#39;</span><span class="n">company</span>
+<span class="o">(</span><span class="n">add</span><span class="o">-</span><span class="k">to</span><span class="o">-</span><span class="kt">list</span> <span class="k">&#39;</span><span class="n">company</span><span class="o">-</span><span class="n">backends</span> <span class="k">&#39;</span><span class="n">merlin</span><span class="o">-</span><span class="n">company</span><span class="o">-</span><span class="n">backend</span><span class="o">))</span>
+<span class="o">;</span> <span class="nc">Enable</span> <span class="n">company</span> <span class="n">on</span> <span class="n">merlin</span> <span class="n">managed</span> <span class="n">buffers</span>
+<span class="o">(</span><span class="n">add</span><span class="o">-</span><span class="n">hook</span> <span class="k">&#39;</span><span class="n">merlin</span><span class="o">-</span><span class="n">mode</span><span class="o">-</span><span class="n">hook</span> <span class="k">&#39;</span><span class="n">company</span><span class="o">-</span><span class="n">mode</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Some additional information about this Emacs mode can be found <a class="reference external" href="https://github.com/ocaml/merlin/wiki/emacs-from-scratch">here</a>.</p>
+</li>
+<li><p class="first">You’re good to go. To check your setup, create an OCaml file in Emacs (e.g., <code class="docutils literal notranslate"><span class="pre">a.ml</span></code>) and try to play with a few function definitions. The editor should highlight syntax, compile-time errors and suggest completions for names:</p>
+</li>
+</ol>
+<a class="reference internal image-reference" href="_images/tuareg.png"><img alt="_images/tuareg.png" class="align-center" src="_images/tuareg.png" style="width: 820px;" /></a>
+</div>
+<div class="section" id="linux">
+<h2>2.1.2. Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
+<p>If you’re using Linux, the setup is similar to the one for Windows 10 WSL described previously. Just follow the points above starting from the step 5. If you’re using a distributoin different from Ubuntu, make sure to use the corresponding package manager (instead of <code class="docutils literal notranslate"><span class="pre">apt</span></code>) to get the system packages in the step 6.</p>
+</div>
+<div class="section" id="mac-os-x">
+<h2>2.1.3. Mac OS X<a class="headerlink" href="#mac-os-x" title="Permalink to this headline">¶</a></h2>
+<p>OCaml is well supported in Mac OS X, so the installation process is fairly straightforward.</p>
+<ol class="arabic">
+<li><p class="first">I suggest to use <a class="reference external" href="http://aquamacs.org/">Aquamacs</a> as an Emacs-like editor for work with OCaml. Please, download and install it.</p>
+</li>
+<li><p class="first">Install the <a class="reference external" href="https://brew.sh/">Homebrew package manager</a> for Mac OS X.</p>
+</li>
+<li><p class="first">Install the following system packages using Homebrew:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">make</span> <span class="n">m4</span> <span class="n">gcc</span> <span class="n">pkg</span><span class="o">-</span><span class="n">config</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Install the <a class="reference external" href="https://www.xquartz.org/">XQuartz</a> X window system for Mac OS X. Make sure it <cite>before</cite> you install <code class="docutils literal notranslate"><span class="pre">opam</span></code> and all libraries from it. We will need this library for a few graphical applications in this course.</p>
+</li>
+<li><p class="first">Next, we will install the <code class="docutils literal notranslate"><span class="pre">opam</span></code> package manager for managing different OCaml libraries. Execute the following lines from Linux terminal:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">opam</span>
+<span class="n">opam</span> <span class="n">init</span> <span class="o">--</span><span class="n">disable</span><span class="o">-</span><span class="n">sandboxing</span>
+<span class="n">opam</span> <span class="n">switch</span> <span class="n">create</span> <span class="mi">4</span><span class="o">.</span><span class="mi">07</span><span class="o">.</span><span class="mi">1</span>
+<span class="n">eval</span> <span class="o">$(</span><span class="n">opam</span> <span class="n">env</span><span class="o">)</span>
+<span class="n">opam</span> <span class="n">install</span> <span class="n">dune</span> <span class="n">core</span> <span class="n">batteries</span> <span class="n">utop</span> <span class="n">graphics</span>
+</pre></div>
+</div>
+<p>When prompted, just choose <code class="docutils literal notranslate"><span class="pre">Yes</span></code> as an answer to the installation questions.</p>
+<p>After that, close your terminal window and start a new one.</p>
+<p>To check that your OCaml is correctly installed, run <code class="docutils literal notranslate"><span class="pre">ocamlc</span> <span class="pre">--version</span></code> from the terminal. You should get the following output:</p>
+</li>
+</ol>
+<a class="reference internal image-reference" href="_images/mac-ocamlc.png"><img alt="_images/mac-ocamlc.png" class="align-center" src="_images/mac-ocamlc.png" style="width: 820px;" /></a>
+<ol class="arabic" start="6">
+<li><p class="first">We’re nearly there. Now we need to install the OCaml support for Emacs. Execute the following from terminal:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">opam</span> <span class="n">install</span> <span class="n">tuareg</span> <span class="n">user</span><span class="o">-</span><span class="n">setup</span> <span class="n">merlin</span>
+<span class="n">opam</span> <span class="n">user</span><span class="o">-</span><span class="n">setup</span> <span class="n">install</span>
+</pre></div>
+</div>
+<p>The last touch is to add the code completion feature to Aquamacs. First, add these lines to your <code class="docutils literal notranslate"><span class="pre">~/.emacs</span></code> file (create it if it doesn’t exist):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">;;</span> <span class="nc">Melpa</span>
+<span class="o">(</span><span class="n">require</span> <span class="k">&#39;</span><span class="n">package</span><span class="o">)</span>
+<span class="o">(</span><span class="n">add</span><span class="o">-</span><span class="k">to</span><span class="o">-</span><span class="kt">list</span> <span class="k">&#39;</span><span class="n">package</span><span class="o">-</span><span class="n">archives</span>
+         <span class="k">&#39;</span><span class="o">(</span><span class="s2">&quot;melpa&quot;</span> <span class="o">.</span> <span class="s2">&quot;http://melpa.milkbox.net/packages/&quot;</span><span class="o">)</span> <span class="n">t</span><span class="o">)</span>
+<span class="o">(</span><span class="n">setq</span> <span class="n">package</span><span class="o">-</span><span class="n">archives</span> <span class="k">&#39;</span><span class="o">((</span><span class="s2">&quot;gnu&quot;</span> <span class="o">.</span> <span class="s2">&quot;http://elpa.gnu.org/packages/&quot;</span><span class="o">)</span>
+                     <span class="o">(</span><span class="s2">&quot;marmalade&quot;</span> <span class="o">.</span> <span class="s2">&quot;http://marmalade-repo.org/packages&quot;</span><span class="o">)</span>
+                     <span class="o">(</span><span class="s2">&quot;melpa&quot;</span> <span class="o">.</span> <span class="s2">&quot;http://melpa.milkbox.net/packages/&quot;</span><span class="o">)))</span>
+<span class="o">(</span><span class="n">package</span><span class="o">-</span><span class="n">initialize</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Restart Aquamacs. Once it’s reopened, execute company-mode for completion
+<cite>Alt-X package-list-packages</cite>. From the list choose <cite>company -&gt; Install -&gt; Yes</cite>:</p>
+</li>
+</ol>
+<a class="reference internal image-reference" href="_images/mac-company.png"><img alt="_images/mac-company.png" class="align-center" src="_images/mac-company.png" style="width: 820px;" /></a>
+<ol class="arabic" start="7">
+<li><p class="first">Add the following lines to your <code class="docutils literal notranslate"><span class="pre">~/.emacs</span></code> configuration:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">;</span> <span class="nc">Make</span> <span class="n">company</span> <span class="n">aware</span> <span class="k">of</span> <span class="n">merlin</span>
+<span class="o">(</span><span class="k">with</span><span class="o">-</span><span class="n">eval</span><span class="o">-</span><span class="n">after</span><span class="o">-</span><span class="n">load</span> <span class="k">&#39;</span><span class="n">company</span>
+<span class="o">(</span><span class="n">add</span><span class="o">-</span><span class="k">to</span><span class="o">-</span><span class="kt">list</span> <span class="k">&#39;</span><span class="n">company</span><span class="o">-</span><span class="n">backends</span> <span class="k">&#39;</span><span class="n">merlin</span><span class="o">-</span><span class="n">company</span><span class="o">-</span><span class="n">backend</span><span class="o">))</span>
+<span class="o">;</span> <span class="nc">Enable</span> <span class="n">company</span> <span class="n">on</span> <span class="n">merlin</span> <span class="n">managed</span> <span class="n">buffers</span>
+<span class="o">(</span><span class="n">add</span><span class="o">-</span><span class="n">hook</span> <span class="k">&#39;</span><span class="n">merlin</span><span class="o">-</span><span class="n">mode</span><span class="o">-</span><span class="n">hook</span> <span class="k">&#39;</span><span class="n">company</span><span class="o">-</span><span class="n">mode</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Some additional information about this Emacs mode can be found <a class="reference external" href="https://github.com/ocaml/merlin/wiki/emacs-from-scratch">here</a>.</p>
+</li>
+<li><p class="first">You’re good to go. To check your setup, create an OCaml file in Emacs (e.g., <code class="docutils literal notranslate"><span class="pre">a.ml</span></code>) and try to play with a few function definitions. The editor should highlight syntax, compile-time errors and suggest completions for names:</p>
+</li>
+</ol>
+<a class="reference internal image-reference" href="_images/mac-tuareg.png"><img alt="_images/mac-tuareg.png" class="align-center" src="_images/mac-tuareg.png" style="width: 820px;" /></a>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="git.html" class="btn btn-neutral float-right" title="2.2. Installing and using Git" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="prerequisites.html" class="btn btn-neutral" title="2. Software Prerequisites" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

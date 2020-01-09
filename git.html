@@ -1,0 +1,235 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2.2. Installing and using Git &mdash; YSC2229 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2.3. Checking your setup" href="setup.html" />
+    <link rel="prev" title="2.1. Installing OCaml Libraries and setting up Emacs" href="wsl.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="wsl.html">2.1. Installing OCaml Libraries and setting up Emacs</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.2. Installing and using Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html">2.3. Checking your setup</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="prerequisites.html">2. Software Prerequisites</a> &raquo;</li>
+        
+      <li>2.2. Installing and using Git</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installing-and-using-git">
+<h1>2.2. Installing and using Git<a class="headerlink" href="#installing-and-using-git" title="Permalink to this headline">¶</a></h1>
+<p>We will be using <code class="docutils literal notranslate"><span class="pre">git</span></code> as a version control for this course. You will have to master a small set of its commands to be able to submit your homework assignments.</p>
+<p>Command-line client for <code class="docutils literal notranslate"><span class="pre">git</span></code> comes as a part of standard Mac OS X and Linux distributions, but you can install is separately via <code class="docutils literal notranslate"><span class="pre">apt</span></code> or <code class="docutils literal notranslate"><span class="pre">brew</span></code>. Please, also create yourself an account on <a class="reference external" href="http://github.com/">GitHub</a>, as you will need it to make submissions.</p>
+<p>To work with GitHub comfortably, you will need to set up your SSH keys. To do so, run the following command in your terminal (entering your email):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">t</span> <span class="n">rsa</span> <span class="o">-</span><span class="n">b</span> <span class="mi">4096</span> <span class="o">-</span><span class="nc">C</span> <span class="s2">&quot;your_email@example.com&quot;</span>
+</pre></div>
+</div>
+<p>After that, run <code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">~/.ssh/id_rsa.pub</span></code> and copy all the text starting with <code class="docutils literal notranslate"><span class="pre">ssh-rsa</span></code> and ending with your email.</p>
+<p>Follow <a class="reference external" href="https://help.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account">these instructions</a> to add this text as your public SSH key to your GitHub entry.</p>
+<p>Finally, execute the following commands from terminal, providing your email address and name correspondingly:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span> <span class="s2">&quot;you@example.com&quot;</span>
+<span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span> <span class="s2">&quot;Your Name&quot;</span>
+</pre></div>
+</div>
+<p>These quick tutorials should be helpful in learning basic commands of working with Git:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://www.freecodecamp.org/news/learn-the-basics-of-git-in-under-10-minutes-da548267cc91/">Git basics</a></li>
+<li><a class="reference external" href="https://github.github.com/training-kit/downloads/github-git-cheat-sheet.pdf">Git cheat sheet</a></li>
+</ul>
+<p>Don’t worry - you will have plenty of opportunity to master this knowledge during the course!</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="setup.html" class="btn btn-neutral float-right" title="2.3. Checking your setup" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="wsl.html" class="btn btn-neutral" title="2.1. Installing OCaml Libraries and setting up Emacs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

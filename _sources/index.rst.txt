@@ -11,7 +11,7 @@ Introductory Data Structures and Algorithms
    :maxdepth: 2
 
    syllabus
-..   prerequisites
+   prerequisites
 
 ..   YSC2229-lecture-notes-week-01
 ..   YSC2229-lecture-notes-week-02

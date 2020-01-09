@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>2. Software Prerequisites &mdash; YSC2229 2019</title>
+  <title>2.3. Checking your setup &mdash; YSC2229 2019</title>
   
 
   
@@ -28,8 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="2.1. Installing OCaml Libraries and setting up Emacs" href="wsl.html" />
-    <link rel="prev" title="1. Course Syllabus" href="syllabus.html" /> 
+    <link rel="prev" title="2.2. Installing and using Git" href="git.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -80,10 +79,10 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">2. Software Prerequisites</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="wsl.html">2.1. Installing OCaml Libraries and setting up Emacs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="git.html">2.2. Installing and using Git</a></li>
-<li class="toctree-l2"><a class="reference internal" href="setup.html">2.3. Checking your setup</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.3. Checking your setup</a></li>
 </ul>
 </li>
 </ul>
@@ -131,7 +130,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>2. Software Prerequisites</li>
+          <li><a href="prerequisites.html">2. Software Prerequisites</a> &raquo;</li>
+        
+      <li>2.3. Checking your setup</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -148,31 +149,34 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="software-prerequisites">
-<h1>2. Software Prerequisites<a class="headerlink" href="#software-prerequisites" title="Permalink to this headline">¶</a></h1>
-<p>In this course, we will be using <a class="reference external" href="https://ocaml.org/">OCaml</a> as a
-main programming language. We will be working with multi-file
-projects, which will make use of various external libraries, and
-involve automated testing and graphics. Because of this, you will have
-to install a number of software utilities, which you did not need in
-the Intro to Computer Science class. This document provides detailed
-instructions on how to do so depending on the operating system you
-use.</p>
-<p>Please, allocate <strong>at least 3 hours</strong> for going through this setup
-document, as some of the software packages listed required for our
-class will take quite a while to install.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="wsl.html">2.1. Installing OCaml Libraries and setting up Emacs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="wsl.html#microsoft-windows-10">2.1.1. Microsoft Windows 10</a></li>
-<li class="toctree-l2"><a class="reference internal" href="wsl.html#linux">2.1.2. Linux</a></li>
-<li class="toctree-l2"><a class="reference internal" href="wsl.html#mac-os-x">2.1.3. Mac OS X</a></li>
+  <div class="section" id="checking-your-setup">
+<h1>2.3. Checking your setup<a class="headerlink" href="#checking-your-setup" title="Permalink to this headline">¶</a></h1>
+<p>To ensure that you’ve got all software installed correctly, let us retrieve, compile and run a small self-contained OCaml project. First, open this GitHub project:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/ysc2229/ocaml-graphics-demo">https://github.com/ysc2229/ocaml-graphics-demo</a></li>
 </ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="git.html">2.2. Installing and using Git</a></li>
-<li class="toctree-l1"><a class="reference internal" href="setup.html">2.3. Checking your setup</a></li>
-</ul>
+<p>Click “Clone or Download” button and choose “Use SSH” as a cloning option:</p>
+<a class="reference internal image-reference" href="_images/git.png"><img alt="_images/git.png" class="align-center" src="_images/git.png" style="width: 820px;" /></a>
+<p>Next, copy the url <code class="docutils literal notranslate"><span class="pre">git&#64;github.com:ysc2229/ocaml-graphics-demo.git</span></code> to your buffer.</p>
+<p>Switch to terminal in your WSL Linux or Mac OS system, and create a folder where you’ll be storing your OCaml projects. It might be <code class="docutils literal notranslate"><span class="pre">~/projects</span></code> or <code class="docutils literal notranslate"><span class="pre">~/home/projects</span></code> or whatever you prefer. You can do it as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~</span>
+<span class="n">mkdir</span> <span class="n">projects</span>
+<span class="n">cd</span> <span class="n">projects</span>
+</pre></div>
 </div>
+<p>Now run this command from the folder <code class="docutils literal notranslate"><span class="pre">projects</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="o">@</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">:</span><span class="n">ysc2229</span><span class="o">/</span><span class="n">ocaml</span><span class="o">-</span><span class="n">graphics</span><span class="o">-</span><span class="n">demo</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">ocaml</span><span class="o">-</span><span class="n">graphics</span><span class="o">-</span><span class="n">demo</span>
+</pre></div>
+</div>
+<p>If prompted to answer a question, simply answer <code class="docutils literal notranslate"><span class="pre">y</span></code>. We have just created a local copy of the simple repository. Now let’s compile it and run the executables. Execute the following commands:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">make</span>
+<span class="n">bin</span><span class="o">/</span><span class="n">demo</span>
+</pre></div>
+</div>
+<p>After a few seconds (longer on Mac OS X), you should get a window with a funny face. Feel free to play with it and close when done. You can also browse the sources of the project with Emacs.</p>
+<a class="reference internal image-reference" href="_images/face.png"><img alt="_images/face.png" class="align-center" src="_images/face.png" style="width: 820px;" /></a>
+<p>Well done! Now you’re ready to take the class.</p>
 </div>
 
 
@@ -183,10 +187,8 @@ class will take quite a while to install.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="wsl.html" class="btn btn-neutral float-right" title="2.1. Installing OCaml Libraries and setting up Emacs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-      
-        <a href="syllabus.html" class="btn btn-neutral" title="1. Course Syllabus" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="git.html" class="btn btn-neutral" title="2.2. Installing and using Git" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
