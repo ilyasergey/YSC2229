@@ -82,7 +82,12 @@
 <li class="toctree-l1 current"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="wsl.html">2.1. Installing OCaml Libraries and setting up Emacs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="git.html">2.2. Installing and using Git</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">2.3. Checking your setup</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.3. Checking your setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#getting-a-project-from-git">2.3.1. Getting a project from Git</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#compiling-and-running-a-project">2.3.2. Compiling and running a project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-utop-repl">2.3.3. Running utop REPL</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -151,7 +156,11 @@
             
   <div class="section" id="checking-your-setup">
 <h1>2.3. Checking your setup<a class="headerlink" href="#checking-your-setup" title="Permalink to this headline">¶</a></h1>
-<p>To ensure that you’ve got all software installed correctly, let us retrieve, compile and run a small self-contained OCaml project. First, open this GitHub project:</p>
+<p>To ensure that you’ve got all software installed correctly, let us
+retrieve, compile and run a small self-contained OCaml project.</p>
+<div class="section" id="getting-a-project-from-git">
+<h2>2.3.1. Getting a project from Git<a class="headerlink" href="#getting-a-project-from-git" title="Permalink to this headline">¶</a></h2>
+<p>First, open this GitHub project:</p>
 <ul class="simple">
 <li><a class="reference external" href="https://github.com/ysc2229/ocaml-graphics-demo">https://github.com/ysc2229/ocaml-graphics-demo</a></li>
 </ul>
@@ -169,14 +178,36 @@
 <span class="n">cd</span> <span class="n">ocaml</span><span class="o">-</span><span class="n">graphics</span><span class="o">-</span><span class="n">demo</span>
 </pre></div>
 </div>
-<p>If prompted to answer a question, simply answer <code class="docutils literal notranslate"><span class="pre">y</span></code>. We have just created a local copy of the simple repository. Now let’s compile it and run the executables. Execute the following commands:</p>
+<p>If prompted to answer a question, simply answer <code class="docutils literal notranslate"><span class="pre">y</span></code>. We have just
+created a local copy of the simple repository.</p>
+</div>
+<div class="section" id="compiling-and-running-a-project">
+<h2>2.3.2. Compiling and running a project<a class="headerlink" href="#compiling-and-running-a-project" title="Permalink to this headline">¶</a></h2>
+<p>Let’s compile it and run the executables. Execute the following commands:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">make</span>
 <span class="n">bin</span><span class="o">/</span><span class="n">demo</span>
 </pre></div>
 </div>
 <p>After a few seconds (longer on Mac OS X), you should get a window with a funny face. Feel free to play with it and close when done. You can also browse the sources of the project with Emacs.</p>
 <a class="reference internal image-reference" href="_images/face.png"><img alt="_images/face.png" class="align-center" src="_images/face.png" style="width: 820px;" /></a>
-<p>Well done! Now you’re ready to take the class.</p>
+</div>
+<div class="section" id="running-utop-repl">
+<h2>2.3.3. Running utop REPL<a class="headerlink" href="#running-utop-repl" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">utop</span></code> is a replacement for an inferior OCaml REPL, which provides a
+richer set of features and a nicer highlighting. Unfortunately, it
+cannot be used directly from Emacs with multi-file projects, but we
+can run it from terminal. For instance, for the project above, we can
+invoke <code class="docutils literal notranslate"><span class="pre">utop</span></code> by running:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">utop</span>
+</pre></div>
+</div>
+<p>Now we can load modules defined in the project (eg., <code class="docutils literal notranslate"><span class="pre">GraphicsUtil</span></code>)
+and play with the definitions. Use <code class="docutils literal notranslate"><span class="pre">Esc</span> <span class="pre">+</span> <span class="pre">Left/Right/Down</span></code> arrows to
+navigate between auto-completion options and choose one. An example is
+showon the screenshot below:</p>
+<a class="reference internal image-reference" href="_images/utop.png"><img alt="_images/utop.png" class="align-center" src="_images/utop.png" style="width: 820px;" /></a>
+<p>Fun, isn’t it? Now you’re ready to take the class.</p>
+</div>
 </div>
 
 
