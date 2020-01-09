@@ -156,7 +156,10 @@ fully functional Linux distribution installed on your machine.
 
    Some additional information about this Emacs mode can be found `here <https://github.com/ocaml/merlin/wiki/emacs-from-scratch>`_.
 
-10. You're good to go. To check your setup, create an OCaml file in Emacs (e.g., ``a.ml``) and try to play with a few function definitions. The editor should highlight syntax, compile-time errors and suggest completions for names:
+10. You're good to go. To check your setup, create an OCaml file in
+    Emacs (e.g., ``a.ml``) and try to play with some definitions. The
+    editor should highlight OCaml syntax, compile-time errors, and
+    will suggest options for name auto-completion:
 
 .. image:: ../resources/howto/tuareg.png
    :width: 820px
@@ -240,7 +243,10 @@ OCaml is well supported in Mac OS X, so the installation process is fairly strai
 
    Some additional information about this Emacs mode can be found `here <https://github.com/ocaml/merlin/wiki/emacs-from-scratch>`_.
 
-8. You're good to go. To check your setup, create an OCaml file in Emacs (e.g., ``a.ml``) and try to play with a few function definitions. The editor should highlight syntax, compile-time errors and suggest completions for names:
+8. You're good to go. To check your setup, create an OCaml file in
+   Emacs (e.g., ``a.ml``) and try to play with some definitions. The
+   editor should highlight OCaml syntax, compile-time errors, and will
+   suggest options for name auto-completion:
 
 .. image:: ../resources/howto/mac-tuareg.png
    :width: 820px
