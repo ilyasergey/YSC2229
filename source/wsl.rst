@@ -14,7 +14,7 @@ it is problematic. To circumvent this issue, we will be running OCaml
 and the related software using `Windows Subsystem for Linux
 <https://docs.microsoft.com/en-us/windows/wsl/install-win10>`_, a
 utility that allows to run a distribution of Linux within your Windows
-10 system. This set up takes a large number of steps, but once you're
+10 system. This setup takes a large number of steps, but once you're
 done with it, you'll have a premium support for OCaml, and also a
 fully functional Linux distribution installed on your machine.
 
