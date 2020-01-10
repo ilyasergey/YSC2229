@@ -27,6 +27,8 @@ These quick tutorials should be helpful in learning basic commands of working wi
 
 Don't worry - you will have plenty of opportunity to master this knowledge during the course!
 
+Finally, please consider applying for student benefits on GitHub. This is totally free and will give allow you to make the best of your GitHub account. The instructions on how to apply can be `found online <https://education.github.com/pack>`_.
+
 
 
 
