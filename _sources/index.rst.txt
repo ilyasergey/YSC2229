@@ -28,6 +28,9 @@ Introductory Data Structures and Algorithms
 ..   YSC2229-lecture-notes-week-13
 ..   YSC2229-lecture-notes-week-14
 
+Lecture notes will be posted gradually as we progress through the
+course material.
+
 
 Supplementary Materials
 -----------------------
