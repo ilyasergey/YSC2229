@@ -12,8 +12,8 @@ Introductory Data Structures and Algorithms
 
    syllabus
    prerequisites
+   lecture-notes-week-01
 
-..   YSC2229-lecture-notes-week-01
 ..   YSC2229-lecture-notes-week-02
 ..   YSC2229-lecture-notes-week-03
 ..   YSC2229-lecture-notes-week-04
@@ -42,7 +42,13 @@ Supplementary Materials
 Textbooks
 ---------
 
-1. `Introduction to Algorithms <https://mitpress.mit.edu/books/introduction-algorithms-third-edition>`_ by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein
+1. `Introduction to Algorithms
+   <https://mitpress.mit.edu/books/introduction-algorithms-third-edition>`_
+   by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and
+   Clifford Stein
+2. `Algorithms, 4th edition
+   <https://algs4.cs.princeton.edu/home/>`_
+   by Robert Sedgewick and Kevin Wayne. 
 
 ..
    Indices and tables
