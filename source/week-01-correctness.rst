@@ -13,7 +13,7 @@ OCaml, following the grammar::
   <list-of-things> ::= []
                      | <thing> :: <list-of-things>
 
-That is, to recall, a list is either empty `[]` or constructed by
+That is, to recall, a list is either empty ``[]`` or constructed by
 appending a head `<thing>` to an already constructed list.
 
 Warm-up: finding a minimum in a list of integers
@@ -65,7 +65,7 @@ Reasoning about correctness
 ---------------------------
 
 How do we know that the function is indeed correct, i.e., does what
-it's supposed to do? A familiar way to probe the implementation it for
+it's supposed to do? A familiar way to probe the implementation for
 the *presence* of bugs is to give the function a specification and
 write some tests.
 
@@ -179,7 +179,7 @@ it needs to assist us in showing the two following executions
 properties of the function being specified:
 
 * In the base case of a recursion (in case of ``walk``, it's the
-  branch `[] -> ...`), it trivially gives us the desired property of
+  branch ``[] -> ...``), it trivially gives us the desired property of
   the result, i.e., the postcondition holds.
 
 * It can be established before the initial and the recursive call. 
@@ -213,7 +213,7 @@ minimum is somewhere in the tail yet to be explored. This property is
 a reasonable precondition, which we can capture by the following
 predicate (i.e., a boolean function)::
 
-  let walk_pre ls xs min = 
+  let find_min_walk_pre ls xs min = 
     (* xs is a suffix of ls *)
     is_suffix xs ls &&    
     ((* min is a global minimum, *) 

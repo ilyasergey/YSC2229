@@ -57,10 +57,10 @@ loop, and pattern-matching has been replaced by the loop condition
 references that are being reassigned at each loop iteration.
 
 An important observation is that reassigning the mutable variables in
-the imperative implementation is an equivalent to passing new
-arguments in the recursive one. Knowing that makes it easy to "switch"
-between loop-based imperative and tail-recursive functional
-implementations.
+an imperative implementation is equivalent to passing new arguments in
+the corresponding recursive implementation. Knowing that makes it easy
+to "switch" between loop-based imperative and tail-recursive
+functional implementations.
 
 Loop variants
 -------------
