@@ -52,7 +52,7 @@ After a few seconds (longer on Mac OS X), you should get a window with a funny f
 Running utop REPL
 -----------------
 
-``utop`` is a replacement for an inferior OCaml REPL, which provides a
+``utop`` is a replacement for an inferior OCaml REPL providing a
 richer set of features and a nicer highlighting. Unfortunately, it
 cannot be used directly from Emacs with multi-file projects, but we
 can run it from terminal. For instance, for the project above, we can
