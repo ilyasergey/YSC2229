@@ -1,5 +1,7 @@
 .. -*- mode: rst -*-
 
+.. _prerequisites:
+
 Software Prerequisites
 ======================
 

@@ -6,8 +6,9 @@ Course Syllabus
 The list of topics below is a subject of possible minor changes.
 
 Week 01
-    * Correctness of Recursive Algorithms
+    * Introduction
     * Testing OCaml Code
+    * Correctness of Recursive Algorithms
     * From Recursion to Imperative Loops
     * Sorting Lists via Insertion Sort
 

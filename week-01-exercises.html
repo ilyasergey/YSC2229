@@ -1,0 +1,321 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Exercises &mdash; YSC2229 2020</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Exercises</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="exercises">
+<h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="exercise-1">
+<span id="exercise-algo-example"></span><h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<p>Give an example of a real-life application that requires an
+implementation of and algorithm (or several algorithms) as its part,
+and discuss the algorithms involved: how do they interact, what are
+they inputs and outputs.</p>
+</div>
+<div class="section" id="exercise-2">
+<span id="exercise-merlin-setup"></span><h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<p>Programming in OCaml in Emacs is much more pleasant with instant
+navigation, auto-completion and type information available. Install
+all the necessary sofwtare following the provided <a class="reference internal" href="prerequisites.html#prerequisites"><span class="std std-ref">Software Prerequisites</span></a>.</p>
+</div>
+<div class="section" id="exercise-3">
+<span id="exercise-find-min-termination-measure"></span><h2>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<p>What is the termination measure of <code class="docutils literal notranslate"><span class="pre">walk</span></code> within <code class="docutils literal notranslate"><span class="pre">find_min</span></code>?
+Define it as a function <code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">:</span> <span class="pre">'a</span> <span class="pre">list</span> <span class="pre">-&gt;</span> <span class="pre">int</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code> and change the
+implementation of <code class="docutils literal notranslate"><span class="pre">walk</span></code> annotating it with outputs to check that
+the measure indeed decreases.</p>
+<ul class="simple">
+<li><strong>Hint:</strong> use OCaml’s <code class="docutils literal notranslate"><span class="pre">Printf.printf</span></code> utility to output results of
+the termination measure mid-execution.</li>
+</ul>
+</div>
+<div class="section" id="exercise-4">
+<span id="exercise-find-min2"></span><h2>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Implement the function <code class="docutils literal notranslate"><span class="pre">find_min2</span></code>, similar to <code class="docutils literal notranslate"><span class="pre">find_min</span></code> (also
+using the auxiliary <code class="docutils literal notranslate"><span class="pre">walk</span></code>, but without relying on any other
+auxiliary functions, e.g., sorting) that finds not the minimal
+element, but the <em>second</em> minimal element. For instance, it should
+bive the following output on a list <code class="docutils literal notranslate"><span class="pre">[2;</span> <span class="pre">6;</span> <span class="pre">78;</span> <span class="pre">2;</span> <span class="pre">5;</span> <span class="pre">3;</span> <span class="pre">1]</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">find_min2</span>  <span class="o">[</span><span class="mi">2</span><span class="o">;</span> <span class="mi">6</span><span class="o">;</span> <span class="mi">78</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">1</span><span class="o">];;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="n">option</span> <span class="o">=</span> <span class="nc">Some</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p><strong>Hint:</strong> <code class="docutils literal notranslate"><span class="pre">walk</span></code> is easier to implement if it takes both the
+“absolute” minimum <code class="docutils literal notranslate"><span class="pre">m1</span></code> and the second minimum <code class="docutils literal notranslate"><span class="pre">m2</span></code>, i.e., has
+the type <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">list</span> <span class="pre">-&gt;</span> <span class="pre">int</span> <span class="pre">-&gt;</span> <span class="pre">int</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code>.</p>
+</li>
+<li><p class="first">Write its specification (a relation between its input/output).</p>
+<p><strong>Hint:</strong> the following definition might be helpful:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">is_min2</span> <span class="n">ls</span> <span class="n">m1</span> <span class="n">m2</span> <span class="o">=</span>
+  <span class="n">m1</span> <span class="o">&lt;</span> <span class="n">m2</span> <span class="o">&amp;&amp;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span> <span class="n">e</span> <span class="o">==</span> <span class="n">m1</span> <span class="o">||</span> <span class="n">m2</span> <span class="o">&lt;=</span> <span class="n">e</span><span class="o">)</span> <span class="n">ls</span> <span class="o">&amp;&amp;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">mem</span> <span class="n">m2</span> <span class="n">ls</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Write the precondition for <code class="docutils literal notranslate"><span class="pre">walk</span></code> and annotate the function with
+the assertions, enforcing the pre- and postconditions.</p>
+<p><strong>Hint:</strong> you might want to start from devising the second disjunct
+of <code class="docutils literal notranslate"><span class="pre">find_min2_walk_pre</span> <span class="pre">ls</span> <span class="pre">xs</span> <span class="pre">m1</span> <span class="pre">m2</span></code> to state that “a list has an
+element that is its second minimum, positioned appropriately with
+respect to <code class="docutils literal notranslate"><span class="pre">m1</span></code> and <code class="docutils literal notranslate"><span class="pre">m2</span></code>”.</p>
+</li>
+<li><p class="first">Test your annotated function <code class="docutils literal notranslate"><span class="pre">find_min2_with_invariant</span></code>.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="exercise-5">
+<span id="exercise-tail-rec"></span><h2>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
+<p>Give an example of an interesting non-tail recursive function in OCaml
+and show, if possible, an equivalent tail-recursive function.</p>
+</div>
+<div class="section" id="exercise-6">
+<span id="exercise-find-min2-loop"></span><h2>Exercise 6<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h2>
+<p>Implement an imperative version of the function <code class="docutils literal notranslate"><span class="pre">find_min2</span></code> from
+<a class="reference internal" href="#exercise-find-min2"><span class="std std-ref">Exercise 4</span></a>, annotate its with loop invariants and run
+the tests.</p>
+</div>
+<div class="section" id="exercise-7">
+<span id="exercise-sort-desc"></span><h2>Exercise 7<a class="headerlink" href="#exercise-7" title="Permalink to this headline">¶</a></h2>
+<p>Implement a version of an insertion sort that sorts the elements in
+the descending order and test it.</p>
+</div>
+<div class="section" id="exercise-8">
+<span id="exercise-sort-tail"></span><h2>Exercise 8<a class="headerlink" href="#exercise-8" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to implement (quite unelegantly and not very
+efficiently) the insertion sort on lists, so it would be
+tail-recursive. For this, we will have to rewrite it, so <code class="docutils literal notranslate"><span class="pre">insert</span></code>
+would use the boolean flug <code class="docutils literal notranslate"><span class="pre">run</span></code> in order to indicate whether the
+insertion has already taken place, or the iteration should continue:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert_sort_tail</span> <span class="n">ls</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">xs</span> <span class="n">prefix</span> <span class="o">=</span>
+    <span class="k">match</span> <span class="n">xs</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">prefix</span>
+    <span class="o">|</span> <span class="n">h</span> <span class="o">::</span> <span class="n">t</span> <span class="o">-&gt;</span>
+        <span class="k">let</span> <span class="k">rec</span> <span class="n">insert</span> <span class="n">elem</span> <span class="n">acc</span> <span class="n">remaining</span> <span class="n">run</span> <span class="o">=</span>
+          <span class="k">if</span> <span class="n">not</span> <span class="n">run</span> <span class="k">then</span> <span class="n">acc</span>
+          <span class="k">else</span> <span class="k">match</span> <span class="n">remaining</span> <span class="k">with</span>
+            <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">acc</span> <span class="o">@</span> <span class="o">[</span><span class="n">elem</span><span class="o">]</span>
+            <span class="o">|</span> <span class="n">h</span> <span class="o">::</span> <span class="n">t</span> <span class="k">as</span> <span class="n">l</span> <span class="o">-&gt;</span>
+              <span class="k">if</span> <span class="n">h</span> <span class="o">&lt;</span> <span class="n">elem</span>
+              <span class="k">then</span>
+                <span class="k">let</span> <span class="n">run&#39;</span> <span class="o">=</span> <span class="bp">true</span> <span class="k">in</span>
+                <span class="k">let</span> <span class="n">acc&#39;</span> <span class="o">=</span> <span class="n">acc</span> <span class="o">@</span> <span class="o">[</span><span class="n">h</span><span class="o">]</span> <span class="k">in</span>
+                <span class="n">insert</span> <span class="n">elem</span> <span class="n">acc&#39;</span> <span class="n">t</span> <span class="n">run&#39;</span>
+              <span class="k">else</span>
+                <span class="k">let</span> <span class="n">run&#39;</span> <span class="o">=</span> <span class="bp">false</span> <span class="k">in</span>
+                <span class="k">let</span> <span class="n">acc&#39;</span> <span class="o">=</span> <span class="n">acc</span> <span class="o">@</span> <span class="o">(</span><span class="n">elem</span> <span class="o">::</span> <span class="n">l</span><span class="o">)</span> <span class="k">in</span>
+                <span class="n">insert</span> <span class="n">elem</span> <span class="n">acc&#39;</span> <span class="n">t</span> <span class="n">run&#39;</span>
+        <span class="k">in</span>
+
+        <span class="k">let</span> <span class="n">acc&#39;</span> <span class="o">=</span> <span class="n">insert</span> <span class="n">h</span> <span class="bp">[]</span> <span class="n">prefix</span> <span class="bp">true</span> <span class="k">in</span>
+        <span class="n">walk</span> <span class="n">t</span> <span class="n">acc&#39;</span>
+  <span class="k">in</span>
+  <span class="n">walk</span> <span class="n">ls</span> <span class="bp">[]</span>
+</pre></div>
+</div>
+<ul>
+<li><p class="first">Define the invariants for auxiliary functions:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert_inv</span> <span class="n">prefix</span> <span class="n">elem</span> <span class="n">acc</span> <span class="n">remaining</span> <span class="n">run</span> <span class="o">=</span> <span class="c">(* ... *)</span>
+<span class="k">let</span> <span class="n">insert_sort_tail_walk_inv</span> <span class="n">ls</span> <span class="n">xs</span> <span class="n">acc</span> <span class="o">=</span> <span class="c">(* ... *)</span>
+</pre></div>
+</div>
+<p>Annotate the implementation above with them and test it.</p>
+</li>
+<li><p class="first">Transform <code class="docutils literal notranslate"><span class="pre">insert_sort_tail</span></code> into an imperative version, which
+uses (nested) loops instead of recursion.</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

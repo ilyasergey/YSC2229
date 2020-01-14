@@ -1,0 +1,340 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction &mdash; YSC2229 2020</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Introduction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="about-this-course">
+<h2>About this course<a class="headerlink" href="#about-this-course" title="Permalink to this headline">¶</a></h2>
+<p>Data represents information and computations represent data
+processing, i.e., obtaining <strong>new</strong> information from what we already
+know about the world.</p>
+<p>An <strong>algorithm</strong> is any well-defined computational procedure that
+takes some data value, or a set of values, as input and produces some
+value, or set of values, as output, always terminating with a result.
+An algorithm is thus a sequence of computational steps that transform
+the input data into the output data.</p>
+<p>In this course, we will take a look at some of the problems that can
+be solved by algorithms, learn how to approach challenges that require
+algorithmic solution, and, most important, will learn how to <em>reason</em>
+about crucial properties of algorithms: correctness, termination, and
+complexity.</p>
+</div>
+<div class="section" id="what-problems-are-solved-by-algorithms">
+<h2>What problems are solved by algorithms?<a class="headerlink" href="#what-problems-are-solved-by-algorithms" title="Permalink to this headline">¶</a></h2>
+<p>Algorithms describe a problem in a way that it could be implemented as
+a computer program and solved automatically. You can think of an
+algorithm as of a description of a procedure that achieves that.</p>
+<p>For example, we might need to sort a sequence of numbers in a
+non-decreasing order. This problem arises frequently in practice and
+provides fertile ground for introducing many standard design
+techniques and analysis tools. Here is how we formally define the
+sorting problem:</p>
+<ul class="simple">
+<li><strong>Input</strong>: a sequence of numbers <code class="docutils literal notranslate"><span class="pre">a1</span></code>, <code class="docutils literal notranslate"><span class="pre">a2</span></code>, …, <code class="docutils literal notranslate"><span class="pre">an</span></code>.</li>
+<li><strong>Output</strong>: a permutation (or, reordering) of the initial sequence
+<code class="docutils literal notranslate"><span class="pre">b1</span></code>, <code class="docutils literal notranslate"><span class="pre">b2</span></code>, …, <code class="docutils literal notranslate"><span class="pre">bn</span></code>, such that <code class="docutils literal notranslate"><span class="pre">b1</span> <span class="pre">&lt;=</span> <span class="pre">b2</span> <span class="pre">&lt;=</span> <span class="pre">...</span> <span class="pre">&lt;=</span> <span class="pre">bn</span></code>.</li>
+</ul>
+<p>The description above presents a specification of a problem, but does
+not describe how to come from an input to an output. Indeed, there might
+be many <em>ways</em> to approach the same specification, and, as a
+characteristic example, there are multiple algorithms for solving the
+sorting problem, some of which we will see in this course.</p>
+<p>Obviously, sorting sequences is not the only class of problems that
+can be solved by means of an algorithm. Some other problems include:</p>
+<ul class="simple">
+<li>Searching – quickly finding an element satisfying certain
+requirements in a large collection of other elements. This is a
+problem frequently appearing in the context of e-commerce (think
+about searching for a book to buy on Amazon).</li>
+<li>Data compression/decompression – representing an information so it
+would take the least memory, making it easier to store and transmit,
+while retaining the ability to restore it without any losses. As an
+example, think of video and audio encoders and decoders, whose goal
+is to minimise the size of a file to be streamed, while keeping its
+high quality.</li>
+<li>Path finding – navigating from a point A to a point B, in a
+quickest way, given a fixed map.</li>
+<li>Optimisations in manufacturing and other commercial enterprises. For
+instance, you can think of an algorithm that computes an arrangement
+of cables allowing to connect a number of call centers in the least
+expensive way.</li>
+<li>Various geometric problems: for instance, locating the closest
+facility to one’s position on a map, or installing a set of security
+cameras in an art gallery in the most efficient way.</li>
+</ul>
+<p>Some real-world problems might require multiple algorithms to solve.
+As instance of such a problem, during the lectures we discussed a
+<em>room furnishing</em> challenge, in which one need to cover the maximal
+room surface with furniture. We will discuss more problems of that
+kind and will learn how to approach them in a class.</p>
+</div>
+<div class="section" id="data-structures">
+<h2>Data structures<a class="headerlink" href="#data-structures" title="Permalink to this headline">¶</a></h2>
+<p>Obviously, some of the tasks outlined above can benefit from a data
+arranged in a more convenient way. For example, if one is interested
+in finding the largest element in a collection, it would help to have
+this collection first sorted. As another example, if one wants to
+represent a map of roads of different length, which is suitable for
+calculating the shortest paths, it is wise to invest some time into
+thinking on how to arrange this information to facilitate retrieving
+the relevant topographical properties.</p>
+<p>Data structures are means to organise information in ways that make it
+conceptually simpler and faster to retrieve the bits we might need in
+the future. Some of the data structures you have already seen in the
+past are lists, trees, and arrays. However, more intricate problems
+will require more sophisticated data structures.</p>
+<p>Therefore, on the goals of this course is to show how to pick a right
+data structure for a corresponding problem.</p>
+</div>
+<div class="section" id="what-is-analysis-of-algorithms">
+<h2>What is analysis of algorithms?<a class="headerlink" href="#what-is-analysis-of-algorithms" title="Permalink to this headline">¶</a></h2>
+<p>When we solve a problem algorithmically, we need the solution (i.e.,
+an algorithm providing an answer) to satisfy the following hard
+criteria:</p>
+<ul class="simple">
+<li><strong>Correctness</strong>: Does the algorithm really do what it’s supposed to
+do?</li>
+<li><strong>Termination</strong>: Does the algorithm terminate for any given input.</li>
+<li><strong>Complexity</strong>: Why the algorithm consumes so much resource (time,
+memory) and how can we improve it?</li>
+</ul>
+<p>An algorithm that is simply not correct is not worth much (although
+the notion of correctness is, as we will see, in the eye of the
+beholder). An algorithm that does not terminate, but only on very
+special cases, might be actually useful. Finally, the analysis of
+computational complexity tells us how slow will be an algorithm in
+certain cases or how much memory will it consume.</p>
+<p>In terms of time consumption, problems that can be solved
+algorithmically can be themselves partitioned to several classes:</p>
+<ul class="simple">
+<li><strong>tractable problems</strong> - admit solutions that run in “reasonable”
+time: sorting, searching, compression/decompression.</li>
+<li><strong>possibly intractable</strong> — probably don’t have reasonable-time
+algorithmic solutions: SAT, graph isomorphism</li>
+<li><strong>practically intractable</strong> — definitely don’t have such solutions:
+the Towers of Hanoi</li>
+<li><strong>non-computable</strong> — can’t be solved algorithmically at all: the
+halting problem</li>
+</ul>
+<p>A good programmer should be able to guess correctly whether the
+problem she is trying to solve algorithmically belongs to one of those
+classes.</p>
+<p>There are two ways to analyse algorithms for correctness, termination
+and complexity:</p>
+<ul>
+<li><p class="first"><strong>Empirical</strong> – repeatedly run algorithm with different inputs to get
+some idea of behaviour on different sizes of input. This approach is
+very practical (and we are going to rely on it a lot), but has
+certain shortcomings:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Was our selection of inputs representative?</li>
+<li>This process consumes the very resource (time) we are trying to conserve!</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Theoretical</strong> – a mathematical analysis of a “paper” version of the
+algorithm:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Can deal with all cases (even impractically large input instances);</li>
+<li>Machine-independent;</li>
+<li>Sometimes requires non-trivial mathematical reasoning.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
