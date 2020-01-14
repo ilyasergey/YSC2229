@@ -12,7 +12,7 @@ Introductory Data Structures and Algorithms
 
    syllabus
    prerequisites
-   lecture-notes-week-01
+..   lecture-notes-week-01
 
 ..   YSC2229-lecture-notes-week-02
 ..   YSC2229-lecture-notes-week-03
@@ -35,6 +35,11 @@ course material.
 Supplementary Materials
 -----------------------
 
+* `Code from the lectures
+  <https://github.com/ysc2229/library>`_: each week is a separate
+  branch, ``master`` is a final snapshot.
+.. * `Slides from Week 01 <../resources/intro/Week-01-Intro.pdf>`_
+* `Matrix determinants in Haskell <../resources/intro/Matrices.hs>`_
 * `Example OCaml project with graphics
   <https://github.com/ysc2229/ocaml-graphics-demo>`_ 
 * `GitHub Organisation <https://github.com/ysc2229/>`_ 
