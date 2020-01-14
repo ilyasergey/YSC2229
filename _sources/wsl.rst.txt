@@ -183,8 +183,8 @@ OCaml is well supported in Mac OS X, so the installation process is fairly strai
 4. Install the `XQuartz <https://www.xquartz.org/>`_ X window system
    for Mac OS X. Make sure it `before` you install ``opam`` and all
    libraries from it. We will need this library for a few graphical
-   applications in this course. Once you have done it, **log-out from
-   the system and log-in again**.
+   applications at the end of this course. Once you have done it,
+   **log-out from the system and log-in again**.
 
 5. Next, we will install the ``opam`` package manager for managing different OCaml libraries. Execute the following lines from Linux terminal::
 
