@@ -112,7 +112,7 @@ fully functional Linux distribution installed on your machine.
 
    Don't forget to enter the password you've created for your Linux account, it might be different from your Windows one. Be patient: installing those packages will take quite some time.
 
-7. Next, we will install the ``opam`` package manager for managing different OCaml libraries. Execute the following lines from Linux terminal::
+7. Next, we will install the ``opam`` package manager for working with different OCaml libraries. Execute the following lines from Linux terminal::
 
     sudo apt install opam
     opam init -y --compiler=4.07.1 --disable-sandboxing
@@ -187,7 +187,9 @@ OCaml is well supported in Mac OS X, so the installation process is fairly strai
 
    Once you have done it, **log-out from the system and log-in again**.
 
-5. Next, we will install the ``opam`` package manager for managing different OCaml libraries. Execute the following lines from Linux terminal::
+5. Next, we will install the ``opam`` package manager for installing
+   and maintaining different OCaml libraries. Execute the following
+   lines from the terminal::
 
     brew install opam
     opam init -y --compiler=4.07.1
