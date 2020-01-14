@@ -257,7 +257,7 @@ First, we need to install a number of Linux packages that OCaml needs. Run the f
 </div>
 <p>Don’t forget to enter the password you’ve created for your Linux account, it might be different from your Windows one. Be patient: installing those packages will take quite some time.</p>
 </li>
-<li><p class="first">Next, we will install the <code class="docutils literal notranslate"><span class="pre">opam</span></code> package manager for managing different OCaml libraries. Execute the following lines from Linux terminal:</p>
+<li><p class="first">Next, we will install the <code class="docutils literal notranslate"><span class="pre">opam</span></code> package manager for working with different OCaml libraries. Execute the following lines from Linux terminal:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">opam</span>
 <span class="n">opam</span> <span class="n">init</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">compiler</span><span class="o">=</span><span class="mi">4</span><span class="o">.</span><span class="mi">07</span><span class="o">.</span><span class="mi">1</span> <span class="o">--</span><span class="n">disable</span><span class="o">-</span><span class="n">sandboxing</span>
 <span class="n">eval</span> <span class="o">$(</span><span class="n">opam</span> <span class="n">env</span><span class="o">)</span>
@@ -326,7 +326,9 @@ libraries from it. We will need this library for a few graphical
 applications at the end of this course.</p>
 <p>Once you have done it, <strong>log-out from the system and log-in again</strong>.</p>
 </li>
-<li><p class="first">Next, we will install the <code class="docutils literal notranslate"><span class="pre">opam</span></code> package manager for managing different OCaml libraries. Execute the following lines from Linux terminal:</p>
+<li><p class="first">Next, we will install the <code class="docutils literal notranslate"><span class="pre">opam</span></code> package manager for installing
+and maintaining different OCaml libraries. Execute the following
+lines from the terminal:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">opam</span>
 <span class="n">opam</span> <span class="n">init</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">compiler</span><span class="o">=</span><span class="mi">4</span><span class="o">.</span><span class="mi">07</span><span class="o">.</span><span class="mi">1</span>
 <span class="n">eval</span> <span class="o">$(</span><span class="n">opam</span> <span class="n">env</span><span class="o">)</span>
