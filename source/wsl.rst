@@ -114,6 +114,7 @@ fully functional Linux distribution installed on your machine.
 
 7. Next, we will install the ``opam`` package manager for working with different OCaml libraries. Execute the following lines from Linux terminal::
 
+    sudo add-apt-repository ppa:avsm/ppa
     sudo apt install opam
     opam init -y --compiler=4.07.1 --disable-sandboxing
     eval $(opam env)
