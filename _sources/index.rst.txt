@@ -39,6 +39,7 @@ Supplementary Materials
 * `Matrix determinants in Haskell <resources/intro/Matrices.hs>`_
 
 Examples and Code
+-----------------
 
 * `Code from the lectures
   <https://github.com/ysc2229/library>`_: each week is a separate
@@ -46,8 +47,6 @@ Examples and Code
 * `Example OCaml project with graphics
   <https://github.com/ysc2229/ocaml-graphics-demo>`_ 
 * `GitHub Organisation <https://github.com/ysc2229/>`_ 
-
------------------
 
 Textbooks
 ---------

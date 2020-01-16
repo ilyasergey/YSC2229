@@ -159,8 +159,8 @@ need. Below, we will see our first implementation of sorting a list.</p>
     <span class="k">match</span> <span class="n">xs</span> <span class="k">with</span>
     <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">acc</span>
     <span class="o">|</span> <span class="n">h</span> <span class="o">::</span> <span class="n">t</span> <span class="o">-&gt;</span>
-      <span class="k">let</span> <span class="k">rec</span> <span class="n">insert</span> <span class="n">elem</span> <span class="n">remaining</span> <span class="o">=</span>
-        <span class="k">match</span> <span class="n">remaining</span> <span class="k">with</span>
+      <span class="k">let</span> <span class="k">rec</span> <span class="n">insert</span> <span class="n">elem</span> <span class="n">prefix</span> <span class="o">=</span>
+        <span class="k">match</span> <span class="n">prefix</span> <span class="k">with</span>
         <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="o">[</span><span class="n">elem</span><span class="o">]</span>
         <span class="o">|</span> <span class="n">h</span> <span class="o">::</span> <span class="n">t</span> <span class="k">as</span> <span class="n">l</span> <span class="o">-&gt;</span>
           <span class="k">if</span> <span class="n">h</span> <span class="o">&lt;</span> <span class="n">elem</span>
@@ -180,7 +180,7 @@ and <code class="docutils literal notranslate"><span class="pre">insert</span></
 element, inserts it at a correct position to the prefix via
 <code class="docutils literal notranslate"><span class="pre">insert</span></code>, which is already assumed ordered.</li>
 <li>The inner <code class="docutils literal notranslate"><span class="pre">insert</span></code> traverses the sorted prefix (called
-<code class="docutils literal notranslate"><span class="pre">remaining</span></code>) and inserts an element <code class="docutils literal notranslate"><span class="pre">elem</span></code> to a correct
+<code class="docutils literal notranslate"><span class="pre">prefix</span></code>) and inserts an element <code class="docutils literal notranslate"><span class="pre">elem</span></code> to a correct
 position.</li>
 </ul>
 </div>
