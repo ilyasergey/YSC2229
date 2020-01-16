@@ -21,8 +21,8 @@ The following OCaml code implement the sorting procedure::
       match xs with
       | [] -> acc
       | h :: t -> 
-        let rec insert elem remaining = 
-          match remaining with
+        let rec insert elem prefix = 
+          match prefix with
           | [] -> [elem]
           | h :: t as l ->
             if h < elem 
@@ -42,5 +42,5 @@ and ``insert``. They play the following roles:
   ``insert``, which is already assumed ordered.
 
 * The inner ``insert`` traverses the sorted prefix (called
-  ``remaining``) and inserts an element ``elem`` to a correct
+  ``prefix``) and inserts an element ``elem`` to a correct
   position.
