@@ -14,7 +14,7 @@ need. Below, we will see our first implementation of sorting a list.
 Insertion sort implementation
 -----------------------------
 
-The following OCaml code implement the sorting procedure::
+The following OCaml code implements the sorting procedure::
 
   let insert_sort ls = 
     let rec walk xs acc =
