@@ -13,6 +13,7 @@ Introductory Data Structures and Algorithms
    syllabus
    prerequisites
    lecture-notes-week-01
+   week-02
 
 ..   YSC2229-lecture-notes-week-02
 ..   YSC2229-lecture-notes-week-03
@@ -35,7 +36,7 @@ course material.
 Supplementary Materials
 -----------------------
 
-* `Slides from Week 01 <resources/intro/Week-01-Intro.pdf>`_
+* `Introductory Slides from Week 01 <resources/intro/Week-01-Intro.pdf>`_
 * `Matrix determinants in Haskell <resources/intro/Matrices.hs>`_
 
 Examples and Code
@@ -57,7 +58,8 @@ Textbooks
    Clifford Stein
 2. `Algorithms, 4th edition
    <https://algs4.cs.princeton.edu/home/>`_
-   by Robert Sedgewick and Kevin Wayne. 
+   by Robert Sedgewick and Kevin Wayne.
+   `This book is optional, but it has some good examples.`
 
 ..
    Indices and tables
