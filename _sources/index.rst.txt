@@ -12,7 +12,7 @@ Introductory Data Structures and Algorithms
 
    syllabus
    prerequisites
-..   lecture-notes-week-01
+   lecture-notes-week-01
 
 ..   YSC2229-lecture-notes-week-02
 ..   YSC2229-lecture-notes-week-03

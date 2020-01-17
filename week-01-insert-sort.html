@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Sorting Lists via Insertion Sort &mdash; YSC2229 2020</title>
+  <title>3.5. Sorting Lists via Insertion Sort &mdash; YSC2229 2020</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3.6. Exercises" href="week-01-exercises.html" />
+    <link rel="prev" title="3.4. From Recursion to Imperative Loops" href="week-01-loops.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,9 +78,21 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="lecture-notes-week-01.html">3. Week 01: Introduction</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-01-intro.html">3.1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-01-testing.html">3.2. Testing OCaml Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-01-correctness.html">3.3. Correctness of Recursive Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-01-loops.html">3.4. From Recursion to Imperative Loops</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3.5. Sorting Lists via Insertion Sort</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#insertion-sort-implementation">3.5.1. Insertion sort implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-01-exercises.html">3.6. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -124,7 +138,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Sorting Lists via Insertion Sort</li>
+          <li><a href="lecture-notes-week-01.html">3. Week 01: Introduction</a> &raquo;</li>
+        
+      <li>3.5. Sorting Lists via Insertion Sort</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -142,7 +158,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="sorting-lists-via-insertion-sort">
-<h1>Sorting Lists via Insertion Sort<a class="headerlink" href="#sorting-lists-via-insertion-sort" title="Permalink to this headline">¶</a></h1>
+<h1>3.5. Sorting Lists via Insertion Sort<a class="headerlink" href="#sorting-lists-via-insertion-sort" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">InsertSort.ml</span></code></li>
 </ul>
@@ -152,7 +168,7 @@ list can be made much simpler and fast, if the list is
 take it first or a second element, knowing that it will be what we
 need. Below, we will see our first implementation of sorting a list.</p>
 <div class="section" id="insertion-sort-implementation">
-<h2>Insertion sort implementation<a class="headerlink" href="#insertion-sort-implementation" title="Permalink to this headline">¶</a></h2>
+<h2>3.5.1. Insertion sort implementation<a class="headerlink" href="#insertion-sort-implementation" title="Permalink to this headline">¶</a></h2>
 <p>The following OCaml code implement the sorting procedure:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert_sort</span> <span class="n">ls</span> <span class="o">=</span>
   <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">xs</span> <span class="n">acc</span> <span class="o">=</span>
@@ -191,6 +207,15 @@ position.</li>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-01-exercises.html" class="btn btn-neutral float-right" title="3.6. Exercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-01-loops.html" class="btn btn-neutral" title="3.4. From Recursion to Imperative Loops" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
