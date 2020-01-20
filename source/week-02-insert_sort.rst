@@ -62,14 +62,14 @@ follows::
       done;
       
       print_int_sub_array 0 (i + 1) arr; 
-      * print_int_sub_array (i + 1) len arr; 
+      print_int_sub_array (i + 1) len arr; 
       print_newline (); print_newline ()
   done
 
 That is, we print the array, divided via the current index ``i``, at
 the beginning and at the end of each top-level iteration (at the end,
 the index is incremented, as it would be at the beginning of the next
-iteration or after the loop). In th inner loop, we pring the
+iteration or after the loop). In the inner loop, we pring the
 intermediate arrays. Notice that ``print_int_sub_array l u arr`` does
 not print the element ``arr.(u)``::
 
@@ -199,4 +199,4 @@ Termination of Insertion Sort
 It is not difficult to prove that insertion sort terminates: its outer
 loop is an iteration, bounded by ``len - 1``. Its inner loop's
 termination measure (variant) is ``j``, so the loop terminates when
-``j`` reaches 0.
+``j`` reaches ``0``.

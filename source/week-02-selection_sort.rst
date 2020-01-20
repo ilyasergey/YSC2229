@@ -160,6 +160,6 @@ this element, while remaining sorted.
 Termination of Selection Sort
 -----------------------------
 
-the algorithm terminates, as both loops in it, inner and outer are
+The algorithm terminates, as both loops in it, inner and outer are
 bounded and iterate over finite sub-arrays of a given array.
 

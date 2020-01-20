@@ -3,7 +3,7 @@
 Arrays and Operations on Them
 =============================
 
-So far the main data structure we've been looking and and using as a
+So far the main data structure we've been looking at and using as a
 container is an algebraic list. While simple to work with and grow by
 adding new elements to the beginning, algebraic lists have a
 significant shortcoming: they do not allow an instant access to their
