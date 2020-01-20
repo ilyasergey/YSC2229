@@ -13,7 +13,7 @@ Introductory Data Structures and Algorithms
    syllabus
    prerequisites
    lecture-notes-week-01
-   week-02
+   .. week-02
 
 ..   YSC2229-lecture-notes-week-02
 ..   YSC2229-lecture-notes-week-03
@@ -36,8 +36,8 @@ course material.
 Supplementary Materials
 -----------------------
 
-* `Introductory Slides from Week 01 <resources/intro/Week-01-Intro.pdf>`_
-* `Matrix determinants in Haskell <resources/intro/Matrices.hs>`_
+* `Introductory Slides from Week 01 <resources/2020/Week-01-Intro.pdf>`_
+* `Matrix determinants in Haskell <resources/2020/Matrices.hs>`_
 
 Examples and Code
 -----------------
