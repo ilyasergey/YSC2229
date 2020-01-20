@@ -3,6 +3,8 @@
 Selection Sort
 ==============
 
+* File: ``SelectSortArray.ml``
+
 Selection sort is another sorting algorithm based on finding a minimum
 in an array. Unlike insertion sort, which locates each new element in
 an already sorted prefix, selection sort obtains the sorted prefix by

@@ -3,6 +3,8 @@
 Insertion Sort on Arrays
 ========================
 
+* File: ``InsertSortArray.ml``
+
 Previously, we have studied insertion sort and its invariants on
 lists. Let us now use the same idea to sort an array. Since adding an
 element into an array prefix is more difficult than it would be for

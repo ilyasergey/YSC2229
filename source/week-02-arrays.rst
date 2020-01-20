@@ -3,6 +3,8 @@
 Arrays and Operations on Them
 =============================
 
+* File: ``ArrayUtil.ml``
+
 So far the main data structure we've been looking at and using as a
 container is an algebraic list. While simple to work with and grow by
 adding new elements to the beginning, algebraic lists have a
