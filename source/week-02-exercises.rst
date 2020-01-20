@@ -2,7 +2,6 @@
 
 Exercises
 =========
-
 .. _exercise-selection-max: 
 
 Exercise 1
@@ -29,7 +28,6 @@ Exercise 2
 Conduct experiments and justify your answer by explaining the
 mechanics of the algorithms.
 
-
 .. _exercise-matrix-sum-complexity: 
 
 Exercise 3
@@ -46,13 +44,25 @@ traverses it, summing up *all* elements in it. Express the complexity
 of this procedure using big-O notation and justify your answer using
 the material above.
 
-.. _exercise-bubble-sort-complexity: 
+.. _exercise-big-o-defs4: 
 
 Exercise 4
+----------
+
+Algorithms *A* and *B* spend exactly :math:`T_A(n) = c_A \cdot n \cdot
+\log_2 n` and :math:`T_B(n) = c_B \cdot n^2` nanoseconds,
+respectively, for a problem of size :math:`n`. Find the best algorithm
+for processing :math:`n = 2^{20}` data items if the algorithm *A*
+spends 10 nanoseconds to process 1024 items, while the algorithm *B*
+spends only 1 nanosecond to process 1024 items.
+
+.. _exercise-bubble-sort-complexity: 
+
+Exercise 5
 -----------
 
-Express the complexity of Bubble Sort (see homework for Week 02) using
-big-O notation. Justify your answer.
+Express the complexity of Bubble Sort (see the homework for Week 02)
+using big-O notation. Justify your answer.
 
 
 

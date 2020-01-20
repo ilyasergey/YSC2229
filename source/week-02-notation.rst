@@ -61,7 +61,7 @@ This property follows from the fact that for any :math:`n, \max(f(n), g(n)) \leq
    
    If :math:`f(n) \in O(g(n))`, then :math:`f(n) + g(n) \in O(g(n))`.
 
-Follows from the fact that there exist :math:`c, n_0`, such that for any :math:`n \geq n_0, f(n) \leq c \cdot g(n)`; Therefore, for any :math:`n \geq n0, f(n) + g(n) \leq (c + 1) \cdot g(n)`. Intuitively, a faster-growing function eventually dominates.
+Follows from the fact that there exist :math:`c, n_0`, such that for any :math:`n \geq n_0, f(n) \leq c \cdot g(n)`; Therefore, for any :math:`n \geq n_0, f(n) + g(n) \leq (c + 1) \cdot g(n)`. Intuitively, a faster-growing function eventually dominates.
 
 Little o-notation
 -----------------
@@ -150,4 +150,4 @@ Consider the following OCaml program, where ``a`` is a value of size ``n``::
   let x = f1(a)  
   in  x + f2(a)
 
-Assuming the complexity of ``f1`` is :math:`f(n)` and the complexity of `f2` is :math:`g(n)`, executing both of them sequentially leads to summing up their complexity, which is over-approximated by :math:`O(\max(f(n), g(n))`. This process of "collapsing" big O's can be repeated for a finite number of steps, when it *does not depend* on the input size.
+Assuming the complexity of ``f1`` is :math:`f(n)` and the complexity of ``f2`` is :math:`g(n)`, executing both of them sequentially leads to summing up their complexity, which is over-approximated by :math:`O(\max(f(n), g(n))`. This process of "collapsing" big O's can be repeated for a finite number of steps, when it *does not depend* on the input size.

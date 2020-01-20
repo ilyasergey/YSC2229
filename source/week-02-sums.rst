@@ -42,7 +42,7 @@ of iterations:
 .. math::
 
   \sum_{i=1}^{n}1 = \underbrace{1 + 1 + \ldots + 1}_{n~\text{times}} =
-  k \in O(n)
+  n \in O(n)
 
 By distributivity of the sums:
 
@@ -154,7 +154,7 @@ recalls that by the definition of big O, :math:`f_1(n) \leq c_1\cdot
 g_2(n)` and :math:`f_2(n) \leq c_2\cdot g_2(n)` for :math:`n \geq n_0`
 and some constants :math:`c_1, c_2` and :math:`n_0`.
 
-By monotonicity of :math:`g2` we get 
+By monotonicity of :math:`g_2` we get 
 
 .. math::
 
@@ -220,14 +220,15 @@ studies, namely, Insertion Sort::
      done
    done
 
-Assuming that the size of the array is :math:`n`, the outer loop
-makes. The inner loop, however, goes in an opposite direction and
-starts from :math:`j` such that :math:`0 \leq j < n` and, in the worst
-case, terminates with :math:`j = 0`. The complexity of the body of the
-inner loop is linear (as swam performs three atomic operations, and
-the assignment is atomic). Thereforem we can estimate the complexity
-of this sorting by the following sum (assuming :math:`c` is a constant
-accounting for the complexity of the inner loop body):
+Assuming that the size of the array is :math:`n`, the outer loop makes
+:math:`n` iterations. The inner loop, however, goes in an opposite
+direction and starts from :math:`j` such that :math:`0 \leq j < n`
+and, in the worst case, terminates with :math:`j = 0`. The complexity
+of the body of the inner loop is linear (as ``swap`` performs three
+atomic operations, and the assignment is atomic). Therefore, we can
+estimate the complexity of this sorting by the following sum (assuming
+:math:`c` is a constant accounting for the complexity of the inner
+loop body):
 
 .. math::
 

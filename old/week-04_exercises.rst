@@ -17,7 +17,7 @@ Recommended exercises
   Changing the pivot.
 
 * :ref:`exercise-qsort-invariant`
-  Changing the pivot.
+  Quick-sort invariant.
 
 * :ref:`exercise-change-var`
   Solving divide-and-conquer recurrence relations.

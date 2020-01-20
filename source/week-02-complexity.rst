@@ -18,7 +18,7 @@ important is how quickly the performance deteriorates, as we increase
 the size of the input (i.e., the rank of the matrix, in this case).
 
 Our goal is, thus, to estimate how slow/fast are our algorithms (i.e.,
-what is their time demand). For this, we will use (mathematical
+what is their time demand). For this, we will use *mathematical
 functions* of the input size to describe time demand of a specific
 algorithm. Specifically, we want to formulate time demand (aka
 *algorithmic complexity*) functions in a Machine-independent way,
