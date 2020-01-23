@@ -37,7 +37,7 @@ more data can be allocated after the array, it is not easy to allow
 for its future growth. Therefore, the only way to extend (or shrink)
 and array is to allocate a new array of the necessary size.
 
-In OCaml, arrays with all known elements can be created sugin the
+In OCaml, arrays with all known elements can be created using the
 following syntax::
   
   let a1 = [|6; 8; 5; 2; 3; 7; 0|]
