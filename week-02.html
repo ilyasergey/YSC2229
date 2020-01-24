@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Week 02: Array Sorting and Order Notation &mdash; YSC2229 2020</title>
+  <title>4. Week 02: Array Sorting and Order Notation &mdash; YSC2229 2020</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4.1. Arrays and Operations on Them" href="week-02-arrays.html" />
+    <link rel="prev" title="3.6. Exercises" href="week-01-exercises.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,10 +78,20 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lecture-notes-week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. Week 02: Array Sorting and Order Notation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-02-arrays.html">4.1. Arrays and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-insert_sort.html">4.2. Insertion Sort on Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-selection_sort.html">4.3. Selection Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-complexity.html">4.4. Complexity of Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-notation.html">4.5. Order Notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-sums.html">4.6. Sums of Series and Complexities of Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-exercises.html">4.7. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -125,7 +137,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Week 02: Array Sorting and Order Notation</li>
+      <li>4. Week 02: Array Sorting and Order Notation</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -143,46 +155,46 @@
            <div itemprop="articleBody">
             
   <div class="section" id="week-02-array-sorting-and-order-notation">
-<h1>Week 02: Array Sorting and Order Notation<a class="headerlink" href="#week-02-array-sorting-and-order-notation" title="Permalink to this headline">¶</a></h1>
+<h1>4. Week 02: Array Sorting and Order Notation<a class="headerlink" href="#week-02-array-sorting-and-order-notation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="week-02-arrays.html">Arrays and Operations on Them</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-02-insert_sort.html">Insertion Sort on Arrays</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-02-insert_sort.html#tracing-insertion-sort">Tracing Insertion Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-insert_sort.html#insertion-sort-invariants">Insertion Sort Invariants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-insert_sort.html#termination-of-insertion-sort">Termination of Insertion Sort</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02-arrays.html">4.1. Arrays and Operations on Them</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02-insert_sort.html">4.2. Insertion Sort on Arrays</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-02-insert_sort.html#tracing-insertion-sort">4.2.1. Tracing Insertion Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-insert_sort.html#insertion-sort-invariants">4.2.2. Insertion Sort Invariants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-insert_sort.html#termination-of-insertion-sort">4.2.3. Termination of Insertion Sort</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-02-selection_sort.html">Selection Sort</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-02-selection_sort.html#tracing-selection-sort">Tracing Selection Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-selection_sort.html#invariants-of-selection-sort">Invariants of Selection Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-selection_sort.html#termination-of-selection-sort">Termination of Selection Sort</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02-selection_sort.html">4.3. Selection Sort</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-02-selection_sort.html#tracing-selection-sort">4.3.1. Tracing Selection Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-selection_sort.html#invariants-of-selection-sort">4.3.2. Invariants of Selection Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-selection_sort.html#termination-of-selection-sort">4.3.3. Termination of Selection Sort</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-02-complexity.html">Complexity of Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-02-notation.html">Order Notation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-02-notation.html#big-o-notation">Big O-notation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-notation.html#properties-of-big-o-notation">Properties of Big O-notation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-notation.html#little-o-notation">Little o-notation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-notation.html#proofs-using-o-notation">Proofs using O-notation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-notation.html#hierarchy-of-algorithm-complexities">Hierarchy of algorithm complexities</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-notation.html#complexity-of-sequential-composition">Complexity of sequential composition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02-complexity.html">4.4. Complexity of Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02-notation.html">4.5. Order Notation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-02-notation.html#big-o-notation">4.5.1. Big O-notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-notation.html#properties-of-big-o-notation">4.5.2. Properties of Big O-notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-notation.html#little-o-notation">4.5.3. Little o-notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-notation.html#proofs-using-o-notation">4.5.4. Proofs using O-notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-notation.html#hierarchy-of-algorithm-complexities">4.5.5. Hierarchy of algorithm complexities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-notation.html#complexity-of-sequential-composition">4.5.6. Complexity of sequential composition</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-02-sums.html">Sums of Series and Complexities of Loops</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-02-sums.html#arithmetic-series">Arithmetic series</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-sums.html#geometric-series">Geometric series</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-sums.html#estimating-a-sum-by-an-integral">Estimating a sum by an integral</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-sums.html#big-o-and-function-composition">Big O and function composition</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-sums.html#complexity-of-algorithms-with-loops">Complexity of algorithms with loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02-sums.html">4.6. Sums of Series and Complexities of Loops</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-02-sums.html#arithmetic-series">4.6.1. Arithmetic series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-sums.html#geometric-series">4.6.2. Geometric series</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-sums.html#estimating-a-sum-by-an-integral">4.6.3. Estimating a sum by an integral</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-sums.html#big-o-and-function-composition">4.6.4. Big O and function composition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-sums.html#complexity-of-algorithms-with-loops">4.6.5. Complexity of algorithms with loops</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-02-exercises.html">Exercises</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-02-exercises.html#exercise-1">Exercise 1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-exercises.html#exercise-2">Exercise 2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-exercises.html#exercise-3">Exercise 3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-exercises.html#exercise-4">Exercise 4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-exercises.html#exercise-5">Exercise 5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02-exercises.html">4.7. Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-02-exercises.html#exercise-1">4.7.1. Exercise 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-exercises.html#exercise-2">4.7.2. Exercise 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-exercises.html#exercise-3">4.7.3. Exercise 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-exercises.html#exercise-4">4.7.4. Exercise 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-exercises.html#exercise-5">4.7.5. Exercise 5</a></li>
 </ul>
 </li>
 </ul>
@@ -194,6 +206,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-02-arrays.html" class="btn btn-neutral float-right" title="4.1. Arrays and Operations on Them" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-01-exercises.html" class="btn btn-neutral" title="3.6. Exercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Selection Sort &mdash; YSC2229 2020</title>
+  <title>4.3. Selection Sort &mdash; YSC2229 2020</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4.4. Complexity of Algorithms" href="week-02-complexity.html" />
+    <link rel="prev" title="4.2. Insertion Sort on Arrays" href="week-02-insert_sort.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,10 +78,25 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lecture-notes-week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-02-arrays.html">4.1. Arrays and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-insert_sort.html">4.2. Insertion Sort on Arrays</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.3. Selection Sort</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tracing-selection-sort">4.3.1. Tracing Selection Sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#invariants-of-selection-sort">4.3.2. Invariants of Selection Sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#termination-of-selection-sort">4.3.3. Termination of Selection Sort</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-complexity.html">4.4. Complexity of Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-notation.html">4.5. Order Notation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-sums.html">4.6. Sums of Series and Complexities of Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-exercises.html">4.7. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -125,7 +142,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Selection Sort</li>
+          <li><a href="week-02.html">4. Week 02: Array Sorting and Order Notation</a> &raquo;</li>
+        
+      <li>4.3. Selection Sort</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -143,7 +162,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="selection-sort">
-<h1>Selection Sort<a class="headerlink" href="#selection-sort" title="Permalink to this headline">¶</a></h1>
+<h1>4.3. Selection Sort<a class="headerlink" href="#selection-sort" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">SelectSortArray.ml</span></code></li>
 </ul>
@@ -164,7 +183,7 @@ suffix of the array:</p>
 </pre></div>
 </div>
 <div class="section" id="tracing-selection-sort">
-<h2>Tracing Selection Sort<a class="headerlink" href="#tracing-selection-sort" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.1. Tracing Selection Sort<a class="headerlink" href="#tracing-selection-sort" title="Permalink to this headline">¶</a></h2>
 <p>Let us print intermediate stages of the selection sort as follows:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">select_sort_print</span> <span class="n">arr</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
@@ -256,7 +275,7 @@ prefix-of-the-suffix of the array, yet it’s larger than any element in
 the prefix.</p>
 </div>
 <div class="section" id="invariants-of-selection-sort">
-<h2>Invariants of Selection Sort<a class="headerlink" href="#invariants-of-selection-sort" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.2. Invariants of Selection Sort<a class="headerlink" href="#invariants-of-selection-sort" title="Permalink to this headline">¶</a></h2>
 <p>The observed above intuition can be captured by the following
 invariants:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">suffix_larger_than_prefix</span> <span class="n">i</span> <span class="n">arr</span> <span class="o">=</span>
@@ -300,7 +319,7 @@ larger than prefix), and, hence the sorted prefix can be extended with
 this element, while remaining sorted.</p>
 </div>
 <div class="section" id="termination-of-selection-sort">
-<h2>Termination of Selection Sort<a class="headerlink" href="#termination-of-selection-sort" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.3. Termination of Selection Sort<a class="headerlink" href="#termination-of-selection-sort" title="Permalink to this headline">¶</a></h2>
 <p>The algorithm terminates, as both loops in it, inner and outer are
 bounded and iterate over finite sub-arrays of a given array.</p>
 </div>
@@ -311,6 +330,15 @@ bounded and iterate over finite sub-arrays of a given array.</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-02-complexity.html" class="btn btn-neutral float-right" title="4.4. Complexity of Algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-02-insert_sort.html" class="btn btn-neutral" title="4.2. Insertion Sort on Arrays" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
