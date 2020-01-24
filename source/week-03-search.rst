@@ -10,11 +10,11 @@ Let us put key-value arrays to some good use.
 Linear Search
 -------------
 
-One of the most common operations with key-value arrays is *searching*
-looking for the index of an element with some known key, or reporting
-that there is not such element. The simples implementation of
-searching walks through the entire array until the sought element is
-found, or the whole array is traversed::
+One of the most common operations with key-value arrays is
+*searching*, i.e., looking for the index of an element with some known
+key, or discovering that there is not such element in the array. The
+simplest implementation of searching walks through the entire array
+until the sought element is found, or the whole array is traversed::
 
  let linear_search arr k = 
    let len = Array.length arr in
@@ -67,7 +67,12 @@ search-space by half::
    in
    rank 0 (Array.length arr)
 
-The auxiliary procedure ``rank`` keeps changing the search boundary by recomputing the median of the search range and comparing the element in it. This way it makes sure that the element is already found, or the search space contains it iff and only iff the original array contains it. Let us trace the  binary search and figure out its invariant::
+The auxiliary procedure ``rank`` keeps changing the search boundary by
+recomputing the median of the search range and comparing the element
+in it. This way it makes sure that the element is already found, or
+the search space contains it `if and only if the original array
+contains it`. Let us trace the binary search and figure out its
+invariant::
 
  let rec binary_search_print arr k = 
    let rec rank lo hi = 
@@ -113,18 +118,20 @@ Now, as ``a2`` is sorted, we can run the binary search on it::
 
  - : (int * string) option = Some (32, "yghgg")
 
-Notice that at each iteration the sub-array halves, so ``binary_sort`` does not even have consider the entire array!
+Notice that at each iteration the sub-array halves, so ``binary_sort``
+does not even have consider the entire array, and this is the crux of
+its efficiency!
 
 Binary Search Invariant
 -----------------------
 
 Binary search crucially relies on the fact that the given array (and
-hence its contiguous sub-arrays) are sorted, so, upon comparing the
-key to the middle, it can safely ignore the half that is irrelevant
-for it. This can be captured by the following precondition we are
-going to give to ``rank``. It postulates that a sought element with a
-key ``k`` is in the whole arrays if and only if it is in the sub
-array, bound by ``lo .. hi`` that we are about to consider::
+hence its contiguous sub-array segments) are sorted, so, upon
+comparing the key to the middle, it can safely ignore the half that is
+irrelevant for it. This can be captured by the following precondition
+we are going to give to ``rank``. It postulates that a sought element
+with a key ``k`` is in the whole array if and only if it is in the
+sub-array bound by ``lo .. hi``, which we are about to consider::
 
  let binary_search_rank_pre arr lo hi k = 
    let len = Array.length arr in 
@@ -170,15 +177,15 @@ We can also annotate our implementation with this invariant and test it::
 The Main Idea of Divide-and-Conquer algorithms
 ----------------------------------------------
 
-Both Binary and Exponential search algorithms are examples of the
-so-called *divide-and-conquer* approach. In this approach the
-processing of a data (a key-value array in our case) is based on
-multi-branched recursion. A divide-and-conquer algorithm works by
-recursively breaking down a problem into two or more sub-problems of
-the same or related type, until these become simple enough to be
-solved directly (such as reporting an element). The solutions to the
-sub-problems are then combined to give a solution to the original
-problem.
+The binary search algorithm is an example of the so-called
+*divide-and-conquer* approach. In this approach the processing of a
+data (a key-value array in our case) is based on multi-branched
+recursion. A divide-and-conquer algorithm works by recursively
+breaking down a problem into two or more sub-problems of the same or
+related type, until those become simple enough to be solved directly
+(such as reporting an element in a single-element sub-array). The
+solutions to the sub-problems are then combined to give a solution to
+the original problem.
 
 **Checkpoint question:** What is the "divide" and what is a "conquer" phase of the binary search?
 

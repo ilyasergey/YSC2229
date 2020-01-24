@@ -10,7 +10,10 @@ Merge sort is an algorithm that applies the divide-and-conquer idea to sorting.
 Merging two sorted arrays
 -------------------------
 
-The heart of merge sort heart is the procedure ``merge`` that merges two already sorted arrays, ``from1`` and ``from2``, into a dedicated subarray ranging from ``lo`` to ``hi`` of an initial "destination" array ``dest``::
+The heart of merge sort heart is the procedure ``merge`` that merges
+two already sorted arrays, ``from1`` and ``from2``, into a dedicated
+subarray ranging from ``lo`` to ``hi`` of an initial "destination"
+array ``dest``::
 
  let merge from1 from2 dest lo hi =
    let len1 = Array.length from1 in 
@@ -65,7 +68,7 @@ larger arrays, until the top range is reached::
    in
    sort arr
 
-This style of merge sort is known as a `top-down merge-sort`.
+This style of merge sort is known as a `top-down merge sort`.
 
 We can supplement this procedure with standard randomised tests::
 
@@ -85,8 +88,8 @@ The correctness of merge sort relies on the correctness of the
 ``merge`` procedure, which generates a sorted array out of two smalle
 sorted arrays by copying them in the correct interleaving order. We
 can check that ``merge`` indeed does so, by employing the familiar
-auxiliary functions for testing. The pre- and post-condition of merge
-the would look as follows::
+auxiliary functions for testing. The pre- and post-condition of
+``merge`` the can be stated as follows::
 
  (* The two small arrays are sorted *)
  let merge_pre from1 from2 = 

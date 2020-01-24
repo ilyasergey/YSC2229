@@ -8,9 +8,24 @@ Generating Arrays
 Simple random generators
 ------------------------
 
-To test not only the correctness, but also the performance of our search and sorting algorithms, let us invest some time into creating the procedures for random arrays. In this chapter and further we will consider slightly more interesting arrays than just arrays of integers of type ``int array``. Specifically, each element of an array will hold a *pair*: a *key* (typically an integer), identifying an element, and a *value*, which carries some interesting payload. In a general case, some elements might have duplicating keys, and different keys can correspond to the same element. Do not confuse the array indices (which are used for efficient access to specific array entries) with element keys (which are domain-specific and can be anything identifying the corresponding payload).
+To test not only the correctness, but also the performance of our
+search and sorting algorithms, let us invest some time into creating
+the procedures for generating random arrays. In this chapter and
+further in this module we will consider slightly more interesting
+arrays than just arrays of integers of type ``int array``.
 
-Let us start from implementing a random generator for lists of rundom numbers in a range from ``0`` to a given ``bound``, of a specified length ``len``::
+In such "more interesting" arrays, each of an array will be a *pair*
+of a *key* (an integer), identifying an element, and a *value*, which
+carries some interesting payload. In a general case, some elements
+might have duplicating keys, and different keys can correspond to the
+same element. Do not confuse the array indices (which are used for
+efficient access to specific array entries) with element keys (which
+are domain-specific and can be anything, serving to identify the
+corresponding payload).
+
+Let us start from implementing a random generator for lists of random
+numbers in a range from ``0`` to a given ``bound``, of a specified
+length ``len``::
 
  let generate_keys bound len = 
    let acc = ref [] in
@@ -19,9 +34,12 @@ Let us start from implementing a random generator for lists of rundom numbers in
    done;
    !acc
 
-Notice, that for the sake of efficiency (and diversity) the program is implemented via a loop rather than as a recursion.
+Notice, that for the sake of efficiency (and diversity) the program is
+implemented via a loop rather than as a recursion.
 
-Our next procedure is more interesting and will generate strings of a fixed ``length`` containing lowercase characters of the standard latin alphabet::
+Our next procedure is more interesting and will generate strings of a
+fixed ``length`` containing lowercase characters of the standard latin
+alphabet::
 
  let generate_words length num =
    let random_ascii_char _ = 
@@ -76,7 +94,7 @@ It can be used as follows::
  [|(1, "emwbq"); (3, "yyrby"); (7, "qpzdd"); (7, "eoplb"); (6, "wrpgn");
    (7, "jbkbq"); (7, "nncgq"); (1, "rruxr"); (8, "ootiw"); (7, "halys")|]
 
-Assitionally, we can implement simpler generators for arrays of
+Additionally, we can implement simpler generators for arrays of
 integers and strings::
 
  let generate_int_array len = 
@@ -93,7 +111,9 @@ Measuring execution time
 
 * File: ``Util.ml`` (look for ``Week 03 functions``)
 
-For our future experiments with algorithms and data structures, it is useful to be able to measure execution time, hence we implement the following helper function::
+For our future experiments with algorithms and data structures, it is
+useful to be able to `measure` execution time of computations we run.
+To do so, we implement the following helper function::
 
  let time f x =
    let t = Sys.time () in
@@ -101,7 +121,8 @@ For our future experiments with algorithms and data structures, it is useful to 
    Printf.printf "Execution elapsed time: %f sec\n" (Sys.time () -. t);
    fx
 
-It can be used with any arbitrary computation that takes at least one argument.
+It can be used with any arbitrary computation that takes at least one
+argument (thanks to currying).
 
 Randomised array generation and testing
 ---------------------------------------
