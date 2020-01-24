@@ -48,48 +48,49 @@ constant :math:`c`.
 
 Exercise 2
 ----------
-Implement a function that generates takes (a) a sorting procedure ``sort`` for a key-value array, (b) a number ``n`` and a number ``length``, and generates ``n`` random arrays of the length ``length``, testing that ``sort`` is indeed correct on all those arrays. 
+
+Implement a function that generates takes (a) a sorting procedure
+``sort`` for a key-value array, (b) a number ``n`` and a number
+``length``, and generates ``n`` random arrays of the length
+``length``, testing that ``sort`` is indeed correct on all those
+arrays.
 
 .. _exercise-find-range-unsorted:
 
 Exercise 3
 ----------
 
-Find a procedure that takes an unsorted array and a given range of keys (represented by a pair of numbers ``lo < hi``, right boundary not included), and returns the list of all elements in the array, whose keys are in that range. Estimate the complexity of this procedure.
+Find a procedure that takes an unsorted array and a given range of
+keys (represented by a pair of numbers ``lo < hi``, right boundary not
+included), and returns the list of all elements in the array, whose
+keys are in that range. Estimate the complexity of this procedure.
 
 .. _exercise-binare-no-mid:
 
 Exercise 4
 ----------
 
-Modify ``binary_search`` in a way that it does not test the equality of ``fst arr.(mid) = k`` and does not exclude the middle element, but rather considers it as a part of one of the recursively processed array subparts.
-
-
-.. _exercise-exponential-search:
-
-Exercise 5
-----------
-
-Exponential search is a more efficient version of binary-search, which can also work on infinite sorted arrays (e.g., never-ending streams of given key-value pairs). It starts by choosing the initial search range by making it to be an increasing power of two. Once a suitable range is determined, it works similarly to binary search on that range.  Implement exponential search and argue for its correcntess. [Optionally] Annotate it with preconditions.
-
-Exercise 6 
-----------
-
-The merge sort presented above can be improved by getting rid of allocating new sub-arrays to copy elements to and sort recursively every time. The way to do it is to initially allocate just one auxiliary array ``aux`` of the same size as the initial one and use it as a "sandbox" for sorting, without ever allocating more arrays. Indeed, the ``merge`` procedure will have to be adapted as well.
-
-Implement this version of the merge sort and compare its performance (using function ``time``) with the previous version of merge sort. Describe the invariant for the new version of merge and for the main function and check that it holds.
+Modify ``binary_search`` in a way that it does not test the equality
+of ``fst arr.(mid) = k`` and does not exclude the middle element, but
+rather considers it as a part of one of the recursively processed
+array subparts.
 
 .. _exercise-three-way-merge-sort:
 
-Exercise 7 
+Exercise 5 
 ----------
 
-Implement a version of merge sort that splits the sub-arrays into three parts and then combines them together. Compare its performance to the ordinary 2-way merge sort.
+Implement a version of merge sort that splits the sub-arrays into
+three parts and then combines them together. Compare its performance
+to the ordinary 2-way merge sort.
 
 .. _exercise-index-sort:
 
-Exercise 8
+Exercise 6
 ----------
 
-Develop and implement a version of merge sort that does not rearrange the input array ``arr``, but returns an array ``perm`` of type ``int array``, such that ``perm.(i)`` is the index in ``arr`` of the entry with ``i`` th smallest key in the array.
+Develop and implement a version of merge sort that does not rearrange
+the input array ``arr``, but returns an array ``perm`` of type ``int
+array``, such that ``perm.(i)`` is the index in ``arr`` of the entry
+with ``i`` th smallest key in the array.
 

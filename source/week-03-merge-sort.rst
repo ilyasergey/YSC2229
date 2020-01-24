@@ -3,6 +3,8 @@
 Merge Sort
 ==========
 
+* File: ``MergeSort.ml``
+
 Merge sort is an algorithm that applies the divide-and-conquer idea to sorting. 
 
 Merging two sorted arrays
@@ -17,68 +19,26 @@ The heart of merge sort heart is the procedure ``merge`` that merges two already
    let j = ref 0 in
    for k = lo to hi - 1 do
      if !i >= len1 
+     (* from1 is exhausted, copy everythin from from2 *)   
      then (dest.(k) <- from2.(!j); j := !j + 1)
      else if !j >= len2
+     (* from2 is exhausted, copy everythin from from1 *)   
      then (dest.(k) <- from1.(!i); i := !i + 1)
-     else if fst from1.(!i) <= fst from2.(!j)
+     else if from1.(!i) <= from2.(!j)
+     (* from1 has a smaller element, copy it, advance its index *)
      then (dest.(k) <- from1.(!i); i := !i + 1)
+     (* from2 has a smaller element, copy it, advance its index *)
      else (dest.(k) <- from2.(!j); j := !j + 1)
    done
-
-Invariant of ``merge``
-----------------------
-
-We can check that ``merge`` indeed creates a sorted array out of two smaller sorted arrays using the following familiar auxiliary functions::
-
- let rec sorted ls = 
-   match ls with 
-   | [] -> true
-   | h :: t -> 
-     List.for_all (fun e -> fst e >= fst h) t && sorted t
-
- let array_to_list l u arr = 
-   assert (l <= u);
-   let res = ref [] in
-   let i = ref (u - 1) in
-   while l <= !i do
-     res := arr.(!i) :: !res;
-     i := !i - 1             
-   done;
-   !res
-
- let sub_array_sorted l u arr = 
-   let ls = array_to_list l u arr in 
-   sorted ls
-
- let array_sorted arr = 
-   sub_array_sorted 0 (Array.length  arr) arr
-
- let same_elems ls1 ls2 =
-   List.for_all (fun e ->
-       List.find_all (fun e' -> e = e') ls2 =
-       List.find_all (fun e' -> e = e') ls1
-     ) ls1 &&
-   List.for_all (fun e ->
-       List.find_all (fun e' -> e = e') ls2 =
-       List.find_all (fun e' -> e = e') ls1
-     ) ls2
-
-The pre- and post-condition of merge the would look as follows::
-
- let merge_pre from1 from2 = 
-   array_sorted from1 && array_sorted from2
-
- let merge_post from1 from2 arr lo hi = 
-   array_sorted arr &&
-   (let l1 = array_to_list 0 (Array.length from1) from1 in
-   let l2 = array_to_list 0 (Array.length from2) from2 in
-   let l = array_to_list lo hi arr in
-   same_elems (l1 @ l2) l)
 
 Main sorting procedure and its invariants
 -----------------------------------------
 
-The main merge sort procedure preforms sorting recursively by (a) by splitting the given array range into two new smaller arrays repeatedly until reaching the primitive arrays (of size of 0 or 1, which are already sorted) and (b) merging the small arrays bottom-up into the larger arrays, until the top range is reached::
+The main merge sort procedure preforms sorting recursively by (a) by
+splitting the given array range into two new smaller arrays repeatedly
+until reaching the primitive arrays (of size of 0 or 1, which are
+already sorted) and (b) merging the small arrays bottom-up into the
+larger arrays, until the top range is reached::
 
  let copy_array arr lo hi =
    let len = hi - lo in
@@ -105,9 +65,44 @@ The main merge sort procedure preforms sorting recursively by (a) by splitting t
    in
    sort arr
 
-This style of merge sort is known as a top-down merge-sort.
+This style of merge sort is known as a `top-down merge-sort`.
 
-Having checked the invariants for ``merge`` it's almost trivial to annotate ``merge_sort`` with invariants::
+We can supplement this procedure with standard randomised tests::
+
+  let%test _ =
+    generate_int_array 10 |>
+    generic_array_sort_tester merge_sort
+
+  let%test _ =
+    generate_string_array 10 |>
+    generic_array_sort_tester merge_sort
+
+  let%test _ =
+    generate_key_value_array 10 |>
+    generic_array_sort_tester merge_sort
+
+The correctness of merge sort relies on the correctness of the
+``merge`` procedure, which generates a sorted array out of two smalle
+sorted arrays by copying them in the correct interleaving order. We
+can check that ``merge`` indeed does so, by employing the familiar
+auxiliary functions for testing. The pre- and post-condition of merge
+the would look as follows::
+
+ (* The two small arrays are sorted *)
+ let merge_pre from1 from2 = 
+   array_sorted from1 && array_sorted from2
+
+ (* The merging is correct *) 
+ let merge_post from1 from2 arr lo hi = 
+   array_sorted arr &&
+   (let l1 = array_to_list from1 in
+    let l2 = array_to_list from2 in
+    let l = subarray_to_list lo hi arr in
+    same_elems (l1 @ l2) l)
+
+
+Having checked the invariants for ``merge`` it's almost trivial to
+annotate ``merge_sort`` with invariants::
 
  let rec merge_sort_inv arr = 
    let rec sort a = 
