@@ -1,0 +1,345 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Complexity of Simple Recursive Algorithms &mdash; YSC2229 2020</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Complexity of Simple Recursive Algorithms</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="complexity-of-simple-recursive-algorithms">
+<span id="sec-rr"></span><h1>Complexity of Simple Recursive Algorithms<a class="headerlink" href="#complexity-of-simple-recursive-algorithms" title="Permalink to this headline">¶</a></h1>
+<p>In this chapter we will study complexity of the programs that combine
+both loops and recursion.</p>
+<div class="section" id="complexity-of-computing-the-factorial">
+<h2>Complexity of computing the factorial<a class="headerlink" href="#complexity-of-computing-the-factorial" title="Permalink to this headline">¶</a></h2>
+<p>Typically, any terminating recursive algorithm works by calling itself
+on progressively smaller instances of some data structures. For
+instance, consider the “Hello, World!” of all recursive programs —
+the <code class="docutils literal notranslate"><span class="pre">factorial</span></code> function:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">factorial</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="k">then</span> <span class="mi">1</span>
+  <span class="k">else</span> <span class="n">n</span> <span class="o">*</span> <span class="o">(</span><span class="n">factorial</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>Assume its complexity is the number of multiplications (taken as the
+most expensive operations) it performs for a number <code class="docutils literal notranslate"><span class="pre">n</span></code> (so <code class="docutils literal notranslate"><span class="pre">n</span></code>
+will also serve as the “size” of the problem). We can write the
+relation on factorial’s complexity <span class="math notranslate nohighlight">\(F(n)\)</span> using the following
+relation:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+F(0) &amp;= 0 \\
+F(n) &amp;= F (n - 1) + 1
+\end{align*}\end{split}\]</div>
+<p>That is, the value of <span class="math notranslate nohighlight">\(F(n)\)</span> is defined recursively (shouldn’t be that much of a surprise, huh?) thourgh the value of <span class="math notranslate nohighlight">\(F(n - 1)\)</span>.</p>
+</div>
+<div class="section" id="method-of-differences">
+<h2>Method of differences<a class="headerlink" href="#method-of-differences" title="Permalink to this headline">¶</a></h2>
+<p>We can now exploit this pattern by constructing a number of equations of the following shape, following the definition of <span class="math notranslate nohighlight">\(F(n)\)</span> of the factorial complexity, and sum them up together:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+&amp;&amp; F(n) &amp;- F (n - 1) &amp;= 1 \\
+&amp;+&amp; F(n - 1) &amp;- F (n - 2) &amp;= 1 \\
+&amp;+&amp; F(n - 2) &amp;- F (n - 3) &amp;= 1 \\
+&amp;+&amp; \ldots \\
+&amp;+&amp; F(1) &amp;- F(0) &amp;= 1 \\
+\hline
+&amp;&amp; F(n) &amp;- F(0) &amp;= n
+\end{align*}\end{split}\]</div>
+<p>As the result, we obtain <span class="math notranslate nohighlight">\(F(n) = n\)</span> (since <span class="math notranslate nohighlight">\(F(0) = 0\)</span>), therefore we can conclude that <span class="math notranslate nohighlight">\(F(n) \in O(n)\)</span>.</p>
+</div>
+<div class="section" id="recurrence-relations">
+<h2>Recurrence relations<a class="headerlink" href="#recurrence-relations" title="Permalink to this headline">¶</a></h2>
+<p>What we’ve seen as an example of the factorial complexity can be generalised to the following definition of a <em>recurrence relation</em>.</p>
+<div class="admonition-definition admonition">
+<p class="first admonition-title">Definition</p>
+<p class="last">Recurrence relation for a function <span class="math notranslate nohighlight">\(f\)</span> is an equation that expresses the value <span class="math notranslate nohighlight">\(f(n)\)</span> through the values <span class="math notranslate nohighlight">\(f(n-1), \ldots, f(0)\)</span>.</p>
+</div>
+<p>Naturally, recurrence relations are a method to express complexities of recursive algorithms depending on input sizes of the recursive call, and we’ve just seen an example of such for the factorial, namely <span class="math notranslate nohighlight">\(F(n) = F(n - 1) + 1\)</span>. Similarly to well-founded recursion and induction, recurrence relations require initial values to “bootstrap” the computation (for instance, <span class="math notranslate nohighlight">\(F(0) = 0\)</span>).</p>
+<p>The main challenge that comes with recurrence relations is to find explicit (non-recurrent) expression of <span class="math notranslate nohighlight">\(f\)</span> (aka <em>closed form</em>) as a function of its argument <span class="math notranslate nohighlight">\(n\)</span> (e.g., <span class="math notranslate nohighlight">\(F(n) = n\)</span>).  This is similar to finding an explicit value for a sum in the case of loops.</p>
+</div>
+<div class="section" id="first-order-recurrence-relations">
+<h2>First-order recurrence relations<a class="headerlink" href="#first-order-recurrence-relations" title="Permalink to this headline">¶</a></h2>
+<p>Most of the time we will be considering the following special case of recurrence relations.</p>
+<div class="admonition-definition admonition">
+<p class="first admonition-title">Definition</p>
+<p class="last"><em>First-order recurrence relation</em> for a function <span class="math notranslate nohighlight">\(f\)</span> is an equation that expresses the value <span class="math notranslate nohighlight">\(f(n)\)</span> recursively only via the value of <span class="math notranslate nohighlight">\(f(n-1)\)</span>, when <span class="math notranslate nohighlight">\(n &gt; a\)</span> for some <span class="math notranslate nohighlight">\(a\)</span>.</p>
+</div>
+<div class="admonition-example admonition">
+<p class="first admonition-title">Example</p>
+<p>For some <span class="math notranslate nohighlight">\(c &gt; 0\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+f(0) &amp;= 1 \\
+f(n) &amp;= c \cdot f (n - 1)
+\end{align*}\end{split}\]</div>
+<p class="last">By inspection and unfolding the definition of <span class="math notranslate nohighlight">\(f(n)\)</span>, we get the solution <span class="math notranslate nohighlight">\(f(n) = c^n\)</span>.</p>
+</div>
+<div class="admonition-definition admonition">
+<p class="first admonition-title">Definition</p>
+<p><strong>Homogeneous recurrence relations</strong> take the following form for some constants <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(f(n)\)</span> and a coefficient <span class="math notranslate nohighlight">\(b_n\)</span>, which might be a function of <span class="math notranslate nohighlight">\(n\)</span>:</p>
+<div class="last math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+f(n) &amp;= b_n \cdot f(n - 1) ~\text{if}~ n &gt; a \\
+f(a) &amp;= d
+\end{align*}\end{split}\]</div>
+</div>
+<p>By unfolding the definition recursively, we can obtain the following formula to solve it:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+f(n) &amp;= b_n \cdot f(n - 1) \\
+&amp;= b_n \cdot b_{n-1} \cdot f(n - 2) \\
+&amp; \ldots \\
+&amp;= b_n \cdot b_{n - 1} \cdot \ldots \cdot b_{a + 1} \cdot f(a) \\
+&amp;= b_n \cdot b_{n - 1} \cdot \ldots \cdot b_{a + 1} \cdot d
+\end{align*}\end{split}\]</div>
+<p>Therefore:</p>
+<div class="math notranslate nohighlight">
+\[f(n) = \left( \prod_{i = a + 1}^{n}b_i \right) \cdot f(a)\]</div>
+<p>You can try to remember that formula, but it’s easier to remember how it is obtained.</p>
+</div>
+<div class="section" id="inhomogeneous-recurrence-relations">
+<h2>Inhomogeneous recurrence relations<a class="headerlink" href="#inhomogeneous-recurrence-relations" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-definition admonition">
+<p class="first admonition-title">Definition</p>
+<p><strong>Inhomogeneous recurrence relations</strong> take the following form for some constants <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(f(n)\)</span> and a coefficient <span class="math notranslate nohighlight">\(b_n\)</span> and <span class="math notranslate nohighlight">\(c_n\)</span>, which might be functions of <span class="math notranslate nohighlight">\(n\)</span>:</p>
+<div class="last math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+f(n) &amp;= b_n \cdot f(n - 1) + c_n ~\text{if}~ n &gt; a \\
+f(a) &amp;= d
+\end{align*}\end{split}\]</div>
+</div>
+<p>The trick to solve an inhomogeneous relation is to “pretend” that we are solving a homogeneous recurrence relation by changing the function <span class="math notranslate nohighlight">\(f(n)\)</span> to <span class="math notranslate nohighlight">\(g(n)\)</span>, such that</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+f(n) &amp;= b_{a+1}\cdot \ldots \cdot b_n \cdot g(n) ~\text{if}~ n &gt; a \\
+f(a) &amp;= g(a) = d
+\end{align*}\end{split}\]</div>
+<p>Intuitively, this “change of function” allows us to reduce a general recurrence relation to the one where <span class="math notranslate nohighlight">\(b_n = 1\)</span>. In other words, <span class="math notranslate nohighlight">\(g(n)\)</span> is a “calibrated” version of <span class="math notranslate nohighlight">\(f(n)\)</span> that behaves “like” <span class="math notranslate nohighlight">\(f(n)\)</span> module the appended product of coefficients.</p>
+<p>Let us see how this trick helps us to solve the initial relation. We start by expanding the definition of <span class="math notranslate nohighlight">\(f(n)\)</span> for <span class="math notranslate nohighlight">\(n &gt; 0\)</span> as follows:</p>
+<div class="math notranslate nohighlight">
+\[f(n) = b_n \cdot f(n - 1) + c_n\]</div>
+<p>We then recall that <span class="math notranslate nohighlight">\(f(n)\)</span> can be expressed via <span class="math notranslate nohighlight">\(g(n)\)</span>, and rewrite both parts of this equation as follows:</p>
+<div class="math notranslate nohighlight">
+\[\underbrace{b_{a+1}\cdot \ldots \cdot b_n}_{X} \cdot g(n) = \underbrace{b_n \cdot b_{a+1}\cdot \ldots \cdot b_{n-1}}_{X} \cdot g(n) + c_n\]</div>
+<p>Notice that the parts marked via <span class="math notranslate nohighlight">\(X\)</span> are, in fact the same, so we can divide both parts of the expression by it, so we can get</p>
+<div class="math notranslate nohighlight">
+\[g(n) = g(n - 1) + d_n ~\text{where}~ d_n = \frac{c_n}{\prod_{i = a + 1}^{n}b_i}.\]</div>
+<p>We can now solve the recurrence on <span class="math notranslate nohighlight">\(g(n)\)</span> via the method of difference, obtaining</p>
+<div class="math notranslate nohighlight">
+\[g(n) = g(a) + \sum_{j = a + 1}^{n}d_j ~\text{where}~ d_j = \frac{c_j}{\prod_{k = a + 1}^{j}b_k}\]</div>
+<p>The final step is to obtain <span class="math notranslate nohighlight">\(f(n)\)</span> by multiplying <span class="math notranslate nohighlight">\(g(n)\)</span> by the corresponding product. This way we obtain:</p>
+<div class="math notranslate nohighlight">
+\[f(n) = \prod_{i = a + 1}^{n} b_i \cdot \left(g(a) + \sum_{j = a + 1}^{n}d_j\right) ~\text{where}~ d_j = \frac{c_j}{\prod_{k = a + 1}^{j}b_k}\]</div>
+<p>As in the previous case, it is much easier to remember the “trick” with introducing <span class="math notranslate nohighlight">\(g(n)\)</span> and reproduce it every time you solve a relation, than to remember that formula above!  In the examples we’ll, the initial index <span class="math notranslate nohighlight">\(a\)</span> will be normally be 0 or 1.  The techniques for series summation and approximation will come useful when dealing with coefficients <span class="math notranslate nohighlight">\(d_j\)</span>.</p>
+<div class="admonition-example admonition">
+<p class="first admonition-title">Example</p>
+<p>Consider the following recurrence relation:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+f(n) &amp;= 3 \cdot f(n - 1) + 1 ~\text{if}~ n &gt; 0 \\
+f(0) &amp;= 0
+\end{align*}\end{split}\]</div>
+<p>We start by changing the function so <span class="math notranslate nohighlight">\(f(n) = 3^n \cdot g(n)\)</span> for an unknown <span class="math notranslate nohighlight">\(g(n)\)</span>, since <span class="math notranslate nohighlight">\(b_i = 3\)</span> for any <span class="math notranslate nohighlight">\(i\)</span>. Substityting for <span class="math notranslate nohighlight">\(f(n)\)</span> gives us</p>
+<div class="math notranslate nohighlight">
+\[g(n) = g(n - 1) + \frac{1}{3^n}\]</div>
+<p>By method of differences, we obtain</p>
+<div class="math notranslate nohighlight">
+\[g(n) = \sum_{i = 1}^{n}\frac{1}{3^i} = \left[\sum_{i = 1}^{n}\frac{1}{a^i}\right]_{a = \frac{1}{3}} = \left[\frac{a (1 - a^n)}{1-a}\right]_{a = \frac{1}{3}} = \frac{1}{2}\left(1 - \frac{1}{3^n}\right)\]</div>
+<p>Finally, restoring <span class="math notranslate nohighlight">\(f(n)\)</span>, we get</p>
+<div class="last math notranslate nohighlight">
+\[f(n) = 3^n \cdot g(n) = \frac{3^n}{2}\left(1 - \frac{1}{3^n}\right) = \frac{1}{2} \left(3^n - 1\right) \in O(3^n)\]</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

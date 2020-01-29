@@ -1,0 +1,343 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Generating Arrays &mdash; YSC2229 2020</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Generating Arrays</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="generating-arrays">
+<h1>Generating Arrays<a class="headerlink" href="#generating-arrays" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>File: <code class="docutils literal notranslate"><span class="pre">ArrayUtil.ml</span></code> (look for <code class="docutils literal notranslate"><span class="pre">Week</span> <span class="pre">03</span> <span class="pre">functions</span></code>)</li>
+</ul>
+<div class="section" id="simple-random-generators">
+<h2>Simple random generators<a class="headerlink" href="#simple-random-generators" title="Permalink to this headline">¶</a></h2>
+<p>To test not only the correctness, but also the performance of our
+search and sorting algorithms, let us invest some time into creating
+the procedures for generating random arrays. In this chapter and
+further in this module we will consider slightly more interesting
+arrays than just arrays of integers of type <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">array</span></code>.</p>
+<p>In such “more interesting” arrays, each of an array will be a <em>pair</em>
+of a <em>key</em> (an integer), identifying an element, and a <em>value</em>, which
+carries some interesting payload. In a general case, some elements
+might have duplicating keys, and different keys can correspond to the
+same element. Do not confuse the array indices (which are used for
+efficient access to specific array entries) with element keys (which
+are domain-specific and can be anything, serving to identify the
+corresponding payload).</p>
+<p>Let us start from implementing a random generator for lists of random
+numbers in a range from <code class="docutils literal notranslate"><span class="pre">0</span></code> to a given <code class="docutils literal notranslate"><span class="pre">bound</span></code>, of a specified
+length <code class="docutils literal notranslate"><span class="pre">len</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">generate_keys</span> <span class="n">bound</span> <span class="n">len</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">ref</span> <span class="bp">[]</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="n">acc</span> <span class="o">:=</span> <span class="o">(</span><span class="nn">Random</span><span class="p">.</span><span class="n">int</span> <span class="n">bound</span><span class="o">)</span> <span class="o">::</span> <span class="o">!</span> <span class="n">acc</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="o">!</span><span class="n">acc</span>
+</pre></div>
+</div>
+<p>Notice, that for the sake of efficiency (and diversity) the program is
+implemented via a loop rather than as a recursion.</p>
+<p>Our next procedure is more interesting and will generate strings of a
+fixed <code class="docutils literal notranslate"><span class="pre">length</span></code> containing lowercase characters of the standard latin
+alphabet:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">generate_words</span> <span class="n">length</span> <span class="n">num</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">random_ascii_char</span> <span class="o">_</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">rnd</span> <span class="o">=</span> <span class="o">(</span><span class="nn">Random</span><span class="p">.</span><span class="n">int</span> <span class="mi">26</span><span class="o">)</span> <span class="o">+</span> <span class="mi">97</span> <span class="k">in</span>
+    <span class="nn">Char</span><span class="p">.</span><span class="n">chr</span> <span class="n">rnd</span>
+  <span class="k">in</span>
+  <span class="k">let</span> <span class="n">random_string</span> <span class="o">_</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">buf</span> <span class="o">=</span> <span class="nn">Buffer</span><span class="p">.</span><span class="n">create</span> <span class="n">length</span> <span class="k">in</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">length</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+      <span class="nn">Buffer</span><span class="p">.</span><span class="n">add_char</span> <span class="n">buf</span> <span class="o">(</span><span class="n">random_ascii_char</span> <span class="bp">()</span><span class="o">)</span>
+    <span class="k">done</span><span class="o">;</span>
+    <span class="nn">Buffer</span><span class="p">.</span><span class="n">contents</span> <span class="n">buf</span>
+  <span class="k">in</span>
+  <span class="k">let</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">ref</span> <span class="bp">[]</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">num</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="n">acc</span> <span class="o">:=</span> <span class="o">(</span><span class="n">random_string</span> <span class="bp">()</span><span class="o">)</span> <span class="o">::</span> <span class="o">!</span> <span class="n">acc</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="o">!</span><span class="n">acc</span>
+</pre></div>
+</div>
+<p>The first function, <code class="docutils literal notranslate"><span class="pre">random_ascii_char</span></code> generates a random lowercase <a class="reference external" href="https://en.wikipedia.org/wiki/ASCII">ASCII</a> character (of which there are 26), and 97 corresponds to <code class="docutils literal notranslate"><span class="pre">'a'</span></code>. <code class="docutils literal notranslate"><span class="pre">random_string</span></code> will create a string up to the fixed <code class="docutils literal notranslate"><span class="pre">length</span></code>. Finally, the main body function will add this string to the result list.</p>
+<p>To generate arrays, let us first implement a function
+<code class="docutils literal notranslate"><span class="pre">list_to_array</span></code> that creates an array from a list of elements:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">list_to_array</span> <span class="n">ls</span> <span class="o">=</span> <span class="k">match</span> <span class="n">ls</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="o">[||]</span>
+  <span class="o">|</span> <span class="n">h</span> <span class="o">::</span> <span class="n">t</span> <span class="o">-&gt;</span>
+    <span class="k">let</span> <span class="n">arr</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">length</span> <span class="n">ls</span><span class="o">)</span> <span class="n">h</span> <span class="k">in</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">iteri</span> <span class="o">(</span><span class="k">fun</span> <span class="n">i</span> <span class="n">v</span> <span class="o">-&gt;</span> <span class="n">arr</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">v</span><span class="o">)</span> <span class="n">ls</span><span class="o">;</span>
+    <span class="n">arr</span>
+</pre></div>
+</div>
+<p>We also define an auxiliary function <code class="docutils literal notranslate"><span class="pre">list_zip</span></code>, which is similar in its functionality to the standard function <code class="docutils literal notranslate"><span class="pre">List.combine</span></code>, but, unlike the latter does not exhaust call stack, as it is implemented in <a class="reference external" href="https://en.wikipedia.org/wiki/Continuation-passing_style">Continuation-Passing Style</a> and is, hence, in a tail-call form:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">list_zip</span> <span class="n">ls1</span> <span class="n">ls2</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">xs1</span> <span class="n">xs2</span> <span class="n">k</span> <span class="o">=</span> <span class="k">match</span> <span class="n">xs1</span><span class="o">,</span> <span class="n">xs2</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="n">h1</span> <span class="o">::</span> <span class="n">t1</span><span class="o">,</span> <span class="n">h2</span> <span class="o">::</span> <span class="n">t2</span> <span class="o">-&gt;</span>
+      <span class="n">walk</span> <span class="n">t1</span> <span class="n">t2</span> <span class="o">(</span><span class="k">fun</span> <span class="n">acc</span> <span class="o">-&gt;</span> <span class="n">k</span> <span class="o">((</span><span class="n">h1</span><span class="o">,</span> <span class="n">h2</span><span class="o">)</span> <span class="o">::</span> <span class="n">acc</span><span class="o">))</span>
+    <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="n">k</span> <span class="bp">[]</span>
+  <span class="k">in</span>
+  <span class="n">walk</span> <span class="n">ls1</span> <span class="n">ls2</span> <span class="o">(</span><span class="k">fun</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>We can finally implement an generator for key-value arrays:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">generate_key_value_array</span> <span class="n">len</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">kvs</span> <span class="o">=</span> <span class="n">list_zip</span> <span class="o">(</span><span class="n">generate_keys</span> <span class="n">len</span> <span class="n">len</span><span class="o">)</span> <span class="o">(</span><span class="n">generate_words</span> <span class="mi">5</span> <span class="n">len</span><span class="o">)</span> <span class="k">in</span>
+  <span class="n">list_to_array</span> <span class="n">kvs</span>
+</pre></div>
+</div>
+<p>It can be used as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">generate_key_value_array</span> <span class="mi">10</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="kt">array</span> <span class="o">=</span>
+<span class="o">[|(</span><span class="mi">1</span><span class="o">,</span> <span class="s2">&quot;emwbq&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;yyrby&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;qpzdd&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;eoplb&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="s2">&quot;wrpgn&quot;</span><span class="o">);</span>
+  <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;jbkbq&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;nncgq&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s2">&quot;rruxr&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="s2">&quot;ootiw&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;halys&quot;</span><span class="o">)|]</span>
+</pre></div>
+</div>
+<p>Additionally, we can implement simpler generators for arrays of
+integers and strings:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">generate_int_array</span> <span class="n">len</span> <span class="o">=</span>
+  <span class="n">generate_keys</span> <span class="n">len</span> <span class="n">len</span> <span class="o">|&gt;</span> <span class="n">list_to_array</span>
+
+<span class="k">let</span> <span class="n">generate_string_array</span> <span class="n">len</span> <span class="o">=</span>
+  <span class="n">generate_words</span> <span class="mi">5</span> <span class="n">len</span> <span class="o">|&gt;</span> <span class="n">list_to_array</span>
+</pre></div>
+</div>
+<p>The “pipeline” operator <code class="docutils literal notranslate"><span class="pre">|&gt;</span></code> is ised in OCaml to provide its left
+operand as an input to its right operand, which must be a function.</p>
+</div>
+<div class="section" id="measuring-execution-time">
+<h2>Measuring execution time<a class="headerlink" href="#measuring-execution-time" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>File: <code class="docutils literal notranslate"><span class="pre">Util.ml</span></code> (look for <code class="docutils literal notranslate"><span class="pre">Week</span> <span class="pre">03</span> <span class="pre">functions</span></code>)</li>
+</ul>
+<p>For our future experiments with algorithms and data structures, it is
+useful to be able to <cite>measure</cite> execution time of computations we run.
+To do so, we implement the following helper function:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">time</span> <span class="n">f</span> <span class="n">x</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="nn">Sys</span><span class="p">.</span><span class="n">time</span> <span class="bp">()</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">fx</span> <span class="o">=</span> <span class="n">f</span> <span class="n">x</span> <span class="k">in</span>
+  <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&quot;Execution elapsed time: %f sec</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">(</span><span class="nn">Sys</span><span class="p">.</span><span class="n">time</span> <span class="bp">()</span> <span class="o">-.</span> <span class="n">t</span><span class="o">);</span>
+  <span class="n">fx</span>
+</pre></div>
+</div>
+<p>It can be used with any arbitrary computation that takes at least one
+argument (thanks to currying).</p>
+</div>
+<div class="section" id="randomised-array-generation-and-testing">
+<h2>Randomised array generation and testing<a class="headerlink" href="#randomised-array-generation-and-testing" title="Permalink to this headline">¶</a></h2>
+<p>Let us make use of the random generators for testing <code class="docutils literal notranslate"><span class="pre">insert_sort</span></code>
+and its performance:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">InsertSortArray</span><span class="o">;;</span>
+
+<span class="o">#</span> <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">generate_key_value_array</span> <span class="mi">5000</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">a</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="kt">array</span> <span class="o">=</span>
+  <span class="o">[|(</span><span class="mi">894</span><span class="o">,</span> <span class="s2">&quot;goavt&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">2768</span><span class="o">,</span> <span class="s2">&quot;hvjjb&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">3535</span><span class="o">,</span> <span class="s2">&quot;pbkoy&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">1615</span><span class="o">,</span> <span class="s2">&quot;ybzua&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">2820</span><span class="o">,</span> <span class="s2">&quot;ssriq&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">2060</span><span class="o">,</span> <span class="s2">&quot;sfxsu&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">2328</span><span class="o">,</span> <span class="s2">&quot;kjgff&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">112</span><span class="o">,</span> <span class="s2">&quot;xuoht&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">1188</span><span class="o">,</span> <span class="s2">&quot;xxfcs&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">2384</span><span class="o">,</span> <span class="s2">&quot;xbwgb&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">1134</span><span class="o">,</span> <span class="s2">&quot;oi&quot;</span><span class="o">...</span> <span class="c">(* string length 5; truncated *)</span><span class="o">);</span> <span class="o">(</span><span class="mi">3102</span><span class="o">,</span> <span class="o">...);</span> <span class="o">...|]</span>
+
+<span class="o">#</span> <span class="n">time</span> <span class="n">insert_sort</span> <span class="n">a</span><span class="o">;;</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">395832</span> <span class="n">sec</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
+</pre></div>
+</div>
+<p>Notice that the comparison operator <code class="docutils literal notranslate"><span class="pre">&lt;</span></code> in OCaml is overloaded and
+works not only on integers but on arbitrary values, implementing an
+<cite>ad-hoc</cite> comparison. Thanks to this, even though we initially designed
+<code class="docutils literal notranslate"><span class="pre">insert_sort</span></code> to work on arrays of integers, it works on arrays of
+pairs equally well.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

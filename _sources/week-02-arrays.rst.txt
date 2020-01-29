@@ -113,7 +113,7 @@ simplicity we assume the array to be filled with integers::
 
   let print_int_array arr = 
     let len = Array.length arr in
-    print_int_sub_array 0 (len - 1) arr
+    print_int_sub_array 0 len arr
 
 Notice that the procedure ``print_int_sub_array`` employs the special
 bounded iteration loop of a general form::

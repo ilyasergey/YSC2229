@@ -1,0 +1,270 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Exercises &mdash; YSC2229 2020</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Exercises</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="exercises">
+<h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="exercise-1-realistic-complexity-of-laplace-expansion">
+<span id="exercise-determ2"></span><h2>Exercise 1: Realistic Complexity of Laplace Expansion<a class="headerlink" href="#exercise-1-realistic-complexity-of-laplace-expansion" title="Permalink to this headline">¶</a></h2>
+<p>Recall the definition of a matrix determinant by Laplace expansion</p>
+<div class="math notranslate nohighlight">
+\[|M| = \sum_{i = 0}^{n - 1}(-1)^{i} M_{0, i} \cdot |M^{0, i}|\]</div>
+<p>where <span class="math notranslate nohighlight">\(M^{0, i}\)</span> is the corresponding <a class="reference external" href="https://en.wikipedia.org/wiki/Minor_(linear_algebra)">minor of the matrix</a> <span class="math notranslate nohighlight">\(M\)</span> of size <span class="math notranslate nohighlight">\(n\)</span>, with indexing starting from <span class="math notranslate nohighlight">\(0\)</span>.</p>
+<p>This definition can be translated to OCaml as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">detLaplace</span> <span class="n">m</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">then</span> <span class="n">m</span><span class="o">.(</span><span class="mi">0</span><span class="o">).(</span><span class="mi">0</span><span class="o">)</span>
+  <span class="k">else</span>
+    <span class="k">let</span> <span class="n">det</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">0</span> <span class="k">in</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+      <span class="k">let</span> <span class="n">min</span> <span class="o">=</span> <span class="n">minor</span> <span class="n">m</span> <span class="mi">0</span> <span class="n">i</span> <span class="k">in</span>
+      <span class="k">let</span> <span class="n">detMin</span> <span class="o">=</span>  <span class="n">detLaplace</span> <span class="n">min</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="k">in</span>
+      <span class="n">det</span> <span class="o">:=</span> <span class="o">!</span><span class="n">det</span> <span class="o">+</span> <span class="o">(</span><span class="n">power</span> <span class="o">(-</span><span class="mi">1</span><span class="o">)</span> <span class="n">i</span><span class="o">)</span> <span class="o">*</span> <span class="n">m</span><span class="o">.(</span><span class="mi">0</span><span class="o">).(</span><span class="n">i</span><span class="o">)</span> <span class="o">*</span> <span class="n">detMin</span>
+    <span class="k">done</span><span class="o">;</span>
+    <span class="o">!</span><span class="n">det</span>
+</pre></div>
+</div>
+<p>A matrix is encoded as a 2-dimensional array <code class="docutils literal notranslate"><span class="pre">m</span></code>, whose rank (both
+dimensions) is <code class="docutils literal notranslate"><span class="pre">n</span></code>. Here, <code class="docutils literal notranslate"><span class="pre">minor</span></code> returns the minor of the matrix
+<code class="docutils literal notranslate"><span class="pre">m</span></code>, and <code class="docutils literal notranslate"><span class="pre">power</span> <span class="pre">a</span> <span class="pre">b</span></code> returns the natural power of <code class="docutils literal notranslate"><span class="pre">b</span></code> of an
+integer value <code class="docutils literal notranslate"><span class="pre">a</span></code>.</p>
+<p>Out of the explanations and the code above, estimate (in terms of
+big-O notation) the time complexity <span class="math notranslate nohighlight">\(t(n)\)</span> of the recursive
+determinant computation. Start by writing down a recurrence relation
+on <span class="math notranslate nohighlight">\(t(n)\)</span>. Assume that the complexity of <code class="docutils literal notranslate"><span class="pre">minor</span></code> is <span class="math notranslate nohighlight">\(c
+\dot n^2\)</span> for some constant <span class="math notranslate nohighlight">\(c\)</span>. Consider the complexity of
+returning an element of an array to be 0 (i.e., <span class="math notranslate nohighlight">\(t(1) = 0\)</span>). For
+<span class="math notranslate nohighlight">\(n &gt; 1\)</span>, <code class="docutils literal notranslate"><span class="pre">power</span></code>, addition, multiplication and other primitive
+operations to be constants and approximate all of them by a single
+constant <span class="math notranslate nohighlight">\(c\)</span>.</p>
+</div>
+<div class="section" id="exercise-2">
+<span id="exercise-randomised-testing"></span><h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<p>Implement a function that generates takes (a) a sorting procedure
+<code class="docutils literal notranslate"><span class="pre">sort</span></code> for a key-value array, (b) a number <code class="docutils literal notranslate"><span class="pre">n</span></code> and a number
+<code class="docutils literal notranslate"><span class="pre">length</span></code>, and generates <code class="docutils literal notranslate"><span class="pre">n</span></code> random arrays of the length
+<code class="docutils literal notranslate"><span class="pre">length</span></code>, testing that <code class="docutils literal notranslate"><span class="pre">sort</span></code> is indeed correct on all those
+arrays.</p>
+</div>
+<div class="section" id="exercise-3">
+<span id="exercise-find-range-unsorted"></span><h2>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<p>Find a procedure that takes an unsorted array and a given range of
+keys (represented by a pair of numbers <code class="docutils literal notranslate"><span class="pre">lo</span> <span class="pre">&lt;</span> <span class="pre">hi</span></code>, right boundary not
+included), and returns the list of all elements in the array, whose
+keys are in that range. Estimate the complexity of this procedure.</p>
+</div>
+<div class="section" id="exercise-4">
+<span id="exercise-binare-no-mid"></span><h2>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
+<p>Modify <code class="docutils literal notranslate"><span class="pre">binary_search</span></code> in a way that it does not test the equality
+of <code class="docutils literal notranslate"><span class="pre">fst</span> <span class="pre">arr.(mid)</span> <span class="pre">=</span> <span class="pre">k</span></code> and does not exclude the middle element, but
+rather considers it as a part of one of the recursively processed
+array subparts.</p>
+</div>
+<div class="section" id="exercise-5">
+<span id="exercise-three-way-merge-sort"></span><h2>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
+<p>Implement a version of merge sort that splits the sub-arrays into
+three parts and then combines them together. Compare its performance
+to the ordinary 2-way merge sort.</p>
+</div>
+<div class="section" id="exercise-6">
+<span id="exercise-index-sort"></span><h2>Exercise 6<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h2>
+<p>Develop and implement a version of merge sort that does not rearrange
+the input array <code class="docutils literal notranslate"><span class="pre">arr</span></code>, but returns an array <code class="docutils literal notranslate"><span class="pre">perm</span></code> of type <code class="docutils literal notranslate"><span class="pre">int</span>
+<span class="pre">array</span></code>, such that <code class="docutils literal notranslate"><span class="pre">perm.(i)</span></code> is the index in <code class="docutils literal notranslate"><span class="pre">arr</span></code> of the entry
+with <code class="docutils literal notranslate"><span class="pre">i</span></code> th smallest key in the array.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
