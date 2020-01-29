@@ -14,7 +14,7 @@ Introductory Data Structures and Algorithms
    prerequisites
    week-01
    week-02
-..   week-03	 
+   week-03	 
 
 ..   YSC2229-lecture-notes-week-04
 ..   YSC2229-lecture-notes-week-05
