@@ -111,7 +111,7 @@ Therefore, for :math:`a \neq 1`
 
 .. math::
 
-  S(n) = \frac{a (1 - a^n)}{1 - 1}
+  S(n) = \frac{a (1 - a^n)}{1 - a}
 
 
 Estimating a sum by an integral
