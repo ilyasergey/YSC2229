@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Searching in Arrays &mdash; YSC2229 2020</title>
+  <title>5.3. Searching in Arrays &mdash; YSC2229 2020</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5.4. Merge Sort" href="week-03-merge-sort.html" />
+    <link rel="prev" title="5.2. Generating Arrays" href="week-03-array-generators.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,11 +78,25 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-03.html">5. Complexity of Recursive Algorithms and Array Generators</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-03-recursive-complexity.html">5.1. Complexity of Simple Recursive Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-array-generators.html">5.2. Generating Arrays</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.3. Searching in Arrays</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#linear-search">5.3.1. Linear Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#binary-search">5.3.2. Binary Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#binary-search-invariant">5.3.3. Binary Search Invariant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-main-idea-of-divide-and-conquer-algorithms">5.3.4. The Main Idea of Divide-and-Conquer algorithms</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-merge-sort.html">5.4. Merge Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-exercises.html">5.5. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -126,7 +142,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Searching in Arrays</li>
+          <li><a href="week-03.html">5. Complexity of Recursive Algorithms and Array Generators</a> &raquo;</li>
+        
+      <li>5.3. Searching in Arrays</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -144,13 +162,13 @@
            <div itemprop="articleBody">
             
   <div class="section" id="searching-in-arrays">
-<h1>Searching in Arrays<a class="headerlink" href="#searching-in-arrays" title="Permalink to this headline">¶</a></h1>
+<h1>5.3. Searching in Arrays<a class="headerlink" href="#searching-in-arrays" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">SearchArray.ml</span></code></li>
 </ul>
 <p>Let us put key-value arrays to some good use.</p>
 <div class="section" id="linear-search">
-<h2>Linear Search<a class="headerlink" href="#linear-search" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.1. Linear Search<a class="headerlink" href="#linear-search" title="Permalink to this headline">¶</a></h2>
 <p>One of the most common operations with key-value arrays is
 <em>searching</em>, i.e., looking for the index of an element with some known
 key, or discovering that there is not such element in the array. The
@@ -184,7 +202,7 @@ second case, it returns <code class="docutils literal notranslate"><span class="
 array <code class="docutils literal notranslate"><span class="pre">a1</span></code>.</p>
 </div>
 <div class="section" id="binary-search">
-<h2>Binary Search<a class="headerlink" href="#binary-search" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.2. Binary Search<a class="headerlink" href="#binary-search" title="Permalink to this headline">¶</a></h2>
 <p>Binary search is an efficient search procedure that works on a <em>sorted
 array</em> and looks for an element in it, repeatedly dividing its
 search-space by half:</p>
@@ -262,7 +280,7 @@ does not even have consider the entire array, and this is the crux of
 its efficiency!</p>
 </div>
 <div class="section" id="binary-search-invariant">
-<h2>Binary Search Invariant<a class="headerlink" href="#binary-search-invariant" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.3. Binary Search Invariant<a class="headerlink" href="#binary-search-invariant" title="Permalink to this headline">¶</a></h2>
 <p>Binary search crucially relies on the fact that the given array (and
 hence its contiguous sub-array segments) are sorted, so, upon
 comparing the key to the middle, it can safely ignore the half that is
@@ -314,7 +332,7 @@ sub-array bound by <code class="docutils literal notranslate"><span class="pre">
 </div>
 </div>
 <div class="section" id="the-main-idea-of-divide-and-conquer-algorithms">
-<h2>The Main Idea of Divide-and-Conquer algorithms<a class="headerlink" href="#the-main-idea-of-divide-and-conquer-algorithms" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.4. The Main Idea of Divide-and-Conquer algorithms<a class="headerlink" href="#the-main-idea-of-divide-and-conquer-algorithms" title="Permalink to this headline">¶</a></h2>
 <p>The binary search algorithm is an example of the so-called
 <em>divide-and-conquer</em> approach. In this approach the processing of a
 data (a key-value array in our case) is based on multi-branched
@@ -333,6 +351,15 @@ the original problem.</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-03-merge-sort.html" class="btn btn-neutral float-right" title="5.4. Merge Sort" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-03-array-generators.html" class="btn btn-neutral" title="5.2. Generating Arrays" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

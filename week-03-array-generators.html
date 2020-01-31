@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Generating Arrays &mdash; YSC2229 2020</title>
+  <title>5.2. Generating Arrays &mdash; YSC2229 2020</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5.3. Searching in Arrays" href="week-03-search.html" />
+    <link rel="prev" title="5.1. Complexity of Simple Recursive Algorithms" href="week-03-recursive-complexity.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,11 +78,24 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-03.html">5. Complexity of Recursive Algorithms and Array Generators</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-03-recursive-complexity.html">5.1. Complexity of Simple Recursive Algorithms</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.2. Generating Arrays</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#simple-random-generators">5.2.1. Simple random generators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#measuring-execution-time">5.2.2. Measuring execution time</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#randomised-array-generation-and-testing">5.2.3. Randomised array generation and testing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-search.html">5.3. Searching in Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-merge-sort.html">5.4. Merge Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-exercises.html">5.5. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -126,7 +141,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Generating Arrays</li>
+          <li><a href="week-03.html">5. Complexity of Recursive Algorithms and Array Generators</a> &raquo;</li>
+        
+      <li>5.2. Generating Arrays</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -144,12 +161,12 @@
            <div itemprop="articleBody">
             
   <div class="section" id="generating-arrays">
-<h1>Generating Arrays<a class="headerlink" href="#generating-arrays" title="Permalink to this headline">¶</a></h1>
+<h1>5.2. Generating Arrays<a class="headerlink" href="#generating-arrays" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">ArrayUtil.ml</span></code> (look for <code class="docutils literal notranslate"><span class="pre">Week</span> <span class="pre">03</span> <span class="pre">functions</span></code>)</li>
 </ul>
 <div class="section" id="simple-random-generators">
-<h2>Simple random generators<a class="headerlink" href="#simple-random-generators" title="Permalink to this headline">¶</a></h2>
+<h2>5.2.1. Simple random generators<a class="headerlink" href="#simple-random-generators" title="Permalink to this headline">¶</a></h2>
 <p>To test not only the correctness, but also the performance of our
 search and sorting algorithms, let us invest some time into creating
 the procedures for generating random arrays. In this chapter and
@@ -245,7 +262,7 @@ integers and strings:</p>
 operand as an input to its right operand, which must be a function.</p>
 </div>
 <div class="section" id="measuring-execution-time">
-<h2>Measuring execution time<a class="headerlink" href="#measuring-execution-time" title="Permalink to this headline">¶</a></h2>
+<h2>5.2.2. Measuring execution time<a class="headerlink" href="#measuring-execution-time" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">Util.ml</span></code> (look for <code class="docutils literal notranslate"><span class="pre">Week</span> <span class="pre">03</span> <span class="pre">functions</span></code>)</li>
 </ul>
@@ -263,7 +280,7 @@ To do so, we implement the following helper function:</p>
 argument (thanks to currying).</p>
 </div>
 <div class="section" id="randomised-array-generation-and-testing">
-<h2>Randomised array generation and testing<a class="headerlink" href="#randomised-array-generation-and-testing" title="Permalink to this headline">¶</a></h2>
+<h2>5.2.3. Randomised array generation and testing<a class="headerlink" href="#randomised-array-generation-and-testing" title="Permalink to this headline">¶</a></h2>
 <p>Let us make use of the random generators for testing <code class="docutils literal notranslate"><span class="pre">insert_sort</span></code>
 and its performance:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">InsertSortArray</span><span class="o">;;</span>
@@ -293,6 +310,15 @@ pairs equally well.</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-03-search.html" class="btn btn-neutral float-right" title="5.3. Searching in Arrays" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-03-recursive-complexity.html" class="btn btn-neutral" title="5.1. Complexity of Simple Recursive Algorithms" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

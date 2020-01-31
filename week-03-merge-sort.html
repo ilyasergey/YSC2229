@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Merge Sort &mdash; YSC2229 2020</title>
+  <title>5.4. Merge Sort &mdash; YSC2229 2020</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5.5. Exercises" href="week-03-exercises.html" />
+    <link rel="prev" title="5.3. Searching in Arrays" href="week-03-search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,11 +78,23 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-03.html">5. Complexity of Recursive Algorithms and Array Generators</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-03-recursive-complexity.html">5.1. Complexity of Simple Recursive Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-array-generators.html">5.2. Generating Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-search.html">5.3. Searching in Arrays</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.4. Merge Sort</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#merging-two-sorted-arrays">5.4.1. Merging two sorted arrays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#main-sorting-procedure-and-its-invariants">5.4.2. Main sorting procedure and its invariants</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-exercises.html">5.5. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -126,7 +140,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Merge Sort</li>
+          <li><a href="week-03.html">5. Complexity of Recursive Algorithms and Array Generators</a> &raquo;</li>
+        
+      <li>5.4. Merge Sort</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -144,13 +160,13 @@
            <div itemprop="articleBody">
             
   <div class="section" id="merge-sort">
-<h1>Merge Sort<a class="headerlink" href="#merge-sort" title="Permalink to this headline">¶</a></h1>
+<h1>5.4. Merge Sort<a class="headerlink" href="#merge-sort" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">MergeSort.ml</span></code></li>
 </ul>
 <p>Merge sort is an algorithm that applies the divide-and-conquer idea to sorting.</p>
 <div class="section" id="merging-two-sorted-arrays">
-<h2>Merging two sorted arrays<a class="headerlink" href="#merging-two-sorted-arrays" title="Permalink to this headline">¶</a></h2>
+<h2>5.4.1. Merging two sorted arrays<a class="headerlink" href="#merging-two-sorted-arrays" title="Permalink to this headline">¶</a></h2>
 <p>The heart of merge sort heart is the procedure <code class="docutils literal notranslate"><span class="pre">merge</span></code> that merges
 two already sorted arrays, <code class="docutils literal notranslate"><span class="pre">from1</span></code> and <code class="docutils literal notranslate"><span class="pre">from2</span></code>, into a dedicated
 subarray ranging from <code class="docutils literal notranslate"><span class="pre">lo</span></code> to <code class="docutils literal notranslate"><span class="pre">hi</span></code> of an initial “destination”
@@ -177,7 +193,7 @@ array <code class="docutils literal notranslate"><span class="pre">dest</span></
 </div>
 </div>
 <div class="section" id="main-sorting-procedure-and-its-invariants">
-<h2>Main sorting procedure and its invariants<a class="headerlink" href="#main-sorting-procedure-and-its-invariants" title="Permalink to this headline">¶</a></h2>
+<h2>5.4.2. Main sorting procedure and its invariants<a class="headerlink" href="#main-sorting-procedure-and-its-invariants" title="Permalink to this headline">¶</a></h2>
 <p>The main merge sort procedure preforms sorting recursively by (a) by
 splitting the given array range into two new smaller arrays repeatedly
 until reaching the primitive arrays (of size of 0 or 1, which are
@@ -270,6 +286,15 @@ annotate <code class="docutils literal notranslate"><span class="pre">merge_sort
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-03-exercises.html" class="btn btn-neutral float-right" title="5.5. Exercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-03-search.html" class="btn btn-neutral" title="5.3. Searching in Arrays" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

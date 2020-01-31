@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Complexity of Recursive Algorithms and Array Generators &mdash; YSC2229 2020</title>
+  <title>5. Complexity of Recursive Algorithms and Array Generators &mdash; YSC2229 2020</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5.1. Complexity of Simple Recursive Algorithms" href="week-03-recursive-complexity.html" />
+    <link rel="prev" title="4.7. Exercises" href="week-02-exercises.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,11 +78,19 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. Complexity of Recursive Algorithms and Array Generators</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03-recursive-complexity.html">5.1. Complexity of Simple Recursive Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-array-generators.html">5.2. Generating Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-search.html">5.3. Searching in Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-merge-sort.html">5.4. Merge Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-exercises.html">5.5. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -126,7 +136,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Complexity of Recursive Algorithms and Array Generators</li>
+      <li>5. Complexity of Recursive Algorithms and Array Generators</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -144,42 +154,42 @@
            <div itemprop="articleBody">
             
   <div class="section" id="complexity-of-recursive-algorithms-and-array-generators">
-<h1>Complexity of Recursive Algorithms and Array Generators<a class="headerlink" href="#complexity-of-recursive-algorithms-and-array-generators" title="Permalink to this headline">¶</a></h1>
+<h1>5. Complexity of Recursive Algorithms and Array Generators<a class="headerlink" href="#complexity-of-recursive-algorithms-and-array-generators" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="week-03-recursive-complexity.html">Complexity of Simple Recursive Algorithms</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-03-recursive-complexity.html#complexity-of-computing-the-factorial">Complexity of computing the factorial</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03-recursive-complexity.html#method-of-differences">Method of differences</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03-recursive-complexity.html#recurrence-relations">Recurrence relations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03-recursive-complexity.html#first-order-recurrence-relations">First-order recurrence relations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03-recursive-complexity.html#inhomogeneous-recurrence-relations">Inhomogeneous recurrence relations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03-recursive-complexity.html">5.1. Complexity of Simple Recursive Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03-recursive-complexity.html#complexity-of-computing-the-factorial">5.1.1. Complexity of computing the factorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-recursive-complexity.html#method-of-differences">5.1.2. Method of differences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-recursive-complexity.html#recurrence-relations">5.1.3. Recurrence relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-recursive-complexity.html#first-order-recurrence-relations">5.1.4. First-order recurrence relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-recursive-complexity.html#inhomogeneous-recurrence-relations">5.1.5. Inhomogeneous recurrence relations</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-03-array-generators.html">Generating Arrays</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-03-array-generators.html#simple-random-generators">Simple random generators</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03-array-generators.html#measuring-execution-time">Measuring execution time</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03-array-generators.html#randomised-array-generation-and-testing">Randomised array generation and testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03-array-generators.html">5.2. Generating Arrays</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03-array-generators.html#simple-random-generators">5.2.1. Simple random generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-array-generators.html#measuring-execution-time">5.2.2. Measuring execution time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-array-generators.html#randomised-array-generation-and-testing">5.2.3. Randomised array generation and testing</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-03-search.html">Searching in Arrays</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-03-search.html#linear-search">Linear Search</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03-search.html#binary-search">Binary Search</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03-search.html#binary-search-invariant">Binary Search Invariant</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03-search.html#the-main-idea-of-divide-and-conquer-algorithms">The Main Idea of Divide-and-Conquer algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03-search.html">5.3. Searching in Arrays</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03-search.html#linear-search">5.3.1. Linear Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-search.html#binary-search">5.3.2. Binary Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-search.html#binary-search-invariant">5.3.3. Binary Search Invariant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-search.html#the-main-idea-of-divide-and-conquer-algorithms">5.3.4. The Main Idea of Divide-and-Conquer algorithms</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-03-merge-sort.html">Merge Sort</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-03-merge-sort.html#merging-two-sorted-arrays">Merging two sorted arrays</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03-merge-sort.html#main-sorting-procedure-and-its-invariants">Main sorting procedure and its invariants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03-merge-sort.html">5.4. Merge Sort</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03-merge-sort.html#merging-two-sorted-arrays">5.4.1. Merging two sorted arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-merge-sort.html#main-sorting-procedure-and-its-invariants">5.4.2. Main sorting procedure and its invariants</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-03-exercises.html">Exercises</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-03-exercises.html#exercise-1-realistic-complexity-of-laplace-expansion">Exercise 1: Realistic Complexity of Laplace Expansion</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03-exercises.html#exercise-2">Exercise 2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03-exercises.html#exercise-3">Exercise 3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03-exercises.html#exercise-4">Exercise 4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03-exercises.html#exercise-5">Exercise 5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03-exercises.html#exercise-6">Exercise 6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03-exercises.html">5.5. Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03-exercises.html#exercise-1-realistic-complexity-of-laplace-expansion">5.5.1. Exercise 1: Realistic Complexity of Laplace Expansion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-exercises.html#exercise-2">5.5.2. Exercise 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-exercises.html#exercise-3">5.5.3. Exercise 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-exercises.html#exercise-4">5.5.4. Exercise 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-exercises.html#exercise-5">5.5.5. Exercise 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-exercises.html#exercise-6">5.5.6. Exercise 6</a></li>
 </ul>
 </li>
 </ul>
@@ -191,6 +201,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-03-recursive-complexity.html" class="btn btn-neutral float-right" title="5.1. Complexity of Simple Recursive Algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-02-exercises.html" class="btn btn-neutral" title="4.7. Exercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

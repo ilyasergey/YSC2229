@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Complexity of Simple Recursive Algorithms &mdash; YSC2229 2020</title>
+  <title>5.1. Complexity of Simple Recursive Algorithms &mdash; YSC2229 2020</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5.2. Generating Arrays" href="week-03-array-generators.html" />
+    <link rel="prev" title="5. Complexity of Recursive Algorithms and Array Generators" href="week-03.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,11 +78,26 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-03.html">5. Complexity of Recursive Algorithms and Array Generators</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.1. Complexity of Simple Recursive Algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#complexity-of-computing-the-factorial">5.1.1. Complexity of computing the factorial</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#method-of-differences">5.1.2. Method of differences</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#recurrence-relations">5.1.3. Recurrence relations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#first-order-recurrence-relations">5.1.4. First-order recurrence relations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#inhomogeneous-recurrence-relations">5.1.5. Inhomogeneous recurrence relations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-array-generators.html">5.2. Generating Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-search.html">5.3. Searching in Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-merge-sort.html">5.4. Merge Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-exercises.html">5.5. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -126,7 +143,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Complexity of Simple Recursive Algorithms</li>
+          <li><a href="week-03.html">5. Complexity of Recursive Algorithms and Array Generators</a> &raquo;</li>
+        
+      <li>5.1. Complexity of Simple Recursive Algorithms</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -144,11 +163,11 @@
            <div itemprop="articleBody">
             
   <div class="section" id="complexity-of-simple-recursive-algorithms">
-<span id="sec-rr"></span><h1>Complexity of Simple Recursive Algorithms<a class="headerlink" href="#complexity-of-simple-recursive-algorithms" title="Permalink to this headline">¶</a></h1>
+<span id="sec-rr"></span><h1>5.1. Complexity of Simple Recursive Algorithms<a class="headerlink" href="#complexity-of-simple-recursive-algorithms" title="Permalink to this headline">¶</a></h1>
 <p>In this chapter we will study complexity of the programs that combine
 both loops and recursion.</p>
 <div class="section" id="complexity-of-computing-the-factorial">
-<h2>Complexity of computing the factorial<a class="headerlink" href="#complexity-of-computing-the-factorial" title="Permalink to this headline">¶</a></h2>
+<h2>5.1.1. Complexity of computing the factorial<a class="headerlink" href="#complexity-of-computing-the-factorial" title="Permalink to this headline">¶</a></h2>
 <p>Typically, any terminating recursive algorithm works by calling itself
 on progressively smaller instances of some data structures. For
 instance, consider the “Hello, World!” of all recursive programs —
@@ -171,7 +190,7 @@ F(n) &amp;= F (n - 1) + 1
 <p>That is, the value of <span class="math notranslate nohighlight">\(F(n)\)</span> is defined recursively (shouldn’t be that much of a surprise, huh?) thourgh the value of <span class="math notranslate nohighlight">\(F(n - 1)\)</span>.</p>
 </div>
 <div class="section" id="method-of-differences">
-<h2>Method of differences<a class="headerlink" href="#method-of-differences" title="Permalink to this headline">¶</a></h2>
+<h2>5.1.2. Method of differences<a class="headerlink" href="#method-of-differences" title="Permalink to this headline">¶</a></h2>
 <p>We can now exploit this pattern by constructing a number of equations of the following shape, following the definition of <span class="math notranslate nohighlight">\(F(n)\)</span> of the factorial complexity, and sum them up together:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*}
@@ -186,7 +205,7 @@ F(n) &amp;= F (n - 1) + 1
 <p>As the result, we obtain <span class="math notranslate nohighlight">\(F(n) = n\)</span> (since <span class="math notranslate nohighlight">\(F(0) = 0\)</span>), therefore we can conclude that <span class="math notranslate nohighlight">\(F(n) \in O(n)\)</span>.</p>
 </div>
 <div class="section" id="recurrence-relations">
-<h2>Recurrence relations<a class="headerlink" href="#recurrence-relations" title="Permalink to this headline">¶</a></h2>
+<h2>5.1.3. Recurrence relations<a class="headerlink" href="#recurrence-relations" title="Permalink to this headline">¶</a></h2>
 <p>What we’ve seen as an example of the factorial complexity can be generalised to the following definition of a <em>recurrence relation</em>.</p>
 <div class="admonition-definition admonition">
 <p class="first admonition-title">Definition</p>
@@ -196,7 +215,7 @@ F(n) &amp;= F (n - 1) + 1
 <p>The main challenge that comes with recurrence relations is to find explicit (non-recurrent) expression of <span class="math notranslate nohighlight">\(f\)</span> (aka <em>closed form</em>) as a function of its argument <span class="math notranslate nohighlight">\(n\)</span> (e.g., <span class="math notranslate nohighlight">\(F(n) = n\)</span>).  This is similar to finding an explicit value for a sum in the case of loops.</p>
 </div>
 <div class="section" id="first-order-recurrence-relations">
-<h2>First-order recurrence relations<a class="headerlink" href="#first-order-recurrence-relations" title="Permalink to this headline">¶</a></h2>
+<h2>5.1.4. First-order recurrence relations<a class="headerlink" href="#first-order-recurrence-relations" title="Permalink to this headline">¶</a></h2>
 <p>Most of the time we will be considering the following special case of recurrence relations.</p>
 <div class="admonition-definition admonition">
 <p class="first admonition-title">Definition</p>
@@ -236,7 +255,7 @@ f(n) &amp;= b_n \cdot f(n - 1) \\
 <p>You can try to remember that formula, but it’s easier to remember how it is obtained.</p>
 </div>
 <div class="section" id="inhomogeneous-recurrence-relations">
-<h2>Inhomogeneous recurrence relations<a class="headerlink" href="#inhomogeneous-recurrence-relations" title="Permalink to this headline">¶</a></h2>
+<h2>5.1.5. Inhomogeneous recurrence relations<a class="headerlink" href="#inhomogeneous-recurrence-relations" title="Permalink to this headline">¶</a></h2>
 <div class="admonition-definition admonition">
 <p class="first admonition-title">Definition</p>
 <p><strong>Inhomogeneous recurrence relations</strong> take the following form for some constants <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(f(n)\)</span> and a coefficient <span class="math notranslate nohighlight">\(b_n\)</span> and <span class="math notranslate nohighlight">\(c_n\)</span>, which might be functions of <span class="math notranslate nohighlight">\(n\)</span>:</p>
@@ -295,6 +314,15 @@ f(0) &amp;= 0
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-03-array-generators.html" class="btn btn-neutral float-right" title="5.2. Generating Arrays" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-03.html" class="btn btn-neutral" title="5. Complexity of Recursive Algorithms and Array Generators" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
