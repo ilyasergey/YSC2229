@@ -58,7 +58,7 @@ Change the procedure ``partition`` from Section :ref:`sec-partition` so it would
 Exercise 3
 ----------
 
-Implement and check a precondition of the ``sort`` subrouting withint ``quick_sort`` from Section :ref:`sec-partition`. It should relate the initial array, and the sub-arrays, obtained as results of partitioning, stating something about the arrangement of elements in them wrt. element at the position ``mid`` and others.
+Implement and check a precondition of the ``sort`` subrouting within ``quick_sort`` from Section :ref:`sec-partition`. It should relate the initial array, and the sub-arrays, obtained as results of partitioning, stating something about the arrangement of elements in them wrt. element at the position ``mid`` and others.
 
 .. _exercise-change-var: 
 
@@ -101,7 +101,7 @@ Exercise 8
 ----------
 
 Change the implementation of :ref:`sec-bucket-sort`, so it would not
-require to take the gues for a maximal key as a parameter, while
+require to take the guess for a maximal key as a parameter, while
 retaining the same aymptotic complexity.
 
 .. _exercise-radix-sort:
