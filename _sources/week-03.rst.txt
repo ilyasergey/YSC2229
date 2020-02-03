@@ -1,7 +1,7 @@
 .. -*- mode: rst -*-
 
-Complexity of Recursive Algorithms and Array Generators
-=======================================================
+Week 03: Complexity of Recursive Algorithms; Array Generators
+=============================================================
 
 .. toctree::
 
