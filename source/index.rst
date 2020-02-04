@@ -17,7 +17,6 @@ Introductory Data Structures and Algorithms
    week-03	 
 ..   week-04	 
 
-
 ..   YSC2229-lecture-notes-week-04
 ..   YSC2229-lecture-notes-week-05
 ..   YSC2229-lecture-notes-week-06
@@ -37,8 +36,9 @@ course material.
 Supplementary Materials
 -----------------------
 
-* `Introductory Slides from Week 01 <resources/2020/Week-01-Intro.pdf>`_
+* `Week 01 Introductory Slides <resources/2020/Week-01-Intro.pdf>`_
 * `Matrix determinants in Haskell <resources/2020/Matrices.hs>`_
+* `Week 04 Slides on Advanced Sorting <resources/2020/Week-04-Sorting.pdf>`_
 
 Examples and Code
 -----------------
@@ -57,10 +57,10 @@ Textbooks
    <https://mitpress.mit.edu/books/introduction-algorithms-third-edition>`_
    by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and
    Clifford Stein
-2. `Algorithms, 4th edition
+2. (Optional `Algorithms, 4th edition
    <https://algs4.cs.princeton.edu/home/>`_
    by Robert Sedgewick and Kevin Wayne.
-   `This book is optional, but it has some good examples.`
+   `This book is has some good in-depth examples of basic algorithms.`
 
 ..
    Indices and tables
