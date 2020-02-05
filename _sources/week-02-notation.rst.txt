@@ -99,7 +99,7 @@ Assume this holds for some :math:`c` and :math:`n_0`, then:
  \implies & 
  n^2 (1 - c \cdot n) \leq 0,~\text{for all}~n \geq n_0 \\
  \implies & 
- c \cdot n \leq 1,~\text{for all}~n \geq n_0 \\
+ 1 \leq c \cdot n,~\text{for all}~n \geq n_0 \\
  \implies & 
  n > \frac{1}{c},~\text{for all}~n \geq n_0 \\
  \end{align*} 
