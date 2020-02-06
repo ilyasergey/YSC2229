@@ -1,6 +1,6 @@
 .. -*- mode: rst -*-
 
-Quicksort and Its Variations
+Quicksort and its Variations
 ============================
 
 * File: ``QuickSort.ml``
