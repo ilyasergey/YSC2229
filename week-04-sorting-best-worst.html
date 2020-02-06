@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>6. Week 04: Divide-and-Conquer Algorithms &mdash; YSC2229 2020</title>
+  <title>6.4. Best-Worst Case for Comparison-Based Sorting &mdash; YSC2229 2020</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="6.1. Quicksort and its Variations" href="week-04-quicksort.html" />
-    <link rel="prev" title="5.5. Exercises" href="week-03-exercises.html" /> 
+    <link rel="next" title="6.5. Sorting in Linear Time" href="week-04-linear-time.html" />
+    <link rel="prev" title="6.3. Generalising Comparison-Based Sorting" href="week-04-comparison-based-sorting.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -84,11 +84,11 @@
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">6. Week 04: Divide-and-Conquer Algorithms</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="week-04-quicksort.html">6.1. Quicksort and its Variations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html">6.2. Complexity of Divide-and-Conquer Algorithms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="week-04-comparison-based-sorting.html">6.3. Generalising Comparison-Based Sorting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-sorting-best-worst.html">6.4. Best-Worst Case for Comparison-Based Sorting</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6.4. Best-Worst Case for Comparison-Based Sorting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html">6.5. Sorting in Linear Time</a></li>
 <li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html">6.6. Exercises</a></li>
 </ul>
@@ -138,7 +138,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>6. Week 04: Divide-and-Conquer Algorithms</li>
+          <li><a href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a> &raquo;</li>
+        
+      <li>6.4. Best-Worst Case for Comparison-Based Sorting</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -155,49 +157,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="week-04-divide-and-conquer-algorithms">
-<h1>6. Week 04: Divide-and-Conquer Algorithms<a class="headerlink" href="#week-04-divide-and-conquer-algorithms" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="week-04-quicksort.html">6.1. Quicksort and its Variations</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-04-quicksort.html#partitioning-an-array">6.1.1. Partitioning an array</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-quicksort.html#partitioning-in-action">6.1.2. Partitioning in action</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-quicksort.html#sorting-via-partitioning">6.1.3. Sorting via partitioning</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html">6.2. Complexity of Divide-and-Conquer Algorithms</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html#changing-variable-in-recurrence-relations">6.2.1. Changing variable in recurrence relations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html#complexity-of-merge-sort">6.2.2. Complexity of Merge Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html#complexity-of-quicksort">6.2.3. Complexity of Quicksort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html#the-master-theorem">6.2.4. The Master Theorem</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-04-comparison-based-sorting.html">6.3. Generalising Comparison-Based Sorting</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-04-comparison-based-sorting.html#comparator-as-a-parameter">6.3.1. Comparator as a parameter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-comparison-based-sorting.html#a-functor-for-sorting">6.3.2. A functor for sorting</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-04-sorting-best-worst.html">6.4. Best-Worst Case for Comparison-Based Sorting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-04-linear-time.html">6.5. Sorting in Linear Time</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html#simple-bucket-sort">6.5.1. Simple Bucket Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html#enhanced-bucket-sort">6.5.2. Enhanced Bucket Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html#stability-of-sorting">6.5.3. Stability of sorting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html#radix-sort">6.5.4. Radix Sort</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-04-exercises.html">6.6. Exercises</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-1">6.6.1. Exercise 1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-2">6.6.2. Exercise 2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-3">6.6.3. Exercise 3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-4">6.6.4. Exercise 4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-5">6.6.5. Exercise 5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-6">6.6.6. Exercise 6</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-7">6.6.7. Exercise 7</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-8">6.6.8. Exercise 8</a></li>
-</ul>
-</li>
-</ul>
-</div>
+  <div class="section" id="best-worst-case-for-comparison-based-sorting">
+<span id="best-worst"></span><h1>6.4. Best-Worst Case for Comparison-Based Sorting<a class="headerlink" href="#best-worst-case-for-comparison-based-sorting" title="Permalink to this headline">¶</a></h1>
+<p>A strength and a weakness of Comparison-Based Sorting is the fact that the only operation it relies in its implementation is a primitive to compare two elements. This makes it very generic and applicable to diverse classes of data, but also puts a theoretical limit on how fast (in the asymptotic big-O sence) we can sort arrays <em>if we use only comparison</em>.</p>
+<p>Let us se what is this theoretical limit. Quicksort, Insertion sort, Merge sort are all comparison-based sorting algorithms: they compare elements pairwise. An “ideal” algorithm will always perform no more than <span class="math notranslate nohighlight">\(t(n)\)</span> comparisons, for the worst possible case on an array of size <span class="math notranslate nohighlight">\(n\)</span>. What is then <span class="math notranslate nohighlight">\(t(n)\)</span>?</p>
+<p>Let us think in the following way. What a sorting delivers is a permutation of an initial array, which is also sorted. A number of possible permutations of <span class="math notranslate nohighlight">\(n\)</span> elements is <span class="math notranslate nohighlight">\(n!\)</span>, and such an algorithm should find “the right one” by following a path in a binary decision tree, where each node corresponds to comparing just two elements.</p>
+<p>As an example, consider the following decision tree for an array of just three elements <code class="docutils literal notranslate"><span class="pre">[|A;</span> <span class="pre">B;</span> <span class="pre">C|]</span></code>:</p>
+<a class="reference internal image-reference" href="_images/decisions.png"><img alt="_images/decisions.png" class="align-center" src="_images/decisions.png" style="width: 700px;" /></a>
+<p>Intuitively, by making <span class="math notranslate nohighlight">\(t(n)\)</span> steps in a decision tree, in its search for the “correctly ordered” permutation, the algorithm should be able to say, which ordering it is. Since the number of reachable leaves in <span class="math notranslate nohighlight">\(t(n)\)</span> steps is <span class="math notranslate nohighlight">\(2^{t(n)}\)</span>, and the number of possible orderings is <span class="math notranslate nohighlight">\(n!\)</span>, it should be the case that</p>
+<div class="math notranslate nohighlight">
+\[2^{t(n)} \geq n!\]</div>
+<p>To obtain the boundary on <span class="math notranslate nohighlight">\(t(n)\)</span> we need to solve this inequality. We can do so by first taking tha logarithm of the both sides:</p>
+<div class="math notranslate nohighlight">
+\[t(n) \geq \log_2(n!)\]</div>
+<p>We can then use <a class="reference external" href="https://en.wikipedia.org/wiki/Stirling%27s_approximation">Stirling’s formula</a> for large <span class="math notranslate nohighlight">\(n\)</span>, which states that <span class="math notranslate nohighlight">\(n! \approx \sqrt{2\pi n}\left(\frac{n}{e}\right)^n\)</span>. Therefore, we obtain</p>
+<div class="math notranslate nohighlight">
+\[t(n) \approx n \log_e n = (\log_e 2) n \log_2 n \in O(n \log n)\]</div>
+<p>With this we establish that the best possible algorithm for sorting arrays using only comparison will be deemed to perform <span class="math notranslate nohighlight">\(O(n \log n)\)</span> comparisons in the worst case.</p>
+<p>The complexity class <span class="math notranslate nohighlight">\(O(n \log n)\)</span> is so paramount in the study of algorithms that it deserved its own name: computations having this complexity are often referred to as having <strong>linearithmic</strong> complexity.</p>
 </div>
 
 
@@ -208,10 +185,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="week-04-quicksort.html" class="btn btn-neutral float-right" title="6.1. Quicksort and its Variations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="week-04-linear-time.html" class="btn btn-neutral float-right" title="6.5. Sorting in Linear Time" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="week-03-exercises.html" class="btn btn-neutral" title="5.5. Exercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="week-04-comparison-based-sorting.html" class="btn btn-neutral" title="6.3. Generalising Comparison-Based Sorting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

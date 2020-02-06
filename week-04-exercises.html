@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Exercises &mdash; YSC2229 2020</title>
+  <title>6.6. Exercises &mdash; YSC2229 2020</title>
   
 
   
@@ -27,7 +27,8 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="6.5. Sorting in Linear Time" href="week-04-linear-time.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,12 +77,31 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-04-quicksort.html">6.1. Quicksort and its Variations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html">6.2. Complexity of Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-comparison-based-sorting.html">6.3. Generalising Comparison-Based Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-sorting-best-worst.html">6.4. Best-Worst Case for Comparison-Based Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html">6.5. Sorting in Linear Time</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6.6. Exercises</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-1">6.6.1. Exercise 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-2">6.6.2. Exercise 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-3">6.6.3. Exercise 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-4">6.6.4. Exercise 4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-5">6.6.5. Exercise 5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-6">6.6.6. Exercise 6</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-7">6.6.7. Exercise 7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-8">6.6.8. Exercise 8</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
             
@@ -127,7 +147,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Exercises</li>
+          <li><a href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a> &raquo;</li>
+        
+      <li>6.6. Exercises</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -145,26 +167,31 @@
            <div itemprop="articleBody">
             
   <div class="section" id="exercises">
-<h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
+<h1>6.6. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="exercise-1">
-<h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-partition-invariants"></span><h2>6.6.1. Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
 <p>Implement and check the loop invariants (described in the text) of the
 <code class="docutils literal notranslate"><span class="pre">partition</span></code> procedure from Section <a class="reference internal" href="week-04-quicksort.html#sec-partition"><span class="std std-ref">Partitioning an array</span></a>, as well as
 as the procedure’s postcondition. The assertions should relate the
 initial array, the final array and returned <code class="docutils literal notranslate"><span class="pre">i</span></code>. You might need to
-inroduce an initial copy of an unmodified array to assert those
+introduce an initial copy of an unmodified array to assert those
 statements.</p>
 </div>
 <div class="section" id="exercise-2">
-<span id="exercise-qsort-invariant"></span><h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-partition-different-pivot"></span><h2>6.6.2. Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<p>Change the procedure <code class="docutils literal notranslate"><span class="pre">partition</span></code> from Section <a class="reference internal" href="week-04-quicksort.html#sec-partition"><span class="std std-ref">Partitioning an array</span></a>
+so it would take as <code class="docutils literal notranslate"><span class="pre">pivot</span></code> the first element of an array.</p>
+</div>
+<div class="section" id="exercise-3">
+<span id="exercise-qsort-invariant"></span><h2>6.6.3. Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
 <p>Implement and check a precondition of the <code class="docutils literal notranslate"><span class="pre">sort</span></code> subrouting within
 <code class="docutils literal notranslate"><span class="pre">quick_sort</span></code> from Section <a class="reference internal" href="week-04-quicksort.html#sec-partition"><span class="std std-ref">Partitioning an array</span></a>. It should relate the
 initial array, and the sub-arrays, obtained as results of
 partitioning, stating something about the arrangement of elements in
-them with regard to the element at the position <code class="docutils literal notranslate"><span class="pre">mid</span></code> and others.</p>
+them wrt. element at the position <code class="docutils literal notranslate"><span class="pre">mid</span></code> and others.</p>
 </div>
-<div class="section" id="exercise-3">
-<span id="exercise-change-var"></span><h2>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-4">
+<span id="exercise-change-var"></span><h2>6.6.4. Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
 <p>Solve, by means of changing a variable, the following recurrence
 relation:</p>
 <div class="math notranslate nohighlight">
@@ -173,31 +200,32 @@ f(1) &amp;= 1 \\
 f(n) &amp;= 4 f(n/2) + n^2, \text{if}~n &gt; 1
 \end{align*}\end{split}\]</div>
 </div>
-<div class="section" id="exercise-4">
-<span id="exercise-quicksort-worst"></span><h2>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-5">
+<span id="exercise-quicksort-worst"></span><h2>6.6.5. Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
 <p>What is the worst-case complexity of Quicksort? Obtain it by stating
 and solving the corresponding recurrence relations. Give an example of
-an array when the worst-case complexity is achieved.</p>
+an array when the worst-case complexity is achieved (hint: think of a
+case insert sort does its best).</p>
 </div>
-<div class="section" id="exercise-5">
-<span id="exercise-more-notations"></span><h2>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-6">
+<span id="exercise-more-notations"></span><h2>6.6.6. Exercise 6<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h2>
 <p>Prove, out of definitions that for ay two functions <span class="math notranslate nohighlight">\(f(n)\)</span> and
 <cite>:math:`g(n)</cite>, one has <span class="math notranslate nohighlight">\(f(n) \in \Theta(g(n))\)</span> if and only if
 <span class="math notranslate nohighlight">\(f(n) \in O(g(n))\)</span> and <span class="math notranslate nohighlight">\(f(n) \in \Omega(g(n))\)</span>.</p>
 </div>
-<div class="section" id="exercise-6">
-<span id="exercise-functor-printing"></span><h2>Exercise 6<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h2>
-<p>Enhance <a class="reference internal" href="week-04-comparison_based_sorting.html#sec-functor-sorting"><span class="std std-ref">A functor for sorting</span></a> <code class="docutils literal notranslate"><span class="pre">Sorting</span></code>, so it would also take
+<div class="section" id="exercise-7">
+<span id="exercise-functor-printing"></span><h2>6.6.7. Exercise 7<a class="headerlink" href="#exercise-7" title="Permalink to this headline">¶</a></h2>
+<p>Enhance <a class="reference internal" href="week-04-comparison-based-sorting.html#sec-functor-sorting"><span class="std std-ref">A functor for sorting</span></a> <code class="docutils literal notranslate"><span class="pre">Sorting</span></code>, so it would also take
 an instance of a signature <code class="docutils literal notranslate"><span class="pre">Printable</span></code> that provides an
 implementation for printing elements of an array. With that
 <code class="docutils literal notranslate"><span class="pre">Sorting</span></code> should also feature a second version of sorting,
 <code class="docutils literal notranslate"><span class="pre">sort_print</span></code>, which will print a sorting trace using the machinery
 imported from <code class="docutils literal notranslate"><span class="pre">Printable</span></code>.</p>
 </div>
-<div class="section" id="exercise-7">
-<span id="exercise-bucket-sort"></span><h2>Exercise 7<a class="headerlink" href="#exercise-7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-8">
+<span id="exercise-radix-sort"></span><h2>6.6.8. Exercise 8<a class="headerlink" href="#exercise-8" title="Permalink to this headline">¶</a></h2>
 <p>Implement and test the invariant for the <code class="docutils literal notranslate"><span class="pre">while</span></code>-loop of
-<a class="reference internal" href="week-04-linear_time.html#sec-radix-sort"><span class="std std-ref">Radix Sort</span></a>.</p>
+<a class="reference internal" href="week-04-linear-time.html#sec-radix-sort"><span class="std std-ref">Radix Sort</span></a>.</p>
 </div>
 </div>
 
@@ -206,6 +234,13 @@ imported from <code class="docutils literal notranslate"><span class="pre">Print
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="week-04-linear-time.html" class="btn btn-neutral" title="6.5. Sorting in Linear Time" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
