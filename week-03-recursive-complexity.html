@@ -277,7 +277,7 @@ f(a) &amp;= g(a) = d
 \[f(n) = b_n \cdot f(n - 1) + c_n\]</div>
 <p>We then recall that <span class="math notranslate nohighlight">\(f(n)\)</span> can be expressed via <span class="math notranslate nohighlight">\(g(n)\)</span>, and rewrite both parts of this equation as follows:</p>
 <div class="math notranslate nohighlight">
-\[\underbrace{b_{a+1}\cdot \ldots \cdot b_n}_{X} \cdot g(n) = \underbrace{b_n \cdot b_{a+1}\cdot \ldots \cdot b_{n-1}}_{X} \cdot g(n) + c_n\]</div>
+\[\underbrace{b_{a+1}\cdot \ldots \cdot b_n}_{X} \cdot g(n) = \underbrace{b_n \cdot b_{a+1}\cdot \ldots \cdot b_{n-1}}_{X} \cdot g(n - 1) + c_n\]</div>
 <p>Notice that the parts marked via <span class="math notranslate nohighlight">\(X\)</span> are, in fact the same, so we can divide both parts of the expression by it, so we can get</p>
 <div class="math notranslate nohighlight">
 \[g(n) = g(n - 1) + d_n ~\text{where}~ d_n = \frac{c_n}{\prod_{i = a + 1}^{n}b_i}.\]</div>
