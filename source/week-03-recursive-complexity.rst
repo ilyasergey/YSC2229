@@ -156,7 +156,7 @@ We then recall that :math:`f(n)` can be expressed via :math:`g(n)`, and rewrite 
 
 .. math::
 
-  \underbrace{b_{a+1}\cdot \ldots \cdot b_n}_{X} \cdot g(n) = \underbrace{b_n \cdot b_{a+1}\cdot \ldots \cdot b_{n-1}}_{X} \cdot g(n) + c_n
+  \underbrace{b_{a+1}\cdot \ldots \cdot b_n}_{X} \cdot g(n) = \underbrace{b_n \cdot b_{a+1}\cdot \ldots \cdot b_{n-1}}_{X} \cdot g(n - 1) + c_n
 
 Notice that the parts marked via :math:`X` are, in fact the same, so we can divide both parts of the expression by it, so we can get
 
