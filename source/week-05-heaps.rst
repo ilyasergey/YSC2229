@@ -209,17 +209,20 @@ We can now check that our array is indeed a heap::
 
 Let us not create an array, which is *not* a heap (by the way, why it isn't --- please explain!)::
 
- let bad_heap = 
-   [|(16, "a");
-     (14, "b");
-     (10, "c");
-     (8, "d");
-     (7, "e");
-     (11, "f");
-     (3, "g");
-     (2, "h");
-     (4, "i");
-     (1, "j");|]
+  let bad_heap = 
+    [|(16, "a");
+      (14, "b");
+      (9, "c");
+      (8, "d");
+      (7, "e");
+      (11, "f");
+      (3, "g");
+      (2, "h");
+      (4, "i");
+      (1, "j");
+      (1, "k");
+      (10, "l");
+      (6, "m");
 
 To make the checking more informative, let us introduce another version of the heap checker to the ``Heap`` functor::
 
