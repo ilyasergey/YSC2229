@@ -56,7 +56,7 @@ Textbooks
    <https://mitpress.mit.edu/books/introduction-algorithms-third-edition>`_
    by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and
    Clifford Stein
-2. (Optional `Algorithms, 4th edition
+2. (Optional) `Algorithms, 4th edition
    <https://algs4.cs.princeton.edu/home/>`_
    by Robert Sedgewick and Kevin Wayne.
    `This book is has some good in-depth examples of basic algorithms.`
