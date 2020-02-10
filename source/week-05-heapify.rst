@@ -35,7 +35,6 @@ function shown below::
          comp (snd (get_exn l)) (snd !largest) > 0 
       then largest := get_exn l;
 
-
       (* May be the right child is even bigger? *)
       let r = right arr i in 
       if r <> None && 
@@ -43,12 +42,12 @@ function shown below::
          comp (snd (get_exn r)) (snd !largest) > 0
       then largest := get_exn r;
 
-
       if !largest <> (i, ai) 
       (* Okay, there is a necessity to progress further... *)
-      then 
-         (swap arr i (fst !largest); 
-          max_heapify heap_size arr (fst !largest))
+      then begin
+        swap arr i (fst !largest); 
+        max_heapify heap_size arr (fst !largest)
+      end
 
 The implementation of ``max_heapify`` deserves som attention. It takes
 three arguments, an integer ``heap_size`` (whose role will be
