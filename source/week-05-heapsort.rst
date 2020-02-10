@@ -12,13 +12,13 @@ one offending triple) in :math:`\Theta(n \log n)`, for construct a
 very efficient sorting algorithm --- Heapsort.
 
 Heapsort starts by turning an arbitrary array into a max-heap (by
-means of `build_max_heap`). It then repeatedly takes the first element
-and swaps it with the "working" element in the tail, building a sorted
-array backwards. After each swap, it shifts the "front" of what is
-considered to be a heap (i.e., the mentioned above ``heap_size``), and
-what is an already sorted array suffix, and restores the heap
-structure up to this front. The following code the final addition to
-the ``Heaps`` functor::
+means of ``build_max_heap``). It then repeatedly takes the first
+element and swaps it with the "working" element in the tail, building
+a sorted array backwards. After each swap, it shifts the "front" of
+what is considered to be a heap (i.e., the mentioned above
+``heap_size``), and what is an already sorted array suffix, and
+restores the heap structure up to this front. The following code the
+final addition to the ``Heaps`` functor::
 
   let heapsort arr = 
     let len = Array.length arr in
@@ -66,7 +66,9 @@ divide-and-conquer strategy (structuring the computations in a tree).
 The last one exploits the properties of a maintained data structures
 (i.e., a heap), which also coincidentally turns out to be a tree.
 
-It would be interesting to compare the relative performance of the three implementations we have, by running them on three copies of the same array::
+It would be interesting to compare the relative performance of the
+three implementations we have, by running them on three copies of the
+same array::
 
  let x = generate_key_value_array 100000
  let y = Array.copy x
