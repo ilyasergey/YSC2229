@@ -131,6 +131,7 @@ Notice that for a given index there might be no child, hence both ``left`` and `
  end
 
  module KVHeaps = Heaps(KV)
+
 Let us now create our first binary heap and make sure that it follows the intution from the image above::
 
  let good_heap = 

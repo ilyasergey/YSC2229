@@ -132,8 +132,7 @@ functor::
       max_heapify len arr i
     done
 
-**Question:** Why does the ``for``-loop start only from ``i =
- (len - 1) / 2``, not from ``len - 1``?
+**Question:** Why does the ``for``-loop start only from ``i = (len - 1) / 2``, not from ``len - 1``?
 
 The complexity of ``build_max_heap`` can be *over-approximated* by analysing the complexity of each iteration of the ``while``-loop, and the number of the iteration it makes. 
 
