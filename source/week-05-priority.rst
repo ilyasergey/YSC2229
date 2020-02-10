@@ -5,9 +5,17 @@
 Priority Queues
 ===============
 
-Recall our main for studying binary heaps: efficient retrieval of an element with maximal/minimal key in an array, without re-sorting it from scratch between the changes. A data structure that allows for efficient retrieval of an element with the highest/lowest key is called a *priority queue*. In this section, we will design a priority queue based on the implementation of the heaps we already have.
+* File: ``PriorityQueue.ml``
 
-The priority queue will be implemented by a dedicated data type and a number of operations, all residing within the following functor::
+Recall our main for studying binary heaps: efficient retrieval of an
+element with maximal/minimal key in an array, without re-sorting it
+from scratch between the changes. A data structure that allows for
+efficient retrieval of an element with the highest/lowest key is
+called a *priority queue*. In this section, we will design a priority
+queue based on the implementation of the heaps we already have.
+
+The priority queue will be implemented by a dedicated data type and a
+number of operations, all residing within the following functor::
 
   module PriorityQueue(C: CompareAndPrint) = struct 
 
@@ -15,9 +23,15 @@ The priority queue will be implemented by a dedicated data type and a number of 
 
   end
 
-A *carrier* of a priority queue (i.e., a container for its elements) will be, of course, an array. Therefore, a priority queue may only hold as many elements as is the size of the array. 
+A *carrier* of a priority queue (i.e., a container for its elements)
+will be, of course, an array. Therefore, a priority queue may only
+hold as many elements as is the size of the array.
 
-We introduce a small encoding tweak, which will be very helpful for accounting for the fact that the array might be not fully filled, allowing the priority queue to grow (as more elements are added to it) and shrink (as the elements are extracted). Let us add the following definitions into the body of ``PriorityQueue``::
+We introduce a small encoding tweak, which will be very helpful for
+accounting for the fact that the array might be not fully filled,
+allowing the priority queue to grow (as more elements are added to it)
+and shrink (as the elements are extracted). Let us add the following
+definitions into the body of ``PriorityQueue``::
 
 
   module COpt = struct
@@ -38,7 +52,12 @@ We introduce a small encoding tweak, which will be very helpful for accounting f
   (* Do no inline, just include *)
   open H
 
-The module ``COpt`` "lifts" the pretty-printer and the comparator of a given module ``C`` (of signature ``CompareAndPrint``), to the elements of type ``option``. Specifically, if an element is ``None``, it is strictly smaller than any ``Some``-like elements. As you can guess, the ``None`` elements will denote the "empty space" in our priority queue. 
+The module ``COpt`` "lifts" the pretty-printer and the comparator of a
+given module ``C`` (of signature ``CompareAndPrint``), to the elements
+of type ``option``. Specifically, if an element is ``None``, it is
+strictly smaller than any ``Some``-like elements. As you can guess,
+the ``None`` elements will denote the "empty space" in our priority
+queue.
 
 
 Creating Priority Queues
@@ -95,7 +114,7 @@ The next operation allows not just look at, but also extract (i.e., obtain and r
       a.(!(h.heap_size) - 1) <- None;
       h.heap_size := !(h.heap_size) - 1;
       max_heapify !(h.heap_size) h.arr 0;
-      Some max
+      max
 
 The way ``heap_extract_max`` works for a non-empty heap is by taking its maximal element, and then putting one of the smallest elements (``a.(!(h.heap_size) - 1)``) to its place, reducing the heap size and restoring the heap shape via already familiar procedure ``max_heapify`` applied to the first element in the array (which is the only heap offender after swapping). 
 
@@ -105,7 +124,7 @@ The following auxiliary function ``heap_increase_key`` is somewhat dual to ``max
     let a = h.arr in
     let c = comp key (a.(i)) >= 0 in
     if not c then (
-      Printf.printf "A new ket is smaller than current key!";
+      Printf.printf "A new key is smaller than current key!";
       assert false);
     a.(i) <- key;
     let j = ref i in
@@ -117,7 +136,8 @@ The following auxiliary function ``heap_increase_key`` is somewhat dual to ``max
 
 **Question:** What is the complexity of ``heap_increase_key``?
 
-Finally, the function ``max_heap_insert`` implements an insertion of a new element ``elem`` into a priority heap ``h``:: 
+Finally, the function ``max_heap_insert`` implements an insertion of a
+new element ``elem`` into a priority heap ``h``::
 
   let max_heap_insert h elem = 
     let hs = !(h.heap_size) in
@@ -126,9 +146,20 @@ Finally, the function ``max_heap_insert`` implements an insertion of a new eleme
     h.heap_size := hs + 1;
     heap_increase_key h hs (Some elem)
 
-It only succeeds in the case if there is still vacant space in the queue (i.e., at the end of the array), which can be determined by examining the ``heap_size`` field of ``h``. If the space permits, the limit ``heap_size`` is increased. Since we know that ``None`` used to be installed to the vacant place (which is an invariant maintained by means of ``heap_size``), we can simply install the new element ``Some elem`` (which is guaranteed to be larger than ``None`` as per our defined comparator) and let the heap rebalance using ``heap_increase_key``.
+It only succeeds in the case if there is still vacant space in the
+queue (i.e., at the end of the array), which can be determined by
+examining the ``heap_size`` field of ``h``. If the space permits, the
+limit ``heap_size`` is increased. Since we know that ``None`` used to
+be installed to the vacant place (which is an invariant maintained by
+means of ``heap_size``), we can simply install the new element ``Some
+elem`` (which is guaranteed to be larger than ``None`` as per our
+defined comparator) and let the heap rebalance using
+``heap_increase_key``.
 
-Given the complexity of ``max_heap_insert``, it is easy to show that the complexity of element insertion is :math:`O(\log n)`. This brings us to an important property of priority queues implemented by means of heaps:
+Given the complexity of ``max_heap_insert``, it is easy to show that
+the complexity of element insertion is :math:`O(\log n)`. This brings
+us to an important property of priority queues implemented by means of
+heaps:
 
 .. admonition:: Complexity of priority queue operations
 
@@ -146,7 +177,11 @@ Let us see a priority queue in action. We start by creating it from a randomly g
   module PQ = PriorityQueue(KV)
   open PQ
   
-  let q = mk_queue (generate_key_value_array 10)
+  let q = mk_queue (
+   [|(6, "egkbs"); (4, "nugab"); (4, "xcwjg");
+     (4, "oxfyr"); (4, "opdhq"); (0, "huiuv");
+     (0, "sbcnl"); (2, "gzpyp"); (4, "hymnz");
+     (2, "yxzro")|]);;
 
 Let us see what's inside::
 
@@ -171,13 +206,13 @@ We can proceed by checking the maximum::
 Let us extract several maximum elements::
 
  # heap_extract_max q;;
- - : PQ.H.t option = Some (Some (6, "egkbs"))
+ - : PQ.H.t option = Some (6, "egkbs")
  # heap_extract_max q;;
- - : PQ.H.t option = Some (Some (4, "nugab"))
+ - : PQ.H.t option = Some (4, "nugab")
  # heap_extract_max q;;
- - : PQ.H.t option = Some (Some (4, "oxfyr"))
+ - : PQ.H.t option = Some (4, "oxfyr")
  # heap_extract_max q;;
- - : PQ.H.t option = Some (Some (4, "hymnz"))
+ - : PQ.H.t option = Some (4, "hymnz")
 
 Is it still a heap?::
 
@@ -186,8 +221,8 @@ Is it still a heap?::
  {heap_size = {contents = 6};
   arr =
    [|Some (4, "opdhq"); Some (2, "yxzro"); Some (4, "xcwjg");
-     Some (0, "sbcnl"); Some (2, "gzpyp"); Some (0, "huiuv"); None; None;
-     None; None|]}
+     Some (0, "sbcnl"); Some (2, "gzpyp"); Some (0, "huiuv"); 
+     None; None; None; None|]}
  #  PQ.H.is_heap q.arr;;
  - : bool = true
 
