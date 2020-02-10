@@ -267,10 +267,7 @@ functor:</p>
   <span class="k">done</span>
 </pre></div>
 </div>
-<dl class="docutils">
-<dt><strong>Question:</strong> Why does the <code class="docutils literal notranslate"><span class="pre">for</span></code>-loop start only from <a href="#id1"><span class="problematic" id="id2">``</span></a>i =</dt>
-<dd>(len - 1) / 2``, not from <code class="docutils literal notranslate"><span class="pre">len</span> <span class="pre">-</span> <span class="pre">1</span></code>?</dd>
-</dl>
+<p><strong>Question:</strong> Why does the <code class="docutils literal notranslate"><span class="pre">for</span></code>-loop start only from <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">=</span> <span class="pre">(len</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">/</span> <span class="pre">2</span></code>, not from <code class="docutils literal notranslate"><span class="pre">len</span> <span class="pre">-</span> <span class="pre">1</span></code>?</p>
 <p>The complexity of <code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code> can be <em>over-approximated</em> by analysing the complexity of each iteration of the <code class="docutils literal notranslate"><span class="pre">while</span></code>-loop, and the number of the iteration it makes.</p>
 <p>Why does this procedure deliver a heap? This can be established by the
 following invariant, which we state in plain English (implementing it
