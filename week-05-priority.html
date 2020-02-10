@@ -1,0 +1,393 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Priority Queues &mdash; YSC2229 2020</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Priority Queues</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="priority-queues">
+<span id="id1"></span><h1>Priority Queues<a class="headerlink" href="#priority-queues" title="Permalink to this headline">¶</a></h1>
+<p>Recall our main for studying binary heaps: efficient retrieval of an element with maximal/minimal key in an array, without re-sorting it from scratch between the changes. A data structure that allows for efficient retrieval of an element with the highest/lowest key is called a <em>priority queue</em>. In this section, we will design a priority queue based on the implementation of the heaps we already have.</p>
+<p>The priority queue will be implemented by a dedicated data type and a number of operations, all residing within the following functor:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">PriorityQueue</span><span class="o">(</span><span class="nc">C</span><span class="o">:</span> <span class="nc">CompareAndPrint</span><span class="o">)</span> <span class="o">=</span> <span class="k">struct</span>
+
+  <span class="c">(* To be filled *)</span>
+
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>A <em>carrier</em> of a priority queue (i.e., a container for its elements) will be, of course, an array. Therefore, a priority queue may only hold as many elements as is the size of the array.</p>
+<p>We introduce a small encoding tweak, which will be very helpful for accounting for the fact that the array might be not fully filled, allowing the priority queue to grow (as more elements are added to it) and shrink (as the elements are extracted). Let us add the following definitions into the body of <code class="docutils literal notranslate"><span class="pre">PriorityQueue</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">COpt</span> <span class="o">=</span> <span class="k">struct</span>
+  <span class="k">type</span> <span class="n">t</span> <span class="o">=</span> <span class="nn">C</span><span class="p">.</span><span class="n">t</span> <span class="n">option</span>
+
+  <span class="k">let</span> <span class="n">comp</span> <span class="n">x</span> <span class="n">y</span> <span class="o">=</span> <span class="k">match</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">Some</span> <span class="n">a</span><span class="o">,</span> <span class="nc">Some</span> <span class="n">b</span> <span class="o">-&gt;</span> <span class="nn">C</span><span class="p">.</span><span class="n">comp</span> <span class="n">a</span> <span class="n">b</span>
+    <span class="o">|</span> <span class="nc">None</span><span class="o">,</span> <span class="nc">Some</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="o">|</span> <span class="nc">Some</span> <span class="o">_,</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="mi">1</span>
+    <span class="o">|</span> <span class="nc">None</span><span class="o">,</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="mi">0</span>
+
+  <span class="k">let</span> <span class="n">pp</span> <span class="n">x</span> <span class="o">=</span> <span class="k">match</span> <span class="n">x</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">Some</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="nn">C</span><span class="p">.</span><span class="n">pp</span> <span class="n">x</span>
+    <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="s2">&quot;None&quot;</span>
+<span class="k">end</span>
+
+<span class="k">module</span> <span class="nc">H</span> <span class="o">=</span> <span class="nc">Heaps</span><span class="o">(</span><span class="nc">COpt</span><span class="o">)</span>
+<span class="c">(* Do no inline, just include *)</span>
+<span class="k">open</span> <span class="nc">H</span>
+</pre></div>
+</div>
+<p>The module <code class="docutils literal notranslate"><span class="pre">COpt</span></code> “lifts” the pretty-printer and the comparator of a given module <code class="docutils literal notranslate"><span class="pre">C</span></code> (of signature <code class="docutils literal notranslate"><span class="pre">CompareAndPrint</span></code>), to the elements of type <code class="docutils literal notranslate"><span class="pre">option</span></code>. Specifically, if an element is <code class="docutils literal notranslate"><span class="pre">None</span></code>, it is strictly smaller than any <code class="docutils literal notranslate"><span class="pre">Some</span></code>-like elements. As you can guess, the <code class="docutils literal notranslate"><span class="pre">None</span></code> elements will denote the “empty space” in our priority queue.</p>
+<div class="section" id="creating-priority-queues">
+<h2>Creating Priority Queues<a class="headerlink" href="#creating-priority-queues" title="Permalink to this headline">¶</a></h2>
+<p>The queue is represented by an OCaml <em>record</em> of the following shape (also to be added to the module):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">heap</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="n">heap_size</span> <span class="o">:</span> <span class="kt">int</span> <span class="n">ref</span><span class="o">;</span>
+  <span class="n">arr</span> <span class="o">:</span> <span class="nn">H</span><span class="p">.</span><span class="n">t</span> <span class="kt">array</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>The records in OCaml are similar to those in C and are simply collections of named values (referred to as record <em>fields</em>). Specifically, the record type <code class="docutils literal notranslate"><span class="pre">heap</span></code> pairs the carrier array <code class="docutils literal notranslate"><span class="pre">arr</span></code> of elements of type <code class="docutils literal notranslate"><span class="pre">H.t</span></code> (i.e., <code class="docutils literal notranslate"><span class="pre">C.t</span></code> lifted to an option), and the dedicated “heap threshold” <code class="docutils literal notranslate"><span class="pre">heap_size</span></code> to determine which part of <code class="docutils literal notranslate"><span class="pre">arr</span></code> serves as a heap.</p>
+<p>The following two functions allow to create an empty priority queue of a given size, and also turn an array into a priority queue (by effectively building a heap out of it):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">mk_empty_queue</span> <span class="n">size</span> <span class="o">=</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">size</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="o">{</span><span class="n">heap_size</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">0</span><span class="o">;</span>
+   <span class="n">arr</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">size</span> <span class="nc">None</span><span class="o">}</span>
+
+<span class="c">(* Make a priority queue from an array *)</span>
+<span class="k">let</span> <span class="n">mk_queue</span> <span class="n">a</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">ls</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span> <span class="nc">Some</span> <span class="n">e</span><span class="o">)</span> <span class="o">(</span><span class="n">to_list</span> <span class="n">a</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">a&#39;</span> <span class="o">=</span> <span class="n">list_to_array</span> <span class="n">ls</span> <span class="k">in</span>
+  <span class="n">build_max_heap</span> <span class="n">a&#39;</span><span class="o">;</span>
+  <span class="o">{</span><span class="n">heap_size</span> <span class="o">=</span> <span class="n">ref</span> <span class="o">(</span><span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">a</span><span class="o">);</span>
+   <span class="n">arr</span> <span class="o">=</span> <span class="n">a&#39;</span><span class="o">}</span>
+</pre></div>
+</div>
+<p>Finally, the following construction allows to print out the contents of a priority queue by reusing the functor <code class="docutils literal notranslate"><span class="pre">ArrayPrinter</span></code> defined at the beginning of this chapter:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">P</span> <span class="o">=</span> <span class="nc">ArrayPrinter</span><span class="o">(</span><span class="nc">COpt</span><span class="o">)</span>
+
+<span class="k">let</span> <span class="n">print_heap</span> <span class="n">h</span> <span class="o">=</span>
+  <span class="nn">P</span><span class="p">.</span><span class="n">print_array</span> <span class="n">h</span><span class="o">.</span><span class="n">arr</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="operations-on-priority-queues">
+<span id="sec-pq-impl"></span><h2>Operations on Priority Queues<a class="headerlink" href="#operations-on-priority-queues" title="Permalink to this headline">¶</a></h2>
+<p>The first and the simplest operation on a priority queue <code class="docutils literal notranslate"><span class="pre">h</span></code> is to take its highest-ranked element (i.e., the one with the greatest priority, expressed by means of its key value):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">heap_maximum</span> <span class="n">h</span> <span class="o">=</span> <span class="o">(</span><span class="n">h</span><span class="o">.</span><span class="n">arr</span><span class="o">).(</span><span class="mi">0</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The next operation allows not just look at, but also extract (i.e., obtain and remove) the maximal element from the priority queue:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">heap_extract_max</span> <span class="n">h</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="o">!(</span><span class="n">h</span><span class="o">.</span><span class="n">heap_size</span><span class="o">)</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="k">then</span> <span class="nc">None</span>
+  <span class="k">else</span>
+    <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">arr</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">max</span> <span class="o">=</span> <span class="n">a</span><span class="o">.(</span><span class="mi">0</span><span class="o">)</span> <span class="k">in</span>
+    <span class="n">a</span><span class="o">.(</span><span class="mi">0</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">a</span><span class="o">.(!(</span><span class="n">h</span><span class="o">.</span><span class="n">heap_size</span><span class="o">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+    <span class="n">a</span><span class="o">.(!(</span><span class="n">h</span><span class="o">.</span><span class="n">heap_size</span><span class="o">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="nc">None</span><span class="o">;</span>
+    <span class="n">h</span><span class="o">.</span><span class="n">heap_size</span> <span class="o">:=</span> <span class="o">!(</span><span class="n">h</span><span class="o">.</span><span class="n">heap_size</span><span class="o">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="n">max_heapify</span> <span class="o">!(</span><span class="n">h</span><span class="o">.</span><span class="n">heap_size</span><span class="o">)</span> <span class="n">h</span><span class="o">.</span><span class="n">arr</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="nc">Some</span> <span class="n">max</span>
+</pre></div>
+</div>
+<p>The way <code class="docutils literal notranslate"><span class="pre">heap_extract_max</span></code> works for a non-empty heap is by taking its maximal element, and then putting one of the smallest elements (<code class="docutils literal notranslate"><span class="pre">a.(!(h.heap_size)</span> <span class="pre">-</span> <span class="pre">1)</span></code>) to its place, reducing the heap size and restoring the heap shape via already familiar procedure <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> applied to the first element in the array (which is the only heap offender after swapping).</p>
+<p>The following auxiliary function <code class="docutils literal notranslate"><span class="pre">heap_increase_key</span></code> is somewhat dual to <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code>. It inserts an element <code class="docutils literal notranslate"><span class="pre">key</span></code> into a position <code class="docutils literal notranslate"><span class="pre">i</span></code>, assuming that its key is larger than what’s currently at that position. It then restores the heap property (which might be broken if the parents in the chain are smaller) by “walking up” the chain of parents and performing swaps until the correct order is restored:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">heap_increase_key</span> <span class="n">h</span> <span class="n">i</span> <span class="n">key</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">arr</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">c</span> <span class="o">=</span> <span class="n">comp</span> <span class="n">key</span> <span class="o">(</span><span class="n">a</span><span class="o">.(</span><span class="n">i</span><span class="o">))</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">in</span>
+  <span class="k">if</span> <span class="n">not</span> <span class="n">c</span> <span class="k">then</span> <span class="o">(</span>
+    <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&quot;A new ket is smaller than current key!&quot;</span><span class="o">;</span>
+    <span class="k">assert</span> <span class="bp">false</span><span class="o">);</span>
+  <span class="n">a</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">key</span><span class="o">;</span>
+  <span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">i</span> <span class="k">in</span>
+  <span class="k">while</span> <span class="o">!</span><span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">comp</span> <span class="o">(</span><span class="n">snd</span> <span class="o">(</span><span class="nn">H</span><span class="p">.</span><span class="n">parent</span> <span class="n">a</span> <span class="o">(!</span><span class="n">j</span><span class="o">)))</span> <span class="n">a</span><span class="o">.(!</span><span class="n">j</span><span class="o">)</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="n">pj</span> <span class="o">=</span> <span class="n">fst</span> <span class="o">(</span><span class="nn">H</span><span class="p">.</span><span class="n">parent</span> <span class="n">a</span> <span class="o">(!</span><span class="n">j</span><span class="o">))</span> <span class="k">in</span>
+    <span class="n">swap</span> <span class="n">a</span> <span class="o">!</span><span class="n">j</span> <span class="n">pj</span><span class="o">;</span>
+    <span class="n">j</span> <span class="o">:=</span> <span class="n">pj</span>
+  <span class="k">done</span>
+</pre></div>
+</div>
+<p><strong>Question:</strong> What is the complexity of <code class="docutils literal notranslate"><span class="pre">heap_increase_key</span></code>?</p>
+<p>Finally, the function <code class="docutils literal notranslate"><span class="pre">max_heap_insert</span></code> implements an insertion of a new element <code class="docutils literal notranslate"><span class="pre">elem</span></code> into a priority heap <code class="docutils literal notranslate"><span class="pre">h</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">max_heap_insert</span> <span class="n">h</span> <span class="n">elem</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">hs</span> <span class="o">=</span> <span class="o">!(</span><span class="n">h</span><span class="o">.</span><span class="n">heap_size</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">if</span> <span class="n">hs</span> <span class="o">&gt;=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">h</span><span class="o">.</span><span class="n">arr</span>
+  <span class="k">then</span> <span class="k">raise</span> <span class="o">(</span><span class="nc">Failure</span> <span class="s2">&quot;Maximal heap capacity reached!&quot;</span><span class="o">);</span>
+  <span class="n">h</span><span class="o">.</span><span class="n">heap_size</span> <span class="o">:=</span> <span class="n">hs</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="n">heap_increase_key</span> <span class="n">h</span> <span class="n">hs</span> <span class="o">(</span><span class="nc">Some</span> <span class="n">elem</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>It only succeeds in the case if there is still vacant space in the queue (i.e., at the end of the array), which can be determined by examining the <code class="docutils literal notranslate"><span class="pre">heap_size</span></code> field of <code class="docutils literal notranslate"><span class="pre">h</span></code>. If the space permits, the limit <code class="docutils literal notranslate"><span class="pre">heap_size</span></code> is increased. Since we know that <code class="docutils literal notranslate"><span class="pre">None</span></code> used to be installed to the vacant place (which is an invariant maintained by means of <code class="docutils literal notranslate"><span class="pre">heap_size</span></code>), we can simply install the new element <code class="docutils literal notranslate"><span class="pre">Some</span> <span class="pre">elem</span></code> (which is guaranteed to be larger than <code class="docutils literal notranslate"><span class="pre">None</span></code> as per our defined comparator) and let the heap rebalance using <code class="docutils literal notranslate"><span class="pre">heap_increase_key</span></code>.</p>
+<p>Given the complexity of <code class="docutils literal notranslate"><span class="pre">max_heap_insert</span></code>, it is easy to show that the complexity of element insertion is <span class="math notranslate nohighlight">\(O(\log n)\)</span>. This brings us to an important property of priority queues implemented by means of heaps:</p>
+<div class="admonition-complexity-of-priority-queue-operations admonition">
+<p class="first admonition-title">Complexity of priority queue operations</p>
+<p>For a priority queue of size <span class="math notranslate nohighlight">\(n\)</span>,</p>
+<ul class="last simple">
+<li>Finding the largest element has complexity <span class="math notranslate nohighlight">\(O(1)\)</span>,</li>
+<li>Extraction of the largest element has complexity <span class="math notranslate nohighlight">\(O(\log n)\)</span>,</li>
+<li>Insertion of a new element has complexity <span class="math notranslate nohighlight">\(O(\log n)\)</span>.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="working-with-priority-queues">
+<h2>Working with Priority Queues<a class="headerlink" href="#working-with-priority-queues" title="Permalink to this headline">¶</a></h2>
+<p>Let us see a priority queue in action. We start by creating it from a randomly generated array:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">PQ</span> <span class="o">=</span> <span class="nc">PriorityQueue</span><span class="o">(</span><span class="nc">KV</span><span class="o">)</span>
+<span class="k">open</span> <span class="nc">PQ</span>
+
+<span class="k">let</span> <span class="n">q</span> <span class="o">=</span> <span class="n">mk_queue</span> <span class="o">(</span><span class="n">generate_key_value_array</span> <span class="mi">10</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Let us see what’s inside:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">q</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="nn">PQ</span><span class="p">.</span><span class="n">heap</span> <span class="o">=</span>
+<span class="o">{</span><span class="n">heap_size</span> <span class="o">=</span> <span class="o">{</span><span class="n">contents</span> <span class="o">=</span> <span class="mi">10</span><span class="o">};</span>
+ <span class="n">arr</span> <span class="o">=</span>
+  <span class="o">[|</span><span class="nc">Some</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="s2">&quot;egkbs&quot;</span><span class="o">);</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;nugab&quot;</span><span class="o">);</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;xcwjg&quot;</span><span class="o">);</span>
+    <span class="nc">Some</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;oxfyr&quot;</span><span class="o">);</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;opdhq&quot;</span><span class="o">);</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="s2">&quot;huiuv&quot;</span><span class="o">);</span>
+    <span class="nc">Some</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="s2">&quot;sbcnl&quot;</span><span class="o">);</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s2">&quot;gzpyp&quot;</span><span class="o">);</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;hymnz&quot;</span><span class="o">);</span>
+    <span class="nc">Some</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s2">&quot;yxzro&quot;</span><span class="o">)|]}</span>
+</pre></div>
+</div>
+<p>We can proceed by checking the maximum:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">heap_maximum</span> <span class="n">q</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="nn">PQ</span><span class="p">.</span><span class="nn">H</span><span class="p">.</span><span class="n">t</span> <span class="o">=</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="s2">&quot;egkbs&quot;</span><span class="o">)</span>
+
+<span class="c">(* It is indeed a heap! *)</span>
+<span class="o">#</span>  <span class="nn">PQ</span><span class="p">.</span><span class="nn">H</span><span class="p">.</span><span class="n">is_heap</span> <span class="n">q</span><span class="o">.</span><span class="n">arr</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">true</span>
+</pre></div>
+</div>
+<p>Let us extract several maximum elements:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">heap_extract_max</span> <span class="n">q</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="nn">PQ</span><span class="p">.</span><span class="nn">H</span><span class="p">.</span><span class="n">t</span> <span class="n">option</span> <span class="o">=</span> <span class="nc">Some</span> <span class="o">(</span><span class="nc">Some</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="s2">&quot;egkbs&quot;</span><span class="o">))</span>
+<span class="o">#</span> <span class="n">heap_extract_max</span> <span class="n">q</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="nn">PQ</span><span class="p">.</span><span class="nn">H</span><span class="p">.</span><span class="n">t</span> <span class="n">option</span> <span class="o">=</span> <span class="nc">Some</span> <span class="o">(</span><span class="nc">Some</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;nugab&quot;</span><span class="o">))</span>
+<span class="o">#</span> <span class="n">heap_extract_max</span> <span class="n">q</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="nn">PQ</span><span class="p">.</span><span class="nn">H</span><span class="p">.</span><span class="n">t</span> <span class="n">option</span> <span class="o">=</span> <span class="nc">Some</span> <span class="o">(</span><span class="nc">Some</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;oxfyr&quot;</span><span class="o">))</span>
+<span class="o">#</span> <span class="n">heap_extract_max</span> <span class="n">q</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="nn">PQ</span><span class="p">.</span><span class="nn">H</span><span class="p">.</span><span class="n">t</span> <span class="n">option</span> <span class="o">=</span> <span class="nc">Some</span> <span class="o">(</span><span class="nc">Some</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;hymnz&quot;</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>Is it still a heap?:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">q</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="nn">PQ</span><span class="p">.</span><span class="n">heap</span> <span class="o">=</span>
+<span class="o">{</span><span class="n">heap_size</span> <span class="o">=</span> <span class="o">{</span><span class="n">contents</span> <span class="o">=</span> <span class="mi">6</span><span class="o">};</span>
+ <span class="n">arr</span> <span class="o">=</span>
+  <span class="o">[|</span><span class="nc">Some</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;opdhq&quot;</span><span class="o">);</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s2">&quot;yxzro&quot;</span><span class="o">);</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;xcwjg&quot;</span><span class="o">);</span>
+    <span class="nc">Some</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="s2">&quot;sbcnl&quot;</span><span class="o">);</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s2">&quot;gzpyp&quot;</span><span class="o">);</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="s2">&quot;huiuv&quot;</span><span class="o">);</span> <span class="nc">None</span><span class="o">;</span> <span class="nc">None</span><span class="o">;</span>
+    <span class="nc">None</span><span class="o">;</span> <span class="nc">None</span><span class="o">|]}</span>
+<span class="o">#</span>  <span class="nn">PQ</span><span class="p">.</span><span class="nn">H</span><span class="p">.</span><span class="n">is_heap</span> <span class="n">q</span><span class="o">.</span><span class="n">arr</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">true</span>
+</pre></div>
+</div>
+<p>Finally, let us insert a new element and check whether it is still a heap:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">max_heap_insert</span> <span class="n">q</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;abcde&quot;</span><span class="o">);;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
+<span class="o">#</span> <span class="n">q</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="nn">PQ</span><span class="p">.</span><span class="n">heap</span> <span class="o">=</span>
+<span class="o">{</span><span class="n">heap_size</span> <span class="o">=</span> <span class="o">{</span><span class="n">contents</span> <span class="o">=</span> <span class="mi">7</span><span class="o">};</span>
+ <span class="n">arr</span> <span class="o">=</span>
+  <span class="o">[|</span><span class="nc">Some</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;abcde&quot;</span><span class="o">);</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s2">&quot;yxzro&quot;</span><span class="o">);</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;opdhq&quot;</span><span class="o">);</span>
+    <span class="nc">Some</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="s2">&quot;sbcnl&quot;</span><span class="o">);</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s2">&quot;gzpyp&quot;</span><span class="o">);</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="s2">&quot;huiuv&quot;</span><span class="o">);</span>
+    <span class="nc">Some</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;xcwjg&quot;</span><span class="o">);</span> <span class="nc">None</span><span class="o">;</span> <span class="nc">None</span><span class="o">;</span> <span class="nc">None</span><span class="o">|]}</span>
+<span class="o">#</span> <span class="n">heap_maximum</span> <span class="n">q</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="nn">PQ</span><span class="p">.</span><span class="nn">H</span><span class="p">.</span><span class="n">t</span> <span class="o">=</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;abcde&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
