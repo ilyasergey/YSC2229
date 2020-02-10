@@ -1,7 +1,7 @@
 .. -*- mode: rst -*-
 
-YSC2229 Lecture Notes, Week 05
-==============================
+Week 05: Binary Heaps and Priority Queues
+=========================================
 
 .. toctree::
 

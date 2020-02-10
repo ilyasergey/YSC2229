@@ -35,7 +35,7 @@ Week 05
     * Printing and Validating Generic Arrays
     * Binary Heaps
     * Maintaining Binary Heaps
-    * Heapsort and  Priority Queues
+    * Heapsort and Priority Queues
 
 Week 06
     * Abstract Data Types

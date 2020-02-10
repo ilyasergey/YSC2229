@@ -101,7 +101,7 @@ Assume this holds for some :math:`c` and :math:`n_0`, then:
  \implies & 
  1 \leq c \cdot n,~\text{for all}~n \geq n_0 \\
  \implies & 
- n > \frac{1}{c},~\text{for all}~n \geq n_0 \\
+ n \geq \frac{1}{c},~\text{for all}~n \geq n_0 \\
  \end{align*} 
 
 As this clearly holds for :math:`n_0 = 2` and :math:`c = 1`, we may conclude that :math:`n^2 \in O(n^3)`. 
