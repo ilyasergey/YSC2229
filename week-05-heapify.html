@@ -147,15 +147,25 @@
             
   <div class="section" id="maintaining-binary-heaps">
 <h1>Maintaining Binary Heaps<a class="headerlink" href="#maintaining-binary-heaps" title="Permalink to this headline">¶</a></h1>
-<p>Let us now fix the broken heap <code class="docutils literal notranslate"><span class="pre">bad_heap</span></code> by restoring an order in it. As we can see, the issue there is between the parent <code class="docutils literal notranslate"><span class="pre">(10,</span> <span class="pre">&quot;c&quot;)</span></code> and a left child <code class="docutils literal notranslate"><span class="pre">(11,</span> <span class="pre">&quot;f&quot;)</span></code> that are out of order.</p>
+<ul class="simple">
+<li>File: <code class="docutils literal notranslate"><span class="pre">Heaps.ml</span></code> (continued)</li>
+</ul>
+<p>Let us now fix the broken heap <code class="docutils literal notranslate"><span class="pre">bad_heap</span></code> by restoring an order in
+it. As we can see, the issue there is between the parent <code class="docutils literal notranslate"><span class="pre">(10,</span> <span class="pre">&quot;c&quot;)</span></code>
+and a left child <code class="docutils literal notranslate"><span class="pre">(11,</span> <span class="pre">&quot;f&quot;)</span></code> that are out of order.</p>
 <div class="section" id="heapifying-elements-of-an-array">
 <h2>“Heapifying” elements of an array<a class="headerlink" href="#heapifying-elements-of-an-array" title="Permalink to this headline">¶</a></h2>
-<p>What we need to do is to swap them (assuming that both subtrees reachable from the children obey the descending order), and also make sure that the swapped element <code class="docutils literal notranslate"><span class="pre">(10,</span> <span class="pre">&quot;c&quot;)</span></code> “sinks down”, finding its correct position in a reachable subtree. This procedure of “sinking” is what is implemented by the most important heap-manipulating function shown below:</p>
+<p>What we need to do is to swap the offending parent with the children
+(assuming that both subtrees reachable from the children obey the
+descending order), and also make sure that the swapped element <code class="docutils literal notranslate"><span class="pre">(10,</span>
+<span class="pre">&quot;c&quot;)</span></code> “sinks down”, finding its correct position in a reachable
+subtree. This procedure of “sinking” is what is implemented by the
+most important heap-manipulating function shown below:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* 3. Restoring the heap property for an element i *)</span>
 <span class="k">let</span> <span class="k">rec</span> <span class="n">max_heapify</span> <span class="n">heap_size</span> <span class="n">arr</span> <span class="n">i</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
   <span class="k">assert</span> <span class="o">(</span><span class="n">heap_size</span> <span class="o">&lt;=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span><span class="o">);</span>
-  <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="o">(</span><span class="n">len</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="k">then</span> <span class="bp">()</span>
+  <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="o">(</span><span class="n">len</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">||</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">heap_size</span> <span class="k">then</span> <span class="bp">()</span>
   <span class="k">else</span>
     <span class="k">let</span> <span class="n">ai</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="k">in</span>
     <span class="k">let</span> <span class="n">largest</span> <span class="o">=</span> <span class="n">ref</span> <span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">arr</span><span class="o">.(</span><span class="n">i</span><span class="o">))</span> <span class="k">in</span>
@@ -167,7 +177,6 @@
        <span class="n">comp</span> <span class="o">(</span><span class="n">snd</span> <span class="o">(</span><span class="n">get_exn</span> <span class="n">l</span><span class="o">))</span> <span class="o">(</span><span class="n">snd</span> <span class="o">!</span><span class="n">largest</span><span class="o">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
     <span class="k">then</span> <span class="n">largest</span> <span class="o">:=</span> <span class="n">get_exn</span> <span class="n">l</span><span class="o">;</span>
 
-
     <span class="c">(* May be the right child is even bigger? *)</span>
     <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="n">right</span> <span class="n">arr</span> <span class="n">i</span> <span class="k">in</span>
     <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;&gt;</span> <span class="nc">None</span> <span class="o">&amp;&amp;</span>
@@ -175,34 +184,55 @@
        <span class="n">comp</span> <span class="o">(</span><span class="n">snd</span> <span class="o">(</span><span class="n">get_exn</span> <span class="n">r</span><span class="o">))</span> <span class="o">(</span><span class="n">snd</span> <span class="o">!</span><span class="n">largest</span><span class="o">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
     <span class="k">then</span> <span class="n">largest</span> <span class="o">:=</span> <span class="n">get_exn</span> <span class="n">r</span><span class="o">;</span>
 
-
     <span class="k">if</span> <span class="o">!</span><span class="n">largest</span> <span class="o">&lt;&gt;</span> <span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">ai</span><span class="o">)</span>
     <span class="c">(* Okay, there is a necessity to progress further... *)</span>
-    <span class="k">then</span>
-       <span class="o">(</span><span class="n">swap</span> <span class="n">arr</span> <span class="n">i</span> <span class="o">(</span><span class="n">fst</span> <span class="o">!</span><span class="n">largest</span><span class="o">);</span>
-        <span class="n">max_heapify</span> <span class="n">heap_size</span> <span class="n">arr</span> <span class="o">(</span><span class="n">fst</span> <span class="o">!</span><span class="n">largest</span><span class="o">))</span>
+    <span class="k">then</span> <span class="k">begin</span>
+      <span class="n">swap</span> <span class="n">arr</span> <span class="n">i</span> <span class="o">(</span><span class="n">fst</span> <span class="o">!</span><span class="n">largest</span><span class="o">);</span>
+      <span class="n">max_heapify</span> <span class="n">heap_size</span> <span class="n">arr</span> <span class="o">(</span><span class="n">fst</span> <span class="o">!</span><span class="n">largest</span><span class="o">)</span>
+    <span class="k">end</span>
 </pre></div>
 </div>
-<p>The implementation of <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> deserves som attention. It takes three arguments, an integer <code class="docutils literal notranslate"><span class="pre">heap_size</span></code> (whose role will be explained shortly), and array <code class="docutils literal notranslate"><span class="pre">arr</span></code> representing the heap, and an index <code class="docutils literal notranslate"><span class="pre">i</span></code> of a parent element of an offending triple.</p>
-<p>The <code class="docutils literal notranslate"><span class="pre">heap_size</span></code> serves the purpose of “limiting the scope” of a heap in an array and is always assumed to be less or equal than the array size. The reason why one might need it is because in some applications (as we will soon see), it is convenient to consider only a certain prefix of an array as a heap (and, thus obeying the heap definition), while the remaining suffix does not to be a part of it. One can, therefore, think of  <code class="docutils literal notranslate"><span class="pre">heap_size</span></code> as of a “separator” between the heap-y and a non-heapy parts of an array.</p>
-<p>The body of <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> is rather straightforward. It first assumes that the element at the position <code class="docutils literal notranslate"><span class="pre">arr.(i)</span></code> is the largest one. It then triese to retrieve its both children (if those are within the array size and heap size ranges), and determine the largest of them. If such one is present, it becomes the new parent, swapping with previous one. However, such a swap might have broken the heap-property in one of the subtrees, so the procedure needs to be repeated. Hence, the operation happens recursively for the new child (which used to be a parent, and now, after the swap, resides at the position <code class="docutils literal notranslate"><span class="pre">!larger</span></code>).</p>
+<p>The implementation of <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> deserves some attention, as it
+is not entirely trivial. It takes three arguments, an integer
+<code class="docutils literal notranslate"><span class="pre">heap_size</span></code> (whose role will be explained shortly), and array
+<code class="docutils literal notranslate"><span class="pre">arr</span></code> representing the heap, and an index <code class="docutils literal notranslate"><span class="pre">i</span></code> of a parent element
+of an offending triple.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">heap_size</span></code> serves the purpose of “limiting the scope” of a heap
+in an array and is always assumed to be less or equal than the array
+size. The reason why one might need it is because in some applications
+(as we will soon see), it is convenient to consider only a certain
+prefix of an array as a heap (and, thus obeying the heap definition),
+while the remaining suffix does not to be a part of it. One can,
+therefore, think of <code class="docutils literal notranslate"><span class="pre">heap_size</span></code> as of a “separator” between the
+heap-y and a non-heapy parts of an array.</p>
+<p>The body of <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> is rather straightforward. It first
+assumes that the element at the position <code class="docutils literal notranslate"><span class="pre">arr.(i)</span></code> is the largest
+one. It then tries to retrieve its both children (if those are within
+the array size and heap size ranges), and determine the largest of
+them. If such one is present, it becomes the new parent, swapping with
+previous one. However, such a swap might have broken the heap-property
+in one of the subtrees, so the procedure needs to be repeated. Hence,
+the operation happens recursively for the new child (which used to be
+a parent, and now, after the swap, resides at the position
+<code class="docutils literal notranslate"><span class="pre">!larger</span></code>).</p>
 <p><strong>Question:</strong> Why does <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> terminate?</p>
 <p>Let us now restore the heap using the <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> procedure:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">bad_heap</span> <span class="o">=</span>
-  <span class="o">[|(</span><span class="mi">16</span><span class="o">,</span> <span class="s2">&quot;a&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">14</span><span class="o">,</span> <span class="s2">&quot;b&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="s2">&quot;c&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="s2">&quot;d&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;e&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">11</span><span class="o">,</span> <span class="s2">&quot;f&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;g&quot;</span><span class="o">);</span>
-    <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s2">&quot;h&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;i&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s2">&quot;j&quot;</span><span class="o">)|]</span>
+   <span class="o">[|(</span><span class="mi">16</span><span class="o">,</span> <span class="s2">&quot;a&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">14</span><span class="o">,</span> <span class="s2">&quot;b&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">9</span><span class="o">,</span> <span class="s2">&quot;c&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="s2">&quot;d&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;e&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">11</span><span class="o">,</span> <span class="s2">&quot;f&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;g&quot;</span><span class="o">);</span>
+   <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s2">&quot;h&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;i&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s2">&quot;j&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s2">&quot;k&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="s2">&quot;l&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="s2">&quot;m&quot;</span><span class="o">)|];;</span>
 
+<span class="o">#</span> <span class="k">open</span> <span class="nc">KVHeaps</span><span class="o">;;</span>
 <span class="o">#</span> <span class="n">is_heap</span> <span class="n">bad_heap</span><span class="o">;;</span>
 <span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">false</span>
 
 <span class="o">#</span> <span class="n">is_heap_print</span> <span class="o">~</span><span class="n">print</span><span class="o">:</span><span class="bp">true</span> <span class="n">bad_heap</span><span class="o">;;</span>
 <span class="nc">Out</span><span class="o">-</span><span class="k">of</span><span class="o">-</span><span class="n">order</span> <span class="n">elements</span><span class="o">:</span>
-<span class="nc">Parent</span><span class="o">:</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="n">c</span><span class="o">))</span>
+<span class="nc">Parent</span><span class="o">:</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="o">(</span><span class="mi">9</span><span class="o">,</span> <span class="n">c</span><span class="o">))</span>
 <span class="nc">Left</span><span class="o">:</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="o">(</span><span class="mi">11</span><span class="o">,</span> <span class="n">f</span><span class="o">))</span>
 <span class="nc">Right</span><span class="o">:</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">g</span><span class="o">))</span>
 <span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">false</span>
 
-<span class="o">#</span> <span class="n">max_heapify</span> <span class="mi">10</span> <span class="n">bad_heap</span> <span class="mi">2</span><span class="o">;;</span>
+<span class="o">#</span> <span class="n">max_heapify</span> <span class="mi">13</span> <span class="n">bad_heap</span> <span class="mi">2</span><span class="o">;;</span>
 <span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
 
 <span class="o">#</span> <span class="n">is_heap_print</span> <span class="o">~</span><span class="n">print</span><span class="o">:</span><span class="bp">true</span> <span class="n">bad_heap</span><span class="o">;;</span>
@@ -210,33 +240,46 @@
 
 <span class="o">#</span> <span class="n">bad_heap</span><span class="o">;;</span>
 <span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="kt">array</span> <span class="o">=</span>
-<span class="o">[|(</span><span class="mi">16</span><span class="o">,</span> <span class="s2">&quot;a&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">14</span><span class="o">,</span> <span class="s2">&quot;b&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">11</span><span class="o">,</span> <span class="s2">&quot;f&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="s2">&quot;d&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;e&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="s2">&quot;c&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;g&quot;</span><span class="o">);</span>
-  <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s2">&quot;h&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;i&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s2">&quot;j&quot;</span><span class="o">)|]</span>
+<span class="o">[|(</span><span class="mi">16</span><span class="o">,</span> <span class="s2">&quot;a&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">14</span><span class="o">,</span> <span class="s2">&quot;b&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">11</span><span class="o">,</span> <span class="s2">&quot;f&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="s2">&quot;d&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;e&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="s2">&quot;l&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;g&quot;</span><span class="o">);</span>
+  <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s2">&quot;h&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;i&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s2">&quot;j&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s2">&quot;k&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">9</span><span class="o">,</span> <span class="s2">&quot;c&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="s2">&quot;m&quot;</span><span class="o">)|]</span>
 </pre></div>
 </div>
 <p>As we can observe the two elements have now been correctly swapped.</p>
 </div>
 <div class="section" id="complexity-of-heapify">
 <h2>Complexity of heapify<a class="headerlink" href="#complexity-of-heapify" title="Permalink to this headline">¶</a></h2>
-<p>The maximal number of steps required to reach a child in a tree is called a <em>height</em> of a tree.  Notice that the way <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> “walks” and array is by taking left/right child of an element. This way, it will make at most <span class="math notranslate nohighlight">\(\log_2 n\)</span> steps (which is the height of a heap). That is, the <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> procedure will terminate very quickly.</p>
+<p>The maximal number of steps required to reach a child in a tree is
+called a <em>height</em> of a tree. Notice that the way <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code>
+“walks” and array is by taking left/right child of an element. This
+way, it will make at most <span class="math notranslate nohighlight">\(\log_2 n\)</span> steps (which is the height
+of a heap). That is, the <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> procedure will terminate very
+quickly.</p>
 </div>
 <div class="section" id="building-a-heap-from-an-array">
 <span id="sec-build-heap"></span><h2>Building a heap from an array<a class="headerlink" href="#building-a-heap-from-an-array" title="Permalink to this headline">¶</a></h2>
-<p>We can now use <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> iteratively to turn an arbitrary array into a max-heap. The following code should be added to the <code class="docutils literal notranslate"><span class="pre">Heap</span></code> functor:</p>
-<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* 4: building a heap from an array *)</span>
-<span class="k">let</span> <span class="n">build_max_heap</span> <span class="n">arr</span> <span class="o">=</span>
+<p>We can now use <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> iteratively to turn an arbitrary array
+into a max-heap. The following code should be added to the <code class="docutils literal notranslate"><span class="pre">Heap</span></code>
+functor:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">build_max_heap</span> <span class="n">arr</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
   <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="o">(</span><span class="n">len</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="k">downto</span> <span class="mi">0</span> <span class="k">do</span>
     <span class="n">max_heapify</span> <span class="n">len</span> <span class="n">arr</span> <span class="n">i</span>
   <span class="k">done</span>
 </pre></div>
 </div>
-<p><strong>Question:</strong> Why does the <code class="docutils literal notranslate"><span class="pre">for</span></code>-loop start only from <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">=</span> <span class="pre">(len</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">/</span> <span class="pre">2</span></code>, not from <code class="docutils literal notranslate"><span class="pre">len</span> <span class="pre">-</span> <span class="pre">1</span></code>?</p>
+<dl class="docutils">
+<dt><strong>Question:</strong> Why does the <code class="docutils literal notranslate"><span class="pre">for</span></code>-loop start only from <a href="#id1"><span class="problematic" id="id2">``</span></a>i =</dt>
+<dd>(len - 1) / 2``, not from <code class="docutils literal notranslate"><span class="pre">len</span> <span class="pre">-</span> <span class="pre">1</span></code>?</dd>
+</dl>
 <p>The complexity of <code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code> can be <em>over-approximated</em> by analysing the complexity of each iteration of the <code class="docutils literal notranslate"><span class="pre">while</span></code>-loop, and the number of the iteration it makes.</p>
-<p>Why does this procedure deliver a heap? This can be established by the following invariant, which we state in plain English (implementing it is a home exercise):</p>
+<p>Why does this procedure deliver a heap? This can be established by the
+following invariant, which we state in plain English (implementing it
+is a home exercise):</p>
 <div class="admonition-invariant admonition">
 <p class="first admonition-title">Invariant</p>
-<p class="last">At the start of each iteration of the <code class="docutils literal notranslate"><span class="pre">for</span></code>-loop in <code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code>, each node <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">+</span> <span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">+</span> <span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">len</span> <span class="pre">-</span> <span class="pre">1</span></code> is a root of a max-heap.</p>
+<p class="last">At the start of each iteration of the <code class="docutils literal notranslate"><span class="pre">for</span></code>-loop in
+<code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code>, each node <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">+</span> <span class="pre">1</span></code>, <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">+</span> <span class="pre">2</span></code>, <code class="docutils literal notranslate"><span class="pre">len</span> <span class="pre">-</span> <span class="pre">1</span></code> is a
+root of a max-heap.</p>
 </div>
 <p><strong>Question:</strong> Why does this invariant holds for the elements from the second half of the array?</p>
 <p><strong>Question:</strong> What happens if we start building the heap from the beginning of the array, moving right. How correctness and performance will be affected? Justify your answer by talking about loop invariants.</p>
@@ -245,7 +288,7 @@
 <span class="k">val</span> <span class="n">a</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="kt">array</span> <span class="o">=</span>
   <span class="o">[|(</span><span class="mi">6</span><span class="o">,</span> <span class="s2">&quot;ktesl&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">9</span><span class="o">,</span> <span class="s2">&quot;herli&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;etqiz&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;wrnqu&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;ceojd&quot;</span><span class="o">);</span>
     <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s2">&quot;cklpw&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s2">&quot;mvcme&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;uowmp&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="s2">&quot;yeuzq&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;yuzdw&quot;</span><span class="o">)|]</span>
-<span class="o">#</span> <span class="n">build_max_heap</span> <span class="n">a</span><span class="o">;;</span>
+<span class="o">#</span> <span class="nn">KVHeaps</span><span class="p">.</span><span class="n">build_max_heap</span> <span class="n">a</span><span class="o">;;</span>
 <span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
 <span class="o">#</span> <span class="n">a</span><span class="o">;;</span>
 <span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="kt">array</span> <span class="o">=</span>

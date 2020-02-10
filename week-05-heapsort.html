@@ -147,8 +147,22 @@
             
   <div class="section" id="heapsort">
 <h1>Heapsort<a class="headerlink" href="#heapsort" title="Permalink to this headline">¶</a></h1>
-<p>Let us now exploit the ability of a max-heap to always keep the element with the largest key at the beggining, as well as being able to restore a heap from an “almost-heap” (i.e., the one that only has one offending triple) in <span class="math notranslate nohighlight">\(\Theta(n \log n)\)</span>, for construct a very efficient sorting algorithm — Heapsort.</p>
-<p>Heapsort starts by turning an arbitrary array into a max-heap (by means of <cite>build_max_heap</cite>). It then repeatedly takes the first element and swaps it with the “working” element in the tail, building a sorted array backwards. After each swap, it shifts the “front” of what is considered to be a heap (i.e., the mentioned above <code class="docutils literal notranslate"><span class="pre">heap_size</span></code>), and what is an already sorted array suffix, and restores the heap structure up to this front. The following code the final addition to the <code class="docutils literal notranslate"><span class="pre">Heaps</span></code> functor:</p>
+<ul class="simple">
+<li>File: <code class="docutils literal notranslate"><span class="pre">Heaps.ml</span></code> (continued)</li>
+</ul>
+<p>Let us now exploit the ability of a max-heap to always keep the
+element with the largest key at the beginning, as well as being able
+to restore a heap from an “almost-heap” (i.e., the one that only has
+one offending triple) in <span class="math notranslate nohighlight">\(\Theta(n \log n)\)</span>, for construct a
+very efficient sorting algorithm — Heapsort.</p>
+<p>Heapsort starts by turning an arbitrary array into a max-heap (by
+means of <code class="docutils literal notranslate"><span class="pre">build_max_heap</span></code>). It then repeatedly takes the first
+element and swaps it with the “working” element in the tail, building
+a sorted array backwards. After each swap, it shifts the “front” of
+what is considered to be a heap (i.e., the mentioned above
+<code class="docutils literal notranslate"><span class="pre">heap_size</span></code>), and what is an already sorted array suffix, and
+restores the heap structure up to this front. The following code the
+final addition to the <code class="docutils literal notranslate"><span class="pre">Heaps</span></code> functor:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">heapsort</span> <span class="n">arr</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
   <span class="k">let</span> <span class="n">heap_size</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">len</span> <span class="k">in</span>
@@ -162,7 +176,11 @@
 </div>
 <div class="section" id="heapsort-complexity">
 <h2>Heapsort Complexity<a class="headerlink" href="#heapsort-complexity" title="Permalink to this headline">¶</a></h2>
-<p>The main bulk of complexity is taken by <code class="docutils literal notranslate"><span class="pre">build_max_heap</span> <span class="pre">arr</span></code> (which results in <span class="math notranslate nohighlight">\(O(n \log n)\)</span>) and in running the loop. Since the loop runs <span class="math notranslate nohighlight">\(n/2\)</span> iteration, and each reconstruction of the tree takes <span class="math notranslate nohighlight">\(O(\log n)\)</span> swaps, the overall complexity of Heapsort is <span class="math notranslate nohighlight">\(O(n \log n)\)</span>.</p>
+<p>The main bulk of complexity is taken by <code class="docutils literal notranslate"><span class="pre">build_max_heap</span> <span class="pre">arr</span></code> (which
+results in <span class="math notranslate nohighlight">\(O(n \log n)\)</span>) and in running the loop. Since the
+loop runs <span class="math notranslate nohighlight">\(n/2\)</span> iteration, and each reconstruction of the tree
+takes <span class="math notranslate nohighlight">\(O(\log n)\)</span> swaps, the overall complexity of Heapsort is
+<span class="math notranslate nohighlight">\(O(n \log n)\)</span>.</p>
 </div>
 <div class="section" id="evaluating-heapsort">
 <h2>Evaluating Heapsort<a class="headerlink" href="#evaluating-heapsort" title="Permalink to this headline">¶</a></h2>
@@ -183,8 +201,14 @@
 </div>
 <div class="section" id="which-sorting-algorithm-to-choose">
 <h2>Which sorting algorithm to choose?<a class="headerlink" href="#which-sorting-algorithm-to-choose" title="Permalink to this headline">¶</a></h2>
-<p>By now we have seen three linearithmic sorting algorithms: merge sort, Quicksort and Heapsort. The first two achieve efficiency via divide-and-conquer strategy (structuring the computations in a tree). The last one exploits the properties of a maintained data structures (i.e., a heap), which also coincidentally turns out to be a tree.</p>
-<p>It would be interesting to compare the relative performance of the three implementations we have, by running them on three copies of the same array:</p>
+<p>By now we have seen three linearithmic sorting algorithms: merge sort,
+Quicksort and Heapsort. The first two achieve efficiency via
+divide-and-conquer strategy (structuring the computations in a tree).
+The last one exploits the properties of a maintained data structures
+(i.e., a heap), which also coincidentally turns out to be a tree.</p>
+<p>It would be interesting to compare the relative performance of the
+three implementations we have, by running them on three copies of the
+same array:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="n">generate_key_value_array</span> <span class="mi">100000</span>
 <span class="k">let</span> <span class="n">y</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">copy</span> <span class="n">x</span>
 <span class="k">let</span> <span class="n">z</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">copy</span> <span class="n">x</span>
@@ -204,7 +228,8 @@
 <span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
 </pre></div>
 </div>
-<p>We can repeat an experiment on a larget array:</p>
+<p>We can repeat an experiment on a larger array (e.g., <span class="math notranslate nohighlight">\(10^6\)</span>
+elements):</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">time</span> <span class="n">heapsort</span> <span class="n">x</span><span class="o">;;</span>
 <span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">6</span><span class="o">.</span><span class="mi">943117</span> <span class="n">sec</span>
 <span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
@@ -216,9 +241,17 @@
 <span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
 </pre></div>
 </div>
-<p>As we can see, the relative performance of the three algorithms remains the same, with our implementation of <code class="docutils literal notranslate"><span class="pre">heapsort</span></code> being about 3.5 slower than both <code class="docutils literal notranslate"><span class="pre">quicksort</span></code> and <code class="docutils literal notranslate"><span class="pre">merge_sort</span></code>.</p>
-<p>The reason why <code class="docutils literal notranslate"><span class="pre">quicksort</span></code> beats <code class="docutils literal notranslate"><span class="pre">heapsort</span></code> by a constant factor is because is almost doesn’t perform “unnecessary” element swapping, which is time consuming. In contrast, even if all of the array is already ordered, <code class="docutils literal notranslate"><span class="pre">heapsort</span></code> is going to swap all of them in order to make a heap structure.</p>
-<p>However, on an almost-sorted array, <code class="docutils literal notranslate"><span class="pre">heapsort</span></code> will perform significantly better than <code class="docutils literal notranslate"><span class="pre">quicksort</span></code> and, unlike <code class="docutils literal notranslate"><span class="pre">merge_sort</span></code>, it won’t require extra memory:</p>
+<p>As we can see, the relative performance of the three algorithms
+remains the same, with our implementation of <code class="docutils literal notranslate"><span class="pre">heapsort</span></code> being about
+3.5 slower than both <code class="docutils literal notranslate"><span class="pre">quicksort</span></code> and <code class="docutils literal notranslate"><span class="pre">merge_sort</span></code>.</p>
+<p>The reason why <code class="docutils literal notranslate"><span class="pre">quicksort</span></code> beats <code class="docutils literal notranslate"><span class="pre">heapsort</span></code> by a constant factor
+is because is almost doesn’t perform “unnecessary” element swapping,
+which is time consuming. In contrast, even if all of the array is
+already ordered, <code class="docutils literal notranslate"><span class="pre">heapsort</span></code> is going to swap all of them in order to
+make a heap structure.</p>
+<p>However, on an almost-sorted array, <code class="docutils literal notranslate"><span class="pre">heapsort</span></code> will perform
+significantly better than <code class="docutils literal notranslate"><span class="pre">quicksort</span></code> and, unlike <code class="docutils literal notranslate"><span class="pre">merge_sort</span></code>, it
+will not require extra memory:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="n">generate_key_value_array</span> <span class="mi">10000</span><span class="o">;;</span>
 <span class="o">...</span>
 <span class="o">#</span> <span class="n">time</span> <span class="n">quicksort</span> <span class="n">x</span><span class="o">;;</span>

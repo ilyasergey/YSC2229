@@ -16,7 +16,7 @@ Introductory Data Structures and Algorithms
    week-02
    week-03	 
    week-04	 
-..    week-05
+..   week-05
 
 ..   YSC2229-lecture-notes-week-06
 ..   YSC2229-midterm-tasks
@@ -56,7 +56,7 @@ Textbooks
    <https://mitpress.mit.edu/books/introduction-algorithms-third-edition>`_
    by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and
    Clifford Stein
-2. (Optional `Algorithms, 4th edition
+2. (Optional) `Algorithms, 4th edition
    <https://algs4.cs.princeton.edu/home/>`_
    by Robert Sedgewick and Kevin Wayne.
    `This book is has some good in-depth examples of basic algorithms.`
