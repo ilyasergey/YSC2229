@@ -3,12 +3,21 @@
 Maintaining Binary Heaps
 ========================
 
-Let us now fix the broken heap ``bad_heap`` by restoring an order in it. As we can see, the issue there is between the parent ``(10, "c")`` and a left child ``(11, "f")`` that are out of order. 
+* File: ``Heaps.ml`` (continued)
+
+Let us now fix the broken heap ``bad_heap`` by restoring an order in
+it. As we can see, the issue there is between the parent ``(10, "c")``
+and a left child ``(11, "f")`` that are out of order.
 
 "Heapifying" elements of an array
 ---------------------------------
 
-What we need to do is to swap them (assuming that both subtrees reachable from the children obey the descending order), and also make sure that the swapped element ``(10, "c")`` "sinks down", finding its correct position in a reachable subtree. This procedure of "sinking" is what is implemented by the most important heap-manipulating function shown below::
+What we need to do is to swap them (assuming that both subtrees
+reachable from the children obey the descending order), and also make
+sure that the swapped element ``(10, "c")`` "sinks down", finding its
+correct position in a reachable subtree. This procedure of "sinking"
+is what is implemented by the most important heap-manipulating
+function shown below::
 
   (* 3. Restoring the heap property for an element i *)
   let rec max_heapify heap_size arr i = 
@@ -41,11 +50,30 @@ What we need to do is to swap them (assuming that both subtrees reachable from t
          (swap arr i (fst !largest); 
           max_heapify heap_size arr (fst !largest))
 
-The implementation of ``max_heapify`` deserves som attention. It takes three arguments, an integer ``heap_size`` (whose role will be explained shortly), and array ``arr`` representing the heap, and an index ``i`` of a parent element of an offending triple. 
+The implementation of ``max_heapify`` deserves som attention. It takes
+three arguments, an integer ``heap_size`` (whose role will be
+explained shortly), and array ``arr`` representing the heap, and an
+index ``i`` of a parent element of an offending triple.
 
-The ``heap_size`` serves the purpose of "limiting the scope" of a heap in an array and is always assumed to be less or equal than the array size. The reason why one might need it is because in some applications (as we will soon see), it is convenient to consider only a certain prefix of an array as a heap (and, thus obeying the heap definition), while the remaining suffix does not to be a part of it. One can, therefore, think of  ``heap_size`` as of a "separator" between the heap-y and a non-heapy parts of an array.
+The ``heap_size`` serves the purpose of "limiting the scope" of a heap
+in an array and is always assumed to be less or equal than the array
+size. The reason why one might need it is because in some applications
+(as we will soon see), it is convenient to consider only a certain
+prefix of an array as a heap (and, thus obeying the heap definition),
+while the remaining suffix does not to be a part of it. One can,
+therefore, think of ``heap_size`` as of a "separator" between the
+heap-y and a non-heapy parts of an array.
 
-The body of ``max_heapify`` is rather straightforward. It first assumes that the element at the position ``arr.(i)`` is the largest one. It then triese to retrieve its both children (if those are within the array size and heap size ranges), and determine the largest of them. If such one is present, it becomes the new parent, swapping with previous one. However, such a swap might have broken the heap-property in one of the subtrees, so the procedure needs to be repeated. Hence, the operation happens recursively for the new child (which used to be a parent, and now, after the swap, resides at the position ``!larger``).
+The body of ``max_heapify`` is rather straightforward. It first
+assumes that the element at the position ``arr.(i)`` is the largest
+one. It then triese to retrieve its both children (if those are within
+the array size and heap size ranges), and determine the largest of
+them. If such one is present, it becomes the new parent, swapping with
+previous one. However, such a swap might have broken the heap-property
+in one of the subtrees, so the procedure needs to be repeated. Hence,
+the operation happens recursively for the new child (which used to be
+a parent, and now, after the swap, resides at the position
+``!larger``).
 
 **Question:** Why does ``max_heapify`` terminate?
 
