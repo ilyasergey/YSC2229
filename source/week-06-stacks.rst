@@ -42,8 +42,8 @@ only vocabulary for doing so. Specifically:
   the stack is empty. The stack is then modified, so this element is
   removed.
 
-Unlike OCaml list, is an *mutable* structure. This means each
-"effectful" operation of it, such as push or pop, changes its
+Unlike OCaml list, is a *mutable* structure. This means each
+"effectful" operation of it, such as ``push`` or ``pop``, changes its
 contents, rather than returns a new copy, the result type of ``push``
 is ``unit``. Both ``push`` and ``pop``, thus, modify the stack
 contents, in addition to returning a result (in the case of ``pop``).
@@ -52,7 +52,9 @@ contents, in addition to returning a result (in the case of ``pop``).
 An List-Based Stack
 -------------------
 
-Our first concrete implementation of a stack ADT exploits the fact that OCaml lists behave precisely like stacks, so we can build the following implementation almost effortlessly::
+Our first concrete implementation of a stack ADT exploits the fact
+that OCaml lists behave precisely like stacks, so we can build the
+following implementation almost effortlessly::
 
  module ListBasedStack : AbstractStack = struct
      type 'e t = 'e list ref
@@ -75,17 +77,19 @@ module we can use the properties of this concrete data type (i.e.,
 dereference it and work with it as with an OCaml list). Notice also
 that the concrete module ``ListBasedStack`` is annotated with the
 abstract signature ``AbstractStack``, making sure that all definitions
-have the matching types. The implication of this is that no user of
+have the matching types. The implication of this is that `no user` of
 this module will be able to exploit the fact that our "stack type" is,
-in fact, a reference to an OCaml list.
+in fact, a reference to an OCaml list. An example of such an "exploit"
+would be, for instance, making the stack empty foregoing the use of
+``pop`` in order to deplete it first, element by element.
 
-Finally, when implementing your own concrete implementation of an
-abstract data type, it is recommended to ascribe the module signature
-(e.g., ``AbstractStack``) as the last step of your implementation. If
-you do it before the module is complete, the OCaml compiler/back-end
-will not be complaining about your implementation of the module does
-not match the signature, which makes the whole development process
-less pleasant.
+When implementing your own concrete implementation of an abstract data
+type, it is recommended to ascribe the module signature (e.g.,
+``AbstractStack``) as the `last` step of your implementation. If you
+do it before the module is complete, the OCaml compiler/back-end will
+not be complaining about your implementation of the module does not
+match the signature, which makes the whole development process less
+pleasant.
 
 Let us now test our stack ADT implementation by pushing and popping
 different elements, keeping in mind the expected LIFO behaviour. We
@@ -127,14 +131,15 @@ elements, the stack is empty and remains this way::
  # pop s;;
  - : (int * string) option = None
 
-
 An Array-Based Stack
 --------------------
 
 An alternative implementation of stacks uses an array of some size
 ``n``, thus requiring constant-size memory. A natural shortcoming of
 such a solution is the fact that the stack can hold only up to ``n``
-elements::
+elements. However, the advantage is that one can implement such a
+stack in language that do not provide algebraic lists, but only
+provide arrays (e.g., C)::
 
  module ArrayBasedStack : AbstractStack = struct
      type 'e t = {

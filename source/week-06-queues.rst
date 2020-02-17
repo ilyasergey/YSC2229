@@ -106,10 +106,10 @@ Finally, ``queue_to_list`` constructs the queue by considering two possibilities
        let tl = !(q.tail) in
        if is_empty q then [] 
        else if hd < tl then
-         List.map get_exn (array_to_list hd (tl + 1) q.elems)
+         List.map get_exn (subarray_to_list hd (tl + 1) q.elems)
        else 
-         let l1 = array_to_list hd q.size q.elems in
-         let l2 = array_to_list 0 tl q.elems in
+         let l1 = subarray_to_list hd q.size q.elems in
+         let l2 = subarray_to_list 0 tl q.elems in
          List.map get_exn (l1 @ l2)
 
 Debugging queue implementations
@@ -133,7 +133,7 @@ For instance, it can be instantiated as follows for printing queues of pairs of 
 
  let pp (k, v) = Printf.sprintf "(%d, %s)" k v
 
- let print_queue q = ABQPrinter.print_queue q pp
+ let print_kv_queue q = ABQPrinter.print_kv_queue q pp
 
 Let us experiment with the queue by first creating it::
 
@@ -150,7 +150,7 @@ We can then fill a queue from a randomly generater array ``a``::
    (9, "jtwrn"); (8, "zovuq"); (4, "hgiki"); (8, "yqnvq"); (3, "gjmfh")|]
  # for i = 0 to 9 do enqueue q a.(i) done;;
  - : unit = ()
- # print_queue q;;
+ # print_kv_queue q;;
  [(7, sapwd); (3, bsxoq); (0, lfckx); (7, nwztj); (5, voeed); (9, jtwrn); (8, zovuq); (4, hgiki); (8, yqnvq); (3, gjmfh); ]
  - : unit = ()
  # is_full q;;
@@ -164,12 +164,12 @@ We can then start removing elements from the queue, checking that they come out 
  - : (int * string) option = Some (3, "bsxoq")
  # dequeue q;;
  - : (int * string) option = Some (0, "lfckx")
- # print_queue q;;
+ # print_kv_queue q;;
  [(7, nwztj); (5, voeed); (9, jtwrn); (8, zovuq); (4, hgiki); (8, yqnvq); (3, gjmfh); ]
  - : unit = ()
  # enqueue q (13, "lololo");;
  - : unit = ()
- # print_queue q;;
+ # print_kv_queue q;;
  [(7, nwztj); (5, voeed); (9, jtwrn); (8, zovuq); (4, hgiki); (8, yqnvq); (3, gjmfh); (13, lololo); ]
  - : unit = ()
  # dequeue q;;
@@ -178,9 +178,20 @@ We can then start removing elements from the queue, checking that they come out 
 Doubly Linked Lists
 -------------------
 
-The obvious limitation of an array-based queue is its limited capacity, bounded by the size of the carrier array. To allow for the queue of an arbitrary size, we will need an auxiliary data structure, known as *doubly-linked list*. 
+* File: ``DoubleLinkedList.ml``
 
-A doubly-linked list is one of the most characteristic linked data structures, which aggressively employs OCaml's references as its main building component, and can be efficiently implemented in other imperative programming languages, such as C and Java. As they embrace mutability, the provide a variety of ways to modify their contents, as well as structure by simply manipulating with the references and exploiting the indirection, afforded by them.
+The obvious limitation of an array-based queue is its limited
+capacity, bounded by the size of the carrier array. To allow for the
+queue of an arbitrary size, we will need an auxiliary data structure,
+known as *doubly-linked list*.
+
+A doubly-linked list is one of the most characteristic linked data
+structures, which aggressively employs OCaml's references as its main
+building component, and can be efficiently implemented in other
+imperative programming languages, such as C and Java. As they embrace
+mutability, doubly-linked lists provide a variety of ways to modify
+their contents and structure by simply manipulating with the
+references and exploiting the indirection in data structure encoding.
 
 Let us start the definition of a concrete module implementing the doubly-linked list data structure by defining its key components::
 
@@ -211,7 +222,9 @@ The function ``mk_node e`` creates a new "detached" node that contains an payloa
   let value n = !(n.value)
   let set_value n v = n.value := v
 
-How do we construct a list our of disparate nodes? The following two functions allow to *insert* new nodes before and after some other existing nodes, thus, updating the linked structure::
+How do we construct a list out of those disparate nodes? The following
+two functions allow to *insert* new nodes before and after some other
+existing nodes, thus, updating the linked structure::
   
      let insert_after n1 n2 = 
        let n3 = next n1 in
@@ -247,7 +260,6 @@ In a similar spirit, we can removing an arbitrary node from a DLL in :math:`O(1)
        | None -> ()
        | Some nxt -> nxt.prev := prev n);
 
-
 Given an arbitrary node of a DLL, we can now "walk" forward/backwards by its predecessors/successors, in order to reach both ends of the list::
 
     let rec move_to_head n = 
@@ -270,7 +282,11 @@ We can use a similar walking logic to conver the "tail" of a double linked list 
 A queue based on doubly linked lists
 ------------------------------------
 
-Let us now put doubly-linked lists to a good use and implement a queue that can grow arbitrarily large (or, at least, as large as one's computer memory permits)::
+* File: ``Queues.ml`` (continued)
+
+Let us now put doubly-linked lists to some good use and implement a
+queue that can grow arbitrarily large (or, at least, as large as one's
+computer memory permits)::
 
  module DLLBasedQueue : Queue = struct
   open DoublyLinkedList
@@ -288,9 +304,15 @@ Let us now put doubly-linked lists to a good use and implement a queue that can 
 
  end
 
-The queue is defined by means of holding two mutable references to (optional) nodes of a doubly-linked list, representing the head and the tail of the queue. The ``option`` accounts for the fact that the queue might be empty, which is the case for a freshly created instance (vai ``mk_queue _``).
+The queue is defined by means of holding two mutable references to
+(optional) nodes of a doubly-linked list, representing the head and
+the tail of the queue. The ``option`` accounts for the fact that the
+queue might be empty, which is the case for a freshly created instance
+(vai ``mk_queue _``).
 
-The emptyness of the queue can be checked by examining its head, and the ``is_full`` check now always returns ``false``, as the queue may grow infinitely::
+The emptyness of the queue can be checked by examining its head, and
+the ``is_full`` check now always returns ``false``, as the queue may
+grow infinitely::
 
     let is_empty q = 
       !(q.head) = None
@@ -321,7 +343,16 @@ Dequeueing an element simply returns the payload of the node pointed to by ``hea
         remove n; (* This is not necessary, but helps GC *)
         Some (value n)
 
-The removal of an node ``n`` on the penultimate line of ``dequque`` is not necessary for the correctness of the data structure, but it helps to save the memory. To understand why it is essential, we need to know a bit about how *Tracing* `Garbage Collector <https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)>`_ works in OCaml. While the garbage collection and automated memory management are outside of the scope of this course, let us just notice that not removing the node will make OCaml runtime treat it as being in use (as it is *reachable* from its successor), and hence keep it in memory, which could be otherwise used for something else.
+The removal of an node ``n`` on the penultimate line of ``dequeue`` is
+not necessary for the correctness of the data structure, but it helps
+to save the memory. To understand why it is essential, we need to know
+a bit about how *Tracing* `Garbage Collector
+<https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)>`_
+works in OCaml. While the garbage collection and automated memory
+management are outside of the scope of this course, let us just notice
+that not removing the node will make OCaml runtime treat it as being
+in use (as it is *reachable* from its successor), and hence keep it in
+memory, which could be otherwise used for something else.
 
 A conversion to list is almost trivial, given the functionality of a doubly-linked list::
 
@@ -336,7 +367,7 @@ Now, with this definition complete, we can do some experiments. First, as before
 
  let pp (k, v) = Printf.sprintf "(%d, %s)" k v
 
- let print_queue q = DLQPrinter.print_queue q pp
+ let print_kv_queue q = DLQPrinter.print_kv_queue q pp
 
 Finally, let us put and remove some elements from the queue::
 
@@ -347,15 +378,17 @@ Finally, let us put and remove some elements from the queue::
  [|(7, "sapwd"); (3, "bsxoq"); (0, "lfckx"); (7, "nwztj"); (5, "voeed");
    (9, "jtwrn"); (8, "zovuq"); (4, "hgiki"); (8, "yqnvq"); (3, "gjmfh")|]
 
-Similarly to previous examples, we will up the queue from a randomly generated array::
+Similarly to previous examples, we will up the queue from a randomly
+generated array::
 
  # for i = 0 to 9 do enqueue dq a.(i) done;;
  - : unit = ()
- # print_queue dq;;
+ # print_kv_queue dq;;
  [(7, sapwd); (3, bsxoq); (0, lfckx); (7, nwztj); (5, voeed); (9, jtwrn); (8, zovuq); (4, hgiki); (8, yqnvq); (3, gjmfh); ]
  - : unit = ()
 
-We can then ensure that the elements come out in the order they were added::
+We can then ensure that the elements come out in the order they were
+added::
 
  # is_empty dq;;
  - : bool = false
@@ -367,6 +400,6 @@ We can then ensure that the elements come out in the order they were added::
  - : (int * string) option = Some (0, "lfckx")
  # enqueue dq (13, "lololo");;
  - : unit = ()
- # print_queue dq;;
+ # print_kv_queue dq;;
  [(7, nwztj); (5, voeed); (9, jtwrn); (8, zovuq); (4, hgiki); (8, yqnvq); (3, gjmfh); (13, lololo); ]
  - : unit = ()
