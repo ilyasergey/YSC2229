@@ -60,7 +60,7 @@ Textbooks
 2. (Optional) `Algorithms, 4th edition
    <https://algs4.cs.princeton.edu/home/>`_
    by Robert Sedgewick and Kevin Wayne.
-   `This book is has some good in-depth examples of basic algorithms.`
+   `This book has some great in-depth examples of basic algorithms.`
 
 ..
    Indices and tables
