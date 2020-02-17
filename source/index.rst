@@ -18,6 +18,7 @@ Introductory Data Structures and Algorithms
    week-04	 
    week-05
 ..   week-06
+..   midterm   
 
 ..   YSC2229-midterm-tasks
 ..   YSC2229-lecture-notes-week-08
