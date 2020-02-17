@@ -1,0 +1,315 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Midterm Project: Memory Allocation and Reclamation &mdash; YSC2229 2020</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Midterm Project: Memory Allocation and Reclamation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="midterm-project-memory-allocation-and-reclamation">
+<h1>Midterm Project: Memory Allocation and Reclamation<a class="headerlink" href="#midterm-project-memory-allocation-and-reclamation" title="Permalink to this headline">¶</a></h1>
+<p>This midterm project will consist of two parts: grop-based coding
+assignments and individual implementation reports.</p>
+<div class="section" id="coding-assignment">
+<h2>Coding Assignment<a class="headerlink" href="#coding-assignment" title="Permalink to this headline">¶</a></h2>
+<p>How do we implement references and pointers in languages that do not
+provide them? In this project you will be developing a solution for
+implementing linked data structures (such as lists and queues) without
+relying to OCaml’s explicit <code class="docutils literal notranslate"><span class="pre">ref</span></code> type, by means of implementing a
+custom <a class="reference external" href="https://en.wikipedia.org/wiki/C_dynamic_memory_allocation">C-style memory allocator</a>.</p>
+<p>In order to encode the necessary machinery for dynamically creating
+references, we notice that one can represent a collection of similar
+values (e.g., of type <code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">string</span></code>) by packaging them into
+arrays, so such arrays will play the role of random-access memory. For
+instance, two consecutive nodes with the payloads <code class="docutils literal notranslate"><span class="pre">(15,</span> <span class="pre">&quot;a&quot;)</span></code> and
+<code class="docutils literal notranslate"><span class="pre">(42,</span> <span class="pre">&quot;b&quot;)</span></code> of a double-linked list containing pairs of integers can
+be encoded by sub-segments of following three arrays: one for pointer
+“addresses”, one for integers, and one for strings:</p>
+<a class="reference internal image-reference" href="_images/alloc.png"><img alt="_images/alloc.png" class="align-center" src="_images/alloc.png" style="width: 800px;" /></a>
+<p>A list “node” (<code class="docutils literal notranslate"><span class="pre">dll_node</span></code>) is simply a segment of four consecutive
+entries in a pointer array, with the corresponding links to an integer
+and a string part of the payload. Therefore, in order to work with a
+double-linked list represented via three arrays, one should manipulate
+with the encoding of references in by means of changing the contents
+of those arrays.</p>
+<p>The template code for the project can be obtained via the link
+available on Canvas, In this project, you are expected to deliver the
+following artefacts:</p>
+<ul>
+<li><p class="first">An implementation of an array-based memory allocator that can
+provide storage (of a <em>fixed limited</em> capacity) for dynamically
+“allocated” pointers, integers, and strings, with a possibility of
+updating them. Similarly to languages without automatic memory
+management, such as C, it should be possible to both allocate and
+“free” consecutive pointer segments, making it possible to reuse the
+memory (i.e., “reclaim” it be the allocator).</p>
+</li>
+<li><p class="first">An implementation of a double-linked list, built on top of the
+allocator interface via the abstract “heap” it provides and the
+operations for manipulating with the pointers. Crucially, the list
+should free the memory occupied by its nodes, when the nodes are
+explicitly removed.</p>
+</li>
+<li><p class="first">An implementation of a queue data type (taking <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">*</span> <span class="pre">string</span></code>
+pairs), following the module signature from Section <a class="reference internal" href="week-06-queues.html#sec-queues"><span class="std std-ref">Queues</span></a>
+and tests for checking that it indeed behaves like a queue. As your
+queue will not be polymorphic only be able to accept elements of a
+specific type, it needs to implement a specialised signature:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="k">type</span> <span class="nc">Queue</span> <span class="o">=</span>
+<span class="k">sig</span>
+  <span class="k">type</span> <span class="n">t</span>
+  <span class="k">val</span> <span class="n">mk_queue</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">-&gt;</span> <span class="n">t</span>
+  <span class="k">val</span> <span class="n">is_empty</span> <span class="o">:</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="kt">bool</span>
+  <span class="k">val</span> <span class="n">is_full</span> <span class="o">:</span>  <span class="n">t</span> <span class="o">-&gt;</span> <span class="kt">bool</span>
+  <span class="k">val</span> <span class="n">enqueue</span> <span class="o">:</span>  <span class="n">t</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="kt">unit</span>
+  <span class="k">val</span> <span class="n">dequeue</span> <span class="o">:</span>  <span class="n">t</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="n">option</span>
+  <span class="k">val</span> <span class="n">queue_to_list</span> <span class="o">:</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="kt">list</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>The nature of the task imposes some restrictions and hints some
+observations:</p>
+<ul class="simple">
+<li>You may <strong>not</strong> use OCaml’s references (i.e., values of type
+<code class="docutils literal notranslate"><span class="pre">ref</span></code>) in your implementation.</li>
+<li>As you remember, pointers and arrays are somewhat similar.
+Specifically, most of the pointer operations expect not just the
+pointer <code class="docutils literal notranslate"><span class="pre">p</span></code> value but also a non-negative integer “offset” <code class="docutils literal notranslate"><span class="pre">o</span></code>,
+so that the considered value is located by the “address” <code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">+</span> <span class="pre">o</span></code>.</li>
+<li>The allocator only has to provide storage and the machinery to
+manipulate references storing (a) integers, (b) strings, and (c)
+pointers which can point to either of the three kinds of values. You
+are not expected to support references to any other composite data
+types (such as, e.g., pairs). However, you might need to encode those
+data types using consecutive pointers with offsets.</li>
+</ul>
+<p>More hints on the implementation are provided in the <code class="docutils literal notranslate"><span class="pre">README.md</span></code>
+file of the repository template.</p>
+<p>This part of the assignment is to be completed in groups of two.
+Please, follow the instruction on Canvas to create a team on GitHub
+Classroom and make a submission of your code on Canvas. For this part
+of the assignment, both participants will be awarded the same grade,
+depending on how well their code implements the tasks and also on the
+quality of the provided tests. Feel free to think on how to split the
+implementation workload within your team.</p>
+</div>
+<div class="section" id="report">
+<h2>Report<a class="headerlink" href="#report" title="Permalink to this headline">¶</a></h2>
+<p>The report are written and submitted on Canvas individually. They
+should focus on the following aspects of your experience with the
+project:</p>
+<ul class="simple">
+<li>High-level overview of your design of the allocator implementation.
+How did you define its basic data structures, what were the algorithmic decisions
+you’ve taken for more efficient memory management? Please, don’t
+quote the code verbatim at length (you may provide 3-4 line code
+snippets, if necessary). Pictures and drawings are welcome, but are
+not strictly required.</li>
+<li>What you considered to be the essential properties of your
+allocator implementation of the data structures that rely on it?
+How did you test those properties?</li>
+<li>How the design and implementation effort has been split between the
+team members, and what were your contributions?</li>
+<li>Any discoveries, anecdotes, and gotchas, elaborating on your
+experience with this project.</li>
+</ul>
+<p>You individual report should not be very long; please, try to make it
+succinct and to the point. 2-3 pages should be enough.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

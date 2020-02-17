@@ -1,0 +1,237 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Week 06: Abstract Data Types &mdash; YSC2229 2020</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Week 06: Abstract Data Types</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="week-06-abstract-data-types">
+<h1>Week 06: Abstract Data Types<a class="headerlink" href="#week-06-abstract-data-types" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="week-06-abstract-data-types.html">Abstract Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-06-stacks.html">Stacks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-06-stacks.html#the-stack-interface">The Stack interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-stacks.html#an-list-based-stack">An List-Based Stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-stacks.html#an-array-based-stack">An Array-Based Stack</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-06-queues.html">Queues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html#the-queue-interface">The Queue interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html#an-array-based-queue">An Array-Based Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html#debugging-queue-implementations">Debugging queue implementations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html#doubly-linked-lists">Doubly Linked Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html#a-queue-based-on-doubly-linked-lists">A queue based on doubly linked lists</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-06-hash-tables.html">Hash-tables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-06-hash-tables.html#allocation-by-hashing-keys">Allocation by hashing keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-hash-tables.html#operations-on-hash-tables">Operations on hash-tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-hash-tables.html#implementing-hash-tables">Implementing hash-tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-hash-tables.html#hash-tables-in-action">Hash-tables in action</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-06-exercises.html">Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-06-exercises.html#exercise-1">Exercise 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-exercises.html#exercise-2">Exercise 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-exercises.html#exercise-3">Exercise 3</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
