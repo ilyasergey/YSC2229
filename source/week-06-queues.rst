@@ -178,7 +178,7 @@ We can then start removing elements from the queue, checking that they come out 
 Doubly Linked Lists
 -------------------
 
-* File: ``DoubleLinkedList.ml``
+* File: ``DoublyLinkedList.ml``
 
 The obvious limitation of an array-based queue is its limited
 capacity, bounded by the size of the carrier array. To allow for the
