@@ -84,6 +84,7 @@
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
 </ul>
 
             
@@ -162,14 +163,14 @@ references, we notice that one can represent a collection of similar
 values (e.g., of type <code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">string</span></code>) by packaging them into
 arrays, so such arrays will play the role of random-access memory. For
 instance, two consecutive nodes with the payloads <code class="docutils literal notranslate"><span class="pre">(15,</span> <span class="pre">&quot;a&quot;)</span></code> and
-<code class="docutils literal notranslate"><span class="pre">(42,</span> <span class="pre">&quot;b&quot;)</span></code> of a double-linked list containing pairs of integers can
+<code class="docutils literal notranslate"><span class="pre">(42,</span> <span class="pre">&quot;b&quot;)</span></code> of a doubly-linked list containing pairs of integers can
 be encoded by sub-segments of following three arrays: one for pointer
 “addresses”, one for integers, and one for strings:</p>
 <a class="reference internal image-reference" href="_images/alloc.png"><img alt="_images/alloc.png" class="align-center" src="_images/alloc.png" style="width: 800px;" /></a>
 <p>A list “node” (<code class="docutils literal notranslate"><span class="pre">dll_node</span></code>) is simply a segment of four consecutive
 entries in a pointer array, with the corresponding links to an integer
 and a string part of the payload. Therefore, in order to work with a
-double-linked list represented via three arrays, one should manipulate
+doubly-linked list represented via three arrays, one should manipulate
 with the encoding of references in by means of changing the contents
 of those arrays.</p>
 <p>The template code for the project can be obtained via the link
@@ -184,7 +185,7 @@ management, such as C, it should be possible to both allocate and
 “free” consecutive pointer segments, making it possible to reuse the
 memory (i.e., “reclaim” it be the allocator).</p>
 </li>
-<li><p class="first">An implementation of a double-linked list, built on top of the
+<li><p class="first">An implementation of a doubly-linked list, built on top of the
 allocator interface via the abstract “heap” it provides and the
 operations for manipulating with the pointers. Crucially, the list
 should free the memory occupied by its nodes, when the nodes are

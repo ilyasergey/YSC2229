@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Week 06: Abstract Data Types &mdash; YSC2229 2020</title>
+  <title>8. Week 06: Abstract Data Types &mdash; YSC2229 2020</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="8.1. Information Hiding and Abstraction" href="week-06-abstract-data-types.html" />
+    <link rel="prev" title="7.6. Exercises" href="week-05-exercises.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,7 +78,7 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
@@ -84,6 +86,14 @@
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">8. Week 06: Abstract Data Types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-06-abstract-data-types.html">8.1. Information Hiding and Abstraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-stacks.html">8.2. Stacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html">8.3. Queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-hash-tables.html">8.4. Hash-tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-exercises.html">8.5. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -129,7 +139,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Week 06: Abstract Data Types</li>
+      <li>8. Week 06: Abstract Data Types</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -147,35 +157,35 @@
            <div itemprop="articleBody">
             
   <div class="section" id="week-06-abstract-data-types">
-<h1>Week 06: Abstract Data Types<a class="headerlink" href="#week-06-abstract-data-types" title="Permalink to this headline">¶</a></h1>
+<h1>8. Week 06: Abstract Data Types<a class="headerlink" href="#week-06-abstract-data-types" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="week-06-abstract-data-types.html">Abstract Data Types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-06-stacks.html">Stacks</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-06-stacks.html#the-stack-interface">The Stack interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-06-stacks.html#an-list-based-stack">An List-Based Stack</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-06-stacks.html#an-array-based-stack">An Array-Based Stack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-06-abstract-data-types.html">8.1. Information Hiding and Abstraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-06-stacks.html">8.2. Stacks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-06-stacks.html#the-stack-interface">8.2.1. The Stack interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-stacks.html#an-list-based-stack">8.2.2. An List-Based Stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-stacks.html#an-array-based-stack">8.2.3. An Array-Based Stack</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-06-queues.html">Queues</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html#the-queue-interface">The Queue interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html#an-array-based-queue">An Array-Based Queue</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html#debugging-queue-implementations">Debugging queue implementations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html#doubly-linked-lists">Doubly Linked Lists</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html#a-queue-based-on-doubly-linked-lists">A queue based on doubly linked lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-06-queues.html">8.3. Queues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html#the-queue-interface">8.3.1. The Queue interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html#an-array-based-queue">8.3.2. An Array-Based Queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html#debugging-queue-implementations">8.3.3. Debugging queue implementations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html#doubly-linked-lists">8.3.4. Doubly Linked Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html#a-queue-based-on-doubly-linked-lists">8.3.5. A queue based on doubly linked lists</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-06-hash-tables.html">Hash-tables</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-06-hash-tables.html#allocation-by-hashing-keys">Allocation by hashing keys</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-06-hash-tables.html#operations-on-hash-tables">Operations on hash-tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-06-hash-tables.html#implementing-hash-tables">Implementing hash-tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-06-hash-tables.html#hash-tables-in-action">Hash-tables in action</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-06-hash-tables.html">8.4. Hash-tables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-06-hash-tables.html#allocation-by-hashing-keys">8.4.1. Allocation by hashing keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-hash-tables.html#operations-on-hash-tables">8.4.2. Operations on hash-tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-hash-tables.html#implementing-hash-tables">8.4.3. Implementing hash-tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-hash-tables.html#hash-tables-in-action">8.4.4. Hash-tables in action</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-06-exercises.html">Exercises</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-06-exercises.html#exercise-1">Exercise 1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-06-exercises.html#exercise-2">Exercise 2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-06-exercises.html#exercise-3">Exercise 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-06-exercises.html">8.5. Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-06-exercises.html#exercise-1">8.5.1. Exercise 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-exercises.html#exercise-2">8.5.2. Exercise 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-exercises.html#exercise-3">8.5.3. Exercise 3</a></li>
 </ul>
 </li>
 </ul>
@@ -187,6 +197,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-06-abstract-data-types.html" class="btn btn-neutral float-right" title="8.1. Information Hiding and Abstraction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-05-exercises.html" class="btn btn-neutral" title="7.6. Exercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

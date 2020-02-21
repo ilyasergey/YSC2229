@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Abstract Data Types &mdash; YSC2229 2020</title>
+  <title>8.1. Information Hiding and Abstraction &mdash; YSC2229 2020</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="8.2. Stacks" href="week-06-stacks.html" />
+    <link rel="prev" title="8. Week 06: Abstract Data Types" href="week-06.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,7 +78,7 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
@@ -84,6 +86,14 @@
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">8.1. Information Hiding and Abstraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-stacks.html">8.2. Stacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html">8.3. Queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-hash-tables.html">8.4. Hash-tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-exercises.html">8.5. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -129,7 +139,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Abstract Data Types</li>
+          <li><a href="week-06.html">8. Week 06: Abstract Data Types</a> &raquo;</li>
+        
+      <li>8.1. Information Hiding and Abstraction</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -146,12 +158,34 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="abstract-data-types">
-<h1>Abstract Data Types<a class="headerlink" href="#abstract-data-types" title="Permalink to this headline">¶</a></h1>
-<p><em>Data structures</em> provide an efficient way to represent information, facilitating access to it and its manipulation. However, it is not always desirable to let the client of a data structure know <em>how exactly</em> it is implemented. The mechanism for hiding the implementation details (or, alternatively <em>information hiding</em>) is typically referred to as <em>abstraction</em>, and different programming languages provide various mechanisms to define abstractions.</p>
-<p>A data structure, once it implementation details are hidden, becomes an <a class="reference external" href="https://en.wikipedia.org/wiki/Abstract_data_type">Abstract Data Type</a> (ADT) — a representation of information, which only allows to manipulate with it by means of a well-defined interface, without exposing the details of how the information is structured.</p>
-<p>Most of abstract data types in computer science are targeted to represent, in a certain way, a set of elements, providing different interfaces (i.e., sets of functions/methods) to access elements of a set, add and remove them. A choice of a particular ADT is usually dictated by the needs of a client program and the semantics of the ADT. For instance, some ADTs are designed to facilitate search of a particular element in a set (e.g., search trees), while the others provide a more efficient way to retrieve and element added most recently (e.g., stacks), and different applications might rely on either of those characteristic properties.</p>
-<p>In this chapter, we will study several basic abstract data types, learn their properties and applications and see how they can be implemented differently by means of data structures at hand.</p>
+  <div class="section" id="information-hiding-and-abstraction">
+<h1>8.1. Information Hiding and Abstraction<a class="headerlink" href="#information-hiding-and-abstraction" title="Permalink to this headline">¶</a></h1>
+<p><em>Data structures</em> provide an efficient way to represent information,
+facilitating access to it and its manipulation. However, it is not
+always desirable to let the client of a data structure know <em>how
+exactly</em> it is implemented. The mechanism for hiding the
+implementation details (or, alternatively <em>information hiding</em>) is
+typically referred to as <em>abstraction</em>, and different programming
+languages provide various mechanisms to define abstractions.</p>
+<p>A data structure, once its implementation details are hidden, becomes
+an <a class="reference external" href="https://en.wikipedia.org/wiki/Abstract_data_type">Abstract Data Type</a> (ADT) — a
+representation of information, which only allows to manipulate with it
+by means of a well-defined interface, without exposing the details of
+how the information is structured.</p>
+<p>Most of abstract data types in computer science are targeted to
+represent, in a certain way, a set of elements, providing different
+interfaces (i.e., collections of functions/methods) to access elements
+of a set, add, and remove them. A choice of a particular ADT is
+usually dictated by the needs of a client program and the semantics of
+the ADT. For instance, some ADTs are designed to facilitate search of
+a particular element in a set (e.g., search trees), while the others
+provide a more efficient way to retrieve an element added most
+recently (e.g., stacks), and different applications might rely on
+either of those characteristic properties for the sake of correctness
+and/or efficiency.</p>
+<p>In this chapter, we will study several basic abstract data types,
+learn their properties and applications, and see how they can be
+implemented differently by means of data structures at hand.</p>
 </div>
 
 
@@ -159,6 +193,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-06-stacks.html" class="btn btn-neutral float-right" title="8.2. Stacks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-06.html" class="btn btn-neutral" title="8. Week 06: Abstract Data Types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Queues &mdash; YSC2229 2020</title>
+  <title>8.3. Queues &mdash; YSC2229 2020</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="8.4. Hash-tables" href="week-06-hash-tables.html" />
+    <link rel="prev" title="8.2. Stacks" href="week-06-stacks.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,7 +78,7 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
@@ -84,6 +86,21 @@
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-06-abstract-data-types.html">8.1. Information Hiding and Abstraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-stacks.html">8.2. Stacks</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">8.3. Queues</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-queue-interface">8.3.1. The Queue interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#an-array-based-queue">8.3.2. An Array-Based Queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#debugging-queue-implementations">8.3.3. Debugging queue implementations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#doubly-linked-lists">8.3.4. Doubly Linked Lists</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a-queue-based-on-doubly-linked-lists">8.3.5. A queue based on doubly linked lists</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-hash-tables.html">8.4. Hash-tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-exercises.html">8.5. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -129,7 +146,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Queues</li>
+          <li><a href="week-06.html">8. Week 06: Abstract Data Types</a> &raquo;</li>
+        
+      <li>8.3. Queues</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -147,10 +166,10 @@
            <div itemprop="articleBody">
             
   <div class="section" id="queues">
-<span id="sec-queues"></span><h1>Queues<a class="headerlink" href="#queues" title="Permalink to this headline">¶</a></h1>
+<span id="sec-queues"></span><h1>8.3. Queues<a class="headerlink" href="#queues" title="Permalink to this headline">¶</a></h1>
 <p>Unlike stacks, in which the elements added the last, come out first (last-in-first-out, LIFO), <em>queues</em> implement a complementary adding/removal strategy, known as <em>first-in-first-out</em> (FIFO), allowing to process their elements in the order they come.</p>
 <div class="section" id="the-queue-interface">
-<h2>The Queue interface<a class="headerlink" href="#the-queue-interface" title="Permalink to this headline">¶</a></h2>
+<h2>8.3.1. The Queue interface<a class="headerlink" href="#the-queue-interface" title="Permalink to this headline">¶</a></h2>
 <p>We can define an abstract data type for queues by means the following OCaml module signature:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="k">type</span> <span class="nc">Queue</span> <span class="o">=</span>
   <span class="k">sig</span>
@@ -169,7 +188,7 @@
 <p>Similarly, to the stack ADT, queues defined by means of the <code class="docutils literal notranslate"><span class="pre">Queue</span></code> signature are mutable, i.e., functions <code class="docutils literal notranslate"><span class="pre">enqueue</span></code> and <code class="docutils literal notranslate"><span class="pre">dequeue</span></code> modify the contents of a queue in-place rather than create a new queue.</p>
 </div>
 <div class="section" id="an-array-based-queue">
-<h2>An Array-Based Queue<a class="headerlink" href="#an-array-based-queue" title="Permalink to this headline">¶</a></h2>
+<h2>8.3.2. An Array-Based Queue<a class="headerlink" href="#an-array-based-queue" title="Permalink to this headline">¶</a></h2>
 <p>The following module implements a queue based on a finite-size array:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">ArrayBasedQueue</span> <span class="o">:</span> <span class="nc">Queue</span> <span class="o">=</span>
   <span class="k">struct</span>
@@ -241,10 +260,10 @@
   <span class="k">let</span> <span class="n">tl</span> <span class="o">=</span> <span class="o">!(</span><span class="n">q</span><span class="o">.</span><span class="n">tail</span><span class="o">)</span> <span class="k">in</span>
   <span class="k">if</span> <span class="n">is_empty</span> <span class="n">q</span> <span class="k">then</span> <span class="bp">[]</span>
   <span class="k">else</span> <span class="k">if</span> <span class="n">hd</span> <span class="o">&lt;</span> <span class="n">tl</span> <span class="k">then</span>
-    <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="n">get_exn</span> <span class="o">(</span><span class="n">array_to_list</span> <span class="n">hd</span> <span class="o">(</span><span class="n">tl</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">q</span><span class="o">.</span><span class="n">elems</span><span class="o">)</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="n">get_exn</span> <span class="o">(</span><span class="n">subarray_to_list</span> <span class="n">hd</span> <span class="o">(</span><span class="n">tl</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">q</span><span class="o">.</span><span class="n">elems</span><span class="o">)</span>
   <span class="k">else</span>
-    <span class="k">let</span> <span class="n">l1</span> <span class="o">=</span> <span class="n">array_to_list</span> <span class="n">hd</span> <span class="n">q</span><span class="o">.</span><span class="n">size</span> <span class="n">q</span><span class="o">.</span><span class="n">elems</span> <span class="k">in</span>
-    <span class="k">let</span> <span class="n">l2</span> <span class="o">=</span> <span class="n">array_to_list</span> <span class="mi">0</span> <span class="n">tl</span> <span class="n">q</span><span class="o">.</span><span class="n">elems</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">l1</span> <span class="o">=</span> <span class="n">subarray_to_list</span> <span class="n">hd</span> <span class="n">q</span><span class="o">.</span><span class="n">size</span> <span class="n">q</span><span class="o">.</span><span class="n">elems</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">l2</span> <span class="o">=</span> <span class="n">subarray_to_list</span> <span class="mi">0</span> <span class="n">tl</span> <span class="n">q</span><span class="o">.</span><span class="n">elems</span> <span class="k">in</span>
     <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="n">get_exn</span> <span class="o">(</span><span class="n">l1</span> <span class="o">@</span> <span class="n">l2</span><span class="o">)</span>
 </pre></div>
 </div>
@@ -252,7 +271,7 @@
 </ul>
 </div>
 <div class="section" id="debugging-queue-implementations">
-<h2>Debugging queue implementations<a class="headerlink" href="#debugging-queue-implementations" title="Permalink to this headline">¶</a></h2>
+<h2>8.3.3. Debugging queue implementations<a class="headerlink" href="#debugging-queue-implementations" title="Permalink to this headline">¶</a></h2>
 <p>We can pring the content of a queue using the following module:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">QueuePrinter</span><span class="o">(</span><span class="nc">Q</span><span class="o">:</span> <span class="nc">Queue</span><span class="o">)</span> <span class="o">=</span> <span class="k">struct</span>
 
@@ -270,7 +289,7 @@
 
 <span class="k">let</span> <span class="n">pp</span> <span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">=</span> <span class="nn">Printf</span><span class="p">.</span><span class="n">sprintf</span> <span class="s2">&quot;(%d, %s)&quot;</span> <span class="n">k</span> <span class="n">v</span>
 
-<span class="k">let</span> <span class="n">print_queue</span> <span class="n">q</span> <span class="o">=</span> <span class="nn">ABQPrinter</span><span class="p">.</span><span class="n">print_queue</span> <span class="n">q</span> <span class="n">pp</span>
+<span class="k">let</span> <span class="n">print_kv_queue</span> <span class="n">q</span> <span class="o">=</span> <span class="nn">ABQPrinter</span><span class="p">.</span><span class="n">print_kv_queue</span> <span class="n">q</span> <span class="n">pp</span>
 </pre></div>
 </div>
 <p>Let us experiment with the queue by first creating it:</p>
@@ -287,7 +306,7 @@
   <span class="o">(</span><span class="mi">9</span><span class="o">,</span> <span class="s2">&quot;jtwrn&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="s2">&quot;zovuq&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;hgiki&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="s2">&quot;yqnvq&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;gjmfh&quot;</span><span class="o">)|]</span>
 <span class="o">#</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="mi">9</span> <span class="k">do</span> <span class="n">enqueue</span> <span class="n">q</span> <span class="n">a</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="k">done</span><span class="o">;;</span>
 <span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
-<span class="o">#</span> <span class="n">print_queue</span> <span class="n">q</span><span class="o">;;</span>
+<span class="o">#</span> <span class="n">print_kv_queue</span> <span class="n">q</span><span class="o">;;</span>
 <span class="o">[(</span><span class="mi">7</span><span class="o">,</span> <span class="n">sapwd</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">bsxoq</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">lfckx</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="n">nwztj</span><span class="o">);</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">voeed</span><span class="o">);</span> <span class="o">(</span><span class="mi">9</span><span class="o">,</span> <span class="n">jtwrn</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="n">zovuq</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">hgiki</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="n">yqnvq</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">gjmfh</span><span class="o">);</span> <span class="o">]</span>
 <span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
 <span class="o">#</span> <span class="n">is_full</span> <span class="n">q</span><span class="o">;;</span>
@@ -301,12 +320,12 @@
 <span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="n">option</span> <span class="o">=</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;bsxoq&quot;</span><span class="o">)</span>
 <span class="o">#</span> <span class="n">dequeue</span> <span class="n">q</span><span class="o">;;</span>
 <span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="n">option</span> <span class="o">=</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="s2">&quot;lfckx&quot;</span><span class="o">)</span>
-<span class="o">#</span> <span class="n">print_queue</span> <span class="n">q</span><span class="o">;;</span>
+<span class="o">#</span> <span class="n">print_kv_queue</span> <span class="n">q</span><span class="o">;;</span>
 <span class="o">[(</span><span class="mi">7</span><span class="o">,</span> <span class="n">nwztj</span><span class="o">);</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">voeed</span><span class="o">);</span> <span class="o">(</span><span class="mi">9</span><span class="o">,</span> <span class="n">jtwrn</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="n">zovuq</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">hgiki</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="n">yqnvq</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">gjmfh</span><span class="o">);</span> <span class="o">]</span>
 <span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
 <span class="o">#</span> <span class="n">enqueue</span> <span class="n">q</span> <span class="o">(</span><span class="mi">13</span><span class="o">,</span> <span class="s2">&quot;lololo&quot;</span><span class="o">);;</span>
 <span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
-<span class="o">#</span> <span class="n">print_queue</span> <span class="n">q</span><span class="o">;;</span>
+<span class="o">#</span> <span class="n">print_kv_queue</span> <span class="n">q</span><span class="o">;;</span>
 <span class="o">[(</span><span class="mi">7</span><span class="o">,</span> <span class="n">nwztj</span><span class="o">);</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">voeed</span><span class="o">);</span> <span class="o">(</span><span class="mi">9</span><span class="o">,</span> <span class="n">jtwrn</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="n">zovuq</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">hgiki</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="n">yqnvq</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">gjmfh</span><span class="o">);</span> <span class="o">(</span><span class="mi">13</span><span class="o">,</span> <span class="n">lololo</span><span class="o">);</span> <span class="o">]</span>
 <span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
 <span class="o">#</span> <span class="n">dequeue</span> <span class="n">q</span><span class="o">;;</span>
@@ -315,9 +334,21 @@
 </div>
 </div>
 <div class="section" id="doubly-linked-lists">
-<h2>Doubly Linked Lists<a class="headerlink" href="#doubly-linked-lists" title="Permalink to this headline">¶</a></h2>
-<p>The obvious limitation of an array-based queue is its limited capacity, bounded by the size of the carrier array. To allow for the queue of an arbitrary size, we will need an auxiliary data structure, known as <em>doubly-linked list</em>.</p>
-<p>A doubly-linked list is one of the most characteristic linked data structures, which aggressively employs OCaml’s references as its main building component, and can be efficiently implemented in other imperative programming languages, such as C and Java. As they embrace mutability, the provide a variety of ways to modify their contents, as well as structure by simply manipulating with the references and exploiting the indirection, afforded by them.</p>
+<h2>8.3.4. Doubly Linked Lists<a class="headerlink" href="#doubly-linked-lists" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>File: <code class="docutils literal notranslate"><span class="pre">DoubleLinkedList.ml</span></code></li>
+</ul>
+<p>The obvious limitation of an array-based queue is its limited
+capacity, bounded by the size of the carrier array. To allow for the
+queue of an arbitrary size, we will need an auxiliary data structure,
+known as <em>doubly-linked list</em>.</p>
+<p>A doubly-linked list is one of the most characteristic linked data
+structures, which aggressively employs OCaml’s references as its main
+building component, and can be efficiently implemented in other
+imperative programming languages, such as C and Java. As they embrace
+mutability, doubly-linked lists provide a variety of ways to modify
+their contents and structure by simply manipulating with the
+references and exploiting the indirection in data structure encoding.</p>
 <p>Let us start the definition of a concrete module implementing the doubly-linked list data structure by defining its key components:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">DoublyLinkedList</span> <span class="o">=</span>
   <span class="k">struct</span>
@@ -346,7 +377,9 @@
 <span class="k">let</span> <span class="n">set_value</span> <span class="n">n</span> <span class="n">v</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="k">value</span> <span class="o">:=</span> <span class="n">v</span>
 </pre></div>
 </div>
-<p>How do we construct a list our of disparate nodes? The following two functions allow to <em>insert</em> new nodes before and after some other existing nodes, thus, updating the linked structure:</p>
+<p>How do we construct a list out of those disparate nodes? The following
+two functions allow to <em>insert</em> new nodes before and after some other
+existing nodes, thus, updating the linked structure:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert_after</span> <span class="n">n1</span> <span class="n">n2</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">n3</span> <span class="o">=</span> <span class="n">next</span> <span class="n">n1</span> <span class="k">in</span>
   <span class="o">(</span><span class="k">match</span> <span class="n">n3</span> <span class="k">with</span>
@@ -402,8 +435,13 @@
 </div>
 </div>
 <div class="section" id="a-queue-based-on-doubly-linked-lists">
-<h2>A queue based on doubly linked lists<a class="headerlink" href="#a-queue-based-on-doubly-linked-lists" title="Permalink to this headline">¶</a></h2>
-<p>Let us now put doubly-linked lists to a good use and implement a queue that can grow arbitrarily large (or, at least, as large as one’s computer memory permits):</p>
+<h2>8.3.5. A queue based on doubly linked lists<a class="headerlink" href="#a-queue-based-on-doubly-linked-lists" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>File: <code class="docutils literal notranslate"><span class="pre">Queues.ml</span></code> (continued)</li>
+</ul>
+<p>Let us now put doubly-linked lists to some good use and implement a
+queue that can grow arbitrarily large (or, at least, as large as one’s
+computer memory permits):</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">DLLBasedQueue</span> <span class="o">:</span> <span class="nc">Queue</span> <span class="o">=</span> <span class="k">struct</span>
  <span class="k">open</span> <span class="nc">DoublyLinkedList</span>
 
@@ -421,8 +459,14 @@
 <span class="k">end</span>
 </pre></div>
 </div>
-<p>The queue is defined by means of holding two mutable references to (optional) nodes of a doubly-linked list, representing the head and the tail of the queue. The <code class="docutils literal notranslate"><span class="pre">option</span></code> accounts for the fact that the queue might be empty, which is the case for a freshly created instance (vai <code class="docutils literal notranslate"><span class="pre">mk_queue</span> <span class="pre">_</span></code>).</p>
-<p>The emptyness of the queue can be checked by examining its head, and the <code class="docutils literal notranslate"><span class="pre">is_full</span></code> check now always returns <code class="docutils literal notranslate"><span class="pre">false</span></code>, as the queue may grow infinitely:</p>
+<p>The queue is defined by means of holding two mutable references to
+(optional) nodes of a doubly-linked list, representing the head and
+the tail of the queue. The <code class="docutils literal notranslate"><span class="pre">option</span></code> accounts for the fact that the
+queue might be empty, which is the case for a freshly created instance
+(vai <code class="docutils literal notranslate"><span class="pre">mk_queue</span> <span class="pre">_</span></code>).</p>
+<p>The emptyness of the queue can be checked by examining its head, and
+the <code class="docutils literal notranslate"><span class="pre">is_full</span></code> check now always returns <code class="docutils literal notranslate"><span class="pre">false</span></code>, as the queue may
+grow infinitely:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">is_empty</span> <span class="n">q</span> <span class="o">=</span>
   <span class="o">!(</span><span class="n">q</span><span class="o">.</span><span class="n">head</span><span class="o">)</span> <span class="o">=</span> <span class="nc">None</span>
 
@@ -453,7 +497,15 @@
     <span class="nc">Some</span> <span class="o">(</span><span class="k">value</span> <span class="n">n</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>The removal of an node <code class="docutils literal notranslate"><span class="pre">n</span></code> on the penultimate line of <code class="docutils literal notranslate"><span class="pre">dequque</span></code> is not necessary for the correctness of the data structure, but it helps to save the memory. To understand why it is essential, we need to know a bit about how <em>Tracing</em> <a class="reference external" href="https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)">Garbage Collector</a> works in OCaml. While the garbage collection and automated memory management are outside of the scope of this course, let us just notice that not removing the node will make OCaml runtime treat it as being in use (as it is <em>reachable</em> from its successor), and hence keep it in memory, which could be otherwise used for something else.</p>
+<p>The removal of an node <code class="docutils literal notranslate"><span class="pre">n</span></code> on the penultimate line of <code class="docutils literal notranslate"><span class="pre">dequeue</span></code> is
+not necessary for the correctness of the data structure, but it helps
+to save the memory. To understand why it is essential, we need to know
+a bit about how <em>Tracing</em> <a class="reference external" href="https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)">Garbage Collector</a>
+works in OCaml. While the garbage collection and automated memory
+management are outside of the scope of this course, let us just notice
+that not removing the node will make OCaml runtime treat it as being
+in use (as it is <em>reachable</em> from its successor), and hence keep it in
+memory, which could be otherwise used for something else.</p>
 <p>A conversion to list is almost trivial, given the functionality of a doubly-linked list:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">queue_to_list</span> <span class="n">q</span> <span class="o">=</span> <span class="k">match</span> <span class="o">!(</span><span class="n">q</span><span class="o">.</span><span class="n">head</span><span class="o">)</span> <span class="k">with</span>
   <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="bp">[]</span>
@@ -465,27 +517,29 @@
 
 <span class="k">let</span> <span class="n">pp</span> <span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">=</span> <span class="nn">Printf</span><span class="p">.</span><span class="n">sprintf</span> <span class="s2">&quot;(%d, %s)&quot;</span> <span class="n">k</span> <span class="n">v</span>
 
-<span class="k">let</span> <span class="n">print_queue</span> <span class="n">q</span> <span class="o">=</span> <span class="nn">DLQPrinter</span><span class="p">.</span><span class="n">print_queue</span> <span class="n">q</span> <span class="n">pp</span>
+<span class="k">let</span> <span class="n">print_kv_queue</span> <span class="n">q</span> <span class="o">=</span> <span class="nn">DLQPrinter</span><span class="p">.</span><span class="n">print_kv_queue</span> <span class="n">q</span> <span class="n">pp</span>
 </pre></div>
 </div>
 <p>Finally, let us put and remove some elements from the queue:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="k">let</span> <span class="n">dq</span> <span class="o">=</span> <span class="nn">DLLBasedQueue</span><span class="p">.</span><span class="n">mk_queue</span> <span class="mi">0</span><span class="o">;;</span>
 <span class="k">val</span> <span class="n">dq</span> <span class="o">:</span> <span class="k">&#39;</span><span class="o">_</span><span class="n">weak105</span> <span class="nn">DLLBasedQueue</span><span class="p">.</span><span class="n">t</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">abstr</span><span class="o">&gt;</span>
-<span class="o">#</span> <span class="n">a</span><span class="o">;;</span>
+<span class="o">#</span> <span class="k">let</span> <span class="o">=</span> <span class="n">a</span> <span class="n">generate_key_value_array</span> <span class="mi">10</span><span class="o">;;</span>
 <span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="kt">array</span> <span class="o">=</span>
 <span class="o">[|(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;sapwd&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;bsxoq&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="s2">&quot;lfckx&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;nwztj&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="s2">&quot;voeed&quot;</span><span class="o">);</span>
   <span class="o">(</span><span class="mi">9</span><span class="o">,</span> <span class="s2">&quot;jtwrn&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="s2">&quot;zovuq&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;hgiki&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="s2">&quot;yqnvq&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;gjmfh&quot;</span><span class="o">)|]</span>
 </pre></div>
 </div>
-<p>Similarly to previous examples, we will up the queue from a randomly generated array:</p>
+<p>Similarly to previous examples, we will up the queue from a randomly
+generated array:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="mi">9</span> <span class="k">do</span> <span class="n">enqueue</span> <span class="n">dq</span> <span class="n">a</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="k">done</span><span class="o">;;</span>
 <span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
-<span class="o">#</span> <span class="n">print_queue</span> <span class="n">dq</span><span class="o">;;</span>
+<span class="o">#</span> <span class="n">print_kv_queue</span> <span class="n">dq</span><span class="o">;;</span>
 <span class="o">[(</span><span class="mi">7</span><span class="o">,</span> <span class="n">sapwd</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">bsxoq</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">lfckx</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="n">nwztj</span><span class="o">);</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">voeed</span><span class="o">);</span> <span class="o">(</span><span class="mi">9</span><span class="o">,</span> <span class="n">jtwrn</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="n">zovuq</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">hgiki</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="n">yqnvq</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">gjmfh</span><span class="o">);</span> <span class="o">]</span>
 <span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
 </pre></div>
 </div>
-<p>We can then ensure that the elements come out in the order they were added:</p>
+<p>We can then ensure that the elements come out in the order they were
+added:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="n">is_empty</span> <span class="n">dq</span><span class="o">;;</span>
 <span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">false</span>
 <span class="o">#</span> <span class="n">dequeue</span> <span class="n">dq</span><span class="o">;;</span>
@@ -496,7 +550,7 @@
 <span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="n">option</span> <span class="o">=</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="s2">&quot;lfckx&quot;</span><span class="o">)</span>
 <span class="o">#</span> <span class="n">enqueue</span> <span class="n">dq</span> <span class="o">(</span><span class="mi">13</span><span class="o">,</span> <span class="s2">&quot;lololo&quot;</span><span class="o">);;</span>
 <span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
-<span class="o">#</span> <span class="n">print_queue</span> <span class="n">dq</span><span class="o">;;</span>
+<span class="o">#</span> <span class="n">print_kv_queue</span> <span class="n">dq</span><span class="o">;;</span>
 <span class="o">[(</span><span class="mi">7</span><span class="o">,</span> <span class="n">nwztj</span><span class="o">);</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">voeed</span><span class="o">);</span> <span class="o">(</span><span class="mi">9</span><span class="o">,</span> <span class="n">jtwrn</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="n">zovuq</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">hgiki</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="n">yqnvq</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">gjmfh</span><span class="o">);</span> <span class="o">(</span><span class="mi">13</span><span class="o">,</span> <span class="n">lololo</span><span class="o">);</span> <span class="o">]</span>
 <span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
 </pre></div>
@@ -509,6 +563,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-06-hash-tables.html" class="btn btn-neutral float-right" title="8.4. Hash-tables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-06-stacks.html" class="btn btn-neutral" title="8.2. Stacks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

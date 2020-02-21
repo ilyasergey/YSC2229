@@ -5,6 +5,8 @@
 Hash-tables
 ===========
 
+* File: ``HashTables.ml``
+
 Hash-tables generalise the ideas of ordinary arrays and also (somewhat
 surprisingly) bucket-sort, providing an efficient way to store
 elements in a collection, addressed by their keys, with average
