@@ -373,7 +373,7 @@ Finally, let us put and remove some elements from the queue::
 
  # let dq = DLLBasedQueue.mk_queue 0;;
  val dq : '_weak105 DLLBasedQueue.t = <abstr>
- # a;;
+ # let = a generate_key_value_array 10;;
  - : (int * string) array =
  [|(7, "sapwd"); (3, "bsxoq"); (0, "lfckx"); (7, "nwztj"); (5, "voeed");
    (9, "jtwrn"); (8, "zovuq"); (4, "hgiki"); (8, "yqnvq"); (3, "gjmfh")|]
