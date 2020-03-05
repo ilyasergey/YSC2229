@@ -1,0 +1,513 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Bloom Filters and Their Applications &mdash; YSC2229 2020</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Bloom Filters and Their Applications</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="bloom-filters-and-their-applications">
+<span id="sec-bloom"></span><h1>Bloom Filters and Their Applications<a class="headerlink" href="#bloom-filters-and-their-applications" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>File: <code class="docutils literal notranslate"><span class="pre">BloomFilters.ml</span></code></li>
+</ul>
+<p>Hashing can be useful for other applications besides distributing elements in an array when implementing a hash-table. for instance, we can also employ hashing for compactly representing the information of whether a certain element is or is not in a given set. to do so, let us first the introduce the following notion dealing with algorithms and data structures giving occasionally “wrong” answers.</p>
+<div class="admonition-true-negatives-and-false-positives admonition">
+<p class="first admonition-title">True Negatives and False Positives</p>
+<p>Let us notice that some applications <em>do not</em> require to always have the correct answer to the question</p>
+<p>“Whether the element <code class="docutils literal notranslate"><span class="pre">e</span></code> is in the set <code class="docutils literal notranslate"><span class="pre">s</span></code>”?</p>
+<p>Imagine that we have a data structure, such that</p>
+<ul class="simple">
+<li>when the data structure answers “no” to the above question, it means “the element <code class="docutils literal notranslate"><span class="pre">e</span></code> is certainly not in the set <code class="docutils literal notranslate"><span class="pre">s</span></code>”, but</li>
+<li>when it answers “yes” the above question, it means that “the element <code class="docutils literal notranslate"><span class="pre">e</span></code> might or might not be in set <code class="docutils literal notranslate"><span class="pre">s</span></code>”.</li>
+</ul>
+<p class="last">This behaviour of the data structure is typicall called as “sound-but-incomplete”. The first scenario (precise no-answer) is called “true negatives”, while the case of the second scenario, in which the answer “yes” is given for a certain element <em>not</em> in the set is called “false positive” (if the element is in the set, it would be “true positive”).</p>
+</div>
+<p>Data structure that give false positives, but no false negatives (the answer “no” is precise), while providing a compact representation, are very useful and are employed in applications, that might tolerate imprecise “yes”-answers, given conservatively.</p>
+<p>In this section, we will study one of such data structures called <a class="reference external" href="https://en.wikipedia.org/wiki/Bloom_filter">Bloom filter</a> — a compact representation of a “lossy” set that provides precisely this functionality. Bloom filters are widely used in practice:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://www.google.com/chrome/">Google Chrome</a> web browser used to use a Bloom filter to identify malicious URLs.</li>
+<li><a class="reference external" href="https://medium.com/">Medium</a> uses Bloom filters to avoid recommending articles a user has previously read.</li>
+<li><a class="reference external" href="https://en.wikipedia.org/wiki/Bitcoin">Bitcoin</a> uses Bloom filters to speed up wallet synchronisation.</li>
+</ul>
+<div class="section" id="high-level-intuition">
+<h2>High-level intuition<a class="headerlink" href="#high-level-intuition" title="Permalink to this headline">¶</a></h2>
+<p>Blom filter is a very simple data structure, which uses hashing. It is represented by a large boolean/bit array (you can think of it of an array of 0s and 1s) of size <code class="docutils literal notranslate"><span class="pre">m</span></code>, and a finite number <code class="docutils literal notranslate"><span class="pre">k</span></code> of different hash functions, which map elements to be added to a set of interest to <code class="docutils literal notranslate"><span class="pre">int</span></code> (as usual).</p>
+<p>For each new element to be added to the set, all <code class="docutils literal notranslate"><span class="pre">k</span></code> hash functions are used to determine specific bits, corresponding to this element in the array. The combination of those positions is the element’s “image”. For instance, the following image shows a Bloom filter with <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">=</span> <span class="pre">15</span></code> and <code class="docutils literal notranslate"><span class="pre">k</span> <span class="pre">=</span> <span class="pre">3</span></code>, with an example of three elements, X, Y, and Z, added to it.</p>
+<a class="reference internal image-reference" href="_images/bloom.png"><img alt="_images/bloom.png" class="align-center" src="_images/bloom.png" style="width: 800px;" /></a>
+<p>To determine whether an element is in the set, one needs to compute its <code class="docutils literal notranslate"><span class="pre">k</span></code> hashes, and check the bits in the corresponding array in a constant time (<span class="math notranslate nohighlight">\(O(k)\)</span>). Having more than 1 hash function reduces the risk of collision if the number of elements is smaller than the size of the filter, however, two or more different elements can indeed had all similar <code class="docutils literal notranslate"><span class="pre">k</span></code> hashes.</p>
+<p>Elements are <strong>never</strong> removed from a Bloom filter.</p>
+</div>
+<div class="section" id="bloom-filter-signature">
+<h2>Bloom filter signature<a class="headerlink" href="#bloom-filter-signature" title="Permalink to this headline">¶</a></h2>
+<p>Let us first define the Bloom filter signature. It starts from the module describing the type of its elements and the list of hash functions:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="k">type</span> <span class="nc">BloomHashing</span> <span class="o">=</span> <span class="k">sig</span>
+  <span class="k">type</span> <span class="n">t</span>
+  <span class="k">val</span> <span class="n">hash_functions</span> <span class="o">:</span> <span class="o">(</span><span class="n">t</span> <span class="o">-&gt;</span> <span class="kt">int</span><span class="o">)</span> <span class="kt">list</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>The Bloom filter itself is a functor, parameterised by <code class="docutils literal notranslate"><span class="pre">BloomHashing</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="k">type</span> <span class="nc">BloomFilter</span> <span class="o">=</span> <span class="k">functor</span>
+  <span class="o">(</span><span class="nc">H</span><span class="o">:</span> <span class="nc">BloomHashing</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="k">sig</span>
+  <span class="k">type</span> <span class="n">t</span>
+  <span class="k">val</span> <span class="n">mk_bloom_filter</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">-&gt;</span> <span class="n">t</span>
+  <span class="k">val</span> <span class="n">insert</span> <span class="o">:</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="nn">H</span><span class="p">.</span><span class="n">t</span> <span class="o">-&gt;</span> <span class="kt">unit</span>
+  <span class="k">val</span> <span class="n">contains</span> <span class="o">:</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="nn">H</span><span class="p">.</span><span class="n">t</span> <span class="o">-&gt;</span> <span class="kt">bool</span>
+  <span class="k">val</span> <span class="n">print_filter</span> <span class="o">:</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="kt">unit</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="implementing-a-bloom-filter">
+<h2>Implementing a Bloom filter<a class="headerlink" href="#implementing-a-bloom-filter" title="Permalink to this headline">¶</a></h2>
+<p>The implementation of Bloom filter is simply an array of booleans (which we use to represent 0/1-bits) of a fixed size:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">BloomFilterImpl</span> <span class="o">:</span> <span class="nc">BloomFilter</span> <span class="o">=</span> <span class="k">functor</span>
+  <span class="o">(</span><span class="nc">H</span><span class="o">:</span> <span class="nc">BloomHashing</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="k">struct</span>
+
+  <span class="c">(* Type of filter *)</span>
+  <span class="k">type</span> <span class="n">t</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">slots</span> <span class="o">:</span> <span class="kt">bool</span> <span class="kt">array</span><span class="o">;</span>
+    <span class="n">size</span>  <span class="o">:</span> <span class="kt">int</span>
+  <span class="o">}</span>
+
+  <span class="c">(* Functions come here *)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Creation of a Bloom filter is trivial:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">mk_bloom_filter</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">n</span> <span class="bp">false</span> <span class="k">in</span>
+  <span class="o">{</span><span class="n">slots</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span> <span class="n">size</span> <span class="o">=</span> <span class="n">n</span><span class="o">}</span>
+</pre></div>
+</div>
+<p>Insertion amounts to computing all hashes for the element and setting the corresponding array bits to <code class="docutils literal notranslate"><span class="pre">true</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert</span> <span class="n">f</span> <span class="n">e</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">size</span> <span class="k">in</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">hash</span> <span class="o">-&gt;</span>
+      <span class="k">let</span> <span class="n">h</span> <span class="o">=</span> <span class="o">(</span><span class="n">hash</span> <span class="n">e</span><span class="o">)</span> <span class="ow">mod</span> <span class="n">n</span> <span class="k">in</span>
+      <span class="n">f</span><span class="o">.</span><span class="n">slots</span><span class="o">.(</span><span class="n">h</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="bp">true</span><span class="o">)</span> <span class="nn">H</span><span class="p">.</span><span class="n">hash_functions</span>
+</pre></div>
+</div>
+<p>and to check if an element is in the filter, we need to compute all its hashes and check the corresponding bits:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">contains</span> <span class="n">f</span> <span class="n">e</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="nn">H</span><span class="p">.</span><span class="n">hash_functions</span> <span class="o">=</span> <span class="bp">[]</span> <span class="k">then</span> <span class="bp">false</span>
+  <span class="k">else</span>
+    <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">size</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">ref</span> <span class="bp">true</span> <span class="k">in</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">hash</span> <span class="o">-&gt;</span>
+        <span class="k">let</span> <span class="n">h</span> <span class="o">=</span> <span class="o">(</span><span class="n">hash</span> <span class="n">e</span><span class="o">)</span> <span class="ow">mod</span> <span class="n">n</span> <span class="k">in</span>
+        <span class="n">res</span> <span class="o">:=</span> <span class="o">!</span><span class="n">res</span> <span class="o">&amp;&amp;</span> <span class="n">f</span><span class="o">.</span><span class="n">slots</span><span class="o">.(</span><span class="n">h</span><span class="o">))</span> <span class="nn">H</span><span class="p">.</span><span class="n">hash_functions</span><span class="o">;</span>
+    <span class="o">!</span><span class="n">res</span>
+</pre></div>
+</div>
+<p>We can implement a printer for the Bloom filter by means of one of the previous modules:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">BP</span> <span class="o">=</span> <span class="nc">ArrayPrinter</span><span class="o">(</span><span class="k">struct</span>
+    <span class="k">type</span> <span class="n">t</span> <span class="o">=</span> <span class="kt">bool</span>
+    <span class="k">let</span> <span class="n">pp</span> <span class="n">b</span> <span class="o">=</span> <span class="k">if</span> <span class="n">b</span> <span class="k">then</span> <span class="s2">&quot;1&quot;</span> <span class="k">else</span> <span class="s2">&quot;0&quot;</span>
+  <span class="k">end</span><span class="o">)</span>
+
+<span class="k">let</span> <span class="n">print_filter</span> <span class="n">t</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">BP</span> <span class="k">in</span>
+  <span class="n">print_array</span> <span class="n">t</span><span class="o">.</span><span class="n">slots</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="experimenting-with-bloom-filters">
+<h2>Experimenting with Bloom filters<a class="headerlink" href="#experimenting-with-bloom-filters" title="Permalink to this headline">¶</a></h2>
+<p>Let us fix a hashing strategy for our favourite data type <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">*</span> <span class="pre">string</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">IntStringHashing</span> <span class="o">=</span> <span class="k">struct</span>
+  <span class="k">type</span> <span class="n">t</span> <span class="o">=</span> <span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span>
+  <span class="k">let</span> <span class="n">hash1</span> <span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="o">_)</span> <span class="o">=</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">hash</span> <span class="n">k</span>
+  <span class="k">let</span> <span class="n">hash2</span> <span class="o">(_,</span> <span class="n">v</span><span class="o">)</span> <span class="o">=</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">hash</span> <span class="n">v</span>
+  <span class="k">let</span> <span class="n">hash3</span> <span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="o">_)</span> <span class="o">=</span> <span class="n">k</span>
+  <span class="k">let</span> <span class="n">hash_functions</span> <span class="o">=</span> <span class="o">[</span><span class="n">hash1</span><span class="o">;</span> <span class="n">hash2</span><span class="o">;</span> <span class="n">hash3</span><span class="o">]</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Instantiating the filter:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">IntStringFilter</span> <span class="o">=</span> <span class="nc">BloomFilterImpl</span><span class="o">(</span><span class="nc">IntStringHashing</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Filling a filter from an array:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">fill_bloom_filter</span> <span class="n">m</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">IntStringFilter</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">filter</span> <span class="o">=</span> <span class="n">mk_bloom_filter</span> <span class="n">m</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">generate_key_value_array</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span>  <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="n">insert</span> <span class="n">filter</span> <span class="n">a</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="o">(</span><span class="n">filter</span><span class="o">,</span> <span class="n">a</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Let’s do some experiments:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="o">(</span><span class="n">f</span><span class="o">,</span> <span class="n">a</span><span class="o">)</span> <span class="o">=</span> <span class="n">fill_bloom_filter</span> <span class="mi">20</span> <span class="mi">10</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">f</span> <span class="o">:</span> <span class="nn">IntStringFilter</span><span class="p">.</span><span class="n">t</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">abstr</span><span class="o">&gt;</span>
+<span class="k">val</span> <span class="n">a</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="kt">array</span> <span class="o">=</span>
+  <span class="o">[|(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;ayuys&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;cdrhf&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;ukobi&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="s2">&quot;hwsjs&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="s2">&quot;uyrla&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="s2">&quot;uldju&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;rkolw&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;gnzzo&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;nksfe&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;geevu&quot;</span><span class="o">)|]</span>
+
+<span class="n">utop</span> <span class="o">#</span> <span class="nn">IntStringFilter</span><span class="p">.</span><span class="n">contains</span> <span class="n">f</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;rkolw&quot;</span><span class="o">);;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">true</span>
+
+<span class="n">utop</span> <span class="o">#</span> <span class="nn">IntStringFilter</span><span class="p">.</span><span class="n">contains</span> <span class="n">f</span> <span class="o">(</span><span class="mi">13</span><span class="o">,</span> <span class="s2">&quot;aaa&quot;</span><span class="o">);;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">false</span>
+
+<span class="n">utop</span> <span class="o">#</span> <span class="nn">IntStringFilter</span><span class="p">.</span><span class="n">print_filter</span> <span class="n">f</span><span class="o">;;</span>
+<span class="o">[|</span> <span class="mi">1</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">1</span><span class="o">;</span> <span class="mi">1</span><span class="o">;</span> <span class="mi">1</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">1</span><span class="o">;</span> <span class="mi">1</span><span class="o">;</span> <span class="mi">1</span><span class="o">;</span> <span class="mi">1</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">1</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">1</span><span class="o">;</span> <span class="mi">1</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">1</span><span class="o">;</span> <span class="mi">1</span><span class="o">;</span> <span class="mi">0</span> <span class="o">|]</span> <span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-bloom-filters">
+<h2>Testing Bloom Filters<a class="headerlink" href="#testing-bloom-filters" title="Permalink to this headline">¶</a></h2>
+<p>Testing for no true positive:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;bloom filter true positives&quot;</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">IntStringFilter</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">fsize</span> <span class="o">=</span> <span class="mi">2000</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="mi">1000</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">f</span><span class="o">,</span> <span class="n">a</span><span class="o">)</span> <span class="o">=</span> <span class="n">fill_bloom_filter</span> <span class="n">fsize</span> <span class="n">len</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">assert</span> <span class="o">(</span><span class="n">contains</span> <span class="n">f</span> <span class="n">a</span><span class="o">.(</span><span class="n">i</span><span class="o">))</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="bp">true</span>
+</pre></div>
+</div>
+<p>Testing for true negatives:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;bloom filter false positives&quot;</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">IntStringFilter</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">fsize</span> <span class="o">=</span> <span class="mi">2000</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="mi">1000</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">f</span><span class="o">,</span> <span class="n">a</span><span class="o">)</span> <span class="o">=</span> <span class="n">fill_bloom_filter</span> <span class="n">fsize</span> <span class="n">len</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">al</span> <span class="o">=</span> <span class="n">array_to_list</span> <span class="mi">0</span> <span class="n">len</span> <span class="n">a</span> <span class="k">in</span>
+
+
+  <span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="n">generate_key_value_array</span> <span class="n">len</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="n">e</span> <span class="o">=</span> <span class="n">b</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">not</span> <span class="o">(</span><span class="n">contains</span> <span class="n">f</span> <span class="n">e</span><span class="o">))</span>
+    <span class="k">then</span> <span class="k">assert</span> <span class="o">(</span><span class="n">not</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">mem</span> <span class="n">e</span> <span class="n">al</span><span class="o">))</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="bp">true</span>
+</pre></div>
+</div>
+<p>However, there can be also <em>false positives</em>, although we don’t check for them.</p>
+</div>
+<div class="section" id="improving-simple-hash-table-with-a-bloom-filter">
+<h2>Improving Simple Hash-table with a Bloom filter<a class="headerlink" href="#improving-simple-hash-table-with-a-bloom-filter" title="Permalink to this headline">¶</a></h2>
+<p>Let us put Bloom filter to some good use by improving our simple implementation of a hash table.</p>
+<p>The way it has been implemented, it has spent too much on iterating through the buckets before adding or getting an element. This is something that can be improved with a Bloom filter: indeed if we known that there is <em>no</em> element with a certain key in the bucket (the answer that Bloom filter can answer precisely), we don’t have to look for it.</p>
+<p>The price to pay for this speed-up is inability to remove elements from the hash-table (as one cannot remove elements from a Bloom filter).</p>
+<p>We start our hash-table from the following preamble. Its core data structure now gets enhanced with a Bloom filter:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">BloomHashTable</span> <span class="o">(</span><span class="nc">K</span><span class="o">:</span> <span class="nc">BloomHashing</span><span class="o">)</span> <span class="o">=</span> <span class="k">struct</span>
+  <span class="k">type</span> <span class="n">key</span> <span class="o">=</span> <span class="nn">K</span><span class="p">.</span><span class="n">t</span>
+
+  <span class="c">(* Adding bloom filter *)</span>
+  <span class="k">module</span> <span class="nc">BF</span> <span class="o">=</span> <span class="nc">BloomFilterImpl</span><span class="o">(</span><span class="nc">K</span><span class="o">)</span>
+
+  <span class="k">type</span> <span class="k">&#39;</span><span class="n">v</span> <span class="n">hash_table</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">buckets</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">v</span> <span class="kt">list</span> <span class="kt">array</span><span class="o">;</span>
+    <span class="n">capacity</span> <span class="o">:</span> <span class="kt">int</span><span class="o">;</span>
+    <span class="n">filter</span>   <span class="o">:</span> <span class="nn">BF</span><span class="p">.</span><span class="n">t</span>
+  <span class="o">}</span>
+
+  <span class="c">(* Functions come here *)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>For simplicity, upon creating a hash table, we make a Bloom filter with a fixed capacity:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">mk_new_table</span> <span class="n">cap</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">buckets</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">cap</span> <span class="bp">[]</span> <span class="k">in</span>
+  <span class="c">(* Pick reasonably large BF size *)</span>
+  <span class="k">let</span> <span class="n">filter</span> <span class="o">=</span> <span class="nn">BF</span><span class="p">.</span><span class="n">mk_bloom_filter</span> <span class="mi">15000</span> <span class="k">in</span>
+  <span class="o">{</span><span class="n">buckets</span> <span class="o">=</span> <span class="n">buckets</span><span class="o">;</span>
+   <span class="n">capacity</span> <span class="o">=</span> <span class="n">cap</span><span class="o">;</span>
+   <span class="n">filter</span> <span class="o">=</span> <span class="n">filter</span><span class="o">}</span>
+</pre></div>
+</div>
+<p>Insertion also updates the filter correspondingly:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert</span> <span class="n">ht</span> <span class="n">k</span> <span class="n">v</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">hs</span> <span class="o">=</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">hash</span> <span class="n">k</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">bnum</span> <span class="o">=</span> <span class="n">hs</span> <span class="ow">mod</span> <span class="n">ht</span><span class="o">.</span><span class="n">capacity</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">bucket</span> <span class="o">=</span> <span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">.(</span><span class="n">bnum</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">filter</span> <span class="o">=</span> <span class="n">ht</span><span class="o">.</span><span class="n">filter</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">clean_bucket</span> <span class="o">=</span>
+    <span class="c">(* New stuff *)</span>
+    <span class="k">if</span> <span class="nn">BF</span><span class="p">.</span><span class="n">contains</span> <span class="n">filter</span> <span class="n">k</span>
+    <span class="c">(* Only filter if ostensibly contains key *)</span>
+    <span class="k">then</span> <span class="nn">List</span><span class="p">.</span><span class="n">filter</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">k&#39;</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">k&#39;</span> <span class="o">&lt;&gt;</span> <span class="n">k</span><span class="o">)</span> <span class="n">bucket</span>
+    <span class="k">else</span> <span class="n">bucket</span> <span class="k">in</span>
+  <span class="c">(* Missed in the initial the implementation *)</span>
+  <span class="nn">BF</span><span class="p">.</span><span class="n">insert</span> <span class="n">filter</span> <span class="n">k</span><span class="o">;</span>
+  <span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">.(</span><span class="n">bnum</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">::</span> <span class="n">clean_bucket</span>
+</pre></div>
+</div>
+<p>Fetching consults the filter first:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">get</span> <span class="n">ht</span> <span class="n">k</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">filter</span> <span class="o">=</span> <span class="n">ht</span><span class="o">.</span><span class="n">filter</span> <span class="k">in</span>
+  <span class="k">if</span> <span class="nn">BF</span><span class="p">.</span><span class="n">contains</span> <span class="n">filter</span> <span class="n">k</span> <span class="k">then</span>
+    <span class="k">let</span> <span class="n">hs</span> <span class="o">=</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">hash</span> <span class="n">k</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">bnum</span> <span class="o">=</span> <span class="n">hs</span> <span class="ow">mod</span> <span class="n">ht</span><span class="o">.</span><span class="n">capacity</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">bucket</span> <span class="o">=</span> <span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">.(</span><span class="n">bnum</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">find_opt</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">k&#39;</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">k&#39;</span> <span class="o">=</span> <span class="n">k</span><span class="o">)</span> <span class="n">bucket</span> <span class="k">in</span>
+    <span class="k">match</span> <span class="n">res</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">Some</span> <span class="o">(_,</span> <span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">Some</span> <span class="n">v</span>
+    <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="nc">None</span>
+  <span class="k">else</span> <span class="nc">None</span>
+</pre></div>
+</div>
+<p>As announced before, removal is prohibited:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">remove</span> <span class="o">_</span> <span class="o">_</span> <span class="o">=</span> <span class="k">raise</span> <span class="o">(</span><span class="nc">Failure</span> <span class="s2">&quot;Removal is deprecated!&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="comparing-performance">
+<h2>Comparing performance<a class="headerlink" href="#comparing-performance" title="Permalink to this headline">¶</a></h2>
+<p>Let us instantiate the Bloom-table:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">BHT</span> <span class="o">=</span> <span class="nc">BloomHashTable</span><span class="o">(</span><span class="nc">IntStringHashing</span><span class="o">)</span>
+<span class="k">module</span> <span class="nc">BHTTester</span> <span class="o">=</span> <span class="nc">HashTableTester</span><span class="o">(</span><span class="nc">BHT</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Similarly to methods for testing performance of previiously defined hash-tables, we implement the following function:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert_and_get_bulk_bloom</span> <span class="n">a</span> <span class="n">m</span> <span class="o">=</span>
+  <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&quot;Creating Bloom hash table:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">;</span>
+  <span class="k">let</span> <span class="n">ht</span> <span class="o">=</span> <span class="n">time</span> <span class="o">(</span><span class="nn">BHTTester</span><span class="p">.</span><span class="n">mk_test_table_from_array_length</span> <span class="n">a</span><span class="o">)</span> <span class="n">m</span> <span class="k">in</span>
+  <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&quot;Fetching from Bloom hash table on the array of size %d:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">(</span><span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">a</span><span class="o">);</span>
+  <span class="k">let</span> <span class="o">_</span> <span class="o">=</span> <span class="n">time</span> <span class="nn">BHTTester</span><span class="p">.</span><span class="n">test_table_get</span> <span class="n">ht</span> <span class="n">a</span> <span class="k">in</span> <span class="bp">()</span>
+</pre></div>
+</div>
+<p>Now, leet us compare the Bloom filter-powered simple table versus
+vanilla simple hash-table:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">compare_hashing_time_simple_bloom</span> <span class="n">n</span> <span class="n">m</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">generate_key_value_array</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="n">insert_and_get_bulk_simple</span> <span class="n">a</span> <span class="n">m</span><span class="o">;</span>
+  <span class="n">print_endline</span> <span class="s2">&quot;&quot;</span><span class="o">;</span>
+  <span class="n">insert_and_get_bulk_bloom</span> <span class="n">a</span> <span class="n">m</span>
+</pre></div>
+</div>
+<p>Running the expriments. Not so much gain when a number of elements and
+the buckets are in the same ballpark:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="n">compare_hashing_time_simple_bloom</span> <span class="mi">10000</span> <span class="mi">5000</span><span class="o">;;</span>
+<span class="nc">Creating</span> <span class="n">simple</span> <span class="n">hash</span> <span class="n">table</span><span class="o">:</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">003352</span> <span class="n">sec</span>
+<span class="nc">Fetching</span> <span class="n">from</span> <span class="n">simple</span> <span class="n">hash</span> <span class="n">table</span> <span class="n">on</span> <span class="n">the</span> <span class="kt">array</span> <span class="k">of</span> <span class="n">size</span> <span class="mi">10000</span><span class="o">:</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">000001</span> <span class="n">sec</span>
+
+<span class="nc">Creating</span> <span class="nc">Bloom</span> <span class="n">hash</span> <span class="n">table</span><span class="o">:</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">007994</span> <span class="n">sec</span>
+<span class="nc">Fetching</span> <span class="n">from</span> <span class="nc">Bloom</span> <span class="n">hash</span> <span class="n">table</span> <span class="n">on</span> <span class="n">the</span> <span class="kt">array</span> <span class="k">of</span> <span class="n">size</span> <span class="mi">10000</span><span class="o">:</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">000001</span> <span class="n">sec</span>
+</pre></div>
+</div>
+<p>However, the difference is noticeable when the number of buckets is
+small, and the sie of the filter is still comparable with the number
+of elements being inserted:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="n">compare_hashing_time_simple_bloom</span> <span class="mi">15000</span> <span class="mi">20</span><span class="o">;;</span>
+<span class="nc">Creating</span> <span class="n">simple</span> <span class="n">hash</span> <span class="n">table</span><span class="o">:</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">370876</span> <span class="n">sec</span>
+<span class="nc">Fetching</span> <span class="n">from</span> <span class="n">simple</span> <span class="n">hash</span> <span class="n">table</span> <span class="n">on</span> <span class="n">the</span> <span class="kt">array</span> <span class="k">of</span> <span class="n">size</span> <span class="mi">15000</span><span class="o">:</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">000002</span> <span class="n">sec</span>
+
+<span class="nc">Creating</span> <span class="nc">Bloom</span> <span class="n">hash</span> <span class="n">table</span><span class="o">:</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">234405</span> <span class="n">sec</span>
+<span class="nc">Fetching</span> <span class="n">from</span> <span class="nc">Bloom</span> <span class="n">hash</span> <span class="n">table</span> <span class="n">on</span> <span class="n">the</span> <span class="kt">array</span> <span class="k">of</span> <span class="n">size</span> <span class="mi">15000</span><span class="o">:</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">000000</span> <span class="n">sec</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

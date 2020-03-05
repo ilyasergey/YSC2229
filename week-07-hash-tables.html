@@ -1,0 +1,394 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Hash-tables &mdash; YSC2229 2020</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Hash-tables</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="hash-tables">
+<span id="id1"></span><h1>Hash-tables<a class="headerlink" href="#hash-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>File: <code class="docutils literal notranslate"><span class="pre">HashTables.ml</span></code></li>
+</ul>
+<p>Hash-tables generalise the ideas of ordinary arrays and also (somewhat
+surprisingly) bucket-sort, providing an efficient way to store
+elements in a collection, addressed by their keys, with average
+<span class="math notranslate nohighlight">\(O(1)\)</span> complexity for inserting, finding and removing elements
+from the collection.</p>
+<div class="section" id="allocation-by-hashing-keys">
+<h2>Allocation by hashing keys<a class="headerlink" href="#allocation-by-hashing-keys" title="Permalink to this headline">¶</a></h2>
+<p>At heart of hash-tables is the idea of a <em>hash-function</em> — a mapping
+from elements of a certain type to randomly distributed integers. This
+functionality can be described by means of the following OCaml
+signature:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="k">type</span> <span class="nc">Hashable</span> <span class="o">=</span> <span class="k">sig</span>
+  <span class="k">type</span> <span class="n">t</span>
+  <span class="k">val</span> <span class="n">hash</span> <span class="o">:</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="kt">int</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Designing a good hash-function for an arbitrary data type (e.g., a
+string) is highly non-trivial and is outside of the scope of this
+course. The main complexity is to make it such that “similar” values
+(e.g., <code class="docutils literal notranslate"><span class="pre">s1</span> <span class="pre">=</span> <span class="pre">&quot;aaa&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">s2</span> <span class="pre">=</span> <span class="pre">&quot;aab&quot;</span></code>) would have very different
+hashes (e.g., <code class="docutils literal notranslate"><span class="pre">hash</span> <span class="pre">s1</span> <span class="pre">=</span> <span class="pre">12423512</span></code> and <code class="docutils literal notranslate"><span class="pre">s2</span> <span class="pre">=</span> <span class="pre">99887978</span></code>), thus
+providing a uniform distribution. It is not required for a
+hash-function to be injective (i.e., it <em>may</em> map different elements
+to the same integer value — phenomenon known as <em>hash collision</em>).
+However, for most of the purposes of hash-functions, it is assumed
+that collisions are relatively rare.</p>
+</div>
+<div class="section" id="operations-on-hash-tables">
+<h2>Operations on hash-tables<a class="headerlink" href="#operations-on-hash-tables" title="Permalink to this headline">¶</a></h2>
+<p>As we remember, in arrays, elements are indexed by integers ranging
+form 0 to the size of the array minus one. Hash-tables provide an
+interface similar to arrays, with the only difference that <em>any</em> type
+<code class="docutils literal notranslate"><span class="pre">t</span></code> can be used as keys for indexing elements (similarly to integers
+in an array), as long as there is an implementation of <code class="docutils literal notranslate"><span class="pre">hash</span></code>
+available for it.</p>
+<p>An interface of a hash-table is thus parameterised by the hashing
+strategy, used for its implementation for a specific type of <em>keys</em>.
+The following module signature the types and operations over a hash
+table:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="k">type</span> <span class="nc">HashTable</span> <span class="o">=</span> <span class="k">functor</span>
+  <span class="o">(</span><span class="nc">H</span> <span class="o">:</span> <span class="nc">Hashable</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="k">sig</span>
+  <span class="k">type</span> <span class="n">key</span> <span class="o">=</span> <span class="nn">H</span><span class="p">.</span><span class="n">t</span>
+  <span class="k">type</span> <span class="k">&#39;</span><span class="n">v</span> <span class="n">hash_table</span>
+  <span class="k">val</span> <span class="n">mk_new_table</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="n">v</span> <span class="n">hash_table</span>
+  <span class="k">val</span> <span class="n">insert</span> <span class="o">:</span> <span class="o">(</span><span class="n">key</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">v</span><span class="o">)</span> <span class="n">hash_table</span> <span class="o">-&gt;</span> <span class="n">key</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="n">v</span> <span class="o">-&gt;</span> <span class="kt">unit</span>
+  <span class="k">val</span> <span class="n">get</span> <span class="o">:</span> <span class="o">(</span><span class="n">key</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">v</span><span class="o">)</span> <span class="n">hash_table</span> <span class="o">-&gt;</span> <span class="n">key</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="n">v</span> <span class="n">option</span>
+  <span class="k">val</span> <span class="n">remove</span> <span class="o">:</span> <span class="o">(</span><span class="n">key</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">v</span><span class="o">)</span> <span class="n">hash_table</span> <span class="o">-&gt;</span> <span class="n">key</span> <span class="o">-&gt;</span> <span class="kt">unit</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>As announced <code class="docutils literal notranslate"><span class="pre">key</span></code> specifies the type of keys, used to refer to
+elements stored in a hash table. One can create a new hash-table of a
+predefined <em>size</em> (of type <code class="docutils literal notranslate"><span class="pre">int</span></code>) via <code class="docutils literal notranslate"><span class="pre">mk_new_table</span></code>. The next
+three functions provide the main interface for hash-table, allowing to
+insert and retrieve elements for a given key, as well as remove
+elements by key, thus, changing the state of the hash table (hence the
+return type of <code class="docutils literal notranslate"><span class="pre">remove</span></code> is <code class="docutils literal notranslate"><span class="pre">unit</span></code>).</p>
+</div>
+<div class="section" id="implementing-hash-tables">
+<h2>Implementing hash-tables<a class="headerlink" href="#implementing-hash-tables" title="Permalink to this headline">¶</a></h2>
+<p>Implementations of hash-table build on a simple idea. In order to fit
+an arbitrary number of elements with different keys into a
+limited-size array, one can use a trick similar to bucket sort,
+enabled by the hashing function:</p>
+<ul class="simple">
+<li>Compute <code class="docutils literal notranslate"><span class="pre">(hash</span> <span class="pre">k)</span> <span class="pre">mod</span> <span class="pre">n</span></code> to compute the slot (aka <em>bucket</em>) in an
+array of size <code class="docutils literal notranslate"><span class="pre">n</span></code> for inserting an element with a key <code class="docutils literal notranslate"><span class="pre">k</span></code>;</li>
+<li>if there are already elements in this bucket, add the new one,
+together with the old ones, storing them in a list.</li>
+</ul>
+<p>Then, when trying to retrieve an element with a key <code class="docutils literal notranslate"><span class="pre">k</span></code>, one has to</p>
+<ul class="simple">
+<li>Compute <code class="docutils literal notranslate"><span class="pre">(hash</span> <span class="pre">k)</span> <span class="pre">mod</span> <span class="pre">n</span></code> to compute the bucket where the element
+is located;</li>
+<li>Go through the bucket with a linear search, finding the element
+whose key is precisely <code class="docutils literal notranslate"><span class="pre">k</span></code>.</li>
+</ul>
+<p>That is, it is okay for elements with different keys to collude on the
+same bucket, as more elaborated search will be performed in each
+bucket.</p>
+<p>Why hash-tables are so efficient? As long as the size of the carrier
+array is greater or roughly the same as the number of inserted
+elements so far, and there were not many collusions, we can assume
+that each bucket has a very small number of elements (for which the
+collusions have happened while determining their bucket). Therefore,
+as long as the size of a bucket is limited by a certain constant, the
+search will boil down to (a) computing a bucket for a key in a
+constant time and (b) scanning the bucket for the right element, both
+operations yielding <span class="math notranslate nohighlight">\(O(1)\)</span> complexity.</p>
+<p>Let us start by defining a simple hash-table that uses lists to
+represent buckets:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">ListBasedHashTable</span>
+  <span class="o">:</span> <span class="nc">HashTable</span> <span class="o">=</span> <span class="k">functor</span>
+  <span class="o">(</span><span class="nc">H</span> <span class="o">:</span> <span class="nc">Hashable</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="k">struct</span>
+  <span class="k">type</span> <span class="n">key</span> <span class="o">=</span> <span class="nn">H</span><span class="p">.</span><span class="n">t</span>
+
+  <span class="k">type</span> <span class="k">&#39;</span><span class="n">v</span> <span class="n">hash_table</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">buckets</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">v</span> <span class="kt">list</span> <span class="kt">array</span><span class="o">;</span>
+    <span class="n">size</span> <span class="o">:</span> <span class="kt">int</span>
+  <span class="o">}</span>
+
+  <span class="c">(* More functions are coming *)</span>
+
+  <span class="k">end</span>
+</pre></div>
+</div>
+<p>Making a new hash table can be done by simply allocating a new array:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">mk_new_table</span> <span class="n">size</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">buckets</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">size</span> <span class="bp">[]</span> <span class="k">in</span>
+  <span class="o">{</span><span class="n">buckets</span> <span class="o">=</span> <span class="n">buckets</span><span class="o">;</span>
+   <span class="n">size</span> <span class="o">=</span> <span class="n">size</span><span class="o">}</span>
+</pre></div>
+</div>
+<p>Inserting an element follows the scenario described above.
+<code class="docutils literal notranslate"><span class="pre">List.filter</span></code> is used to make sure that no elements with the same
+key are lingering in the same bucket:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert</span> <span class="n">ht</span> <span class="n">k</span> <span class="n">v</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">hs</span> <span class="o">=</span> <span class="nn">H</span><span class="p">.</span><span class="n">hash</span> <span class="n">k</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">bnum</span> <span class="o">=</span> <span class="n">hs</span> <span class="ow">mod</span> <span class="n">ht</span><span class="o">.</span><span class="n">size</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">bucket</span> <span class="o">=</span> <span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">.(</span><span class="n">bnum</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">clean_bucket</span> <span class="o">=</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">filter</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">k&#39;</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">k&#39;</span> <span class="o">&lt;&gt;</span> <span class="n">k</span><span class="o">)</span> <span class="n">bucket</span> <span class="k">in</span>
+  <span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">.(</span><span class="n">bnum</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">::</span> <span class="n">clean_bucket</span>
+</pre></div>
+</div>
+<p>Retrieving an element by its key is done by using <code class="docutils literal notranslate"><span class="pre">List.filter_opt</span></code>
+for retrieving the desired element from the bucket. Even though
+<code class="docutils literal notranslate"><span class="pre">List.filter_opt</span></code> has linear complexity, it will not hurt
+performance for small buckets:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">get</span> <span class="n">ht</span> <span class="n">k</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">hs</span> <span class="o">=</span> <span class="nn">H</span><span class="p">.</span><span class="n">hash</span> <span class="n">k</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">bnum</span> <span class="o">=</span> <span class="n">hs</span> <span class="ow">mod</span> <span class="n">ht</span><span class="o">.</span><span class="n">size</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">bucket</span> <span class="o">=</span> <span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">.(</span><span class="n">bnum</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">find_opt</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">k&#39;</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">k&#39;</span> <span class="o">=</span> <span class="n">k</span><span class="o">)</span> <span class="n">bucket</span> <span class="k">in</span>
+  <span class="k">match</span> <span class="n">res</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">Some</span> <span class="o">(_,</span> <span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">Some</span> <span class="n">v</span>
+  <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="nc">None</span>
+</pre></div>
+</div>
+<p>Finally, removing an element is similar to inserting a new one:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">remove</span> <span class="n">ht</span> <span class="n">k</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">hs</span> <span class="o">=</span> <span class="nn">H</span><span class="p">.</span><span class="n">hash</span> <span class="n">k</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">bnum</span> <span class="o">=</span> <span class="n">hs</span> <span class="ow">mod</span> <span class="n">ht</span><span class="o">.</span><span class="n">size</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">bucket</span> <span class="o">=</span> <span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">.(</span><span class="n">bnum</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">clean_bucket</span> <span class="o">=</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">filter</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">k&#39;</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">k&#39;</span> <span class="o">&lt;&gt;</span> <span class="n">k</span><span class="o">)</span> <span class="n">bucket</span> <span class="k">in</span>
+  <span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">.(</span><span class="n">bnum</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">clean_bucket</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="hash-tables-in-action">
+<h2>Hash-tables in action<a class="headerlink" href="#hash-tables-in-action" title="Permalink to this headline">¶</a></h2>
+<p>Let us adopt the simplest possible strategy for hashing the integer
+keys:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">HashTableIntKey</span> <span class="o">=</span> <span class="nc">ListBasedHashTable</span>
+    <span class="o">(</span><span class="k">struct</span> <span class="k">type</span> <span class="n">t</span> <span class="o">=</span> <span class="kt">int</span> <span class="k">let</span> <span class="n">hash</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="k">end</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>As before, let us fill up a hash-table from an array:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">generate_key_value_array</span> <span class="mi">10</span>
+
+<span class="o">#</span> <span class="n">a</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="kt">array</span> <span class="o">=</span>
+<span class="o">[|(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;sapwd&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;bsxoq&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="s2">&quot;lfckx&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;nwztj&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="s2">&quot;voeed&quot;</span><span class="o">);</span>
+  <span class="o">(</span><span class="mi">9</span><span class="o">,</span> <span class="s2">&quot;jtwrn&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="s2">&quot;zovuq&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;hgiki&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="s2">&quot;yqnvq&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;gjmfh&quot;</span><span class="o">)|]</span>
+
+<span class="o">#</span> <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="mi">9</span> <span class="k">do</span> <span class="nn">HashTableIntKey</span><span class="p">.</span><span class="n">insert</span> <span class="n">hs</span> <span class="o">(</span><span class="n">fst</span> <span class="n">a</span><span class="o">.(</span><span class="n">i</span><span class="o">))</span> <span class="n">a</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="k">done</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
+</pre></div>
+</div>
+<p>We can now retrieve the values:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="nn">HashTableIntKey</span><span class="p">.</span><span class="n">get</span> <span class="n">hs</span> <span class="mi">4</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="n">option</span> <span class="o">=</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;hgiki&quot;</span><span class="o">)</span>
+<span class="o">#</span> <span class="nn">HashTableIntKey</span><span class="p">.</span><span class="n">get</span> <span class="n">hs</span> <span class="mi">8</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="n">option</span> <span class="o">=</span> <span class="nc">Some</span> <span class="o">(</span><span class="mi">8</span><span class="o">,</span> <span class="s2">&quot;yqnvq&quot;</span><span class="o">)</span>
+<span class="o">#</span> <span class="nn">HashTableIntKey</span><span class="p">.</span><span class="n">get</span> <span class="n">hs</span> <span class="mi">10</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="n">option</span> <span class="o">=</span> <span class="nc">None</span>
+</pre></div>
+</div>
+<p>Notice that the latest occurrence of an element with the key <code class="docutils literal notranslate"><span class="pre">8</span></code>
+(i.e., <code class="docutils literal notranslate"><span class="pre">(8,</span> <span class="pre">&quot;yqnvq&quot;)</span></code>) has overriden an earlier element <code class="docutils literal notranslate"><span class="pre">(8,</span>
+<span class="pre">&quot;zovuq&quot;)</span></code> in the hash-table.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

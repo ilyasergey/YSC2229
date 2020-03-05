@@ -1,0 +1,612 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Generalised Hash-Tables &mdash; YSC2229 2020</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Generalised Hash-Tables</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="generalised-hash-tables">
+<h1>Generalised Hash-Tables<a class="headerlink" href="#generalised-hash-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>File: <code class="docutils literal notranslate"><span class="pre">BetterHashTable.ml</span></code></li>
+</ul>
+<p>We have briefly considered hash-tables in Section <a class="reference internal" href="week-07-hash-tables.html#hash-tables"><span class="std std-ref">Hash-tables</span></a>.  Given their ubiquity and importance, we are going to further elaborate on their construction in this lecture.</p>
+<div class="section" id="ocaml-s-universal-hashing">
+<h2>OCaml’s universal hashing<a class="headerlink" href="#ocaml-s-universal-hashing" title="Permalink to this headline">¶</a></h2>
+<p>As many other mainstream languages (such as Java and C#), OCaml provides a polymorphic function for hashing <em>any</em> values, no matter what type they have:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">hash</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="o">-&gt;</span> <span class="kt">int</span> <span class="o">=</span> <span class="o">&lt;</span><span class="k">fun</span><span class="o">&gt;</span>
+
+<span class="n">utop</span> <span class="o">#</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">hash</span> <span class="s2">&quot;abc&quot;</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">767105082</span>
+
+<span class="n">utop</span> <span class="o">#</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">hash</span> <span class="mi">42</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">395478795</span>
+</pre></div>
+</div>
+<p>This function, unfortunately, has some limitations for particularly deep data structures (such as, e.g., long immutable lists). In particular, for lists beyond certain length there will be collisions:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">hash</span> <span class="o">[</span><span class="mi">1</span><span class="o">;</span><span class="mi">2</span><span class="o">;</span><span class="mi">3</span><span class="o">;</span><span class="mi">4</span><span class="o">;</span><span class="mi">5</span><span class="o">;</span><span class="mi">6</span><span class="o">;</span><span class="mi">7</span><span class="o">;</span><span class="mi">8</span><span class="o">;</span><span class="mi">9</span><span class="o">;</span><span class="mi">0</span><span class="o">];;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">67023335</span>
+
+<span class="n">utop</span> <span class="o">#</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">hash</span> <span class="o">[</span><span class="mi">1</span><span class="o">;</span><span class="mi">2</span><span class="o">;</span><span class="mi">3</span><span class="o">;</span><span class="mi">4</span><span class="o">;</span><span class="mi">5</span><span class="o">;</span><span class="mi">6</span><span class="o">;</span><span class="mi">7</span><span class="o">;</span><span class="mi">8</span><span class="o">;</span><span class="mi">9</span><span class="o">;</span><span class="mi">0</span><span class="o">;</span><span class="mi">1</span><span class="o">];;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">=</span> <span class="mi">67023335</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="redefining-hash-table-signature">
+<h2>Redefining hash-table signature<a class="headerlink" href="#redefining-hash-table-signature" title="Permalink to this headline">¶</a></h2>
+<p>Thanks to OCaml’s universal hashing, we no longer have to provide a hashing strategy for the keys of a hash-table, and can simply redefine its signature as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="k">type</span> <span class="nc">HashTable</span> <span class="o">=</span> <span class="k">sig</span>
+  <span class="k">type</span> <span class="n">key</span>
+  <span class="k">type</span> <span class="k">&#39;</span><span class="n">v</span> <span class="n">hash_table</span>
+  <span class="k">val</span> <span class="n">mk_new_table</span> <span class="o">:</span> <span class="kt">int</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="n">key</span><span class="o">*</span> <span class="k">&#39;</span><span class="n">v</span><span class="o">)</span> <span class="n">hash_table</span>
+  <span class="k">val</span> <span class="n">insert</span> <span class="o">:</span> <span class="o">(</span><span class="n">key</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">v</span><span class="o">)</span> <span class="n">hash_table</span> <span class="o">-&gt;</span> <span class="n">key</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="n">v</span> <span class="o">-&gt;</span> <span class="kt">unit</span>
+  <span class="k">val</span> <span class="n">get</span> <span class="o">:</span> <span class="o">(</span><span class="n">key</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">v</span><span class="o">)</span> <span class="n">hash_table</span> <span class="o">-&gt;</span> <span class="n">key</span> <span class="o">-&gt;</span> <span class="k">&#39;</span><span class="n">v</span> <span class="n">option</span>
+  <span class="k">val</span> <span class="n">remove</span> <span class="o">:</span> <span class="o">(</span><span class="n">key</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">v</span><span class="o">)</span> <span class="n">hash_table</span> <span class="o">-&gt;</span> <span class="n">key</span> <span class="o">-&gt;</span> <span class="kt">unit</span>
+  <span class="k">val</span> <span class="n">print_hash_table</span> <span class="o">:</span>
+    <span class="o">(</span><span class="n">key</span> <span class="o">-&gt;</span> <span class="kt">string</span><span class="o">)</span> <span class="o">-&gt;</span>
+    <span class="o">(</span><span class="k">&#39;</span><span class="n">v</span> <span class="o">-&gt;</span> <span class="kt">string</span><span class="o">)</span> <span class="o">-&gt;</span>
+    <span class="o">(</span><span class="n">key</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">v</span><span class="o">)</span> <span class="n">hash_table</span> <span class="o">-&gt;</span> <span class="kt">unit</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>For design reasons that will become clear further in this lecture, we still mention the type <code class="docutils literal notranslate"><span class="pre">key</span></code> of keys separately in the signature. We also add a convenience function <code class="docutils literal notranslate"><span class="pre">print_hash_table</span></code> to output the contents of the data structure.</p>
+</div>
+<div class="section" id="a-framework-for-testing-hash-tables">
+<h2>A framework for testing hash-tables<a class="headerlink" href="#a-framework-for-testing-hash-tables" title="Permalink to this headline">¶</a></h2>
+<p>Before we re-define the hash-table, let us define a module for automated testing of hash-tables. The module starts with the following preamble:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">HashTableTester</span>
+    <span class="o">(</span><span class="nc">H</span> <span class="o">:</span> <span class="nc">HashTable</span> <span class="k">with</span> <span class="k">type</span> <span class="n">key</span> <span class="o">=</span> <span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="o">=</span> <span class="k">struct</span>
+
+  <span class="k">module</span> <span class="nc">MyHT</span> <span class="o">=</span> <span class="nc">H</span>
+  <span class="k">open</span> <span class="nc">MyHT</span>
+
+  <span class="c">(* More functions will come here. *)</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Notice that it is a functor that takes an implementation of hash-table module <code class="docutils literal notranslate"><span class="pre">H</span></code>, but requires the keys to be of a specific type <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">*</span> <span class="pre">string</span></code>.</p>
+<p>The following function will fill the hash-table from an array:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">mk_test_table_from_array_length</span> <span class="n">a</span> <span class="n">m</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">a</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ht</span> <span class="o">=</span> <span class="n">mk_new_table</span> <span class="n">m</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="n">insert</span> <span class="n">ht</span> <span class="n">a</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="n">a</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="o">(</span><span class="n">ht</span><span class="o">,</span> <span class="n">a</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The next function takes a hash-table <code class="docutils literal notranslate"><span class="pre">ht</span></code> and an array <code class="docutils literal notranslate"><span class="pre">a</span></code> used for filling it with elements, and tests that <em>all</em> elements in the array are also in the hash-table (we optimistically assume that an array does not have repetitions):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">test_table_get</span> <span class="n">ht</span> <span class="n">a</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">a</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="n">e</span> <span class="o">=</span> <span class="n">get</span> <span class="n">ht</span> <span class="n">a</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">assert</span> <span class="o">(</span><span class="n">e</span> <span class="o">&lt;&gt;</span> <span class="nc">None</span><span class="o">);</span>
+    <span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="n">get_exn</span> <span class="n">e</span> <span class="k">in</span>
+    <span class="k">assert</span> <span class="o">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">a</span><span class="o">.(</span><span class="n">i</span><span class="o">))</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="bp">true</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="a-simple-list-based-hash-table">
+<h2>A simple list-based hash-table<a class="headerlink" href="#a-simple-list-based-hash-table" title="Permalink to this headline">¶</a></h2>
+<p>With the new signature at hand, let us now redefine a simple implementation of a list-based hash-table.</p>
+<p>Even though not strictly necessary at the moment, we are going to make the type of keys used by the hash-table implementation explicit, and expose in the following signature:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="k">type</span> <span class="nc">KeyType</span> <span class="o">=</span> <span class="k">sig</span>
+  <span class="k">type</span> <span class="n">t</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>The reason why we need to do it will become in the next Section <a class="reference internal" href="week-07-bloom.html#sec-bloom"><span class="std std-ref">Bloom Filters and Their Applications</span></a>, in which we will <em>need</em> to be able to introspect on the structure of the keys, prior to instantiating a hash-table.</p>
+<p>We proceed with the fining our simple hash-table based on lists as previously:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">SimpleListBasedHashTable</span><span class="o">(</span><span class="nc">K</span><span class="o">:</span> <span class="nc">KeyType</span><span class="o">)</span> <span class="o">=</span> <span class="k">struct</span>
+  <span class="k">type</span> <span class="n">key</span> <span class="o">=</span> <span class="nn">K</span><span class="p">.</span><span class="n">t</span>
+
+  <span class="k">type</span> <span class="k">&#39;</span><span class="n">v</span> <span class="n">hash_table</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">buckets</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">v</span> <span class="kt">list</span> <span class="kt">array</span><span class="o">;</span>
+    <span class="n">capacity</span> <span class="o">:</span> <span class="kt">int</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="k">let</span> <span class="n">mk_new_table</span> <span class="n">cap</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">buckets</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">cap</span> <span class="bp">[]</span> <span class="k">in</span>
+    <span class="o">{</span><span class="n">buckets</span> <span class="o">=</span> <span class="n">buckets</span><span class="o">;</span>
+     <span class="n">capacity</span> <span class="o">=</span> <span class="n">cap</span><span class="o">}</span>
+
+  <span class="k">let</span> <span class="n">insert</span> <span class="n">ht</span> <span class="n">k</span> <span class="n">v</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">hs</span> <span class="o">=</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">hash</span> <span class="n">k</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">bnum</span> <span class="o">=</span> <span class="n">hs</span> <span class="ow">mod</span> <span class="n">ht</span><span class="o">.</span><span class="n">capacity</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">bucket</span> <span class="o">=</span> <span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">.(</span><span class="n">bnum</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">clean_bucket</span> <span class="o">=</span>
+      <span class="nn">List</span><span class="p">.</span><span class="n">filter</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">k&#39;</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">k&#39;</span> <span class="o">&lt;&gt;</span> <span class="n">k</span><span class="o">)</span> <span class="n">bucket</span> <span class="k">in</span>
+    <span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">.(</span><span class="n">bnum</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">::</span> <span class="n">clean_bucket</span>
+
+  <span class="k">let</span> <span class="n">get</span> <span class="n">ht</span> <span class="n">k</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">hs</span> <span class="o">=</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">hash</span> <span class="n">k</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">bnum</span> <span class="o">=</span> <span class="n">hs</span> <span class="ow">mod</span> <span class="n">ht</span><span class="o">.</span><span class="n">capacity</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">bucket</span> <span class="o">=</span> <span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">.(</span><span class="n">bnum</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">find_opt</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">k&#39;</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">k&#39;</span> <span class="o">=</span> <span class="n">k</span><span class="o">)</span> <span class="n">bucket</span> <span class="k">in</span>
+    <span class="k">match</span> <span class="n">res</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">Some</span> <span class="o">(_,</span> <span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">Some</span> <span class="n">v</span>
+    <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="nc">None</span>
+
+  <span class="c">(* Slow remove - introduce for completeness *)</span>
+  <span class="k">let</span> <span class="n">remove</span> <span class="n">ht</span> <span class="n">k</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">hs</span> <span class="o">=</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">hash</span> <span class="n">k</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">bnum</span> <span class="o">=</span> <span class="n">hs</span> <span class="ow">mod</span> <span class="n">ht</span><span class="o">.</span><span class="n">capacity</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">bucket</span> <span class="o">=</span> <span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">.(</span><span class="n">bnum</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">clean_bucket</span> <span class="o">=</span>
+      <span class="nn">List</span><span class="p">.</span><span class="n">filter</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">k&#39;</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">k&#39;</span> <span class="o">&lt;&gt;</span> <span class="n">k</span><span class="o">)</span> <span class="n">bucket</span> <span class="k">in</span>
+    <span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">.(</span><span class="n">bnum</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">clean_bucket</span>
+
+  <span class="c">(* Another function is coming here *)</span>
+
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>As the last touch, we add the function to print the contents of the table:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">print_hash_table</span> <span class="n">ppk</span> <span class="n">ppv</span> <span class="n">ht</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">Printf</span> <span class="k">in</span>
+  <span class="n">print_endline</span> <span class="o">@@</span> <span class="n">sprintf</span> <span class="s2">&quot;Capacity: %d&quot;</span> <span class="o">(</span><span class="n">ht</span><span class="o">.</span><span class="n">capacity</span><span class="o">);</span>
+  <span class="n">print_endline</span> <span class="s2">&quot;Buckets:&quot;</span><span class="o">;</span>
+  <span class="k">let</span> <span class="n">buckets</span> <span class="o">=</span> <span class="o">(</span><span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="o">(</span><span class="n">ht</span><span class="o">.</span><span class="n">capacity</span><span class="o">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="n">bucket</span> <span class="o">=</span> <span class="n">buckets</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">if</span> <span class="n">bucket</span> <span class="o">&lt;&gt;</span> <span class="bp">[]</span> <span class="k">then</span> <span class="o">(</span>
+      <span class="c">(* Print bucket *)</span>
+      <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">fold_left</span>
+          <span class="o">(</span><span class="k">fun</span> <span class="n">acc</span> <span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">acc</span> <span class="o">^</span> <span class="o">(</span><span class="n">sprintf</span> <span class="s2">&quot;(%s, %s); &quot;</span><span class="o">)</span> <span class="o">(</span><span class="n">ppk</span> <span class="n">k</span><span class="o">)</span> <span class="o">(</span><span class="n">ppv</span> <span class="n">v</span><span class="o">))</span> <span class="s2">&quot;&quot;</span> <span class="n">bucket</span> <span class="k">in</span>
+      <span class="n">printf</span> <span class="s2">&quot;%d -&gt; [ %s]</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="n">i</span> <span class="n">s</span><span class="o">)</span>
+  <span class="k">done</span>
+</pre></div>
+</div>
+<p>Let us now instantiate the table to use pairs of type <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">*</span> <span class="pre">string</span></code> as keys, as well as the corresponding testing framework developed above:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">IntKey</span> <span class="o">=</span> <span class="k">struct</span> <span class="k">type</span> <span class="n">t</span> <span class="o">=</span> <span class="kt">int</span> <span class="k">end</span>
+<span class="k">module</span> <span class="nc">SHT</span> <span class="o">=</span> <span class="nc">SimpleListBasedHashTable</span><span class="o">(</span><span class="nc">IntKey</span><span class="o">)</span>
+<span class="k">module</span> <span class="nc">SimpleHTTester</span> <span class="o">=</span> <span class="nc">HashTableTester</span><span class="o">(</span><span class="nc">SHT</span><span class="o">)</span>
+
+<span class="k">let</span> <span class="n">pp_kv</span> <span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">=</span> <span class="nn">Printf</span><span class="p">.</span><span class="n">sprintf</span> <span class="s2">&quot;(%d, %s)&quot;</span> <span class="n">k</span> <span class="n">v</span>
+</pre></div>
+</div>
+<p>We can now create a simple hash-table and observe its contents:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">generate_key_value_array</span> <span class="mi">15</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">a</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="kt">array</span> <span class="o">=</span>
+  <span class="o">[|(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;ayqtk&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">12</span><span class="o">,</span> <span class="s2">&quot;kemle&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="s2">&quot;kcrtm&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s2">&quot;qxcnk&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;czzva&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;ayuys&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="s2">&quot;cdrhf&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="s2">&quot;ukobi&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="s2">&quot;hwsjs&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">13</span><span class="o">,</span> <span class="s2">&quot;uyrla&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s2">&quot;uldju&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="s2">&quot;rkolw&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">13</span><span class="o">,</span> <span class="s2">&quot;gnzzo&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;nksfe&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;geevu&quot;</span><span class="o">)|]</span>
+
+<span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="nn">SimpleHTTester</span><span class="p">.</span><span class="n">mk_test_table_from_array_length</span> <span class="n">a</span> <span class="mi">10</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">t</span> <span class="o">:</span> <span class="o">(</span><span class="nn">SHT</span><span class="p">.</span><span class="n">key</span> <span class="o">*</span> <span class="nn">SHT</span><span class="p">.</span><span class="n">key</span><span class="o">)</span> <span class="nn">SHT</span><span class="p">.</span><span class="n">hash_table</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="n">utop</span> <span class="o">#</span> <span class="nn">SimpleHTTester</span><span class="p">.</span><span class="nn">MyHT</span><span class="p">.</span><span class="n">print_hash_table</span> <span class="n">pp_kv</span> <span class="n">pp_kv</span> <span class="n">t</span><span class="o">;;</span>
+<span class="nc">Capacity</span><span class="o">:</span> <span class="mi">10</span>
+<span class="nc">Buckets</span><span class="o">:</span>
+<span class="mi">0</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">7</span><span class="o">,</span> <span class="n">geevu</span><span class="o">),</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="n">geevu</span><span class="o">));</span> <span class="o">((</span><span class="mi">3</span><span class="o">,</span> <span class="n">czzva</span><span class="o">),</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">czzva</span><span class="o">));</span> <span class="o">((</span><span class="mi">12</span><span class="o">,</span> <span class="n">kemle</span><span class="o">),</span> <span class="o">(</span><span class="mi">12</span><span class="o">,</span> <span class="n">kemle</span><span class="o">));</span> <span class="o">]</span>
+<span class="mi">1</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">7</span><span class="o">,</span> <span class="n">ayqtk</span><span class="o">),</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="n">ayqtk</span><span class="o">));</span> <span class="o">]</span>
+<span class="mi">2</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">13</span><span class="o">,</span> <span class="n">uyrla</span><span class="o">),</span> <span class="o">(</span><span class="mi">13</span><span class="o">,</span> <span class="n">uyrla</span><span class="o">));</span> <span class="o">((</span><span class="mi">6</span><span class="o">,</span> <span class="n">cdrhf</span><span class="o">),</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="n">cdrhf</span><span class="o">));</span> <span class="o">]</span>
+<span class="mi">6</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">13</span><span class="o">,</span> <span class="n">gnzzo</span><span class="o">),</span> <span class="o">(</span><span class="mi">13</span><span class="o">,</span> <span class="n">gnzzo</span><span class="o">));</span> <span class="o">]</span>
+<span class="mi">7</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">5</span><span class="o">,</span> <span class="n">rkolw</span><span class="o">),</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">rkolw</span><span class="o">));</span> <span class="o">((</span><span class="mi">6</span><span class="o">,</span> <span class="n">ukobi</span><span class="o">),</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="n">ukobi</span><span class="o">));</span> <span class="o">((</span><span class="mi">1</span><span class="o">,</span> <span class="n">qxcnk</span><span class="o">),</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">qxcnk</span><span class="o">));</span> <span class="o">((</span><span class="mi">6</span><span class="o">,</span> <span class="n">kcrtm</span><span class="o">),</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="n">kcrtm</span><span class="o">));</span> <span class="o">]</span>
+<span class="mi">8</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">4</span><span class="o">,</span> <span class="n">ayuys</span><span class="o">),</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">ayuys</span><span class="o">));</span> <span class="o">]</span>
+<span class="mi">9</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">4</span><span class="o">,</span> <span class="n">nksfe</span><span class="o">),</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">nksfe</span><span class="o">));</span> <span class="o">((</span><span class="mi">2</span><span class="o">,</span> <span class="n">uldju</span><span class="o">),</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="n">uldju</span><span class="o">));</span> <span class="o">((</span><span class="mi">10</span><span class="o">,</span> <span class="n">hwsjs</span><span class="o">),</span> <span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="n">hwsjs</span><span class="o">));</span> <span class="o">]</span>
+</pre></div>
+</div>
+<p>As we can see, due to hash collisions some buckets are not used at all (e.g., <code class="docutils literal notranslate"><span class="pre">3</span></code>), while others hold multiple values (e.g., <code class="docutils literal notranslate"><span class="pre">9</span></code>).</p>
+</div>
+<div class="section" id="testing-a-simple-hash-table">
+<h2>Testing a Simple Hash-Table<a class="headerlink" href="#testing-a-simple-hash-table" title="Permalink to this headline">¶</a></h2>
+<p>We can also add a number of test for the implementation of our hash-table. For instance, the following test checks that the hash table stores all (distinct) elements of a randomly generated array:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;ListBasedHashTable insert&quot;</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">SimpleHTTester</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">generate_key_value_array</span> <span class="mi">1000</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ht</span> <span class="o">=</span> <span class="n">mk_test_table_from_array_length</span> <span class="n">a</span> <span class="mi">50</span> <span class="k">in</span>
+  <span class="n">test_table_get</span> <span class="n">ht</span> <span class="n">a</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="a-resizable-hash-table">
+<h2>A Resizable hash-table<a class="headerlink" href="#a-resizable-hash-table" title="Permalink to this headline">¶</a></h2>
+<p>Let us change the implementation of a hash-table, so it could grow, as the number of the added elements greatly exceeds the number of buckets. We start from the following definition in the module:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">ResizableListBasedHashTable</span><span class="o">(</span><span class="nc">K</span> <span class="o">:</span> <span class="nc">KeyType</span><span class="o">)</span> <span class="o">=</span> <span class="k">struct</span>
+  <span class="k">type</span> <span class="n">key</span> <span class="o">=</span> <span class="nn">K</span><span class="p">.</span><span class="n">t</span>
+
+  <span class="k">type</span> <span class="k">&#39;</span><span class="n">v</span> <span class="n">hash_table</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">buckets</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">v</span> <span class="kt">list</span> <span class="kt">array</span> <span class="n">ref</span><span class="o">;</span>
+    <span class="n">size</span> <span class="o">:</span> <span class="kt">int</span> <span class="n">ref</span><span class="o">;</span>
+    <span class="n">capacity</span> <span class="o">:</span> <span class="kt">int</span> <span class="n">ref</span><span class="o">;</span>
+  <span class="o">}</span>
+
+  <span class="k">let</span> <span class="n">mk_new_table</span> <span class="n">cap</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">buckets</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">cap</span> <span class="bp">[]</span> <span class="k">in</span>
+    <span class="o">{</span><span class="n">buckets</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">buckets</span><span class="o">;</span>
+     <span class="n">capacity</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">cap</span><span class="o">;</span>
+     <span class="n">size</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">0</span><span class="o">}</span>
+
+   <span class="c">(* More functions are coming here *)</span>
+
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>That is, the hash table now includes its own <code class="docutils literal notranslate"><span class="pre">capacity</span></code> (a number of buckets), along with the <code class="docutils literal notranslate"><span class="pre">size</span></code> (a number of stored elements). Both are subject of future change, as more elements are added, and the table is resized.</p>
+<p>Adding new elements by means of <code class="docutils literal notranslate"><span class="pre">insert</span></code> can now trigger the growth of the hash-table structure. Since it is convenient to define resizing by means of insertion into a <em>new</em> hash-table, which is going to be then swapped with the previous one, we define those two functions as mutually recursive via OCaml’s <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">rec</span> <span class="pre">...</span> <span class="pre">and</span> <span class="pre">...</span></code> construct:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">insert</span> <span class="n">ht</span> <span class="n">k</span> <span class="n">v</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">hs</span> <span class="o">=</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">hash</span> <span class="n">k</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">bnum</span> <span class="o">=</span> <span class="n">hs</span> <span class="ow">mod</span> <span class="o">!(</span><span class="n">ht</span><span class="o">.</span><span class="n">capacity</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">bucket</span> <span class="o">=</span> <span class="o">!(</span><span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">).(</span><span class="n">bnum</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">clean_bucket</span> <span class="o">=</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">filter</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">k&#39;</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">k&#39;</span> <span class="o">&lt;&gt;</span> <span class="n">k</span><span class="o">)</span> <span class="n">bucket</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">new_bucket</span> <span class="o">=</span> <span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">::</span> <span class="n">clean_bucket</span> <span class="k">in</span>
+  <span class="o">!(</span><span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">).(</span><span class="n">bnum</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">new_bucket</span><span class="o">;</span>
+  <span class="c">(* Increase size *)</span>
+  <span class="o">(</span><span class="k">if</span> <span class="nn">List</span><span class="p">.</span><span class="n">length</span> <span class="n">bucket</span> <span class="o">&lt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">length</span> <span class="n">new_bucket</span>
+  <span class="k">then</span> <span class="n">ht</span><span class="o">.</span><span class="n">size</span> <span class="o">:=</span> <span class="o">!(</span><span class="n">ht</span><span class="o">.</span><span class="n">size</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
+  <span class="c">(* Resize *)</span>
+  <span class="k">if</span> <span class="o">!(</span><span class="n">ht</span><span class="o">.</span><span class="n">size</span><span class="o">)</span> <span class="o">&gt;</span> <span class="o">!(</span><span class="n">ht</span><span class="o">.</span><span class="n">capacity</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span>
+  <span class="k">then</span> <span class="n">resize_and_copy</span> <span class="n">ht</span>
+
+<span class="ow">and</span> <span class="n">resize_and_copy</span> <span class="n">ht</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">new_capacity</span> <span class="o">=</span> <span class="o">!(</span><span class="n">ht</span><span class="o">.</span><span class="n">capacity</span><span class="o">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">new_buckets</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">new_capacity</span> <span class="bp">[]</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">new_ht</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">buckets</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">new_buckets</span><span class="o">;</span>
+    <span class="n">capacity</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">new_capacity</span><span class="o">;</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="o">}</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">old_buckets</span> <span class="o">=</span> <span class="o">!(</span><span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">old_buckets</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="n">bucket</span> <span class="o">=</span> <span class="n">old_buckets</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="k">in</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">insert</span> <span class="n">new_ht</span> <span class="n">k</span> <span class="n">v</span><span class="o">)</span> <span class="n">bucket</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="n">ht</span><span class="o">.</span><span class="n">buckets</span> <span class="o">:=</span> <span class="o">!(</span><span class="n">new_ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">);</span>
+  <span class="n">ht</span><span class="o">.</span><span class="n">capacity</span> <span class="o">:=</span> <span class="o">!(</span><span class="n">new_ht</span><span class="o">.</span><span class="n">capacity</span><span class="o">);</span>
+  <span class="n">ht</span><span class="o">.</span><span class="n">size</span> <span class="o">:=</span> <span class="o">!(</span><span class="n">new_ht</span><span class="o">.</span><span class="n">size</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Fetching elements from a resizable hash-table is not very different from doing so with a simple hash table that does not re-size:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">get</span> <span class="n">ht</span> <span class="n">k</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">hs</span> <span class="o">=</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">hash</span> <span class="n">k</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">bnum</span> <span class="o">=</span> <span class="n">hs</span> <span class="ow">mod</span> <span class="o">!(</span><span class="n">ht</span><span class="o">.</span><span class="n">capacity</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">bucket</span> <span class="o">=</span> <span class="o">!(</span><span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">).(</span><span class="n">bnum</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">find_opt</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">k&#39;</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">k&#39;</span> <span class="o">=</span> <span class="n">k</span><span class="o">)</span> <span class="n">bucket</span> <span class="k">in</span>
+  <span class="k">match</span> <span class="n">res</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">Some</span> <span class="o">(_,</span> <span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">Some</span> <span class="n">v</span>
+  <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="nc">None</span>
+</pre></div>
+</div>
+<p>Removal of elements requires a bit of care, so the size of the table would be suitably decreased:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Slow remove - introduce for completeness *)</span>
+<span class="k">let</span> <span class="n">remove</span> <span class="n">ht</span> <span class="n">k</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">hs</span> <span class="o">=</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">hash</span> <span class="n">k</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">bnum</span> <span class="o">=</span> <span class="n">hs</span> <span class="ow">mod</span> <span class="o">!(</span><span class="n">ht</span><span class="o">.</span><span class="n">capacity</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">bucket</span> <span class="o">=</span> <span class="o">!(</span><span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">).(</span><span class="n">bnum</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">clean_bucket</span> <span class="o">=</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">filter</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">k&#39;</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">k&#39;</span> <span class="o">&lt;&gt;</span> <span class="n">k</span><span class="o">)</span> <span class="n">bucket</span> <span class="k">in</span>
+  <span class="o">!(</span><span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">).(</span><span class="n">bnum</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">clean_bucket</span><span class="o">;</span>
+  <span class="o">(</span><span class="k">if</span> <span class="nn">List</span><span class="p">.</span><span class="n">length</span> <span class="n">bucket</span> <span class="o">&gt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">length</span> <span class="n">clean_bucket</span>
+  <span class="k">then</span> <span class="n">ht</span><span class="o">.</span><span class="n">size</span> <span class="o">:=</span> <span class="o">!(</span><span class="n">ht</span><span class="o">.</span><span class="n">size</span><span class="o">)</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+  <span class="k">assert</span> <span class="o">(!(</span><span class="n">ht</span><span class="o">.</span><span class="n">size</span><span class="o">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Finally, printing is defined in almost the same way as before:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">print_hash_table</span> <span class="n">ppk</span> <span class="n">ppv</span> <span class="n">ht</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">Printf</span> <span class="k">in</span>
+  <span class="n">print_endline</span> <span class="o">@@</span> <span class="n">sprintf</span> <span class="s2">&quot;Capacity: %d&quot;</span> <span class="o">!(</span><span class="n">ht</span><span class="o">.</span><span class="n">capacity</span><span class="o">);</span>
+  <span class="n">print_endline</span> <span class="o">@@</span> <span class="n">sprintf</span> <span class="s2">&quot;Size:     %d&quot;</span> <span class="o">!(</span><span class="n">ht</span><span class="o">.</span><span class="n">size</span><span class="o">);</span>
+  <span class="n">print_endline</span> <span class="s2">&quot;Buckets:&quot;</span><span class="o">;</span>
+  <span class="k">let</span> <span class="n">buckets</span> <span class="o">=</span> <span class="o">!(</span><span class="n">ht</span><span class="o">.</span><span class="n">buckets</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="o">!(</span><span class="n">ht</span><span class="o">.</span><span class="n">capacity</span><span class="o">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="n">bucket</span> <span class="o">=</span> <span class="n">buckets</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">if</span> <span class="n">bucket</span> <span class="o">&lt;&gt;</span> <span class="bp">[]</span> <span class="k">then</span> <span class="o">(</span>
+      <span class="c">(* Print bucket *)</span>
+      <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">fold_left</span>
+          <span class="o">(</span><span class="k">fun</span> <span class="n">acc</span> <span class="o">(</span><span class="n">k</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">acc</span> <span class="o">^</span> <span class="o">(</span><span class="n">sprintf</span> <span class="s2">&quot;(%s, %s); &quot;</span><span class="o">)</span> <span class="o">(</span><span class="n">ppk</span> <span class="n">k</span><span class="o">)</span> <span class="o">(</span><span class="n">ppv</span> <span class="n">v</span><span class="o">))</span> <span class="s2">&quot;&quot;</span> <span class="n">bucket</span> <span class="k">in</span>
+      <span class="n">printf</span> <span class="s2">&quot;%d -&gt; [ %s]</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="n">i</span> <span class="n">s</span><span class="o">)</span>
+  <span class="k">done</span>
+</pre></div>
+</div>
+<p>Let us experiment with the resizable implementation by means of defining the following modules:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">RHT</span> <span class="o">=</span> <span class="nc">ResizableListBasedHashTable</span><span class="o">(</span><span class="nc">IntKey</span><span class="o">)</span>
+<span class="k">module</span> <span class="nc">ResizableHTTester</span> <span class="o">=</span> <span class="nc">HashTableTester</span><span class="o">(</span><span class="nc">RHT</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Let us see how the table grows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">generate_key_value_array</span> <span class="mi">20</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">a</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="kt">array</span> <span class="o">=</span>
+  <span class="o">[|(</span><span class="mi">17</span><span class="o">,</span> <span class="s2">&quot;hvevv&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">9</span><span class="o">,</span> <span class="s2">&quot;epsxo&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">14</span><span class="o">,</span> <span class="s2">&quot;prasb&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="s2">&quot;ozdnt&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="s2">&quot;hglck&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">18</span><span class="o">,</span> <span class="s2">&quot;ayqtk&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;kemle&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">11</span><span class="o">,</span> <span class="s2">&quot;kcrtm&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">14</span><span class="o">,</span> <span class="s2">&quot;qxcnk&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">19</span><span class="o">,</span> <span class="s2">&quot;czzva&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;ayuys&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;cdrhf&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="s2">&quot;ukobi&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">19</span><span class="o">,</span> <span class="s2">&quot;hwsjs&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;uyrla&quot;</span><span class="o">);</span>
+    <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="s2">&quot;uldju&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;rkolw&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="s2">&quot;gnzzo&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">19</span><span class="o">,</span> <span class="s2">&quot;nksfe&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;geevu&quot;</span><span class="o">)|]</span>
+
+<span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="nn">ResizableHTTester</span><span class="p">.</span><span class="n">mk_test_table_from_array_length</span> <span class="n">a</span> <span class="mi">5</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">t</span> <span class="o">:</span> <span class="o">(</span><span class="nn">SHT</span><span class="p">.</span><span class="n">key</span> <span class="o">*</span> <span class="nn">SHT</span><span class="p">.</span><span class="n">key</span><span class="o">)</span> <span class="nn">RHT</span><span class="p">.</span><span class="n">hash_table</span> <span class="o">=</span> <span class="o">...</span>
+   <span class="n">size</span> <span class="o">=</span> <span class="o">{</span><span class="n">contents</span> <span class="o">=</span> <span class="mi">20</span><span class="o">};</span> <span class="n">capacity</span> <span class="o">=</span> <span class="o">{</span><span class="n">contents</span> <span class="o">=</span> <span class="mi">20</span><span class="o">}}</span>
+
+<span class="n">utop</span> <span class="o">#</span> <span class="nn">RHT</span><span class="p">.</span><span class="n">print_hash_table</span> <span class="n">pp_kv</span> <span class="n">pp_kv</span> <span class="n">t</span><span class="o">;;</span>
+<span class="nc">Capacity</span><span class="o">:</span> <span class="mi">20</span>
+<span class="nc">Size</span><span class="o">:</span>     <span class="mi">20</span>
+<span class="nc">Buckets</span><span class="o">:</span>
+<span class="mi">2</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">14</span><span class="o">,</span> <span class="n">qxcnk</span><span class="o">),</span> <span class="o">(</span><span class="mi">14</span><span class="o">,</span> <span class="n">qxcnk</span><span class="o">));</span> <span class="o">]</span>
+<span class="mi">3</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">7</span><span class="o">,</span> <span class="n">rkolw</span><span class="o">),</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="n">rkolw</span><span class="o">));</span> <span class="o">((</span><span class="mi">0</span><span class="o">,</span> <span class="n">uldju</span><span class="o">),</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">uldju</span><span class="o">));</span> <span class="o">((</span><span class="mi">19</span><span class="o">,</span> <span class="n">hwsjs</span><span class="o">),</span> <span class="o">(</span><span class="mi">19</span><span class="o">,</span> <span class="n">hwsjs</span><span class="o">));</span> <span class="o">]</span>
+<span class="mi">4</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">19</span><span class="o">,</span> <span class="n">nksfe</span><span class="o">),</span> <span class="o">(</span><span class="mi">19</span><span class="o">,</span> <span class="n">nksfe</span><span class="o">));</span> <span class="o">((</span><span class="mi">4</span><span class="o">,</span> <span class="n">kemle</span><span class="o">),</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">kemle</span><span class="o">));</span> <span class="o">((</span><span class="mi">18</span><span class="o">,</span> <span class="n">ayqtk</span><span class="o">),</span> <span class="o">(</span><span class="mi">18</span><span class="o">,</span> <span class="n">ayqtk</span><span class="o">));</span> <span class="o">((</span><span class="mi">5</span><span class="o">,</span> <span class="n">ozdnt</span><span class="o">),</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">ozdnt</span><span class="o">));</span> <span class="o">]</span>
+<span class="mi">5</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">19</span><span class="o">,</span> <span class="n">czzva</span><span class="o">),</span> <span class="o">(</span><span class="mi">19</span><span class="o">,</span> <span class="n">czzva</span><span class="o">));</span> <span class="o">]</span>
+<span class="mi">6</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">3</span><span class="o">,</span> <span class="n">uyrla</span><span class="o">),</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="n">uyrla</span><span class="o">));</span> <span class="o">]</span>
+<span class="mi">8</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">4</span><span class="o">,</span> <span class="n">ayuys</span><span class="o">),</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">ayuys</span><span class="o">));</span> <span class="o">]</span>
+<span class="mi">9</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">6</span><span class="o">,</span> <span class="n">gnzzo</span><span class="o">),</span> <span class="o">(</span><span class="mi">6</span><span class="o">,</span> <span class="n">gnzzo</span><span class="o">));</span> <span class="o">]</span>
+<span class="mi">10</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">17</span><span class="o">,</span> <span class="n">hvevv</span><span class="o">),</span> <span class="o">(</span><span class="mi">17</span><span class="o">,</span> <span class="n">hvevv</span><span class="o">));</span> <span class="o">((</span><span class="mi">7</span><span class="o">,</span> <span class="n">cdrhf</span><span class="o">),</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="n">cdrhf</span><span class="o">));</span> <span class="o">]</span>
+<span class="mi">11</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">14</span><span class="o">,</span> <span class="n">prasb</span><span class="o">),</span> <span class="o">(</span><span class="mi">14</span><span class="o">,</span> <span class="n">prasb</span><span class="o">));</span> <span class="o">]</span>
+<span class="mi">12</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">11</span><span class="o">,</span> <span class="n">kcrtm</span><span class="o">),</span> <span class="o">(</span><span class="mi">11</span><span class="o">,</span> <span class="n">kcrtm</span><span class="o">));</span> <span class="o">]</span>
+<span class="mi">13</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">5</span><span class="o">,</span> <span class="n">ukobi</span><span class="o">),</span> <span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="n">ukobi</span><span class="o">));</span> <span class="o">]</span>
+<span class="mi">16</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">9</span><span class="o">,</span> <span class="n">epsxo</span><span class="o">),</span> <span class="o">(</span><span class="mi">9</span><span class="o">,</span> <span class="n">epsxo</span><span class="o">));</span> <span class="o">]</span>
+<span class="mi">17</span> <span class="o">-&gt;</span> <span class="o">[</span> <span class="o">((</span><span class="mi">4</span><span class="o">,</span> <span class="n">geevu</span><span class="o">),</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="n">geevu</span><span class="o">));</span> <span class="o">((</span><span class="mi">10</span><span class="o">,</span> <span class="n">hglck</span><span class="o">),</span> <span class="o">(</span><span class="mi">10</span><span class="o">,</span> <span class="n">hglck</span><span class="o">));</span> <span class="o">]</span>
+</pre></div>
+</div>
+<p>To emphasise, even though we have created the table with capacity 5 (via <code class="docutils literal notranslate"><span class="pre">mk_test_table_from_array_length</span> <span class="pre">a</span> <span class="pre">5</span></code>), it has then grew, as more elements were added, so its capacity has quadrupled, becoming 20.</p>
+<p>We can also test a resizable implementation of a hash table similarly to how we tested a simple one:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;ResizableHashTable insert&quot;</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">ResizableHTTester</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">generate_key_value_array</span> <span class="mi">1000</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ht</span> <span class="o">=</span> <span class="n">mk_test_table_from_array_length</span> <span class="n">a</span> <span class="mi">50</span> <span class="k">in</span>
+  <span class="n">test_table_get</span> <span class="n">ht</span> <span class="n">a</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="comparing-performance-of-different-implementations">
+<h2>Comparing performance of different implementations<a class="headerlink" href="#comparing-performance-of-different-implementations" title="Permalink to this headline">¶</a></h2>
+<p>Which implementation of a hash-table behaves better in practice? We are going to answer this questions by setting up an experiment. For this, we define the following two functions for stress-testing our two implementations:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert_and_get_bulk_simple</span> <span class="n">a</span> <span class="n">m</span> <span class="o">=</span>
+  <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&quot;Creating simple hash table:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">;</span>
+  <span class="k">let</span> <span class="n">ht</span> <span class="o">=</span> <span class="n">time</span> <span class="o">(</span><span class="nn">SimpleHTTester</span><span class="p">.</span><span class="n">mk_test_table_from_array_length</span> <span class="n">a</span><span class="o">)</span> <span class="n">m</span> <span class="k">in</span>
+  <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&quot;Fetching from simple hash table on the array of size %d:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">(</span><span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">a</span><span class="o">);</span>
+  <span class="k">let</span> <span class="o">_</span> <span class="o">=</span> <span class="n">time</span> <span class="nn">SimpleHTTester</span><span class="p">.</span><span class="n">test_table_get</span> <span class="n">ht</span> <span class="n">a</span> <span class="k">in</span> <span class="bp">()</span>
+
+<span class="k">let</span> <span class="n">insert_and_get_bulk_resizable</span> <span class="n">a</span> <span class="n">m</span> <span class="o">=</span>
+  <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&quot;Creating resizable hash table:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">;</span>
+  <span class="k">let</span> <span class="n">ht</span> <span class="o">=</span> <span class="n">time</span> <span class="o">(</span><span class="nn">ResizableHTTester</span><span class="p">.</span><span class="n">mk_test_table_from_array_length</span> <span class="n">a</span><span class="o">)</span> <span class="n">m</span> <span class="k">in</span>
+  <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&quot;Fetching from resizable hash table on the array of size %d:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">(</span><span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">a</span><span class="o">);</span>
+  <span class="k">let</span> <span class="o">_</span> <span class="o">=</span> <span class="n">time</span> <span class="nn">ResizableHTTester</span><span class="p">.</span><span class="n">test_table_get</span> <span class="n">ht</span> <span class="n">a</span> <span class="k">in</span> <span class="bp">()</span>
+</pre></div>
+</div>
+<p>The next function is going to run both <code class="docutils literal notranslate"><span class="pre">insert_and_get_bulk_simple</span></code> and <code class="docutils literal notranslate"><span class="pre">insert_and_get_bulk_resizable</span></code> on the same array (of a given size <code class="docutils literal notranslate"><span class="pre">n</span></code>), creating two hash-tables of the initial size <code class="docutils literal notranslate"><span class="pre">m</span></code> and measuring</p>
+<ul class="simple">
+<li><ol class="first loweralpha">
+<li>How long does it take to fill up the table, and</li>
+</ol>
+</li>
+<li><ol class="first loweralpha" start="2">
+<li>How long does it take to fetch the elements</li>
+</ol>
+</li>
+</ul>
+<p>This is done as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">compare_hashing_time</span> <span class="n">n</span> <span class="n">m</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">generate_key_value_array</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="n">insert_and_get_bulk_simple</span> <span class="n">a</span> <span class="n">m</span><span class="o">;</span>
+  <span class="n">print_endline</span> <span class="s2">&quot;&quot;</span><span class="o">;</span>
+  <span class="n">insert_and_get_bulk_resizable</span> <span class="n">a</span> <span class="n">m</span><span class="o">;</span>
+</pre></div>
+</div>
+<p>When the number of buckets is of the same order of magnitude as the number of items being inserted, the simple hash-table exhibits performance better than the resizable one (as resizing takes considerable amount of time):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="n">compare_hashing_time</span> <span class="mi">10000</span> <span class="mi">1000</span><span class="o">;;</span>
+<span class="nc">Creating</span> <span class="n">simple</span> <span class="n">hash</span> <span class="n">table</span><span class="o">:</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">005814</span> <span class="n">sec</span>
+<span class="nc">Fetching</span> <span class="n">from</span> <span class="n">simple</span> <span class="n">hash</span> <span class="n">table</span> <span class="n">on</span> <span class="n">the</span> <span class="kt">array</span> <span class="k">of</span> <span class="n">size</span> <span class="mi">10000</span><span class="o">:</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">000000</span> <span class="n">sec</span>
+
+<span class="nc">Creating</span> <span class="n">resizable</span> <span class="n">hash</span> <span class="n">table</span><span class="o">:</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">010244</span> <span class="n">sec</span>
+<span class="nc">Fetching</span> <span class="n">from</span> <span class="n">resizable</span> <span class="n">hash</span> <span class="n">table</span> <span class="n">on</span> <span class="n">the</span> <span class="kt">array</span> <span class="k">of</span> <span class="n">size</span> <span class="mi">10000</span><span class="o">:</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">000000</span> <span class="n">sec</span>
+</pre></div>
+</div>
+<p>However, for a number of buckets much smaller than the number of elements to be inserted, the benefits of dynamic resizing become clear:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="n">compare_hashing_time</span> <span class="mi">25000</span> <span class="mi">50</span><span class="o">;;</span>
+<span class="nc">Creating</span> <span class="n">simple</span> <span class="n">hash</span> <span class="n">table</span><span class="o">:</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">477194</span> <span class="n">sec</span>
+<span class="nc">Fetching</span> <span class="n">from</span> <span class="n">simple</span> <span class="n">hash</span> <span class="n">table</span> <span class="n">on</span> <span class="n">the</span> <span class="kt">array</span> <span class="k">of</span> <span class="n">size</span> <span class="mi">25000</span><span class="o">:</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">000002</span> <span class="n">sec</span>
+
+<span class="nc">Creating</span> <span class="n">resizable</span> <span class="n">hash</span> <span class="n">table</span><span class="o">:</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">020068</span> <span class="n">sec</span>
+<span class="nc">Fetching</span> <span class="n">from</span> <span class="n">resizable</span> <span class="n">hash</span> <span class="n">table</span> <span class="n">on</span> <span class="n">the</span> <span class="kt">array</span> <span class="k">of</span> <span class="n">size</span> <span class="mi">25000</span><span class="o">:</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">000000</span> <span class="n">sec</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

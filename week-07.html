@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>8.4. Exercises &mdash; YSC2229 2020</title>
+  <title>Week 07: Hashing-Based Data Structures &mdash; YSC2229 2020</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="9. Midterm Project: Memory Allocation and Reclamation" href="midterm.html" />
-    <link rel="prev" title="8.3. Queues" href="week-06-queues.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -78,7 +76,7 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
@@ -86,17 +84,7 @@
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="week-06-abstract-data-types.html">8.1. Information Hiding and Abstraction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-06-stacks.html">8.2. Stacks</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html">8.3. Queues</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">8.4. Exercises</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#exercise-1">8.4.1. Exercise 1</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#exercise-2">8.4.2. Exercise 2</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
 </ul>
 
@@ -143,9 +131,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="week-06.html">8. Week 06: Abstract Data Types</a> &raquo;</li>
-        
-      <li>8.4. Exercises</li>
+      <li>Week 07: Hashing-Based Data Structures</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -162,15 +148,38 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="exercises">
-<h1>8.4. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="exercise-1">
-<h2>8.4.1. Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
-<p>Implement a queue data structure, which does not use OCaml arrays or double-linked lists, and at most two values of type <code class="docutils literal notranslate"><span class="pre">ref</span></code>. Make sure it satisfies the <code class="docutils literal notranslate"><span class="pre">Queue</span></code> interface. To do so, use two OCaml lists to represent the part for “enqueueing” and “dequeueing”. What happens if one of them gets empty? Argue that the average-case complexity for enqueue and dequeue operations of your implementation is linear.</p>
-</div>
-<div class="section" id="exercise-2">
-<h2>8.4.2. Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
-<p>Implement a procedure for “reversing” a doubly-linked list, starting from its arbitrary node (which might be at its beginning, end, or in the middle). Make sure that your procedure works in linear time.</p>
+  <div class="section" id="week-07-hashing-based-data-structures">
+<h1>Week 07: Hashing-Based Data Structures<a class="headerlink" href="#week-07-hashing-based-data-structures" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="week-07-hash-tables.html">Hash-tables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables.html#allocation-by-hashing-keys">Allocation by hashing keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables.html#operations-on-hash-tables">Operations on hash-tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables.html#implementing-hash-tables">Implementing hash-tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables.html#hash-tables-in-action">Hash-tables in action</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-07-hash-tables-again.html">Generalised Hash-Tables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#ocaml-s-universal-hashing">OCaml’s universal hashing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#redefining-hash-table-signature">Redefining hash-table signature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#a-framework-for-testing-hash-tables">A framework for testing hash-tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#a-simple-list-based-hash-table">A simple list-based hash-table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#testing-a-simple-hash-table">Testing a Simple Hash-Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#a-resizable-hash-table">A Resizable hash-table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#comparing-performance-of-different-implementations">Comparing performance of different implementations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-07-bloom.html">Bloom Filters and Their Applications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#high-level-intuition">High-level intuition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#bloom-filter-signature">Bloom filter signature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#implementing-a-bloom-filter">Implementing a Bloom filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#experimenting-with-bloom-filters">Experimenting with Bloom filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#testing-bloom-filters">Testing Bloom Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#improving-simple-hash-table-with-a-bloom-filter">Improving Simple Hash-table with a Bloom filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#comparing-performance">Comparing performance</a></li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 
@@ -179,15 +188,6 @@
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="midterm.html" class="btn btn-neutral float-right" title="9. Midterm Project: Memory Allocation and Reclamation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="week-06-queues.html" class="btn btn-neutral" title="8.3. Queues" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

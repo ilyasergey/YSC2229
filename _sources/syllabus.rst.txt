@@ -41,12 +41,12 @@ Week 06
     * Abstract Data Types
     * Stacks and Queues
     * Testing Abstract Data Types
-    * Hash-tables
 
 **Mid-Term Project**
 
 Week 07
-    * Hash-Tables, Revisited
+    * Hash-tables
+    * Generalised Hash-Tables
     * Bloom Filters and Their Applications
 
 Week 08
