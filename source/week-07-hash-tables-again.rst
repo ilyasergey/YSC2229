@@ -198,7 +198,7 @@ As we can see, due to hash collisions some buckets are not used at all (e.g., ``
 Testing a Simple Hash-Table
 ---------------------------
 
-We can also add a number of test for the implementation of our hash-table. For instance, the following test checks that the hash table stores all (distinct) elements of a randomly generated array::
+We can also add a number of tests for the implementation of our hash-table. For instance, the following test checks that the hash table stores all (distinct) elements of a randomly generated array::
 
  let%test "ListBasedHashTable insert" = 
    let open SimpleHTTester in
@@ -278,7 +278,9 @@ Fetching elements from a resizable hash-table is not very different from doing s
     | Some (_, v) -> Some v
     | _ -> None
 
-Removal of elements requires a bit of care, so the size of the table would be suitably decreased::
+Removal of elements requires a bit of care, so the size ``ht.size`` of
+the table (i.e., the number of elements it contains) would be suitably
+decreased::
 
   (* Slow remove - introduce for completeness *)
   let remove ht k = 

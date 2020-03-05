@@ -7,7 +7,12 @@ Bloom Filters and Their Applications
 
 * File: ``BloomFilters.ml``
 
-Hashing can be useful for other applications besides distributing elements in an array when implementing a hash-table. for instance, we can also employ hashing for compactly representing the information of whether a certain element is or is not in a given set. to do so, let us first the introduce the following notion dealing with algorithms and data structures giving occasionally "wrong" answers.
+Hashing can be useful for other applications besides distributing
+elements in an array when implementing a hash-table. For instance, we
+can also employ hashing for compactly representing the information of
+whether a certain element is or is not in a given set. To do so, let
+us first the introduce the following notion dealing with algorithms
+and data structures occasionally giving "wrong" answers.
 
 .. admonition:: True Negatives and False Positives
 
@@ -21,9 +26,17 @@ Hashing can be useful for other applications besides distributing elements in an
 
   * when it answers "yes" the above question, it means that "the element ``e`` might or might not be in set ``s``".
 
-  This behaviour of the data structure is typicall called as "sound-but-incomplete". The first scenario (precise no-answer) is called "true negatives", while the case of the second scenario, in which the answer "yes" is given for a certain element *not* in the set is called "false positive" (if the element is in the set, it would be "true positive").
+  This behaviour of the data structure is typically called as
+  "sound-but-incomplete". The first scenario (precise no-answer) is
+  called "true negatives", while the case of the second scenario, in
+  which the answer "yes" is given for a certain element *not* in the
+  set is called "false positive" (if the element is in the set, it
+  would be "true positive").
 
-Data structure that give false positives, but no false negatives (the answer "no" is precise), while providing a compact representation, are very useful and are employed in applications, that might tolerate imprecise "yes"-answers, given conservatively.
+Data structures that experience false positives, but no false
+negatives (the answer "no" is precise), while providing a compact
+representation, are very useful and are employed in applications, that
+might tolerate imprecise "yes"-answers, given conservatively.
 
 In this section, we will study one of such data structures called `Bloom filter <https://en.wikipedia.org/wiki/Bloom_filter>`_ --- a compact representation of a "lossy" set that provides precisely this functionality. Bloom filters are widely used in practice:
 
@@ -36,7 +49,11 @@ In this section, we will study one of such data structures called `Bloom filter 
 High-level intuition
 --------------------
 
-Blom filter is a very simple data structure, which uses hashing. It is represented by a large boolean/bit array (you can think of it of an array of 0s and 1s) of size ``m``, and a finite number ``k`` of different hash functions, which map elements to be added to a set of interest to ``int`` (as usual). 
+Bloom filter is a very simple data structure, which uses hashing. It
+is represented by a large boolean/bit array (you can think of it of an
+array of 0s and 1s) of size ``m``, and a finite number ``k`` of
+different hash-functions, which map elements to be added to a set of
+interest to ``int`` (as usual).
 
 For each new element to be added to the set, all ``k`` hash functions are used to determine specific bits, corresponding to this element in the array. The combination of those positions is the element's "image". For instance, the following image shows a Bloom filter with ``m = 15`` and ``k = 3``, with an example of three elements, X, Y, and Z, added to it.
 
@@ -44,7 +61,7 @@ For each new element to be added to the set, all ``k`` hash functions are used t
    :width: 800px
    :align: center
 
-To determine whether an element is in the set, one needs to compute its ``k`` hashes, and check the bits in the corresponding array in a constant time (:math:`O(k)`). Having more than 1 hash function reduces the risk of collision if the number of elements is smaller than the size of the filter, however, two or more different elements can indeed had all similar ``k`` hashes.
+To determine whether an element is in the set, one needs to compute its ``k`` hashes, and check the bits in the corresponding array in a constant time (:math:`O(k)`). Having more than 1 hash function reduces the risk of collision if the number of elements is smaller than the size of the filter, however, two or more different elements can indeed have all similar ``k`` hashes.
 
 Elements are **never** removed from a Bloom filter.
 
@@ -73,7 +90,7 @@ The Bloom filter itself is a functor, parameterised by ``BloomHashing``::
 Implementing a Bloom filter
 ---------------------------
 
-The implementation of Bloom filter is simply an array of booleans (which we use to represent 0/1-bits) of a fixed size::
+The implementation of the Bloom filter is simply an array of booleans (which we use to represent 0/1-bits) of a fixed size::
 
  module BloomFilterImpl : BloomFilter = functor
    (H: BloomHashing) -> struct
@@ -281,12 +298,13 @@ As announced before, removal is prohibited::
 Comparing performance
 ---------------------
 
-Let us instantiate the Bloom-table::
+Let us instantiate the Bloom filter-enhanced hash table::
 
  module BHT = BloomHashTable(IntStringHashing)
  module BHTTester = HashTableTester(BHT)
 
-Similarly to methods for testing performance of previiously defined hash-tables, we implement the following function::
+Similarly to methods for testing performance of previously defined
+hash-tables, we implement the following function::
 
  let insert_and_get_bulk_bloom a m = 
    Printf.printf "Creating Bloom hash table:\n";
@@ -294,7 +312,7 @@ Similarly to methods for testing performance of previiously defined hash-tables,
    Printf.printf "Fetching from Bloom hash table on the array of size %d:\n" (Array.length a);
    let _ = time BHTTester.test_table_get ht a in ()
 
-Now, leet us compare the Bloom filter-powered simple table versus
+Now, let us compare the Bloom filter-powered simple table versus
 vanilla simple hash-table::
 
  let compare_hashing_time_simple_bloom n m = 
@@ -303,8 +321,8 @@ vanilla simple hash-table::
    print_endline "";
    insert_and_get_bulk_bloom a m
 
-Running the expriments. Not so much gain when a number of elements and
-the buckets are in the same ballpark::
+Running the experiments, we observe not so much gain when a number of
+elements and the buckets are in the same ballpark::
 
  utop # compare_hashing_time_simple_bloom 10000 5000;;
  Creating simple hash table:

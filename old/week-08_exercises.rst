@@ -41,4 +41,4 @@ Design and implement a randomised testing procedure for queues, which would inse
 Exercise 3
 ----------
 
-Implement a resizable insert-only hash-table with a bloom filter.  Compare its performance to a regular resizable hash-table.
+Implement a resizable insert-only hash-table with a Bloom filter.  Compare its performance to a regular resizable hash-table.
