@@ -1,7 +1,7 @@
 .. -*- mode: rst -*-
 
-Hash-Tables, Revisited
-======================
+Generalised Hash-Tables
+=======================
 
 * File: ``BetterHashTable.ml``
 
@@ -165,8 +165,8 @@ As the last touch, we add the function to print the contents of the table::
 
 Let us now instantiate the table to use pairs of type ``int * string`` as keys, as well as the corresponding testing framework developed above::
 
- module IntString = struct type t = int * string end
- module SHT = SimpleListBasedHashTable(IntString)
+ module IntKey = struct type t = int end
+ module SHT = SimpleListBasedHashTable(IntKey)
  module SimpleHTTester = HashTableTester(SHT)
 
  let pp_kv (k, v) = Printf.sprintf "(%d, %s)" k v
@@ -311,7 +311,7 @@ Finally, printing is defined in almost the same way as before::
 
 Let us experiment with the resizable implementation by means of defining the following modules::
 
- module RHT = ResizableListBasedHashTable(IntString)
+ module RHT = ResizableListBasedHashTable(IntKey)
  module ResizableHTTester = HashTableTester(RHT)
 
 Let us see how the table grows::
