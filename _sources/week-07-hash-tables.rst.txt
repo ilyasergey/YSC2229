@@ -91,15 +91,15 @@ Then, when trying to retrieve an element with a key ``k``, one has to
 * Go through the bucket with a linear search, finding the element
   whose key is precisely ``k``.
 
-That is, it is okay for elements with different keys to collude on the
+That is, it is okay for elements with different keys to collide on the
 same bucket, as more elaborated search will be performed in each
 bucket.
 
 Why hash-tables are so efficient? As long as the size of the carrier
 array is greater or roughly the same as the number of inserted
-elements so far, and there were not many collusions, we can assume
+elements so far, and there were not many collisions, we can assume
 that each bucket has a very small number of elements (for which the
-collusions have happened while determining their bucket). Therefore,
+collisions have happened while determining their bucket). Therefore,
 as long as the size of a bucket is limited by a certain constant, the
 search will boil down to (a) computing a bucket for a key in a
 constant time and (b) scanning the bucket for the right element, both

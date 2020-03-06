@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3. Week 01: Introduction &mdash; YSC2229 2020</title>
+  <title>Week 08: Searching in Strings &mdash; YSC2229 2020</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="3.1. Introduction" href="week-01-intro.html" />
-    <link rel="prev" title="2.3. Checking your setup" href="setup.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -78,18 +76,10 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">3. Week 01: Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-01-intro.html">3.1. Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-testing.html">3.2. Testing OCaml Code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-correctness.html">3.3. Correctness of Recursive Algorithms</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-loops.html">3.4. From Recursion to Imperative Loops</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-insert-sort.html">3.5. Sorting Lists via Insertion Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-exercises.html">3.6. Exercises</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
@@ -142,7 +132,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>3. Week 01: Introduction</li>
+      <li>Week 08: Searching in Strings</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -159,42 +149,39 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="week-01-introduction">
-<h1>3. Week 01: Introduction<a class="headerlink" href="#week-01-introduction" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="week-08-searching-in-strings">
+<h1>Week 08: Searching in Strings<a class="headerlink" href="#week-08-searching-in-strings" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="week-01-intro.html">3.1. Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-01-intro.html#about-this-course">3.1.1. About this course</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-intro.html#what-problems-are-solved-by-algorithms">3.1.2. What problems are solved by algorithms?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-intro.html#data-structures">3.1.3. Data structures</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-intro.html#what-is-analysis-of-algorithms">3.1.4. What is analysis of algorithms?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-08-string-search.html">Substring Search</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-08-string-search.html#testing-a-search-procedure">Testing a search procedure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-string-search.html#a-naive-search">A naive search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-string-search.html#a-recursive-version-of-the-naive-search">A recursive version of the naive search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-string-search.html#generating-strings-for-testing-search-function">Generating strings for testing search function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-string-search.html#testing-naive-search">Testing naive search</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-01-testing.html">3.2. Testing OCaml Code</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-01-correctness.html">3.3. Correctness of Recursive Algorithms</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-01-correctness.html#warm-up-finding-a-minimum-in-a-list-of-integers">3.3.1. Warm-up: finding a minimum in a list of integers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-correctness.html#reasoning-about-termination">3.3.2. Reasoning about termination</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-correctness.html#reasoning-about-correctness">3.3.3. Reasoning about correctness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-08-rabin-karp.html">Rabin-Karp Search</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-08-rabin-karp.html#recursive-version-of-rabin-karp-search">Recursive version of Rabin-Karp search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-rabin-karp.html#comparing-performance-of-search-procedures">Comparing performance of search procedures</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-01-loops.html">3.4. From Recursion to Imperative Loops</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-01-loops.html#loop-variants">3.4.1. Loop variants</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-loops.html#loop-invariants">3.4.2. Loop invariants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-08-kmp.html">Knuth–Morris–Pratt Algorithm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#revisiting-the-naive-algorithm">Revisiting the naive algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#returning-the-interrupt-index">Returning the Interrupt Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#relating-matched-text-and-the-pattern">Relating Matched Text and the pattern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#fast-forwarding-search-using-interrupt-index">Fast-Forwarding Search using Interrupt Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#extracting-the-interrupt-index">Extracting the Interrupt Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#exploiting-the-prefix-equality">Exploiting the Prefix Equality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#tabulating-the-interrupt-indices">Tabulating the interrupt indices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#boot-strapping-the-table">Boot-strapping the table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#comparing-performance-again">Comparing performance, again</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-01-insert-sort.html">3.5. Sorting Lists via Insertion Sort</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-01-insert-sort.html#insertion-sort-implementation">3.5.1. Insertion sort implementation</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-01-exercises.html">3.6. Exercises</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-01-exercises.html#exercise-1">3.6.1. Exercise 1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-exercises.html#exercise-2">3.6.2. Exercise 2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-exercises.html#exercise-3">3.6.3. Exercise 3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-exercises.html#exercise-4">3.6.4. Exercise 4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-exercises.html#exercise-5">3.6.5. Exercise 5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-exercises.html#exercise-6">3.6.6. Exercise 6</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-exercises.html#exercise-7">3.6.7. Exercise 7</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-exercises.html#exercise-8">3.6.8. Exercise 8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-08-exercises.html">Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-08-exercises.html#exercise-1">Exercise 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-exercises.html#exercise-2">Exercise 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-exercises.html#exercise-3">Exercise 3</a></li>
 </ul>
 </li>
 </ul>
@@ -206,15 +193,6 @@
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="week-01-intro.html" class="btn btn-neutral float-right" title="3.1. Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="setup.html" class="btn btn-neutral" title="2.3. Checking your setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>
