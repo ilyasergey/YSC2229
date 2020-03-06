@@ -47,7 +47,10 @@ The search procedure now takes advantage of it::
 
 **Question:** what is the worst-case complexity of Rabin-Karp search?
 
-**Question:** What do you think would be the strings on which Rabin-Karp search performs more efficiently than naive search?
+**Question:** why on regular strungs Rabin-Karp search is not so efficient?
+
+**Question:** What do you think would be the strings on which
+ Rabin-Karp search performs more efficiently than naive search?
 
 .. Complexity: :math:`O(n)`
 
@@ -94,7 +97,7 @@ Comparing performance of search procedures
 
 * File ``StringSearchComparison.ml``
 
-Let us design the experiment to compare RK search and nive search::
+Let us design the experiment to compare RK search and naive search::
 
  let evaluate_search search name s ps pn = 
    print_endline "";
@@ -120,7 +123,11 @@ That does not show so much difference::
  [Rabin-Karp] Pattern in: Execution elapsed time: 1.112753 sec
  [Rabin-Karp] Pattern not in: Execution elapsed time: 2.155506 sec
 
-In fact, Rabin-Karp is even a bit slower!
+In fact, Rabin-Karp is even a bit slower! The reason for this is that
+Rabin-Karp rolling has has too many collisions. In fact, we almost
+always have to compare strings in the same way as in the naive hash,
+but, in addition to that we also have to maintain the rolling hash
+value.
 
 Now, let us show when it shines. For this, let us create very
 repetitive strings::
