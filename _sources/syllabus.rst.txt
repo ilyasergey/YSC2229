@@ -46,7 +46,7 @@ Week 06
 
 Week 07
     * Hash-tables
-    * Generalised Hash-Tables
+    * Scalable Hash-Tables
     * Bloom Filters and Their Applications
 
 Week 08
@@ -57,13 +57,13 @@ Week 08
 Week 09
     * Constraint Solving via Backtracking
     * Optimisation Problems and Dynamic Programming
-    * File Input and Output in OCaml
-    * Binary Encoding of Data
+    * Equivalance Classes and Union-Find
 
 Week 10
+    * File Input and Output in OCaml
+    * Binary Encoding of Data
     * Run-Length Encoding
     * Huffman Encoding
-    * Equivalance Classes and Union-Find
 
 Week 11
     * Representing Sets via Binary Search Trees
@@ -79,7 +79,5 @@ Week 13
     * Points, Segments and their Properties
     * Working with Polygons
     * Convex Hulls
-
-
 
 **Final Project**
