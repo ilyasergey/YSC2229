@@ -5,7 +5,7 @@ Rabin-Karp Search
 
 * File: ``RabinKarp.ml``
 
-Th idea of hashing studied before for the implementations of hash-tables and bloom filters, is also very useful for improving the efficiency of detecting patterns in strings. 
+Th idea of hashing studied before for the implementations of hash-tables and Bloom filters, is also very useful for improving the efficiency of detecting patterns in strings. 
 
 The idea of Rabin-Karp algorithm is to speed up the ordinary search by means of computing the *rolling hash* of the sub-string currently being checked, and comparing it to the hash of the of the pattern.
 

@@ -87,7 +87,11 @@ Generating strings for testing search function
 
 How do we generate random strings for testing search? 
 
-This can be done using the function ``generate_words``, which we generated before. We simply  create a list of words and concatenate it to produce the string ``text``. We can also create the list of words that are (with a very hight probability) are not in the obtained string ``text``::
+This can be done using the function ``generate_words``, which we
+generated before. We simply create a list of words and concatenate it
+to produce the string ``text``. We can also create the list of words
+that are (with a very high probability) not in the obtained string
+``text``::
 
  let generate_string_and_patterns n m = 
    let ps_in = generate_words n m in
@@ -97,7 +101,9 @@ This can be done using the function ``generate_words``, which we generated befor
    let s = String.concat "" (List.rev ps_in) in
    (s, ps_in, ps_not_in)
 
-We can provide a higher-order testing procedure for strings, so it would test on a specific string, and on randomly-generated strings (for true positives and negatives), as follows::
+We can provide a higher-order testing procedure for strings, so it
+would test on a specific string, and on randomly-generated strings
+(for both positive and negative results), as follows::
 
  let search_tester search = 
    let (s, ps, pn) = generate_string_and_patterns 500 5 in
