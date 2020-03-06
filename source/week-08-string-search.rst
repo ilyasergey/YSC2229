@@ -39,16 +39,13 @@ We can implement a naive search as follows. Notice that OCaml syntax ``s.[i]`` a
    else
      let k = ref 0 in
      let res = ref None in
-     let stop = ref false in
-     while !k <= n - m && not !stop do
+     while !k <= n - m && !res = None do
        let j = ref 0 in
        while !j <= m - 1 && 
              text.[!k + !j] = pattern.[!j]
        do  j := !j + 1  done;
        if !j = m
-       then (
-         res := Some !k; 
-         stop := true)
+       then res := Some !k
        else
          k := !k + 1
      done;

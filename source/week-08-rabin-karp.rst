@@ -99,9 +99,9 @@ Let us design the experiment to compare RK search and nive search::
  let evaluate_search search name s ps pn = 
    print_endline "";
    Printf.printf "[%s] Pattern in: " name;
-   Week_03.time (List.iter (fun p -> test_pattern_in search s p)) ps;
+   time (List.iter (fun p -> test_pattern_in search s p)) ps;
    Printf.printf "[%s] Pattern not in: " name;
-   Week_03.time (List.iter (fun p -> test_pattern_not_in search s p)) pn
+   time (List.iter (fun p -> test_pattern_not_in search s p)) pn
 
 First, let's compare on  random strings::
 
