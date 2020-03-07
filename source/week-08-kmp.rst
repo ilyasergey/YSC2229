@@ -9,15 +9,36 @@ Knuth–Morris–Pratt Algorithm
 
 This is the first algorithm for string matching in :math:`O(n)`, where :math:`n` is the size of the text where the search takes place). It has been independently invented by Donald Knuth and Vaughan Pratt, and James H. Morris, who published it together in a joint paper. 
 
-It is known as one of the most non-trivial basic algorithms, and is commonly just presented as-is, with explanations of its pragmatics and the complexity. In this chapter, we will take a look at a systematic derivation of the algorithm from a naive string search, eventually touching upon a very interesting (although somewhat non-obvious) idea --- *interrupted partial matches can be used to optimise the search in the rest of the text by "fast-forwarding" through several positions*, without re-matching completely starting from the next character.
+It is known as one of the most non-trivial basic algorithms, and is
+commonly just presented as-is, with explanations of its pragmatics and
+the complexity. In this chapter, we will take a look at a systematic
+derivation of the algorithm from a naive string search, eventually
+touching upon a very interesting (although somewhat non-obvious) idea
+--- *interrupted partial matches can be used to optimise the search in
+the rest of the text by "fast-forwarding" through several positions*,
+without re-matching completely starting from the next character.
 
-The material of this chapter is based on `this blog article <http://gallium.inria.fr/blog/kmp/>`_, which, in its turn is based on `this research paper <https://www.brics.dk/RS/02/32/BRICS-RS-02-32.pdf>`_ by `Prof. Olivier Danvy <https://www.yale-nus.edu.sg/about/faculty/olivier-danvy/>`_ and his co-authors.
+A `very nice video explaining KMP
+<https://www.youtube.com/watch?v=V5-7GzOfADQ>`_ is available on
+YouTube.
+
+
+This chapter shows how to systematically derive KMP from the naive
+search. We will not cover this in the lecture, but you are encouraged
+to go through the steps below. The material of this chapter is based
+on `this blog article <http://gallium.inria.fr/blog/kmp/>`_, which, in
+its turn is based on `this research paper
+<https://www.brics.dk/RS/02/32/BRICS-RS-02-32.pdf>`_ by `Prof. Olivier
+Danvy <https://www.yale-nus.edu.sg/about/faculty/olivier-danvy/>`_ and
+his co-authors.
 
 
 Revisiting the naive algorithm
 ------------------------------
 
-Let us start by re-implementing the naive research algorithm with a single loop that handles both indices ``k`` and ``j``, soe the former ranges over the text ,and the latter goes over the pattern::
+Let us start by re-implementing the naive research algorithm with a
+single loop that handles both indices ``k`` and ``j``, so the former
+ranges over the text, and the latter goes over the pattern::
 
  let naive_search_one_loop text pattern = 
    let n = length text in
@@ -78,7 +99,7 @@ The result is than processed by a generic function ``global_search`` that conver
    in
    global_search search
 
-The signature of th inner ``search`` seems to verbose, but it is important for the derivation, which is coming: the first three parameters are the pattern, its size ``m`` and the text; ``n`` stands for the size of the text, but it also limits the search range on the right (and will be a subject to manipulation in the future). Finally, ``j`` and ``k`` are the current (and also initial for the first run) values of the running indices within ``pattern`` and ``text``, correspondingly.
+The signature of the inner ``search`` seems quite verbose, but it is important for the derivation, which is coming: the first three parameters are the pattern, its size ``m`` and the text; ``n`` stands for the size of the text, but it also limits the search range on the right (and will be a subject to manipulation in the future). Finally, ``j`` and ``k`` are the current (and also initial for the first run) values of the running indices within ``pattern`` and ``text``, correspondingly.
 
 So far, we don't make any interesting use of a interrupt index ``j`` in the case when the inner ``search`` returns ``Interrupted j``
 
@@ -301,7 +322,10 @@ Notice that the mutual dependency between ``loop`` and ``table`` is resolved, as
 
 This concludes our derivation of the Knuth-Morris-Pratt (KMP) algorithm, whose main idea is to *pre-compute* the table of fast-forwarding shifts for a given pattern, which is then used to avoid redundant work for re-matching already observed parts and the corresponding back-tracking.
 
-The fact that the lookup in the table takes constant and the main iteration through ``text`` always progresses without backtracking, yields the linear complexity result :math:`O(n)` for the final algorithm.
+The fact that the lookup in the table takes constant and the main
+iteration through ``text`` always progresses without backtracking,
+yields the linear complexity result :math:`O(n)` for the final
+algorithm.
 
 Comparing performance, again
 ----------------------------
