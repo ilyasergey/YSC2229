@@ -155,11 +155,28 @@
 <li>File: <code class="docutils literal notranslate"><span class="pre">KMP.ml</span></code></li>
 </ul>
 <p>This is the first algorithm for string matching in <span class="math notranslate nohighlight">\(O(n)\)</span>, where <span class="math notranslate nohighlight">\(n\)</span> is the size of the text where the search takes place). It has been independently invented by Donald Knuth and Vaughan Pratt, and James H. Morris, who published it together in a joint paper.</p>
-<p>It is known as one of the most non-trivial basic algorithms, and is commonly just presented as-is, with explanations of its pragmatics and the complexity. In this chapter, we will take a look at a systematic derivation of the algorithm from a naive string search, eventually touching upon a very interesting (although somewhat non-obvious) idea — <em>interrupted partial matches can be used to optimise the search in the rest of the text by “fast-forwarding” through several positions</em>, without re-matching completely starting from the next character.</p>
-<p>The material of this chapter is based on <a class="reference external" href="http://gallium.inria.fr/blog/kmp/">this blog article</a>, which, in its turn is based on <a class="reference external" href="https://www.brics.dk/RS/02/32/BRICS-RS-02-32.pdf">this research paper</a> by <a class="reference external" href="https://www.yale-nus.edu.sg/about/faculty/olivier-danvy/">Prof. Olivier Danvy</a> and his co-authors.</p>
+<p>It is known as one of the most non-trivial basic algorithms, and is
+commonly just presented as-is, with explanations of its pragmatics and
+the complexity. In this chapter, we will take a look at a systematic
+derivation of the algorithm from a naive string search, eventually
+touching upon a very interesting (although somewhat non-obvious) idea
+— <em>interrupted partial matches can be used to optimise the search in
+the rest of the text by “fast-forwarding” through several positions</em>,
+without re-matching completely starting from the next character.</p>
+<p>A <a class="reference external" href="https://www.youtube.com/watch?v=V5-7GzOfADQ">very nice video explaining KMP</a> is available on
+YouTube.</p>
+<p>This chapter shows how to systematically derive KMP from the naive
+search. We will not cover this in the lecture, but you are encouraged
+to go through the steps below. The material of this chapter is based
+on <a class="reference external" href="http://gallium.inria.fr/blog/kmp/">this blog article</a>, which, in
+its turn is based on <a class="reference external" href="https://www.brics.dk/RS/02/32/BRICS-RS-02-32.pdf">this research paper</a> by <a class="reference external" href="https://www.yale-nus.edu.sg/about/faculty/olivier-danvy/">Prof. Olivier
+Danvy</a> and
+his co-authors.</p>
 <div class="section" id="revisiting-the-naive-algorithm">
 <h2>Revisiting the naive algorithm<a class="headerlink" href="#revisiting-the-naive-algorithm" title="Permalink to this headline">¶</a></h2>
-<p>Let us start by re-implementing the naive research algorithm with a single loop that handles both indices <code class="docutils literal notranslate"><span class="pre">k</span></code> and <code class="docutils literal notranslate"><span class="pre">j</span></code>, soe the former ranges over the text ,and the latter goes over the pattern:</p>
+<p>Let us start by re-implementing the naive research algorithm with a
+single loop that handles both indices <code class="docutils literal notranslate"><span class="pre">k</span></code> and <code class="docutils literal notranslate"><span class="pre">j</span></code>, so the former
+ranges over the text, and the latter goes over the pattern:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">naive_search_one_loop</span> <span class="n">text</span> <span class="n">pattern</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="n">length</span> <span class="n">text</span> <span class="k">in</span>
   <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="n">length</span> <span class="n">pattern</span> <span class="k">in</span>
@@ -219,7 +236,7 @@
   <span class="n">global_search</span> <span class="n">search</span>
 </pre></div>
 </div>
-<p>The signature of th inner <code class="docutils literal notranslate"><span class="pre">search</span></code> seems to verbose, but it is important for the derivation, which is coming: the first three parameters are the pattern, its size <code class="docutils literal notranslate"><span class="pre">m</span></code> and the text; <code class="docutils literal notranslate"><span class="pre">n</span></code> stands for the size of the text, but it also limits the search range on the right (and will be a subject to manipulation in the future). Finally, <code class="docutils literal notranslate"><span class="pre">j</span></code> and <code class="docutils literal notranslate"><span class="pre">k</span></code> are the current (and also initial for the first run) values of the running indices within <code class="docutils literal notranslate"><span class="pre">pattern</span></code> and <code class="docutils literal notranslate"><span class="pre">text</span></code>, correspondingly.</p>
+<p>The signature of the inner <code class="docutils literal notranslate"><span class="pre">search</span></code> seems quite verbose, but it is important for the derivation, which is coming: the first three parameters are the pattern, its size <code class="docutils literal notranslate"><span class="pre">m</span></code> and the text; <code class="docutils literal notranslate"><span class="pre">n</span></code> stands for the size of the text, but it also limits the search range on the right (and will be a subject to manipulation in the future). Finally, <code class="docutils literal notranslate"><span class="pre">j</span></code> and <code class="docutils literal notranslate"><span class="pre">k</span></code> are the current (and also initial for the first run) values of the running indices within <code class="docutils literal notranslate"><span class="pre">pattern</span></code> and <code class="docutils literal notranslate"><span class="pre">text</span></code>, correspondingly.</p>
 <p>So far, we don’t make any interesting use of a interrupt index <code class="docutils literal notranslate"><span class="pre">j</span></code> in the case when the inner <code class="docutils literal notranslate"><span class="pre">search</span></code> returns <code class="docutils literal notranslate"><span class="pre">Interrupted</span> <span class="pre">j</span></code></p>
 </div>
 <div class="section" id="relating-matched-text-and-the-pattern">
@@ -430,7 +447,10 @@
 </div>
 <p>Notice that the mutual dependency between <code class="docutils literal notranslate"><span class="pre">loop</span></code> and <code class="docutils literal notranslate"><span class="pre">table</span></code> is resolved, as <code class="docutils literal notranslate"><span class="pre">table</span></code> is mutable, hence it can be altered by <code class="docutils literal notranslate"><span class="pre">loop</span></code> a-posteriori (the trick known and Landin’s knot – A technique named after <a class="reference external" href="https://en.wikipedia.org/wiki/Peter_Landin">Pater Landin</a> for implementing recursive functions using mutable state).</p>
 <p>This concludes our derivation of the Knuth-Morris-Pratt (KMP) algorithm, whose main idea is to <em>pre-compute</em> the table of fast-forwarding shifts for a given pattern, which is then used to avoid redundant work for re-matching already observed parts and the corresponding back-tracking.</p>
-<p>The fact that the lookup in the table takes constant and the main iteration through <code class="docutils literal notranslate"><span class="pre">text</span></code> always progresses without backtracking, yields the linear complexity result <span class="math notranslate nohighlight">\(O(n)\)</span> for the final algorithm.</p>
+<p>The fact that the lookup in the table takes constant and the main
+iteration through <code class="docutils literal notranslate"><span class="pre">text</span></code> always progresses without backtracking,
+yields the linear complexity result <span class="math notranslate nohighlight">\(O(n)\)</span> for the final
+algorithm.</p>
 </div>
 <div class="section" id="comparing-performance-again">
 <h2>Comparing performance, again<a class="headerlink" href="#comparing-performance-again" title="Permalink to this headline">¶</a></h2>

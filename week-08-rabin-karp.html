@@ -154,7 +154,7 @@
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">RabinKarp.ml</span></code></li>
 </ul>
-<p>Th idea of hashing studied before for the implementations of hash-tables and bloom filters, is also very useful for improving the efficiency of detecting patterns in strings.</p>
+<p>Th idea of hashing studied before for the implementations of hash-tables and Bloom filters, is also very useful for improving the efficiency of detecting patterns in strings.</p>
 <p>The idea of Rabin-Karp algorithm is to speed up the ordinary search by means of computing the <em>rolling hash</em> of the sub-string currently being checked, and comparing it to the hash of the of the pattern.</p>
 <p>First, define a special hash:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">rk_hash</span> <span class="n">text</span> <span class="o">=</span>
@@ -193,7 +193,11 @@
 </pre></div>
 </div>
 <p><strong>Question:</strong> what is the worst-case complexity of Rabin-Karp search?</p>
-<p><strong>Question:</strong> What do you think would be the strings on which Rabin-Karp search performs more efficiently than naive search?</p>
+<p><strong>Question:</strong> why on regular strungs Rabin-Karp search is not so efficient?</p>
+<dl class="docutils">
+<dt><strong>Question:</strong> What do you think would be the strings on which</dt>
+<dd>Rabin-Karp search performs more efficiently than naive search?</dd>
+</dl>
 <p>Testing Rabin-Karp search can be done easily with the help of the <code class="docutils literal notranslate"><span class="pre">search_tested</span> <span class="pre">procedure</span></code>:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;Rabin-Karp Search Works&quot;</span> <span class="o">=</span>
   <span class="n">search_tester</span> <span class="n">rabin_karp_search</span>
@@ -235,13 +239,13 @@
 <ul class="simple">
 <li>File <code class="docutils literal notranslate"><span class="pre">StringSearchComparison.ml</span></code></li>
 </ul>
-<p>Let us design the experiment to compare RK search and nive search:</p>
+<p>Let us design the experiment to compare RK search and naive search:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">evaluate_search</span> <span class="n">search</span> <span class="n">name</span> <span class="n">s</span> <span class="n">ps</span> <span class="n">pn</span> <span class="o">=</span>
   <span class="n">print_endline</span> <span class="s2">&quot;&quot;</span><span class="o">;</span>
   <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&quot;[%s] Pattern in: &quot;</span> <span class="n">name</span><span class="o">;</span>
-  <span class="nn">Week_03</span><span class="p">.</span><span class="n">time</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">test_pattern_in</span> <span class="n">search</span> <span class="n">s</span> <span class="n">p</span><span class="o">))</span> <span class="n">ps</span><span class="o">;</span>
+  <span class="n">time</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">test_pattern_in</span> <span class="n">search</span> <span class="n">s</span> <span class="n">p</span><span class="o">))</span> <span class="n">ps</span><span class="o">;</span>
   <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&quot;[%s] Pattern not in: &quot;</span> <span class="n">name</span><span class="o">;</span>
-  <span class="nn">Week_03</span><span class="p">.</span><span class="n">time</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">test_pattern_not_in</span> <span class="n">search</span> <span class="n">s</span> <span class="n">p</span><span class="o">))</span> <span class="n">pn</span>
+  <span class="n">time</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">test_pattern_not_in</span> <span class="n">search</span> <span class="n">s</span> <span class="n">p</span><span class="o">))</span> <span class="n">pn</span>
 </pre></div>
 </div>
 <p>First, let’s compare on  random strings:</p>
@@ -261,7 +265,11 @@
 <span class="o">[</span><span class="nc">Rabin</span><span class="o">-</span><span class="nc">Karp</span><span class="o">]</span> <span class="nc">Pattern</span> <span class="n">not</span> <span class="k">in</span><span class="o">:</span> <span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">2</span><span class="o">.</span><span class="mi">155506</span> <span class="n">sec</span>
 </pre></div>
 </div>
-<p>In fact, Rabin-Karp is even a bit slower!</p>
+<p>In fact, Rabin-Karp is even a bit slower! The reason for this is that
+Rabin-Karp rolling has has too many collisions. In fact, we almost
+always have to compare strings in the same way as in the naive hash,
+but, in addition to that we also have to maintain the rolling hash
+value.</p>
 <p>Now, let us show when it shines. For this, let us create very
 repetitive strings:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">repetitive_string</span> <span class="n">n</span> <span class="o">=</span>
