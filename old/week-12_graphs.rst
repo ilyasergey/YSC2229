@@ -7,11 +7,11 @@ Representing Graphs
 
 https://github.com/ilyasergey/ysc2229-part-two/blob/master/lib/week_12_Graphs.ml
 
-Graphs are an important versatile mathematical abstractions, which is used to represent the relations between multiple objects. Such (possibly non-symeetric) relations can be frequently phrased in terms of *connectivity* and *reachability*, as we've seen before in the chapter on :ref:`union-find`. 
+Graphs are an important versatile mathematical abstractions, which is used to represent the relations between multiple objects. Such (possibly non-symmetric) relations can be frequently phrased in terms of *connectivity* and *reachability*, as we've seen before in the chapter on :ref:`union-find`. 
 
 A graph is commonly represented in mathematics by a pair :math:`G = (V, E)`, where :math:`V` is a set of the graphs's vertices (nodes), represented the related elements, and :math:`E` is a set of its edges (arcs) such that :math:`E \subseteq V \times V`. 
 
-As some graph exampes, :math:`V` and :math:`E` can represent correspondingly:
+As some graph examples, :math:`V` and :math:`E` can represent correspondingly:
 
 * Cities and roads between them
 * Routers in the networks and connections between them
@@ -19,7 +19,7 @@ As some graph exampes, :math:`V` and :math:`E` can represent correspondingly:
 * Control states of a machine and transitions between them
 * "Friendship" relations between users of a social network
 
-It is commont to think of :math:`V` to be represented by a segment :math:`\{0 ... (n - 1)\}` of natural numbers for some :math:`n` (so that :math:`n` is the size of the set of vertices). However, if the nodes carry additional meaning (e.g., the name of the city), one can define their payload as a function :math:`\{0 ... (n - 1)\} \rightarrow P` for some set of payload values :math:`P`. Edges can be also given labels in a similar way by defining a function :math:`E \rightarrow L` for some label set :math:`L`.
+It is common to think of :math:`V` to be represented by a segment :math:`\{0 ... (n - 1)\}` of natural numbers for some :math:`n` (so that :math:`n` is the size of the set of vertices). However, if the nodes carry additional meaning (e.g., the name of the city), one can define their payload as a function :math:`\{0 ... (n - 1)\} \rightarrow P` for some set of payload values :math:`P`. Edges can be also given labels in a similar way by defining a function :math:`E \rightarrow L` for some label set :math:`L`.
 
 Graphs as Adjacency Lists
 -------------------------
@@ -65,7 +65,7 @@ Keeping in mind the possibility of adding payload to nodes and labels to edges, 
 
  end 
 
-Creating a graph allocates ``n`` nodes, but does not add anye edges. As graphs are an inherently imperative (i.e., mutable) structure, we can add edges as follows by changing the corresponding componnents of the adjacency array::
+Creating a graph allocates ``n`` nodes, but does not add any edges. As graphs are an inherently imperative (i.e., mutable) structure, we can add edges as follows by changing the corresponding components of the adjacency array::
 
   let add_edge g src dst = 
     assert (in_range g src && in_range g dst);
@@ -89,7 +89,7 @@ Removing edges or adding labels to them can be achieved in a similar way::
     let labs' = List.filter (fun ((s, d), _) -> (s, d) <> (src, dst)) labs in
     g.edge_labels := ((src, dst), l) :: labs'
 
-It is not uncommon to need to have the whole set of edges. We can obtain it as follows, byt traversing the entire adjacency array, returning the list of edges::
+It is not uncommon to need to have the whole set of edges. We can obtain it as follows, by traversing the entire adjacency array, returning the list of edges::
 
   let edges g = 
     let open Week_06.DLLBasedQueue in
@@ -157,7 +157,7 @@ Finally, we can dump a simple graph with no payloads into a file using the follo
     write_string_to_file filename
 
 
-**Question:** How would you suggest to serialise graphs with non-trivial payloads on nodes and labels on edges?
+**Question:** How would you suggest to serialize graphs with non-trivial payloads on nodes and labels on edges?
 
 Rendering Graphs via GraphViz
 -----------------------------
@@ -184,13 +184,13 @@ The following functions transform a graph, represented by adjacency lists to a G
 
 The function ``graphviz_string_of_graph`` takes many arguments::
 
-* ``gtyp`` is the type of the graph to be renderred (directed/undirected);
+* ``gtyp`` is the type of the graph to be rendered (directed/undirected);
 * ``conn`` is a connective determining the shape of edges;
 * ``vattrib`` is a function to render nodes;
 * ``eattrib`` is a function to render edges;
 * ``g`` is a graph itself in an adjacency-list representation
 
-When run ``graphviz_no_payload g "graph.dot"`` produces a file named ``graph.dot``, which can be then renderred from the console via GraphViz-provided utility ``dot`` as follows::
+When run ``graphviz_no_payload g "graph.dot"`` produces a file named ``graph.dot``, which can be then rendered from the console via GraphViz-provided utility ``dot`` as follows::
 
  dot -Tpdf filename.dot -o outfile.pdf
 
@@ -243,7 +243,7 @@ We start by defining the data type for nodes::
 
 Each node stores its identifier (an integer), a payload ``value``, as well as lists of "previous" and "next" nodes in the graph (initially empty). 
 
-We now defing a graph as follows::
+We now define a graph as follows::
 
   (*************************************************)
   (*           Auxiliary definitions               *)
@@ -307,7 +307,7 @@ The ``graph`` structure defined just above allows to access the set of predecess
     let nodes = g.edges in
     Set.search nodes (src, dst) <> None
 
-As the linked ``graph`` structure combines five conceptually "overlapping" components, it needs to be maintaned with a lot of care, in order not to introduce any discrepancies in the representations.
+As the linked ``graph`` structure combines five conceptually "overlapping" components, it needs to be maintained with a lot of care, in order not to introduce any discrepancies in the representations.
 
 Creating new linked graph is easy::
 
