@@ -12,17 +12,20 @@ Introductory Data Structures and Algorithms
 
    syllabus
    prerequisites
+
    week-01
    week-02
    week-03	 
    week-04	 
    week-05
    week-06
+
    midterm   
+
    week-07
    week-08
+   week-09
 
-..   YSC2229-lecture-notes-week-10
 ..   YSC2229-lecture-notes-week-11
 ..   YSC2229-lecture-notes-week-12
 ..   YSC2229-lecture-notes-week-13

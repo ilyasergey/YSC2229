@@ -81,7 +81,7 @@ The deserialization works by reading the bits from an input, determining whether
 
 We can test those two procedures as follows::
 
- open Week_10_BinaryEncodings
+ open BinaryEncodings
 
  (* Test functions *)
  let write_tree_to_binary = write_to_binary write_tree
@@ -270,8 +270,8 @@ https://github.com/ilyasergey/ysc2229-part-two/blob/master/runners/compress_text
 The following file defines the runnable that executes Huffman compression on a given file (first runtime argument) and outputs the result into a file named as a second argument::
 
  open Printf
- open Week_10_HuffmanCodes
- open Week_03
+ open HuffmanCodes
+ open ArrayUtil
 
  let () =
    if Array.length (Sys.argv) < 3 

@@ -55,5 +55,10 @@ Implement a version of Union-Find, such that ``union`` has :math:`O(n)` complexi
 Exercise 4
 ----------
 
-Implement a version of Union-Find to include *path compression*, by adding a code to ``find`` that links every element on the path from ``p`` to the root (thus making a short-cut for the path). Give a sequence of inputs that causes thie function to produce a path of length 4 (and compress it). *Note*: The amortised cost per operation for this algorithm is known to be logarithmic.
+Implement a version of Union-Find to include *path compression*, by
+adding a code to ``find`` that links every element on the path from
+``p`` to the root (thus making a short-cut for the path). Give a
+sequence of inputs that causes this function to produce a path of
+length 4 (and compress it). *Note*: The amortised cost per operation
+for this algorithm is known to be logarithmic.
 
