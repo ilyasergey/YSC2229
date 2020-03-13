@@ -11,7 +11,7 @@ An equivalence class is a set of elements related by a relation :math:`R`, such 
 
 (a) reflexive (any element is related to itself)
 (b) symmetric (if :math:`p` is related to :math:`q`, then :math:`q` is related to :math:`p`), and
-(c) transitice (if :math:`p` is related to :math:`q` and :math:`q` is related to :math:`r`, then :math:`p` is related to :math:`r`).
+(c) transitive (if :math:`p` is related to :math:`q` and :math:`q` is related to :math:`r`, then :math:`p` is related to :math:`r`).
 
 Reasoning about inclusion of an element into a certain equivalence class within a set is a common problem in computing. For instance, it appears in the following domains:
 
@@ -31,7 +31,10 @@ Union-Find Structure
 * What is an equivalence class of an element ``i``?
 * How many equivalence classes are there in the given relation?
 
-In addition to that it allows to modify the current equivalence relation by taking a union of two classes, corresponding by elements ``i`` and ``j``, therefore, possibly affecting the answers to the questions above.
+In addition to those queries, union-find support modification of the
+current equivalence relation by taking a union of two classes,
+corresponding by elements ``i`` and ``j``, therefore, possibly
+affecting the answers to the questions above.
 
 The definition of the Union-Find structure is very simple::
 
