@@ -121,7 +121,7 @@ Insertion amounts to computing all hashes for the element and setting the corres
 and to check if an element is in the filter, we need to compute all its hashes and check the corresponding bits::
 
   let contains f e = 
-    if H.hash_functions = [] then false
+    if H.hash_functions = [] then true
     else
       let n = f.size in
       let res = ref true in
