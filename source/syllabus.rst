@@ -55,9 +55,9 @@ Week 08
     * Knuth–Morris–Pratt Algorithm
 
 Week 09
+    * Equivalance Classes and Union-Find
     * Constraint Solving via Backtracking
     * Optimisation Problems and Dynamic Programming
-    * Equivalance Classes and Union-Find
 
 Week 10
     * File Input and Output in OCaml
