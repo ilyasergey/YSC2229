@@ -222,8 +222,20 @@ document.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="generating-strings-for-testing-search-function">
-<h2>Generating strings for testing search function<a class="headerlink" href="#generating-strings-for-testing-search-function" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="testing-naive-search">
+<h2>Testing naive search<a class="headerlink" href="#testing-naive-search" title="Permalink to this headline">¶</a></h2>
+<p>Let us construct a number of tests, starting from a simple one:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">big</span> <span class="o">=</span> <span class="s2">&quot;abcdefghijklmnopeqrstuvabcsrtdsdqewgdcvaegbdweffwdajbjrag&quot;</span>
+
+<span class="k">let</span> <span class="n">patterns</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;dsd&quot;</span><span class="o">;</span> <span class="s2">&quot;jrag&quot;</span><span class="o">;</span> <span class="s2">&quot;abc&quot;</span><span class="o">]</span>
+
+<span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;Naive Search Works&quot;</span> <span class="o">=</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">test_pattern_in</span> <span class="n">naive_search</span> <span class="n">big</span> <span class="n">p</span><span class="o">)</span> <span class="n">patterns</span><span class="o">;</span>
+  <span class="bp">true</span>
+</pre></div>
+</div>
+<p>We can also check, on a random string, that our search returns no
+false positives and no false negatives.</p>
 <p>How do we generate random strings for testing search?</p>
 <p>This can be done using the function <code class="docutils literal notranslate"><span class="pre">generate_words</span></code>, which we
 generated before. We simply create a list of words and concatenate it
@@ -237,34 +249,8 @@ that are (with a very high probability) not in the obtained string
     <span class="n">generate_words</span> <span class="n">n</span> <span class="n">m</span> <span class="k">in</span>
   <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nn">String</span><span class="p">.</span><span class="n">concat</span> <span class="s2">&quot;&quot;</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">rev</span> <span class="n">ps_in</span><span class="o">)</span> <span class="k">in</span>
   <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">ps_in</span><span class="o">,</span> <span class="n">ps_not_in</span><span class="o">)</span>
-</pre></div>
-</div>
-<p>We can provide a higher-order testing procedure for strings, so it
-would test on a specific string, and on randomly-generated strings
-(for both positive and negative results), as follows:</p>
-<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">search_tester</span> <span class="n">search</span> <span class="o">=</span>
-  <span class="k">let</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">ps</span><span class="o">,</span> <span class="n">pn</span><span class="o">)</span> <span class="o">=</span> <span class="n">generate_string_and_patterns</span> <span class="mi">500</span> <span class="mi">5</span> <span class="k">in</span>
-  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">test_pattern_in</span> <span class="n">search</span> <span class="n">big</span> <span class="n">p</span><span class="o">)</span> <span class="n">patterns</span><span class="o">;</span>
-  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">test_pattern_in</span> <span class="n">search</span> <span class="n">s</span> <span class="n">p</span><span class="o">)</span> <span class="n">ps</span><span class="o">;</span>
-  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">test_pattern_not_in</span> <span class="n">search</span> <span class="n">s</span> <span class="n">p</span><span class="o">)</span> <span class="n">pn</span><span class="o">;</span>
-  <span class="bp">true</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="testing-naive-search">
-<h2>Testing naive search<a class="headerlink" href="#testing-naive-search" title="Permalink to this headline">¶</a></h2>
-<p>Let us construct a number of tests, starting from a simple one:</p>
-<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">big</span> <span class="o">=</span> <span class="s2">&quot;abcdefghijklmnopeqrstuvabcsrtdsdqewgdcvaegbdweffwdajbjrag&quot;</span>
 
-<span class="k">let</span> <span class="n">patterns</span> <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;dsd&quot;</span><span class="o">;</span> <span class="s2">&quot;jrag&quot;</span><span class="o">;</span> <span class="s2">&quot;abc&quot;</span><span class="o">]</span>
-
-<span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;Naive Search Works&quot;</span> <span class="o">=</span>
-  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">test_pattern_in</span> <span class="n">naive_search</span> <span class="n">big</span> <span class="n">p</span><span class="o">)</span> <span class="n">patterns</span><span class="o">;</span>
-  <span class="bp">true</span>
-</pre></div>
-</div>
-<p>We can also check, on a random string, that our search returns no false positives and no false negatives:</p>
-<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;Naive Search True Positives&quot;</span> <span class="o">=</span>
+<span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;Naive Search True Positives&quot;</span> <span class="o">=</span>
   <span class="k">let</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">ps</span><span class="o">,</span> <span class="o">_)</span> <span class="o">=</span> <span class="n">generate_string_and_patterns</span> <span class="mi">500</span> <span class="mi">5</span> <span class="k">in</span>
   <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">test_pattern_in</span> <span class="n">naive_search</span> <span class="n">s</span> <span class="n">p</span><span class="o">)</span> <span class="n">ps</span><span class="o">;</span>
   <span class="bp">true</span>
@@ -273,6 +259,19 @@ would test on a specific string, and on randomly-generated strings
   <span class="k">let</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="o">_,</span> <span class="n">pn</span><span class="o">)</span> <span class="o">=</span> <span class="n">generate_string_and_patterns</span> <span class="mi">500</span> <span class="mi">5</span> <span class="k">in</span>
   <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">test_pattern_not_in</span> <span class="n">naive_search</span> <span class="n">s</span> <span class="n">p</span><span class="o">)</span> <span class="n">pn</span><span class="o">;</span>
   <span class="bp">true</span>
+</pre></div>
+</div>
+<p>Finally, we can provide a higher-order testing procedure for strings,
+so it would test on a specific string, and on randomly-generated
+strings (for both positive and negative results), as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">search_tester</span> <span class="n">search</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">ps</span><span class="o">,</span> <span class="n">pn</span><span class="o">)</span> <span class="o">=</span> <span class="n">generate_string_and_patterns</span> <span class="mi">500</span> <span class="mi">5</span> <span class="k">in</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">test_pattern_in</span> <span class="n">search</span> <span class="n">big</span> <span class="n">p</span><span class="o">)</span> <span class="n">patterns</span><span class="o">;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">test_pattern_in</span> <span class="n">search</span> <span class="n">s</span> <span class="n">p</span><span class="o">)</span> <span class="n">ps</span><span class="o">;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">test_pattern_not_in</span> <span class="n">search</span> <span class="n">s</span> <span class="n">p</span><span class="o">)</span> <span class="n">pn</span><span class="o">;</span>
+  <span class="bp">true</span>
+
+<span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="o">_</span> <span class="o">=</span> <span class="n">search_tester</span> <span class="n">naive_search</span>
 </pre></div>
 </div>
 </div>

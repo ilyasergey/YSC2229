@@ -154,8 +154,13 @@
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">RabinKarp.ml</span></code></li>
 </ul>
-<p>Th idea of hashing studied before for the implementations of hash-tables and Bloom filters, is also very useful for improving the efficiency of detecting patterns in strings.</p>
-<p>The idea of Rabin-Karp algorithm is to speed up the ordinary search by means of computing the <em>rolling hash</em> of the sub-string currently being checked, and comparing it to the hash of the of the pattern.</p>
+<p>The notion of hashing studied before for the implementations of
+hash-tables and Bloom filters, is also very useful for improving the
+efficiency of detecting patterns in strings.</p>
+<p>The key idea of the Rabin-Karp algorithm is to speed up the ordinary
+search by means of computing the <em>rolling hash</em> of the sub-string
+currently being checked, and comparing it to the hash of the of the
+pattern.</p>
 <p>First, define a special hash:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">rk_hash</span> <span class="n">text</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">h</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">0</span> <span class="k">in</span>

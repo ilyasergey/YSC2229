@@ -82,8 +82,22 @@ The same implementation can be, obviously rewritten so it would be tail-recursiv
      in walk 0
 
 
-Generating strings for testing search function
-----------------------------------------------
+
+Testing naive search
+--------------------
+
+Let us construct a number of tests, starting from a simple one::
+
+ let big = "abcdefghijklmnopeqrstuvabcsrtdsdqewgdcvaegbdweffwdajbjrag"
+
+ let patterns = ["dsd"; "jrag"; "abc"]
+
+ let%test "Naive Search Works" = 
+   List.iter (fun p -> test_pattern_in naive_search big p) patterns;
+   true
+
+We can also check, on a random string, that our search returns no
+false positives and no false negatives. 
 
 How do we generate random strings for testing search? 
 
@@ -101,32 +115,6 @@ that are (with a very high probability) not in the obtained string
    let s = String.concat "" (List.rev ps_in) in
    (s, ps_in, ps_not_in)
 
-We can provide a higher-order testing procedure for strings, so it
-would test on a specific string, and on randomly-generated strings
-(for both positive and negative results), as follows::
-
- let search_tester search = 
-   let (s, ps, pn) = generate_string_and_patterns 500 5 in
-   List.iter (fun p -> test_pattern_in search big p) patterns;
-   List.iter (fun p -> test_pattern_in search s p) ps;
-   List.iter (fun p -> test_pattern_not_in search s p) pn;
-   true
-
-Testing naive search
---------------------
-
-Let us construct a number of tests, starting from a simple one::
-
- let big = "abcdefghijklmnopeqrstuvabcsrtdsdqewgdcvaegbdweffwdajbjrag"
-
- let patterns = ["dsd"; "jrag"; "abc"]
-
- let%test "Naive Search Works" = 
-   List.iter (fun p -> test_pattern_in naive_search big p) patterns;
-   true
-
-We can also check, on a random string, that our search returns no false positives and no false negatives::
-
  let%test "Naive Search True Positives" = 
    let (s, ps, _) = generate_string_and_patterns 500 5 in
    List.iter (fun p -> test_pattern_in naive_search s p) ps;
@@ -137,4 +125,15 @@ We can also check, on a random string, that our search returns no false positive
    List.iter (fun p -> test_pattern_not_in naive_search s p) pn;
    true
 
+Finally, we can provide a higher-order testing procedure for strings,
+so it would test on a specific string, and on randomly-generated
+strings (for both positive and negative results), as follows::
 
+ let search_tester search = 
+   let (s, ps, pn) = generate_string_and_patterns 500 5 in
+   List.iter (fun p -> test_pattern_in search big p) patterns;
+   List.iter (fun p -> test_pattern_in search s p) ps;
+   List.iter (fun p -> test_pattern_not_in search s p) pn;
+   true
+
+ let%test _ = search_tester naive_search
