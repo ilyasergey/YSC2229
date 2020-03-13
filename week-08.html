@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Week 08: Searching in Strings &mdash; YSC2229 2020</title>
+  <title>11. Week 08: Searching in Strings &mdash; YSC2229 2020</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="11.1. Substring Search" href="week-08-string-search.html" />
+    <link rel="prev" title="10.3. Bloom Filters and Their Applications" href="week-07-bloom.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,7 +78,7 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
@@ -87,6 +89,13 @@
 <li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">11. Week 08: Searching in Strings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-08-string-search.html">11.1. Substring Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-rabin-karp.html">11.2. Rabin-Karp Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html">11.3. Knuth–Morris–Pratt Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-exercises.html">11.4. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -132,7 +141,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Week 08: Searching in Strings</li>
+      <li>11. Week 08: Searching in Strings</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -150,37 +159,37 @@
            <div itemprop="articleBody">
             
   <div class="section" id="week-08-searching-in-strings">
-<h1>Week 08: Searching in Strings<a class="headerlink" href="#week-08-searching-in-strings" title="Permalink to this headline">¶</a></h1>
+<h1>11. Week 08: Searching in Strings<a class="headerlink" href="#week-08-searching-in-strings" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="week-08-string-search.html">Substring Search</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-08-string-search.html#testing-a-search-procedure">Testing a search procedure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-08-string-search.html#a-naive-search">A naive search</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-08-string-search.html#a-recursive-version-of-the-naive-search">A recursive version of the naive search</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-08-string-search.html#testing-naive-search">Testing naive search</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-08-string-search.html">11.1. Substring Search</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-08-string-search.html#testing-a-search-procedure">11.1.1. Testing a search procedure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-string-search.html#a-naive-search">11.1.2. A naive search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-string-search.html#a-recursive-version-of-the-naive-search">11.1.3. A recursive version of the naive search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-string-search.html#testing-naive-search">11.1.4. Testing naive search</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-08-rabin-karp.html">Rabin-Karp Search</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-08-rabin-karp.html#recursive-version-of-rabin-karp-search">Recursive version of Rabin-Karp search</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-08-rabin-karp.html#comparing-performance-of-search-procedures">Comparing performance of search procedures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-08-rabin-karp.html">11.2. Rabin-Karp Search</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-08-rabin-karp.html#recursive-version-of-rabin-karp-search">11.2.1. Recursive version of Rabin-Karp search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-rabin-karp.html#comparing-performance-of-search-procedures">11.2.2. Comparing performance of search procedures</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-08-kmp.html">Knuth–Morris–Pratt Algorithm</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#revisiting-the-naive-algorithm">Revisiting the naive algorithm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#returning-the-interrupt-index">Returning the Interrupt Index</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#relating-matched-text-and-the-pattern">Relating Matched Text and the pattern</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#fast-forwarding-search-using-interrupt-index">Fast-Forwarding Search using Interrupt Index</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#extracting-the-interrupt-index">Extracting the Interrupt Index</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#exploiting-the-prefix-equality">Exploiting the Prefix Equality</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#tabulating-the-interrupt-indices">Tabulating the interrupt indices</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#boot-strapping-the-table">Boot-strapping the table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#comparing-performance-again">Comparing performance, again</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-08-kmp.html">11.3. Knuth–Morris–Pratt Algorithm</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#revisiting-the-naive-algorithm">11.3.1. Revisiting the naive algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#returning-the-interrupt-index">11.3.2. Returning the Interrupt Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#relating-matched-text-and-the-pattern">11.3.3. Relating Matched Text and the pattern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#fast-forwarding-search-using-interrupt-index">11.3.4. Fast-Forwarding Search using Interrupt Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#extracting-the-interrupt-index">11.3.5. Extracting the Interrupt Index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#exploiting-the-prefix-equality">11.3.6. Exploiting the Prefix Equality</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#tabulating-the-interrupt-indices">11.3.7. Tabulating the interrupt indices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#boot-strapping-the-table">11.3.8. Boot-strapping the table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html#comparing-performance-again">11.3.9. Comparing performance, again</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-08-exercises.html">Exercises</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-08-exercises.html#exercise-1">Exercise 1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-08-exercises.html#exercise-2">Exercise 2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-08-exercises.html#exercise-3">Exercise 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-08-exercises.html">11.4. Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-08-exercises.html#exercise-1">11.4.1. Exercise 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-exercises.html#exercise-2">11.4.2. Exercise 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-exercises.html#exercise-3">11.4.3. Exercise 3</a></li>
 </ul>
 </li>
 </ul>
@@ -192,6 +201,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-08-string-search.html" class="btn btn-neutral float-right" title="11.1. Substring Search" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-07-bloom.html" class="btn btn-neutral" title="10.3. Bloom Filters and Their Applications" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

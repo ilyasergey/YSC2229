@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Rabin-Karp Search &mdash; YSC2229 2020</title>
+  <title>11.2. Rabin-Karp Search &mdash; YSC2229 2020</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="11.3. Knuth–Morris–Pratt Algorithm" href="week-08-kmp.html" />
+    <link rel="prev" title="11.1. Substring Search" href="week-08-string-search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,7 +78,7 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
@@ -87,6 +89,17 @@
 <li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-08-string-search.html">11.1. Substring Search</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11.2. Rabin-Karp Search</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#recursive-version-of-rabin-karp-search">11.2.1. Recursive version of Rabin-Karp search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#comparing-performance-of-search-procedures">11.2.2. Comparing performance of search procedures</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html">11.3. Knuth–Morris–Pratt Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-exercises.html">11.4. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -132,7 +145,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Rabin-Karp Search</li>
+          <li><a href="week-08.html">11. Week 08: Searching in Strings</a> &raquo;</li>
+        
+      <li>11.2. Rabin-Karp Search</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -150,7 +165,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="rabin-karp-search">
-<h1>Rabin-Karp Search<a class="headerlink" href="#rabin-karp-search" title="Permalink to this headline">¶</a></h1>
+<h1>11.2. Rabin-Karp Search<a class="headerlink" href="#rabin-karp-search" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">RabinKarp.ml</span></code></li>
 </ul>
@@ -212,7 +227,7 @@ pattern.</p>
 </pre></div>
 </div>
 <div class="section" id="recursive-version-of-rabin-karp-search">
-<h2>Recursive version of Rabin-Karp search<a class="headerlink" href="#recursive-version-of-rabin-karp-search" title="Permalink to this headline">¶</a></h2>
+<h2>11.2.1. Recursive version of Rabin-Karp search<a class="headerlink" href="#recursive-version-of-rabin-karp-search" title="Permalink to this headline">¶</a></h2>
 <p>One can implement the recursive search version as follows:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">rabin_karp_search_rec</span> <span class="n">text</span> <span class="n">pattern</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">String</span><span class="p">.</span><span class="n">length</span> <span class="n">text</span> <span class="k">in</span>
@@ -240,7 +255,7 @@ pattern.</p>
 </div>
 </div>
 <div class="section" id="comparing-performance-of-search-procedures">
-<h2>Comparing performance of search procedures<a class="headerlink" href="#comparing-performance-of-search-procedures" title="Permalink to this headline">¶</a></h2>
+<h2>11.2.2. Comparing performance of search procedures<a class="headerlink" href="#comparing-performance-of-search-procedures" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>File <code class="docutils literal notranslate"><span class="pre">StringSearchComparison.ml</span></code></li>
 </ul>
@@ -315,6 +330,15 @@ repetitive strings:</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-08-kmp.html" class="btn btn-neutral float-right" title="11.3. Knuth–Morris–Pratt Algorithm" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-08-string-search.html" class="btn btn-neutral" title="11.1. Substring Search" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

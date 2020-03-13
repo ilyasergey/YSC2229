@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Substring Search &mdash; YSC2229 2020</title>
+  <title>11.1. Substring Search &mdash; YSC2229 2020</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="11.2. Rabin-Karp Search" href="week-08-rabin-karp.html" />
+    <link rel="prev" title="11. Week 08: Searching in Strings" href="week-08.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,7 +78,7 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
@@ -87,6 +89,19 @@
 <li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11.1. Substring Search</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#testing-a-search-procedure">11.1.1. Testing a search procedure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a-naive-search">11.1.2. A naive search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a-recursive-version-of-the-naive-search">11.1.3. A recursive version of the naive search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-naive-search">11.1.4. Testing naive search</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-rabin-karp.html">11.2. Rabin-Karp Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html">11.3. Knuth–Morris–Pratt Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-exercises.html">11.4. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -132,7 +147,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Substring Search</li>
+          <li><a href="week-08.html">11. Week 08: Searching in Strings</a> &raquo;</li>
+        
+      <li>11.1. Substring Search</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -150,7 +167,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="substring-search">
-<h1>Substring Search<a class="headerlink" href="#substring-search" title="Permalink to this headline">¶</a></h1>
+<h1>11.1. Substring Search<a class="headerlink" href="#substring-search" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">StringSearch.ml</span></code></li>
 </ul>
@@ -159,7 +176,7 @@ document.</p>
 <p>This problem is known and pattern search in a string. Despite being seemlingly a simple challenge to solve, in order to do efficiently, it requires a lot of ingenuity.</p>
 <p>In this lecture we will see several solutions for it, of the increased implementation complexity, while reduced time demand.</p>
 <div class="section" id="testing-a-search-procedure">
-<h2>Testing a search procedure<a class="headerlink" href="#testing-a-search-procedure" title="Permalink to this headline">¶</a></h2>
+<h2>11.1.1. Testing a search procedure<a class="headerlink" href="#testing-a-search-procedure" title="Permalink to this headline">¶</a></h2>
 <p>The procedure <code class="docutils literal notranslate"><span class="pre">search</span></code> takes a string <code class="docutils literal notranslate"><span class="pre">text</span></code> and a patern <code class="docutils literal notranslate"><span class="pre">pattern</span></code> and returns a result of type <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">option</span></code>, where <code class="docutils literal notranslate"><span class="pre">Some</span> <span class="pre">i</span></code> denotes the first index in the string <code class="docutils literal notranslate"><span class="pre">text</span></code>, such that <code class="docutils literal notranslate"><span class="pre">pattern</span></code> starts from it and is fully contained within <code class="docutils literal notranslate"><span class="pre">text</span></code>. If no such index exist (i.e., <code class="docutils literal notranslate"><span class="pre">pattern</span></code> is not in <code class="docutils literal notranslate"><span class="pre">text</span></code>), <code class="docutils literal notranslate"><span class="pre">search</span></code> returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 <p>Even before we implement the search procedure itself, we develop a test for it.  The first test function checkes if a pattern <code class="docutils literal notranslate"><span class="pre">pattern</span></code> is indeed in the string <code class="docutils literal notranslate"><span class="pre">text</span></code>, as reported by the function <code class="docutils literal notranslate"><span class="pre">search</span></code>:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">test_pattern_in</span> <span class="n">search</span> <span class="n">text</span> <span class="n">pattern</span> <span class="o">=</span>
@@ -173,7 +190,7 @@ document.</p>
 </div>
 </div>
 <div class="section" id="a-naive-search">
-<h2>A naive search<a class="headerlink" href="#a-naive-search" title="Permalink to this headline">¶</a></h2>
+<h2>11.1.2. A naive search<a class="headerlink" href="#a-naive-search" title="Permalink to this headline">¶</a></h2>
 <p>We can implement a naive search as follows. Notice that OCaml syntax <code class="docutils literal notranslate"><span class="pre">s.[i]</span></code> allows one to refer to a character of a string <code class="docutils literal notranslate"><span class="pre">s</span></code> at a position <code class="docutils literal notranslate"><span class="pre">i</span></code>:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">naive_search</span> <span class="n">text</span> <span class="n">pattern</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">String</span><span class="p">.</span><span class="n">length</span> <span class="n">text</span> <span class="k">in</span>
@@ -199,7 +216,7 @@ document.</p>
 <p><strong>Question:</strong> what is the worst-case complexity of this search in terms of sizes <code class="docutils literal notranslate"><span class="pre">n</span></code> and <code class="docutils literal notranslate"><span class="pre">m</span></code> of <code class="docutils literal notranslate"><span class="pre">text</span></code> and <code class="docutils literal notranslate"><span class="pre">pattern</span></code> correspondingly?</p>
 </div>
 <div class="section" id="a-recursive-version-of-the-naive-search">
-<h2>A recursive version of the naive search<a class="headerlink" href="#a-recursive-version-of-the-naive-search" title="Permalink to this headline">¶</a></h2>
+<h2>11.1.3. A recursive version of the naive search<a class="headerlink" href="#a-recursive-version-of-the-naive-search" title="Permalink to this headline">¶</a></h2>
 <p>The same implementation can be, obviously rewritten so it would be tail-recursive:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">naive_search_rec</span> <span class="n">text</span> <span class="n">pattern</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">String</span><span class="p">.</span><span class="n">length</span> <span class="n">text</span> <span class="k">in</span>
@@ -223,7 +240,7 @@ document.</p>
 </div>
 </div>
 <div class="section" id="testing-naive-search">
-<h2>Testing naive search<a class="headerlink" href="#testing-naive-search" title="Permalink to this headline">¶</a></h2>
+<h2>11.1.4. Testing naive search<a class="headerlink" href="#testing-naive-search" title="Permalink to this headline">¶</a></h2>
 <p>Let us construct a number of tests, starting from a simple one:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">big</span> <span class="o">=</span> <span class="s2">&quot;abcdefghijklmnopeqrstuvabcsrtdsdqewgdcvaegbdweffwdajbjrag&quot;</span>
 
@@ -282,6 +299,15 @@ strings (for both positive and negative results), as follows:</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-08-rabin-karp.html" class="btn btn-neutral float-right" title="11.2. Rabin-Karp Search" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-08.html" class="btn btn-neutral" title="11. Week 08: Searching in Strings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
