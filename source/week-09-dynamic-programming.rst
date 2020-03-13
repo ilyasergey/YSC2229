@@ -5,7 +5,7 @@
 Optimisation Problems and Dynamic Programming
 =============================================
 
-*File: ``DynamicProgramming.ml``
+* File: ``DynamicProgramming.ml``
 
 *Dynamic programming* is a method for optimising the expensive algorithms by *memoising* the intermediate results of repetitive computations. Such repetitive computations most often appear in the context of applications that requires back-tracking (when one back-tracks, they might re-compute a result already obtained, which is undesirable). The essense of dynamic programming is to store (or, occasionally *tabulate*) the results of the recursive algorithm obtained for "smaller" inputs, so they could be used when computing the result for larger inputs. 
 
