@@ -30,7 +30,7 @@ Since the parameter ``f`` is named, it can be located at any position.
 Reading and Writing with Channels
 ---------------------------------
 
-In an operational system, files can be concurrently accessed for reading/writing by multiple applications. Because of this, the access to then needs to be controlled. OCaml enables this via *channels* --- an abstraction that guarantees that no one is modifying the file, from which reading is done, and no one is reading from a file, to which we write.
+In an operating system, files can be concurrently accessed for reading/writing by multiple applications. Because of this, the access to then needs to be controlled. OCaml enables this via *channels* --- an abstraction that guarantees that no one is modifying the file, from which reading is done, and no one is reading from a file, to which we write.
 
 A channel for reading can be used as in the following example that reads all lines from a file with the path ``filename``:: 
 

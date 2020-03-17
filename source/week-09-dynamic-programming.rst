@@ -7,7 +7,7 @@ Optimisation Problems and Dynamic Programming
 
 * File: ``DynamicProgramming.ml``
 
-*Dynamic programming* is a method for optimising the expensive algorithms by *memoising* the intermediate results of repetitive computations. Such repetitive computations most often appear in the context of applications that requires back-tracking (when one back-tracks, they might re-compute a result already obtained, which is undesirable). The essense of dynamic programming is to store (or, occasionally *tabulate*) the results of the recursive algorithm obtained for "smaller" inputs, so they could be used when computing the result for larger inputs. 
+*Dynamic programming* is a method for optimising expensive algorithms by *memoising* the intermediate results of repetitive computations. Such repetitive computations most often appear in the context of applications that require back-tracking (when one back-tracks, they might re-compute a result already obtained, which is undesirable). The essense of dynamic programming is to store (or, occasionally *tabulate*) the results of the recursive algorithm obtained for "smaller" inputs, so they could be used when computing the result for larger inputs. 
 
 The term `"dynamic programming" <https://en.wikipedia.org/wiki/Dynamic_programming>`_ was originally used in the 1940s by Richard Bellman to describe the process of solving problems where one needs to find the best decisions one after another.
 
@@ -97,7 +97,7 @@ Now assume that we want to first solve a simpler problem: what is the maximal cu
    (* n - currently observed item
       w - remaining weight        *)
    let rec solver n w = 
-     if n < 0 || w == 0 then 0
+     if n < 0 || w <= 0 then 0
      else 
        let wn = weight items n in
        if wn > w 

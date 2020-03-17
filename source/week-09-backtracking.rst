@@ -12,7 +12,7 @@ Science. In the most abstract form a constraint problem deals with a
 finite set of variables ``x1``, ``x2``, ... ``xn`` that can be
 assigned multiple values, in the most common cases those values being
 ``0`` and ``1``. In addition to the set of variables, each problem
-comes with a number of **constraints** in a for of predicates (boolean
+comes with a number of **constraints** defined as predicates (boolean
 functions) that render certain assignment schemes to the variables as
 undesirable. Therefore, you can think of constraint systems as of
 systems of equations and inequalities on ``x1``, ``x2``, ... ``xn``,
@@ -20,14 +20,14 @@ and their solutions to be the values of ``x1``, ``x2``, ... ``xn``
 that satisfy all the constraints.
 
 Another example of a constraint problem is allocating ``N`` students
-into groups, such that each group would hame between ``m`` and ``k``
+into groups, such that each group would have between ``m`` and ``k``
 members. The problem could be solved by a simple division, but in the
 presence of constraints (a student ``A`` does not want to be in the
 same group with a student ``B``), the finding solution becomes less
 trivial. While humans are good in solving constraint-satisfaction
 problems for small number of variables (e.g., 20 or less), it becomes
-quite tedious and should be implemented as a computer program.
-
+quite tedious as the number fo involved variables grows, and should be
+implemented as a computer program.
 
 Constraint Solving by Backtracking
 ----------------------------------
