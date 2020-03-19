@@ -58,9 +58,10 @@ solution, which did not (yet) violate the constraints, and try a
 different path. Eventually, either the full solution satisfying all
 constraints is discovered, or no solution is found (in which case CSP
 is unsolvable). As a graphical analogy, you can think of CSPs as
-walking by the trees towards possible solutions, back-tracking when a
-certain branch does not work. This is somewhat reminiscent to the tree
-of sorting possibilities discussed in Section :ref:`best_worst`.
+walking by the branches of a "decision tree" towards possible
+solutions, back-tracking when a certain branch does not work. This is
+somewhat reminiscent to the tree of sorting possibilities discussed in
+Section :ref:`best_worst`.
 
 Computing Solutions with Backtracking
 -------------------------------------
@@ -81,7 +82,7 @@ The tree-based analogy and back-tracking is widely applicable for solving NP-com
 * `Graph coloring <https://en.wikipedia.org/wiki/Graph_coloring>`_
 
 We will consider some of these problems later in this class, but in
-this section focus on a simpler (and less practically useful problem)
+this section focus on a simpler (and less practically useful) problem
 solved by backtracking, namely *N-Queens problem*.
 
 N-Queens problem
@@ -147,7 +148,15 @@ The following procedure demonstrates back-tracking by combining the iteration an
    then true
    else loop 0
 
-The main work is done by the recursive function ``loop i``, implementing the iteration through **rows** for a fixed column ``col``. Whenever ``loop`` reaches the bottom (row ``i = n``) it stops and returns ``true``, indicating that the solution is found. Alternatively, it tries to install a queen to a position ``board.(i).(col)`` and solve the remainin problem by moving to the next column (``solver board n (col + 1)``). In case if this has failed, it back-tracks (by un-installing the queen) and tries a different row. 
+The main work is done by the recursive function ``loop i``,
+implementing the iteration through **rows** for a fixed column
+``col``. Whenever ``loop`` reaches the bottom row (``i = n``) it stops
+and returns ``true``, indicating that the solution is found.
+Alternatively, it tries to install a queen to a position
+``board.(i).(col)`` and solve the remaining problem by moving to the
+next column (``solver board n (col + 1)``). In case if this has
+failed, it back-tracks (by un-installing the queen) and tries a
+different row.
 
 The top-level program simply calls ``solver`` from the leftmost column::
 

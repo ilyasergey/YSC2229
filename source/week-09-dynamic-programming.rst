@@ -66,7 +66,7 @@ Knapsack Problem
 
 *Knapsack Problem* (KP) is a very famous instance of a CSP, combined with an *optimisation problem*. This means that not only we need to find a solution that satisfies the given constraints, but also such that it maximises certain target function. 
 
-The classical formulation of KP is as follows. Given a set of items, each with a weight and a value, determine the number of each item to include in a collection so that the total weight is less than or equal to a given limit and the total value is as large as possible. It derives its name from the problem faced by someone who is constrained by a fixed-size knapsack and must fill it with the most valuable items.
+The classical formulation of KP is as follows. Given a set of distinct items, each with a weight and a value, determine which items to include in a collection so that the total weight is less than or equal to a given limit and the total value is as large as possible. It derives its name from the problem faced by someone who is constrained by a fixed-size knapsack and must fill it with the most valuable items.
 
 For instance, we can encode our items (each available in a singe instance) in a form of an array, coupling their descriptions with their weight and price::
 

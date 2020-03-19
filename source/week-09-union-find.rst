@@ -64,11 +64,11 @@ Working with Sets via Union-Find
 
 The Union-Find structure is going to rely on an old trick --- encoding
 certain information about elements in an array via their locations. In
-this particular case, once created, each location in a UF "carrier"
-array determines an equivalence class, represented by an element
-itself. That is, for instance creating a UF structure via ``mk_UF 10``
-we create an equivalence relation with 10 classes, where each element
-is only connected to itself.
+this particular case, once created, each location in a UnionFind's
+"carrier" array determines an equivalence class, represented by an
+element itself. That is, for instance creating a UF structure via
+``mk_UF 10`` we create an equivalence relation with 10 classes, where
+each element is only connected to itself.
 
 However, in the future the class of an element might change, which
 will be reflected by changing the value in the corresponding array
