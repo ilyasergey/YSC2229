@@ -53,7 +53,7 @@ That is, it only stores a count of equivalence classes and an array, representin
 
   let mk_UF n = 
     let ints = 
-      ArrayUtil.list_to_array (Week_03.iota (n - 1)) in
+      ArrayUtil.list_to_array (ArrayUtil.iota (n - 1)) in
     { count = ref n;
       id = ints }
 

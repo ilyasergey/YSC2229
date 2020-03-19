@@ -1,7 +1,7 @@
 .. -*- mode: rst -*-
 
-YSC2229 Lecture Notes, Week 11
-==============================
+Week 10: Binary Data Compression
+================================
 
 .. toctree::
 

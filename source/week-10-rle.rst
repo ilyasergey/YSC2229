@@ -112,7 +112,7 @@ The decoder is implemented similarly: the RLE decompression is simply a reversal
    let lengths = read_from_binary read_lengths archive in
    write_to_binary write_bits_from_length new_binary (lengths, 0)
 
-With the implementation of compression/decompression at place, we can test them on the particular DNA sequences:
+With the implementation of compression/decompression at place, we can test them on the particular DNA sequences::
 
  let dna_rle_compression_test d = 
    let dna = "dna.tmp" in
