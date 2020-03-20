@@ -41,6 +41,8 @@ Supplementary Materials
 * `Week 01 Introductory Slides <resources/2020/Week-01-Intro.pdf>`_
 * `Matrix determinants in Haskell <resources/2020/Matrices.hs>`_
 * `Week 04 Slides on Advanced Sorting <resources/2020/Week-04-Sorting.pdf>`_
+* `Board shots from the Backtracking lecute <resources/2020/backtracking.pdf>`_
+
 
 Examples and Code
 -----------------
