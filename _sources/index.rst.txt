@@ -12,18 +12,21 @@ Introductory Data Structures and Algorithms
 
    syllabus
    prerequisites
+
    week-01
    week-02
    week-03	 
    week-04	 
    week-05
    week-06
+
    midterm   
+
    week-07
    week-08
+   week-09
+..   week-10
 
-..   YSC2229-lecture-notes-week-10
-..   YSC2229-lecture-notes-week-11
 ..   YSC2229-lecture-notes-week-12
 ..   YSC2229-lecture-notes-week-13
 ..   YSC2229-lecture-notes-week-14
@@ -38,6 +41,8 @@ Supplementary Materials
 * `Week 01 Introductory Slides <resources/2020/Week-01-Intro.pdf>`_
 * `Matrix determinants in Haskell <resources/2020/Matrices.hs>`_
 * `Week 04 Slides on Advanced Sorting <resources/2020/Week-04-Sorting.pdf>`_
+* `Board shots from the Backtracking lecute <resources/2020/backtracking.pdf>`_
+
 
 Examples and Code
 -----------------

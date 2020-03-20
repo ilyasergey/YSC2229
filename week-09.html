@@ -1,0 +1,251 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>12. Week 09: Backtracking and Dynamic Programming &mdash; YSC2229 2020</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="12.1. Equivalence Classes and Union-Find" href="week-09-union-find.html" />
+    <link rel="prev" title="11.4. Exercises" href="week-08-exercises.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">12. Week 09: Backtracking and Dynamic Programming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-09-union-find.html">12.1. Equivalence Classes and Union-Find</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09-backtracking.html">12.2. Constraint Solving via Backtracking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09-dynamic-programming.html">12.3. Optimisation Problems and Dynamic Programming</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>12. Week 09: Backtracking and Dynamic Programming</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="week-09-backtracking-and-dynamic-programming">
+<h1>12. Week 09: Backtracking and Dynamic Programming<a class="headerlink" href="#week-09-backtracking-and-dynamic-programming" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="week-09-union-find.html">12.1. Equivalence Classes and Union-Find</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-09-union-find.html#union-find-structure">12.1.1. Union-Find Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09-union-find.html#working-with-sets-via-union-find">12.1.2. Working with Sets via Union-Find</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09-union-find.html#testing-union-find">12.1.3. Testing Union-Find</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-09-backtracking.html">12.2. Constraint Solving via Backtracking</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-09-backtracking.html#constraint-solving-by-backtracking">12.2.1. Constraint Solving by Backtracking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09-backtracking.html#computing-solutions-with-backtracking">12.2.2. Computing Solutions with Backtracking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09-backtracking.html#examples-of-csp-solved-by-backtracking">12.2.3. Examples of CSP solved by Backtracking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09-backtracking.html#n-queens-problem">12.2.4. N-Queens problem</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="week-09-dynamic-programming.html">12.3. Optimisation Problems and Dynamic Programming</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-09-dynamic-programming.html#implementing-fibonacci-numbers">12.3.1. Implementing Fibonacci numbers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09-dynamic-programming.html#knapsack-problem">12.3.2. Knapsack Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09-dynamic-programming.html#determining-the-maximal-price">12.3.3. Determining the Maximal Price</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09-dynamic-programming.html#solving-knapsack-problem-via-dynamic-programming">12.3.4. Solving Knapsack Problem via Dynamic Programming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-09-dynamic-programming.html#restoring-the-optimal-list-of-items">12.3.5. Restoring the Optimal List of Items</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-09-union-find.html" class="btn btn-neutral float-right" title="12.1. Equivalence Classes and Union-Find" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-08-exercises.html" class="btn btn-neutral" title="11.4. Exercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

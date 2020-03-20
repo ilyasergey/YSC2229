@@ -1,0 +1,428 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>12.2. Constraint Solving via Backtracking &mdash; YSC2229 2020</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="12.3. Optimisation Problems and Dynamic Programming" href="week-09-dynamic-programming.html" />
+    <link rel="prev" title="12.1. Equivalence Classes and Union-Find" href="week-09-union-find.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-09-union-find.html">12.1. Equivalence Classes and Union-Find</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">12.2. Constraint Solving via Backtracking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#constraint-solving-by-backtracking">12.2.1. Constraint Solving by Backtracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#computing-solutions-with-backtracking">12.2.2. Computing Solutions with Backtracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#examples-of-csp-solved-by-backtracking">12.2.3. Examples of CSP solved by Backtracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#n-queens-problem">12.2.4. N-Queens problem</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-09-dynamic-programming.html">12.3. Optimisation Problems and Dynamic Programming</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a> &raquo;</li>
+        
+      <li>12.2. Constraint Solving via Backtracking</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="constraint-solving-via-backtracking">
+<span id="week-09-backtracking"></span><h1>12.2. Constraint Solving via Backtracking<a class="headerlink" href="#constraint-solving-via-backtracking" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>File: <code class="docutils literal notranslate"><span class="pre">Backtracking.ml</span></code></li>
+</ul>
+<p><em>Constraint solving</em> problems are extremely common in Computer
+Science. In the most abstract form a constraint problem deals with a
+finite set of variables <code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">x2</span></code>, … <code class="docutils literal notranslate"><span class="pre">xn</span></code> that can be
+assigned multiple values, in the most common cases those values being
+<code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">1</span></code>. In addition to the set of variables, each problem
+comes with a number of <strong>constraints</strong> defined as predicates (boolean
+functions) that render certain assignment schemes to the variables as
+undesirable. Therefore, you can think of constraint systems as of
+systems of equations and inequalities on <code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">x2</span></code>, … <code class="docutils literal notranslate"><span class="pre">xn</span></code>,
+and their solutions to be the values of <code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">x2</span></code>, … <code class="docutils literal notranslate"><span class="pre">xn</span></code>
+that satisfy all the constraints.</p>
+<p>Another example of a constraint problem is allocating <code class="docutils literal notranslate"><span class="pre">N</span></code> students
+into groups, such that each group would have between <code class="docutils literal notranslate"><span class="pre">m</span></code> and <code class="docutils literal notranslate"><span class="pre">k</span></code>
+members. The problem could be solved by a simple division, but in the
+presence of constraints (a student <code class="docutils literal notranslate"><span class="pre">A</span></code> does not want to be in the
+same group with a student <code class="docutils literal notranslate"><span class="pre">B</span></code>), the finding solution becomes less
+trivial. While humans are good in solving constraint-satisfaction
+problems for small number of variables (e.g., 20 or less), it becomes
+quite tedious as the number fo involved variables grows, and should be
+implemented as a computer program.</p>
+<div class="section" id="constraint-solving-by-backtracking">
+<h2>12.2.1. Constraint Solving by Backtracking<a class="headerlink" href="#constraint-solving-by-backtracking" title="Permalink to this headline">¶</a></h2>
+<p>In practice, most of constraint satisfaction problems (CSPs) do not
+have an efficient solution, and fall into the category of
+<strong>intractable</strong>, having complexity <span class="math notranslate nohighlight">\(O(2^n)\)</span> or <span class="math notranslate nohighlight">\(O(n!)\)</span> in
+the number of involved variables. Nevertheless, they still arise very
+often in practice and hence we need to know how to tackle them
+algorithmically.</p>
+<p>The stated complexities <span class="math notranslate nohighlight">\(O(2^n)\)</span> and <span class="math notranslate nohighlight">\(O(n!)\)</span> hint that in
+order to solve a CSP we often need to enumerate all <strong>subsets</strong> or
+even all <strong>permutations</strong> of the set of variables. This is due to the
+fact that for a set of <span class="math notranslate nohighlight">\(n\)</span> distinct elements, the number its
+subsets would be <span class="math notranslate nohighlight">\(2^n\)</span> and the number of permutations would be
+<span class="math notranslate nohighlight">\(n!\)</span>.</p>
+<p>When enumerating subsets or permutations, we should take constraints
+into the account. Instead of trying all permutations/subsets randomly,
+we can do slightly better by constructing the solution incrementally,
+while checking the constraints at each intermediate step. However, it
+might also be the case that, while taking a certain route when
+assigning values to <code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">x2</span></code>, … <code class="docutils literal notranslate"><span class="pre">xn</span></code>, we have went in a
+“wrong way”. In this case, the algorithm for gradually constructing
+the solution, the algorithm needs to <strong>back-track</strong> to the partial
+solution, which did not (yet) violate the constraints, and try a
+different path. Eventually, either the full solution satisfying all
+constraints is discovered, or no solution is found (in which case CSP
+is unsolvable). As a graphical analogy, you can think of CSPs as
+walking by the branches of a “decision tree” towards possible
+solutions, back-tracking when a certain branch does not work. This is
+somewhat reminiscent to the tree of sorting possibilities discussed in
+Section <a class="reference internal" href="week-04-sorting-best-worst.html#best-worst"><span class="std std-ref">Best-Worst Case for Comparison-Based Sorting</span></a>.</p>
+</div>
+<div class="section" id="computing-solutions-with-backtracking">
+<h2>12.2.2. Computing Solutions with Backtracking<a class="headerlink" href="#computing-solutions-with-backtracking" title="Permalink to this headline">¶</a></h2>
+<p>In the light of the tree-analogy described above, let us remark that each algorithm implementing a CSP solution by search via back-tracking combines two computational patterns:</p>
+<ul class="simple">
+<li>Iteration (e.g., via <code class="docutils literal notranslate"><span class="pre">for</span></code>-loop) — for enumerating possible alternatives (branches) to consider at a given stage.</li>
+<li>Recursion — for going deeper into a certain branch, in a hope that it will bring us closer to a solution.</li>
+</ul>
+</div>
+<div class="section" id="examples-of-csp-solved-by-backtracking">
+<h2>12.2.3. Examples of CSP solved by Backtracking<a class="headerlink" href="#examples-of-csp-solved-by-backtracking" title="Permalink to this headline">¶</a></h2>
+<p>The tree-based analogy and back-tracking is widely applicable for solving NP-complete problems, such as</p>
+<ul class="simple">
+<li><a class="reference external" href="https://en.wikipedia.org/wiki/Boolean_satisfiability_problem">Boolean satisfiability problem (SAT)</a></li>
+<li><a class="reference external" href="https://en.wikipedia.org/wiki/Hamiltonian_path_problem">Hamiltonian path problem</a></li>
+<li><a class="reference external" href="https://en.wikipedia.org/wiki/Travelling_salesman_problem">Travelling salesman problem</a></li>
+<li><a class="reference external" href="https://en.wikipedia.org/wiki/Graph_coloring">Graph coloring</a></li>
+</ul>
+<p>We will consider some of these problems later in this class, but in
+this section focus on a simpler (and less practically useful) problem
+solved by backtracking, namely <em>N-Queens problem</em>.</p>
+</div>
+<div class="section" id="n-queens-problem">
+<h2>12.2.4. N-Queens problem<a class="headerlink" href="#n-queens-problem" title="Permalink to this headline">¶</a></h2>
+<p>Assume you are given an <code class="docutils literal notranslate"><span class="pre">n</span></code> by <code class="docutils literal notranslate"><span class="pre">n</span></code> chessboard so that no two queens threaten each other; thus, a solution requires that no two queens share the same row, column, or diagonal. We are going to discover this solution iteratively, via back-tracking, by considering it a CSP.</p>
+<p><strong>Question</strong>: does the solution exist fo any <code class="docutils literal notranslate"><span class="pre">n</span></code>?</p>
+<p>The board is encoded as 2-dimensional array <code class="docutils literal notranslate"><span class="pre">board</span></code> of integers (0
+or 1). We are going to put queens, iteratively, in each column,
+starting from the left, and moving right. To check the safety of a
+partial solution, before placing a new queen in a row <code class="docutils literal notranslate"><span class="pre">row</span></code> and a
+column <code class="docutils literal notranslate"><span class="pre">col</span></code>, we define the constraints, that check that no other
+queen on the left part of the board threatens it:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">is_safe</span> <span class="n">board</span> <span class="n">row</span> <span class="n">col</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">board</span> <span class="k">in</span>
+
+  <span class="c">(* Check this row on the left *)</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">check_row_left</span> <span class="n">i</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">then</span> <span class="bp">true</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="n">board</span><span class="o">.(</span><span class="n">row</span><span class="o">).(</span><span class="n">i</span><span class="o">)</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">then</span> <span class="bp">false</span>
+    <span class="k">else</span> <span class="n">check_row_left</span> <span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span>
+  <span class="k">in</span>
+
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">check_left_up_diag</span> <span class="n">i</span> <span class="n">j</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">then</span> <span class="bp">true</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="n">board</span><span class="o">.(</span><span class="n">i</span><span class="o">).(</span><span class="n">j</span><span class="o">)</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">then</span> <span class="bp">false</span>
+    <span class="k">else</span> <span class="n">check_left_up_diag</span> <span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span>
+  <span class="k">in</span>
+
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">check_left_down_diag</span> <span class="n">i</span> <span class="n">j</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">n</span> <span class="o">||</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">then</span> <span class="bp">true</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="n">board</span><span class="o">.(</span><span class="n">i</span><span class="o">).(</span><span class="n">j</span><span class="o">)</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">then</span> <span class="bp">false</span>
+    <span class="k">else</span> <span class="n">check_left_down_diag</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span>
+
+  <span class="k">in</span>
+
+  <span class="n">check_row_left</span> <span class="n">col</span> <span class="o">&amp;&amp;</span>
+  <span class="n">check_left_up_diag</span> <span class="n">row</span> <span class="n">col</span> <span class="o">&amp;&amp;</span>
+  <span class="n">check_left_down_diag</span> <span class="n">row</span> <span class="n">col</span>
+</pre></div>
+</div>
+<p>The following procedure demonstrates back-tracking by combining the iteration and recursion. It rakes a <code class="docutils literal notranslate"><span class="pre">board</span></code> and its size <code class="docutils literal notranslate"><span class="pre">n</span></code> and solves the problem (or discovers that it is unsolvable) starting from the column <code class="docutils literal notranslate"><span class="pre">col</span></code>, assuming the columns on the left are already taken care of:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">solver</span> <span class="n">board</span> <span class="n">n</span> <span class="n">col</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">loop</span> <span class="n">i</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">=</span> <span class="n">n</span> <span class="k">then</span> <span class="bp">false</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="n">is_safe</span> <span class="n">board</span> <span class="n">i</span> <span class="n">col</span>
+    <span class="k">then</span> <span class="k">begin</span>
+      <span class="n">board</span><span class="o">.(</span><span class="n">i</span><span class="o">).(</span><span class="n">col</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">1</span><span class="o">;</span>
+      <span class="k">if</span> <span class="n">solver</span> <span class="n">board</span> <span class="n">n</span> <span class="o">(</span><span class="n">col</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+      <span class="k">then</span> <span class="bp">true</span>
+      <span class="c">(* Back-tracking *)</span>
+      <span class="k">else</span> <span class="k">begin</span>
+        <span class="n">board</span><span class="o">.(</span><span class="n">i</span><span class="o">).(</span><span class="n">col</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="n">loop</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+    <span class="k">else</span> <span class="n">loop</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+  <span class="k">in</span>
+  <span class="k">if</span> <span class="n">col</span> <span class="o">&gt;=</span> <span class="n">n</span>
+  <span class="k">then</span> <span class="bp">true</span>
+  <span class="k">else</span> <span class="n">loop</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>The main work is done by the recursive function <code class="docutils literal notranslate"><span class="pre">loop</span> <span class="pre">i</span></code>,
+implementing the iteration through <strong>rows</strong> for a fixed column
+<code class="docutils literal notranslate"><span class="pre">col</span></code>. Whenever <code class="docutils literal notranslate"><span class="pre">loop</span></code> reaches the bottom row (<code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">=</span> <span class="pre">n</span></code>) it stops
+and returns <code class="docutils literal notranslate"><span class="pre">true</span></code>, indicating that the solution is found.
+Alternatively, it tries to install a queen to a position
+<code class="docutils literal notranslate"><span class="pre">board.(i).(col)</span></code> and solve the remaining problem by moving to the
+next column (<code class="docutils literal notranslate"><span class="pre">solver</span> <span class="pre">board</span> <span class="pre">n</span> <span class="pre">(col</span> <span class="pre">+</span> <span class="pre">1)</span></code>). In case if this has
+failed, it back-tracks (by un-installing the queen) and tries a
+different row.</p>
+<p>The top-level program simply calls <code class="docutils literal notranslate"><span class="pre">solver</span></code> from the leftmost column:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">solve_n_queens</span> <span class="n">board</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">board</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="o">_</span> <span class="o">=</span> <span class="n">solver</span> <span class="n">board</span> <span class="n">n</span> <span class="mi">0</span> <span class="k">in</span>
+  <span class="n">board</span>
+</pre></div>
+</div>
+<p><strong>Question:</strong> what is the complexity of <code class="docutils literal notranslate"><span class="pre">solve_n_queens</span></code> in terms of the size of the board?</p>
+<p>We can check the result via the following functions:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">mk_board</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">board</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">n</span> <span class="o">(</span><span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">n</span> <span class="mi">0</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="n">board</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">n</span> <span class="mi">0</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="n">board</span>
+
+<span class="k">let</span> <span class="n">print_board</span> <span class="n">board</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">board</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+      <span class="nn">Printf</span><span class="p">.</span><span class="n">printf</span> <span class="s2">&quot;%d  &quot;</span> <span class="n">board</span><span class="o">.(</span><span class="n">i</span><span class="o">).(</span><span class="n">j</span><span class="o">);</span>
+    <span class="k">done</span><span class="o">;</span>
+    <span class="n">print_endline</span> <span class="s2">&quot;&quot;</span>
+  <span class="k">done</span>
+</pre></div>
+</div>
+<p>For instance, for <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">8</span></code> the outcome is as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="n">mk_board</span> <span class="mi">8</span><span class="o">;;</span>
+<span class="k">val</span> <span class="n">b</span> <span class="o">:</span> <span class="kt">int</span> <span class="kt">array</span> <span class="kt">array</span> <span class="o">=</span>
+  <span class="o">[|[|</span><span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">|];</span> <span class="o">[|</span><span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">|];</span>
+    <span class="o">[|</span><span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">|];</span> <span class="o">[|</span><span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">|];</span>
+    <span class="o">[|</span><span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">|];</span> <span class="o">[|</span><span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">|];</span>
+    <span class="o">[|</span><span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">|];</span> <span class="o">[|</span><span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">0</span><span class="o">|]|]</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">solve_n_queens</span> <span class="n">b</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">*</span> <span class="kt">int</span> <span class="kt">array</span> <span class="kt">array</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">print_board</span> <span class="n">b</span><span class="o">;;</span>
+
+<span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">0</span>
+<span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>
+<span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">0</span>
+<span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span>
+
+<span class="o">-</span> <span class="o">:</span> <span class="kt">unit</span> <span class="o">=</span> <span class="bp">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-09-dynamic-programming.html" class="btn btn-neutral float-right" title="12.3. Optimisation Problems and Dynamic Programming" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-09-union-find.html" class="btn btn-neutral" title="12.1. Equivalence Classes and Union-Find" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

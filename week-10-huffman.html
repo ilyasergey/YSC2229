@@ -1,0 +1,511 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Huffman Encoding &mdash; YSC2229 2020</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Huffman Encoding</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="huffman-encoding">
+<span id="week-10-huffman"></span><h1>Huffman Encoding<a class="headerlink" href="#huffman-encoding" title="Permalink to this headline">¶</a></h1>
+<p>File: <code class="docutils literal notranslate"><span class="pre">HuffmanCodes.ml</span></code></p>
+<p>All the compression algorithms we explored so far did not really exploit any specifics of the file they are working on in order to adapt the compression scheme itself.</p>
+<p>The idea of <a class="reference external" href="https://en.wikipedia.org/wiki/Huffman_coding">Huffman coding</a> (named after its inventor David A. Huffman) is to encode a text by assigning longer bit sequences to more rare characters in it, while giving shorter codes (bit sequences) to more frequent characters. It builds on several simple but powerful ideas, which we will consider further below:</p>
+<ul class="simple">
+<li>Huffman tree of characters</li>
+<li>Character frequency analysis</li>
+</ul>
+<div class="section" id="assigning-codes-via-character-trees">
+<h2>Assigning Codes via Character Trees<a class="headerlink" href="#assigning-codes-via-character-trees" title="Permalink to this headline">¶</a></h2>
+<p>Huffman tree is a binary tree that has characters in its leaves. It gives a simple way to assign <cite>unique</cite> binary codes (bit sequences) to individual characters by following paths in the tree. The key characterising of a Huffman tree is that no code for any character is a prefix of a code of another character. This makes it possible to use the tree for both encoding and decoding without any overhead from under-used encodings (as was the case with RLE).</p>
+<p>The binary tree can be represented by the following OCaml type:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">tree</span> <span class="o">=</span>
+  <span class="o">|</span> <span class="nc">Node</span> <span class="k">of</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">tree</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">tree</span>
+  <span class="o">|</span> <span class="nc">Leaf</span> <span class="k">of</span> <span class="k">&#39;</span><span class="n">a</span>
+</pre></div>
+</div>
+<p>Consider the following example:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">tree1</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">le</span> <span class="o">=</span> <span class="nc">Leaf</span> <span class="sc">&#39;e&#39;</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ld</span> <span class="o">=</span> <span class="nc">Leaf</span> <span class="sc">&#39;d&#39;</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">la</span> <span class="o">=</span> <span class="nc">Leaf</span> <span class="sc">&#39;a&#39;</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">lb</span> <span class="o">=</span> <span class="nc">Leaf</span> <span class="sc">&#39;b&#39;</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">lc</span> <span class="o">=</span> <span class="nc">Leaf</span> <span class="sc">&#39;c&#39;</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">lf</span> <span class="o">=</span> <span class="nc">Leaf</span> <span class="sc">&#39;f&#39;</span> <span class="k">in</span>
+  <span class="nc">Node</span> <span class="o">(</span><span class="n">la</span><span class="o">,</span>
+        <span class="nc">Node</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="n">lc</span><span class="o">,</span> <span class="n">lb</span><span class="o">),</span>
+              <span class="nc">Node</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="n">lf</span><span class="o">,</span> <span class="n">le</span><span class="o">),</span>
+                    <span class="n">ld</span><span class="o">)))</span>
+</pre></div>
+</div>
+<p>The encodings for <code class="docutils literal notranslate"><span class="pre">'a'</span></code>, <code class="docutils literal notranslate"><span class="pre">'b'</span></code>, etc can be restored by walking down the branches (0 - left, 1 - right) of the tree before reaching the corresponding leaf. This way we obtain the following codes:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">-&gt;</span> <span class="mi">0</span>
+<span class="n">b</span> <span class="o">-&gt;</span> <span class="mi">101</span>
+<span class="n">c</span> <span class="o">-&gt;</span> <span class="mi">100</span>
+<span class="n">d</span> <span class="o">-&gt;</span> <span class="mi">111</span>
+<span class="n">e</span> <span class="o">-&gt;</span> <span class="mi">1101</span>
+<span class="n">f</span> <span class="o">-&gt;</span> <span class="mi">1100</span>
+</pre></div>
+</div>
+<p>It is easy to see that none of the codes is a prefix of another one, thus, using this particular Huffman tree, we can unambiguously restore the string <code class="docutils literal notranslate"><span class="pre">&quot;acd&quot;</span></code> from its code <code class="docutils literal notranslate"><span class="pre">0100111</span></code>.</p>
+</div>
+<div class="section" id="serializing-huffman-trees">
+<h2>Serializing Huffman Trees<a class="headerlink" href="#serializing-huffman-trees" title="Permalink to this headline">¶</a></h2>
+<p>It is very easy to serialize the tree recursively by writing its characters for the leaves, or recursively serializing subtrees for nodes:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">write_tree</span> <span class="n">out</span> <span class="n">t</span> <span class="o">=</span>
+  <span class="k">match</span> <span class="n">t</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">Leaf</span> <span class="n">c</span> <span class="o">-&gt;</span> <span class="k">begin</span>
+      <span class="n">write_bits</span> <span class="n">out</span> <span class="o">~</span><span class="n">nbits</span><span class="o">:</span><span class="mi">1</span> <span class="mi">1</span><span class="o">;</span>
+      <span class="n">write_bits</span> <span class="n">out</span> <span class="o">~</span><span class="n">nbits</span><span class="o">:</span><span class="mi">8</span> <span class="o">(</span><span class="n">int_of_char</span> <span class="n">c</span><span class="o">)</span>
+    <span class="k">end</span>
+  <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span> <span class="o">-&gt;</span>
+    <span class="n">write_bits</span> <span class="n">out</span> <span class="o">~</span><span class="n">nbits</span><span class="o">:</span><span class="mi">1</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="n">write_tree</span> <span class="n">out</span> <span class="n">l</span><span class="o">;</span>
+    <span class="n">write_tree</span> <span class="n">out</span> <span class="n">r</span>
+</pre></div>
+</div>
+<p>The deserialization works by reading the bits from an input, determining whether it sees a leaf or a node. In the latter case it proceeds recursively:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">read_tree</span> <span class="n">input</span> <span class="o">=</span>
+  <span class="k">match</span> <span class="n">read_bits</span> <span class="n">input</span> <span class="mi">1</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="mi">1</span> <span class="o">-&gt;</span>
+    <span class="k">let</span> <span class="n">c</span> <span class="o">=</span> <span class="n">read_bits</span> <span class="n">input</span> <span class="mi">8</span> <span class="o">|&gt;</span> <span class="n">char_of_int</span> <span class="k">in</span>
+    <span class="nc">Leaf</span> <span class="n">c</span>
+  <span class="o">|</span> <span class="mi">0</span> <span class="o">-&gt;</span>
+    <span class="k">let</span> <span class="n">l</span> <span class="o">=</span> <span class="n">read_tree</span> <span class="n">input</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="n">read_tree</span> <span class="n">input</span> <span class="k">in</span>
+    <span class="nc">Node</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span>
+  <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span><span class="nc">Failure</span> <span class="s2">&quot;Cannot unparse tree!&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>We can test those two procedures as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">BinaryEncodings</span>
+
+<span class="c">(* Test functions *)</span>
+<span class="k">let</span> <span class="n">write_tree_to_binary</span> <span class="o">=</span> <span class="n">write_to_binary</span> <span class="n">write_tree</span>
+<span class="k">let</span> <span class="n">read_tree_from_binary</span> <span class="o">=</span> <span class="n">read_from_binary</span> <span class="n">read_tree</span>
+
+<span class="k">let</span> <span class="n">test_tree_serialization</span> <span class="n">t</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="s2">&quot;tree.tmp&quot;</span> <span class="k">in</span>
+  <span class="n">write_tree_to_binary</span> <span class="n">f</span> <span class="n">t</span><span class="o">;</span>
+  <span class="k">let</span> <span class="n">t&#39;</span> <span class="o">=</span> <span class="n">read_tree_from_binary</span> <span class="n">f</span> <span class="k">in</span>
+  <span class="nn">Sys</span><span class="p">.</span><span class="n">remove</span> <span class="n">f</span><span class="o">;</span>
+  <span class="n">t</span> <span class="o">=</span> <span class="n">t&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="constructing-huffman-tree-from-frequencies">
+<h2>Constructing Huffman tree from Frequencies<a class="headerlink" href="#constructing-huffman-tree-from-frequencies" title="Permalink to this headline">¶</a></h2>
+<p>Naturally, we want to assign shorter codes to more common characters and longer codes to more rare ones. For now, assume that we know relative frequencies of the characters in our text, encoded, e.g., by the following array:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">cfreqs1</span> <span class="o">=</span> <span class="o">[|(</span><span class="sc">&#39;a&#39;</span><span class="o">,</span> <span class="mi">45</span><span class="o">);</span> <span class="o">(</span><span class="sc">&#39;b&#39;</span><span class="o">,</span> <span class="mi">13</span><span class="o">);</span> <span class="o">(</span><span class="sc">&#39;c&#39;</span><span class="o">,</span> <span class="mi">12</span><span class="o">);</span>
+                <span class="o">(</span><span class="sc">&#39;d&#39;</span><span class="o">,</span> <span class="mi">16</span><span class="o">);</span> <span class="o">(</span><span class="sc">&#39;e&#39;</span><span class="o">,</span> <span class="mi">9</span><span class="o">);</span> <span class="o">(</span><span class="sc">&#39;f&#39;</span><span class="o">,</span> <span class="mi">5</span><span class="o">)|]</span>
+</pre></div>
+</div>
+<p>Using this information, we are going to build the Huffman tree iteratively, by “merging” a number of disparate trees and taking unioin of their frequencies. To do so, we first create an array of disparate leaves, along with their frequencies:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">make_tree_array</span> <span class="n">freq_chars</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">freq_chars</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ftrees</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">n</span> <span class="o">(</span><span class="nc">Leaf</span> <span class="sc">&#39;a&#39;</span><span class="o">,</span> <span class="mi">1</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="o">(</span><span class="n">c</span><span class="o">,</span> <span class="n">f</span><span class="o">)</span> <span class="o">=</span> <span class="n">freq_chars</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="k">in</span>
+    <span class="n">ftrees</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="o">(</span><span class="nc">Leaf</span> <span class="n">c</span><span class="o">,</span> <span class="n">f</span><span class="o">)</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="n">ftrees</span>
+</pre></div>
+</div>
+<p>To build the tree from those leaves, we are going to use a familiar structure min-priority queue. It can be defined by instantiating a functor from Chapter <a class="reference internal" href="week-05-priority.html#priority-queues"><span class="std std-ref">Priority Queues</span></a> with the following comparator:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">CF</span> <span class="o">=</span> <span class="k">struct</span>
+  <span class="k">type</span> <span class="n">t</span> <span class="o">=</span> <span class="kt">char</span> <span class="n">tree</span> <span class="o">*</span> <span class="kt">int</span>
+  <span class="k">let</span> <span class="n">comp</span> <span class="n">x</span> <span class="n">y</span> <span class="o">=</span>
+    <span class="k">if</span> <span class="n">snd</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">snd</span> <span class="n">y</span> <span class="k">then</span> <span class="mi">1</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="n">fst</span> <span class="n">x</span> <span class="o">=</span> <span class="n">fst</span> <span class="n">y</span> <span class="k">then</span> <span class="mi">0</span>
+    <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+  <span class="k">let</span> <span class="n">pp</span> <span class="o">(_,</span> <span class="n">f</span><span class="o">)</span> <span class="o">=</span> <span class="nn">Printf</span><span class="p">.</span><span class="n">sprintf</span> <span class="s2">&quot;[tree -&gt; %d]&quot;</span> <span class="n">f</span>
+<span class="k">end</span>
+
+<span class="k">open</span> <span class="nc">PriorityQueue</span>
+<span class="k">module</span> <span class="nc">PQ</span> <span class="o">=</span> <span class="nc">PriorityQueue</span><span class="o">(</span><span class="nc">CF</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The final tree is computed as follows. Having <code class="docutils literal notranslate"><span class="pre">n</span></code> leaves, we iterate for <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">-</span> <span class="pre">2</span></code> times, each time extracting the trees with the minimal cumulative frequency. Having those, we “merge” them by allocating a node, assigning the cumulative frequence to it, and insert it back to the priority queue. Having done that <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">-</span> <span class="pre">2</span></code> times, we will have only one node leftin the queue, corresponding to the root of the tree:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">compute_frequency_tree</span> <span class="n">freq_chars</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">PQ</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">Util</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">freq_chars</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ftrees</span> <span class="o">=</span> <span class="n">make_tree_array</span> <span class="n">freq_chars</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">q</span> <span class="o">=</span> <span class="n">mk_queue</span> <span class="n">ftrees</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">2</span> <span class="k">do</span>
+    <span class="c">(* TODO: fix this in Week_05! *)</span>
+    <span class="k">let</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">fx</span><span class="o">)</span> <span class="o">=</span> <span class="n">get_exn</span> <span class="o">@@</span> <span class="n">heap_extract_max</span> <span class="n">q</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="o">(</span><span class="n">y</span><span class="o">,</span> <span class="n">fy</span><span class="o">)</span> <span class="o">=</span> <span class="n">get_exn</span> <span class="o">@@</span> <span class="n">heap_extract_max</span> <span class="n">q</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Node</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">),</span> <span class="n">fx</span> <span class="o">+</span> <span class="n">fy</span><span class="o">)</span> <span class="k">in</span>
+    <span class="n">max_heap_insert</span> <span class="n">q</span> <span class="n">n</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="n">fst</span> <span class="o">@@</span> <span class="n">get_exn</span> <span class="o">@@</span> <span class="n">heap_extract_max</span> <span class="n">q</span>
+</pre></div>
+</div>
+<p>We can now test our implementation:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="o">_</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="n">compute_frequency_tree</span> <span class="n">cfreqs1</span> <span class="k">in</span>
+  <span class="n">test_tree_serialization</span> <span class="n">t</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="computing-relative-frequencies">
+<h2>Computing Relative Frequencies<a class="headerlink" href="#computing-relative-frequencies" title="Permalink to this headline">¶</a></h2>
+<p>For large texts, we can assume that any ASCII character occurs there, hence we can allocate a 256-slot array and fill it with frequencies by traversing the string:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">compute_freqs</span> <span class="n">s</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">String</span><span class="p">.</span><span class="n">length</span> <span class="n">s</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">256</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">freqs</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">m</span> <span class="mi">0</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="n">i</span> <span class="o">=</span> <span class="n">int_of_char</span> <span class="n">s</span><span class="o">.[</span><span class="n">i</span><span class="o">]</span> <span class="k">in</span>
+    <span class="n">freqs</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">freqs</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="k">let</span> <span class="n">cfreqs</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">m</span> <span class="o">(</span><span class="sc">&#39;a&#39;</span><span class="o">,</span> <span class="mi">0</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="n">cfreqs</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="o">(</span><span class="n">char_of_int</span> <span class="n">i</span><span class="o">,</span> <span class="n">freqs</span><span class="o">.(</span><span class="n">i</span><span class="o">))</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="n">cfreqs</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="encoding-and-writing-the-compressed-text">
+<h2>Encoding and Writing the Compressed Text<a class="headerlink" href="#encoding-and-writing-the-compressed-text" title="Permalink to this headline">¶</a></h2>
+<p>Having a tree, we can produce a table of Huffman codes by traversing it recursively, filling up a table of 256 characters:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">build_table</span> <span class="n">t</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">256</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">table</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">m</span> <span class="bp">[]</span> <span class="k">in</span>
+
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">make_codes</span> <span class="n">t</span> <span class="n">acc</span> <span class="o">=</span>
+    <span class="k">match</span> <span class="n">t</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">Leaf</span> <span class="n">c</span> <span class="o">-&gt;</span>
+      <span class="k">let</span> <span class="n">i</span> <span class="o">=</span> <span class="n">int_of_char</span> <span class="n">c</span> <span class="k">in</span>
+      <span class="n">table</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">acc</span>
+    <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="k">begin</span>
+        <span class="n">make_codes</span> <span class="n">l</span> <span class="o">(</span><span class="n">acc</span> <span class="o">@</span> <span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+        <span class="n">make_codes</span> <span class="n">r</span> <span class="o">(</span><span class="n">acc</span> <span class="o">@</span> <span class="o">[</span><span class="mi">1</span><span class="o">])</span>
+      <span class="k">end</span>
+  <span class="k">in</span>
+  <span class="n">make_codes</span> <span class="n">t</span> <span class="bp">[]</span><span class="o">;</span>
+  <span class="n">table</span>
+</pre></div>
+</div>
+<p>Now, with the tree, encoding table at hand, and the text itself, we can proceed to write the compressed binary file. The file will contain</p>
+<ol class="loweralpha simple">
+<li>The serialized Huffman tree with the codes, necessary to decode the rest and</li>
+<li>The string encoded using the table built via the <code class="docutils literal notranslate"><span class="pre">build_table</span></code> function.</li>
+</ol>
+<p>Since we serialize the tree, there is no need to serialize the table.</p>
+<p>The following function writes the tree and the encoded string to the output bit-channel <code class="docutils literal notranslate"><span class="pre">out</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">write_tree_and_data</span> <span class="n">out</span> <span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">s</span><span class="o">)</span> <span class="o">=</span>
+  <span class="n">write_tree</span> <span class="n">out</span> <span class="n">t</span><span class="o">;</span>
+  <span class="k">let</span> <span class="n">table</span> <span class="o">=</span> <span class="n">build_table</span> <span class="n">t</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">String</span><span class="p">.</span><span class="n">length</span> <span class="n">s</span> <span class="k">in</span>
+  <span class="c">(* Write length *)</span>
+  <span class="n">write_bits</span> <span class="n">out</span> <span class="o">~</span><span class="n">nbits</span><span class="o">:</span><span class="mi">30</span> <span class="n">n</span><span class="o">;</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="n">bits</span> <span class="o">=</span> <span class="n">table</span><span class="o">.(</span><span class="n">int_of_char</span> <span class="n">s</span><span class="o">.[</span><span class="n">i</span><span class="o">])</span>  <span class="k">in</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">bit</span> <span class="o">-&gt;</span>
+        <span class="n">write_bits</span> <span class="n">out</span> <span class="o">~</span><span class="n">nbits</span><span class="o">:</span><span class="mi">1</span> <span class="n">bit</span><span class="o">)</span> <span class="n">bits</span>
+  <span class="k">done</span>
+</pre></div>
+</div>
+<p>Notice that due to the padding, we also store the length of the string, as there might be some “garbage” zeroes at the end of the stream.</p>
+<p>The following two functions compress the string and the file (<code class="docutils literal notranslate"><span class="pre">source</span></code>) into a compressed file <code class="docutils literal notranslate"><span class="pre">target</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">compress_string</span> <span class="n">target</span> <span class="n">s</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">freqs</span> <span class="o">=</span> <span class="n">compute_freqs</span> <span class="n">s</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="n">compute_frequency_tree</span> <span class="n">freqs</span> <span class="k">in</span>
+  <span class="n">write_to_binary</span> <span class="n">write_tree_and_data</span> <span class="n">target</span> <span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">s</span><span class="o">)</span>
+
+<span class="k">let</span> <span class="n">compress_file</span> <span class="n">source</span> <span class="n">target</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="n">read_file_to_single_string</span> <span class="n">source</span> <span class="k">in</span>
+  <span class="n">compress_string</span> <span class="n">target</span> <span class="n">s</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="decompression">
+<h2>Decompression<a class="headerlink" href="#decompression" title="Permalink to this headline">¶</a></h2>
+<p>In order to decompress a file, we need to know how to interpret the stream of bits via the Huffman tree. This can be done via the procedure that reads bits as long as there is a tree to walk by, and returns a character once it encounters a leaf:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">read_char_via_tree</span> <span class="n">t</span> <span class="n">input</span> <span class="o">=</span>
+  <span class="k">match</span> <span class="n">t</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">Leaf</span> <span class="n">c</span> <span class="o">-&gt;</span> <span class="n">c</span>
+  <span class="o">|</span> <span class="nc">Node</span> <span class="o">(</span><span class="n">l</span><span class="o">,</span> <span class="n">r</span><span class="o">)</span> <span class="o">-&gt;</span>
+    <span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="n">read_bits</span> <span class="n">input</span> <span class="mi">1</span> <span class="k">in</span>
+    <span class="k">match</span> <span class="n">b</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="mi">0</span> <span class="o">-&gt;</span> <span class="n">read_char_via_tree</span> <span class="n">l</span> <span class="n">input</span>
+    <span class="o">|</span> <span class="mi">1</span> <span class="o">-&gt;</span> <span class="n">read_char_via_tree</span> <span class="n">r</span> <span class="n">input</span>
+    <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span><span class="nc">Failure</span> <span class="s2">&quot;This cannot happen!&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The following function first reads a serialized Huffman tree from the given <code class="docutils literal notranslate"><span class="pre">input</span></code> and then uses it to decode the rest of the file:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">read_encoded</span> <span class="n">input</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="n">read_tree</span> <span class="n">input</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="n">read_bits</span> <span class="n">input</span> <span class="mi">30</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">buf</span> <span class="o">=</span> <span class="nn">Buffer</span><span class="p">.</span><span class="n">create</span> <span class="mi">100</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="n">ch</span> <span class="o">=</span> <span class="n">read_char_via_tree</span> <span class="n">t</span> <span class="n">input</span> <span class="k">in</span>
+    <span class="nn">Buffer</span><span class="p">.</span><span class="n">add_char</span> <span class="n">buf</span> <span class="n">ch</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="nn">Buffer</span><span class="p">.</span><span class="n">contents</span> <span class="n">buf</span>
+</pre></div>
+</div>
+<p>We can finally put everything together for decompression:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">decompress_file</span> <span class="n">filename</span> <span class="o">=</span>
+  <span class="n">read_from_binary</span> <span class="n">read_encoded</span> <span class="n">filename</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-and-running-huffman-compression">
+<h2>Testing and Running Huffman Compression<a class="headerlink" href="#testing-and-running-huffman-compression" title="Permalink to this headline">¶</a></h2>
+<p>We can test Huffman compression similarly to previous encoding algorithms:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">huffman_test</span> <span class="n">s</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;archive.huf&quot;</span> <span class="k">in</span>
+  <span class="n">compress_string</span> <span class="n">filename</span> <span class="n">s</span><span class="o">;</span>
+  <span class="k">let</span> <span class="n">s&#39;</span> <span class="o">=</span> <span class="n">decompress_file</span> <span class="n">filename</span> <span class="k">in</span>
+  <span class="nn">Sys</span><span class="p">.</span><span class="n">remove</span> <span class="n">filename</span><span class="o">;</span>
+  <span class="n">s</span> <span class="o">=</span> <span class="n">s&#39;</span>
+</pre></div>
+</div>
+<p>The developed compression/decompression algorithms are so useful that we should deliver them as standalone runnable programs:</p>
+<ul class="simple">
+<li>File <code class="docutils literal notranslate"><span class="pre">runners/compress_test.ml</span></code></li>
+<li>File <code class="docutils literal notranslate"><span class="pre">runners/decompress_text.ml</span></code></li>
+</ul>
+<p>The following implementation from <code class="docutils literal notranslate"><span class="pre">compress_text.ml</span></code> defines the runnable that executes Huffman compression on a given file (first runtime argument) and outputs the result into a file named as a second argument:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">Printf</span>
+<span class="k">open</span> <span class="nc">HuffmanCodes</span>
+<span class="k">open</span> <span class="nc">ArrayUtil</span>
+
+<span class="k">let</span> <span class="bp">()</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="o">(</span><span class="nn">Sys</span><span class="p">.</span><span class="n">argv</span><span class="o">)</span> <span class="o">&lt;</span> <span class="mi">3</span>
+  <span class="k">then</span> <span class="k">begin</span>
+    <span class="n">print_endline</span> <span class="s2">&quot;No input or output file name provided!&quot;</span><span class="o">;</span>
+    <span class="n">print_endline</span> <span class="s2">&quot;Format: compress input_file archive_name&quot;</span>
+  <span class="k">end</span>
+  <span class="k">else</span> <span class="k">begin</span>
+    <span class="k">let</span> <span class="n">input</span> <span class="o">=</span> <span class="nn">Sys</span><span class="p">.</span><span class="n">argv</span><span class="o">.(</span><span class="mi">1</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">archive</span> <span class="o">=</span> <span class="nn">Sys</span><span class="p">.</span><span class="n">argv</span><span class="o">.(</span><span class="mi">2</span><span class="o">)</span> <span class="k">in</span>
+    <span class="n">print_endline</span> <span class="s2">&quot;Compressing...&quot;</span><span class="o">;</span>
+    <span class="n">time</span> <span class="o">(</span><span class="n">compress_file</span> <span class="n">input</span><span class="o">)</span> <span class="n">archive</span><span class="o">;</span>
+    <span class="n">print_endline</span> <span class="s2">&quot;Compression complete.&quot;</span>
+  <span class="k">end</span>
+</pre></div>
+</div>
+<p>Once compiled, let us try to run it on some large text, such as <a class="reference external" href="https://en.wikipedia.org/wiki/War_and_Peace">Leo Tolstoy’s “War and Peace”</a> taken from <a class="reference external" href="https://en.wikipedia.org/wiki/Project_Gutenberg">Project Gutenberg</a> (located in the <code class="docutils literal notranslate"><span class="pre">resources</span></code> folder of the project):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">bin</span><span class="o">/</span><span class="n">compress</span> <span class="n">resources</span><span class="o">/</span><span class="n">war</span><span class="o">-</span><span class="ow">and</span><span class="o">-</span><span class="n">peace</span><span class="o">.</span><span class="n">txt</span> <span class="n">resources</span><span class="o">/</span><span class="n">war</span><span class="o">-</span><span class="ow">and</span><span class="o">-</span><span class="n">peace</span><span class="o">.</span><span class="n">huf</span>
+<span class="nn">Compressing</span><span class="p">...</span>
+<span class="nc">Execution</span> <span class="n">elapsed</span> <span class="n">time</span><span class="o">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">171870</span> <span class="n">sec</span>
+<span class="nc">Compression</span> <span class="n">complete</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>As the result, as file <code class="docutils literal notranslate"><span class="pre">war-and-piece.huf</span></code> has been produced under <code class="docutils literal notranslate"><span class="pre">resources</span></code>. Let us compare the sizes of the compressed and the original:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="mi">1960786</span> <span class="n">war</span><span class="o">-</span><span class="ow">and</span><span class="o">-</span><span class="n">peace</span><span class="o">.</span><span class="n">huf</span>
+<span class="mi">3359545</span> <span class="n">war</span><span class="o">-</span><span class="ow">and</span><span class="o">-</span><span class="n">peace</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>That is the compression rate is 1960786 / 3359545 = 58%.</p>
+<p>The original file can be obtained by running, e.g.:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">bin</span><span class="o">/</span><span class="n">decompress</span> <span class="n">resources</span><span class="o">/</span><span class="n">war</span><span class="o">-</span><span class="ow">and</span><span class="o">-</span><span class="n">peace</span><span class="o">.</span><span class="n">huf</span> <span class="n">resources</span><span class="o">/</span><span class="n">war</span><span class="o">-</span><span class="ow">and</span><span class="o">-</span><span class="n">peace</span><span class="o">-</span><span class="n">copy</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>It is easy to check (via <code class="docutils literal notranslate"><span class="pre">md5</span></code> of <code class="docutils literal notranslate"><span class="pre">cksum</span></code>) that <code class="docutils literal notranslate"><span class="pre">war-and-peace-copy.txt</span></code> is identical to <code class="docutils literal notranslate"><span class="pre">war-and-peace.txt</span></code></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
