@@ -11,11 +11,11 @@ Run-length encoding is a compression methods that works well with bit-strings wi
 
  0000000000000001111111000000011111111111
 
-Can be encoded via 4 4-bit integer representation as follows::
+can be encoded via 4-bit integer representation as follows::
 
  1111011101111011
 
-Tis would ben that we have 15 (1111 in binary) 0s, then 7 (0111 in binary) 1s, then 7 0s and finally 11 (0111) ones.  
+This encoding means that we have 15 (1111 in binary) 0s, then 7 (0111 in binary) 1s, then 7 0s and finally 11 (0111) ones.  
 
 Design Considerations
 ---------------------

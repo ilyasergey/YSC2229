@@ -17,7 +17,7 @@ The idea of `Huffman coding <https://en.wikipedia.org/wiki/Huffman_coding>`_ (na
 Assigning Codes via Character Trees
 -----------------------------------
 
-Huffman tree is a binary tree that has characters in its leaves. It gives a simple way to assign `unique` binary codes (bit sequences) to individual characters by following paths in the tree. The key characterising of a Huffman tree is that no code for any character is a prefix of a code of another character. This makes it possible to use the tree for both encoding and decoding without any overhead from under-used encodings (as was the case with RLE).
+Huffman tree is a binary tree that has characters in its leaves. It gives a simple way to assign `unique` binary codes (bit sequences) to individual characters by following paths in the tree. The key characterising of a Huffman tree is that **no** code for any character is a prefix of a code of another character. This makes it possible to use the tree for both encoding and decoding without any overhead from under-used encodings (as was the case with RLE).
 
 The binary tree can be represented by the following OCaml type::
 
@@ -127,7 +127,12 @@ To build the tree from those leaves, we are going to use a familiar structure mi
  open PriorityQueue
  module PQ = PriorityQueue(CF)
 
-The final tree is computed as follows. Having ``n`` leaves, we iterate for ``n - 2`` times, each time extracting the trees with the minimal cumulative frequency. Having those, we "merge" them by allocating a node, assigning the cumulative frequence to it, and insert it back to the priority queue. Having done that ``n - 2`` times, we will have only one node leftin the queue, corresponding to the root of the tree::
+The final tree is computed as follows. Having ``n`` leaves, we iterate
+for ``n - 2`` times, each time extracting the trees with the minimal
+cumulative frequency. Having those, we "merge" them by allocating a
+node, assigning the cumulative frequency to it, and insert it back to
+the priority queue. Having done that ``n - 2`` times, we will have
+only one node left in the queue, corresponding to the root of the tree::
 
  let compute_frequency_tree freq_chars = 
    let open PQ in
@@ -136,7 +141,6 @@ The final tree is computed as follows. Having ``n`` leaves, we iterate for ``n -
    let ftrees = make_tree_array freq_chars in
    let q = mk_queue ftrees in
    for i = 0 to n - 2 do
-     (* TODO: fix this in Week_05! *)
      let (x, fx) = get_exn @@ heap_extract_max q in
      let (y, fy) = get_exn @@ heap_extract_max q in
      let n = (Node (x, y), fx + fy) in

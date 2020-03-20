@@ -114,7 +114,10 @@ Compressing DNA Sequences
 
 There is no gain in reading strings in binary, as we use the same format for representing them as plain OCaml. 
 
-Some domains, however, have data, which, which would be too wasteful to represent as strings. Realising this gives an initial idea of implementing *data compression* --- exploiting properties of data to find more compact representation of it as a bit-string.
+Some domains, however, have data, for which it would be too wasteful
+to represent it as a string. Realising this gives an initial idea of
+implementing *data compression* --- exploiting properties of data to
+find more compact representation of it as a bit-string.
 
 A good example of data that can be efficiently represented are `DNA sequences <https://en.wikipedia.org/wiki/DNA>`_. The sequences are very long strings of only four characters: 
 
@@ -150,9 +153,16 @@ We can the implement the encoding from DNA characters to 2-bit integers and vice
    | 3 -> 'T'
    | _ -> raise (Failure "DNA decoding error")
 
-Let us not implement the binary serializers/deserializers for DNA data using this format. This can be accomplished using the general binary-manipulating primitives defined above.
+Let us now implement the binary serializers/deserializers for DNA data
+using this format. This can be accomplished using the general
+binary-manipulating primitives defined above.
 
-The writing procedure starts by putting a *header* to the bit file of size 30 (the largest size of a bit-sequence supported by ``Extlib.IO``), which is a serialised integer indicating the length of the following sequence of 2-bit encoded DNA characters. We did not need to put this information for 8-bit strings, but need it here because of the file padding via ``flush_bits``::
+The writing procedure starts by putting a *header* to the bit file of
+size 30 (the largest size of a bit-sequence supported by
+``Extlib.IO``), which is a serialised integer indicating the length of
+the following sequence of 2-bit encoded DNA characters. We did not
+need to put this information for 8-bit strings, but need it here
+because of the file padding via ``flush_bits``::
 
  let write_dna_to_binary filename text = 
    let serialize out text = 
@@ -165,19 +175,21 @@ The writing procedure starts by putting a *header* to the bit file of size 30 (t
    in
    write_to_binary serialize filename text
 
-The deserializer proceeds by first retrieving the header and learning the length of the stream of 2-bit characters, and then using this information to read the DNA string into a buffer and return it is OCaml string::
+The deserializer proceeds by first retrieving the header and learning
+the length of the stream of 2-bit characters, and then using this
+information to read the DNA string into a buffer and return it as an
+OCaml string::
 
- let read_string_from_binary filename =  
+ let read_dna_from_binary filename =  
    let deserialize input = 
      let buffer = Buffer.create 1 in
-     (try
-        while true do
-          let bits = read_bits input 8 in
-          let ch = char_of_int bits in   
-          Buffer.add_char buffer ch
-        done;
-      with BatInnerIO.No_more_input -> ());
-     Buffer.contents buffer    
+     let input_length = read_bits input 30 in
+     for _ = 0 to input_length - 1 do
+       let bits = read_bits input dna_encoding_size in
+       let ch = dna_decoder bits in   
+       Buffer.add_char buffer ch
+     done;
+     Buffer.contents buffer
    in
    read_from_binary deserialize filename
 
