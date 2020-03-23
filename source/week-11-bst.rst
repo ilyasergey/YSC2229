@@ -369,13 +369,15 @@ Thanks to its invariant, a BST makes it almost trivial to implement operations, 
 * Getting minimum/maximum element in a set representing by a tree
 * Find a successor/predecessor of an element
 
-For instance, finding the minimal element of a subtree starting from a node ``n`` can be achieved by the following operation::
+For instance, finding the minimal element of a `subtree` starting from a node ``n`` can be achieved by the following operation::
 
   let rec find_min_node n = 
     match left n with
     | Some m -> find_min_node m
     | None -> n
 
+Notice that this operation does not find the `global` tree-wise
+successor of the element in node `n`.
 
 Deleting a node from BST
 ------------------------
@@ -413,19 +415,32 @@ Let us now discuss possible scenarios for removing a node ``z`` from the tree ``
    :width: 700px
    :align: center
 
-(d) In the case when ``z`` has two children, we need to look up for the node that corresponds to its successor in the ordering of elements. In this particular case, such a successor, ``y``, is the immediate right child of ``z`` that has no left child itself (convince yourself that in this case ``y`` is indeed a successor of ``z``), therefore we can transplate ``y`` to replace ``z``: 
+(d) In the case when ``z`` has two children, we need to look up for
+    the node that corresponds to its successor in ``z``-rooted subtree
+    wrt. the ordering of elements. In this particular case, such a
+    successor, ``y``, is the immediate right child of ``z`` that has
+    no left child itself (convince yourself that in this case ``y`` is
+    indeed a successor of ``z``), therefore we can transplate ``y`` to
+    replace ``z``:
 
 .. image:: ../resources/delete-d.png
    :width: 700px
    :align: center
 
-(e) Finally, in the most nasty case, ``y``, the successor of ``z``, is deep below ``z``, and potentially hasa right child (but no left child, otherwise it wouldn't be the successor of ``z``) . In this case we need to make to perform the transformation as follows:
+(e) Finally, in the most nasty case, ``y``, the successor of ``z`` (in
+    its subtree), is buried deep below ``z``, and potentially hasa
+    right child (but no left child, otherwise it wouldn't be the
+    successor of ``z``) . In this case we need to make to perform the
+    transformation as follows:
 
 .. image:: ../resources/delete-e.png
    :width: 700px
    :align: center
 
-Specifically, in the last case we first transplant ``y`` and its right child ``x`` and then make ``r``, the former right child of ``z`` to be the right child of ``y``. After that we simply transplant ``y`` to the place of ``z``. 
+Specifically, in the last case we first transplant ``y`` and its right
+child ``x`` and then make ``r``, the former right child of ``z`` to be
+the right child of ``y``. After that we simply transplant ``y`` to the
+place of ``z``.
 
 The full code of deletion is as follows::
 
@@ -456,7 +471,9 @@ The full code of deletion is as follows::
       y.left := !(z.left);
       (get_exn @@ left y).parent := Some y
 
-How would we test deletion? We can do so by generating a random BST, choosing a random node in it ``z``, and then checking the following properties for the modified tree after the deletion of ``z``:
+How would we test deletion? We can do so by generating a random BST,
+choosing a random node in it ``z``, and then checking the following
+properties for the modified tree after the deletion of ``z``:
 
 * The tree still satisfies the BST invariant;
 * It has the same number of elements;
@@ -484,7 +501,6 @@ These checks can be automatically performed by the following function, parameter
 
 BST Rotations
 -------------
-
 
 In a BST, *left and right rotations* exchange the node with its right/left child (if present), correspondingly. Diagrammatically, this can be represented by the following picture:
 
@@ -520,6 +536,12 @@ That is, via left rotation, :math:`y` becomes a parent of :math:`x` and vice ver
       x.parent := Some y      
 
 
-When a subtree is rotated, the subtree side upon which it is rotated increases its height by one node while the other subtree decreases its height. This makes tree rotations useful for rebalancing a tree when it becomes "degenerate" (tall and thin). This makes it possible to keep the worst-case complexity of tree operations within :math:`O(n \log n)`, without it generating to :math:`O(n)`.
+When a subtree is rotated, the subtree side upon which it is rotated
+increases its height by one node while the other subtree decreases its
+height. This makes tree rotations useful for rebalancing a tree when
+it becomes "degenerate" (tall and thin). This makes it possible to
+keep the worst-case complexity of tree operations within :math:`O(n
+\log n)`, without it generating to :math:`O(n)`.
  
-Implementation of the right BST rotation and rotation testing are left as an exercise.
+Implementation of the right BST rotation and rotation testing are left
+as an exercise.
