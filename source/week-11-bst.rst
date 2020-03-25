@@ -517,8 +517,15 @@ When a subtree is rotated, the subtree side upon which it is rotated
 increases its height by one node while the other subtree decreases its
 height. This makes tree rotations useful for rebalancing a tree when
 it becomes "degenerate" (tall and thin). This makes it possible to
-keep the worst-case complexity of tree operations within :math:`O(n
-\log n)`, without it generating to :math:`O(n)`.
+keep the worst-case complexity of tree operations within :math:`O(\log
+n)`, without it degenerating to :math:`O(n)`.
+
+Finally, notice the comparison via ``when x == l`` in the
+implementation above. This is essential: node references need to be
+compared using OCaml's "shallow" equality mechanism, as structural
+"deep" equality on references (``=``) in the case of linked data
+structures, such as BSTs, may lead to errors that are very difficult
+to debug.
  
 Implementation of the right BST rotation and rotation testing are left
 as an exercise.
