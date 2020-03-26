@@ -307,10 +307,10 @@ Once compiled, let us try to run it on some large text, such as `Leo Tolstoy's "
   
 As the result, as file ``war-and-piece.huf`` has been produced under ``resources``. Let us compare the sizes of the compressed and the original::
 
- 1960786 war-and-peace.huf
- 3359545 war-and-peace.txt
+ 1901334 war-and-peace.huf
+ 3293490 war-and-peace.txt
 
-That is the compression rate is 1960786 / 3359545 = 58%.
+That is the compression rate is 1960786 / 3359545 = 59%.
 
 The original file can be obtained by running, e.g.:: 
 

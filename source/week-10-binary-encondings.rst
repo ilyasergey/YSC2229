@@ -18,9 +18,15 @@ The standard terminology for writing/reading data to/from its binary representat
 Writing and Reading Binary Files
 --------------------------------
 
-Standard OCaml library does not provide means to work with binary data explicitly: with standard functions one can read/write sequences of bits that are multipliers of 8 (i.e., bytes etc), but not individual bits. The functions ``output_bits`` and ``input_bits`` from ``Extlib.IO`` provide this possibility by giving "wrappers" around standard input/output channels for manipulating with files.
+Standard OCaml library does not provide means to work with binary data
+in the most fine-grained way: with standard functions one can
+read/write sequences of bits that are multipliers of 8 (i.e., bytes
+etc), but not individual bits. The functions ``output_bits`` and
+``input_bits`` from ``Extlib.IO`` provide this possibility by giving
+"wrappers" around standard input/output channels for manipulating with
+files.
 
-The following function, implemented by us, uses ``input_bits`` to read bits from a file ``filename`` and process them via the client-provided function ``deseiralize``::
+The following function, implemented by us, uses ``input_bits`` to read bits from a file ``filename`` and process them via the client-provided function ``deserialize``::
 
  let read_from_binary deserialize filename =  
    Core.In_channel.with_file ~binary:true filename 
@@ -76,7 +82,13 @@ Reading is done similarly::
    in
    read_from_binary deserialize filename
 
-For an arbitrary file, we don't know what is the length of the string it has. Therefore, we just keep adding byte-encoded characters to a buffer in a ``while true`` loop, until we hit the end file (each invocation of ``read_bits`` advances our reading "position" in the file, ultimately reaching the end). Once it happens an exception ``BatInnerIO.No_more_input`` is raised, which we can catch and  return the result accumulated in the buffer.
+For an arbitrary file, we don't know what is the length of the string
+it has. Therefore, we just keep adding byte-encoded characters to a
+buffer in a ``while true`` loop, until we hit the end of the file
+(each invocation of ``read_bits`` advances our reading "position" in
+the file, ultimately reaching the end). Once it happens an exception
+``BatInnerIO.No_more_input`` is raised, which we can catch and return
+the result accumulated in the buffer.
 
 We can also test that our serialization is implemented correctly::
 
@@ -106,13 +118,16 @@ For more impressive testing, let us read a large text file (Leo Tolstoy's "War a
    string_file_serialization_test f
 
 Notice that the function ``find_file`` returns the absolute path of a
-file located counting from the running directory of the executable.
-Here, we have tailored the path so it would work correctly with inline tests.
+file located by starting at the running directory of the executable
+(which is different in the cases when we run ``utop`` and when we run
+tests - feel frree to check it). Here, we have tailored the path so it
+would work correctly with inline tests.
 
 Compressing DNA Sequences
 -------------------------
 
-There is no gain in reading strings in binary, as we use the same format for representing them as plain OCaml. 
+There is no gain in reading strings in binary, as we use the same
+format for representing them as plain OCaml.
 
 Some domains, however, have data, for which it would be too wasteful
 to represent it as a string. Realising this gives an initial idea of
@@ -137,7 +152,7 @@ Since there are only 4 characters in DNA strings, we don't need 8 bits to encode
 
  let dna_encoding_size = 2
 
-We can the implement the encoding from DNA characters to 2-bit integers and vice verse::
+We can the implement the encoding from DNA characters to 2-bit integers and vice versa::
 
  let dna_encoder = function
    | 'A' -> 0

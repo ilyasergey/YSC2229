@@ -40,7 +40,11 @@ A channel for reading can be used as in the following example that reads all lin
    In_channel.close file;
    strings
 
-Notice that before the function returns its result, it has to close the channel, thus giving up the read-acces to it, so other applications could use it. If it is not done, no other program (including the same one) will be able to get an access to this file (an attempt of doing so will result in a runtime error).
+Notice that before the function returns its result, it has to close
+the channel, thus giving up the read access to it, so other
+applications could use it. This should be done because operating
+systems have a limit on the number of files that can be opened
+simultaneously for reading and writing.
 
 In OCaml, the pattern of reading from a file and closing the channel after completing the optation can be done using the ``with_file`` function which takes a file name an a function that tells ``f`` how to obtain a result from the input channel ``input`` of the file::
 
