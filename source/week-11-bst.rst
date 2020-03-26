@@ -7,14 +7,20 @@ Representing Sets via Binary Search Trees
 
 * File ``BST.ml``
 
-Binary search trees (BST) are one of the most versatile representations of mutable sets, supporting a variety of operations, such as insertion, deletion, checking membership, finding minimums, maximums, predecessors and successors. 
+Binary Search Trees (BSTs) are one of the most versatile
+representations of mutable sets of `ordered elements`, supporting a
+variety of operations, such as insertion, deletion, checking
+membership, finding minimums, maximums, predecessors and successors of
+a value.
 
-The key to this expressivity is the invariant of a tree-shaped data structure, that mandates that, for any node,
+The key to this expressivity is the invariant of a tree-shaped data
+structure, that mandates that, for any node,
 
 * any element in its left subtree is less or equal than the element in the node itself, and
 * any element in its right subtree is greater or equal than the element in the node itself.
 
-This invariant is maintained by all operations that modify the set, and is relied upon by all queries. 
+This invariant is maintained by all operations that modify the set,
+and is relied upon by all its queries. 
 
 
 A Data Structure for Binary-Search Trees
@@ -22,7 +28,10 @@ A Data Structure for Binary-Search Trees
 
 We start by defining a linked in-memory data structure for BSTs in its own module. 
 
-The tree is populated by nodes, each of which carries a value (immutable), and also maintains references (mutable) to its left/right children and a parent, which can be either absent or some other nodes::
+The tree is populated by nodes, each of which carries a value
+(immutable), and also maintains references (mutable) to its left/right
+children and a parent, which can be either absent or refer to some
+other nodes of the tree::
 
  module BinarySearchTree = struct
 
@@ -100,7 +109,14 @@ The defined above ``mk_tree`` function creates an empty tree. Let us now impleme
       then (t.size := !(t.size) + 1; true)
       else false
 
-Notice that the main working routine ``insert_element`` is careful with respect to the BST property defined above: it positions the node ``m`` with the element ``e``, so it would be in the right subtree (smaller-left/greater-right) with respect to its parent nodes.  Finally, ``insert_element`` returns a boolean to indicate whether the element has been indeed added (``true``) or ignored as duplicated (``false``). In the former case the size of the tree is increased, in the latter it remains the same.
+Notice that the main working routine ``insert_element`` respects the
+BST property defined above: it positions the node ``m`` with the
+element ``e``, so it would be in the correct subtree
+(smaller-left/greater-right) with respect to its parent nodes.
+Finally, ``insert_element`` returns a boolean to indicate whether the
+element has been indeed added (``true``) or ignored as duplicated
+(``false``). In the former case the size of the tree is increased, in
+the latter it remains the same.
 
 Binary-Search-Tree Invariant
 ----------------------------
@@ -156,7 +172,9 @@ Printing a Tree
 
 It would be very nice if we could not only test but also visualise our binary search trees.
 
-Unfortunately, printing a tree in a standard top-down fashion requires quite a bit of book-keeping of tree-specific information (implementation of a this procedure in a particular case is left to you as a homework assignment). Printing a tree left-to-right is, however, can be done quite easily as follows::
+Unfortunately, printing a tree in a standard top-down fashion requires
+quite a bit of book-keeping of tree-specific information. Printing a
+tree left-to-right is, however, can be done quite easily as follows::
 
   let print_tree pp snum t = 
     let print_node_with_spaces l s = 
@@ -177,7 +195,7 @@ Unfortunately, printing a tree in a standard top-down fashion requires quite a b
     in
     map_option (get_root t) (fun n -> walk 0 (Some n)) ()
 
-The first auxiliary function  ``print_node_with_spaces`` Prints a string of ``s`` spaces and the value of a node ``l``. 
+The first auxiliary function  ``print_node_with_spaces`` prints a string of ``s`` spaces and the value of a node ``l``. 
 
 The second function ``walk`` traverses the tree recursively, accumulating the "offset" proportionally to the depth of the tree node. It first prints the right sub-tree, then the node itself and then the left sub-tree, making use of the accumulated offset for printing the necessary number of spaces. Finally, it runs ``walk`` for the top-level root node, if it exists.
 
@@ -314,7 +332,8 @@ As we know well how to work with lists, we can use traversals to test each other
    let t = mk_tree_of_size n in
    let l1 = depth_first_search_rec t in
    List.length l1 = n &&
-   List.for_all (fun e -> check_elem_in_tree t e) l1
+   List.for_all (fun e -> check_elem_in_tree t e) l1 &&
+   sorted l1
 
  let%test "Testing BFS" = 
    let n = 1000 in
@@ -359,9 +378,14 @@ successor of the element in node `n`.
 Deleting a node from BST
 ------------------------
 
-Deletion of a node from a BST is the most complicated operation, as it requires significant restructuring of the tree in order to maintain its invariant.
+Deletion of a node from a BST is the most complicated operation, as it
+requires significant restructuring of the tree in order to maintain
+its invariant.
 
-Deletion of a non-leaf node from a tree will require some other nod to take its place. This can be achieved by the following operation for performing "transplantation" of one node by another::
+Deletion of a non-leaf node from a tree will require some other node
+(along with its subtree) to take its place. This can be achieved by
+the following operation for performing "transplantation" of one node
+by another::
 
   (* Replacing node U by (optional) node V in T. *)
   let transplant t u v = 
@@ -414,7 +438,7 @@ Let us now discuss possible scenarios for removing a node ``z`` from the tree ``
    :width: 700px
    :align: center
 
-Specifically, in the last case we first transplant ``y`` and its right
+Specifically, in the last case we first transplant ``y`` with its right
 child ``x`` and then make ``r``, the former right child of ``z`` to be
 the right child of ``y``. After that we simply transplant ``y`` to the
 place of ``z``.

@@ -7,7 +7,7 @@ Representing Graphs
 
 * File ``Graphs.ml``
 
-Graphs are an important versatile mathematical abstractions, which is used to represent the relations between multiple objects. Such (possibly non-symmetric) relations can be frequently phrased in terms of *connectivity* and *reachability*, as we've seen before in the chapter on :ref:`union-find`. 
+Graphs are an important versatile mathematical abstraction, which is used to represent the relations between multiple objects. Such (possibly non-symmetric) relations can be frequently phrased in terms of *connectivity* and *reachability*, as we've seen before in the chapter on :ref:`union-find`. 
 
 A graph is commonly represented in mathematics by a pair :math:`G = (V, E)`, where :math:`V` is a set of the graphs's vertices (nodes), represented the related elements, and :math:`E` is a set of its edges (arcs) such that :math:`E \subseteq V \times V`. 
 
