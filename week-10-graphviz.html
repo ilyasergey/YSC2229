@@ -169,7 +169,13 @@
             
   <div class="section" id="installing-graphviz">
 <span id="graphviz"></span><h1>13.5. Installing GraphViz<a class="headerlink" href="#installing-graphviz" title="Permalink to this headline">¶</a></h1>
-<p>For the next two lectures we will be using the <a class="reference external" href="https://www.graphviz.org/">GraphViz</a> tool suite for visualising graph-like data structures. GraphViz is available on all mordern operating systems and is easy to install. Below, I provide brief instructions on how to obtain it. As input, GraphViz accepts a text file in a special format, which it can then convert to an image of a graph, taking care of positioning the nodes and rendering the edges between them. Some examples ony using GraphViz can be found by <a class="reference external" href="https://graphs.grevian.org/example">this link</a>.</p>
+<p>For the next two lectures we will be using the <a class="reference external" href="https://www.graphviz.org/">GraphViz</a> tool suite for visualising graph-like
+data structures. GraphViz is available on all modern operating
+systems and is easy to install. Below, I provide brief instructions on
+how to obtain it. As its input, GraphViz accepts a text file in a
+special format, which it can then convert to an image of a graph,
+taking care of positioning the nodes and rendering the edges between
+them. Some examples for using GraphViz can be found by <a class="reference external" href="https://graphs.grevian.org/example">this link</a>.</p>
 <div class="section" id="microsoft-windows-10">
 <h2>13.5.1. Microsoft Windows 10<a class="headerlink" href="#microsoft-windows-10" title="Permalink to this headline">¶</a></h2>
 <p>Assuming that you have WSL and Ubuntu Linux installed, execute the following commands from the terminal:</p>
@@ -211,7 +217,7 @@ type in the terminal:</p>
 </pre></div>
 </div>
 <p>The second utility, <code class="docutils literal notranslate"><span class="pre">wget</span></code> allows download files from the command line.</p>
-<p>For convenience of viewing the files, add the follwing line into your configuration file <code class="docutils literal notranslate"><span class="pre">~/.profile</span></code>:</p>
+<p>For convenience of viewing the files, add the following line into your configuration file <code class="docutils literal notranslate"><span class="pre">~/.profile</span></code>:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">alias</span> <span class="n">preview</span><span class="o">=</span><span class="k">&#39;open</span> <span class="o">-</span><span class="n">a</span> <span class="nc">Preview&#39;</span>
 </pre></div>
 </div>
@@ -219,7 +225,7 @@ type in the terminal:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">https</span><span class="o">://</span><span class="n">ilyasergey</span><span class="o">.</span><span class="n">net</span><span class="o">/</span><span class="nc">YSC2229</span><span class="o">/</span><span class="n">resources</span><span class="o">/</span><span class="n">graph</span><span class="o">.</span><span class="n">dot</span>
 </pre></div>
 </div>
-<p>And execute the following command from the comand line:</p>
+<p>And execute the following command from the command line:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">dot</span> <span class="o">-</span><span class="nc">Tpdf</span> <span class="n">graph</span><span class="o">.</span><span class="n">dot</span> <span class="o">-</span><span class="n">o</span> <span class="n">graph</span><span class="o">.</span><span class="n">pdf</span>
 </pre></div>
 </div>
