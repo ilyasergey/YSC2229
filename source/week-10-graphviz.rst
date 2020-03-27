@@ -5,7 +5,14 @@
 Installing GraphViz
 ===================
 
-For the next two lectures we will be using the `GraphViz <https://www.graphviz.org/>`_ tool suite for visualising graph-like data structures. GraphViz is available on all mordern operating systems and is easy to install. Below, I provide brief instructions on how to obtain it. As input, GraphViz accepts a text file in a special format, which it can then convert to an image of a graph, taking care of positioning the nodes and rendering the edges between them. Some examples ony using GraphViz can be found by `this link <https://graphs.grevian.org/example>`_.
+For the next two lectures we will be using the `GraphViz
+<https://www.graphviz.org/>`_ tool suite for visualising graph-like
+data structures. GraphViz is available on all modern operating
+systems and is easy to install. Below, I provide brief instructions on
+how to obtain it. As its input, GraphViz accepts a text file in a
+special format, which it can then convert to an image of a graph,
+taking care of positioning the nodes and rendering the edges between
+them. Some examples for using GraphViz can be found by `this link <https://graphs.grevian.org/example>`_.
 
 Microsoft Windows 10
 --------------------
@@ -53,7 +60,7 @@ Install GraphViz by executing the following command in the terminal::
 
 The second utility, ``wget`` allows download files from the command line.
 
-For convenience of viewing the files, add the follwing line into your configuration file ``~/.profile``::
+For convenience of viewing the files, add the following line into your configuration file ``~/.profile``::
 
   alias preview='open -a Preview'
 
@@ -61,7 +68,7 @@ After that, open a new terminal window or tab and download `this file <resources
 
   wget https://ilyasergey.net/YSC2229/resources/graph.dot  
 
-And execute the following command from the comand line::
+And execute the following command from the command line::
 
   dot -Tpdf graph.dot -o graph.pdf
 
