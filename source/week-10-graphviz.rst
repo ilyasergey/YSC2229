@@ -2,7 +2,7 @@
 
 .. _graphviz:
 
-Installing Graphviz
+Installing GraphViz
 ===================
 
 For the next two lectures we will be using the `GraphViz <https://www.graphviz.org/>`_ tool suite for visualising graph-like data structures. GraphViz is available on all mordern operating systems and is easy to install. Below, I provide brief instructions on how to obtain it. As input, GraphViz accepts a text file in a special format, which it can then convert to an image of a graph, taking care of positioning the nodes and rendering the edges between them. Some examples ony using GraphViz can be found by `this link <https://graphs.grevian.org/example>`_.
