@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Binary Encoding of Data &mdash; YSC2229 2020</title>
+  <title>13.2. Binary Encoding of Data &mdash; YSC2229 2020</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="13.3. Run-Length Encoding" href="week-10-rle.html" />
+    <link rel="prev" title="13.1. File Input and Output in OCaml" href="week-10-reading-files.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,7 +78,7 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
@@ -89,6 +91,18 @@
 <li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-10-reading-files.html">13.1. File Input and Output in OCaml</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">13.2. Binary Encoding of Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#writing-and-reading-binary-files">13.2.1. Writing and Reading Binary Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#writing-and-reading-ocaml-strings">13.2.2. Writing and Reading OCaml Strings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#compressing-dna-sequences">13.2.3. Compressing DNA Sequences</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-rle.html">13.3. Run-Length Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-huffman.html">13.4. Huffman Encoding</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -134,7 +148,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Binary Encoding of Data</li>
+          <li><a href="week-10.html">13. Week 10: Binary Data Compression</a> &raquo;</li>
+        
+      <li>13.2. Binary Encoding of Data</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -152,7 +168,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="binary-encoding-of-data">
-<span id="week-10-binary"></span><h1>Binary Encoding of Data<a class="headerlink" href="#binary-encoding-of-data" title="Permalink to this headline">¶</a></h1>
+<span id="week-10-binary"></span><h1>13.2. Binary Encoding of Data<a class="headerlink" href="#binary-encoding-of-data" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">BinaryEncodings.ml</span></code></li>
 </ul>
@@ -163,9 +179,15 @@
 </div>
 <p>The standard terminology for writing/reading data to/from its binary representation is to <em>serialize</em>/<em>deserialize</em> it.</p>
 <div class="section" id="writing-and-reading-binary-files">
-<h2>Writing and Reading Binary Files<a class="headerlink" href="#writing-and-reading-binary-files" title="Permalink to this headline">¶</a></h2>
-<p>Standard OCaml library does not provide means to work with binary data explicitly: with standard functions one can read/write sequences of bits that are multipliers of 8 (i.e., bytes etc), but not individual bits. The functions <code class="docutils literal notranslate"><span class="pre">output_bits</span></code> and <code class="docutils literal notranslate"><span class="pre">input_bits</span></code> from <code class="docutils literal notranslate"><span class="pre">Extlib.IO</span></code> provide this possibility by giving “wrappers” around standard input/output channels for manipulating with files.</p>
-<p>The following function, implemented by us, uses <code class="docutils literal notranslate"><span class="pre">input_bits</span></code> to read bits from a file <code class="docutils literal notranslate"><span class="pre">filename</span></code> and process them via the client-provided function <code class="docutils literal notranslate"><span class="pre">deseiralize</span></code>:</p>
+<h2>13.2.1. Writing and Reading Binary Files<a class="headerlink" href="#writing-and-reading-binary-files" title="Permalink to this headline">¶</a></h2>
+<p>Standard OCaml library does not provide means to work with binary data
+in the most fine-grained way: with standard functions one can
+read/write sequences of bits that are multipliers of 8 (i.e., bytes
+etc), but not individual bits. The functions <code class="docutils literal notranslate"><span class="pre">output_bits</span></code> and
+<code class="docutils literal notranslate"><span class="pre">input_bits</span></code> from <code class="docutils literal notranslate"><span class="pre">Extlib.IO</span></code> provide this possibility by giving
+“wrappers” around standard input/output channels for manipulating with
+files.</p>
+<p>The following function, implemented by us, uses <code class="docutils literal notranslate"><span class="pre">input_bits</span></code> to read bits from a file <code class="docutils literal notranslate"><span class="pre">filename</span></code> and process them via the client-provided function <code class="docutils literal notranslate"><span class="pre">deserialize</span></code>:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">read_from_binary</span> <span class="n">deserialize</span> <span class="n">filename</span> <span class="o">=</span>
   <span class="nn">Core</span><span class="p">.</span><span class="nn">In_channel</span><span class="p">.</span><span class="n">with_file</span> <span class="o">~</span><span class="n">binary</span><span class="o">:</span><span class="bp">true</span> <span class="n">filename</span>
     <span class="o">~</span><span class="n">f</span><span class="o">:(</span><span class="k">fun</span> <span class="n">file_input</span> <span class="o">-&gt;</span>
@@ -185,7 +207,7 @@
 <p>Notice the last statement <code class="docutils literal notranslate"><span class="pre">flush_bits</span> <span class="pre">bits_output</span></code>. What it does is to add “missing” bits (as zeroes) to the binary file so its length (in bits) would be divisible by 8. If this is not done, then reading such a file might result in an error. The procedure <code class="docutils literal notranslate"><span class="pre">write_to_binary</span></code> takes as arguments, the function <code class="docutils literal notranslate"><span class="pre">serialize</span></code> that handles the data to be written to an output file , the <code class="docutils literal notranslate"><span class="pre">filename</span></code> of the file and the <code class="docutils literal notranslate"><span class="pre">data</span></code> itself.</p>
 </div>
 <div class="section" id="writing-and-reading-ocaml-strings">
-<h2>Writing and Reading OCaml Strings<a class="headerlink" href="#writing-and-reading-ocaml-strings" title="Permalink to this headline">¶</a></h2>
+<h2>13.2.2. Writing and Reading OCaml Strings<a class="headerlink" href="#writing-and-reading-ocaml-strings" title="Permalink to this headline">¶</a></h2>
 <p>Let us now use the binary-manipulating machinery to read/write OCaml strings as if they were just sequences of bits.</p>
 <p>Writing is done via the following function:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">write_string_to_binary</span> <span class="n">filename</span> <span class="n">text</span> <span class="o">=</span>
@@ -217,7 +239,13 @@
   <span class="n">read_from_binary</span> <span class="n">deserialize</span> <span class="n">filename</span>
 </pre></div>
 </div>
-<p>For an arbitrary file, we don’t know what is the length of the string it has. Therefore, we just keep adding byte-encoded characters to a buffer in a <code class="docutils literal notranslate"><span class="pre">while</span> <span class="pre">true</span></code> loop, until we hit the end file (each invocation of <code class="docutils literal notranslate"><span class="pre">read_bits</span></code> advances our reading “position” in the file, ultimately reaching the end). Once it happens an exception <code class="docutils literal notranslate"><span class="pre">BatInnerIO.No_more_input</span></code> is raised, which we can catch and  return the result accumulated in the buffer.</p>
+<p>For an arbitrary file, we don’t know what is the length of the string
+it has. Therefore, we just keep adding byte-encoded characters to a
+buffer in a <code class="docutils literal notranslate"><span class="pre">while</span> <span class="pre">true</span></code> loop, until we hit the end of the file
+(each invocation of <code class="docutils literal notranslate"><span class="pre">read_bits</span></code> advances our reading “position” in
+the file, ultimately reaching the end). Once it happens an exception
+<code class="docutils literal notranslate"><span class="pre">BatInnerIO.No_more_input</span></code> is raised, which we can catch and return
+the result accumulated in the buffer.</p>
 <p>We can also test that our serialization is implemented correctly:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">string_serialization_test</span> <span class="n">s</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;text.tmp&quot;</span> <span class="k">in</span>
@@ -246,13 +274,19 @@
 </pre></div>
 </div>
 <p>Notice that the function <code class="docutils literal notranslate"><span class="pre">find_file</span></code> returns the absolute path of a
-file located counting from the running directory of the executable.
-Here, we have tailored the path so it would work correctly with inline tests.</p>
+file located by starting at the running directory of the executable
+(which is different in the cases when we run <code class="docutils literal notranslate"><span class="pre">utop</span></code> and when we run
+tests - feel frree to check it). Here, we have tailored the path so it
+would work correctly with inline tests.</p>
 </div>
 <div class="section" id="compressing-dna-sequences">
-<h2>Compressing DNA Sequences<a class="headerlink" href="#compressing-dna-sequences" title="Permalink to this headline">¶</a></h2>
-<p>There is no gain in reading strings in binary, as we use the same format for representing them as plain OCaml.</p>
-<p>Some domains, however, have data, which, which would be too wasteful to represent as strings. Realising this gives an initial idea of implementing <em>data compression</em> — exploiting properties of data to find more compact representation of it as a bit-string.</p>
+<h2>13.2.3. Compressing DNA Sequences<a class="headerlink" href="#compressing-dna-sequences" title="Permalink to this headline">¶</a></h2>
+<p>There is no gain in reading strings in binary, as we use the same
+format for representing them as plain OCaml.</p>
+<p>Some domains, however, have data, for which it would be too wasteful
+to represent it as a string. Realising this gives an initial idea of
+implementing <em>data compression</em> — exploiting properties of data to
+find more compact representation of it as a bit-string.</p>
 <p>A good example of data that can be efficiently represented are <a class="reference external" href="https://en.wikipedia.org/wiki/DNA">DNA sequences</a>. The sequences are very long strings of only four characters:</p>
 <ul class="simple">
 <li>A (Adenosine)</li>
@@ -271,7 +305,7 @@ Here, we have tailored the path so it would work correctly with inline tests.</p
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">dna_encoding_size</span> <span class="o">=</span> <span class="mi">2</span>
 </pre></div>
 </div>
-<p>We can the implement the encoding from DNA characters to 2-bit integers and vice verse:</p>
+<p>We can the implement the encoding from DNA characters to 2-bit integers and vice versa:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">dna_encoder</span> <span class="o">=</span> <span class="k">function</span>
   <span class="o">|</span> <span class="sc">&#39;A&#39;</span> <span class="o">-&gt;</span> <span class="mi">0</span>
   <span class="o">|</span> <span class="sc">&#39;C&#39;</span> <span class="o">-&gt;</span> <span class="mi">1</span>
@@ -287,8 +321,15 @@ Here, we have tailored the path so it would work correctly with inline tests.</p
   <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span><span class="nc">Failure</span> <span class="s2">&quot;DNA decoding error&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>Let us not implement the binary serializers/deserializers for DNA data using this format. This can be accomplished using the general binary-manipulating primitives defined above.</p>
-<p>The writing procedure starts by putting a <em>header</em> to the bit file of size 30 (the largest size of a bit-sequence supported by <code class="docutils literal notranslate"><span class="pre">Extlib.IO</span></code>), which is a serialised integer indicating the length of the following sequence of 2-bit encoded DNA characters. We did not need to put this information for 8-bit strings, but need it here because of the file padding via <code class="docutils literal notranslate"><span class="pre">flush_bits</span></code>:</p>
+<p>Let us now implement the binary serializers/deserializers for DNA data
+using this format. This can be accomplished using the general
+binary-manipulating primitives defined above.</p>
+<p>The writing procedure starts by putting a <em>header</em> to the bit file of
+size 30 (the largest size of a bit-sequence supported by
+<code class="docutils literal notranslate"><span class="pre">Extlib.IO</span></code>), which is a serialised integer indicating the length of
+the following sequence of 2-bit encoded DNA characters. We did not
+need to put this information for 8-bit strings, but need it here
+because of the file padding via <code class="docutils literal notranslate"><span class="pre">flush_bits</span></code>:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">write_dna_to_binary</span> <span class="n">filename</span> <span class="n">text</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">serialize</span> <span class="n">out</span> <span class="n">text</span> <span class="o">=</span>
     <span class="k">let</span> <span class="n">size</span> <span class="o">=</span> <span class="nn">String</span><span class="p">.</span><span class="n">length</span> <span class="n">text</span> <span class="k">in</span>
@@ -301,17 +342,19 @@ Here, we have tailored the path so it would work correctly with inline tests.</p
   <span class="n">write_to_binary</span> <span class="n">serialize</span> <span class="n">filename</span> <span class="n">text</span>
 </pre></div>
 </div>
-<p>The deserializer proceeds by first retrieving the header and learning the length of the stream of 2-bit characters, and then using this information to read the DNA string into a buffer and return it is OCaml string:</p>
-<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">read_string_from_binary</span> <span class="n">filename</span> <span class="o">=</span>
+<p>The deserializer proceeds by first retrieving the header and learning
+the length of the stream of 2-bit characters, and then using this
+information to read the DNA string into a buffer and return it as an
+OCaml string:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">read_dna_from_binary</span> <span class="n">filename</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">deserialize</span> <span class="n">input</span> <span class="o">=</span>
     <span class="k">let</span> <span class="n">buffer</span> <span class="o">=</span> <span class="nn">Buffer</span><span class="p">.</span><span class="n">create</span> <span class="mi">1</span> <span class="k">in</span>
-    <span class="o">(</span><span class="k">try</span>
-       <span class="k">while</span> <span class="bp">true</span> <span class="k">do</span>
-         <span class="k">let</span> <span class="n">bits</span> <span class="o">=</span> <span class="n">read_bits</span> <span class="n">input</span> <span class="mi">8</span> <span class="k">in</span>
-         <span class="k">let</span> <span class="n">ch</span> <span class="o">=</span> <span class="n">char_of_int</span> <span class="n">bits</span> <span class="k">in</span>
-         <span class="nn">Buffer</span><span class="p">.</span><span class="n">add_char</span> <span class="n">buffer</span> <span class="n">ch</span>
-       <span class="k">done</span><span class="o">;</span>
-     <span class="k">with</span> <span class="nn">BatInnerIO</span><span class="p">.</span><span class="nc">No_more_input</span> <span class="o">-&gt;</span> <span class="bp">()</span><span class="o">);</span>
+    <span class="k">let</span> <span class="n">input_length</span> <span class="o">=</span> <span class="n">read_bits</span> <span class="n">input</span> <span class="mi">30</span> <span class="k">in</span>
+    <span class="k">for</span> <span class="o">_</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">input_length</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+      <span class="k">let</span> <span class="n">bits</span> <span class="o">=</span> <span class="n">read_bits</span> <span class="n">input</span> <span class="n">dna_encoding_size</span> <span class="k">in</span>
+      <span class="k">let</span> <span class="n">ch</span> <span class="o">=</span> <span class="n">dna_decoder</span> <span class="n">bits</span> <span class="k">in</span>
+      <span class="nn">Buffer</span><span class="p">.</span><span class="n">add_char</span> <span class="n">buffer</span> <span class="n">ch</span>
+    <span class="k">done</span><span class="o">;</span>
     <span class="nn">Buffer</span><span class="p">.</span><span class="n">contents</span> <span class="n">buffer</span>
   <span class="k">in</span>
   <span class="n">read_from_binary</span> <span class="n">deserialize</span> <span class="n">filename</span>
@@ -335,6 +378,15 @@ Here, we have tailored the path so it would work correctly with inline tests.</p
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-10-rle.html" class="btn btn-neutral float-right" title="13.3. Run-Length Encoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-10-reading-files.html" class="btn btn-neutral" title="13.1. File Input and Output in OCaml" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
