@@ -164,7 +164,12 @@ Finally, we can dump a simple graph with no payloads into a file using the follo
 Rendering Graphs via GraphViz
 -----------------------------
 
-The simples way to visualise graphs in a nice form is to use a third-party tool `GraphViz <https://www.graphviz.org/>`_. As input, GraphViz accepts a text file in a special format, which it can then convert to an image of a graph, taking care of positioning the nodes and rendering the edges between them. Some examples ony using GraphViz can be found by `this link <https://graphs.grevian.org/example>`_.
+The simplest way to visualise graphs in a nice form is to use a
+third-party tool `GraphViz <https://www.graphviz.org/>`_. As input,
+GraphViz accepts a text file in a special format, which it can then
+convert to an image of a graph, taking care of positioning the nodes
+and rendering the edges between them. Some examples ony using GraphViz
+can be found by `this link <https://graphs.grevian.org/example>`_.
 
 The following functions transform a graph, represented by adjacency lists to a GraphViz-formatted string and write it to the file::
 
