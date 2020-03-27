@@ -1,7 +1,5 @@
 .. -*- mode: rst -*-
 
-.. _graphviz:
-
 Installing GraphViz
 ===================
 
