@@ -12,7 +12,7 @@ Microsoft Windows 10
 
 Assuming that you have WSL and Ubuntu Linux installed, execute the following commands from the terminal::
 
-  apt install graphviz evince
+  sudo apt install -y graphviz evince
 
 This will install GraphViz as well as the Evince viewer for PDF documents.
 
