@@ -20,7 +20,7 @@ Once complete, download `this file <resources/graph.dot>`_. You can do it from t
 
   wget https://ilyasergey.net/YSC2229/resources/graph.dot  
 
-And execute the following command from the comand line::
+And execute the following command from the command line::
 
   dot -Tpdf graph.dot -o graph.pdf
 
@@ -28,9 +28,14 @@ This should produce the file ``graph.pdf``, which you should be view by calling:
 
   evince graph.pdf
 
-If it looks like a graph with four nodes, you're all set for the next lecture.
+If it looks like a graph with four nodes, you're all set for the next
+lecture. Don't worry if your WSL window turns black after that (it
+happened to me once after performing this operation). Just restart
+your X Server asa usual and it should work fine.
 
-You may also open ``graph.pdf`` with your Windows PDF viewer by opening the current folder in Windows Explorer. Just type in the terminal::
+You may also open ``graph.pdf`` with your Windows PDF viewer (e.g.,
+Adobe Acrobat) by opening the current folder in Windows Explorer. Just
+type in the terminal::
 
   explorer.exe .
 
