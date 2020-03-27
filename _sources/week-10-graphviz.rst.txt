@@ -36,7 +36,7 @@ This should produce the file ``graph.pdf``, which you should be view by calling:
 If it looks like a graph with four nodes, you're all set for the next
 lecture. Don't worry if your WSL window turns black after that (it
 happened to me once after performing this operation). Just restart
-your X Server asa usual and it should work fine.
+your Ubuntu XServer as usual and it should work fine.
 
 You may also open ``graph.pdf`` with your Windows PDF viewer (e.g.,
 Adobe Acrobat) by opening the current folder in Windows Explorer. Just
