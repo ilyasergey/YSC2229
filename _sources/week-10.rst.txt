@@ -9,3 +9,4 @@ Week 10: Binary Data Compression
    week-10-binary-encondings
    week-10-rle
    week-10-huffman
+   week-10-graphviz
