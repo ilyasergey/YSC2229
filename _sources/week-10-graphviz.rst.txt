@@ -56,9 +56,9 @@ Install GraphViz by executing the following command in the terminal::
 
   brew install graphviz wget
 
-The second utility, ``wget`` allows download files from the command line.
+The second utility ``wget`` allows download files from the command line.
 
-For convenience of viewing the files, add the following line into your configuration file ``~/.profile``::
+For convenience of viewing PDF files add the following line into your configuration file ``~/.profile``::
 
   alias preview='open -a Preview'
 
