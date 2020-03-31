@@ -26,10 +26,10 @@ Introductory Data Structures and Algorithms
    week-08
    week-09
    week-10
-..   week-11
-..   week-12
 
-..   YSC2229-lecture-notes-week-14
+   week-11
+   week-12
+   week-13
 
 Lecture notes will be posted gradually as we progress through the
 course material.
