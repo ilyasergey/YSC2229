@@ -14,7 +14,8 @@ a set of points. A convex hull for a set of points :math:`S` is a
 smalles polygon (in terms of are) such that all points from :math:`S`
 are contained within it, or are lying on its boundary.
 
-The definition implies that the vertices of the polygons are some points from :math:`S`.
+The definition implies that the vertices of the polygons are some
+points from :math:`S`.
 
 The image below shows an example of a convex hull for a set of 50 points:
 
@@ -69,9 +70,11 @@ which we will extend with the following definitions::
 The crux of the algorithm is to sort the set of points twice, using different comparisons:
 
 (a) The first sort is done by :math:`y`-coordinate;
-(b) The second sort is done by a radial angle from the point :math:`p_0` with a smallest :math:`y` coordinate (and leftmost of points with the smallest :math:`y`-coordinate).
+(b) The second sort is done by a radial angle from the point
+    :math:`p_0` with a smallest :math:`y` coordinate (and leftmost of
+    points with the smallest :math:`y`-coordinate).
 
-For these sortins, we will need the following two procedures::
+For these sortings, we will need the following two procedures::
 
  (* Sort by axis Y *)
  let axis_y_sorter (Point (x1, y1)) (Point (x2, y2)) =
