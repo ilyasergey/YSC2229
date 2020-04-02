@@ -1,0 +1,592 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Working with Polygons &mdash; YSC2229 2020</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Working with Polygons</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="working-with-polygons">
+<span id="polygons"></span><h1>Working with Polygons<a class="headerlink" href="#working-with-polygons" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>File: <code class="docutils literal notranslate"><span class="pre">Polygons.ml</span></code></li>
+</ul>
+<p>From points and segments we move to more interesting two-dimensional objects — polygons.</p>
+<p>To work with them, we will require a couple of auxiliary functions:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">include</span> <span class="nc">Points</span>
+
+<span class="c">(* Some utility functions *)</span>
+<span class="k">let</span> <span class="k">rec</span> <span class="n">all_pairs</span> <span class="n">ls</span> <span class="o">=</span> <span class="k">match</span> <span class="n">ls</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="bp">[]</span>
+  <span class="o">|</span> <span class="o">_</span> <span class="o">::</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="bp">[]</span>
+  <span class="o">|</span> <span class="n">h1</span> <span class="o">::</span> <span class="n">h2</span> <span class="o">::</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="n">h1</span><span class="o">,</span> <span class="n">h2</span><span class="o">)</span> <span class="o">::</span> <span class="o">(</span><span class="n">all_pairs</span> <span class="o">(</span><span class="n">h2</span> <span class="o">::</span> <span class="n">t</span><span class="o">))</span>
+
+<span class="k">let</span> <span class="k">rec</span> <span class="n">all_triples</span> <span class="n">ls</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">=</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">hd</span> <span class="n">ls</span><span class="o">,</span> <span class="nn">List</span><span class="p">.</span><span class="n">hd</span> <span class="o">@@</span> <span class="nn">List</span><span class="p">.</span><span class="n">tl</span> <span class="n">ls</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">l</span> <span class="o">=</span> <span class="k">match</span> <span class="n">l</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="n">x</span> <span class="o">::</span> <span class="n">y</span> <span class="o">::</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="o">[(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">a</span><span class="o">);</span> <span class="o">(</span><span class="n">y</span><span class="o">,</span> <span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)]</span>
+    <span class="o">|</span> <span class="n">x</span> <span class="o">::</span> <span class="n">y</span> <span class="o">::</span> <span class="n">z</span> <span class="o">::</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">,</span> <span class="n">z</span><span class="o">)</span> <span class="o">::</span> <span class="o">(</span><span class="n">walk</span> <span class="o">(</span><span class="n">y</span> <span class="o">::</span> <span class="n">z</span> <span class="o">::</span> <span class="n">t</span><span class="o">))</span>
+    <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">[]</span>
+  <span class="k">in</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">length</span> <span class="n">ls</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="o">);</span>
+  <span class="n">walk</span> <span class="n">ls</span>
+
+<span class="c">(* Remove duplicates without sorting, via OCaml hashtable *)</span>
+<span class="k">let</span> <span class="n">uniq</span> <span class="n">lst</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">seen</span> <span class="o">=</span> <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">create</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">length</span> <span class="n">lst</span><span class="o">)</span> <span class="k">in</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">filter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="k">let</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">not</span> <span class="o">(</span><span class="nn">Hashtbl</span><span class="p">.</span><span class="n">mem</span> <span class="n">seen</span> <span class="n">x</span><span class="o">)</span> <span class="k">in</span>
+                        <span class="nn">Hashtbl</span><span class="p">.</span><span class="n">replace</span> <span class="n">seen</span> <span class="n">x</span> <span class="bp">()</span><span class="o">;</span>
+                        <span class="n">tmp</span><span class="o">)</span> <span class="n">lst</span>
+</pre></div>
+</div>
+<div class="section" id="encoding-and-rendering-polygons">
+<h2>Encoding and rendering polygons<a class="headerlink" href="#encoding-and-rendering-polygons" title="Permalink to this headline">¶</a></h2>
+<p>A polygon can be represented as a list of points:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">polygon</span> <span class="o">=</span> <span class="n">point</span> <span class="kt">list</span>
+</pre></div>
+</div>
+<p>We will use the following convention to interpret this list as a sequence of polygon vertices: as we “walk” along the list, the polygon is always on our left. OCaml’s representation of polygons uses the same convention.</p>
+<p>It is more convenient to define polygons as list of integers (unless we specifically need coordinates expressed with decimals), hence the following auxiliary function:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">polygon_of_int_pairs</span> <span class="n">l</span> <span class="o">=</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">-&gt;</span>
+      <span class="nc">Point</span> <span class="o">(</span><span class="n">float_of_int</span> <span class="n">x</span><span class="o">,</span> <span class="n">float_of_int</span> <span class="n">y</span><span class="o">))</span> <span class="n">l</span>
+</pre></div>
+</div>
+<p>A very common operation is to shift polygon in a certain direction. This can be done as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">shift_polygon</span> <span class="o">(</span><span class="n">dx</span><span class="o">,</span> <span class="n">dy</span><span class="o">)</span> <span class="n">pol</span> <span class="o">=</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">function</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">-&gt;</span>
+    <span class="nc">Point</span> <span class="o">(</span><span class="n">x</span> <span class="o">+.</span> <span class="n">dx</span><span class="o">,</span> <span class="n">y</span> <span class="o">+.</span> <span class="n">dy</span><span class="o">))</span> <span class="n">pol</span>
+</pre></div>
+</div>
+<p>OCaml provides a special function <code class="docutils literal notranslate"><span class="pre">draw_poly</span></code> to render polygons, and we implement our machinery relying on it:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">draw_polygon</span> <span class="o">?</span><span class="n">color</span><span class="o">:(</span><span class="n">color</span> <span class="o">=</span> <span class="nn">Graphics</span><span class="p">.</span><span class="n">black</span><span class="o">)</span> <span class="n">p</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">Graphics</span> <span class="k">in</span>
+  <span class="n">set_color</span> <span class="n">color</span><span class="o">;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">function</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">-&gt;</span>
+    <span class="o">(</span><span class="n">int_of_float</span> <span class="n">x</span> <span class="o">+</span> <span class="n">fst</span> <span class="n">origin</span><span class="o">,</span>
+     <span class="n">int_of_float</span> <span class="n">y</span> <span class="o">+</span> <span class="n">snd</span> <span class="n">origin</span><span class="o">))</span> <span class="n">p</span> <span class="o">|&gt;</span>
+  <span class="nn">Array</span><span class="p">.</span><span class="n">of_list</span> <span class="o">|&gt;</span>
+  <span class="n">draw_poly</span><span class="o">;</span>
+  <span class="n">set_color</span> <span class="n">black</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="some-useful-polygons">
+<h2>Some useful polygons<a class="headerlink" href="#some-useful-polygons" title="Permalink to this headline">¶</a></h2>
+<p>The following module defines a number of polygons with interesting properties:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">TestPolygons</span> <span class="o">=</span> <span class="k">struct</span>
+
+  <span class="k">let</span> <span class="n">triangle</span> <span class="o">=</span>
+    <span class="o">[(-</span><span class="mi">50</span><span class="o">,</span> <span class="mi">50</span><span class="o">);</span> <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">200</span><span class="o">)]</span> <span class="o">|&gt;</span> <span class="n">polygon_of_int_pairs</span>
+
+  <span class="k">let</span> <span class="n">square</span> <span class="o">=</span> <span class="o">[(</span><span class="mi">100</span><span class="o">,</span> <span class="o">-</span><span class="mi">100</span><span class="o">);</span> <span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span> <span class="o">(-</span><span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span> <span class="o">(-</span><span class="mi">100</span><span class="o">,</span> <span class="o">-</span><span class="mi">100</span><span class="o">)]</span> <span class="o">|&gt;</span> <span class="n">polygon_of_int_pairs</span>
+
+  <span class="k">let</span> <span class="n">convexPoly2</span> <span class="o">=</span> <span class="o">[(</span><span class="mi">100</span><span class="o">,</span> <span class="o">-</span><span class="mi">100</span><span class="o">);</span> <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">)]</span> <span class="o">|&gt;</span> <span class="n">polygon_of_int_pairs</span>
+
+  <span class="k">let</span> <span class="n">convexPoly3</span> <span class="o">=</span> <span class="o">[(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span> <span class="o">(</span><span class="mi">40</span><span class="o">,</span> <span class="mi">100</span><span class="o">)]</span> <span class="o">|&gt;</span> <span class="n">polygon_of_int_pairs</span>
+
+  <span class="k">let</span> <span class="n">simpleNonConvexPoly</span> <span class="o">=</span> <span class="o">[(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+                             <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span> <span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">50</span><span class="o">)]</span> <span class="o">|&gt;</span> <span class="n">polygon_of_int_pairs</span>
+
+  <span class="k">let</span> <span class="n">nonConvexPoly5</span> <span class="o">=</span> <span class="o">[(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span>
+                        <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span> <span class="o">(-</span><span class="mi">100</span><span class="o">,</span> <span class="mi">300</span><span class="o">)]</span> <span class="o">|&gt;</span>
+                       <span class="n">polygon_of_int_pairs</span> <span class="o">|&gt;</span>
+                       <span class="n">shift_polygon</span> <span class="o">(-</span><span class="mi">50</span><span class="o">.,</span> <span class="o">-</span><span class="mi">100</span><span class="o">.)</span>
+
+  <span class="k">let</span> <span class="n">bunnyEars</span>  <span class="o">=</span> <span class="o">[(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">400</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">300</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span>
+                    <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span> <span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">200</span><span class="o">)]</span> <span class="o">|&gt;</span>
+                   <span class="n">polygon_of_int_pairs</span> <span class="o">|&gt;</span>
+                   <span class="n">shift_polygon</span> <span class="o">(-</span><span class="mi">100</span><span class="o">.,</span> <span class="o">-</span><span class="mi">50</span><span class="o">.)</span>
+
+  <span class="k">let</span> <span class="n">lShapedPolygon</span> <span class="o">=</span> <span class="o">[(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+                        <span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span> <span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">300</span><span class="o">)]</span>
+                       <span class="o">|&gt;</span> <span class="n">polygon_of_int_pairs</span>
+                       <span class="o">|&gt;</span> <span class="n">shift_polygon</span> <span class="o">(-</span><span class="mi">150</span><span class="o">.,</span> <span class="o">-</span><span class="mi">150</span><span class="o">.)</span>
+
+  <span class="k">let</span> <span class="n">kittyPolygon</span> <span class="o">=</span> <span class="o">[(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span>
+                      <span class="o">(</span><span class="mi">400</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span> <span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">200</span><span class="o">)]</span>
+                     <span class="o">|&gt;</span> <span class="n">polygon_of_int_pairs</span>
+                     <span class="o">|&gt;</span> <span class="n">shift_polygon</span> <span class="o">(-</span><span class="mi">250</span><span class="o">.,</span> <span class="o">-</span><span class="mi">150</span><span class="o">.)</span>
+
+  <span class="k">let</span> <span class="n">simpleStarPolygon</span> <span class="o">=</span> <span class="o">[(</span><span class="mi">290</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">290</span><span class="o">);</span>
+                           <span class="o">(-</span><span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span> <span class="o">(-</span><span class="mi">290</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(-</span><span class="mi">100</span><span class="o">,</span> <span class="o">-</span><span class="mi">100</span><span class="o">);</span>
+                           <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="o">-</span><span class="mi">290</span><span class="o">);</span> <span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="o">-</span><span class="mi">100</span><span class="o">)]</span>  <span class="o">|&gt;</span> <span class="n">polygon_of_int_pairs</span>
+
+  <span class="k">let</span> <span class="n">weirdRectPolygon</span> <span class="o">=</span> <span class="o">[(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span> <span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+                          <span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span> <span class="o">(</span><span class="mi">300</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span> <span class="o">(</span><span class="mi">300</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">300</span><span class="o">)]</span>
+                         <span class="o">|&gt;</span> <span class="n">polygon_of_int_pairs</span>
+                         <span class="o">|&gt;</span> <span class="n">shift_polygon</span> <span class="o">(-</span><span class="mi">150</span><span class="o">.,</span> <span class="o">-</span><span class="mi">150</span><span class="o">.)</span>
+
+  <span class="k">let</span> <span class="n">sand4</span> <span class="o">=</span> <span class="o">[(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span> <span class="o">(</span><span class="mi">170</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+               <span class="o">(</span><span class="mi">150</span><span class="o">,</span> <span class="mi">40</span><span class="o">);</span> <span class="o">(</span><span class="mi">130</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">100</span><span class="o">)]</span>
+              <span class="o">|&gt;</span> <span class="n">polygon_of_int_pairs</span>
+              <span class="o">|&gt;</span> <span class="n">shift_polygon</span> <span class="o">(-</span><span class="mi">30</span><span class="o">.,</span> <span class="o">-</span><span class="mi">30</span><span class="o">.)</span>
+
+  <span class="k">let</span> <span class="n">tHorror</span> <span class="o">=</span> <span class="o">[(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span> <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span> <span class="o">(</span><span class="mi">300</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
+                 <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span> <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">400</span><span class="o">)]</span>
+                <span class="o">|&gt;</span> <span class="n">polygon_of_int_pairs</span>
+                <span class="o">|&gt;</span> <span class="n">shift_polygon</span> <span class="o">(-</span><span class="mi">250</span><span class="o">.,</span> <span class="o">-</span><span class="mi">250</span><span class="o">.)</span>
+
+
+  <span class="k">let</span> <span class="n">chvatal_comb</span> <span class="o">=</span> <span class="o">[(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span> <span class="o">(</span><span class="mi">455</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span> <span class="o">(</span><span class="mi">400</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+                      <span class="o">(</span><span class="mi">350</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span> <span class="o">(</span><span class="mi">300</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span> <span class="o">(</span><span class="mi">250</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+                      <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span> <span class="o">(</span><span class="mi">150</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span> <span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+                      <span class="o">(</span><span class="mi">50</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">0</span><span class="o">)]</span>
+                     <span class="o">|&gt;</span> <span class="n">polygon_of_int_pairs</span>
+                     <span class="o">|&gt;</span> <span class="n">shift_polygon</span> <span class="o">(-</span><span class="mi">200</span><span class="o">.,</span> <span class="o">-</span><span class="mi">70</span><span class="o">.)</span>
+
+
+  <span class="k">let</span> <span class="n">chvatal_comb1</span> <span class="o">=</span> <span class="o">[(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span> <span class="o">(</span><span class="mi">420</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span> <span class="o">(</span><span class="mi">400</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+                       <span class="o">(</span><span class="mi">350</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span> <span class="o">(</span><span class="mi">300</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span> <span class="o">(</span><span class="mi">250</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+                       <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span> <span class="o">(</span><span class="mi">150</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span> <span class="o">(</span><span class="mi">100</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+                       <span class="o">(</span><span class="mi">50</span><span class="o">,</span> <span class="mi">200</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">70</span><span class="o">);</span> <span class="o">(</span><span class="mi">500</span><span class="o">,</span> <span class="mi">70</span><span class="o">)]</span>
+                      <span class="o">|&gt;</span> <span class="n">polygon_of_int_pairs</span>
+                      <span class="o">|&gt;</span> <span class="n">shift_polygon</span> <span class="o">(-</span><span class="mi">200</span><span class="o">.,</span> <span class="o">-</span><span class="mi">70</span><span class="o">.)</span>
+
+  <span class="k">let</span> <span class="n">shurikenPolygon</span> <span class="o">=</span> <span class="o">[(</span><span class="mi">390</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">200</span><span class="o">,</span> <span class="mi">50</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">290</span><span class="o">);</span>
+                         <span class="o">(</span><span class="mi">50</span><span class="o">,</span> <span class="mi">150</span><span class="o">);</span> <span class="o">(-</span><span class="mi">200</span><span class="o">,</span> <span class="o">-</span><span class="mi">100</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">)]</span>
+                        <span class="o">|&gt;</span> <span class="n">polygon_of_int_pairs</span>
+                        <span class="o">|&gt;</span> <span class="n">shift_polygon</span> <span class="o">(-</span><span class="mi">80</span><span class="o">.,</span> <span class="o">-</span><span class="mi">70</span><span class="o">.)</span>
+
+
+
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Let us render some of those:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="k">open</span> <span class="nc">Polygons</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">open</span> <span class="nc">TestPolygons</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">mk_screen</span> <span class="bp">()</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">draw_polygon</span> <span class="n">kittyPolygon</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">k1</span> <span class="o">=</span> <span class="n">shift_polygon</span> <span class="o">(</span><span class="mi">50</span><span class="o">.,</span> <span class="mi">50</span><span class="o">.)</span> <span class="n">kittyPolygon</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">draw_polygon</span> <span class="n">k1</span><span class="o">;;</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/cg07.png"><img alt="_images/cg07.png" class="align-center" src="_images/cg07.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="basic-polygon-manipulations">
+<h2>Basic polygon manipulations<a class="headerlink" href="#basic-polygon-manipulations" title="Permalink to this headline">¶</a></h2>
+<p>In addition to moving polygons, we can also resize and rotate polygons. The first operation is done by multiplying all vertices (as they were vectors) by the defined factor:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">resize_polygon</span> <span class="n">k</span> <span class="n">pol</span> <span class="o">=</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">function</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">-&gt;</span>
+    <span class="nc">Point</span> <span class="o">(</span><span class="n">x</span> <span class="o">*.</span> <span class="n">k</span><span class="o">,</span> <span class="n">y</span> <span class="o">*.</span> <span class="n">k</span><span class="o">))</span> <span class="n">pol</span>
+</pre></div>
+</div>
+<p>For rotation, we need to specify the center, relative to which the rotations is going to be performed. After that the conversion to polar coordinates and back does the trick:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">rotate_polygon</span> <span class="n">pol</span> <span class="n">p0</span> <span class="n">angle</span> <span class="o">=</span>
+  <span class="n">pol</span> <span class="o">|&gt;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">p</span> <span class="o">--</span> <span class="n">p0</span><span class="o">)</span> <span class="o">|&gt;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="n">polar_of_cartesian</span> <span class="o">|&gt;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">function</span> <span class="nc">Polar</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">phi</span><span class="o">)</span> <span class="o">-&gt;</span>
+      <span class="nc">Polar</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">phi</span> <span class="o">+.</span> <span class="n">angle</span><span class="o">))</span> <span class="o">|&gt;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="n">cartesian_of_polar</span> <span class="o">|&gt;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span> <span class="n">p</span> <span class="o">++</span> <span class="o">(</span><span class="n">get_x</span> <span class="n">p0</span><span class="o">,</span> <span class="n">get_y</span> <span class="n">p0</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>Here is an example of using thoe functions:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">k2</span> <span class="o">=</span> <span class="n">rotate_polygon</span> <span class="n">k1</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="mi">0</span><span class="o">.,</span> <span class="mi">0</span><span class="o">.))</span> <span class="o">(</span><span class="n">pi</span> <span class="o">/.</span> <span class="mi">2</span><span class="o">.);;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">clear_screen</span> <span class="bp">()</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">draw_polygon</span> <span class="n">k2</span><span class="o">;;</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/cg08.png"><img alt="_images/cg08.png" class="align-center" src="_images/cg08.png" style="width: 700px;" /></a>
+</div>
+<div class="section" id="queries-about-polygons">
+<h2>Queries about polygons<a class="headerlink" href="#queries-about-polygons" title="Permalink to this headline">¶</a></h2>
+<p>One of non-trivial properties of a polygon is <em>convexity</em>. A polygon is convex if any segment connecting points on its edges fully lies within the polygon. That is, checking convexity out of this definition is cumbersome, and there is a better way to do it, by relying one the machinery for determining directions. In essence, a polygon is convex if each three consecutive vertices in it do not form a right turn:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">is_convex</span> <span class="n">pol</span> <span class="o">=</span>
+  <span class="n">all_triples</span> <span class="n">pol</span> <span class="o">|&gt;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">p1</span><span class="o">,</span> <span class="n">p2</span><span class="o">,</span> <span class="n">p3</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">direction</span> <span class="n">p1</span> <span class="n">p2</span> <span class="n">p3</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Another property to check of two fixed polygons, is whether they intersect, which would mean a collision. This can be checked in a time proportional to the product of the sizes of the two polygons, via the following functions, checking pair-wise intersection of all of the edges:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">edges</span> <span class="n">pol</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="n">pol</span> <span class="o">=</span> <span class="bp">[]</span> <span class="k">then</span> <span class="bp">[]</span>
+  <span class="k">else</span>
+    <span class="k">let</span> <span class="n">es</span> <span class="o">=</span> <span class="n">all_pairs</span> <span class="n">pol</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">lst</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">rev</span> <span class="n">pol</span> <span class="o">|&gt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">hd</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">e</span> <span class="o">=</span> <span class="o">(</span><span class="n">lst</span><span class="o">,</span> <span class="nn">List</span><span class="p">.</span><span class="n">hd</span> <span class="n">pol</span><span class="o">)</span> <span class="k">in</span>
+    <span class="n">e</span> <span class="o">::</span> <span class="n">es</span>
+
+<span class="k">let</span> <span class="n">polygons_touch_or_intersect</span> <span class="n">pol1</span> <span class="n">pol2</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">es1</span> <span class="o">=</span> <span class="n">edges</span> <span class="n">pol1</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">es2</span> <span class="o">=</span> <span class="n">edges</span> <span class="n">pol2</span> <span class="k">in</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">exists</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e1</span> <span class="o">-&gt;</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">exists</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e2</span> <span class="o">-&gt;</span>
+          <span class="n">segments_intersect</span> <span class="n">e1</span> <span class="n">e2</span><span class="o">)</span> <span class="n">es2</span><span class="o">)</span> <span class="n">es1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="intermezzo-rays-and-intersections">
+<h2>Intermezzo: rays and intersections<a class="headerlink" href="#intermezzo-rays-and-intersections" title="Permalink to this headline">¶</a></h2>
+<p>The procedure above only checks for intersection of edges, but what is one polygon is fully within another polygon? How can we determine that? To answer this question, we would need to be able to determine whether a certain <em>point</em> is within a given polygon. But for this we would need to make a small detour and talk about another geometric construction: rays.</p>
+<p>Ray is similar to a segment, but only has one endpoint, spreading to the infinity in a certain direction. This is why we represent rays by its origin and an angle in radians (encoded as <code class="docutils literal notranslate"><span class="pre">float</span></code>), determining the direction in which it spreads:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">ray</span> <span class="o">=</span> <span class="n">point</span> <span class="o">*</span> <span class="kt">float</span>
+
+<span class="k">let</span> <span class="n">draw_ray</span> <span class="o">?</span><span class="n">color</span><span class="o">:(</span><span class="n">color</span> <span class="o">=</span> <span class="nn">Graphics</span><span class="p">.</span><span class="n">black</span><span class="o">)</span> <span class="n">r</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="n">phi</span><span class="o">)</span> <span class="o">=</span> <span class="n">r</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">Graphics</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">q</span> <span class="o">=</span> <span class="n">p</span> <span class="o">++</span> <span class="o">(</span><span class="mi">2000</span><span class="o">.</span> <span class="o">*.</span> <span class="o">(</span><span class="n">cos</span> <span class="n">phi</span><span class="o">),</span> <span class="mi">2000</span><span class="o">.</span> <span class="o">*.</span> <span class="o">(</span><span class="n">sin</span> <span class="n">phi</span><span class="o">))</span> <span class="k">in</span>
+  <span class="n">draw_segment</span> <span class="o">~</span><span class="n">color</span> <span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="n">q</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Given a ray <span class="math notranslate nohighlight">\(R = (p, \phi)\)</span> and a point <span class="math notranslate nohighlight">\(p\)</span> that belongs to the line of the ray, we can determine whether <span class="math notranslate nohighlight">\(p\)</span> is on <span class="math notranslate nohighlight">\(r\)</span> by manes of the following function:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">point_on_ray</span> <span class="n">ray</span> <span class="n">p</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">q</span><span class="o">,</span> <span class="n">phi</span><span class="o">)</span> <span class="o">=</span> <span class="n">ray</span> <span class="k">in</span>
+  <span class="c">(* Ray&#39;s direction *)</span>
+  <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">cos</span> <span class="n">phi</span><span class="o">,</span> <span class="n">sin</span> <span class="n">phi</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">u</span> <span class="o">=</span> <span class="n">dot_product</span> <span class="o">(</span><span class="n">p</span> <span class="o">--</span> <span class="n">q</span><span class="o">)</span> <span class="n">r</span> <span class="k">in</span>
+  <span class="n">u</span> <span class="o">&gt;=~</span> <span class="mi">0</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Notice that here we encode all points of <span class="math notranslate nohighlight">\(R\)</span> via the equation <span class="math notranslate nohighlight">\(q + u r\)</span>, where <span class="math notranslate nohighlight">\(r\)</span> is a “directional” vector of the ray and <span class="math notranslate nohighlight">\(0 \leq u\)</span>. We then solve the vector equation <span class="math notranslate nohighlight">\(p = q + u r\)</span>, by multiplying both parts by <span class="math notranslate nohighlight">\(r\)</span> via scalar product, and also noticing that <span class="math notranslate nohighlight">\(r \cdot r = 0\)</span>. Finally, we check if <span class="math notranslate nohighlight">\(u \geq 0\)</span>, to make sure that <span class="math notranslate nohighlight">\(p\)</span> is not lying “behind” the ray.</p>
+<p>Now, we can find an intersection of a ray and a segment, in a way similar to how that was done in Section <a class="reference internal" href="week-13-points.html#points"><span class="std std-ref">Points, Segments and their Properties</span></a>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">ray_segment_intersection</span> <span class="n">ray</span> <span class="n">seg</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="n">p&#39;</span><span class="o">)</span> <span class="o">=</span> <span class="n">seg</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">q</span><span class="o">,</span> <span class="n">phi</span><span class="o">)</span> <span class="o">=</span> <span class="n">ray</span> <span class="k">in</span>
+  <span class="c">(* Segment&#39;s direction *)</span>
+  <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">get_x</span> <span class="n">p&#39;</span> <span class="o">-.</span> <span class="n">get_x</span> <span class="n">p</span><span class="o">,</span> <span class="n">get_y</span> <span class="n">p&#39;</span> <span class="o">-.</span> <span class="n">get_y</span> <span class="n">p</span><span class="o">)</span> <span class="k">in</span>
+  <span class="c">(* Ray&#39;s direction *)</span>
+  <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">cos</span> <span class="n">phi</span><span class="o">,</span> <span class="n">sin</span> <span class="n">phi</span><span class="o">)</span> <span class="k">in</span>
+
+  <span class="k">if</span> <span class="n">cross_product</span> <span class="n">s</span> <span class="n">r</span> <span class="o">=~=</span> <span class="mi">0</span><span class="o">.</span> <span class="k">then</span>
+    <span class="k">if</span> <span class="n">cross_product</span> <span class="o">(</span><span class="n">p</span> <span class="o">--</span> <span class="n">q</span><span class="o">)</span> <span class="n">r</span> <span class="o">=~=</span> <span class="mi">0</span><span class="o">.</span>
+    <span class="k">then</span> <span class="k">if</span> <span class="n">point_on_ray</span> <span class="n">ray</span> <span class="n">p</span> <span class="k">then</span> <span class="nc">Some</span> <span class="n">p</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="n">point_on_ray</span> <span class="n">ray</span> <span class="n">p&#39;</span> <span class="k">then</span> <span class="nc">Some</span> <span class="n">p&#39;</span>
+      <span class="k">else</span> <span class="nc">None</span>
+    <span class="k">else</span> <span class="nc">None</span>
+  <span class="k">else</span> <span class="k">begin</span>
+    <span class="c">(* Point on segment *)</span>
+    <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="o">(</span><span class="n">cross_product</span> <span class="o">(</span><span class="n">q</span> <span class="o">--</span> <span class="n">p</span><span class="o">)</span> <span class="n">r</span><span class="o">)</span> <span class="o">/.</span> <span class="o">(</span><span class="n">cross_product</span> <span class="n">s</span> <span class="n">r</span><span class="o">)</span> <span class="k">in</span>
+    <span class="c">(* Point on ray *)</span>
+    <span class="k">let</span> <span class="n">u</span> <span class="o">=</span> <span class="o">(</span><span class="n">cross_product</span> <span class="o">(</span><span class="n">p</span> <span class="o">--</span> <span class="n">q</span><span class="o">)</span> <span class="n">s</span><span class="o">)</span> <span class="o">/.</span> <span class="o">(</span><span class="n">cross_product</span> <span class="n">r</span> <span class="n">s</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">if</span> <span class="n">u</span> <span class="o">&gt;=~</span> <span class="mi">0</span><span class="o">.</span> <span class="o">&amp;&amp;</span> <span class="n">t</span> <span class="o">&gt;=~</span> <span class="mi">0</span><span class="o">.</span> <span class="o">&amp;&amp;</span> <span class="n">t</span> <span class="o">&lt;=~</span> <span class="mi">1</span><span class="o">.</span>
+    <span class="k">then</span>
+      <span class="k">let</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">sx</span><span class="o">,</span> <span class="n">sy</span><span class="o">)</span> <span class="o">=</span> <span class="n">s</span> <span class="k">in</span>
+      <span class="k">let</span> <span class="n">z</span> <span class="o">=</span> <span class="n">p</span> <span class="o">++</span> <span class="o">(</span><span class="n">sx</span> <span class="o">*.</span> <span class="n">t</span><span class="o">,</span> <span class="n">sy</span> <span class="o">*.</span> <span class="n">t</span><span class="o">)</span> <span class="k">in</span>
+      <span class="nc">Some</span> <span class="n">z</span>
+    <span class="k">else</span>
+      <span class="nc">None</span>
+  <span class="k">end</span>
+</pre></div>
+</div>
+<p>Specifically, if the ray and the segment are collinear than we can try to find if one of the end points of the segment is on the ray.</p>
+<p>Otherwise, if they are not collinear, we express them both in the vector form and solve two equations, wrt. the scalar parameters <code class="docutils literal notranslate"><span class="pre">t</span></code> and <code class="docutils literal notranslate"><span class="pre">u</span></code>. Finally, we check that <code class="docutils literal notranslate"><span class="pre">u</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code> are in the allowed ranges, and use one of them to calculate the intersection point.</p>
+</div>
+<div class="section" id="point-within-an-polygon">
+<h2>Point within an polygon<a class="headerlink" href="#point-within-an-polygon" title="Permalink to this headline">¶</a></h2>
+<p>A simple way to determine whether a point is within a polygon if to draw a ray (in an arbitrary direction) from it and count how many times it intersect the edges of the polygon. If this number is odd, the point is within the polygon, otherwise it is outside. This is done by the procedure <code class="docutils literal notranslate"><span class="pre">point_within_polygon</span></code> defined below, along with several auxiliary functions:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Get neightbors of a vertex *)</span>
+<span class="k">let</span> <span class="n">get_vertex_neighbours</span> <span class="n">pol</span> <span class="n">v</span> <span class="o">=</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">mem</span> <span class="n">v</span> <span class="n">pol</span><span class="o">);</span>
+
+  <span class="k">let</span> <span class="n">arr</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">of_list</span> <span class="n">pol</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="o">);</span>
+
+  <span class="k">if</span> <span class="n">v</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.(</span><span class="mi">0</span><span class="o">)</span> <span class="k">then</span> <span class="o">(</span><span class="n">arr</span><span class="o">.(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">),</span> <span class="n">arr</span><span class="o">.(</span><span class="mi">1</span><span class="o">))</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">v</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="k">then</span> <span class="o">(</span><span class="n">arr</span><span class="o">.(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="o">),</span> <span class="n">arr</span><span class="o">.(</span><span class="mi">0</span><span class="o">))</span>
+  <span class="k">else</span> <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">i</span> <span class="o">=</span>
+         <span class="k">if</span> <span class="n">i</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">then</span> <span class="o">(</span><span class="n">arr</span><span class="o">.(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="o">),</span> <span class="n">arr</span><span class="o">.(</span><span class="mi">0</span><span class="o">))</span>
+         <span class="k">else</span> <span class="k">if</span> <span class="n">v</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span>
+         <span class="k">then</span> <span class="o">(</span><span class="n">arr</span><span class="o">.(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">),</span> <span class="n">arr</span><span class="o">.(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">))</span>
+         <span class="k">else</span> <span class="n">walk</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+    <span class="k">in</span> <span class="n">walk</span> <span class="mi">1</span>
+
+<span class="c">(* Get neightbors of a vertex *)</span>
+<span class="k">let</span> <span class="n">neighbours_on_different_sides</span> <span class="n">ray</span> <span class="n">pol</span> <span class="n">p</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="n">not</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">mem</span> <span class="n">p</span> <span class="n">pol</span><span class="o">)</span> <span class="k">then</span> <span class="bp">true</span>
+  <span class="k">else</span>
+    <span class="k">let</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">=</span> <span class="n">get_vertex_neighbours</span> <span class="n">pol</span> <span class="n">p</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span> <span class="o">=</span> <span class="n">ray</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="n">r</span> <span class="o">++</span> <span class="o">(</span><span class="n">cos</span> <span class="n">d</span><span class="o">,</span> <span class="n">sin</span> <span class="n">d</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">dir1</span> <span class="o">=</span> <span class="n">direction</span> <span class="n">r</span> <span class="n">s</span> <span class="n">a</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">dir2</span> <span class="o">=</span> <span class="n">direction</span> <span class="n">r</span> <span class="n">s</span> <span class="n">b</span> <span class="k">in</span>
+    <span class="n">dir1</span> <span class="o">&lt;&gt;</span> <span class="n">dir2</span>
+</pre></div>
+</div>
+<p>To avoid conrer cases, it makes sense to choose the ray, so it would
+not be collinear with any of the edges. For this, we will need the
+following function:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">choose_ray_angle</span> <span class="n">pol</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">edge_angles</span> <span class="o">=</span>
+    <span class="n">edges</span> <span class="n">pol</span> <span class="o">|&gt;</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x1</span><span class="o">,</span> <span class="n">y1</span><span class="o">),</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">x2</span><span class="o">,</span> <span class="n">y2</span><span class="o">))</span> <span class="o">-&gt;</span>
+        <span class="k">let</span> <span class="n">dx</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">-.</span> <span class="n">x1</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">-.</span> <span class="n">y1</span> <span class="k">in</span>
+        <span class="n">atan2</span> <span class="n">dy</span> <span class="n">dx</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">length</span> <span class="n">pol</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">candidate_angles</span> <span class="o">=</span>
+    <span class="n">iota</span> <span class="o">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">|&gt;</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">fun</span> <span class="n">i</span> <span class="o">-&gt;</span>
+      <span class="o">(</span><span class="n">float_of_int</span> <span class="n">i</span><span class="o">)</span> <span class="o">*.</span> <span class="n">pi</span> <span class="o">/.</span> <span class="o">(</span><span class="n">float_of_int</span> <span class="n">n</span><span class="o">))</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">phi</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">find</span> <span class="o">(</span><span class="k">fun</span> <span class="n">c</span> <span class="o">-&gt;</span>  <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span>
+                          <span class="o">(</span><span class="k">fun</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">not</span> <span class="o">(</span><span class="n">a</span> <span class="o">=~=</span> <span class="n">c</span><span class="o">))</span>
+                          <span class="n">edge_angles</span><span class="o">)</span> <span class="n">candidate_angles</span> <span class="k">in</span>
+  <span class="n">phi</span>
+</pre></div>
+</div>
+<p>Now, we can determine whether the point is within the polygon:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Point within a polygon *)</span>
+
+<span class="k">let</span> <span class="n">point_within_polygon</span> <span class="n">pol</span> <span class="n">p</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">ray</span> <span class="o">=</span> <span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="o">(</span><span class="n">choose_ray_angle</span> <span class="n">pol</span><span class="o">))</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">es</span> <span class="o">=</span> <span class="n">edges</span> <span class="n">pol</span> <span class="k">in</span>
+  <span class="k">if</span> <span class="nn">List</span><span class="p">.</span><span class="n">mem</span> <span class="n">p</span> <span class="n">pol</span> <span class="o">||</span>
+     <span class="nn">List</span><span class="p">.</span><span class="n">exists</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span> <span class="n">point_on_segment</span> <span class="n">e</span> <span class="n">p</span><span class="o">)</span> <span class="n">es</span> <span class="k">then</span> <span class="bp">true</span>
+  <span class="k">else</span>
+    <span class="k">begin</span>
+      <span class="k">let</span> <span class="n">n</span> <span class="o">=</span>
+        <span class="n">edges</span> <span class="n">pol</span> <span class="o">|&gt;</span>
+        <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span> <span class="n">ray_segment_intersection</span> <span class="n">ray</span> <span class="n">e</span><span class="o">)</span> <span class="o">|&gt;</span>
+        <span class="nn">List</span><span class="p">.</span><span class="n">filter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">r</span> <span class="o">-&gt;</span> <span class="n">r</span> <span class="o">&lt;&gt;</span> <span class="nc">None</span><span class="o">)</span> <span class="o">|&gt;</span>
+        <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">fun</span> <span class="n">r</span> <span class="o">-&gt;</span> <span class="n">get_exn</span> <span class="n">r</span><span class="o">)</span> <span class="o">|&gt;</span>
+
+        <span class="c">(* Intersecting a vertex *)</span>
+        <span class="n">uniq</span> <span class="o">|&gt;</span>
+
+        <span class="c">(* Touching vertices *)</span>
+        <span class="nn">List</span><span class="p">.</span><span class="n">filter</span> <span class="o">(</span><span class="n">neighbours_on_different_sides</span> <span class="n">ray</span> <span class="n">pol</span><span class="o">)</span> <span class="o">|&gt;</span>
+
+        <span class="c">(* Compute length *)</span>
+        <span class="nn">List</span><span class="p">.</span><span class="n">length</span>
+      <span class="k">in</span>
+      <span class="n">n</span> <span class="ow">mod</span> <span class="mi">2</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">end</span>
+</pre></div>
+</div>
+<p>A few corner cases have to be taken into the account:</p>
+<ol class="loweralpha simple">
+<li>A ray may contain the entire edge of the polygon.</li>
+<li>A ray may “touch” a sharp vertex — in this case this
+intersection should not count. However, if a ray “passes” through
+a vertex (as opposed to touching it), this should count as an
+intersection.</li>
+</ol>
+<p>The case (a) does not happen, as we have chosen the ray to be not
+collinear with any of th edges.</p>
+<p>In the case (b) case, duplicating intersections need to be removed
+first, hence the use of <code class="docutils literal notranslate"><span class="pre">uniq</span></code>. The configuration can be detected by
+checking whether two adjacent edges to the node suspected in
+“touching” lie on the single side or on two opposite sides of the ray.
+Only the second case (detected via <code class="docutils literal notranslate"><span class="pre">neighbours_on_different_sides</span></code>)
+needs to be accounted.</p>
+<p>We can test our procedure on the following polygon:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">pol</span> <span class="o">=</span> <span class="nn">TestPolygons</span><span class="p">.</span><span class="n">sand4</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">p</span> <span class="o">=</span> <span class="nc">Point</span> <span class="o">(-</span><span class="mi">150</span><span class="o">.,</span> <span class="mi">10</span><span class="o">.);;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">q</span> <span class="o">=</span> <span class="nc">Point</span> <span class="o">(</span><span class="mi">50</span><span class="o">.,</span> <span class="mi">10</span><span class="o">.);;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="nc">Point</span> <span class="o">(-</span><span class="mi">150</span><span class="o">.,</span> <span class="mi">70</span><span class="o">.);;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="nc">Point</span> <span class="o">(</span><span class="mi">120</span><span class="o">.,</span> <span class="mi">70</span><span class="o">.);;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">point_within_polygon</span> <span class="n">pol</span> <span class="n">p</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">false</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">point_within_polygon</span> <span class="n">pol</span> <span class="n">q</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">true</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">point_within_polygon</span> <span class="n">pol</span> <span class="n">r</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">false</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">point_within_polygon</span> <span class="n">pol</span> <span class="n">s</span><span class="o">;;</span>
+<span class="o">-</span> <span class="o">:</span> <span class="kt">bool</span> <span class="o">=</span> <span class="bp">false</span>
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/cg09.png"><img alt="_images/cg09.png" class="align-center" src="_images/cg09.png" style="width: 700px;" /></a>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -161,15 +161,24 @@
 representations of mutable sets of <cite>ordered elements</cite>, supporting a
 variety of operations, such as insertion, deletion, checking
 membership, finding minimums, maximums, predecessors and successors of
-a value.</p>
-<p>The key to this expressivity is the invariant of a tree-shaped data
-structure, that mandates that, for any node,</p>
+a value — all those operations taking the time proportional to the
+height <span class="math notranslate nohighlight">\(h\)</span> of the tree or, if the tree is constructed randomly
+out of <span class="math notranslate nohighlight">\(n\)</span> elements — <span class="math notranslate nohighlight">\(O(\log n)\)</span>. This makes BST a
+superior alternative to lists, heaps, and even hash-tables when
+impelmenting sets mutable sets with a number of operations.</p>
+<p>The key to this expressivity and efficience is the invariant of a
+tree-shaped data structure, that mandates that, for any node <code class="docutils literal notranslate"><span class="pre">q</span></code>,</p>
 <ul class="simple">
-<li>any element in its left subtree is less or equal than the element in the node itself, and</li>
-<li>any element in its right subtree is greater or equal than the element in the node itself.</li>
+<li>any element in its left subtree <code class="docutils literal notranslate"><span class="pre">q.l</span></code> is less or equal (with
+respect to a certain total order) than the element in the node <code class="docutils literal notranslate"><span class="pre">q</span></code>
+itself, and</li>
+<li>any element in its right subtree <code class="docutils literal notranslate"><span class="pre">q.r</span></code> is greater or equal than
+the element in the node <code class="docutils literal notranslate"><span class="pre">q</span></code> itself.</li>
 </ul>
 <p>This invariant is maintained by all operations that modify the set,
-and is relied upon by all its queries.</p>
+and is relied upon by all its queries. The logarithmic complexity of
+operations, thus, follows from the intuition similar to the one
+powering <a class="reference internal" href="week-03-search.html#binsearch"><span class="std std-ref">Binary Search</span></a> in arrays.</p>
 <div class="section" id="a-data-structure-for-binary-search-trees">
 <h2>A Data Structure for Binary-Search Trees<a class="headerlink" href="#a-data-structure-for-binary-search-trees" title="Permalink to this headline">¶</a></h2>
 <p>We start by defining a linked in-memory data structure for BSTs in its own module.</p>
@@ -264,7 +273,9 @@ the latter it remains the same.</p>
 </div>
 <div class="section" id="binary-search-tree-invariant">
 <h2>Binary-Search-Tree Invariant<a class="headerlink" href="#binary-search-tree-invariant" title="Permalink to this headline">¶</a></h2>
-<p>Let us now assert tree-manipulating operations such as <code class="docutils literal notranslate"><span class="pre">insert</span></code> indeed preserve the BST property. For this, let us define the BST invariant in the form of the following function:</p>
+<p>Let us now assert that tree-manipulating operations such as <code class="docutils literal notranslate"><span class="pre">insert</span></code>
+indeed preserve the discussed above BST property. For this, let us
+define the BST invariant in the form of the following function:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">check_bst_inv</span> <span class="n">t</span> <span class="o">=</span>
   <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">node</span> <span class="n">p</span> <span class="o">=</span>
     <span class="o">(</span><span class="n">p</span> <span class="n">node</span><span class="o">.</span><span class="k">value</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
@@ -505,7 +516,9 @@ tree elements by following its “layers”:</p>
 </pre></div>
 </div>
 <p>Notice that this operation does not find the <cite>global</cite> tree-wise
-successor of the element in node <cite>n</cite>.</p>
+successor of the element in node <cite>n</cite>, although that is also possible
+to do in <span class="math notranslate nohighlight">\(O(log n)\)</span> operations for a tree that is well-balanced
+(i.e., not to “tall” and “thin”).</p>
 </div>
 <div class="section" id="deleting-a-node-from-bst">
 <h2>Deleting a node from BST<a class="headerlink" href="#deleting-a-node-from-bst" title="Permalink to this headline">¶</a></h2>
@@ -530,6 +543,11 @@ by another:</p>
   <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">()</span>
 </pre></div>
 </div>
+<p>Notice the comparison via <code class="docutils literal notranslate"><span class="pre">when</span> <span class="pre">u</span> <span class="pre">==</span> <span class="pre">l</span></code> in the implementation above.
+This is essential: node references must be compared using OCaml’s
+“shallow” equality mechanism, as structural “deep” equality on
+references (<code class="docutils literal notranslate"><span class="pre">=</span></code>) in the case of linked data structures, such as
+BSTs, may lead to errors that are <cite>very</cite> difficult to debug.</p>
 <p>Let us now discuss possible scenarios for removing a node <code class="docutils literal notranslate"><span class="pre">z</span></code> from the tree <code class="docutils literal notranslate"><span class="pre">T</span></code> by preserving the BST property.</p>
 <ol class="loweralpha simple">
 <li>The simplest case is when <code class="docutils literal notranslate"><span class="pre">z</span></code> is a leaf, so we can simply remove it.</li>
@@ -656,14 +674,8 @@ height. This makes tree rotations useful for rebalancing a tree when
 it becomes “degenerate” (tall and thin). This makes it possible to
 keep the worst-case complexity of tree operations within <span class="math notranslate nohighlight">\(O(\log
 n)\)</span>, without it degenerating to <span class="math notranslate nohighlight">\(O(n)\)</span>.</p>
-<p>Finally, notice the comparison via <code class="docutils literal notranslate"><span class="pre">when</span> <span class="pre">x</span> <span class="pre">==</span> <span class="pre">l</span></code> in the
-implementation above. This is essential: node references need to be
-compared using OCaml’s “shallow” equality mechanism, as structural
-“deep” equality on references (<code class="docutils literal notranslate"><span class="pre">=</span></code>) in the case of linked data
-structures, such as BSTs, may lead to errors that are very difficult
-to debug.</p>
-<p>Implementation of the right BST rotation and rotation testing are left
-as an exercise.</p>
+<p>Implementation of the right BST rotation and rotation testing of the
+rotations are left as an exercise.</p>
 </div>
 </div>
 

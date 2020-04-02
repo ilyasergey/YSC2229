@@ -7,9 +7,16 @@ Representing Graphs
 
 * File ``Graphs.ml``
 
-Graphs are an important versatile mathematical abstraction, which is used to represent the relations between multiple objects. Such (possibly non-symmetric) relations can be frequently phrased in terms of *connectivity* and *reachability*, as we've seen before in the chapter on :ref:`union-find`. 
+Graphs are an important versatile mathematical abstraction, which is
+used to represent the relations between multiple objects. Such
+(possibly non-symmetric) relations can be frequently phrased in terms
+of *connectivity* and *reachability*, as we've seen before in the
+chapter on :ref:`union-find`.
 
-A graph is commonly represented in mathematics by a pair :math:`G = (V, E)`, where :math:`V` is a set of the graphs's vertices (nodes), represented the related elements, and :math:`E` is a set of its edges (arcs) such that :math:`E \subseteq V \times V`. 
+A graph is commonly represented in mathematics by a pair :math:`G =
+(V, E)`, where :math:`V` is a set of the graphs's vertices (nodes),
+represented the related elements, and :math:`E` is a set of its edges
+(arcs) such that :math:`E \subseteq V \times V`.
 
 As some graph examples, :math:`V` and :math:`E` can represent correspondingly:
 
@@ -19,7 +26,14 @@ As some graph examples, :math:`V` and :math:`E` can represent correspondingly:
 * Control states of a machine and transitions between them
 * "Friendship" relations between users of a social network
 
-It is common to think of :math:`V` to be represented by a segment :math:`\{0 ... (n - 1)\}` of natural numbers for some :math:`n` (so that :math:`n` is the size of the set of vertices). However, if the nodes carry additional meaning (e.g., the name of the city), one can define their payload as a function :math:`\{0 ... (n - 1)\} \rightarrow P` for some set of payload values :math:`P`. Edges can be also given labels in a similar way by defining a function :math:`E \rightarrow L` for some label set :math:`L`.
+It is common to think of :math:`V` to be represented by a segment
+:math:`\{0 ... (n - 1)\}` of natural numbers for some :math:`n` (so
+that :math:`n` is the size of the set of vertices). However, if the
+nodes carry additional meaning (e.g., the name of the city), one can
+define their payload as a function :math:`\{0 ... (n - 1)\}
+\rightarrow P` for some set of payload values :math:`P`. Edges can be
+also given labels in a similar way by defining a function :math:`E
+\rightarrow L` for some label set :math:`L`.
 
 Graphs as Adjacency Lists
 -------------------------
@@ -154,7 +168,7 @@ Finally, we can dump a simple graph with no payloads into a file using the follo
     String.concat "\n" (s0 :: ls)
 
   (* Dump graph to file *)
-  let wirte_simple_graph_shape_to_file filename g =
+  let write_simple_graph_shape_to_file filename g =
     graph_to_string g |>
     write_string_to_file filename
 
@@ -208,12 +222,21 @@ The image above has been obtained via GraphViz for the graph, read from ``small_
 Shortcomings of Adjacency-List graph representation
 ---------------------------------------------------
 
-The main disadvantage of adjacency-list based representation is that the operations of adding an edge, getting successors (and possibly predecessors) of a node in it are very expensive.
+The main disadvantage of adjacency-list based representation is that
+the operations of adding an edge, getting successors (and possibly
+predecessors) of a node in it are very expensive: all of those
+operations take :math:`O(|V|)` time. It is also very difficult to add
+new nodes, as it would require allocating a new array.
 
 Graphs as Linked Data Structures
 --------------------------------
 
-Let us consider a more efficient implementation of graphs as linked data structure. The implementation imposes some overhead, in order to provide an efficient access to the nodes of a graph as well as their adjacent neighbours. The implementation will rely on data structures developed previously: hash-tables and sets, represented via BSTs.
+Let us consider a more efficient implementation of graphs as a linked
+heap-based data structure. The implementation features some
+redundancy, in order to provide an efficient access to the nodes of a
+graph as well as their adjacent neighbours. The implementation will
+rely on data structures developed previously: hash-tables and sets,
+represented via BSTs.
 
 We start by defining the data type for nodes::
 
@@ -316,7 +339,7 @@ The ``graph`` structure defined just above allows to access the set of predecess
 
 As the linked ``graph`` structure combines five conceptually "overlapping" components, it needs to be maintained with a lot of care, in order not to introduce any discrepancies in the representations.
 
-Creating new linked graph is easy::
+Creating new empty graph is easy::
 
   let mk_graph _ = {
     next_node_id = ref 0;
@@ -326,7 +349,8 @@ Creating new linked graph is easy::
     edge_labels = EdgeTable.mk_new_table 10
   }
 
-Adding a node requires allocating it a new id, registering it in both the set of node identifiers, and the node map::
+Adding a node requires allocating a new identifier for it, registering
+it in both the set of node identifiers, and the node map::
 
   let add_node g v = 
     let new_id = !(g.next_node_id) in
@@ -390,7 +414,7 @@ As we already have reading/writing implemented for AL-based graphs, let us imple
 
     g
 
-Conversely, the following functions obtains an adjacency graph from a linked representation::
+Conversely, the following functionsobtains an adjacency graph from a linked representation::
 
   let to_adjacency_graph g = 
     let size = v_size g in
@@ -426,7 +450,11 @@ We can now put those functions to use for getting linked graphs immediate from t
 Testing graph operations
 ------------------------
 
-One advantage of AL-based representation is that it makes it considerably easier to test graphs for certain properties. For instance, the following function checks that two AL-represented graphs have the same topology (i.e., the same sets of node identifiers, and edges between them)::
+One advantage of AL-based representation is that it makes it
+considerably easier to test graphs for certain properties. For
+instance, the following function checks that two AL-represented graphs
+have the same topology assuming the exact correspondence of the nodes
+(i.e., the same sets of node identifiers, and edges between them)::
 
  let same_shape (ag1 : ('a, 'b) AdjacencyGraphs.graph) 
      (ag2 : ('a, 'b) AdjacencyGraphs.graph) = 
@@ -477,7 +505,7 @@ We can also try out the conversion machinery for the sake of producing nice Grap
  utop # let ag = LinkedGraphs.to_adjacency_graph g;;
  utop # graphviz_no_payload ag "medium.dot";;
 
-No, running::
+Now, running::
 
  dot -Tpdf medium.dot -o medium.pdf
 

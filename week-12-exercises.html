@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Week 11: Binary Search Trees and Graphs &mdash; YSC2229 2020</title>
+  <title>Exercises &mdash; YSC2229 2020</title>
   
 
   
@@ -135,7 +135,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Week 11: Binary Search Trees and Graphs</li>
+      <li>Exercises</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -152,35 +152,25 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="week-11-binary-search-trees-and-graphs">
-<h1>Week 11: Binary Search Trees and Graphs<a class="headerlink" href="#week-11-binary-search-trees-and-graphs" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="week-11-bst.html">Representing Sets via Binary Search Trees</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#a-data-structure-for-binary-search-trees">A Data Structure for Binary-Search Trees</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#inserting-an-element-into-a-bst">Inserting an element into a BST</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#binary-search-tree-invariant">Binary-Search-Tree Invariant</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#testing-tree-operations">Testing Tree Operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#printing-a-tree">Printing a Tree</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#searching-elements">Searching Elements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#tree-traversals">Tree Traversals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#testing-element-retrieval-and-tree-traversals">Testing Element Retrieval and Tree Traversals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#more-bst-operations">More BST operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#deleting-a-node-from-bst">Deleting a node from BST</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#bst-rotations">BST Rotations</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-11-graphs.html">Representing Graphs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#graphs-as-adjacency-lists">Graphs as Adjacency Lists</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#reading-and-printing-graphs">Reading and Printing Graphs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#rendering-graphs-via-graphviz">Rendering Graphs via GraphViz</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#shortcomings-of-adjacency-list-graph-representation">Shortcomings of Adjacency-List graph representation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#graphs-as-linked-data-structures">Graphs as Linked Data Structures</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#switching-between-graph-representations">Switching between graph representations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#testing-graph-operations">Testing graph operations</a></li>
-</ul>
-</li>
-</ul>
+  <div class="section" id="exercises">
+<span id="exercises-12"></span><h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="exercise-1">
+<span id="exercise-monotonic"></span><h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<p>Given a weighted directed graph, implement an algorithm to find a
+monotonic shortest path from a node <code class="docutils literal notranslate"><span class="pre">s</span></code> to any other node. A path is
+monotonic if the weight of its edges are either strictly increasing or
+strictly decreasing. <strong>Hint:</strong> think about the <em>order</em> in which the
+edges need to be relaxed. Implement tests for your algorithm and argue
+about its asymptotic complexity.</p>
+</div>
+<div class="section" id="exercise-2">
+<span id="exercise-bitonic"></span><h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<p>Given a weighted directed graph, implement an algorithm to find a
+<em>bitonic</em> shortest path from a node <code class="docutils literal notranslate"><span class="pre">s</span></code> to any other node. A path is
+bitonic if there is an intermediate node <code class="docutils literal notranslate"><span class="pre">v</span></code> in it such that the
+weight of the edges on the path from <code class="docutils literal notranslate"><span class="pre">s</span></code> to <code class="docutils literal notranslate"><span class="pre">v</span></code> are strictly
+increasing and the weight on edges from <code class="docutils literal notranslate"><span class="pre">v</span></code> to <code class="docutils literal notranslate"><span class="pre">t</span></code> (final path of
+a node) are strictly decreasing.</p>
 </div>
 </div>
 

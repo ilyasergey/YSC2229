@@ -1,0 +1,664 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Single-Source Shortest Paths &mdash; YSC2229 2020</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Single-Source Shortest Paths</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="single-source-shortest-paths">
+<span id="paths"></span><h1>Single-Source Shortest Paths<a class="headerlink" href="#single-source-shortest-paths" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>File: <code class="docutils literal notranslate"><span class="pre">Paths.ml</span></code></li>
+</ul>
+<p>One of the most common problems solved via graphs is <em>navigation</em> —
+finding the most efficient route from a point A to a point B,
+following the map, defined by the graph (this is what is happening
+when you are looking for directions on Google maps).</p>
+<div class="section" id="weighted-graphs">
+<h2>Weighted Graphs<a class="headerlink" href="#weighted-graphs" title="Permalink to this headline">¶</a></h2>
+<p>To represent the navigation problem using graphs, we need to expand our definitions.</p>
+<div class="admonition-definition-weighted-directed-graph admonition">
+<p class="first admonition-title">Definition (Weighted directed graph)</p>
+<p class="last">A directed graph <span class="math notranslate nohighlight">\(G = (V, E)\)</span> is called <em>weighted</em> if it comes with a function <span class="math notranslate nohighlight">\(w : E \rightarrow \mathbb{R}\)</span>, which maps each edge to some number, representing its “weight” (or “cost”).</p>
+</div>
+<div class="admonition-definition-a-path-in-a-graph admonition">
+<p class="first admonition-title">Definition (A path in a graph)</p>
+<p class="last">A sequence of nodes <span class="math notranslate nohighlight">\(p = \langle v_0, \ldots, v_k \rangle\)</span> is a <em>path</em> in a graph <span class="math notranslate nohighlight">\(G\)</span>, if for any <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(i + 1\)</span>, such that <span class="math notranslate nohighlight">\(v_i\)</span> and <span class="math notranslate nohighlight">\(v_{i + 1}\)</span> are the two nodes in <span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\((v_i, v_{i + 1}) \in G.E\)</span>. A weight of the path <span class="math notranslate nohighlight">\(p\)</span> is defined as <span class="math notranslate nohighlight">\(w(p) = \sum_{i=1}^{k}w(v_{i - 1}, v_i)\)</span>.</p>
+</div>
+<div class="admonition-definition-the-shortest-path admonition">
+<p class="first admonition-title">Definition (The shortest path)</p>
+<p class="last">A path <span class="math notranslate nohighlight">\(p\)</span> from a node <span class="math notranslate nohighlight">\(u\)</span> to a node <span class="math notranslate nohighlight">\(v\)</span> in a graph <span class="math notranslate nohighlight">\(G\)</span> is the <em>shortest</em> one, if its weight is the smallest of all possible paths from <span class="math notranslate nohighlight">\(u\)</span> to <span class="math notranslate nohighlight">\(v\)</span> in <span class="math notranslate nohighlight">\(G\)</span>. If no path from <span class="math notranslate nohighlight">\(u\)</span> to <span class="math notranslate nohighlight">\(v\)</span> exists, the shortest path’s weight is taken to be <span class="math notranslate nohighlight">\(\infty\)</span>.</p>
+</div>
+<p>In our example with navigation via Google Maps, a weight of a path correspond to the time of a certain connection. Choosing the shortest path corresponds to choosing a fastest route.</p>
+</div>
+<div class="section" id="some-properties-of-paths">
+<h2>Some Properties of Paths<a class="headerlink" href="#some-properties-of-paths" title="Permalink to this headline">¶</a></h2>
+<p>The following properties hold of shortest paths in directed weighted graphs, and are easy to prove:</p>
+<ul class="simple">
+<li>A subpath of a shortest path is a shortest path between the corresponding nodes.</li>
+<li>The shortest graph always contains each node at most once.</li>
+</ul>
+<p>The definition of a shortest path also applies in the case of negative weights. However, it makes no sense in the presence of cycles with negative weight (explain, why).</p>
+</div>
+<div class="section" id="representing-shortest-paths">
+<h2>Representing Shortest Paths<a class="headerlink" href="#representing-shortest-paths" title="Permalink to this headline">¶</a></h2>
+<p>Given a <em>source</em> node <span class="math notranslate nohighlight">\(s\)</span> in a graph <span class="math notranslate nohighlight">\(G\)</span>, we are interested in computing the shortest paths to all nodes of <span class="math notranslate nohighlight">\(G\)</span> that are reachable from <span class="math notranslate nohighlight">\(s\)</span>. This problem is known ad SSSP — <em>Single-Source Shortest Paths</em>.</p>
+<p>While discovering shortest paths, we will be representing the current knowledge about paths from <span class="math notranslate nohighlight">\(s\)</span> to other nodes by building a <em>predecessor tree</em> <code class="docutils literal notranslate"><span class="pre">pred_tree</span></code> . It can be represented via a hash table, in which each node <span class="math notranslate nohighlight">\(v\)</span> of the graph (serving as a key) will be pointing to the current predecessor node on a path from <span class="math notranslate nohighlight">\(s\)</span> to <span class="math notranslate nohighlight">\(v\)</span> or <code class="docutils literal notranslate"><span class="pre">None</span></code>, if no path is built yet. As we keep building the shortest paths, this information can change.</p>
+<p>The actual paths from <span class="math notranslate nohighlight">\(s\)</span> to any node <span class="math notranslate nohighlight">\(v\)</span> can be reconstructing by traversing the branches of the predecessor tree bottom-up and then reversing the obtained lists.</p>
+<p>It is also convenient to store the distance from the search root <span class="math notranslate nohighlight">\(s\)</span> to all nodes <span class="math notranslate nohighlight">\(v\)</span> is a separate structure, which we will call distance table (<code class="docutils literal notranslate"><span class="pre">dist_table</span></code>). Initially <code class="docutils literal notranslate"><span class="pre">dist_table</span></code> stores <code class="docutils literal notranslate"><span class="pre">0</span></code> for <span class="math notranslate nohighlight">\(s\)</span> and <span class="math notranslate nohighlight">\(\infty\)</span> for all other nodes. This information will evolve with the progression of the algorithms.</p>
+<p>In our implementation of graphs, we can encoding the weights of edges by piggy-backing on the labels for the graph edges. Therefore, we will need the following auxiliary definitions:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">ReadingFiles</span>
+<span class="k">open</span> <span class="nc">BST</span>
+<span class="k">open</span> <span class="nc">BinarySearchTree</span>
+<span class="k">include</span> <span class="nc">Reachability</span>
+
+<span class="c">(* Get node payload for AL graph *)</span>
+<span class="k">let</span> <span class="n">get_ag_node_payload</span> <span class="n">ag</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">AdjacencyGraphs</span> <span class="k">in</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">find</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">n</span><span class="o">)</span> <span class="o">!(</span><span class="n">ag</span><span class="o">.</span><span class="n">node_payloads</span><span class="o">)</span> <span class="o">|&gt;</span> <span class="n">snd</span>
+
+<span class="c">(* Get edge label for AL graph *)</span>
+<span class="k">let</span> <span class="n">get_ag_edge_label</span> <span class="n">ag</span> <span class="n">s</span> <span class="n">d</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">AdjacencyGraphs</span> <span class="k">in</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">find</span> <span class="o">(</span><span class="k">fun</span> <span class="o">((</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">),</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">s</span> <span class="o">=</span> <span class="n">x</span> <span class="o">&amp;&amp;</span> <span class="n">y</span> <span class="o">=</span> <span class="n">d</span><span class="o">)</span>
+    <span class="o">!(</span><span class="n">ag</span><span class="o">.</span><span class="n">edge_labels</span><span class="o">)</span> <span class="o">|&gt;</span> <span class="n">snd</span>
+
+<span class="c">(* Get node payload for linked graph *)</span>
+<span class="k">let</span> <span class="n">get_linked_node_payload</span> <span class="n">g</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">LinkedGraphs</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">node</span> <span class="o">=</span> <span class="nn">NodeTable</span><span class="p">.</span><span class="n">get</span> <span class="n">g</span><span class="o">.</span><span class="n">node_map</span> <span class="n">n</span> <span class="o">|&gt;</span> <span class="n">get_exn</span> <span class="k">in</span>
+  <span class="o">!(</span><span class="n">node</span><span class="o">.</span><span class="k">value</span><span class="o">)</span>
+
+<span class="c">(* Get edge label for AL-graph *)</span>
+<span class="k">let</span> <span class="n">get_linked_edge_label</span> <span class="n">g</span> <span class="n">s</span> <span class="n">d</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">LinkedGraphs</span> <span class="k">in</span>
+  <span class="nn">EdgeTable</span><span class="p">.</span><span class="n">get</span> <span class="n">g</span><span class="o">.</span><span class="n">edge_labels</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span> <span class="o">|&gt;</span> <span class="n">get_exn</span>
+</pre></div>
+</div>
+<p>The following modified function helps to visualise graphs with weights:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">graphviz_with_weights</span> <span class="n">g</span> <span class="n">out</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">AdjacencyGraphs</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ag</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">to_adjacency_graph</span> <span class="n">g</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">vattrib</span> <span class="o">=</span> <span class="n">get_ag_node_payload</span> <span class="n">ag</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">eattrib</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">l</span> <span class="o">=</span> <span class="n">get_ag_edge_label</span> <span class="n">ag</span> <span class="n">s</span> <span class="n">d</span> <span class="o">|&gt;</span> <span class="n">string_of_int</span> <span class="k">in</span>
+    <span class="nn">Printf</span><span class="p">.</span><span class="n">sprintf</span> <span class="s2">&quot;[label=</span><span class="se">\&quot;</span><span class="s2">%s</span><span class="se">\&quot;</span><span class="s2">, weight=</span><span class="se">\&quot;</span><span class="s2">%s</span><span class="se">\&quot;</span><span class="s2">]&quot;</span> <span class="n">l</span> <span class="n">l</span>
+  <span class="k">in</span>
+  <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="n">graphviz_string_of_graph</span> <span class="s2">&quot;digraph&quot;</span> <span class="s2">&quot; -&gt; &quot;</span>
+      <span class="n">vattrib</span> <span class="n">eattrib</span> <span class="n">ag</span> <span class="k">in</span>
+  <span class="n">write_string_to_file</span> <span class="n">out</span> <span class="n">s</span>
+</pre></div>
+</div>
+<p>For instance, consider the following example graph with named nodes and integer weights on its edges:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">bf_example_nodes</span> <span class="o">=</span> <span class="o">[|</span><span class="s2">&quot;s&quot;</span><span class="o">;</span> <span class="s2">&quot;t&quot;</span><span class="o">;</span> <span class="s2">&quot;y&quot;</span><span class="o">;</span> <span class="s2">&quot;x&quot;</span><span class="o">;</span> <span class="s2">&quot;z&quot;</span><span class="o">|]</span>
+
+<span class="k">let</span> <span class="n">bf_example_edges</span> <span class="o">=</span>
+  <span class="o">[(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">3</span><span class="o">)]</span>
+
+<span class="k">let</span> <span class="n">bf_example_labels</span> <span class="o">=</span>
+  <span class="o">[(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span>  <span class="mi">6</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span>  <span class="mi">7</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span>  <span class="mi">8</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span>  <span class="mi">5</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="o">-</span><span class="mi">4</span><span class="o">);</span>
+   <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="o">-</span><span class="mi">3</span><span class="o">);</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span>  <span class="mi">4</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="o">-</span><span class="mi">2</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span>  <span class="mi">2</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span>  <span class="mi">7</span><span class="o">)]</span>
+
+<span class="k">let</span> <span class="n">example_graph_bf</span> <span class="o">=</span>
+  <span class="n">read_graph_and_payloads</span> <span class="mi">5</span> <span class="n">bf_example_nodes</span>
+    <span class="n">bf_example_edges</span> <span class="n">bf_example_labels</span>
+</pre></div>
+</div>
+<p>Upon rendering it via <code class="docutils literal notranslate"><span class="pre">graphviz_with_weights</span></code>, we obtain the following plot:</p>
+<a class="reference internal image-reference" href="_images/01-bf.png"><img alt="_images/01-bf.png" class="align-center" src="_images/01-bf.png" style="width: 300px;" /></a>
+</div>
+<div class="section" id="representing-distance">
+<h2>Representing Distance<a class="headerlink" href="#representing-distance" title="Permalink to this headline">¶</a></h2>
+<p>When we only start looking for the paths, we don’t know what is the
+distance from <span class="math notranslate nohighlight">\(s\)</span> to other nodes, hence we need to
+over-approximate. For this we are going to be using the following
+“wrapper” type <code class="docutils literal notranslate"><span class="pre">Distance.dist</span></code>, which allows for representing
+infinite distances:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">Distance</span> <span class="o">=</span> <span class="k">struct</span>
+
+<span class="k">type</span> <span class="n">dist</span> <span class="o">=</span>
+    <span class="o">|</span> <span class="nc">Finite</span> <span class="k">of</span> <span class="kt">int</span>
+    <span class="o">|</span> <span class="nc">Infinity</span>
+
+<span class="k">let</span> <span class="o">(&lt;)</span> <span class="n">d1</span> <span class="n">d2</span> <span class="o">=</span> <span class="k">match</span> <span class="o">(</span><span class="n">d1</span><span class="o">,</span> <span class="n">d2</span><span class="o">)</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">Infinity</span><span class="o">,</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">false</span>
+  <span class="o">|</span> <span class="nc">Finite</span> <span class="o">_,</span> <span class="nc">Infinity</span> <span class="o">-&gt;</span> <span class="bp">true</span>
+  <span class="o">|</span> <span class="nc">Finite</span> <span class="n">x</span><span class="o">,</span> <span class="nc">Finite</span> <span class="n">y</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">y</span>
+
+<span class="k">let</span> <span class="o">(&lt;=)</span> <span class="n">d1</span> <span class="n">d2</span> <span class="o">=</span> <span class="n">d1</span> <span class="o">&lt;</span> <span class="n">d2</span> <span class="o">||</span> <span class="n">d1</span> <span class="o">=</span> <span class="n">d2</span>
+<span class="k">let</span> <span class="o">(&gt;)</span> <span class="n">d1</span> <span class="n">d2</span> <span class="o">=</span> <span class="n">not</span> <span class="o">(</span><span class="n">d1</span> <span class="o">&lt;=</span> <span class="n">d2</span><span class="o">)</span>
+<span class="k">let</span> <span class="o">(&gt;=)</span> <span class="n">d1</span> <span class="n">d2</span> <span class="o">=</span> <span class="n">not</span> <span class="o">(</span><span class="n">d1</span> <span class="o">&lt;</span> <span class="n">d2</span><span class="o">)</span>
+
+
+<span class="k">let</span> <span class="o">(+)</span> <span class="n">d1</span> <span class="n">d2</span> <span class="o">=</span> <span class="k">match</span> <span class="o">(</span><span class="n">d1</span><span class="o">,</span> <span class="n">d2</span><span class="o">)</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">Infinity</span><span class="o">,</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="nc">Infinity</span>
+  <span class="o">|</span> <span class="o">_,</span> <span class="nc">Infinity</span> <span class="o">-&gt;</span> <span class="nc">Infinity</span>
+  <span class="o">|</span> <span class="nc">Finite</span> <span class="n">x</span><span class="o">,</span> <span class="nc">Finite</span> <span class="n">y</span> <span class="o">-&gt;</span> <span class="nc">Finite</span> <span class="o">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">)</span>
+
+<span class="k">let</span> <span class="n">int_of_dist</span> <span class="n">d</span> <span class="o">=</span> <span class="k">match</span> <span class="n">d</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">Infinity</span> <span class="o">-&gt;</span> <span class="k">raise</span> <span class="o">(</span><span class="nc">Failure</span> <span class="s2">&quot;Cannot convert infinity to integer!&quot;</span><span class="o">)</span>
+  <span class="o">|</span> <span class="nc">Finite</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span>
+
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Notice that we specifically arrange it as a separate module, in order to avoid clashes between the overloaded comparison operators and those defined automatically by OCaml (should we have relied on the latter ones, our further implementation would be incorrect!).</p>
+</div>
+<div class="section" id="initialisation-and-relaxation">
+<h2>Initialisation and Relaxation<a class="headerlink" href="#initialisation-and-relaxation" title="Permalink to this headline">¶</a></h2>
+<p>All SSSP algorithms rely on the two main operations:</p>
+<ul class="simple">
+<li>Initialising the predecessor tree and the distance table, and</li>
+<li><em>Relaxing</em> the path information about two nodes, by accounting for a found smalle distance between them.</li>
+</ul>
+<p>The first operation is implemented as follows. It takes a graph <code class="docutils literal notranslate"><span class="pre">g</span></code> (in a linked form), a source node <code class="docutils literal notranslate"><span class="pre">s</span></code> and returns the weight function <code class="docutils literal notranslate"><span class="pre">w</span></code>, the predecessor tree and the distance table:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">initialise_single_source</span> <span class="n">g</span> <span class="n">s</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">Distance</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="n">v_size</span> <span class="n">g</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">dist_table</span> <span class="o">=</span> <span class="n">mk_new_table</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">prev_tree</span>  <span class="o">=</span> <span class="n">mk_new_table</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="n">insert</span> <span class="n">dist_table</span> <span class="n">i</span> <span class="nc">Infinity</span><span class="o">;</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="n">insert</span> <span class="n">dist_table</span> <span class="n">s</span> <span class="o">(</span><span class="nc">Finite</span> <span class="mi">0</span><span class="o">);</span>
+  <span class="k">let</span> <span class="n">w</span> <span class="o">=</span> <span class="n">get_linked_edge_label</span> <span class="n">g</span> <span class="k">in</span>
+  <span class="o">(</span><span class="n">w</span><span class="o">,</span> <span class="n">dist_table</span><span class="o">,</span> <span class="n">prev_tree</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The second operation relies on the auxiliary function <code class="docutils literal notranslate"><span class="pre">dist</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Get distance from the table *)</span>
+<span class="k">let</span> <span class="n">dist</span> <span class="n">dist_table</span> <span class="n">u</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">NodeTable</span> <span class="k">in</span>
+  <span class="n">get_exn</span> <span class="o">@@</span> <span class="n">get</span> <span class="n">dist_table</span> <span class="n">u</span>
+</pre></div>
+</div>
+<p>The function <code class="docutils literal notranslate"><span class="pre">relax</span> <span class="pre">dist_table</span> <span class="pre">prev_tree</span> <span class="pre">w</span> <span class="pre">u</span> <span class="pre">v</span></code> acts in the
+assumption that <code class="docutils literal notranslate"><span class="pre">dist_table</span></code> and <code class="docutils literal notranslate"><span class="pre">prev_tree</span></code> record some partial
+information about the over-approximated shortest paths from <code class="docutils literal notranslate"><span class="pre">s</span></code> to
+both <code class="docutils literal notranslate"><span class="pre">u</span></code> and <code class="docutils literal notranslate"><span class="pre">v</span></code>. It then checks if this information can benefit
+by taking the weight of the edge <code class="docutils literal notranslate"><span class="pre">(u,</span> <span class="pre">v)</span></code> into the account. If it is
+the case, both the distance and the predecessor information is
+updated:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Relax the distance between u and v *)</span>
+<span class="k">let</span> <span class="n">relax</span> <span class="n">dist_table</span> <span class="n">prev_tree</span> <span class="n">w</span> <span class="n">u</span> <span class="n">v</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">Distance</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">vud</span> <span class="o">=</span> <span class="n">dist</span> <span class="n">dist_table</span> <span class="n">u</span> <span class="o">+</span> <span class="o">(</span><span class="nc">Finite</span> <span class="o">(</span><span class="n">w</span> <span class="n">u</span> <span class="n">v</span><span class="o">))</span> <span class="k">in</span>
+  <span class="k">if</span> <span class="n">dist</span> <span class="n">dist_table</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="n">vud</span>
+  <span class="k">then</span> <span class="k">begin</span>
+    <span class="n">insert</span> <span class="n">dist_table</span> <span class="n">v</span> <span class="n">vud</span><span class="o">;</span>
+    <span class="n">insert</span> <span class="n">prev_tree</span> <span class="n">v</span> <span class="n">u</span>
+  <span class="k">end</span>
+</pre></div>
+</div>
+<p>The relaxation procedure satisfies the following property, which is crucial for the correctness of many SSSP algorithms:</p>
+<div class="admonition-property-path-relaxation admonition">
+<p class="first admonition-title">Property (Path relaxation)</p>
+<p class="last">If <span class="math notranslate nohighlight">\(p = \langle v_0, v_1, \ldots, v_k \rangle\)</span> is a shortest
+path from <span class="math notranslate nohighlight">\(s = v_0\)</span> to <span class="math notranslate nohighlight">\(v_k\)</span>, and we relax the edges of
+<span class="math notranslate nohighlight">\(p\)</span> in order <span class="math notranslate nohighlight">\((v_0, v_1)\)</span>, <span class="math notranslate nohighlight">\((v_1, v_2)\)</span>, etc. Then
+the distance to <span class="math notranslate nohighlight">\(v_k\)</span>, as recorded in the distance table is
+the weight of the path <span class="math notranslate nohighlight">\(p\)</span>. In other words, any path of the
+length <span class="math notranslate nohighlight">\(k\)</span> or less can be discovered in <span class="math notranslate nohighlight">\(k\)</span> relaxations
+of the entire set <span class="math notranslate nohighlight">\(E\)</span> of edges.</p>
+</div>
+</div>
+<div class="section" id="bellman-ford-algorithm">
+<h2>Bellman-Ford Algorithm<a class="headerlink" href="#bellman-ford-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>The <strong>Bellman-Ford algorithm</strong> builds on the path relaxation property.
+It is powered by observation that if <code class="docutils literal notranslate"><span class="pre">n</span></code> is the size of the set of
+nodes of the graph, and shortest path will have <code class="docutils literal notranslate"><span class="pre">n</span></code> or lest nodes in
+it (otherwise there are repetitions, which contradicts the fact that
+this is a shortest path). Therefore, having done <code class="docutils literal notranslate"><span class="pre">n</span></code> relaxations of
+the entire set of the nodes, we can discover the shortest paths by
+building the predecessor trees. This is doen as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">bellman_ford</span> <span class="n">g</span> <span class="n">s</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">Distance</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">w</span><span class="o">,</span> <span class="n">d</span><span class="o">,</span> <span class="n">p</span><span class="o">)</span> <span class="o">=</span> <span class="n">initialise_single_source</span> <span class="n">g</span> <span class="n">s</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">all_edges</span> <span class="o">=</span> <span class="n">elements</span> <span class="n">g</span><span class="o">.</span><span class="n">edges</span> <span class="k">in</span>
+
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">v_size</span> <span class="n">g</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">u</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">relax</span> <span class="n">d</span> <span class="n">p</span> <span class="n">w</span> <span class="n">u</span> <span class="n">v</span><span class="o">)</span> <span class="n">all_edges</span>
+  <span class="k">done</span><span class="o">;</span>
+
+  <span class="c">(* Check for negative cycles *)</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">check_neg_cycles</span> <span class="n">es</span> <span class="o">=</span> <span class="k">match</span> <span class="n">es</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="bp">true</span>
+    <span class="o">|</span> <span class="o">(</span><span class="n">u</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">::</span> <span class="n">t</span> <span class="o">-&gt;</span>
+      <span class="k">if</span> <span class="n">dist</span> <span class="n">d</span> <span class="n">v</span> <span class="o">&gt;</span> <span class="n">dist</span> <span class="n">d</span> <span class="n">u</span> <span class="o">+</span> <span class="o">(</span><span class="nc">Finite</span> <span class="o">(</span><span class="n">w</span> <span class="n">u</span> <span class="n">v</span><span class="o">))</span>
+      <span class="k">then</span> <span class="bp">false</span>
+      <span class="k">else</span> <span class="n">check_neg_cycles</span> <span class="n">t</span>
+  <span class="k">in</span>
+
+  <span class="o">((</span><span class="n">p</span><span class="o">,</span> <span class="n">d</span><span class="o">),</span> <span class="n">check_neg_cycles</span> <span class="n">all_edges</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>The algorithm works also on graphs with negative-weighted edges. As a bonus, it discovers whether the graph has <em>negative cycles</em>, in which case there is no shortest path (or its weight is <span class="math notranslate nohighlight">\(-\infty\)</span>). This is done by the call to <code class="docutils literal notranslate"><span class="pre">check_neg_cycles</span></code>, which checks if further relaxations can reduce some distances further (which would be impossible if there were no cycles).</p>
+<p>Notice that <code class="docutils literal notranslate"><span class="pre">bellman_ford</span></code> relies on the <code class="docutils literal notranslate"><span class="pre">dist</span></code> data types from the <code class="docutils literal notranslate"><span class="pre">Distance</span></code> module to operate with possibly infinite weights.</p>
+<p><strong>Question:</strong> What is a complexity of <code class="docutils literal notranslate"><span class="pre">bellman_ford</span></code> in terms of <code class="docutils literal notranslate"><span class="pre">g.V</span></code> and <code class="docutils literal notranslate"><span class="pre">g.E</span></code>?</p>
+</div>
+<div class="section" id="rendering-minimal-paths">
+<h2>Rendering Minimal Paths<a class="headerlink" href="#rendering-minimal-paths" title="Permalink to this headline">¶</a></h2>
+<p>We can visualise the result of the algorithm by using the following function rendering a suitable GraphViz representation:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">graphviz_with_min_paths</span> <span class="n">path_calculuator</span> <span class="n">g</span> <span class="n">s</span> <span class="n">out</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">p</span> <span class="o">=</span> <span class="n">path_calculuator</span> <span class="n">g</span> <span class="n">s</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">attrib</span> <span class="o">(</span><span class="n">u</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">l</span> <span class="o">=</span> <span class="n">get_linked_edge_label</span> <span class="n">g</span> <span class="n">u</span> <span class="n">v</span> <span class="o">|&gt;</span> <span class="n">string_of_int</span> <span class="k">in</span>
+    <span class="k">match</span> <span class="n">get</span> <span class="n">p</span> <span class="n">v</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">Some</span> <span class="n">z</span> <span class="k">when</span> <span class="n">u</span> <span class="o">=</span> <span class="n">z</span> <span class="o">-&gt;</span>
+      <span class="nn">Printf</span><span class="p">.</span><span class="n">sprintf</span> <span class="s2">&quot;[label=</span><span class="se">\&quot;</span><span class="s2">%s</span><span class="se">\&quot;</span><span class="s2">, color=red,penwidth=3.0]&quot;</span> <span class="n">l</span>
+    <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span>
+      <span class="nn">Printf</span><span class="p">.</span><span class="n">sprintf</span> <span class="s2">&quot;[label=</span><span class="se">\&quot;</span><span class="s2">%s</span><span class="se">\&quot;</span><span class="s2">]&quot;</span> <span class="n">l</span>
+  <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ag</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">to_adjacency_graph</span> <span class="n">g</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">s</span> <span class="o">=</span> <span class="n">graphviz_string_of_graph</span> <span class="s2">&quot;digraph&quot;</span> <span class="s2">&quot; -&gt; &quot;</span>
+      <span class="o">(</span><span class="n">get_linked_node_payload</span> <span class="n">g</span><span class="o">)</span> <span class="n">attrib</span> <span class="n">ag</span> <span class="k">in</span>
+  <span class="n">write_string_to_file</span> <span class="n">out</span> <span class="n">s</span>
+
+
+<span class="k">let</span> <span class="n">graphviz_with_bellman_ford</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">pc</span> <span class="n">g</span> <span class="n">s</span> <span class="o">=</span> <span class="n">bellman_ford</span> <span class="n">g</span> <span class="n">s</span> <span class="o">|&gt;</span> <span class="n">fst</span> <span class="o">|&gt;</span> <span class="n">fst</span> <span class="k">in</span>
+  <span class="n">graphviz_with_min_paths</span> <span class="n">pc</span>
+</pre></div>
+</div>
+<p>Running <code class="docutils literal notranslate"><span class="pre">graphviz_with_bellman_ford</span> <span class="pre">example_graph_bf</span> <span class="pre">0</span> <span class="pre">&quot;bf.dot&quot;</span></code> produces the following plot:</p>
+<a class="reference internal image-reference" href="_images/02-bf.png"><img alt="_images/02-bf.png" class="align-center" src="_images/02-bf.png" style="width: 300px;" /></a>
+</div>
+<div class="section" id="dijkstra-s-algorithm">
+<h2>Dijkstra’s Algorithm<a class="headerlink" href="#dijkstra-s-algorithm" title="Permalink to this headline">¶</a></h2>
+<p><strong>Dijkstra’s algorithm</strong> has a better complexity that Bellman-Fort but only works on graphs with non-negative edge weights. It is a <em>greedy</em> algorithm, that gradually explores the surroundings of the source node <span class="math notranslate nohighlight">\(s\)</span>, looking for the next node that will provide for the shortest paths. In doing so, it explores each node and edge just once, relying on the ongoing relaxation, recomputing the shortest paths as it goes:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Extract minimal distance in O(|remaining|) *)</span>
+<span class="k">let</span> <span class="n">extract_min_dist</span> <span class="n">dist_table</span> <span class="n">remaining</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">open</span> <span class="nc">Distance</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">ref</span> <span class="nc">None</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">d</span> <span class="o">=</span> <span class="n">ref</span> <span class="nc">Infinity</span> <span class="k">in</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">i</span> <span class="o">-&gt;</span>
+      <span class="k">let</span> <span class="n">di</span> <span class="o">=</span> <span class="n">dist</span> <span class="n">dist_table</span> <span class="n">i</span> <span class="k">in</span>
+      <span class="k">if</span> <span class="n">di</span> <span class="o">&lt;=</span> <span class="o">!</span><span class="n">d</span>
+      <span class="k">then</span> <span class="k">begin</span>
+        <span class="n">res</span> <span class="o">:=</span> <span class="nc">Some</span> <span class="n">i</span><span class="o">;</span>
+        <span class="n">d</span> <span class="o">:=</span> <span class="n">di</span>
+      <span class="k">end</span><span class="o">)</span> <span class="o">!</span><span class="n">remaining</span><span class="o">;</span>
+
+  <span class="k">match</span> <span class="o">!</span><span class="n">res</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="nc">None</span>
+  <span class="o">|</span> <span class="nc">Some</span> <span class="n">i</span> <span class="o">-&gt;</span> <span class="k">begin</span>
+      <span class="n">remaining</span> <span class="o">:=</span> <span class="nn">List</span><span class="p">.</span><span class="n">filter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">j</span> <span class="o">-&gt;</span> <span class="n">i</span> <span class="o">&lt;&gt;</span> <span class="n">j</span><span class="o">)</span> <span class="o">!</span><span class="n">remaining</span><span class="o">;</span>
+      <span class="o">!</span><span class="n">res</span>
+    <span class="k">end</span>
+
+
+<span class="k">let</span> <span class="n">dijkstra</span> <span class="n">g</span> <span class="n">s</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="o">(</span><span class="n">w</span><span class="o">,</span> <span class="n">d</span><span class="o">,</span> <span class="n">p</span><span class="o">)</span> <span class="o">=</span> <span class="n">initialise_single_source</span> <span class="n">g</span> <span class="n">s</span> <span class="k">in</span>
+
+  <span class="c">(* Make queue of remaining uninspected nodes *)</span>
+  <span class="k">let</span> <span class="n">q</span> <span class="o">=</span> <span class="n">ref</span> <span class="o">(</span><span class="n">iota</span> <span class="o">(</span><span class="n">v_size</span> <span class="n">g</span> <span class="o">-</span> <span class="mi">1</span><span class="o">))</span> <span class="k">in</span>
+  <span class="k">while</span> <span class="o">!</span><span class="n">q</span> <span class="o">&lt;&gt;</span> <span class="bp">[]</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="n">u</span> <span class="o">=</span> <span class="n">extract_min_dist</span> <span class="n">d</span> <span class="n">q</span> <span class="o">|&gt;</span> <span class="n">get_exn</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">adj</span> <span class="o">=</span> <span class="n">get_succ</span> <span class="n">g</span> <span class="n">u</span> <span class="k">in</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">v</span> <span class="o">-&gt;</span> <span class="n">relax</span> <span class="n">d</span> <span class="n">p</span> <span class="n">w</span> <span class="n">u</span> <span class="n">v</span><span class="o">)</span> <span class="n">adj</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span>
+</pre></div>
+</div>
+<dl class="docutils">
+<dt><strong>Question:</strong> The complexity of out implementation of <code class="docutils literal notranslate"><span class="pre">dijkstra</span></code> is</dt>
+<dd><span class="math notranslate nohighlight">\(O(|g.V|^2 + |g.E|)\)</span>. Can you explain it?</dd>
+</dl>
+<p>Dijkstra crucially relies on all weights on edges being
+<em>non-negative</em>. This way, adding an edge to a path can never make a it
+shorter (which is not the case with negative edges). This is why
+taking the shortest candidate edge (local optimality) always ends up
+being correct (global optimality). If that is not the case, the
+“frontier” of candidate edges does not send the right signals; a cheap
+edge might lure you down a path with positive weights while an
+expensive one hides a path with negative weights.</p>
+<p>We can experiment with Dijkstra’s algorithm on the following graph:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">graphviz_with_dijkstra</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">pc</span> <span class="n">g</span> <span class="n">s</span> <span class="o">=</span> <span class="n">dijkstra</span> <span class="n">g</span> <span class="n">s</span> <span class="o">|&gt;</span> <span class="n">fst</span> <span class="k">in</span>
+  <span class="n">graphviz_with_min_paths</span> <span class="n">pc</span>
+
+<span class="k">let</span> <span class="n">dijkstra_example_nodes</span> <span class="o">=</span>
+  <span class="o">[|</span><span class="s2">&quot;s&quot;</span><span class="o">;</span> <span class="s2">&quot;t&quot;</span><span class="o">;</span> <span class="s2">&quot;y&quot;</span><span class="o">;</span> <span class="s2">&quot;x&quot;</span><span class="o">;</span> <span class="s2">&quot;z&quot;</span><span class="o">|]</span>
+
+<span class="k">let</span> <span class="n">dijkstra_example_edges</span> <span class="o">=</span>
+  <span class="o">[</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">3</span><span class="o">)]</span>
+
+<span class="k">let</span> <span class="n">dijkstra_example_labels</span> <span class="o">=</span>
+  <span class="o">[(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span> <span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">5</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span> <span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+   <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">9</span><span class="o">);</span> <span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">2</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">4</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">7</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">6</span><span class="o">)]</span>
+
+<span class="k">let</span> <span class="n">example_graph_dijkstra</span> <span class="o">=</span>
+  <span class="n">read_graph_and_payloads</span> <span class="mi">5</span> <span class="n">dijkstra_example_nodes</span>
+    <span class="n">dijkstra_example_edges</span> <span class="n">dijkstra_example_labels</span>
+</pre></div>
+</div>
+<p>This results in the following plot:</p>
+<a class="reference internal image-reference" href="_images/03-dij.png"><img alt="_images/03-dij.png" class="align-center" src="_images/03-dij.png" style="width: 300px;" /></a>
+</div>
+<div class="section" id="testing-shortest-path-algorithms">
+<h2>Testing Shortest-Path Algorithms<a class="headerlink" href="#testing-shortest-path-algorithms" title="Permalink to this headline">¶</a></h2>
+<p>The following functions help to retrieve the shortest paths from the predecessor tree and also compute the weight of a path:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">get_shortest_path</span> <span class="n">p</span> <span class="n">s</span> <span class="n">u</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">acc</span> <span class="n">v</span> <span class="o">=</span> <span class="k">match</span> <span class="n">get</span> <span class="n">p</span> <span class="n">v</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="n">acc</span>
+    <span class="o">|</span> <span class="nc">Some</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">walk</span> <span class="o">((</span><span class="n">x</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">::</span> <span class="n">acc</span><span class="o">)</span> <span class="n">x</span>
+  <span class="k">in</span>
+  <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">walk</span> <span class="bp">[]</span> <span class="n">u</span> <span class="k">in</span>
+  <span class="k">if</span> <span class="n">u</span> <span class="o">=</span> <span class="n">s</span> <span class="o">||</span>
+     <span class="n">res</span> <span class="o">&lt;&gt;</span> <span class="bp">[]</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">hd</span> <span class="n">res</span> <span class="o">|&gt;</span> <span class="n">get_exn</span> <span class="o">|&gt;</span> <span class="n">fst</span> <span class="o">=</span> <span class="n">s</span><span class="o">)</span>
+  <span class="k">then</span> <span class="nc">Some</span> <span class="n">res</span>
+  <span class="k">else</span> <span class="nc">None</span>
+
+<span class="k">let</span> <span class="k">rec</span> <span class="n">get_path_weigth</span> <span class="n">g</span> <span class="n">path</span> <span class="o">=</span> <span class="k">match</span> <span class="n">path</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="o">(</span><span class="n">u</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">::</span> <span class="n">t</span> <span class="o">-&gt;</span>
+    <span class="k">let</span> <span class="n">w</span> <span class="o">=</span> <span class="n">get_linked_edge_label</span> <span class="n">g</span> <span class="n">u</span> <span class="n">v</span> <span class="k">in</span>
+    <span class="n">w</span> <span class="o">+</span> <span class="n">get_path_weigth</span> <span class="n">g</span> <span class="n">t</span>
+  <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>Let us now distil some properties of the shortest paths in a form of a test. We will test an SSSP solution for the two given graphs by relying on the reachability facts derived before. Specifically, we will check that</p>
+<ol class="arabic simple">
+<li>A shortest path is a connected path.</li>
+<li>The distance table correctly records the shortest path’s weight.</li>
+<li>Each edge of a shortest path is an edge of a graph.</li>
+<li>A shortest path from <code class="docutils literal notranslate"><span class="pre">s</span></code> exists for each node reachable from <code class="docutils literal notranslate"><span class="pre">s</span></code>.</li>
+<li>A shortest path from <code class="docutils literal notranslate"><span class="pre">s</span></code> to <code class="docutils literal notranslate"><span class="pre">u</span></code> is no longer than an arbitrary path from <code class="docutils literal notranslate"><span class="pre">s</span></code> to <code class="docutils literal notranslate"><span class="pre">u</span></code>.</li>
+</ol>
+<p>This is covered by the following tests:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">LinkedGraphs</span>
+<span class="k">open</span> <span class="nc">NodeTable</span>
+
+<span class="c">(*</span>
+
+<span class="c">Test the following facts:</span>
+
+<span class="c">* p - predecessor tree</span>
+<span class="c">* d - distance table</span>
+<span class="c">* g - the graph</span>
+<span class="c">* s - source node</span>
+<span class="c">* u - destination node</span>
+
+<span class="c">*)</span>
+
+<span class="c">(* 1. Path is connected *)</span>
+<span class="k">let</span> <span class="n">test_path_connected</span> <span class="n">p</span> <span class="n">d</span> <span class="n">g</span> <span class="n">s</span> <span class="n">u</span> <span class="o">=</span>
+  <span class="k">match</span> <span class="n">get_shortest_path</span> <span class="n">p</span> <span class="n">s</span> <span class="n">u</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="bp">true</span>
+  <span class="o">|</span> <span class="nc">Some</span> <span class="n">path</span> <span class="o">-&gt;</span>
+    <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">p</span> <span class="o">=</span> <span class="k">match</span> <span class="n">p</span> <span class="k">with</span>
+      <span class="o">|</span> <span class="o">(</span><span class="n">u</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">::</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">::</span> <span class="n">t</span> <span class="o">-&gt;</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">x</span> <span class="o">&amp;&amp;</span> <span class="n">walk</span> <span class="o">((</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">::</span> <span class="n">t</span> <span class="o">)</span>
+      <span class="o">|</span> <span class="o">_</span> <span class="o">-&gt;</span> <span class="bp">true</span>
+    <span class="k">in</span>
+    <span class="n">walk</span> <span class="n">path</span>
+
+<span class="c">(* 2. Path&#39;s weight is correctly recorded *)</span>
+<span class="k">let</span> <span class="n">test_path_weight</span> <span class="n">p</span> <span class="n">d</span> <span class="n">g</span> <span class="n">s</span> <span class="n">u</span> <span class="o">=</span>
+  <span class="k">match</span> <span class="n">get_shortest_path</span> <span class="n">p</span> <span class="n">s</span> <span class="n">u</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="bp">true</span>
+  <span class="o">|</span> <span class="nc">Some</span> <span class="n">path</span> <span class="o">-&gt;</span>
+    <span class="k">let</span> <span class="n">w1</span> <span class="o">=</span> <span class="n">get_path_weigth</span> <span class="n">g</span> <span class="n">path</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">w2</span> <span class="o">=</span> <span class="n">get_exn</span> <span class="o">@@</span> <span class="n">get</span> <span class="n">d</span> <span class="n">u</span> <span class="o">|&gt;</span> <span class="nn">Distance</span><span class="p">.</span><span class="n">int_of_dist</span> <span class="k">in</span>
+    <span class="n">w1</span> <span class="o">=</span> <span class="n">w2</span>
+
+<span class="c">(* 3. Has all edges *)</span>
+<span class="k">let</span> <span class="n">test_that_is_path_graph</span> <span class="n">p</span> <span class="n">d</span> <span class="n">g</span> <span class="n">s</span> <span class="n">u</span> <span class="o">=</span>
+  <span class="k">match</span> <span class="n">get_shortest_path</span> <span class="n">p</span> <span class="n">s</span> <span class="n">u</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="bp">true</span>
+  <span class="o">|</span> <span class="nc">Some</span> <span class="n">path</span> <span class="o">-&gt;</span>
+    <span class="k">let</span> <span class="n">all_edges</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">edges</span> <span class="o">|&gt;</span> <span class="n">elements</span> <span class="k">in</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">mem</span> <span class="n">e</span> <span class="n">all_edges</span><span class="o">)</span> <span class="n">path</span>
+
+<span class="c">(* 4. Exists for any reachable node *)</span>
+<span class="k">let</span> <span class="n">test_reachable_hence_has_path</span> <span class="n">p</span> <span class="n">d</span> <span class="n">g</span> <span class="n">s</span> <span class="n">u</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="n">is_reachable</span> <span class="n">g</span> <span class="n">s</span> <span class="n">u</span>
+  <span class="k">then</span> <span class="n">get_shortest_path</span> <span class="n">p</span> <span class="n">s</span> <span class="n">u</span> <span class="o">&lt;&gt;</span> <span class="nc">None</span>
+  <span class="k">else</span> <span class="bp">true</span>
+
+<span class="c">(* 5. And is the shortest *)</span>
+<span class="k">let</span> <span class="n">test_shortest_is_shorter</span> <span class="n">p</span> <span class="n">d</span> <span class="n">g</span> <span class="n">s</span> <span class="n">u</span> <span class="o">=</span>
+  <span class="k">match</span> <span class="n">reachable</span> <span class="n">g</span> <span class="n">s</span> <span class="n">u</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="bp">true</span>
+  <span class="o">|</span> <span class="nc">Some</span> <span class="n">p1</span> <span class="o">-&gt;</span>
+    <span class="k">match</span> <span class="n">get_shortest_path</span> <span class="n">p</span> <span class="n">s</span> <span class="n">u</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="bp">false</span>
+    <span class="o">|</span> <span class="nc">Some</span> <span class="n">p2</span> <span class="o">-&gt;</span>
+      <span class="k">let</span> <span class="n">w1</span> <span class="o">=</span> <span class="n">get_path_weigth</span> <span class="n">g</span> <span class="n">p1</span> <span class="k">in</span>
+      <span class="k">let</span> <span class="n">w2</span> <span class="o">=</span> <span class="n">get_path_weigth</span> <span class="n">g</span> <span class="n">p2</span> <span class="k">in</span>
+      <span class="n">w2</span> <span class="o">&lt;=</span> <span class="n">w1</span>
+
+<span class="c">(*  Main testing function  *)</span>
+<span class="k">let</span> <span class="n">test_sssp</span> <span class="n">algo</span> <span class="n">g</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">all_nodes</span> <span class="o">=</span> <span class="n">get_nodes</span> <span class="n">g</span> <span class="k">in</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">u</span> <span class="o">-&gt;</span>
+      <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">v</span> <span class="o">-&gt;</span>
+          <span class="k">let</span> <span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span> <span class="o">=</span> <span class="n">algo</span> <span class="n">g</span> <span class="n">u</span> <span class="k">in</span>
+          <span class="k">assert</span> <span class="o">(</span><span class="n">test_path_connected</span> <span class="n">p</span> <span class="n">d</span> <span class="n">g</span> <span class="n">u</span> <span class="n">v</span><span class="o">);</span>
+          <span class="k">assert</span> <span class="o">(</span><span class="n">test_path_weight</span> <span class="n">p</span> <span class="n">d</span> <span class="n">g</span> <span class="n">u</span> <span class="n">v</span><span class="o">);</span>
+          <span class="k">assert</span> <span class="o">(</span><span class="n">test_that_is_path_graph</span> <span class="n">p</span> <span class="n">d</span> <span class="n">g</span> <span class="n">u</span> <span class="n">v</span><span class="o">);</span>
+          <span class="k">assert</span> <span class="o">(</span><span class="n">test_reachable_hence_has_path</span> <span class="n">p</span> <span class="n">d</span> <span class="n">g</span> <span class="n">u</span> <span class="n">v</span><span class="o">);</span>
+          <span class="k">assert</span> <span class="o">(</span><span class="n">test_shortest_is_shorter</span> <span class="n">p</span> <span class="n">d</span> <span class="n">g</span> <span class="n">u</span> <span class="n">v</span><span class="o">);</span>
+        <span class="o">)</span> <span class="n">all_nodes</span><span class="o">)</span> <span class="n">all_nodes</span><span class="o">;</span>
+  <span class="bp">true</span>
+
+
+<span class="c">(*  Testing Bellman-Ford  *)</span>
+
+<span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;Bellman-Ford-1&quot;</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">algo</span> <span class="n">g</span> <span class="n">s</span> <span class="o">=</span> <span class="n">bellman_ford</span> <span class="n">g</span> <span class="n">s</span> <span class="o">|&gt;</span> <span class="n">fst</span> <span class="k">in</span>
+  <span class="n">test_sssp</span> <span class="n">algo</span> <span class="n">example_graph_bf</span>
+
+<span class="c">(* BF also works on Dijkstra-suitable graphs *)</span>
+<span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;Bellman-Ford-2&quot;</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">algo</span> <span class="n">g</span> <span class="n">s</span> <span class="o">=</span> <span class="n">bellman_ford</span> <span class="n">g</span> <span class="n">s</span> <span class="o">|&gt;</span> <span class="n">fst</span> <span class="k">in</span>
+  <span class="n">test_sssp</span> <span class="n">algo</span> <span class="n">example_graph_dijkstra</span>
+
+<span class="c">(*  Testing Dijkstra  *)</span>
+
+<span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;Dijkstra&quot;</span> <span class="o">=</span>
+  <span class="n">test_sssp</span> <span class="n">dijkstra</span> <span class="n">example_graph_dijkstra</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

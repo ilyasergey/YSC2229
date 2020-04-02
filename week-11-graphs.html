@@ -157,8 +157,15 @@
 <ul class="simple">
 <li>File <code class="docutils literal notranslate"><span class="pre">Graphs.ml</span></code></li>
 </ul>
-<p>Graphs are an important versatile mathematical abstraction, which is used to represent the relations between multiple objects. Such (possibly non-symmetric) relations can be frequently phrased in terms of <em>connectivity</em> and <em>reachability</em>, as we’ve seen before in the chapter on <a class="reference internal" href="week-09-union-find.html#union-find"><span class="std std-ref">Equivalence Classes and Union-Find</span></a>.</p>
-<p>A graph is commonly represented in mathematics by a pair <span class="math notranslate nohighlight">\(G = (V, E)\)</span>, where <span class="math notranslate nohighlight">\(V\)</span> is a set of the graphs’s vertices (nodes), represented the related elements, and <span class="math notranslate nohighlight">\(E\)</span> is a set of its edges (arcs) such that <span class="math notranslate nohighlight">\(E \subseteq V \times V\)</span>.</p>
+<p>Graphs are an important versatile mathematical abstraction, which is
+used to represent the relations between multiple objects. Such
+(possibly non-symmetric) relations can be frequently phrased in terms
+of <em>connectivity</em> and <em>reachability</em>, as we’ve seen before in the
+chapter on <a class="reference internal" href="week-09-union-find.html#union-find"><span class="std std-ref">Equivalence Classes and Union-Find</span></a>.</p>
+<p>A graph is commonly represented in mathematics by a pair <span class="math notranslate nohighlight">\(G =
+(V, E)\)</span>, where <span class="math notranslate nohighlight">\(V\)</span> is a set of the graphs’s vertices (nodes),
+represented the related elements, and <span class="math notranslate nohighlight">\(E\)</span> is a set of its edges
+(arcs) such that <span class="math notranslate nohighlight">\(E \subseteq V \times V\)</span>.</p>
 <p>As some graph examples, <span class="math notranslate nohighlight">\(V\)</span> and <span class="math notranslate nohighlight">\(E\)</span> can represent correspondingly:</p>
 <ul class="simple">
 <li>Cities and roads between them</li>
@@ -167,7 +174,14 @@
 <li>Control states of a machine and transitions between them</li>
 <li>“Friendship” relations between users of a social network</li>
 </ul>
-<p>It is common to think of <span class="math notranslate nohighlight">\(V\)</span> to be represented by a segment <span class="math notranslate nohighlight">\(\{0 ... (n - 1)\}\)</span> of natural numbers for some <span class="math notranslate nohighlight">\(n\)</span> (so that <span class="math notranslate nohighlight">\(n\)</span> is the size of the set of vertices). However, if the nodes carry additional meaning (e.g., the name of the city), one can define their payload as a function <span class="math notranslate nohighlight">\(\{0 ... (n - 1)\} \rightarrow P\)</span> for some set of payload values <span class="math notranslate nohighlight">\(P\)</span>. Edges can be also given labels in a similar way by defining a function <span class="math notranslate nohighlight">\(E \rightarrow L\)</span> for some label set <span class="math notranslate nohighlight">\(L\)</span>.</p>
+<p>It is common to think of <span class="math notranslate nohighlight">\(V\)</span> to be represented by a segment
+<span class="math notranslate nohighlight">\(\{0 ... (n - 1)\}\)</span> of natural numbers for some <span class="math notranslate nohighlight">\(n\)</span> (so
+that <span class="math notranslate nohighlight">\(n\)</span> is the size of the set of vertices). However, if the
+nodes carry additional meaning (e.g., the name of the city), one can
+define their payload as a function <span class="math notranslate nohighlight">\(\{0 ... (n - 1)\}
+\rightarrow P\)</span> for some set of payload values <span class="math notranslate nohighlight">\(P\)</span>. Edges can be
+also given labels in a similar way by defining a function <span class="math notranslate nohighlight">\(E
+\rightarrow L\)</span> for some label set <span class="math notranslate nohighlight">\(L\)</span>.</p>
 <div class="section" id="graphs-as-adjacency-lists">
 <h2>Graphs as Adjacency Lists<a class="headerlink" href="#graphs-as-adjacency-lists" title="Permalink to this headline">¶</a></h2>
 <p>Here is the first take on representing graphs as data s structure – by means of <em>adjacency lists</em> (AL). In this representation an each node (a natural number) <code class="docutils literal notranslate"><span class="pre">u</span></code> points (e.g., as an element of an array) to a list of other nodes <code class="docutils literal notranslate"><span class="pre">v</span></code>, that are immediately <em>reachable</em> from <code class="docutils literal notranslate"><span class="pre">u</span></code>, i.e., the graph <code class="docutils literal notranslate"><span class="pre">g</span></code> has an edge <code class="docutils literal notranslate"><span class="pre">(u,</span> <span class="pre">v)</span></code>.</p>
@@ -292,7 +306,7 @@
   <span class="nn">String</span><span class="p">.</span><span class="n">concat</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">(</span><span class="n">s0</span> <span class="o">::</span> <span class="n">ls</span><span class="o">)</span>
 
 <span class="c">(* Dump graph to file *)</span>
-<span class="k">let</span> <span class="n">wirte_simple_graph_shape_to_file</span> <span class="n">filename</span> <span class="n">g</span> <span class="o">=</span>
+<span class="k">let</span> <span class="n">write_simple_graph_shape_to_file</span> <span class="n">filename</span> <span class="n">g</span> <span class="o">=</span>
   <span class="n">graph_to_string</span> <span class="n">g</span> <span class="o">|&gt;</span>
   <span class="n">write_string_to_file</span> <span class="n">filename</span>
 </pre></div>
@@ -342,11 +356,20 @@ can be found by <a class="reference external" href="https://graphs.grevian.org/e
 </div>
 <div class="section" id="shortcomings-of-adjacency-list-graph-representation">
 <h2>Shortcomings of Adjacency-List graph representation<a class="headerlink" href="#shortcomings-of-adjacency-list-graph-representation" title="Permalink to this headline">¶</a></h2>
-<p>The main disadvantage of adjacency-list based representation is that the operations of adding an edge, getting successors (and possibly predecessors) of a node in it are very expensive.</p>
+<p>The main disadvantage of adjacency-list based representation is that
+the operations of adding an edge, getting successors (and possibly
+predecessors) of a node in it are very expensive: all of those
+operations take <span class="math notranslate nohighlight">\(O(|V|)\)</span> time. It is also very difficult to add
+new nodes, as it would require allocating a new array.</p>
 </div>
 <div class="section" id="graphs-as-linked-data-structures">
 <h2>Graphs as Linked Data Structures<a class="headerlink" href="#graphs-as-linked-data-structures" title="Permalink to this headline">¶</a></h2>
-<p>Let us consider a more efficient implementation of graphs as linked data structure. The implementation imposes some overhead, in order to provide an efficient access to the nodes of a graph as well as their adjacent neighbours. The implementation will rely on data structures developed previously: hash-tables and sets, represented via BSTs.</p>
+<p>Let us consider a more efficient implementation of graphs as a linked
+heap-based data structure. The implementation features some
+redundancy, in order to provide an efficient access to the nodes of a
+graph as well as their adjacent neighbours. The implementation will
+rely on data structures developed previously: hash-tables and sets,
+represented via BSTs.</p>
 <p>We start by defining the data type for nodes:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">LinkedGraphs</span> <span class="o">=</span> <span class="k">struct</span>
 
@@ -446,7 +469,7 @@ can be found by <a class="reference external" href="https://graphs.grevian.org/e
 </pre></div>
 </div>
 <p>As the linked <code class="docutils literal notranslate"><span class="pre">graph</span></code> structure combines five conceptually “overlapping” components, it needs to be maintained with a lot of care, in order not to introduce any discrepancies in the representations.</p>
-<p>Creating new linked graph is easy:</p>
+<p>Creating new empty graph is easy:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">mk_graph</span> <span class="o">_</span> <span class="o">=</span> <span class="o">{</span>
   <span class="n">next_node_id</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">0</span><span class="o">;</span>
   <span class="n">nodes</span> <span class="o">=</span> <span class="nn">Set</span><span class="p">.</span><span class="n">mk_tree</span> <span class="bp">()</span><span class="o">;</span>
@@ -456,7 +479,8 @@ can be found by <a class="reference external" href="https://graphs.grevian.org/e
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Adding a node requires allocating it a new id, registering it in both the set of node identifiers, and the node map:</p>
+<p>Adding a node requires allocating a new identifier for it, registering
+it in both the set of node identifiers, and the node map:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">add_node</span> <span class="n">g</span> <span class="n">v</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">new_id</span> <span class="o">=</span> <span class="o">!(</span><span class="n">g</span><span class="o">.</span><span class="n">next_node_id</span><span class="o">)</span> <span class="k">in</span>
   <span class="n">g</span><span class="o">.</span><span class="n">next_node_id</span> <span class="o">:=</span> <span class="o">!(</span><span class="n">g</span><span class="o">.</span><span class="n">next_node_id</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
@@ -519,7 +543,7 @@ can be found by <a class="reference external" href="https://graphs.grevian.org/e
   <span class="n">g</span>
 </pre></div>
 </div>
-<p>Conversely, the following functions obtains an adjacency graph from a linked representation:</p>
+<p>Conversely, the following functionsobtains an adjacency graph from a linked representation:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">to_adjacency_graph</span> <span class="n">g</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">size</span> <span class="o">=</span> <span class="n">v_size</span> <span class="n">g</span> <span class="k">in</span>
   <span class="k">let</span> <span class="n">ag</span> <span class="o">=</span> <span class="nn">AdjacencyGraphs</span><span class="p">.</span><span class="n">mk_graph</span> <span class="n">size</span> <span class="k">in</span>
@@ -555,7 +579,11 @@ can be found by <a class="reference external" href="https://graphs.grevian.org/e
 </div>
 <div class="section" id="testing-graph-operations">
 <h2>Testing graph operations<a class="headerlink" href="#testing-graph-operations" title="Permalink to this headline">¶</a></h2>
-<p>One advantage of AL-based representation is that it makes it considerably easier to test graphs for certain properties. For instance, the following function checks that two AL-represented graphs have the same topology (i.e., the same sets of node identifiers, and edges between them):</p>
+<p>One advantage of AL-based representation is that it makes it
+considerably easier to test graphs for certain properties. For
+instance, the following function checks that two AL-represented graphs
+have the same topology assuming the exact correspondence of the nodes
+(i.e., the same sets of node identifiers, and edges between them):</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">same_shape</span> <span class="o">(</span><span class="n">ag1</span> <span class="o">:</span> <span class="o">(</span><span class="k">&#39;</span><span class="n">a</span><span class="o">,</span> <span class="k">&#39;</span><span class="n">b</span><span class="o">)</span> <span class="nn">AdjacencyGraphs</span><span class="p">.</span><span class="n">graph</span><span class="o">)</span>
     <span class="o">(</span><span class="n">ag2</span> <span class="o">:</span> <span class="o">(</span><span class="k">&#39;</span><span class="n">a</span><span class="o">,</span> <span class="k">&#39;</span><span class="n">b</span><span class="o">)</span> <span class="nn">AdjacencyGraphs</span><span class="p">.</span><span class="n">graph</span><span class="o">)</span> <span class="o">=</span>
   <span class="k">assert</span> <span class="o">(</span><span class="n">ag1</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">ag2</span><span class="o">.</span><span class="n">size</span><span class="o">);</span>
@@ -606,7 +634,7 @@ can be found by <a class="reference external" href="https://graphs.grevian.org/e
 <span class="n">utop</span> <span class="o">#</span> <span class="n">graphviz_no_payload</span> <span class="n">ag</span> <span class="s2">&quot;medium.dot&quot;</span><span class="o">;;</span>
 </pre></div>
 </div>
-<p>No, running:</p>
+<p>Now, running:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">dot</span> <span class="o">-</span><span class="nc">Tpdf</span> <span class="n">medium</span><span class="o">.</span><span class="n">dot</span> <span class="o">-</span><span class="n">o</span> <span class="n">medium</span><span class="o">.</span><span class="n">pdf</span>
 </pre></div>
 </div>

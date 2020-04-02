@@ -42,6 +42,7 @@ an element with the key 4, as well as the element itself. In the
 second case, it returns ``None``, as there is no key ``10`` in the
 array ``a1``.
 
+.. _binsearch:
 
 Binary Search
 -------------
