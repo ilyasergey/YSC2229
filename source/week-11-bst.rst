@@ -11,16 +11,25 @@ Binary Search Trees (BSTs) are one of the most versatile
 representations of mutable sets of `ordered elements`, supporting a
 variety of operations, such as insertion, deletion, checking
 membership, finding minimums, maximums, predecessors and successors of
-a value.
+a value --- all those operations taking the time proportional to the
+height :math:`h` of the tree or, if the tree is constructed randomly
+out of :math:`n` elements --- :math:`O(\log n)`. This makes BST a
+superior alternative to lists, heaps, and even hash-tables when
+impelmenting sets mutable sets with a number of operations.
 
-The key to this expressivity is the invariant of a tree-shaped data
-structure, that mandates that, for any node,
+The key to this expressivity and efficience is the invariant of a
+tree-shaped data structure, that mandates that, for any node ``q``,
 
-* any element in its left subtree is less or equal than the element in the node itself, and
-* any element in its right subtree is greater or equal than the element in the node itself.
+* any element in its left subtree ``q.l`` is less or equal (with
+  respect to a certain total order) than the element in the node ``q``
+  itself, and
+* any element in its right subtree ``q.r`` is greater or equal than
+  the element in the node ``q`` itself.
 
 This invariant is maintained by all operations that modify the set,
-and is relied upon by all its queries. 
+and is relied upon by all its queries. The logarithmic complexity of
+operations, thus, follows from the intuition similar to the one
+powering :ref:`binsearch` in arrays.
 
 
 A Data Structure for Binary-Search Trees
@@ -121,7 +130,9 @@ the latter it remains the same.
 Binary-Search-Tree Invariant
 ----------------------------
 
-Let us now assert tree-manipulating operations such as ``insert`` indeed preserve the BST property. For this, let us define the BST invariant in the form of the following function::
+Let us now assert that tree-manipulating operations such as ``insert``
+indeed preserve the discussed above BST property. For this, let us
+define the BST invariant in the form of the following function::
 
   let check_bst_inv t = 
     let rec walk node p = 
@@ -373,7 +384,9 @@ For instance, finding the minimal element of a `subtree` starting from a node ``
     | None -> n
 
 Notice that this operation does not find the `global` tree-wise
-successor of the element in node `n`.
+successor of the element in node `n`, although that is also possible
+to do in :math:`O(log n)` operations for a tree that is well-balanced
+(i.e., not to "tall" and "thin").
 
 Deleting a node from BST
 ------------------------
@@ -399,6 +412,12 @@ by another::
     match v with 
     | Some n -> n.parent := parent u
     | _ -> ()
+
+Notice the comparison via ``when u == l`` in the implementation above.
+This is essential: node references must be compared using OCaml's
+"shallow" equality mechanism, as structural "deep" equality on
+references (``=``) in the case of linked data structures, such as
+BSTs, may lead to errors that are `very` difficult to debug.
 
 Let us now discuss possible scenarios for removing a node ``z`` from the tree ``T`` by preserving the BST property.
 
@@ -543,13 +562,6 @@ height. This makes tree rotations useful for rebalancing a tree when
 it becomes "degenerate" (tall and thin). This makes it possible to
 keep the worst-case complexity of tree operations within :math:`O(\log
 n)`, without it degenerating to :math:`O(n)`.
-
-Finally, notice the comparison via ``when x == l`` in the
-implementation above. This is essential: node references need to be
-compared using OCaml's "shallow" equality mechanism, as structural
-"deep" equality on references (``=``) in the case of linked data
-structures, such as BSTs, may lead to errors that are very difficult
-to debug.
  
-Implementation of the right BST rotation and rotation testing are left
-as an exercise.
+Implementation of the right BST rotation and rotation testing of the
+rotations are left as an exercise.
