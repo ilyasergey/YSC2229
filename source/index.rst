@@ -26,8 +26,8 @@ Introductory Data Structures and Algorithms
    week-08
    week-09
    week-10
+   week-11
 
-..   week-11
 ..   week-12
 ..   week-13
 
