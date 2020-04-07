@@ -1,0 +1,491 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Graphs as Linked Data Structures &mdash; YSC2229 2020</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-11.html">14. Week 11: Binary Search Trees and Graphs</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Graphs as Linked Data Structures</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="graphs-as-linked-data-structures">
+<span id="linked-graphs"></span><h1>Graphs as Linked Data Structures<a class="headerlink" href="#graphs-as-linked-data-structures" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>File <code class="docutils literal notranslate"><span class="pre">Graphs.ml</span></code></li>
+</ul>
+<p>Let us consider a more efficient implementation of graphs as a linked
+heap-based data structure. The implementation features some
+redundancy, in order to provide an efficient access to the nodes of a
+graph as well as their adjacent neighbours. The implementation will
+rely on data structures developed previously: hash-tables and sets,
+represented via BSTs.</p>
+<p>We start by defining the data type for nodes:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">LinkedGraphs</span> <span class="o">=</span> <span class="k">struct</span>
+
+  <span class="c">(*************************************************)</span>
+  <span class="c">(*                     Nodes                     *)</span>
+  <span class="c">(*************************************************)</span>
+
+  <span class="k">type</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">node</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">id</span> <span class="o">:</span> <span class="kt">int</span><span class="o">;</span>
+    <span class="k">value</span> <span class="o">:</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">ref</span><span class="o">;</span>
+    <span class="n">next</span> <span class="o">:</span> <span class="kt">int</span> <span class="kt">list</span> <span class="n">ref</span><span class="o">;</span>
+    <span class="n">prev</span> <span class="o">:</span> <span class="kt">int</span> <span class="kt">list</span> <span class="n">ref</span>
+  <span class="o">}</span>
+
+  <span class="k">let</span> <span class="n">get_value</span> <span class="n">n</span> <span class="o">=</span> <span class="o">!(</span><span class="n">n</span><span class="o">.</span><span class="k">value</span><span class="o">)</span>
+  <span class="k">let</span> <span class="n">get_next</span> <span class="n">n</span> <span class="o">=</span> <span class="o">!(</span><span class="n">n</span><span class="o">.</span><span class="n">next</span><span class="o">)</span>
+  <span class="k">let</span> <span class="n">get_prev</span> <span class="n">n</span> <span class="o">=</span> <span class="o">!(</span><span class="n">n</span><span class="o">.</span><span class="n">prev</span><span class="o">)</span>
+
+  <span class="k">let</span> <span class="n">add_prev</span> <span class="n">node</span> <span class="n">src</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">prev&#39;</span> <span class="o">=</span> <span class="n">get_prev</span> <span class="n">node</span> <span class="o">|&gt;</span>
+                <span class="nn">List</span><span class="p">.</span><span class="n">filter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span> <span class="o">&lt;&gt;</span> <span class="n">src</span><span class="o">)</span> <span class="k">in</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">prev</span> <span class="o">:=</span> <span class="n">src</span> <span class="o">::</span> <span class="n">prev&#39;</span>
+
+  <span class="k">let</span> <span class="n">add_next</span> <span class="n">node</span> <span class="n">dst</span> <span class="o">=</span>
+    <span class="k">let</span> <span class="n">next&#39;</span> <span class="o">=</span> <span class="n">get_next</span> <span class="n">node</span> <span class="o">|&gt;</span>
+                <span class="nn">List</span><span class="p">.</span><span class="n">filter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="n">n</span> <span class="o">&lt;&gt;</span> <span class="n">dst</span><span class="o">)</span> <span class="k">in</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">next</span> <span class="o">:=</span> <span class="n">dst</span> <span class="o">::</span> <span class="n">next&#39;</span>
+
+  <span class="c">(* More types and functions are coming here *)</span>
+
+<span class="k">end</span>
+</pre></div>
+</div>
+<p>Each node stores its identifier (an integer), a payload <code class="docutils literal notranslate"><span class="pre">value</span></code>, as well as lists of “previous” and “next” nodes in the graph (initially empty).</p>
+<p>We now define a graph as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(*************************************************)</span>
+<span class="c">(*           Auxiliary definitions               *)</span>
+<span class="c">(*************************************************)</span>
+
+<span class="k">open</span> <span class="nc">BST</span>
+<span class="k">open</span> <span class="nc">BetterHashTable</span>
+
+<span class="k">module</span> <span class="nc">Set</span> <span class="o">=</span> <span class="nc">BinarySearchTree</span>
+<span class="k">module</span> <span class="nc">NodeTable</span> <span class="o">=</span>
+  <span class="nc">ResizableListBasedHashTable</span><span class="o">(</span><span class="k">struct</span> <span class="k">type</span> <span class="n">t</span> <span class="o">=</span> <span class="kt">int</span> <span class="k">end</span><span class="o">)</span>
+<span class="k">module</span> <span class="nc">EdgeTable</span> <span class="o">=</span>
+  <span class="nc">ResizableListBasedHashTable</span><span class="o">(</span><span class="k">struct</span> <span class="k">type</span> <span class="n">t</span> <span class="o">=</span> <span class="kt">int</span> <span class="o">*</span> <span class="kt">int</span> <span class="k">end</span><span class="o">)</span>
+
+<span class="k">type</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">set</span> <span class="o">=</span> <span class="k">&#39;</span><span class="n">a</span> <span class="nn">Set</span><span class="p">.</span><span class="n">tree</span>
+
+<span class="c">(*************************************************)</span>
+<span class="c">(*                Working with Graphs            *)</span>
+<span class="c">(*************************************************)</span>
+
+<span class="k">type</span> <span class="o">(</span><span class="k">&#39;</span><span class="n">a</span><span class="o">,</span> <span class="k">&#39;</span><span class="n">b</span><span class="o">)</span> <span class="n">graph</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="n">next_node_id</span> <span class="o">:</span> <span class="kt">int</span> <span class="n">ref</span><span class="o">;</span>
+  <span class="n">nodes</span> <span class="o">:</span> <span class="kt">int</span> <span class="n">set</span><span class="o">;</span>
+  <span class="n">node_map</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">a</span> <span class="n">node</span><span class="o">)</span> <span class="nn">NodeTable</span><span class="p">.</span><span class="n">hash_table</span><span class="o">;</span>
+
+  <span class="n">edges</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">int</span><span class="o">)</span> <span class="n">set</span><span class="o">;</span>
+  <span class="n">edge_labels</span> <span class="o">:</span> <span class="o">((</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">int</span><span class="o">)</span> <span class="o">*</span> <span class="k">&#39;</span><span class="n">b</span><span class="o">)</span> <span class="nn">EdgeTable</span><span class="p">.</span><span class="n">hash_table</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>That is, a graph contains:</p>
+<ul class="simple">
+<li>a counter <code class="docutils literal notranslate"><span class="pre">next_node_id</span></code> used to allocate identifiers for newly added nodes;</li>
+<li>a set (represented via BST) <code class="docutils literal notranslate"><span class="pre">nodes</span></code> of all node identifies;</li>
+<li><code class="docutils literal notranslate"><span class="pre">node_map</span></code> for mapping node identifiers to node objects;</li>
+<li>a set of edges (<code class="docutils literal notranslate"><span class="pre">edges</span></code>);</li>
+<li>a hash map of edge labels (<code class="docutils literal notranslate"><span class="pre">edge_labels</span></code>).</li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">graph</span></code> structure defined just above allows to access the set of predecessors/successors of a node in a constant time, as opposed to linear one with the list-based representation. Consider the following utility functions:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Graph size *)</span>
+<span class="k">let</span> <span class="n">v_size</span> <span class="n">g</span> <span class="o">=</span> <span class="o">!(</span><span class="n">g</span><span class="o">.</span><span class="n">next_node_id</span><span class="o">)</span>
+<span class="k">let</span> <span class="n">e_size</span> <span class="n">g</span> <span class="o">=</span> <span class="nn">BinarySearchTree</span><span class="p">.</span><span class="n">get_size</span> <span class="n">g</span><span class="o">.</span><span class="n">edges</span>
+<span class="k">let</span> <span class="n">get_nodes</span> <span class="n">g</span> <span class="o">=</span> <span class="nn">Set</span><span class="p">.</span><span class="n">elements</span> <span class="n">g</span><span class="o">.</span><span class="n">nodes</span>
+
+<span class="c">(* Refer to the node in the graph *)</span>
+<span class="k">let</span> <span class="n">get_node</span> <span class="n">g</span> <span class="n">i</span> <span class="o">=</span> <span class="n">get_exn</span> <span class="o">@@</span> <span class="nn">NodeTable</span><span class="p">.</span><span class="n">get</span> <span class="n">g</span><span class="o">.</span><span class="n">node_map</span> <span class="n">i</span>
+
+<span class="k">let</span> <span class="n">get_succ</span> <span class="n">g</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">node</span> <span class="o">=</span> <span class="n">get_node</span> <span class="n">g</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="n">get_next</span> <span class="n">node</span>
+
+<span class="k">let</span> <span class="n">get_prev</span> <span class="n">g</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">node</span> <span class="o">=</span> <span class="n">get_node</span> <span class="n">g</span> <span class="n">n</span> <span class="k">in</span>
+  <span class="n">get_prev</span> <span class="n">node</span>
+
+<span class="k">let</span> <span class="n">node_in_graph</span> <span class="n">g</span> <span class="n">n</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">nodes</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">nodes</span> <span class="k">in</span>
+  <span class="nn">Set</span><span class="p">.</span><span class="n">search</span> <span class="n">nodes</span> <span class="n">n</span> <span class="o">&lt;&gt;</span> <span class="nc">None</span>
+
+<span class="k">let</span> <span class="n">edge_in_graph</span> <span class="n">g</span> <span class="n">src</span> <span class="n">dst</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">nodes</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">edges</span> <span class="k">in</span>
+  <span class="nn">Set</span><span class="p">.</span><span class="n">search</span> <span class="n">nodes</span> <span class="o">(</span><span class="n">src</span><span class="o">,</span> <span class="n">dst</span><span class="o">)</span> <span class="o">&lt;&gt;</span> <span class="nc">None</span>
+</pre></div>
+</div>
+<p>As the linked <code class="docutils literal notranslate"><span class="pre">graph</span></code> structure combines five conceptually “overlapping” components, it needs to be maintained with a lot of care, in order not to introduce any discrepancies in the representations.</p>
+<p>Creating new empty graph is easy:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">mk_graph</span> <span class="o">_</span> <span class="o">=</span> <span class="o">{</span>
+  <span class="n">next_node_id</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">0</span><span class="o">;</span>
+  <span class="n">nodes</span> <span class="o">=</span> <span class="nn">Set</span><span class="p">.</span><span class="n">mk_tree</span> <span class="bp">()</span><span class="o">;</span>
+  <span class="n">node_map</span> <span class="o">=</span> <span class="nn">NodeTable</span><span class="p">.</span><span class="n">mk_new_table</span> <span class="mi">10</span><span class="o">;</span>
+  <span class="n">edges</span> <span class="o">=</span> <span class="nn">Set</span><span class="p">.</span><span class="n">mk_tree</span> <span class="bp">()</span><span class="o">;</span>
+  <span class="n">edge_labels</span> <span class="o">=</span> <span class="nn">EdgeTable</span><span class="p">.</span><span class="n">mk_new_table</span> <span class="mi">10</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Adding a node requires allocating a new identifier for it, registering
+it in both the set of node identifiers, and the node map:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">add_node</span> <span class="n">g</span> <span class="n">v</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">new_id</span> <span class="o">=</span> <span class="o">!(</span><span class="n">g</span><span class="o">.</span><span class="n">next_node_id</span><span class="o">)</span> <span class="k">in</span>
+  <span class="n">g</span><span class="o">.</span><span class="n">next_node_id</span> <span class="o">:=</span> <span class="o">!(</span><span class="n">g</span><span class="o">.</span><span class="n">next_node_id</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+  <span class="k">let</span> <span class="n">node</span> <span class="o">=</span> <span class="o">{</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">new_id</span><span class="o">;</span>
+    <span class="k">value</span> <span class="o">=</span> <span class="n">ref</span> <span class="n">v</span><span class="o">;</span>
+    <span class="n">next</span> <span class="o">=</span> <span class="n">ref</span> <span class="bp">[]</span><span class="o">;</span>
+    <span class="n">prev</span> <span class="o">=</span> <span class="n">ref</span> <span class="bp">[]</span><span class="o">;</span>
+  <span class="o">}</span> <span class="k">in</span>
+  <span class="c">(* Register node *)</span>
+  <span class="k">let</span> <span class="o">_</span> <span class="o">=</span> <span class="nn">Set</span><span class="p">.</span><span class="n">insert</span> <span class="n">g</span><span class="o">.</span><span class="n">nodes</span> <span class="n">new_id</span> <span class="k">in</span>
+  <span class="c">(* Register node payload *)</span>
+  <span class="nn">NodeTable</span><span class="p">.</span><span class="n">insert</span> <span class="n">g</span><span class="o">.</span><span class="n">node_map</span> <span class="n">new_id</span> <span class="n">node</span>
+</pre></div>
+</div>
+<p>Adding an edge requires modifying the corresponding node instances to account for new predecessors and successors:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">add_edge</span> <span class="n">g</span> <span class="n">src</span> <span class="n">dst</span> <span class="o">=</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">node_in_graph</span> <span class="n">g</span> <span class="n">src</span> <span class="o">&amp;&amp;</span> <span class="n">node_in_graph</span> <span class="n">g</span> <span class="n">src</span><span class="o">);</span>
+  <span class="c">(* Register edge *)</span>
+  <span class="k">let</span> <span class="o">_</span> <span class="o">=</span> <span class="nn">Set</span><span class="p">.</span><span class="n">insert</span> <span class="n">g</span><span class="o">.</span><span class="n">edges</span> <span class="o">(</span><span class="n">src</span><span class="o">,</span> <span class="n">dst</span><span class="o">)</span> <span class="k">in</span>
+  <span class="c">(* Add information to individual nodes *)</span>
+  <span class="k">let</span> <span class="n">src_node</span> <span class="o">=</span> <span class="n">get_exn</span> <span class="o">@@</span> <span class="nn">NodeTable</span><span class="p">.</span><span class="n">get</span> <span class="n">g</span><span class="o">.</span><span class="n">node_map</span> <span class="n">src</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">dst_node</span> <span class="o">=</span> <span class="n">get_exn</span> <span class="o">@@</span> <span class="nn">NodeTable</span><span class="p">.</span><span class="n">get</span> <span class="n">g</span><span class="o">.</span><span class="n">node_map</span> <span class="n">dst</span> <span class="k">in</span>
+  <span class="n">add_prev</span> <span class="n">dst_node</span> <span class="n">src</span><span class="o">;</span>
+  <span class="n">add_next</span> <span class="n">src_node</span> <span class="n">dst</span>
+</pre></div>
+</div>
+<p>We can also set a new label to an edge <code class="docutils literal notranslate"><span class="pre">(src,</span> <span class="pre">dst)</span></code> as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">set_edge_label</span> <span class="n">g</span> <span class="n">src</span> <span class="n">dst</span> <span class="n">l</span> <span class="o">=</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">node_in_graph</span> <span class="n">g</span> <span class="n">src</span> <span class="o">&amp;&amp;</span> <span class="n">node_in_graph</span> <span class="n">g</span> <span class="n">src</span><span class="o">);</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">edge_in_graph</span> <span class="n">g</span> <span class="n">src</span> <span class="n">dst</span><span class="o">);</span>
+  <span class="c">(* Register label *)</span>
+  <span class="nn">EdgeTable</span><span class="p">.</span><span class="n">insert</span> <span class="n">g</span><span class="o">.</span><span class="n">edge_labels</span> <span class="o">(</span><span class="n">src</span><span class="o">,</span> <span class="n">dst</span><span class="o">)</span> <span class="n">l</span>
+</pre></div>
+</div>
+<div class="section" id="switching-between-graph-representations">
+<h2>Switching between graph representations<a class="headerlink" href="#switching-between-graph-representations" title="Permalink to this headline">¶</a></h2>
+<p>As we already have reading/writing implemented for AL-based graphs, let us implement conversion between them and linked representations. The following function, for instance, converts a simple AL-based graph (with arbitrary node payloads) to a linked representation:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">from_simple_adjacency_graph</span> <span class="o">(</span><span class="n">ag</span> <span class="o">:</span> <span class="o">(</span><span class="k">&#39;</span><span class="n">a</span><span class="o">,</span> <span class="k">&#39;</span><span class="n">b</span><span class="o">)</span> <span class="nn">AdjacencyGraphs</span><span class="p">.</span><span class="n">graph</span><span class="o">)</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">g</span> <span class="o">=</span> <span class="n">mk_graph</span> <span class="bp">()</span> <span class="k">in</span>
+
+  <span class="c">(* Add nodes *)</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">ag</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="n">v</span> <span class="o">=</span> <span class="n">snd</span> <span class="o">@@</span> <span class="nn">List</span><span class="p">.</span><span class="n">find</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">n</span><span class="o">,</span> <span class="o">_)</span> <span class="o">-&gt;</span> <span class="n">n</span> <span class="o">=</span> <span class="n">i</span><span class="o">)</span> <span class="o">!(</span><span class="n">ag</span><span class="o">.</span><span class="n">node_payloads</span><span class="o">)</span> <span class="k">in</span>
+    <span class="n">add_node</span> <span class="n">g</span> <span class="n">v</span><span class="o">;</span>
+  <span class="k">done</span><span class="o">;</span>
+
+  <span class="c">(* Add edges *)</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">ag</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="n">ag</span><span class="o">.</span><span class="n">adj</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">|&gt;</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">fun</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">n</span><span class="o">))</span> <span class="o">|&gt;</span>
+    <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">src</span><span class="o">,</span> <span class="n">dst</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">add_edge</span> <span class="n">g</span> <span class="n">src</span> <span class="n">dst</span><span class="o">)</span>
+  <span class="k">done</span><span class="o">;</span>
+
+  <span class="c">(* Add edge labels *)</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="o">((</span><span class="n">src</span><span class="o">,</span> <span class="n">dst</span><span class="o">),</span> <span class="n">l</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">set_edge_label</span> <span class="n">g</span> <span class="n">src</span> <span class="n">dst</span> <span class="n">l</span><span class="o">)</span>
+    <span class="o">!(</span><span class="n">ag</span><span class="o">.</span><span class="n">edge_labels</span><span class="o">);</span>
+
+  <span class="n">g</span>
+</pre></div>
+</div>
+<p>Conversely, the following functionsobtains an adjacency graph from a linked representation:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">to_adjacency_graph</span> <span class="n">g</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">size</span> <span class="o">=</span> <span class="n">v_size</span> <span class="n">g</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ag</span> <span class="o">=</span> <span class="nn">AdjacencyGraphs</span><span class="p">.</span><span class="n">mk_graph</span> <span class="n">size</span> <span class="k">in</span>
+
+  <span class="c">(* Set node payloads *)</span>
+  <span class="nn">Set</span><span class="p">.</span><span class="n">elements</span> <span class="n">g</span><span class="o">.</span><span class="n">nodes</span> <span class="o">|&gt;</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">n</span> <span class="o">-&gt;</span>
+      <span class="k">let</span> <span class="n">node</span> <span class="o">=</span> <span class="n">get_exn</span> <span class="o">@@</span> <span class="nn">NodeTable</span><span class="p">.</span><span class="n">get</span> <span class="n">g</span><span class="o">.</span><span class="n">node_map</span> <span class="n">n</span> <span class="k">in</span>
+      <span class="nn">AdjacencyGraphs</span><span class="p">.</span><span class="n">set_payload</span> <span class="n">ag</span> <span class="n">n</span> <span class="o">(</span><span class="n">get_value</span> <span class="n">node</span><span class="o">));</span>
+
+  <span class="c">(* Add edges *)</span>
+  <span class="k">let</span> <span class="n">edges</span> <span class="o">=</span> <span class="nn">Set</span><span class="p">.</span><span class="n">elements</span> <span class="n">g</span><span class="o">.</span><span class="n">edges</span> <span class="k">in</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">src</span><span class="o">,</span> <span class="n">dst</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nn">AdjacencyGraphs</span><span class="p">.</span><span class="n">add_edge</span> <span class="n">ag</span> <span class="n">src</span> <span class="n">dst</span><span class="o">)</span> <span class="n">edges</span><span class="o">;</span>
+
+  <span class="c">(* Add edges labels *)</span>
+  <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span> <span class="o">-&gt;</span>
+      <span class="k">match</span> <span class="nn">EdgeTable</span><span class="p">.</span><span class="n">get</span> <span class="n">g</span><span class="o">.</span><span class="n">edge_labels</span> <span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">d</span><span class="o">)</span> <span class="k">with</span>
+      <span class="o">|</span> <span class="nc">None</span> <span class="o">-&gt;</span> <span class="bp">()</span>
+      <span class="o">|</span> <span class="nc">Some</span> <span class="n">l</span> <span class="o">-&gt;</span> <span class="nn">AdjacencyGraphs</span><span class="p">.</span><span class="n">set_edge_label</span> <span class="n">ag</span> <span class="n">s</span> <span class="n">d</span> <span class="n">l</span><span class="o">)</span> <span class="n">edges</span><span class="o">;</span>
+  <span class="n">ag</span>
+</pre></div>
+</div>
+<p>We can now put those functions to use for getting linked graphs immediate from the strings and files:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">parse_linked_int_graph</span> <span class="n">ls</span> <span class="o">=</span>
+  <span class="nn">AdjacencyGraphs</span><span class="p">.</span><span class="n">adjacency_int_graph_of_strings</span> <span class="n">ls</span> <span class="o">|&gt;</span>
+  <span class="n">from_simple_adjacency_graph</span>
+
+<span class="k">let</span> <span class="n">read_simple_linked_graph_from_file</span> <span class="n">filename</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">ag</span> <span class="o">=</span> <span class="nn">AdjacencyGraphs</span><span class="p">.</span><span class="n">read_simple_graph_shape_from_file</span> <span class="n">filename</span> <span class="k">in</span>
+  <span class="n">from_simple_adjacency_graph</span> <span class="n">ag</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-graph-operations">
+<h2>Testing graph operations<a class="headerlink" href="#testing-graph-operations" title="Permalink to this headline">¶</a></h2>
+<p>One advantage of AL-based representation is that it makes it
+considerably easier to test graphs for certain properties. For
+instance, the following function checks that two AL-represented graphs
+have the same topology assuming the exact correspondence of the nodes
+(i.e., the same sets of node identifiers, and edges between them):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">same_shape</span> <span class="o">(</span><span class="n">ag1</span> <span class="o">:</span> <span class="o">(</span><span class="k">&#39;</span><span class="n">a</span><span class="o">,</span> <span class="k">&#39;</span><span class="n">b</span><span class="o">)</span> <span class="nn">AdjacencyGraphs</span><span class="p">.</span><span class="n">graph</span><span class="o">)</span>
+    <span class="o">(</span><span class="n">ag2</span> <span class="o">:</span> <span class="o">(</span><span class="k">&#39;</span><span class="n">a</span><span class="o">,</span> <span class="k">&#39;</span><span class="n">b</span><span class="o">)</span> <span class="nn">AdjacencyGraphs</span><span class="p">.</span><span class="n">graph</span><span class="o">)</span> <span class="o">=</span>
+  <span class="k">assert</span> <span class="o">(</span><span class="n">ag1</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">ag2</span><span class="o">.</span><span class="n">size</span><span class="o">);</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="n">ag1</span><span class="o">.</span><span class="n">size</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">comp</span> <span class="n">x</span> <span class="n">y</span> <span class="o">=</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">y</span>
+    <span class="k">then</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span>
+    <span class="k">then</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span> <span class="k">in</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
+    <span class="k">let</span> <span class="n">adj1</span> <span class="o">=</span> <span class="n">ag1</span><span class="o">.</span><span class="n">adj</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">|&gt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">sort</span> <span class="n">comp</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">adj2</span> <span class="o">=</span> <span class="n">ag1</span><span class="o">.</span><span class="n">adj</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">|&gt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">sort</span> <span class="n">comp</span> <span class="k">in</span>
+    <span class="k">assert</span> <span class="o">(</span><span class="n">adj1</span> <span class="o">=</span> <span class="n">adj2</span><span class="o">)</span>
+  <span class="k">done</span><span class="o">;</span>
+  <span class="bp">true</span>
+</pre></div>
+</div>
+<p>We can use it to check that out AL-to-linked-and-back conversion preserves the graph shape. Take the following graph:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">medium_graph_shape</span> <span class="o">=</span>
+  <span class="o">[</span><span class="s2">&quot;13&quot;</span><span class="o">;</span>
+   <span class="s2">&quot;0 1&quot;</span><span class="o">;</span>
+   <span class="s2">&quot;0 6&quot;</span><span class="o">;</span>
+   <span class="s2">&quot;0 5&quot;</span><span class="o">;</span>
+   <span class="s2">&quot;2 0&quot;</span><span class="o">;</span>
+   <span class="s2">&quot;2 3&quot;</span><span class="o">;</span>
+   <span class="s2">&quot;3 5&quot;</span><span class="o">;</span>
+   <span class="s2">&quot;5 4&quot;</span><span class="o">;</span>
+   <span class="s2">&quot;6 4&quot;</span><span class="o">;</span>
+   <span class="s2">&quot;7 6&quot;</span><span class="o">;</span>
+   <span class="s2">&quot;8 7&quot;</span><span class="o">;</span>
+   <span class="s2">&quot;6 9&quot;</span><span class="o">;</span>
+   <span class="s2">&quot;9 10&quot;</span><span class="o">;</span>
+   <span class="s2">&quot;9 11&quot;</span><span class="o">;</span>
+   <span class="s2">&quot;9 12&quot;</span><span class="o">;</span>
+   <span class="s2">&quot;11 12&quot;</span><span class="o">]</span>
+</pre></div>
+</div>
+<p>We can now make sure that the following test succeeds:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="o">_</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">ag</span> <span class="o">=</span> <span class="nn">AdjacencyGraphs</span><span class="p">.</span><span class="n">adjacency_int_graph_of_strings</span> <span class="n">medium_graph_shape</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">g</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">from_simple_adjacency_graph</span> <span class="n">ag</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ag&#39;</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">to_adjacency_graph</span> <span class="n">g</span> <span class="k">in</span>
+  <span class="n">same_shape</span> <span class="n">ag</span> <span class="n">ag&#39;</span>
+</pre></div>
+</div>
+<p>We can also try out the conversion machinery for the sake of producing nice GraphViz images:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">g</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">parse_linked_int_graph</span> <span class="n">medium_graph_shape</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="k">let</span> <span class="n">ag</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">to_adjacency_graph</span> <span class="n">g</span><span class="o">;;</span>
+<span class="n">utop</span> <span class="o">#</span> <span class="n">graphviz_no_payload</span> <span class="n">ag</span> <span class="s2">&quot;medium.dot&quot;</span><span class="o">;;</span>
+</pre></div>
+</div>
+<p>Now, running:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">dot</span> <span class="o">-</span><span class="nc">Tpdf</span> <span class="n">medium</span><span class="o">.</span><span class="n">dot</span> <span class="o">-</span><span class="n">o</span> <span class="n">medium</span><span class="o">.</span><span class="n">pdf</span>
+</pre></div>
+</div>
+<p>we obtain the following image:</p>
+<a class="reference internal image-reference" href="_images/medium.png"><img alt="_images/medium.png" class="align-center" src="_images/medium.png" style="width: 500px;" /></a>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
