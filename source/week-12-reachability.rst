@@ -192,11 +192,15 @@ creates an empty tree for each node. It also keeps track of ``time``
 of the trees are all collected in the mutable list ``roots``, and the
 variable ``has_cycles`` determines whether a cycle has been witnessed.
 
-**Question:** How would you characterise the period during which a
- node is painted ``Gray`` during the DFS traversal?
+As the result, the procedure returns the list of roots, the hash-map
+that stores the tree relation between nodes in the DFS traversal from
+the roots, the pair of timestamps when a node has been visited and the
+boolean value indicating whether a graph has cycles. 
+
+**Question:** How would you characterise the period during which a node is painted ``Gray`` during the DFS traversal?
 
 **Question:** If ``u`` is a parent of ``v`` in a DFS-tree, what is the
- relation between their timestamps?
+relation between their timestamps?
 
 We can render the result of DFS via the following procedure, using the
 tree to retrieve the edge attributes::

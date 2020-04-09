@@ -161,7 +161,7 @@ Initialisation and Relaxation
 All SSSP algorithms rely on the two main operations: 
 
 * Initialising the predecessor tree and the distance table, and
-* *Relaxing* the path information about two nodes, by accounting for a found smalle distance between them.
+* *Relaxing* the path information about two nodes, by accounting for a found smaller distance between them.
 
 The first operation is implemented as follows. It takes a graph ``g`` (in a linked form), a source node ``s`` and returns the weight function ``w``, the predecessor tree and the distance table::
 
@@ -321,8 +321,13 @@ Dijkstra's Algorithm
    done;
    (p, d)
 
-**Question:** The complexity of out implementation of ``dijkstra`` is
- :math:`O(|g.V|^2 + |g.E|)`. Can you explain it?
+The procedure ``extract_min_dist`` takes the node with the minimal
+distance from ``s`` (initially, this is just ``s``) and removes it
+from the remaining list of nodes to be processed. After that it uses
+this node for relaxation of paths to all of its successors. This
+procedure is repeated until all nodes are processed.  
+
+**Question:** The complexity of out implementation of ``dijkstra`` is :math:`O(|g.V|^2 + |g.E|)`. Can you explain it?
 
 Dijkstra crucially relies on all weights on edges being
 *non-negative*. This way, adding an edge to a path can never make a it
