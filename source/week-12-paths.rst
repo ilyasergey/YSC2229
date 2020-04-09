@@ -358,7 +358,7 @@ We can experiment with Dijkstra's algorithm on the following graph::
    read_graph_and_payloads 5 dijkstra_example_nodes
      dijkstra_example_edges dijkstra_example_labels
 
-This results in the following plot:
+This results are shown in the following plot:
 
 .. image:: ../resources/03-dij.png
    :width: 300px
