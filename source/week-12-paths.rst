@@ -49,7 +49,7 @@ Given a *source* node :math:`s` in a graph :math:`G`, we are interested in compu
 
 While discovering shortest paths, we will be representing the current knowledge about paths from :math:`s` to other nodes by building a *predecessor tree* ``pred_tree`` . It can be represented via a hash table, in which each node :math:`v` of the graph (serving as a key) will be pointing to the current predecessor node on a path from :math:`s` to :math:`v` or ``None``, if no path is built yet. As we keep building the shortest paths, this information can change.
 
-The actual paths from :math:`s` to any node :math:`v` can be reconstructing by traversing the branches of the predecessor tree bottom-up and then reversing the obtained lists.
+The actual paths from :math:`s` to any node :math:`v` can be reconstructed by traversing the branches of the predecessor tree bottom-up and then reversing the obtained lists.
 
 It is also convenient to store the distance from the search root :math:`s` to all nodes :math:`v` is a separate structure, which we will call distance table (``dist_table``). Initially ``dist_table`` stores ``0`` for :math:`s` and :math:`\infty` for all other nodes. This information will evolve with the progression of the algorithms.
 
