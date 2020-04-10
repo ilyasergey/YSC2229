@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Minimal Spanning Trees &mdash; YSC2229 2020</title>
+  <title>15.4. Minimal Spanning Trees &mdash; YSC2229 2020</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="15.5. Exercises" href="week-12-exercises.html" />
+    <link rel="prev" title="15.3. Single-Source Shortest Paths" href="week-12-paths.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,7 +78,7 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
@@ -91,6 +93,22 @@
 <li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-11.html">14. Week 11: Binary Search Trees and Graphs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-12.html">15. Week 12: Graph Algorithms</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-12-linked-graphs.html">15.1. Graphs as Linked Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html">15.2. Reachability and Graph Traversals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html">15.3. Single-Source Shortest Paths</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">15.4. Minimal Spanning Trees</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#representing-undirected-graphs">15.4.1. Representing Undirected Graphs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trees-in-undirected-connected-graphs">15.4.2. Trees in Undirected Connected Graphs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">15.4.3. Minimal Spanning Trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kruskal-s-algorithm">15.4.4. Kruskal’s Algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-mst-construction">15.4.5. Testing MST Construction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other-mst-algorithms">15.4.6. Other MST Algorithms</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-exercises.html">15.5. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -136,7 +154,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Minimal Spanning Trees</li>
+          <li><a href="week-12.html">15. Week 12: Graph Algorithms</a> &raquo;</li>
+        
+      <li>15.4. Minimal Spanning Trees</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -154,7 +174,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="minimal-spanning-trees">
-<span id="spanning"></span><h1>Minimal Spanning Trees<a class="headerlink" href="#minimal-spanning-trees" title="Permalink to this headline">¶</a></h1>
+<span id="spanning"></span><h1>15.4. Minimal Spanning Trees<a class="headerlink" href="#minimal-spanning-trees" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">Spanning.ml</span></code></li>
 </ul>
@@ -163,7 +183,7 @@ besides the pair of connected nodes, also identified a <em>direction</em>. It
 is uncommon, however, to consider <em>undirected</em> graphs, where each edge
 establishes a symmetric link between two nodes.</p>
 <div class="section" id="representing-undirected-graphs">
-<h2>Representing Undirected Graphs<a class="headerlink" href="#representing-undirected-graphs" title="Permalink to this headline">¶</a></h2>
+<h2>15.4.1. Representing Undirected Graphs<a class="headerlink" href="#representing-undirected-graphs" title="Permalink to this headline">¶</a></h2>
 <p>Undirected graphs can be encoded in the same way as directed ones, using the same data structures with either</p>
 <ul class="simple">
 <li>certain amount of duplication, i.e., for each edge <code class="docutils literal notranslate"><span class="pre">(u,</span> <span class="pre">v)</span></code> ensuring that <code class="docutils literal notranslate"><span class="pre">(v,</span> <span class="pre">u)</span></code> is also prsent, or</li>
@@ -208,7 +228,7 @@ establishes a symmetric link between two nodes.</p>
 <a class="reference internal image-reference" href="_images/04-ud.png"><img alt="_images/04-ud.png" class="align-center" src="_images/04-ud.png" style="width: 300px;" /></a>
 </div>
 <div class="section" id="trees-in-undirected-connected-graphs">
-<h2>Trees in Undirected Connected Graphs<a class="headerlink" href="#trees-in-undirected-connected-graphs" title="Permalink to this headline">¶</a></h2>
+<h2>15.4.2. Trees in Undirected Connected Graphs<a class="headerlink" href="#trees-in-undirected-connected-graphs" title="Permalink to this headline">¶</a></h2>
 <p>Fully connected undirected graph (i.e., graphs in which each node is reachable from another) are frequently used describe network topologies or electronic circuit layout. It is sometime convenient to find the minimal connected graph <span class="math notranslate nohighlight">\(G'\)</span> that spans the entire set <span class="math notranslate nohighlight">\(G.V\)</span> of nodes of the “main” graph <span class="math notranslate nohighlight">\(G\)</span>, while covering only a subset of the edges from <span class="math notranslate nohighlight">\(G.E\)</span>.</p>
 <p>This sub-graph turns out to be a <em>tree</em>, and can be characterised by ether of the following definitions:</p>
 <ul class="simple">
@@ -219,7 +239,7 @@ establishes a symmetric link between two nodes.</p>
 <p>The last observation is important: tree is a very <em>sparse</em> graph, where the number of edges is a number of nodes minus one. However, other definitions are useful, too.</p>
 </div>
 <div class="section" id="id1">
-<h2>Minimal Spanning Trees<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2>15.4.3. Minimal Spanning Trees<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>Given a weighted undirected graph <span class="math notranslate nohighlight">\(G\)</span>, we are interested in finding its Minimal Spanning Tree (MST), which is defined as follows:</p>
 <div class="admonition-definition-minimal-spanning-tree admonition">
 <p class="first admonition-title">Definition (Minimal Spanning Tree)</p>
@@ -237,7 +257,7 @@ establishes a symmetric link between two nodes.</p>
 <p><em>Question:</em> For any graph, is MST always unique?</p>
 </div>
 <div class="section" id="kruskal-s-algorithm">
-<h2>Kruskal’s Algorithm<a class="headerlink" href="#kruskal-s-algorithm" title="Permalink to this headline">¶</a></h2>
+<h2>15.4.4. Kruskal’s Algorithm<a class="headerlink" href="#kruskal-s-algorithm" title="Permalink to this headline">¶</a></h2>
 <p>Kruskal’s algorithm returns the result tree <span class="math notranslate nohighlight">\(T\)</span> as a list of edges (a corresponding undirected graph can be restored in linear time). The key step of the algorithm is sorting edges by their weight.</p>
 <p>The algorithm relies on the Union-Find structure for disjoint sets (cf. Chapter <a class="reference internal" href="week-09-union-find.html#union-find"><span class="std std-ref">Equivalence Classes and Union-Find</span></a>).</p>
 <p>The algorithm first sorts all edges in an ascending other according to their weights. It then progressively fetches the edges and connectes the corresponding disjoint graphs. The following progression illustrates the main procedure on a simple graph example:</p>
@@ -295,7 +315,7 @@ establishes a symmetric link between two nodes.</p>
 <a class="reference internal image-reference" href="_images/05-ud.png"><img alt="_images/05-ud.png" class="align-center" src="_images/05-ud.png" style="width: 300px;" /></a>
 </div>
 <div class="section" id="testing-mst-construction">
-<h2>Testing MST Construction<a class="headerlink" href="#testing-mst-construction" title="Permalink to this headline">¶</a></h2>
+<h2>15.4.5. Testing MST Construction<a class="headerlink" href="#testing-mst-construction" title="Permalink to this headline">¶</a></h2>
 <p>The following simple tests checks one of the properties of the constructed MST:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;Testing MST size&quot;</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">t</span> <span class="o">=</span> <span class="n">mst_kruskal</span> <span class="n">example_graph_undirected</span> <span class="k">in</span>
@@ -305,7 +325,7 @@ establishes a symmetric link between two nodes.</p>
 <p>Other properties are left for you to establish as a home exercise.</p>
 </div>
 <div class="section" id="other-mst-algorithms">
-<h2>Other MST Algorithms<a class="headerlink" href="#other-mst-algorithms" title="Permalink to this headline">¶</a></h2>
+<h2>15.4.6. Other MST Algorithms<a class="headerlink" href="#other-mst-algorithms" title="Permalink to this headline">¶</a></h2>
 <p>In the interest of time, we only mention other popular MST algorithms:</p>
 <ul class="simple">
 <li><a class="reference external" href="https://en.wikipedia.org/wiki/Prim%27s_algorithm">Prim’s algorithm</a></li>
@@ -319,6 +339,15 @@ establishes a symmetric link between two nodes.</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-12-exercises.html" class="btn btn-neutral float-right" title="15.5. Exercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-12-paths.html" class="btn btn-neutral" title="15.3. Single-Source Shortest Paths" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

@@ -281,7 +281,7 @@ We can also try out the conversion machinery for the sake of producing nice Grap
  utop # let ag = LinkedGraphs.to_adjacency_graph g;;
  utop # graphviz_no_payload ag "medium.dot";;
 
-Now, running::
+Now, by running from the terminal::
 
  dot -Tpdf medium.dot -o medium.pdf
 

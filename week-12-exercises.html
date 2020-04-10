@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Exercises &mdash; YSC2229 2020</title>
+  <title>15.5. Exercises &mdash; YSC2229 2020</title>
   
 
   
@@ -27,7 +27,8 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="15.4. Minimal Spanning Trees" href="week-12-spanning.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -76,7 +77,7 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
@@ -91,6 +92,18 @@
 <li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-11.html">14. Week 11: Binary Search Trees and Graphs</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-12.html">15. Week 12: Graph Algorithms</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-12-linked-graphs.html">15.1. Graphs as Linked Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html">15.2. Reachability and Graph Traversals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html">15.3. Single-Source Shortest Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-spanning.html">15.4. Minimal Spanning Trees</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">15.5. Exercises</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-1">15.5.1. Exercise 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-2">15.5.2. Exercise 2</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
             
@@ -136,7 +149,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Exercises</li>
+          <li><a href="week-12.html">15. Week 12: Graph Algorithms</a> &raquo;</li>
+        
+      <li>15.5. Exercises</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -154,9 +169,9 @@
            <div itemprop="articleBody">
             
   <div class="section" id="exercises">
-<span id="exercises-12"></span><h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
+<span id="exercises-12"></span><h1>15.5. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="exercise-1">
-<span id="exercise-monotonic"></span><h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-monotonic"></span><h2>15.5.1. Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
 <p>Given a weighted directed graph, implement an algorithm to find a
 monotonic shortest path from a node <code class="docutils literal notranslate"><span class="pre">s</span></code> to any other node. A path is
 monotonic if the weight of its edges are either strictly increasing or
@@ -165,7 +180,7 @@ edges need to be relaxed. Implement tests for your algorithm and argue
 about its asymptotic complexity.</p>
 </div>
 <div class="section" id="exercise-2">
-<span id="exercise-bitonic"></span><h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-bitonic"></span><h2>15.5.2. Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
 <p>Given a weighted directed graph, implement an algorithm to find a
 <em>bitonic</em> shortest path from a node <code class="docutils literal notranslate"><span class="pre">s</span></code> to any other node. A path is
 bitonic if there is an intermediate node <code class="docutils literal notranslate"><span class="pre">v</span></code> in it such that the
@@ -180,6 +195,13 @@ a node) are strictly decreasing.</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="week-12-spanning.html" class="btn btn-neutral" title="15.4. Minimal Spanning Trees" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
