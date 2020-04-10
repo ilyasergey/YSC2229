@@ -103,7 +103,7 @@ implementation workload within your team.
 Report
 ------
 
-The report are written and submitted on Canvas individually. They
+The reports are written and submitted on Canvas individually. They
 should focus on the following aspects of your experience with the
 project:
 
