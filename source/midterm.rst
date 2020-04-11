@@ -3,7 +3,7 @@
 Midterm Project: Memory Allocation and Reclamation
 ==================================================
 
-This midterm project will consist of two parts: grop-based coding
+This midterm project will consist of two parts: team-based coding
 assignments and individual implementation reports. 
 
 Coding Assignment 
