@@ -254,7 +254,9 @@ Now, we can find an intersection of a ray and a segment, in a way similar to how
    (* Ray's direction *)
    let r = Point (cos phi, sin phi) in
 
+   (* Ray and Segment are parallel *)
    if cross_product s r =~= 0. then
+     (* Ray and Segment are collinear *)
      if cross_product (p -- q) r =~= 0.
      then if point_on_ray ray p then Some p 
        else if point_on_ray ray p' then Some p'
