@@ -7,7 +7,7 @@ Convex Hulls
 
 * File: ``ConvexHulls.ml``
 
-In the last chapter of our brief introduction to problems, techniques,
+In the last section of our brief introduction to problems, techniques,
 and algorithms of computational geometry, we take a look at a very
 simple yet practically relevant problem: constructing a convex hull of
 a set of points. A convex hull for a set of points :math:`S` is a
@@ -117,7 +117,7 @@ The main Graham algorithm is as follows::
        (* Main algorithm *)
        List.iter (fun p ->
            while non_left_turn p do
-             let _ = pop s in ()
+             ignore (pop s)
            done;
            push s p) rest;
 
@@ -129,8 +129,7 @@ angle from ``p0``, making sure that the currently build convex hull
 for a subset is convex. It removes the points that violat this
 invariants from the
 
-*Question:* What is the complexity of the procedure in terms of the
- size ``n`` of the set of points?
+*Question:* What is the complexity of the procedure in terms of the size ``n`` of the set of points?
 
 
 Graham scan invariant

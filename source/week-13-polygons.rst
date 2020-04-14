@@ -221,7 +221,7 @@ Another property to check of two fixed polygons, is whether they intersect, whic
 Intermezzo: rays and intersections
 ----------------------------------
 
-The procedure above only checks for intersection of edges, but what is one polygon is fully within another polygon? How can we determine that? To answer this question, we would need to be able to determine whether a certain *point* is within a given polygon. But for this we would need to make a small detour and talk about another geometric construction: rays.
+The procedure above only checks for intersection of edges, but what is one polygon is fully within another polygon? How can we determine that? To answer this question, we would need to be able to determine whether a certain point is *within* a given polygon. But for this we would need to make a small detour and talk about another geometric construction: rays.
 
 Ray is similar to a segment, but only has one endpoint, spreading to the infinity in a certain direction. This is why we represent rays by its origin and an angle in radians (encoded as ``float``), determining the direction in which it spreads::
 
@@ -233,7 +233,7 @@ Ray is similar to a segment, but only has one endpoint, spreading to the infinit
    let q = p ++ (2000. *. (cos phi), 2000. *. (sin phi)) in
    draw_segment ~color (p, q)
 
-Given a ray :math:`R = (p, \phi)` and a point :math:`p` that belongs to the line of the ray, we can determine whether :math:`p` is on :math:`r` by manes of the following function::
+Given a ray :math:`R = (p, \phi)` and a point :math:`p` that belongs to the line of the ray, we can determine whether :math:`p` is on :math:`r` by means of the following function::
 
  let point_on_ray ray p = 
    let (q, phi) = ray in
@@ -242,7 +242,7 @@ Given a ray :math:`R = (p, \phi)` and a point :math:`p` that belongs to the line
    let u = dot_product (p -- q) r in
    u >=~ 0.
 
-Notice that here we encode all points of :math:`R` via the equation :math:`q + u r`, where :math:`r` is a "directional" vector of the ray and :math:`0 \leq u`. We then solve the vector equation :math:`p = q + u r`, by multiplying both parts by :math:`r` via scalar product, and also noticing that :math:`r \cdot r = 0`. Finally, we check if :math:`u \geq 0`, to make sure that :math:`p` is not lying "behind" the ray.
+Notice that here we encode all points of :math:`R` via the equation :math:`q + u r`, where :math:`r` is a "directional" vector of the ray and :math:`0 \leq u`. We then solve the vector equation :math:`p = q + u r`, by multiplying both parts by :math:`r` via scalar product, and also noticing that :math:`r \cdot r = 1`. Finally, we check if :math:`u \geq 0`, to make sure that :math:`p` is not lying "behind" the ray.
 
 Now, we can find an intersection of a ray and a segment, in a way similar to how that was done in Section :ref:`points`::
 
