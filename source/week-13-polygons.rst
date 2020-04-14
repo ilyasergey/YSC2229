@@ -62,11 +62,8 @@ OCaml provides a special function ``draw_poly`` to render polygons, and we imple
  let draw_polygon ?color:(color = Graphics.black) p = 
    let open Graphics in
    set_color color;
-   List.map (function Point (x, y) -> 
-     (int_of_float x + fst origin, 
-      int_of_float y + snd origin)) p |>
-   Array.of_list |>
-   draw_poly;
+   let ps_array = list_to_array @@ List.map point_to_orig p in
+   draw_poly ps_array;
    set_color black
 
 Some useful polygons
