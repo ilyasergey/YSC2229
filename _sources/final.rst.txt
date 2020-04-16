@@ -9,7 +9,7 @@ assignments and individual implementation reports.
 Coding Assignment 
 -----------------
 
-In these difficult times, it is particularly important to keep our living spaces clean and tidy. To help with this task, the researchers from NUS Faculty of Engineering have designed a new advanced cleaning robot called Vroomba [#]_. In this project, you will have to develop a series of algorithms for navigating a Vroomba robot across arbitrary spaces so it could clean them. The catch is: you will have to strive to minimise the number of moves it takes for Vroomba it to do its job.
+In these difficult times, it is particularly important to keep our living spaces clean and tidy. To help with this task, the researchers from NUS Faculty of Engineering have designed a new advanced cleaning robot called Vroomba [#]_. In this project, you will have to develop a series of algorithms for navigating a Vroomba robot across arbitrary spaces so it could clean them. The catch is: you will have to strive to minimise the number of "moves" the Vroomba needs to make it to do its job.
 
 A room is represented by a two-dimensional rectilinear polygon with
 all coordinates being integer values. Vroomba occupies one square
