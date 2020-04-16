@@ -159,7 +159,7 @@
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">ConvexHulls.ml</span></code></li>
 </ul>
-<p>In the last chapter of our brief introduction to problems, techniques,
+<p>In the last section of our brief introduction to problems, techniques,
 and algorithms of computational geometry, we take a look at a very
 simple yet practically relevant problem: constructing a convex hull of
 a set of points. A convex hull for a set of points <span class="math notranslate nohighlight">\(S\)</span> is a
@@ -258,7 +258,7 @@ points with the smallest <span class="math notranslate nohighlight">\(y\)</span>
       <span class="c">(* Main algorithm *)</span>
       <span class="nn">List</span><span class="p">.</span><span class="n">iter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">p</span> <span class="o">-&gt;</span>
           <span class="k">while</span> <span class="n">non_left_turn</span> <span class="n">p</span> <span class="k">do</span>
-            <span class="k">let</span> <span class="o">_</span> <span class="o">=</span> <span class="n">pop</span> <span class="n">s</span> <span class="k">in</span> <span class="bp">()</span>
+            <span class="n">ignore</span> <span class="o">(</span><span class="n">pop</span> <span class="n">s</span><span class="o">)</span>
           <span class="k">done</span><span class="o">;</span>
           <span class="n">push</span> <span class="n">s</span> <span class="n">p</span><span class="o">)</span> <span class="n">rest</span><span class="o">;</span>
 
@@ -270,10 +270,7 @@ points with the smallest <span class="math notranslate nohighlight">\(y\)</span>
 angle from <code class="docutils literal notranslate"><span class="pre">p0</span></code>, making sure that the currently build convex hull
 for a subset is convex. It removes the points that violat this
 invariants from the</p>
-<dl class="docutils">
-<dt><em>Question:</em> What is the complexity of the procedure in terms of the</dt>
-<dd>size <code class="docutils literal notranslate"><span class="pre">n</span></code> of the set of points?</dd>
-</dl>
+<p><em>Question:</em> What is the complexity of the procedure in terms of the size <code class="docutils literal notranslate"><span class="pre">n</span></code> of the set of points?</p>
 </div>
 <div class="section" id="graham-scan-invariant">
 <h2>Graham scan invariant<a class="headerlink" href="#graham-scan-invariant" title="Permalink to this headline">¶</a></h2>

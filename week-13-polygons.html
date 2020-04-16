@@ -210,11 +210,8 @@
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">draw_polygon</span> <span class="o">?</span><span class="n">color</span><span class="o">:(</span><span class="n">color</span> <span class="o">=</span> <span class="nn">Graphics</span><span class="p">.</span><span class="n">black</span><span class="o">)</span> <span class="n">p</span> <span class="o">=</span>
   <span class="k">let</span> <span class="k">open</span> <span class="nc">Graphics</span> <span class="k">in</span>
   <span class="n">set_color</span> <span class="n">color</span><span class="o">;</span>
-  <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">function</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">-&gt;</span>
-    <span class="o">(</span><span class="n">int_of_float</span> <span class="n">x</span> <span class="o">+</span> <span class="n">fst</span> <span class="n">origin</span><span class="o">,</span>
-     <span class="n">int_of_float</span> <span class="n">y</span> <span class="o">+</span> <span class="n">snd</span> <span class="n">origin</span><span class="o">))</span> <span class="n">p</span> <span class="o">|&gt;</span>
-  <span class="nn">Array</span><span class="p">.</span><span class="n">of_list</span> <span class="o">|&gt;</span>
-  <span class="n">draw_poly</span><span class="o">;</span>
+  <span class="k">let</span> <span class="n">ps_array</span> <span class="o">=</span> <span class="n">list_to_array</span> <span class="o">@@</span> <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="n">point_to_orig</span> <span class="n">p</span> <span class="k">in</span>
+  <span class="n">draw_poly</span> <span class="n">ps_array</span><span class="o">;</span>
   <span class="n">set_color</span> <span class="n">black</span>
 </pre></div>
 </div>
@@ -367,7 +364,7 @@
 </div>
 <div class="section" id="intermezzo-rays-and-intersections">
 <h2>Intermezzo: rays and intersections<a class="headerlink" href="#intermezzo-rays-and-intersections" title="Permalink to this headline">¶</a></h2>
-<p>The procedure above only checks for intersection of edges, but what is one polygon is fully within another polygon? How can we determine that? To answer this question, we would need to be able to determine whether a certain <em>point</em> is within a given polygon. But for this we would need to make a small detour and talk about another geometric construction: rays.</p>
+<p>The procedure above only checks for intersection of edges, but what is one polygon is fully within another polygon? How can we determine that? To answer this question, we would need to be able to determine whether a certain point is <em>within</em> a given polygon. But for this we would need to make a small detour and talk about another geometric construction: rays.</p>
 <p>Ray is similar to a segment, but only has one endpoint, spreading to the infinity in a certain direction. This is why we represent rays by its origin and an angle in radians (encoded as <code class="docutils literal notranslate"><span class="pre">float</span></code>), determining the direction in which it spreads:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">ray</span> <span class="o">=</span> <span class="n">point</span> <span class="o">*</span> <span class="kt">float</span>
 
@@ -378,7 +375,7 @@
   <span class="n">draw_segment</span> <span class="o">~</span><span class="n">color</span> <span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="n">q</span><span class="o">)</span>
 </pre></div>
 </div>
-<p>Given a ray <span class="math notranslate nohighlight">\(R = (p, \phi)\)</span> and a point <span class="math notranslate nohighlight">\(p\)</span> that belongs to the line of the ray, we can determine whether <span class="math notranslate nohighlight">\(p\)</span> is on <span class="math notranslate nohighlight">\(r\)</span> by manes of the following function:</p>
+<p>Given a ray <span class="math notranslate nohighlight">\(R = (p, \phi)\)</span> and a point <span class="math notranslate nohighlight">\(p\)</span> that belongs to the line of the ray, we can determine whether <span class="math notranslate nohighlight">\(p\)</span> is on <span class="math notranslate nohighlight">\(r\)</span> by means of the following function:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">point_on_ray</span> <span class="n">ray</span> <span class="n">p</span> <span class="o">=</span>
   <span class="k">let</span> <span class="o">(</span><span class="n">q</span><span class="o">,</span> <span class="n">phi</span><span class="o">)</span> <span class="o">=</span> <span class="n">ray</span> <span class="k">in</span>
   <span class="c">(* Ray&#39;s direction *)</span>
@@ -387,7 +384,7 @@
   <span class="n">u</span> <span class="o">&gt;=~</span> <span class="mi">0</span><span class="o">.</span>
 </pre></div>
 </div>
-<p>Notice that here we encode all points of <span class="math notranslate nohighlight">\(R\)</span> via the equation <span class="math notranslate nohighlight">\(q + u r\)</span>, where <span class="math notranslate nohighlight">\(r\)</span> is a “directional” vector of the ray and <span class="math notranslate nohighlight">\(0 \leq u\)</span>. We then solve the vector equation <span class="math notranslate nohighlight">\(p = q + u r\)</span>, by multiplying both parts by <span class="math notranslate nohighlight">\(r\)</span> via scalar product, and also noticing that <span class="math notranslate nohighlight">\(r \cdot r = 0\)</span>. Finally, we check if <span class="math notranslate nohighlight">\(u \geq 0\)</span>, to make sure that <span class="math notranslate nohighlight">\(p\)</span> is not lying “behind” the ray.</p>
+<p>Notice that here we encode all points of <span class="math notranslate nohighlight">\(R\)</span> via the equation <span class="math notranslate nohighlight">\(q + u r\)</span>, where <span class="math notranslate nohighlight">\(r\)</span> is a “directional” vector of the ray and <span class="math notranslate nohighlight">\(0 \leq u\)</span>. We then solve the vector equation <span class="math notranslate nohighlight">\(p = q + u r\)</span>, by multiplying both parts by <span class="math notranslate nohighlight">\(r\)</span> via scalar product, and also noticing that <span class="math notranslate nohighlight">\(r \cdot r = 1\)</span>. Finally, we check if <span class="math notranslate nohighlight">\(u \geq 0\)</span>, to make sure that <span class="math notranslate nohighlight">\(p\)</span> is not lying “behind” the ray.</p>
 <p>Now, we can find an intersection of a ray and a segment, in a way similar to how that was done in Section <a class="reference internal" href="week-13-points.html#points"><span class="std std-ref">Points, Segments and their Properties</span></a>:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">ray_segment_intersection</span> <span class="n">ray</span> <span class="n">seg</span> <span class="o">=</span>
   <span class="k">let</span> <span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="n">p&#39;</span><span class="o">)</span> <span class="o">=</span> <span class="n">seg</span> <span class="k">in</span>
@@ -397,7 +394,9 @@
   <span class="c">(* Ray&#39;s direction *)</span>
   <span class="k">let</span> <span class="n">r</span> <span class="o">=</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">cos</span> <span class="n">phi</span><span class="o">,</span> <span class="n">sin</span> <span class="n">phi</span><span class="o">)</span> <span class="k">in</span>
 
+  <span class="c">(* Ray and Segment are parallel *)</span>
   <span class="k">if</span> <span class="n">cross_product</span> <span class="n">s</span> <span class="n">r</span> <span class="o">=~=</span> <span class="mi">0</span><span class="o">.</span> <span class="k">then</span>
+    <span class="c">(* Ray and Segment are collinear *)</span>
     <span class="k">if</span> <span class="n">cross_product</span> <span class="o">(</span><span class="n">p</span> <span class="o">--</span> <span class="n">q</span><span class="o">)</span> <span class="n">r</span> <span class="o">=~=</span> <span class="mi">0</span><span class="o">.</span>
     <span class="k">then</span> <span class="k">if</span> <span class="n">point_on_ray</span> <span class="n">ray</span> <span class="n">p</span> <span class="k">then</span> <span class="nc">Some</span> <span class="n">p</span>
       <span class="k">else</span> <span class="k">if</span> <span class="n">point_on_ray</span> <span class="n">ray</span> <span class="n">p&#39;</span> <span class="k">then</span> <span class="nc">Some</span> <span class="n">p&#39;</span>

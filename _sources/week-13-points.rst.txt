@@ -45,15 +45,21 @@ A point is simply a pair of two floats, wrapped to a constructor to avoid possib
  let get_x (Point (x, y)) = x
  let get_y (Point (x, y)) = y
 
-We can draw a point as a small circle (let's say, with a radius of 3 pixels) using OCaml's graphics capacities, via the following function::
+We can draw a point as a small circle (let's say, with a radius of 3 pixels) using OCaml's graphics capacities, via the following functions::
 
  include GraphicUtil
 
- let draw_point ?color:(color = Graphics.black) (Point (x, y)) = 
+ let point_to_orig p = 
+  let Point (x, y) = p in
+  let ox = fst origin in 
+  let oy = snd origin in 
+  (* Question: why adding fst/snd origin? *)
+  (int_of_float x + ox, int_of_float y + oy)
+
+ let draw_point ?color:(color = Graphics.black) p = 
    let open Graphics in
    let (a, b) = current_point () in
-   let ix = int_of_float x + fst origin in 
-   let iy = int_of_float y + snd origin in 
+   let ix, iy = point_to_orig p in
    moveto ix iy;
    set_color color;
    fill_circle ix iy 3;
@@ -125,7 +131,7 @@ Imagine that we want to "turn" one vector in the direction of another. For this,
 (b) How to perform the rotation?
 (c) Which direction to turn?
 
-The question (a) can be answered by computing the *scalar product* (often referred ) of the two points/vectors. By definition :math:`(x_1, y_1) \cdot (x_2, y_2) = |(x_1, y_1) (x_2, y_2)|\cos{\theta} = x_1 \times x_2 + y_1 \times y_2`, where :math:`\theta` is the smaller angle between `(x_1, y_1)` and :math:`(x_2, y_2)`. 
+The question (a) can be answered by computing the *scalar product* (often referred ) of the two points/vectors. By definition :math:`(x_1, y_1) \cdot (x_2, y_2) = |(x_1, y_1) (x_2, y_2)|\cos{\theta} = x_1 \times x_2 + y_1 \times y_2`, where :math:`\theta` is the smaller angle between :math:`(x_1, y_1)` and :math:`(x_2, y_2)`. 
 
 Therefore, we can calculate the scalar product as follows::
 
@@ -194,22 +200,31 @@ We can use this machinery to rotate by 90 degrees (i.e., :math:`\pi/2`) the vect
 Vector product and its properties
 ---------------------------------
 
-*Vector product* of two vectors (also known as *cross-product*) of two vectors :math:`v_1 = (x_1, y_1)` and :math:`v_2 = (x_2, y_2)` is formally defined as :math:`(x_1, y_1) \times (x_2, y_2) = |(x_1, y_1) (x_2, y_2)|\sin{\theta} = x_1 \times y_2 - x_2 \times y_1`, where :math:`\theta` is an angle between the two vectors::
+*Vector product* of two vectors (also known as *cross-product*) of two vectors :math:`p1 = (x_1, y_1)` and :math:`p2 = (x_2, y_2)` is formally defined as :math:`(x_1, y_1) \times (x_2, y_2) = |(x_1, y_1) (x_2, y_2)|\sin{\theta} = x_1 \times y_2 - x_2 \times y_1`, where :math:`\theta` is an angle between the two vectors::
 
  let cross_product (Point (x1, y1)) (Point (x2, y2)) = 
    x1 *. y2 -. x2 *. y1
+ 
+As the cross-product ``cross_product p1 p2`` it operates with a sine rather than cosine, it allows to determine the "direction", in which in which one needs to rotate :math:`p1` to approach :math:`p2` in the closest way. Specifically, if the result of the cross-product is positive then, one should move in the counter-clockwise fashion, while if it is negative, :math:`p1` is in the clockwise direction from :math:`p2`. Finally, if the product is zero, the two vectors are parallel and point in the same or the opposite directions::
 
-As the cross-product it operates with a sine rather than cosine, it allows to determine the "direction", in which in which one needs to rotate :math:`v_2` to approach :math:`v_1` in the closest way. Specifically, if the result of the cross-product is positive then, one should move in the clock-wise fashion, while if it is negative, :math:`v_1` is in the counter-clockwise direction from `v_2`. Finally, if the product is zero, the two vectors are parallel and point in the same or the opposite directions::
-
- let sign p = 
-   if p =~= 0. then 0
-   else if p < 0. then -1 
+ let sign x = 
+   if x =~= 0. then 0
+   else if x < 0. then -1 
    else 1
 
- (* Where should we turning p *)
+ (* Where should we turning p2 *)
  let dir_clock p1 p2 = 
    let prod = cross_product p1 p2 in 
    sign prod
+
+Another famous mnemonics to remember the relation between the sign of
+the cross product of the vectors :math:`p_1` and :math:`p_2` comes
+from a so-called `right-hand rule
+<https://en.wikipedia.org/wiki/Right-hand_rule>`_. You have come
+across this rule in the real lide while interacting with screws if
+you turn the screw counter-clockwise (think of rotating :math:`p_1` to
+:math:`p_2` the same way), the screw moves up (cross-product is
+positive); otherwise the screw moves down (cross-product is negative).
 
 We can now employ the cross-product to know in which direction to rotate on vector to another::
 
@@ -242,21 +257,17 @@ From individual points on a plain, we transition to segments, are simply the pai
 
  type segment = point * point
 
-The following definitions allow to draw segments using our plotting frameworks, and also provide some default segments to experiment with::
+The following definitions allow one to draw segments using our plotting frameworks, and also provide some default segments to experiment with::
 
  (* Draw a segment *)
  let draw_segment ?color:(color = Graphics.black) (a, b) = 
    let open Graphics in 
-   let (Point (ax, ay)) = a in
-   let (Point (bx, by)) = b in
    draw_point ~color:color a;
    draw_point ~color:color b;
-   let iax = int_of_float ax + fst origin in
-   let iay = int_of_float ay + snd origin in
+   let iax, iay = point_to_orig a in
    moveto iax iay;
    set_color color;
-   let ibx = int_of_float bx + fst origin in
-   let iby = int_of_float by + snd origin in
+   let ibx, iby = point_to_orig b in
    lineto ibx iby;
    go_to_origin ()
 

@@ -195,14 +195,20 @@ to achieve this:</p>
 <span class="k">let</span> <span class="n">get_y</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">))</span> <span class="o">=</span> <span class="n">y</span>
 </pre></div>
 </div>
-<p>We can draw a point as a small circle (let’s say, with a radius of 3 pixels) using OCaml’s graphics capacities, via the following function:</p>
+<p>We can draw a point as a small circle (let’s say, with a radius of 3 pixels) using OCaml’s graphics capacities, via the following functions:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">include</span> <span class="nc">GraphicUtil</span>
 
-<span class="k">let</span> <span class="n">draw_point</span> <span class="o">?</span><span class="n">color</span><span class="o">:(</span><span class="n">color</span> <span class="o">=</span> <span class="nn">Graphics</span><span class="p">.</span><span class="n">black</span><span class="o">)</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">))</span> <span class="o">=</span>
+<span class="k">let</span> <span class="n">point_to_orig</span> <span class="n">p</span> <span class="o">=</span>
+ <span class="k">let</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">=</span> <span class="n">p</span> <span class="k">in</span>
+ <span class="k">let</span> <span class="n">ox</span> <span class="o">=</span> <span class="n">fst</span> <span class="n">origin</span> <span class="k">in</span>
+ <span class="k">let</span> <span class="n">oy</span> <span class="o">=</span> <span class="n">snd</span> <span class="n">origin</span> <span class="k">in</span>
+ <span class="c">(* Question: why adding fst/snd origin? *)</span>
+ <span class="o">(</span><span class="n">int_of_float</span> <span class="n">x</span> <span class="o">+</span> <span class="n">ox</span><span class="o">,</span> <span class="n">int_of_float</span> <span class="n">y</span> <span class="o">+</span> <span class="n">oy</span><span class="o">)</span>
+
+<span class="k">let</span> <span class="n">draw_point</span> <span class="o">?</span><span class="n">color</span><span class="o">:(</span><span class="n">color</span> <span class="o">=</span> <span class="nn">Graphics</span><span class="p">.</span><span class="n">black</span><span class="o">)</span> <span class="n">p</span> <span class="o">=</span>
   <span class="k">let</span> <span class="k">open</span> <span class="nc">Graphics</span> <span class="k">in</span>
   <span class="k">let</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">=</span> <span class="n">current_point</span> <span class="bp">()</span> <span class="k">in</span>
-  <span class="k">let</span> <span class="n">ix</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="n">x</span> <span class="o">+</span> <span class="n">fst</span> <span class="n">origin</span> <span class="k">in</span>
-  <span class="k">let</span> <span class="n">iy</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="n">y</span> <span class="o">+</span> <span class="n">snd</span> <span class="n">origin</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ix</span><span class="o">,</span> <span class="n">iy</span> <span class="o">=</span> <span class="n">point_to_orig</span> <span class="n">p</span> <span class="k">in</span>
   <span class="n">moveto</span> <span class="n">ix</span> <span class="n">iy</span><span class="o">;</span>
   <span class="n">set_color</span> <span class="n">color</span><span class="o">;</span>
   <span class="n">fill_circle</span> <span class="n">ix</span> <span class="n">iy</span> <span class="mi">3</span><span class="o">;</span>
@@ -271,7 +277,7 @@ to achieve this:</p>
 <li>How to perform the rotation?</li>
 <li>Which direction to turn?</li>
 </ol>
-<p>The question (a) can be answered by computing the <em>scalar product</em> (often referred ) of the two points/vectors. By definition <span class="math notranslate nohighlight">\((x_1, y_1) \cdot (x_2, y_2) = |(x_1, y_1) (x_2, y_2)|\cos{\theta} = x_1 \times x_2 + y_1 \times y_2\)</span>, where <span class="math notranslate nohighlight">\(\theta\)</span> is the smaller angle between <cite>(x_1, y_1)</cite> and <span class="math notranslate nohighlight">\((x_2, y_2)\)</span>.</p>
+<p>The question (a) can be answered by computing the <em>scalar product</em> (often referred ) of the two points/vectors. By definition <span class="math notranslate nohighlight">\((x_1, y_1) \cdot (x_2, y_2) = |(x_1, y_1) (x_2, y_2)|\cos{\theta} = x_1 \times x_2 + y_1 \times y_2\)</span>, where <span class="math notranslate nohighlight">\(\theta\)</span> is the smaller angle between <span class="math notranslate nohighlight">\((x_1, y_1)\)</span> and <span class="math notranslate nohighlight">\((x_2, y_2)\)</span>.</p>
 <p>Therefore, we can calculate the scalar product as follows:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">dot_product</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x1</span><span class="o">,</span> <span class="n">y1</span><span class="o">))</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x2</span><span class="o">,</span> <span class="n">y2</span><span class="o">))</span> <span class="o">=</span>
   <span class="n">x1</span> <span class="o">*.</span> <span class="n">x2</span> <span class="o">+.</span> <span class="n">y1</span> <span class="o">*.</span> <span class="n">y2</span>
@@ -335,23 +341,30 @@ to achieve this:</p>
 </div>
 <div class="section" id="vector-product-and-its-properties">
 <h2>Vector product and its properties<a class="headerlink" href="#vector-product-and-its-properties" title="Permalink to this headline">¶</a></h2>
-<p><em>Vector product</em> of two vectors (also known as <em>cross-product</em>) of two vectors <span class="math notranslate nohighlight">\(v_1 = (x_1, y_1)\)</span> and <span class="math notranslate nohighlight">\(v_2 = (x_2, y_2)\)</span> is formally defined as <span class="math notranslate nohighlight">\((x_1, y_1) \times (x_2, y_2) = |(x_1, y_1) (x_2, y_2)|\sin{\theta} = x_1 \times y_2 - x_2 \times y_1\)</span>, where <span class="math notranslate nohighlight">\(\theta\)</span> is an angle between the two vectors:</p>
+<p><em>Vector product</em> of two vectors (also known as <em>cross-product</em>) of two vectors <span class="math notranslate nohighlight">\(p1 = (x_1, y_1)\)</span> and <span class="math notranslate nohighlight">\(p2 = (x_2, y_2)\)</span> is formally defined as <span class="math notranslate nohighlight">\((x_1, y_1) \times (x_2, y_2) = |(x_1, y_1) (x_2, y_2)|\sin{\theta} = x_1 \times y_2 - x_2 \times y_1\)</span>, where <span class="math notranslate nohighlight">\(\theta\)</span> is an angle between the two vectors:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">cross_product</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x1</span><span class="o">,</span> <span class="n">y1</span><span class="o">))</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x2</span><span class="o">,</span> <span class="n">y2</span><span class="o">))</span> <span class="o">=</span>
   <span class="n">x1</span> <span class="o">*.</span> <span class="n">y2</span> <span class="o">-.</span> <span class="n">x2</span> <span class="o">*.</span> <span class="n">y1</span>
 </pre></div>
 </div>
-<p>As the cross-product it operates with a sine rather than cosine, it allows to determine the “direction”, in which in which one needs to rotate <span class="math notranslate nohighlight">\(v_2\)</span> to approach <span class="math notranslate nohighlight">\(v_1\)</span> in the closest way. Specifically, if the result of the cross-product is positive then, one should move in the clock-wise fashion, while if it is negative, <span class="math notranslate nohighlight">\(v_1\)</span> is in the counter-clockwise direction from <cite>v_2</cite>. Finally, if the product is zero, the two vectors are parallel and point in the same or the opposite directions:</p>
-<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">sign</span> <span class="n">p</span> <span class="o">=</span>
-  <span class="k">if</span> <span class="n">p</span> <span class="o">=~=</span> <span class="mi">0</span><span class="o">.</span> <span class="k">then</span> <span class="mi">0</span>
-  <span class="k">else</span> <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">.</span> <span class="k">then</span> <span class="o">-</span><span class="mi">1</span>
+<p>As the cross-product <code class="docutils literal notranslate"><span class="pre">cross_product</span> <span class="pre">p1</span> <span class="pre">p2</span></code> it operates with a sine rather than cosine, it allows to determine the “direction”, in which in which one needs to rotate <span class="math notranslate nohighlight">\(p1\)</span> to approach <span class="math notranslate nohighlight">\(p2\)</span> in the closest way. Specifically, if the result of the cross-product is positive then, one should move in the counter-clockwise fashion, while if it is negative, <span class="math notranslate nohighlight">\(p1\)</span> is in the clockwise direction from <span class="math notranslate nohighlight">\(p2\)</span>. Finally, if the product is zero, the two vectors are parallel and point in the same or the opposite directions:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">sign</span> <span class="n">x</span> <span class="o">=</span>
+  <span class="k">if</span> <span class="n">x</span> <span class="o">=~=</span> <span class="mi">0</span><span class="o">.</span> <span class="k">then</span> <span class="mi">0</span>
+  <span class="k">else</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="o">.</span> <span class="k">then</span> <span class="o">-</span><span class="mi">1</span>
   <span class="k">else</span> <span class="mi">1</span>
 
-<span class="c">(* Where should we turning p *)</span>
+<span class="c">(* Where should we turning p2 *)</span>
 <span class="k">let</span> <span class="n">dir_clock</span> <span class="n">p1</span> <span class="n">p2</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">prod</span> <span class="o">=</span> <span class="n">cross_product</span> <span class="n">p1</span> <span class="n">p2</span> <span class="k">in</span>
   <span class="n">sign</span> <span class="n">prod</span>
 </pre></div>
 </div>
+<p>Another famous mnemonics to remember the relation between the sign of
+the cross product of the vectors <span class="math notranslate nohighlight">\(p_1\)</span> and <span class="math notranslate nohighlight">\(p_2\)</span> comes
+from a so-called <a class="reference external" href="https://en.wikipedia.org/wiki/Right-hand_rule">right-hand rule</a>. You have come
+across this rule in the real lide while interacting with screws if
+you turn the screw counter-clockwise (think of rotating <span class="math notranslate nohighlight">\(p_1\)</span> to
+<span class="math notranslate nohighlight">\(p_2\)</span> the same way), the screw moves up (cross-product is
+positive); otherwise the screw moves down (cross-product is negative).</p>
 <p>We can now employ the cross-product to know in which direction to rotate on vector to another:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">rotate_to</span> <span class="n">p1</span> <span class="n">p2</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">angle_between</span> <span class="n">p1</span> <span class="n">p2</span> <span class="k">in</span>
@@ -379,20 +392,16 @@ to achieve this:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">segment</span> <span class="o">=</span> <span class="n">point</span> <span class="o">*</span> <span class="n">point</span>
 </pre></div>
 </div>
-<p>The following definitions allow to draw segments using our plotting frameworks, and also provide some default segments to experiment with:</p>
+<p>The following definitions allow one to draw segments using our plotting frameworks, and also provide some default segments to experiment with:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Draw a segment *)</span>
 <span class="k">let</span> <span class="n">draw_segment</span> <span class="o">?</span><span class="n">color</span><span class="o">:(</span><span class="n">color</span> <span class="o">=</span> <span class="nn">Graphics</span><span class="p">.</span><span class="n">black</span><span class="o">)</span> <span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">)</span> <span class="o">=</span>
   <span class="k">let</span> <span class="k">open</span> <span class="nc">Graphics</span> <span class="k">in</span>
-  <span class="k">let</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">ax</span><span class="o">,</span> <span class="n">ay</span><span class="o">))</span> <span class="o">=</span> <span class="n">a</span> <span class="k">in</span>
-  <span class="k">let</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">bx</span><span class="o">,</span> <span class="n">by</span><span class="o">))</span> <span class="o">=</span> <span class="n">b</span> <span class="k">in</span>
   <span class="n">draw_point</span> <span class="o">~</span><span class="n">color</span><span class="o">:</span><span class="n">color</span> <span class="n">a</span><span class="o">;</span>
   <span class="n">draw_point</span> <span class="o">~</span><span class="n">color</span><span class="o">:</span><span class="n">color</span> <span class="n">b</span><span class="o">;</span>
-  <span class="k">let</span> <span class="n">iax</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="n">ax</span> <span class="o">+</span> <span class="n">fst</span> <span class="n">origin</span> <span class="k">in</span>
-  <span class="k">let</span> <span class="n">iay</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="n">ay</span> <span class="o">+</span> <span class="n">snd</span> <span class="n">origin</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">iax</span><span class="o">,</span> <span class="n">iay</span> <span class="o">=</span> <span class="n">point_to_orig</span> <span class="n">a</span> <span class="k">in</span>
   <span class="n">moveto</span> <span class="n">iax</span> <span class="n">iay</span><span class="o">;</span>
   <span class="n">set_color</span> <span class="n">color</span><span class="o">;</span>
-  <span class="k">let</span> <span class="n">ibx</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="n">bx</span> <span class="o">+</span> <span class="n">fst</span> <span class="n">origin</span> <span class="k">in</span>
-  <span class="k">let</span> <span class="n">iby</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="n">by</span> <span class="o">+</span> <span class="n">snd</span> <span class="n">origin</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ibx</span><span class="o">,</span> <span class="n">iby</span> <span class="o">=</span> <span class="n">point_to_orig</span> <span class="n">b</span> <span class="k">in</span>
   <span class="n">lineto</span> <span class="n">ibx</span> <span class="n">iby</span><span class="o">;</span>
   <span class="n">go_to_origin</span> <span class="bp">()</span>
 

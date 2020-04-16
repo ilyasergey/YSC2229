@@ -1,0 +1,263 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Final Project: Vroomba Programming &mdash; YSC2229 2020</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-11.html">14. Week 11: Binary Search Trees and Graphs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-12.html">15. Week 12: Graph Algorithms</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Final Project: Vroomba Programming</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="final-project-vroomba-programming">
+<h1>Final Project: Vroomba Programming<a class="headerlink" href="#final-project-vroomba-programming" title="Permalink to this headline">¶</a></h1>
+<p>The final project will consist of two parts: team-based coding
+assignments and individual implementation reports.</p>
+<div class="section" id="coding-assignment">
+<h2>Coding Assignment<a class="headerlink" href="#coding-assignment" title="Permalink to this headline">¶</a></h2>
+<p>In these difficult times, it is particularly important to keep our living spaces clean and tidy. To help with this task, the researchers from NUS Faculty of Engineering have designed a new advanced cleaning robot called Vroomba <a class="footnote-reference" href="#id2" id="id1">[1]</a>. In this project, you will have to develop a series of algorithms that helps to navigate a Vroomba robot across arbitrary spaces it has to clean, while minimising the time it takes for it to do its job.</p>
+<p>A room is represented by a two-dimensional rectilinear polygon with
+all coordinates being integer values. Vroomba occupies one square
+<code class="docutils literal notranslate"><span class="pre">1x1</span></code>, and its position is formally defined to be the bottom left
+corner of this square. Vroomba instantly cleans the space in the
+square it is located. In addition to that, its mechanical brushes can
+clean the eight squares adjacent to its current position.
+Unfortunately, the manipulators cannot spread through the walls or
+“wrap” around the corners.</p>
+<a class="reference internal image-reference" href="_images/vroom-vroom.png"><img alt="_images/vroom-vroom.png" class="align-center" src="_images/vroom-vroom.png" style="width: 600px;" /></a>
+<p>Your goal in this task is to compute for a Vroomba robot that starts his shift at a position <code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">0)</span></code>, the best possible route to clean the entire area of room. For example, consider a room defined as the polygon with coordinates <code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">0);</span> <span class="pre">(6,</span> <span class="pre">0);</span> <span class="pre">(6,</span> <span class="pre">1);</span> <span class="pre">(8,</span> <span class="pre">1);</span> <span class="pre">(8,</span> <span class="pre">2);</span> <span class="pre">(6,</span> <span class="pre">2);</span> <span class="pre">(6,</span> <span class="pre">3);</span> <span class="pre">(0,</span> <span class="pre">3)</span></code> and shown on the image below:</p>
+<a class="reference internal image-reference" href="_images/vroomba-path.png"><img alt="_images/vroomba-path.png" class="align-center" src="_images/vroomba-path.png" style="width: 800px;" /></a>
+<p>In order to clean the entire room the Vroomba positioned initially in the coordinate <code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">0)</span></code> can move by following the route defined by the string of moves <code class="docutils literal notranslate"><span class="pre">WDDDDDD</span></code> (all characters are capital), where <code class="docutils literal notranslate"><span class="pre">W</span></code> makes Vroomba move one square up, <code class="docutils literal notranslate"><span class="pre">D</span></code> moves it right, <code class="docutils literal notranslate"><span class="pre">S</span></code> is “down”, and <code class="docutils literal notranslate"><span class="pre">A</span></code> is “left”.  The figure above shows an initial <code class="docutils literal notranslate"><span class="pre">(0,</span> <span class="pre">0)</span></code>, some intermediate <code class="docutils literal notranslate"><span class="pre">(4,</span> <span class="pre">1)</span></code>, and the final <code class="docutils literal notranslate"><span class="pre">(6,</span> <span class="pre">1)</span></code> positions of the Vroomba following this route. Notice that there is was no need for the robot to step to any other squares, as it brushes cleaned the remaining parts of the room, as it is following the rout.</p>
+<p>The suggested route is a <cite>valid</cite> one for this room, as it (a) does not force the Vroomba to go outside the room boundaries, and (b) by following it, the Vroomba will have cleaned all the squares in the room. Indeed, for more complex rooms the routes are going to be longer and potentially use all four move commands in some sequence.</p>
+<p>When tackling this project, you should strive to find, for a given arbitrary room, a valid Vroomba route that is <cite>as short as possible</cite> (the length of a route is the length of the corresponding string). While it might be difficult to find the most optimal (i.e., the shortest) route, please, do your best to come up with a procedure that finds a “reasonably” good solution, for instance, it does not make the Vroomba to move into every single square of the room, but relies on the range of its brushes instead.  Even the best solution might require amount of back-tracking, forcing the Vroomba to step on the same square more than once. While your procedure is allowed to be computationally expensive (and you should explain the sources of its complexity in the report), it should terminate in a reasonable time (within 20 seconds) for the ten rooms from the provided test file.</p>
+<p>The template GitHub project (link available on Canvas) provides a <code class="docutils literal notranslate"><span class="pre">README.md</span></code> file with an extensive technical specification of the sub-tasks of this project, as well as a number of hints and suggestions on splitting the workload within the team.</p>
+</div>
+<div class="section" id="report">
+<h2>Report<a class="headerlink" href="#report" title="Permalink to this headline">¶</a></h2>
+<p>The reports are written and submitted on Canvas individually. They should focus on the following aspects of your experience with the project:</p>
+<ul class="simple">
+<li>High-level overview of your implementation design. How did you
+define basic data structures, what were the algorithmic decisions
+you’ve taken? Please, don’t quote the code verbatim at length (you
+may provide 3-4 line code snippets, if necessary). Pictures,
+screenshots, and drawings are very welcome, but are not strictly
+required.</li>
+<li>What were your Vroomba solver strategies, interesting polygon
+generation patterns, or game part enhancements? How do you estimate
+the complexity of your solver as a function of the size of a room
+(number of <code class="docutils literal notranslate"><span class="pre">1x1</span></code> squares in it)?</li>
+<li>What you considered important properties of your implementation? How
+did you test them?</li>
+<li>How the implementation effort has been split, and what were your
+personal contributions? Did you make use of the suggested split?</li>
+<li>Any discoveries, anecdotes, and gotchas, elaborating on your
+experience with this project.</li>
+</ul>
+<p>You individual report should not be very long; please, try to make it succinct and to the point: 3-4 pages should be enough.</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Any relation to the existing products or trademarks is accidental.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
