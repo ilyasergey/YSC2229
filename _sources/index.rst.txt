@@ -28,9 +28,8 @@ Introductory Data Structures and Algorithms
    week-10
    week-11
    week-12
-
-..   week-13
-..   final
+   week-13
+   final
 
 Lecture notes will be posted gradually as we progress through the
 course material.

@@ -200,7 +200,7 @@ We can use this machinery to rotate by 90 degrees (i.e., :math:`\pi/2`) the vect
 Vector product and its properties
 ---------------------------------
 
-*Vector product* of two vectors (also known as *cross-product*) of two vectors :math:`p1 = (x_1, y_1)` and :math:`p2 = (x_2, y_2)` is formally defined as :math:`(x_1, y_1) \times (x_2, y_2) = |(x_1, y_1) (x_2, y_2)|\sin{\theta} = x_1 \times y_2 - x_2 \times y_1`, where :math:`\theta` is an angle between the two vectors::
+*Vector product* of two vectors (also known as *cross-product*) of two vectors :math:`p1 = (x_1, y_1)` and :math:`p2 = (x_2, y_2)` is formally defined as :math:`(x_1, y_1) \times (x_2, y_2) = |(x_1, y_1)||(x_2, y_2)|\sin{\theta} = x_1 \times y_2 - x_2 \times y_1`, where :math:`\theta` is an angle between the two vectors::
 
  let cross_product (Point (x1, y1)) (Point (x2, y2)) = 
    x1 *. y2 -. x2 *. y1
