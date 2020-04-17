@@ -64,6 +64,6 @@ The reports are written and submitted on Canvas individually. They should focus 
 * Any discoveries, anecdotes, and gotchas, elaborating on your
   experience with this project.
 
-You individual report should not be very long; please, try to make it succinct and to the point: 3-4 pages should be enough.
+Your individual report should not be very long; please, try to make it succinct and to the point: 3-4 pages should be enough.
 
 .. [#] Any relation to the existing products or trademarks is accidental.
