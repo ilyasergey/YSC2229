@@ -24,7 +24,7 @@ Unfortunately, the manipulators cannot spread through the walls or
    :width: 600px
    :align: center
 
-Your goal in this task is to compute for a Vroomba robot that starts his shift at a position ``(0, 0)``, the best possible route to clean the entire area of room. For example, consider a room defined as the polygon with coordinates ``(0, 0); (6, 0); (6, 1); (8, 1); (8, 2); (6, 2); (6, 3); (0, 3)`` and shown on the image below:
+Your goal in this task is to compute for a Vroomba robot that starts the job at the position ``(0, 0)``, as good as possible route to clean the entire area of room. For example, consider a room defined as the polygon with coordinates ``(0, 0); (6, 0); (6, 1); (8, 1); (8, 2); (6, 2); (6, 3); (0, 3)`` and shown on the image below:
 
 .. image:: ../resources/vroomba/vroomba-path.png
    :width: 800px
