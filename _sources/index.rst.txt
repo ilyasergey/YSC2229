@@ -31,8 +31,7 @@ Introductory Data Structures and Algorithms
    week-13
    final
 
-Lecture notes will be posted gradually as we progress through the
-course material.
+.. Lecture notes will be posted gradually as we progress through the course material.
 
 
 Supplementary Materials
