@@ -116,7 +116,7 @@ fully functional Linux distribution installed on your machine.
 
     sudo add-apt-repository ppa:avsm/ppa
     sudo apt install opam
-    opam init -y --compiler=4.07.1 --disable-sandboxing
+    opam init -y --compiler=4.10.0 --disable-sandboxing
     eval $(opam env)
     opam install -y dune core batteries utop graphics
 
@@ -193,7 +193,7 @@ OCaml is well supported in Mac OS X, so the installation process is fairly strai
    lines from the terminal::
 
     brew install opam
-    opam init -y --compiler=4.07.1
+    opam init -y --compiler=4.10.0
     eval $(opam env)
     opam install -y dune core batteries utop graphics
 
@@ -204,7 +204,7 @@ OCaml is well supported in Mac OS X, so the installation process is fairly strai
    avoid it, please, run this line first before installing the listed
    above packages::
 
-     opam switch reinstall 4.07.1
+     opam switch reinstall 4.10.0
 
    To check that your OCaml is correctly installed, run ``ocamlc --version`` from the terminal. You should get the following output:
 
