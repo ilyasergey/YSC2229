@@ -109,9 +109,9 @@ Let us try a string that has a Cyrillic character from UTF-16 encoding::
 
 When working with strings the following functions implemented via ``core`` machinery will come useful::
 
- let trimmer = String.strip 
-     ~drop:(fun c -> List.mem ['\n'; ' '; '\r'] 
-               c ~equal:(fun a b -> a = b))
+ let trimmer = Core.String.strip 
+    ~drop:(fun c -> Core.List.mem ['\n'; ' '; '\r'] c 
+                     ~equal:(fun a b -> equal_char a b))
 
  let splitter s = 
    String.split_on_chars ~on:['\n'; ' '; '\r'] s |>
