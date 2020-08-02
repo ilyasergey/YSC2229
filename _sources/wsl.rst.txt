@@ -116,7 +116,7 @@ fully functional Linux distribution installed on your machine.
 
     sudo add-apt-repository ppa:avsm/ppa
     sudo apt install opam
-    opam init -y --compiler=4.10.0 --disable-sandboxing
+    opam init -y --compiler=4.09.1 --disable-sandboxing
     eval $(opam env)
     opam install -y dune core batteries utop graphics
 
@@ -127,7 +127,7 @@ fully functional Linux distribution installed on your machine.
    After that, close your terminal window and start a new one.
 
    To check that your OCaml is correctly installed, run ``ocamlc --version`` from the terminal. You should get the output
-   ``4.10.0``, which is the version of the OCaml compiler we have just installed.
+   ``4.09.0``, which is the version of the OCaml compiler we have just installed.
 
 8. We're nearly there. Now we need to install the OCaml support for Emacs. Execute the following from terminal::
 
@@ -190,7 +190,7 @@ OCaml is well supported in Mac OS X, so the installation process is fairly strai
    lines from the terminal::
 
     brew install opam
-    opam init -y --compiler=4.10.0
+    opam init -y --compiler=4.09.0
     eval $(opam env)
     opam install -y dune core batteries utop graphics
 
@@ -201,10 +201,10 @@ OCaml is well supported in Mac OS X, so the installation process is fairly strai
    avoid it, please, run this line first before installing the listed
    above packages::
 
-     opam switch reinstall 4.10.0
+     opam switch reinstall 4.09.0
 
    To check that your OCaml is correctly installed, run ``ocamlc --version`` from the terminal. You should get the output
-   ``4.10.0``, which is the version of the OCaml compiler we have just installed.
+   ``4.09.0``, which is the version of the OCaml compiler we have just installed.
 
 6. We're nearly there. Now we need to install the OCaml support for Emacs. Execute the following from terminal::
 

@@ -275,7 +275,7 @@ First, we need to install a number of Linux packages that OCaml needs. Run the f
 <li><p class="first">Next, we will install the <code class="docutils literal notranslate"><span class="pre">opam</span></code> package manager for working with different OCaml libraries. Execute the following lines from Linux terminal:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">add</span><span class="o">-</span><span class="n">apt</span><span class="o">-</span><span class="n">repository</span> <span class="n">ppa</span><span class="o">:</span><span class="n">avsm</span><span class="o">/</span><span class="n">ppa</span>
 <span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">opam</span>
-<span class="n">opam</span> <span class="n">init</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">compiler</span><span class="o">=</span><span class="mi">4</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">0</span> <span class="o">--</span><span class="n">disable</span><span class="o">-</span><span class="n">sandboxing</span>
+<span class="n">opam</span> <span class="n">init</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">compiler</span><span class="o">=</span><span class="mi">4</span><span class="o">.</span><span class="mi">09</span><span class="o">.</span><span class="mi">1</span> <span class="o">--</span><span class="n">disable</span><span class="o">-</span><span class="n">sandboxing</span>
 <span class="n">eval</span> <span class="o">$(</span><span class="n">opam</span> <span class="n">env</span><span class="o">)</span>
 <span class="n">opam</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">dune</span> <span class="n">core</span> <span class="n">batteries</span> <span class="n">utop</span> <span class="n">graphics</span>
 </pre></div>
@@ -286,7 +286,7 @@ First, we need to install a number of Linux packages that OCaml needs. Run the f
 </div>
 <p>After that, close your terminal window and start a new one.</p>
 <p>To check that your OCaml is correctly installed, run <code class="docutils literal notranslate"><span class="pre">ocamlc</span> <span class="pre">--version</span></code> from the terminal. You should get the output
-<code class="docutils literal notranslate"><span class="pre">4.10.0</span></code>, which is the version of the OCaml compiler we have just installed.</p>
+<code class="docutils literal notranslate"><span class="pre">4.09.0</span></code>, which is the version of the OCaml compiler we have just installed.</p>
 </li>
 <li><p class="first">We’re nearly there. Now we need to install the OCaml support for Emacs. Execute the following from terminal:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">opam</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">tuareg</span> <span class="n">user</span><span class="o">-</span><span class="n">setup</span> <span class="n">merlin</span>
@@ -344,7 +344,7 @@ applications at the end of this course.</p>
 and maintaining different OCaml libraries. Execute the following
 lines from the terminal:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">opam</span>
-<span class="n">opam</span> <span class="n">init</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">compiler</span><span class="o">=</span><span class="mi">4</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">opam</span> <span class="n">init</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">compiler</span><span class="o">=</span><span class="mi">4</span><span class="o">.</span><span class="mi">09</span><span class="o">.</span><span class="mi">0</span>
 <span class="n">eval</span> <span class="o">$(</span><span class="n">opam</span> <span class="n">env</span><span class="o">)</span>
 <span class="n">opam</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">dune</span> <span class="n">core</span> <span class="n">batteries</span> <span class="n">utop</span> <span class="n">graphics</span>
 </pre></div>
@@ -354,11 +354,11 @@ lines from the terminal:</p>
 step 4, the installation of the <code class="docutils literal notranslate"><span class="pre">graphics</span></code> package will fail. To
 avoid it, please, run this line first before installing the listed
 above packages:</p>
-<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">opam</span> <span class="n">switch</span> <span class="n">reinstall</span> <span class="mi">4</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">0</span>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">opam</span> <span class="n">switch</span> <span class="n">reinstall</span> <span class="mi">4</span><span class="o">.</span><span class="mi">09</span><span class="o">.</span><span class="mi">0</span>
 </pre></div>
 </div>
 <p>To check that your OCaml is correctly installed, run <code class="docutils literal notranslate"><span class="pre">ocamlc</span> <span class="pre">--version</span></code> from the terminal. You should get the output
-<code class="docutils literal notranslate"><span class="pre">4.10.0</span></code>, which is the version of the OCaml compiler we have just installed.</p>
+<code class="docutils literal notranslate"><span class="pre">4.09.0</span></code>, which is the version of the OCaml compiler we have just installed.</p>
 </li>
 <li><p class="first">We’re nearly there. Now we need to install the OCaml support for Emacs. Execute the following from terminal:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">opam</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">tuareg</span> <span class="n">user</span><span class="o">-</span><span class="n">setup</span> <span class="n">merlin</span>
