@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>15.2. Reachability and Graph Traversals &mdash; YSC2229 2020</title>
+  <title>Reachability and Graph Traversals &mdash; YSC2229 2020</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="15.3. Single-Source Shortest Paths" href="week-12-paths.html" />
-    <link rel="prev" title="15.1. Graphs as Linked Data Structures" href="week-12-linked-graphs.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -78,41 +76,9 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-11.html">14. Week 11: Binary Search Trees and Graphs</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="week-12.html">15. Week 12: Graph Algorithms</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="week-12-linked-graphs.html">15.1. Graphs as Linked Data Structures</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">15.2. Reachability and Graph Traversals</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#checking-reachability-in-a-graph">15.2.1. Checking Reachability in a Graph</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#testing-reachability">15.2.2. Testing Reachability</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#rendering-paths-in-a-graph">15.2.3. Rendering Paths in a Graph</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#depth-first-traversal">15.2.4. Depth-First Traversal</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dfs-and-reachability">15.2.5. DFS and Reachability</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dfs-and-cycle-detection">15.2.6. DFS and Cycle Detection</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#topological-sort">15.2.7. Topological Sort</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#testing-topological-sort">15.2.8. Testing Topological Sort</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html">15.3. Single-Source Shortest Paths</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-spanning.html">15.4. Minimal Spanning Trees</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-exercises.html">15.5. Exercises</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-13.html">16. Week 13: Elements of Computational Geometry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="final.html">17. Final Project: Vroomba Programming</a></li>
 </ul>
 
             
@@ -158,9 +124,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="week-12.html">15. Week 12: Graph Algorithms</a> &raquo;</li>
-        
-      <li>15.2. Reachability and Graph Traversals</li>
+      <li>Reachability and Graph Traversals</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -178,7 +142,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="reachability-and-graph-traversals">
-<span id="reachability"></span><h1>15.2. Reachability and Graph Traversals<a class="headerlink" href="#reachability-and-graph-traversals" title="Permalink to this headline">¶</a></h1>
+<span id="reachability"></span><h1>Reachability and Graph Traversals<a class="headerlink" href="#reachability-and-graph-traversals" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">Reachability.ml</span></code></li>
 </ul>
@@ -193,7 +157,7 @@ In all algorithms, we will be relying on the linked representation:</p>
 </pre></div>
 </div>
 <div class="section" id="checking-reachability-in-a-graph">
-<h2>15.2.1. Checking Reachability in a Graph<a class="headerlink" href="#checking-reachability-in-a-graph" title="Permalink to this headline">¶</a></h2>
+<h2>Checking Reachability in a Graph<a class="headerlink" href="#checking-reachability-in-a-graph" title="Permalink to this headline">¶</a></h2>
 <p>Given a graph <code class="docutils literal notranslate"><span class="pre">g</span></code> and two its nodes <code class="docutils literal notranslate"><span class="pre">init</span></code> and <code class="docutils literal notranslate"><span class="pre">final</span></code>, let us
 define a procedure that determines whether we can get from <code class="docutils literal notranslate"><span class="pre">init</span></code> to
 <code class="docutils literal notranslate"><span class="pre">final</span></code> by following the edges of <code class="docutils literal notranslate"><span class="pre">g</span></code>, and if so, return the list
@@ -239,7 +203,7 @@ is returned at the end, if the path is found.</p>
 </div>
 </div>
 <div class="section" id="testing-reachability">
-<h2>15.2.2. Testing Reachability<a class="headerlink" href="#testing-reachability" title="Permalink to this headline">¶</a></h2>
+<h2>Testing Reachability<a class="headerlink" href="#testing-reachability" title="Permalink to this headline">¶</a></h2>
 <p>The following are the tests for the specific two graphs we have seen, designed with a human intuition in mind:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">Reachability</span>
 
@@ -269,7 +233,7 @@ is returned at the end, if the path is found.</p>
 </div>
 </div>
 <div class="section" id="rendering-paths-in-a-graph">
-<h2>15.2.3. Rendering Paths in a Graph<a class="headerlink" href="#rendering-paths-in-a-graph" title="Permalink to this headline">¶</a></h2>
+<h2>Rendering Paths in a Graph<a class="headerlink" href="#rendering-paths-in-a-graph" title="Permalink to this headline">¶</a></h2>
 <p>We can use the same machinery for interactive with GraphViz to highlight the reachable paths in a graph:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">bold_edge</span> <span class="o">=</span> <span class="s2">&quot;[color=red,penwidth=3.0]&quot;</span>
 
@@ -294,7 +258,7 @@ end of the previous chapter, we can render the result of
 <a class="reference internal image-reference" href="_images/path1.png"><img alt="_images/path1.png" class="align-center" src="_images/path1.png" style="width: 500px;" /></a>
 </div>
 <div class="section" id="depth-first-traversal">
-<h2>15.2.4. Depth-First Traversal<a class="headerlink" href="#depth-first-traversal" title="Permalink to this headline">¶</a></h2>
+<h2>Depth-First Traversal<a class="headerlink" href="#depth-first-traversal" title="Permalink to this headline">¶</a></h2>
 <p>It is possible to split graph into a set of trees with dedicated roots, so that each subtree is reachable from its root. One way to do it is using the Depth-First Search (DFS) procedure.</p>
 <p>The procedure is similar to reachability checking implemented above, but employs a more efficient way to detect cycles via the “colouring” technique. In essence, it maintains an additional hash table, assigning the colors as attributes to the nodes, to indicate whether the have not yet, are inte processed, or have been fully processed:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">NodeTable</span>
@@ -385,7 +349,7 @@ indicating two trees, rooted at nodes 0 and 2, correspondingly:</p>
 <a class="reference internal image-reference" href="_images/dfs.png"><img alt="_images/dfs.png" class="align-center" src="_images/dfs.png" style="width: 500px;" /></a>
 </div>
 <div class="section" id="dfs-and-reachability">
-<h2>15.2.5. DFS and Reachability<a class="headerlink" href="#dfs-and-reachability" title="Permalink to this headline">¶</a></h2>
+<h2>DFS and Reachability<a class="headerlink" href="#dfs-and-reachability" title="Permalink to this headline">¶</a></h2>
 <p>Let us define the following procedure, checking the reachability via DFS:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">is_reachable_via_dfs</span> <span class="n">g</span> <span class="n">init</span> <span class="n">final</span> <span class="o">=</span>
   <span class="k">let</span> <span class="o">(</span><span class="n">roots</span><span class="o">,</span> <span class="n">tree</span><span class="o">,</span> <span class="o">_,</span> <span class="o">_)</span> <span class="o">=</span> <span class="n">dfs</span> <span class="n">g</span> <span class="k">in</span>
@@ -429,7 +393,7 @@ indicating two trees, rooted at nodes 0 and 2, correspondingly:</p>
 </div>
 </div>
 <div class="section" id="dfs-and-cycle-detection">
-<h2>15.2.6. DFS and Cycle Detection<a class="headerlink" href="#dfs-and-cycle-detection" title="Permalink to this headline">¶</a></h2>
+<h2>DFS and Cycle Detection<a class="headerlink" href="#dfs-and-cycle-detection" title="Permalink to this headline">¶</a></h2>
 <p>As a byproduct, our DFS has detected if a given graph has a cycle in it. We can now test it as follows:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="o">_</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">g</span> <span class="o">=</span> <span class="nn">LinkedGraphs</span><span class="p">.</span><span class="n">parse_linked_int_graph</span> <span class="n">small_graph_shape</span> <span class="k">in</span>
@@ -444,7 +408,7 @@ indicating two trees, rooted at nodes 0 and 2, correspondingly:</p>
 </div>
 </div>
 <div class="section" id="topological-sort">
-<h2>15.2.7. Topological Sort<a class="headerlink" href="#topological-sort" title="Permalink to this headline">¶</a></h2>
+<h2>Topological Sort<a class="headerlink" href="#topological-sort" title="Permalink to this headline">¶</a></h2>
 <p>Assume our graph has no cycles (i.e., it is a so-called <em>Directed
 Acyclic Graph</em>, or <em>DAG</em>). In this case it is possible to enumerate
 its nodes (i.e., put them to an ordered list) in a way that all edges
@@ -555,7 +519,7 @@ to put on:</p>
 </div>
 </div>
 <div class="section" id="testing-topological-sort">
-<h2>15.2.8. Testing Topological Sort<a class="headerlink" href="#testing-topological-sort" title="Permalink to this headline">¶</a></h2>
+<h2>Testing Topological Sort<a class="headerlink" href="#testing-topological-sort" title="Permalink to this headline">¶</a></h2>
 <p>A simple property to check of a topological sort is that for all subsequently positioned nodes <code class="docutils literal notranslate"><span class="pre">(u,</span> <span class="pre">v)</span></code> in its result, the node <code class="docutils literal notranslate"><span class="pre">u</span></code> is not reachable from <code class="docutils literal notranslate"><span class="pre">v</span></code>:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">all_pairs</span> <span class="n">ls</span> <span class="o">=</span> <span class="k">match</span> <span class="n">ls</span> <span class="k">with</span>
   <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="bp">[]</span>
@@ -581,15 +545,6 @@ to put on:</p>
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="week-12-paths.html" class="btn btn-neutral float-right" title="15.3. Single-Source Shortest Paths" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="week-12-linked-graphs.html" class="btn btn-neutral" title="15.1. Graphs as Linked Data Structures" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

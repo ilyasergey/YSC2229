@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>13. Week 10: Binary Data Compression &mdash; YSC2229 2020</title>
+  <title>Week 10: Binary Data Compression &mdash; YSC2229 2020</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="13.1. File Input and Output in OCaml" href="week-10-reading-files.html" />
-    <link rel="prev" title="12.3. Optimisation Problems and Dynamic Programming" href="week-09-dynamic-programming.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -78,31 +76,9 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">13. Week 10: Binary Data Compression</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-10-reading-files.html">13.1. File Input and Output in OCaml</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-binary-encondings.html">13.2. Binary Encoding of Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-rle.html">13.3. Run-Length Encoding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-huffman.html">13.4. Huffman Encoding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-graphviz.html">13.5. Installing GraphViz</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-11.html">14. Week 11: Binary Search Trees and Graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-12.html">15. Week 12: Graph Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-13.html">16. Week 13: Elements of Computational Geometry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="final.html">17. Final Project: Vroomba Programming</a></li>
 </ul>
 
             
@@ -148,7 +124,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>13. Week 10: Binary Data Compression</li>
+      <li>Week 10: Binary Data Compression</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -166,40 +142,40 @@
            <div itemprop="articleBody">
             
   <div class="section" id="week-10-binary-data-compression">
-<h1>13. Week 10: Binary Data Compression<a class="headerlink" href="#week-10-binary-data-compression" title="Permalink to this headline">¶</a></h1>
+<h1>Week 10: Binary Data Compression<a class="headerlink" href="#week-10-binary-data-compression" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="week-10-reading-files.html">13.1. File Input and Output in OCaml</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-10-reading-files.html#reading-and-writing-with-channels">13.1.1. Reading and Writing with Channels</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-reading-files.html#copying-files">13.1.2. Copying Files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-reading-files.html#representing-strings">13.1.3. Representing Strings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-10-reading-files.html">File Input and Output in OCaml</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-10-reading-files.html#reading-and-writing-with-channels">Reading and Writing with Channels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-reading-files.html#copying-files">Copying Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-reading-files.html#representing-strings">Representing Strings</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-10-binary-encondings.html">13.2. Binary Encoding of Data</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-10-binary-encondings.html#writing-and-reading-binary-files">13.2.1. Writing and Reading Binary Files</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-binary-encondings.html#writing-and-reading-ocaml-strings">13.2.2. Writing and Reading OCaml Strings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-binary-encondings.html#compressing-dna-sequences">13.2.3. Compressing DNA Sequences</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-10-binary-encondings.html">Binary Encoding of Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-10-binary-encondings.html#writing-and-reading-binary-files">Writing and Reading Binary Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-binary-encondings.html#writing-and-reading-ocaml-strings">Writing and Reading OCaml Strings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-binary-encondings.html#compressing-dna-sequences">Compressing DNA Sequences</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-10-rle.html">13.3. Run-Length Encoding</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-10-rle.html#design-considerations">13.3.1. Design Considerations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-rle.html#implementation">13.3.2. Implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-10-rle.html">Run-Length Encoding</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-10-rle.html#design-considerations">Design Considerations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-rle.html#implementation">Implementation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-10-huffman.html">13.4. Huffman Encoding</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-10-huffman.html#assigning-codes-via-character-trees">13.4.1. Assigning Codes via Character Trees</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-huffman.html#serializing-huffman-trees">13.4.2. Serializing Huffman Trees</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-huffman.html#constructing-huffman-tree-from-frequencies">13.4.3. Constructing Huffman tree from Frequencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-huffman.html#computing-relative-frequencies">13.4.4. Computing Relative Frequencies</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-huffman.html#encoding-and-writing-the-compressed-text">13.4.5. Encoding and Writing the Compressed Text</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-huffman.html#decompression">13.4.6. Decompression</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-huffman.html#testing-and-running-huffman-compression">13.4.7. Testing and Running Huffman Compression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-10-huffman.html">Huffman Encoding</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-10-huffman.html#assigning-codes-via-character-trees">Assigning Codes via Character Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-huffman.html#serializing-huffman-trees">Serializing Huffman Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-huffman.html#constructing-huffman-tree-from-frequencies">Constructing Huffman tree from Frequencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-huffman.html#computing-relative-frequencies">Computing Relative Frequencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-huffman.html#encoding-and-writing-the-compressed-text">Encoding and Writing the Compressed Text</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-huffman.html#decompression">Decompression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-huffman.html#testing-and-running-huffman-compression">Testing and Running Huffman Compression</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-10-graphviz.html">13.5. Installing GraphViz</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-10-graphviz.html#microsoft-windows-10">13.5.1. Microsoft Windows 10</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-graphviz.html#linux">13.5.2. Linux</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-graphviz.html#mac-os-x">13.5.3. Mac OS X</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-10-graphviz.html">Installing GraphViz</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-10-graphviz.html#microsoft-windows-10">Microsoft Windows 10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-graphviz.html#linux">Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-graphviz.html#mac-os-x">Mac OS X</a></li>
 </ul>
 </li>
 </ul>
@@ -211,15 +187,6 @@
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="week-10-reading-files.html" class="btn btn-neutral float-right" title="13.1. File Input and Output in OCaml" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="week-09-dynamic-programming.html" class="btn btn-neutral" title="12.3. Optimisation Problems and Dynamic Programming" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

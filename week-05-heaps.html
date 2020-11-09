@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>7.2. Binary Heaps &mdash; YSC2229 2020</title>
+  <title>Binary Heaps &mdash; YSC2229 2020</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="7.3. Maintaining Binary Heaps" href="week-05-heapify.html" />
-    <link rel="prev" title="7.1. Printing and Validating Generic Arrays" href="week-05-functors.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -78,37 +76,9 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="week-05-functors.html">7.1. Printing and Validating Generic Arrays</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">7.2. Binary Heaps</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#finding-a-maximum-in-a-changing-array">7.2.1. Finding a maximum in a changing array</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#definition-of-a-binary-heap">7.2.2. Definition of a binary heap</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#checking-that-an-array-is-a-heap">7.2.3. Checking that an array is a heap</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-heapify.html">7.3. Maintaining Binary Heaps</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-heapsort.html">7.4. Heapsort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-priority.html">7.5. Priority Queues</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html">7.6. Exercises</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-11.html">14. Week 11: Binary Search Trees and Graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-12.html">15. Week 12: Graph Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-13.html">16. Week 13: Elements of Computational Geometry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="final.html">17. Final Project: Vroomba Programming</a></li>
 </ul>
 
             
@@ -154,9 +124,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a> &raquo;</li>
-        
-      <li>7.2. Binary Heaps</li>
+      <li>Binary Heaps</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -174,12 +142,12 @@
            <div itemprop="articleBody">
             
   <div class="section" id="binary-heaps">
-<h1>7.2. Binary Heaps<a class="headerlink" href="#binary-heaps" title="Permalink to this headline">¶</a></h1>
+<h1>Binary Heaps<a class="headerlink" href="#binary-heaps" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">Heaps.ml</span></code></li>
 </ul>
 <div class="section" id="finding-a-maximum-in-a-changing-array">
-<h2>7.2.1. Finding a maximum in a changing array<a class="headerlink" href="#finding-a-maximum-in-a-changing-array" title="Permalink to this headline">¶</a></h2>
+<h2>Finding a maximum in a changing array<a class="headerlink" href="#finding-a-maximum-in-a-changing-array" title="Permalink to this headline">¶</a></h2>
 <p>We have started this course from a simple exercise — finding a
 minimal element in a list. While simple enough (and possible to
 implement in <span class="math notranslate nohighlight">\(O(n)\)</span> operations) for a case when we need to find
@@ -217,7 +185,7 @@ have to sort the array <em>every time</em> some changes in its contents take
 place, thus, spending <span class="math notranslate nohighlight">\(O(n \log n)\)</span> operations.</p>
 </div>
 <div class="section" id="definition-of-a-binary-heap">
-<h2>7.2.2. Definition of a binary heap<a class="headerlink" href="#definition-of-a-binary-heap" title="Permalink to this headline">¶</a></h2>
+<h2>Definition of a binary heap<a class="headerlink" href="#definition-of-a-binary-heap" title="Permalink to this headline">¶</a></h2>
 <p>This week we will learn how to solve the problem of retrieving the
 element with the biggest/smallest key from a constantly changing array
 in a more cheaper way than by sorting the array of elements every
@@ -338,7 +306,7 @@ parent is smaller than children) is called <em>min-heap</em>.</p>
 </div>
 </div>
 <div class="section" id="checking-that-an-array-is-a-heap">
-<h2>7.2.3. Checking that an array is a heap<a class="headerlink" href="#checking-that-an-array-is-a-heap" title="Permalink to this headline">¶</a></h2>
+<h2>Checking that an array is a heap<a class="headerlink" href="#checking-that-an-array-is-a-heap" title="Permalink to this headline">¶</a></h2>
 <p>Next, we shall write a function that, taking an array, will determine whether it does have heap structure or not. The following definition should be placed within the body of <code class="docutils literal notranslate"><span class="pre">Heap</span></code> functor:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* 2. Testing whether something is a heap *)</span>
 <span class="k">let</span> <span class="n">is_heap</span> <span class="n">arr</span> <span class="o">=</span>
@@ -455,15 +423,6 @@ here and further by <em>heaps</em> we will mean binary trees.</td></tr>
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="week-05-heapify.html" class="btn btn-neutral float-right" title="7.3. Maintaining Binary Heaps" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="week-05-functors.html" class="btn btn-neutral" title="7.1. Printing and Validating Generic Arrays" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

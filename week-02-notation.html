@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>4.5. Order Notation &mdash; YSC2229 2020</title>
+  <title>Order Notation &mdash; YSC2229 2020</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="4.6. Sums of Series and Complexities of Loops" href="week-02-sums.html" />
-    <link rel="prev" title="4.4. Complexity of Algorithms" href="week-02-complexity.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -78,41 +76,9 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="week-02-arrays.html">4.1. Arrays and Operations on Them</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-insert_sort.html">4.2. Insertion Sort on Arrays</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-selection_sort.html">4.3. Selection Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-complexity.html">4.4. Complexity of Algorithms</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">4.5. Order Notation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#big-o-notation">4.5.1. Big O-notation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#properties-of-big-o-notation">4.5.2. Properties of Big O-notation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#little-o-notation">4.5.3. Little o-notation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#proofs-using-o-notation">4.5.4. Proofs using O-notation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#hierarchy-of-algorithm-complexities">4.5.5. Hierarchy of algorithm complexities</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#complexity-of-sequential-composition">4.5.6. Complexity of sequential composition</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-sums.html">4.6. Sums of Series and Complexities of Loops</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-exercises.html">4.7. Exercises</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-11.html">14. Week 11: Binary Search Trees and Graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-12.html">15. Week 12: Graph Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-13.html">16. Week 13: Elements of Computational Geometry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="final.html">17. Final Project: Vroomba Programming</a></li>
 </ul>
 
             
@@ -158,9 +124,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="week-02.html">4. Week 02: Array Sorting and Order Notation</a> &raquo;</li>
-        
-      <li>4.5. Order Notation</li>
+      <li>Order Notation</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -178,12 +142,12 @@
            <div itemprop="articleBody">
             
   <div class="section" id="order-notation">
-<h1>4.5. Order Notation<a class="headerlink" href="#order-notation" title="Permalink to this headline">¶</a></h1>
+<h1>Order Notation<a class="headerlink" href="#order-notation" title="Permalink to this headline">¶</a></h1>
 <p>Let us introduce a concise notation for <em>asymptotic</em> behaviour of time
 demand functions as an input size <span class="math notranslate nohighlight">\(n\)</span> of an algorithm grows
 infinitely, i.e., <span class="math notranslate nohighlight">\(n \rightarrow \infty\)</span>.</p>
 <div class="section" id="big-o-notation">
-<span id="def-big-o"></span><h2>4.5.1. Big O-notation<a class="headerlink" href="#big-o-notation" title="Permalink to this headline">¶</a></h2>
+<span id="def-big-o"></span><h2>Big O-notation<a class="headerlink" href="#big-o-notation" title="Permalink to this headline">¶</a></h2>
 <div class="admonition-definition admonition">
 <p class="first admonition-title">Definition</p>
 <p class="last">The positive-valued function <span class="math notranslate nohighlight">\(f(x) \in O(g(x))\)</span> if and only if there is a value <span class="math notranslate nohighlight">\(x_0\)</span> and a constant <span class="math notranslate nohighlight">\(c &gt; 0\)</span>, such that for all <span class="math notranslate nohighlight">\(x \geq x_0\)</span>, <span class="math notranslate nohighlight">\(f(x) \leq c \cdot g(x)\)</span>.</p>
@@ -193,7 +157,7 @@ infinitely, i.e., <span class="math notranslate nohighlight">\(n \rightarrow \in
 <p>The intuition is that <span class="math notranslate nohighlight">\(f(x)\)</span> grows no faster than <span class="math notranslate nohighlight">\(c \cdot g(x)\)</span> as <span class="math notranslate nohighlight">\(x\)</span> gets larger. Notice that the notation <span class="math notranslate nohighlight">\(O(g(x))\)</span> describes a <em>set</em> of functions, “approximated” by <span class="math notranslate nohighlight">\(g(x)\)</span>, modulo constant factors and the starting point.</p>
 </div>
 <div class="section" id="properties-of-big-o-notation">
-<span id="def-big-o-props"></span><h2>4.5.2. Properties of Big O-notation<a class="headerlink" href="#properties-of-big-o-notation" title="Permalink to this headline">¶</a></h2>
+<span id="def-big-o-props"></span><h2>Properties of Big O-notation<a class="headerlink" href="#properties-of-big-o-notation" title="Permalink to this headline">¶</a></h2>
 <div class="admonition-property-1 admonition">
 <p class="first admonition-title">Property 1</p>
 <p class="last"><span class="math notranslate nohighlight">\(O(k \cdot f(n)) = O(f(n))\)</span>, for any constant <span class="math notranslate nohighlight">\(k\)</span>.</p>
@@ -225,7 +189,7 @@ f(n) + g(n) \leq 2 \cdot f(n)\)</span> or <span class="math notranslate nohighli
 Intuitively, a faster-growing function eventually dominates.</p>
 </div>
 <div class="section" id="little-o-notation">
-<h2>4.5.3. Little o-notation<a class="headerlink" href="#little-o-notation" title="Permalink to this headline">¶</a></h2>
+<h2>Little o-notation<a class="headerlink" href="#little-o-notation" title="Permalink to this headline">¶</a></h2>
 <div class="admonition-definition admonition">
 <p class="first admonition-title">Definition</p>
 <p class="last">The positive-valued function <span class="math notranslate nohighlight">\(f(x) \in o(g(x))\)</span> if and only if for all constants <span class="math notranslate nohighlight">\(\varepsilon &gt; 0\)</span> there exists a value <span class="math notranslate nohighlight">\(x_0\)</span> such that for all <span class="math notranslate nohighlight">\(x \geq x_0, f(x) \leq \varepsilon \cdot g(x)\)</span>.</p>
@@ -237,7 +201,7 @@ Intuitively, a faster-growing function eventually dominates.</p>
 </div>
 </div>
 <div class="section" id="proofs-using-o-notation">
-<h2>4.5.4. Proofs using O-notation<a class="headerlink" href="#proofs-using-o-notation" title="Permalink to this headline">¶</a></h2>
+<h2>Proofs using O-notation<a class="headerlink" href="#proofs-using-o-notation" title="Permalink to this headline">¶</a></h2>
 <p><strong>Standard exercise:</strong> show that <span class="math notranslate nohighlight">\(f(x) \in O(g(x))\)</span> (or not) is approached as follows:</p>
 <ul class="simple">
 <li>Unfold the definition of O-notation;</li>
@@ -273,11 +237,11 @@ n - c \leq 0,~\text{for all}~n \geq n_0 \\
 <p><span class="math notranslate nohighlight">\(\square\)</span></p>
 </div>
 <div class="section" id="hierarchy-of-algorithm-complexities">
-<h2>4.5.5. Hierarchy of algorithm complexities<a class="headerlink" href="#hierarchy-of-algorithm-complexities" title="Permalink to this headline">¶</a></h2>
+<h2>Hierarchy of algorithm complexities<a class="headerlink" href="#hierarchy-of-algorithm-complexities" title="Permalink to this headline">¶</a></h2>
 <a class="reference internal image-reference" href="_images/hierarchy.png"><img alt="_images/hierarchy.png" class="align-center" src="_images/hierarchy.png" style="width: 800px;" /></a>
 </div>
 <div class="section" id="complexity-of-sequential-composition">
-<h2>4.5.6. Complexity of sequential composition<a class="headerlink" href="#complexity-of-sequential-composition" title="Permalink to this headline">¶</a></h2>
+<h2>Complexity of sequential composition<a class="headerlink" href="#complexity-of-sequential-composition" title="Permalink to this headline">¶</a></h2>
 <p>Consider the following OCaml program, where <code class="docutils literal notranslate"><span class="pre">a</span></code> is a value of size <code class="docutils literal notranslate"><span class="pre">n</span></code>:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">x</span> <span class="o">=</span> <span class="n">f1</span><span class="o">(</span><span class="n">a</span><span class="o">)</span>
 
@@ -293,15 +257,6 @@ n - c \leq 0,~\text{for all}~n \geq n_0 \\
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="week-02-sums.html" class="btn btn-neutral float-right" title="4.6. Sums of Series and Complexities of Loops" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="week-02-complexity.html" class="btn btn-neutral" title="4.4. Complexity of Algorithms" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>4.6. Sums of Series and Complexities of Loops &mdash; YSC2229 2020</title>
+  <title>Sums of Series and Complexities of Loops &mdash; YSC2229 2020</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="4.7. Exercises" href="week-02-exercises.html" />
-    <link rel="prev" title="4.5. Order Notation" href="week-02-notation.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -78,40 +76,9 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="week-02-arrays.html">4.1. Arrays and Operations on Them</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-insert_sort.html">4.2. Insertion Sort on Arrays</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-selection_sort.html">4.3. Selection Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-complexity.html">4.4. Complexity of Algorithms</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-notation.html">4.5. Order Notation</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">4.6. Sums of Series and Complexities of Loops</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#arithmetic-series">4.6.1. Arithmetic series</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#geometric-series">4.6.2. Geometric series</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#estimating-a-sum-by-an-integral">4.6.3. Estimating a sum by an integral</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#big-o-and-function-composition">4.6.4. Big O and function composition</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#complexity-of-algorithms-with-loops">4.6.5. Complexity of algorithms with loops</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="week-02-exercises.html">4.7. Exercises</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-11.html">14. Week 11: Binary Search Trees and Graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-12.html">15. Week 12: Graph Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-13.html">16. Week 13: Elements of Computational Geometry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="final.html">17. Final Project: Vroomba Programming</a></li>
 </ul>
 
             
@@ -157,9 +124,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="week-02.html">4. Week 02: Array Sorting and Order Notation</a> &raquo;</li>
-        
-      <li>4.6. Sums of Series and Complexities of Loops</li>
+      <li>Sums of Series and Complexities of Loops</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -177,7 +142,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="sums-of-series-and-complexities-of-loops">
-<h1>4.6. Sums of Series and Complexities of Loops<a class="headerlink" href="#sums-of-series-and-complexities-of-loops" title="Permalink to this headline">¶</a></h1>
+<h1>Sums of Series and Complexities of Loops<a class="headerlink" href="#sums-of-series-and-complexities-of-loops" title="Permalink to this headline">¶</a></h1>
 <p>So far we have seen the complexities of simple straight-line programs,
 taking the maximum of their asymptotic time demand, using the property
 of big-O with regard to the maximum. Unfortunately, this approach does
@@ -220,7 +185,7 @@ the standard notation as follows:</p>
 <p>where <span class="math notranslate nohighlight">\(a\)</span> is called the lower limit, and <span class="math notranslate nohighlight">\(b\)</span> is the upper
 limit. The whole sum is <span class="math notranslate nohighlight">\(0\)</span> if <span class="math notranslate nohighlight">\(a &lt; b\)</span>.</p>
 <div class="section" id="arithmetic-series">
-<h2>4.6.1. Arithmetic series<a class="headerlink" href="#arithmetic-series" title="Permalink to this headline">¶</a></h2>
+<h2>Arithmetic series<a class="headerlink" href="#arithmetic-series" title="Permalink to this headline">¶</a></h2>
 <p>Arithmetic series are the series of the form <span class="math notranslate nohighlight">\(\sum_{i=a}^{b}i\)</span>.
 Following the example of Gauss, one can notice that</p>
 <div class="math notranslate nohighlight">
@@ -239,7 +204,7 @@ lower bound has the same complexity:</p>
 = \frac{n \cdot (n + 1)}{2} - \frac{j \cdot (j - 1)}{2} \in O(n^2)\]</div>
 </div>
 <div class="section" id="geometric-series">
-<h2>4.6.2. Geometric series<a class="headerlink" href="#geometric-series" title="Permalink to this headline">¶</a></h2>
+<h2>Geometric series<a class="headerlink" href="#geometric-series" title="Permalink to this headline">¶</a></h2>
 <p>Geometric series are defined as series of exponents:</p>
 <div class="math notranslate nohighlight">
 \[S(n) = a + a^2 + a^3 + \ldots + a^n = \sum_{i=1}^{n}a^i\]</div>
@@ -254,7 +219,7 @@ a \cdot S(n) &amp;= a^2 + a^3 + \ldots + a^{n + 1} \\
 \[S(n) = \frac{a (1 - a^n)}{1 - a}\]</div>
 </div>
 <div class="section" id="estimating-a-sum-by-an-integral">
-<h2>4.6.3. Estimating a sum by an integral<a class="headerlink" href="#estimating-a-sum-by-an-integral" title="Permalink to this headline">¶</a></h2>
+<h2>Estimating a sum by an integral<a class="headerlink" href="#estimating-a-sum-by-an-integral" title="Permalink to this headline">¶</a></h2>
 <p>Sometimes it is difficult to write an explicit expression for a sum.
 The following trick helps to estimate sums of values of monotonically
 growing functions:</p>
@@ -269,7 +234,7 @@ growing functions:</p>
 O(n^4)\]</div>
 </div>
 <div class="section" id="big-o-and-function-composition">
-<h2>4.6.4. Big O and function composition<a class="headerlink" href="#big-o-and-function-composition" title="Permalink to this headline">¶</a></h2>
+<h2>Big O and function composition<a class="headerlink" href="#big-o-and-function-composition" title="Permalink to this headline">¶</a></h2>
 <p>Let us take <span class="math notranslate nohighlight">\(f_1(n) \in O(g_1(n))\)</span> and <span class="math notranslate nohighlight">\(f_2(n) \in
 O(g_2(n))\)</span>. Assuming <span class="math notranslate nohighlight">\(g_2(n)\)</span> grows monotonically, what would be
 the tight enough complexity class for <span class="math notranslate nohighlight">\(f_2(f_1(n))\)</span>?</p>
@@ -302,7 +267,7 @@ k^{c\cdot f(n)} &amp;= (k^c)^{f(n)} \notin O(k^{f(n)}) \\
 \end{align*}\end{split}\]</div>
 </div>
 <div class="section" id="complexity-of-algorithms-with-loops">
-<h2>4.6.5. Complexity of algorithms with loops<a class="headerlink" href="#complexity-of-algorithms-with-loops" title="Permalink to this headline">¶</a></h2>
+<h2>Complexity of algorithms with loops<a class="headerlink" href="#complexity-of-algorithms-with-loops" title="Permalink to this headline">¶</a></h2>
 <p>Let us get back to our program that sums up elements of an array:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">0</span> <span class="k">in</span>
 <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
@@ -351,15 +316,6 @@ loop body):</p>
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="week-02-exercises.html" class="btn btn-neutral float-right" title="4.7. Exercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="week-02-notation.html" class="btn btn-neutral" title="4.5. Order Notation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

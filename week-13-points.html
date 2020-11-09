@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>16.2. Points, Segments and their Properties &mdash; YSC2229 2020</title>
+  <title>Points, Segments and their Properties &mdash; YSC2229 2020</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="16.3. Working with Polygons" href="week-13-polygons.html" />
-    <link rel="prev" title="16.1. Basics of Computational Geometry" href="week-13-geometry.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -78,43 +76,9 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-11.html">14. Week 11: Binary Search Trees and Graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-12.html">15. Week 12: Graph Algorithms</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="week-13.html">16. Week 13: Elements of Computational Geometry</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="week-13-geometry.html">16.1. Basics of Computational Geometry</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">16.2. Points, Segments and their Properties</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#on-precision-and-epsilon-equality">16.2.1. On precision and epsilon-equality</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#points-on-a-two-dimensional-plane">16.2.2. Points on a two-dimensional plane</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#points-as-vectors">16.2.3. Points as vectors</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#scalar-product-of-vectors">16.2.4. Scalar product of vectors</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#polar-coordinate-system">16.2.5. Polar coordinate system</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#vector-product-and-its-properties">16.2.6. Vector product and its properties</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#segments-on-a-plane">16.2.7. Segments on a plane</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#generating-random-points-on-a-segment">16.2.8. Generating random points on a segment</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#collinearity-of-segments">16.2.9. Collinearity of segments</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#checking-for-intersections">16.2.10. Checking for intersections</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#finding-intersections">16.2.11. Finding intersections</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="week-13-polygons.html">16.3. Working with Polygons</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-13-convex-hulls.html">16.4. Convex Hulls</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="final.html">17. Final Project: Vroomba Programming</a></li>
 </ul>
 
             
@@ -160,9 +124,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="week-13.html">16. Week 13: Elements of Computational Geometry</a> &raquo;</li>
-        
-      <li>16.2. Points, Segments and their Properties</li>
+      <li>Points, Segments and their Properties</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -180,12 +142,12 @@
            <div itemprop="articleBody">
             
   <div class="section" id="points-segments-and-their-properties">
-<span id="points"></span><h1>16.2. Points, Segments and their Properties<a class="headerlink" href="#points-segments-and-their-properties" title="Permalink to this headline">¶</a></h1>
+<span id="points"></span><h1>Points, Segments and their Properties<a class="headerlink" href="#points-segments-and-their-properties" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">Points.ml</span></code></li>
 </ul>
 <div class="section" id="on-precision-and-epsilon-equality">
-<h2>16.2.1. On precision and epsilon-equality<a class="headerlink" href="#on-precision-and-epsilon-equality" title="Permalink to this headline">¶</a></h2>
+<h2>On precision and epsilon-equality<a class="headerlink" href="#on-precision-and-epsilon-equality" title="Permalink to this headline">¶</a></h2>
 <p>Geometrical objects in a cartesian 2-dimensional space are represented
 by the pairs of their coordinates <span class="math notranslate nohighlight">\(x, y \in \mathbb{R}\)</span>, which
 can be encoded in OCaml using the data type <code class="docutils literal notranslate"><span class="pre">float</span></code>. As the name
@@ -212,7 +174,7 @@ to achieve this:</p>
 </div>
 </div>
 <div class="section" id="points-on-a-two-dimensional-plane">
-<h2>16.2.2. Points on a two-dimensional plane<a class="headerlink" href="#points-on-a-two-dimensional-plane" title="Permalink to this headline">¶</a></h2>
+<h2>Points on a two-dimensional plane<a class="headerlink" href="#points-on-a-two-dimensional-plane" title="Permalink to this headline">¶</a></h2>
 <p>A point is simply a pair of two floats, wrapped to a constructor to avoid possible confusions:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">point</span> <span class="o">=</span> <span class="nc">Point</span> <span class="k">of</span> <span class="kt">float</span> <span class="o">*</span> <span class="kt">float</span>
 
@@ -272,7 +234,7 @@ to achieve this:</p>
 </div>
 </div>
 <div class="section" id="points-as-vectors">
-<h2>16.2.3. Points as vectors<a class="headerlink" href="#points-as-vectors" title="Permalink to this headline">¶</a></h2>
+<h2>Points as vectors<a class="headerlink" href="#points-as-vectors" title="Permalink to this headline">¶</a></h2>
 <p>It is common to think of 2-dimensional points oas of <em>vectors</em> — directed segments, connecting the beginning of the coordinates with the point. We reflect it via the function that renders points as vectors:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">draw_vector</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">))</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">ix</span> <span class="o">=</span> <span class="n">int_of_float</span> <span class="n">x</span> <span class="o">+</span> <span class="n">fst</span> <span class="n">origin</span> <span class="k">in</span>
@@ -295,7 +257,7 @@ to achieve this:</p>
 </div>
 </div>
 <div class="section" id="scalar-product-of-vectors">
-<h2>16.2.4. Scalar product of vectors<a class="headerlink" href="#scalar-product-of-vectors" title="Permalink to this headline">¶</a></h2>
+<h2>Scalar product of vectors<a class="headerlink" href="#scalar-product-of-vectors" title="Permalink to this headline">¶</a></h2>
 <p>Imagine that we want to “turn” one vector in the direction of another. For this, we need to answer three questions:</p>
 <ol class="loweralpha simple">
 <li>How can we calculate the value of the angle?</li>
@@ -322,7 +284,7 @@ to achieve this:</p>
 </div>
 </div>
 <div class="section" id="polar-coordinate-system">
-<h2>16.2.5. Polar coordinate system<a class="headerlink" href="#polar-coordinate-system" title="Permalink to this headline">¶</a></h2>
+<h2>Polar coordinate system<a class="headerlink" href="#polar-coordinate-system" title="Permalink to this headline">¶</a></h2>
 <p>Rotations are very awkward to handle in the cartesian representation of points and vectors. They are much more convenient to peerform in the <em>polar</em> coordinate system, where each point/vector is represented by (i) the length <span class="math notranslate nohighlight">\(r\)</span> of the vector, and (ii) the radial angle <span class="math notranslate nohighlight">\(-\pi &lt; \phi \leq \pi\)</span>.</p>
 <p>In OCaml, the value of <span class="math notranslate nohighlight">\(\pi\)</span> can be obtained as from the arctangent of 1, which is equal <span class="math notranslate nohighlight">\(\pi / 4\)</span>:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">pi</span> <span class="o">=</span> <span class="mi">4</span><span class="o">.</span> <span class="o">*.</span> <span class="n">atan</span> <span class="mi">1</span><span class="o">.</span>
@@ -365,7 +327,7 @@ to achieve this:</p>
 <a class="reference internal image-reference" href="_images/cg03.png"><img alt="_images/cg03.png" class="align-center" src="_images/cg03.png" style="width: 700px;" /></a>
 </div>
 <div class="section" id="vector-product-and-its-properties">
-<h2>16.2.6. Vector product and its properties<a class="headerlink" href="#vector-product-and-its-properties" title="Permalink to this headline">¶</a></h2>
+<h2>Vector product and its properties<a class="headerlink" href="#vector-product-and-its-properties" title="Permalink to this headline">¶</a></h2>
 <p><em>Vector product</em> of two vectors (also known as <em>cross-product</em>) of two vectors <span class="math notranslate nohighlight">\(p1 = (x_1, y_1)\)</span> and <span class="math notranslate nohighlight">\(p2 = (x_2, y_2)\)</span> is formally defined as <span class="math notranslate nohighlight">\((x_1, y_1) \times (x_2, y_2) = |(x_1, y_1)||(x_2, y_2)|\sin{\theta} = x_1 \times y_2 - x_2 \times y_1\)</span>, where <span class="math notranslate nohighlight">\(\theta\)</span> is an angle between the two vectors:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">cross_product</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x1</span><span class="o">,</span> <span class="n">y1</span><span class="o">))</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x2</span><span class="o">,</span> <span class="n">y2</span><span class="o">))</span> <span class="o">=</span>
   <span class="n">x1</span> <span class="o">*.</span> <span class="n">y2</span> <span class="o">-.</span> <span class="n">x2</span> <span class="o">*.</span> <span class="n">y1</span>
@@ -412,7 +374,7 @@ positive); otherwise the screw moves down (cross-product is negative).</p>
 <a class="reference internal image-reference" href="_images/cg05.png"><img alt="_images/cg05.png" class="align-center" src="_images/cg05.png" style="width: 700px;" /></a>
 </div>
 <div class="section" id="segments-on-a-plane">
-<h2>16.2.7. Segments on a plane<a class="headerlink" href="#segments-on-a-plane" title="Permalink to this headline">¶</a></h2>
+<h2>Segments on a plane<a class="headerlink" href="#segments-on-a-plane" title="Permalink to this headline">¶</a></h2>
 <p>From individual points on a plain, we transition to segments, are simply the pairs of points:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">segment</span> <span class="o">=</span> <span class="n">point</span> <span class="o">*</span> <span class="n">point</span>
 </pre></div>
@@ -444,7 +406,7 @@ positive); otherwise the screw moves down (cross-product is negative).</p>
 </div>
 </div>
 <div class="section" id="generating-random-points-on-a-segment">
-<h2>16.2.8. Generating random points on a segment<a class="headerlink" href="#generating-random-points-on-a-segment" title="Permalink to this headline">¶</a></h2>
+<h2>Generating random points on a segment<a class="headerlink" href="#generating-random-points-on-a-segment" title="Permalink to this headline">¶</a></h2>
 <p>It is easy to generate random points and segments within a given range <code class="docutils literal notranslate"><span class="pre">f</span></code>:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">gen_random_point</span> <span class="n">f</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">ax</span> <span class="o">=</span> <span class="nn">Random</span><span class="p">.</span><span class="n">float</span> <span class="n">f</span> <span class="k">in</span>
@@ -477,7 +439,7 @@ positive); otherwise the screw moves down (cross-product is negative).</p>
 <a class="reference internal image-reference" href="_images/cg04.png"><img alt="_images/cg04.png" class="align-center" src="_images/cg04.png" style="width: 700px;" /></a>
 </div>
 <div class="section" id="collinearity-of-segments">
-<h2>16.2.9. Collinearity of segments<a class="headerlink" href="#collinearity-of-segments" title="Permalink to this headline">¶</a></h2>
+<h2>Collinearity of segments<a class="headerlink" href="#collinearity-of-segments" title="Permalink to this headline">¶</a></h2>
 <p>Two segments are <em>collinear</em> (ie., belong to the same straight line), if each of the points of one segment forms a 0-turn (i.e., neither left, nor right) with the two points of another segment. Therefore, we can check the collinearity of two segments <code class="docutils literal notranslate"><span class="pre">s1</span></code> and <code class="docutils literal notranslate"><span class="pre">s2</span></code> as follows:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Checking if segments are collinear *)</span>
 <span class="k">let</span> <span class="n">collinear</span> <span class="n">s1</span> <span class="n">s2</span> <span class="o">=</span>
@@ -506,7 +468,7 @@ positive); otherwise the screw moves down (cross-product is negative).</p>
 </div>
 </div>
 <div class="section" id="checking-for-intersections">
-<h2>16.2.10. Checking for intersections<a class="headerlink" href="#checking-for-intersections" title="Permalink to this headline">¶</a></h2>
+<h2>Checking for intersections<a class="headerlink" href="#checking-for-intersections" title="Permalink to this headline">¶</a></h2>
 <p>Two segments <code class="docutils literal notranslate"><span class="pre">s1</span></code> and <code class="docutils literal notranslate"><span class="pre">s2</span></code> intersect if they</p>
 <ol class="loweralpha simple">
 <li>collinear and have common points, or</li>
@@ -552,7 +514,7 @@ positive); otherwise the screw moves down (cross-product is negative).</p>
 </div>
 </div>
 <div class="section" id="finding-intersections">
-<h2>16.2.11. Finding intersections<a class="headerlink" href="#finding-intersections" title="Permalink to this headline">¶</a></h2>
+<h2>Finding intersections<a class="headerlink" href="#finding-intersections" title="Permalink to this headline">¶</a></h2>
 <p>Sometimes we need to find the exact points where two segments intersect.</p>
 <p>In the case of collinear segments that intersect this is reduced to the enumeration of four possible options (at least one end of some segment should belong to another segment).</p>
 <p>The case of non-collinear segments <code class="docutils literal notranslate"><span class="pre">[p1;</span> <span class="pre">p2]</span></code> and <code class="docutils literal notranslate"><span class="pre">[p3;</span> <span class="pre">p4]</span></code> can be solved if each is represented in a form <span class="math notranslate nohighlight">\(p_1 + t r\)</span> and <span class="math notranslate nohighlight">\(p_3 + u s\)</span>, where <span class="math notranslate nohighlight">\(t\)</span> and <span class="math notranslate nohighlight">\(s\)</span> are the vectors connecting the end-points of each segment correspondingly, and <span class="math notranslate nohighlight">\(t\)</span> and <span class="math notranslate nohighlight">\(u\)</span> are scalar values ranging from 0 to 1. We need to find <span class="math notranslate nohighlight">\(t\)</span> and <cite>u</cite> such that <span class="math notranslate nohighlight">\(p_1 + t r = p_3 + u s\)</span>. To solve this equation (which has two variables), we need to multiple both sides by, using the cross-product, by either <span class="math notranslate nohighlight">\(r\)</span> or <span class="math notranslate nohighlight">\(s\)</span>. In the former case we get <span class="math notranslate nohighlight">\((p_1 + t r) \times s = (p_3 + u s) \times s\)</span>. Since <span class="math notranslate nohighlight">\(s \times s\)</span> is a zero vector, we can get rid of the variable <span class="math notranslate nohighlight">\(u\)</span>, and find the desired <span class="math notranslate nohighlight">\(t\)</span> as in the implementation below:</p>
@@ -606,15 +568,6 @@ positive); otherwise the screw moves down (cross-product is negative).</p>
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="week-13-polygons.html" class="btn btn-neutral float-right" title="16.3. Working with Polygons" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="week-13-geometry.html" class="btn btn-neutral" title="16.1. Basics of Computational Geometry" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

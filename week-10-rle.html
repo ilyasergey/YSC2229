@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>13.3. Run-Length Encoding &mdash; YSC2229 2020</title>
+  <title>Run-Length Encoding &mdash; YSC2229 2020</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="13.4. Huffman Encoding" href="week-10-huffman.html" />
-    <link rel="prev" title="13.2. Binary Encoding of Data" href="week-10-binary-encondings.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -78,35 +76,9 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="week-10-reading-files.html">13.1. File Input and Output in OCaml</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-binary-encondings.html">13.2. Binary Encoding of Data</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">13.3. Run-Length Encoding</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#design-considerations">13.3.1. Design Considerations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#implementation">13.3.2. Implementation</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-huffman.html">13.4. Huffman Encoding</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-10-graphviz.html">13.5. Installing GraphViz</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-11.html">14. Week 11: Binary Search Trees and Graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-12.html">15. Week 12: Graph Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-13.html">16. Week 13: Elements of Computational Geometry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="final.html">17. Final Project: Vroomba Programming</a></li>
 </ul>
 
             
@@ -152,9 +124,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="week-10.html">13. Week 10: Binary Data Compression</a> &raquo;</li>
-        
-      <li>13.3. Run-Length Encoding</li>
+      <li>Run-Length Encoding</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -172,7 +142,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="run-length-encoding">
-<span id="week-10-rle"></span><h1>13.3. Run-Length Encoding<a class="headerlink" href="#run-length-encoding" title="Permalink to this headline">¶</a></h1>
+<span id="week-10-rle"></span><h1>Run-Length Encoding<a class="headerlink" href="#run-length-encoding" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">RunLengthEncoding.ml</span></code></li>
 </ul>
@@ -186,7 +156,7 @@
 </div>
 <p>This encoding means that we have 15 (1111 in binary) 0s, then 7 (0111 in binary) 1s, then 7 0s and finally 11 (0111) ones.</p>
 <div class="section" id="design-considerations">
-<h2>13.3.1. Design Considerations<a class="headerlink" href="#design-considerations" title="Permalink to this headline">¶</a></h2>
+<h2>Design Considerations<a class="headerlink" href="#design-considerations" title="Permalink to this headline">¶</a></h2>
 <p>In order to turn this example into an effective data compression method, we need to answer the following questions:</p>
 <ul class="simple">
 <li>How many bits do we use for representing the counts?</li>
@@ -201,7 +171,7 @@
 </ul>
 </div>
 <div class="section" id="implementation">
-<h2>13.3.2. Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
 <p>The resulting encoding procedure, which makes use of the previously implemented queue data type, is as follows:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">open</span> <span class="nc">Queues</span>
 <span class="k">open</span> <span class="nc">DLLBasedQueue</span>
@@ -307,15 +277,6 @@
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="week-10-huffman.html" class="btn btn-neutral float-right" title="13.4. Huffman Encoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="week-10-binary-encondings.html" class="btn btn-neutral" title="13.2. Binary Encoding of Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

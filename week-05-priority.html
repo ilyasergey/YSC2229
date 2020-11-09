@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>7.5. Priority Queues &mdash; YSC2229 2020</title>
+  <title>Priority Queues &mdash; YSC2229 2020</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="7.6. Exercises" href="week-05-exercises.html" />
-    <link rel="prev" title="7.4. Heapsort" href="week-05-heapsort.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -78,37 +76,9 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="week-05-functors.html">7.1. Printing and Validating Generic Arrays</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-heaps.html">7.2. Binary Heaps</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-heapify.html">7.3. Maintaining Binary Heaps</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-heapsort.html">7.4. Heapsort</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">7.5. Priority Queues</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#creating-priority-queues">7.5.1. Creating Priority Queues</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#operations-on-priority-queues">7.5.2. Operations on Priority Queues</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#working-with-priority-queues">7.5.3. Working with Priority Queues</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html">7.6. Exercises</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-11.html">14. Week 11: Binary Search Trees and Graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-12.html">15. Week 12: Graph Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-13.html">16. Week 13: Elements of Computational Geometry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="final.html">17. Final Project: Vroomba Programming</a></li>
 </ul>
 
             
@@ -154,9 +124,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a> &raquo;</li>
-        
-      <li>7.5. Priority Queues</li>
+      <li>Priority Queues</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -174,7 +142,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="priority-queues">
-<span id="id1"></span><h1>7.5. Priority Queues<a class="headerlink" href="#priority-queues" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Priority Queues<a class="headerlink" href="#priority-queues" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">PriorityQueue.ml</span></code></li>
 </ul>
@@ -227,7 +195,7 @@ strictly smaller than any <code class="docutils literal notranslate"><span class
 the <code class="docutils literal notranslate"><span class="pre">None</span></code> elements will denote the “empty space” in our priority
 queue.</p>
 <div class="section" id="creating-priority-queues">
-<h2>7.5.1. Creating Priority Queues<a class="headerlink" href="#creating-priority-queues" title="Permalink to this headline">¶</a></h2>
+<h2>Creating Priority Queues<a class="headerlink" href="#creating-priority-queues" title="Permalink to this headline">¶</a></h2>
 <p>The queue is represented by an OCaml <em>record</em> of the following shape (also to be added to the module):</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">heap</span> <span class="o">=</span> <span class="o">{</span>
   <span class="n">heap_size</span> <span class="o">:</span> <span class="kt">int</span> <span class="n">ref</span><span class="o">;</span>
@@ -260,7 +228,7 @@ queue.</p>
 </div>
 </div>
 <div class="section" id="operations-on-priority-queues">
-<span id="sec-pq-impl"></span><h2>7.5.2. Operations on Priority Queues<a class="headerlink" href="#operations-on-priority-queues" title="Permalink to this headline">¶</a></h2>
+<span id="sec-pq-impl"></span><h2>Operations on Priority Queues<a class="headerlink" href="#operations-on-priority-queues" title="Permalink to this headline">¶</a></h2>
 <p>The first and the simplest operation on a priority queue <code class="docutils literal notranslate"><span class="pre">h</span></code> is to take its highest-ranked element (i.e., the one with the greatest priority, expressed by means of its key value):</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">heap_maximum</span> <span class="n">h</span> <span class="o">=</span> <span class="o">(</span><span class="n">h</span><span class="o">.</span><span class="n">arr</span><span class="o">).(</span><span class="mi">0</span><span class="o">)</span>
 </pre></div>
@@ -330,7 +298,7 @@ heaps:</p>
 </div>
 </div>
 <div class="section" id="working-with-priority-queues">
-<h2>7.5.3. Working with Priority Queues<a class="headerlink" href="#working-with-priority-queues" title="Permalink to this headline">¶</a></h2>
+<h2>Working with Priority Queues<a class="headerlink" href="#working-with-priority-queues" title="Permalink to this headline">¶</a></h2>
 <p>Let us see a priority queue in action. We start by creating it from a randomly generated array:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">PQ</span> <span class="o">=</span> <span class="nc">PriorityQueue</span><span class="o">(</span><span class="nc">KV</span><span class="o">)</span>
 <span class="k">open</span> <span class="nc">PQ</span>
@@ -407,15 +375,6 @@ heaps:</p>
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="week-05-exercises.html" class="btn btn-neutral float-right" title="7.6. Exercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="week-05-heapsort.html" class="btn btn-neutral" title="7.4. Heapsort" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

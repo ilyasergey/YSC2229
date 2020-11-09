@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3.3. Correctness of Recursive Algorithms &mdash; YSC2229 2020</title>
+  <title>Correctness of Recursive Algorithms &mdash; YSC2229 2020</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="3.4. From Recursion to Imperative Loops" href="week-01-loops.html" />
-    <link rel="prev" title="3.2. Testing OCaml Code" href="week-01-testing.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -78,37 +76,9 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="week-01-intro.html">3.1. Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-testing.html">3.2. Testing OCaml Code</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">3.3. Correctness of Recursive Algorithms</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#warm-up-finding-a-minimum-in-a-list-of-integers">3.3.1. Warm-up: finding a minimum in a list of integers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#reasoning-about-termination">3.3.2. Reasoning about termination</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#reasoning-about-correctness">3.3.3. Reasoning about correctness</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-loops.html">3.4. From Recursion to Imperative Loops</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-insert-sort.html">3.5. Sorting Lists via Insertion Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-01-exercises.html">3.6. Exercises</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-11.html">14. Week 11: Binary Search Trees and Graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-12.html">15. Week 12: Graph Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-13.html">16. Week 13: Elements of Computational Geometry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="final.html">17. Final Project: Vroomba Programming</a></li>
 </ul>
 
             
@@ -154,9 +124,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="week-01.html">3. Week 01: Introduction</a> &raquo;</li>
-        
-      <li>3.3. Correctness of Recursive Algorithms</li>
+      <li>Correctness of Recursive Algorithms</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -174,7 +142,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="correctness-of-recursive-algorithms">
-<h1>3.3. Correctness of Recursive Algorithms<a class="headerlink" href="#correctness-of-recursive-algorithms" title="Permalink to this headline">¶</a></h1>
+<h1>Correctness of Recursive Algorithms<a class="headerlink" href="#correctness-of-recursive-algorithms" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">Invariants.ml</span></code></li>
 </ul>
@@ -189,7 +157,7 @@ OCaml, following the grammar:</p>
 <p>That is, to recall, a list is either empty <code class="docutils literal notranslate"><span class="pre">[]</span></code> or constructed by
 appending a head <cite>&lt;thing&gt;</cite> to an already constructed list.</p>
 <div class="section" id="warm-up-finding-a-minimum-in-a-list-of-integers">
-<h2>3.3.1. Warm-up: finding a minimum in a list of integers<a class="headerlink" href="#warm-up-finding-a-minimum-in-a-list-of-integers" title="Permalink to this headline">¶</a></h2>
+<h2>Warm-up: finding a minimum in a list of integers<a class="headerlink" href="#warm-up-finding-a-minimum-in-a-list-of-integers" title="Permalink to this headline">¶</a></h2>
 <p>Being defined recursively, lists are commonly processed by means of
 recursive functions (which shouldn’t be too surprising). As a warm-up,
 just to remind us what it’s like to work with lists, let us write a
@@ -212,7 +180,7 @@ empty:</p>
 </div>
 </div>
 <div class="section" id="reasoning-about-termination">
-<h2>3.3.2. Reasoning about termination<a class="headerlink" href="#reasoning-about-termination" title="Permalink to this headline">¶</a></h2>
+<h2>Reasoning about termination<a class="headerlink" href="#reasoning-about-termination" title="Permalink to this headline">¶</a></h2>
 <p>How do we know that <code class="docutils literal notranslate"><span class="pre">find_min</span></code> indeed terminates on every input?
 Since the only source of non-termination in functional programs is
 recursion, in order to argue for the termination of <code class="docutils literal notranslate"><span class="pre">find_min</span></code> we
@@ -232,7 +200,7 @@ corresponds to the final step of a computation, at which points the
 function terminates, returning the result.</p>
 </div>
 <div class="section" id="reasoning-about-correctness">
-<h2>3.3.3. Reasoning about correctness<a class="headerlink" href="#reasoning-about-correctness" title="Permalink to this headline">¶</a></h2>
+<h2>Reasoning about correctness<a class="headerlink" href="#reasoning-about-correctness" title="Permalink to this headline">¶</a></h2>
 <p>How do we know that the function is indeed correct, i.e., does what
 it’s supposed to do? A familiar way to probe the implementation for
 the <em>presence</em> of bugs is to give the function a specification and
@@ -474,15 +442,6 @@ Proving, and we will not be covering them here.</p>
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="week-01-loops.html" class="btn btn-neutral float-right" title="3.4. From Recursion to Imperative Loops" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="week-01-testing.html" class="btn btn-neutral" title="3.2. Testing OCaml Code" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>15.3. Single-Source Shortest Paths &mdash; YSC2229 2020</title>
+  <title>Single-Source Shortest Paths &mdash; YSC2229 2020</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="15.4. Minimal Spanning Trees" href="week-12-spanning.html" />
-    <link rel="prev" title="15.2. Reachability and Graph Traversals" href="week-12-reachability.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -78,42 +76,9 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-11.html">14. Week 11: Binary Search Trees and Graphs</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="week-12.html">15. Week 12: Graph Algorithms</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="week-12-linked-graphs.html">15.1. Graphs as Linked Data Structures</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html">15.2. Reachability and Graph Traversals</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">15.3. Single-Source Shortest Paths</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#weighted-graphs">15.3.1. Weighted Graphs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#some-properties-of-paths">15.3.2. Some Properties of Paths</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#representing-shortest-paths">15.3.3. Representing Shortest Paths</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#representing-distance">15.3.4. Representing Distance</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#initialisation-and-relaxation">15.3.5. Initialisation and Relaxation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#bellman-ford-algorithm">15.3.6. Bellman-Ford Algorithm</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#rendering-minimal-paths">15.3.7. Rendering Minimal Paths</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#dijkstra-s-algorithm">15.3.8. Dijkstra’s Algorithm</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#testing-shortest-path-algorithms">15.3.9. Testing Shortest-Path Algorithms</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-spanning.html">15.4. Minimal Spanning Trees</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-exercises.html">15.5. Exercises</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-13.html">16. Week 13: Elements of Computational Geometry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="final.html">17. Final Project: Vroomba Programming</a></li>
 </ul>
 
             
@@ -159,9 +124,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="week-12.html">15. Week 12: Graph Algorithms</a> &raquo;</li>
-        
-      <li>15.3. Single-Source Shortest Paths</li>
+      <li>Single-Source Shortest Paths</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -179,7 +142,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="single-source-shortest-paths">
-<span id="paths"></span><h1>15.3. Single-Source Shortest Paths<a class="headerlink" href="#single-source-shortest-paths" title="Permalink to this headline">¶</a></h1>
+<span id="paths"></span><h1>Single-Source Shortest Paths<a class="headerlink" href="#single-source-shortest-paths" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">Paths.ml</span></code></li>
 </ul>
@@ -188,7 +151,7 @@ finding the most efficient route from a point A to a point B,
 following the map, defined by the graph (this is what is happening
 when you are looking for directions on Google maps).</p>
 <div class="section" id="weighted-graphs">
-<h2>15.3.1. Weighted Graphs<a class="headerlink" href="#weighted-graphs" title="Permalink to this headline">¶</a></h2>
+<h2>Weighted Graphs<a class="headerlink" href="#weighted-graphs" title="Permalink to this headline">¶</a></h2>
 <p>To represent the navigation problem using graphs, we need to expand our definitions.</p>
 <div class="admonition-definition-weighted-directed-graph admonition">
 <p class="first admonition-title">Definition (Weighted directed graph)</p>
@@ -205,7 +168,7 @@ when you are looking for directions on Google maps).</p>
 <p>In our example with navigation via Google Maps, a weight of a path correspond to the time of a certain connection. Choosing the shortest path corresponds to choosing a fastest route.</p>
 </div>
 <div class="section" id="some-properties-of-paths">
-<h2>15.3.2. Some Properties of Paths<a class="headerlink" href="#some-properties-of-paths" title="Permalink to this headline">¶</a></h2>
+<h2>Some Properties of Paths<a class="headerlink" href="#some-properties-of-paths" title="Permalink to this headline">¶</a></h2>
 <p>The following properties hold of shortest paths in directed weighted graphs, and are easy to prove:</p>
 <ul class="simple">
 <li>A subpath of a shortest path is a shortest path between the corresponding nodes.</li>
@@ -214,7 +177,7 @@ when you are looking for directions on Google maps).</p>
 <p>The definition of a shortest path also applies in the case of negative weights. However, it makes no sense in the presence of cycles with negative weight (explain, why).</p>
 </div>
 <div class="section" id="representing-shortest-paths">
-<h2>15.3.3. Representing Shortest Paths<a class="headerlink" href="#representing-shortest-paths" title="Permalink to this headline">¶</a></h2>
+<h2>Representing Shortest Paths<a class="headerlink" href="#representing-shortest-paths" title="Permalink to this headline">¶</a></h2>
 <p>Given a <em>source</em> node <span class="math notranslate nohighlight">\(s\)</span> in a graph <span class="math notranslate nohighlight">\(G\)</span>, we are interested in computing the shortest paths to all nodes of <span class="math notranslate nohighlight">\(G\)</span> that are reachable from <span class="math notranslate nohighlight">\(s\)</span>. This problem is known ad SSSP — <em>Single-Source Shortest Paths</em>.</p>
 <p>While discovering shortest paths, we will be representing the current knowledge about paths from <span class="math notranslate nohighlight">\(s\)</span> to other nodes by building a <em>predecessor tree</em> <code class="docutils literal notranslate"><span class="pre">pred_tree</span></code> . It can be represented via a hash table, in which each node <span class="math notranslate nohighlight">\(v\)</span> of the graph (serving as a key) will be pointing to the current predecessor node on a path from <span class="math notranslate nohighlight">\(s\)</span> to <span class="math notranslate nohighlight">\(v\)</span> or <code class="docutils literal notranslate"><span class="pre">None</span></code>, if no path is built yet. As we keep building the shortest paths, this information can change.</p>
 <p>The actual paths from <span class="math notranslate nohighlight">\(s\)</span> to any node <span class="math notranslate nohighlight">\(v\)</span> can be reconstructed by traversing the branches of the predecessor tree bottom-up and then reversing the obtained lists.</p>
@@ -281,7 +244,7 @@ when you are looking for directions on Google maps).</p>
 <a class="reference internal image-reference" href="_images/01-bf.png"><img alt="_images/01-bf.png" class="align-center" src="_images/01-bf.png" style="width: 300px;" /></a>
 </div>
 <div class="section" id="representing-distance">
-<h2>15.3.4. Representing Distance<a class="headerlink" href="#representing-distance" title="Permalink to this headline">¶</a></h2>
+<h2>Representing Distance<a class="headerlink" href="#representing-distance" title="Permalink to this headline">¶</a></h2>
 <p>When we only start looking for the paths, we don’t know what is the
 distance from <span class="math notranslate nohighlight">\(s\)</span> to other nodes, hence we need to
 over-approximate. For this we are going to be using the following
@@ -318,7 +281,7 @@ infinite distances:</p>
 <p>Notice that we specifically arrange it as a separate module, in order to avoid clashes between the overloaded comparison operators and those defined automatically by OCaml (should we have relied on the latter ones, our further implementation would be incorrect!).</p>
 </div>
 <div class="section" id="initialisation-and-relaxation">
-<h2>15.3.5. Initialisation and Relaxation<a class="headerlink" href="#initialisation-and-relaxation" title="Permalink to this headline">¶</a></h2>
+<h2>Initialisation and Relaxation<a class="headerlink" href="#initialisation-and-relaxation" title="Permalink to this headline">¶</a></h2>
 <p>All SSSP algorithms rely on the two main operations:</p>
 <ul class="simple">
 <li>Initialising the predecessor tree and the distance table, and</li>
@@ -376,7 +339,7 @@ of the entire set <span class="math notranslate nohighlight">\(E\)</span> of edg
 </div>
 </div>
 <div class="section" id="bellman-ford-algorithm">
-<h2>15.3.6. Bellman-Ford Algorithm<a class="headerlink" href="#bellman-ford-algorithm" title="Permalink to this headline">¶</a></h2>
+<h2>Bellman-Ford Algorithm<a class="headerlink" href="#bellman-ford-algorithm" title="Permalink to this headline">¶</a></h2>
 <p>The <strong>Bellman-Ford algorithm</strong> builds on the path relaxation property.
 It is powered by observation that if <code class="docutils literal notranslate"><span class="pre">n</span></code> is the size of the set of
 nodes of the graph, and shortest path will have <code class="docutils literal notranslate"><span class="pre">n</span></code> or lest nodes in
@@ -410,7 +373,7 @@ building the predecessor trees. This is doen as follows:</p>
 <p><strong>Question:</strong> What is a complexity of <code class="docutils literal notranslate"><span class="pre">bellman_ford</span></code> in terms of <code class="docutils literal notranslate"><span class="pre">g.V</span></code> and <code class="docutils literal notranslate"><span class="pre">g.E</span></code>?</p>
 </div>
 <div class="section" id="rendering-minimal-paths">
-<h2>15.3.7. Rendering Minimal Paths<a class="headerlink" href="#rendering-minimal-paths" title="Permalink to this headline">¶</a></h2>
+<h2>Rendering Minimal Paths<a class="headerlink" href="#rendering-minimal-paths" title="Permalink to this headline">¶</a></h2>
 <p>We can visualise the result of the algorithm by using the following function rendering a suitable GraphViz representation:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">graphviz_with_min_paths</span> <span class="n">path_calculuator</span> <span class="n">g</span> <span class="n">s</span> <span class="n">out</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">p</span> <span class="o">=</span> <span class="n">path_calculuator</span> <span class="n">g</span> <span class="n">s</span> <span class="k">in</span>
@@ -437,7 +400,7 @@ building the predecessor trees. This is doen as follows:</p>
 <a class="reference internal image-reference" href="_images/02-bf.png"><img alt="_images/02-bf.png" class="align-center" src="_images/02-bf.png" style="width: 300px;" /></a>
 </div>
 <div class="section" id="dijkstra-s-algorithm">
-<h2>15.3.8. Dijkstra’s Algorithm<a class="headerlink" href="#dijkstra-s-algorithm" title="Permalink to this headline">¶</a></h2>
+<h2>Dijkstra’s Algorithm<a class="headerlink" href="#dijkstra-s-algorithm" title="Permalink to this headline">¶</a></h2>
 <p><strong>Dijkstra’s algorithm</strong> has a better complexity that Bellman-Fort but only works on graphs with non-negative edge weights. It is a <em>greedy</em> algorithm, that gradually explores the surroundings of the source node <span class="math notranslate nohighlight">\(s\)</span>, looking for the next node that will provide for the shortest paths. In doing so, it explores each node and edge just once, relying on the ongoing relaxation, recomputing the shortest paths as it goes:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Extract minimal distance in O(|remaining|) *)</span>
 <span class="k">let</span> <span class="n">extract_min_dist</span> <span class="n">dist_table</span> <span class="n">remaining</span> <span class="o">=</span>
@@ -511,7 +474,7 @@ expensive one hides a path with negative weights.</p>
 <a class="reference internal image-reference" href="_images/03-dij.png"><img alt="_images/03-dij.png" class="align-center" src="_images/03-dij.png" style="width: 300px;" /></a>
 </div>
 <div class="section" id="testing-shortest-path-algorithms">
-<h2>15.3.9. Testing Shortest-Path Algorithms<a class="headerlink" href="#testing-shortest-path-algorithms" title="Permalink to this headline">¶</a></h2>
+<h2>Testing Shortest-Path Algorithms<a class="headerlink" href="#testing-shortest-path-algorithms" title="Permalink to this headline">¶</a></h2>
 <p>The following functions help to retrieve the shortest paths from the predecessor tree and also compute the weight of a path:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">get_shortest_path</span> <span class="n">p</span> <span class="n">s</span> <span class="n">u</span> <span class="o">=</span>
   <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">acc</span> <span class="n">v</span> <span class="o">=</span> <span class="k">match</span> <span class="n">get</span> <span class="n">p</span> <span class="n">v</span> <span class="k">with</span>
@@ -642,15 +605,6 @@ expensive one hides a path with negative weights.</p>
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="week-12-spanning.html" class="btn btn-neutral float-right" title="15.4. Minimal Spanning Trees" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="week-12-reachability.html" class="btn btn-neutral" title="15.2. Reachability and Graph Traversals" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

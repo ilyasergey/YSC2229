@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>7.3. Maintaining Binary Heaps &mdash; YSC2229 2020</title>
+  <title>Maintaining Binary Heaps &mdash; YSC2229 2020</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="7.4. Heapsort" href="week-05-heapsort.html" />
-    <link rel="prev" title="7.2. Binary Heaps" href="week-05-heaps.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -78,37 +76,9 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="week-05-functors.html">7.1. Printing and Validating Generic Arrays</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-heaps.html">7.2. Binary Heaps</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">7.3. Maintaining Binary Heaps</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#heapifying-elements-of-an-array">7.3.1. “Heapifying” elements of an array</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#complexity-of-heapify">7.3.2. Complexity of heapify</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#building-a-heap-from-an-array">7.3.3. Building a heap from an array</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-heapsort.html">7.4. Heapsort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-priority.html">7.5. Priority Queues</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html">7.6. Exercises</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-11.html">14. Week 11: Binary Search Trees and Graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-12.html">15. Week 12: Graph Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-13.html">16. Week 13: Elements of Computational Geometry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="final.html">17. Final Project: Vroomba Programming</a></li>
 </ul>
 
             
@@ -154,9 +124,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a> &raquo;</li>
-        
-      <li>7.3. Maintaining Binary Heaps</li>
+      <li>Maintaining Binary Heaps</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -174,7 +142,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="maintaining-binary-heaps">
-<h1>7.3. Maintaining Binary Heaps<a class="headerlink" href="#maintaining-binary-heaps" title="Permalink to this headline">¶</a></h1>
+<h1>Maintaining Binary Heaps<a class="headerlink" href="#maintaining-binary-heaps" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">Heaps.ml</span></code> (continued)</li>
 </ul>
@@ -182,7 +150,7 @@
 it. As we can see, the issue there is between the parent <code class="docutils literal notranslate"><span class="pre">(10,</span> <span class="pre">&quot;c&quot;)</span></code>
 and a left child <code class="docutils literal notranslate"><span class="pre">(11,</span> <span class="pre">&quot;f&quot;)</span></code> that are out of order.</p>
 <div class="section" id="heapifying-elements-of-an-array">
-<h2>7.3.1. “Heapifying” elements of an array<a class="headerlink" href="#heapifying-elements-of-an-array" title="Permalink to this headline">¶</a></h2>
+<h2>“Heapifying” elements of an array<a class="headerlink" href="#heapifying-elements-of-an-array" title="Permalink to this headline">¶</a></h2>
 <p>What we need to do is to swap the offending parent with the children
 (assuming that both subtrees reachable from the children obey the
 descending order), and also make sure that the swapped element <code class="docutils literal notranslate"><span class="pre">(10,</span>
@@ -275,7 +243,7 @@ a parent, and now, after the swap, resides at the position
 <p>As we can observe the two elements have now been correctly swapped.</p>
 </div>
 <div class="section" id="complexity-of-heapify">
-<h2>7.3.2. Complexity of heapify<a class="headerlink" href="#complexity-of-heapify" title="Permalink to this headline">¶</a></h2>
+<h2>Complexity of heapify<a class="headerlink" href="#complexity-of-heapify" title="Permalink to this headline">¶</a></h2>
 <p>The maximal number of steps required to reach a child in a tree is
 called a <em>height</em> of a tree. Notice that the way <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code>
 “walks” and array is by taking left/right child of an element. This
@@ -284,7 +252,7 @@ of a heap). That is, the <code class="docutils literal notranslate"><span class=
 quickly.</p>
 </div>
 <div class="section" id="building-a-heap-from-an-array">
-<span id="sec-build-heap"></span><h2>7.3.3. Building a heap from an array<a class="headerlink" href="#building-a-heap-from-an-array" title="Permalink to this headline">¶</a></h2>
+<span id="sec-build-heap"></span><h2>Building a heap from an array<a class="headerlink" href="#building-a-heap-from-an-array" title="Permalink to this headline">¶</a></h2>
 <p>We can now use <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> iteratively to turn an arbitrary array
 into a max-heap. The following code should be added to the <code class="docutils literal notranslate"><span class="pre">Heap</span></code>
 functor:</p>
@@ -331,15 +299,6 @@ root of a max-heap.</p>
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="week-05-heapsort.html" class="btn btn-neutral float-right" title="7.4. Heapsort" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="week-05-heaps.html" class="btn btn-neutral" title="7.2. Binary Heaps" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>6.5. Sorting in Linear Time &mdash; YSC2229 2020</title>
+  <title>Sorting in Linear Time &mdash; YSC2229 2020</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="6.6. Exercises" href="week-04-exercises.html" />
-    <link rel="prev" title="6.4. Best-Worst Case for Comparison-Based Sorting" href="week-04-sorting-best-worst.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -78,38 +76,9 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="week-04-quicksort.html">6.1. Quicksort and its Variations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html">6.2. Complexity of Divide-and-Conquer Algorithms</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-comparison-based-sorting.html">6.3. Generalising Comparison-Based Sorting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-sorting-best-worst.html">6.4. Best-Worst Case for Comparison-Based Sorting</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">6.5. Sorting in Linear Time</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#simple-bucket-sort">6.5.1. Simple Bucket Sort</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#enhanced-bucket-sort">6.5.2. Enhanced Bucket Sort</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#stability-of-sorting">6.5.3. Stability of sorting</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#radix-sort">6.5.4. Radix Sort</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html">6.6. Exercises</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-11.html">14. Week 11: Binary Search Trees and Graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-12.html">15. Week 12: Graph Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-13.html">16. Week 13: Elements of Computational Geometry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="final.html">17. Final Project: Vroomba Programming</a></li>
 </ul>
 
             
@@ -155,9 +124,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a> &raquo;</li>
-        
-      <li>6.5. Sorting in Linear Time</li>
+      <li>Sorting in Linear Time</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -175,7 +142,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="sorting-in-linear-time">
-<h1>6.5. Sorting in Linear Time<a class="headerlink" href="#sorting-in-linear-time" title="Permalink to this headline">¶</a></h1>
+<h1>Sorting in Linear Time<a class="headerlink" href="#sorting-in-linear-time" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">LinearTimeSorting.ml</span></code></li>
 </ul>
@@ -187,7 +154,7 @@ data used as keys for elements to be sorted (e.g., integers). In this
 chapter we will see some examples of such specialised sorting
 procedures.</p>
 <div class="section" id="simple-bucket-sort">
-<h2>6.5.1. Simple Bucket Sort<a class="headerlink" href="#simple-bucket-sort" title="Permalink to this headline">¶</a></h2>
+<h2>Simple Bucket Sort<a class="headerlink" href="#simple-bucket-sort" title="Permalink to this headline">¶</a></h2>
 <p>Bucket sort works well for the case, when the size of the set, from
 which we draw the keys is limited by a certain number <cite>bnum</cite>. In this
 case, we can allocate an auxiliary array of “buckets” (implemented as
@@ -229,7 +196,7 @@ is in <span class="math notranslate nohighlight">\(O(\mathtt{bnum} \cdot n)\)</s
 </div>
 </div>
 <div class="section" id="enhanced-bucket-sort">
-<span id="sec-bucket-sort"></span><h2>6.5.2. Enhanced Bucket Sort<a class="headerlink" href="#enhanced-bucket-sort" title="Permalink to this headline">¶</a></h2>
+<span id="sec-bucket-sort"></span><h2>Enhanced Bucket Sort<a class="headerlink" href="#enhanced-bucket-sort" title="Permalink to this headline">¶</a></h2>
 <p>If the size of the space of keys exceeds the number of the buckets,
 one can still use the same idea, while also sorting each bucket
 individually with a suitable sorting, such as insertion sort
@@ -290,7 +257,7 @@ required. This is what is done in the second <code class="docutils literal notra
 </div>
 </div>
 <div class="section" id="stability-of-sorting">
-<h2>6.5.3. Stability of sorting<a class="headerlink" href="#stability-of-sorting" title="Permalink to this headline">¶</a></h2>
+<h2>Stability of sorting<a class="headerlink" href="#stability-of-sorting" title="Permalink to this headline">¶</a></h2>
 <p>An important property of a sorting algorithm is <strong>stability</strong>. A sorting
 algorithms is <em>stable</em> if it preserves the ordering between the elements
 with equal keys in the initial array.</p>
@@ -330,7 +297,7 @@ sorting algorithms are stable though. Try to answer, whether merge
 sort is stable? What about Quicksort?</p>
 </div>
 <div class="section" id="radix-sort">
-<span id="sec-radix-sort"></span><h2>6.5.4. Radix Sort<a class="headerlink" href="#radix-sort" title="Permalink to this headline">¶</a></h2>
+<span id="sec-radix-sort"></span><h2>Radix Sort<a class="headerlink" href="#radix-sort" title="Permalink to this headline">¶</a></h2>
 <p>The stability comes into play, when one sorting algorithm uses another
 one as a black-box, relying on the fact that original order of
 elements in partially-sorted arrays with “almost-same” keys will be
@@ -398,15 +365,6 @@ considered as a constant.</p>
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="week-04-exercises.html" class="btn btn-neutral float-right" title="6.6. Exercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="week-04-sorting-best-worst.html" class="btn btn-neutral" title="6.4. Best-Worst Case for Comparison-Based Sorting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

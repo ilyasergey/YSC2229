@@ -13,45 +13,52 @@ Introductory Data Structures and Algorithms
    syllabus
    prerequisites
 
-   week-01
-   week-02
-   week-03	 
-   week-04	 
-   week-05
-   week-06
+   ..
+      week-01
+      week-02
+      week-03	 
+      week-04	 
+      week-05
+      week-06
 
-   midterm   
+      midterm   
 
-   week-07
-   week-08
-   week-09
-   week-10
-   week-11
-   week-12
-   week-13
-   final
+      week-07
+      week-08
+      week-09
+      week-10
+      week-11
+      week-12
+      week-13
+      final
 
-.. Lecture notes will be posted gradually as we progress through the course material.
+Lecture notes will be posted gradually as we progress through the course material.
 
 
 Supplementary Materials
 -----------------------
 
-* `Week 01 Introductory Slides <resources/2020/Week-01-Intro.pdf>`_
-* `Matrix determinants in Haskell <resources/2020/Matrices.hs>`_
-* `Week 04 Slides on Advanced Sorting <resources/2020/Week-04-Sorting.pdf>`_
-* `Board shots from the Backtracking lecture <resources/2020/backtracking.pdf>`_
+TBA
+
+..
+   * `Week 01 Introductory Slides <resources/2020/Week-01-Intro.pdf>`_
+   * `Matrix determinants in Haskell <resources/2020/Matrices.hs>`_
+   * `Week 04 Slides on Advanced Sorting <resources/2020/Week-04-Sorting.pdf>`_
+   * `Board shots from the Backtracking lecture <resources/2020/backtracking.pdf>`_
 
 
 Examples and Code
 -----------------
 
-* `Code from the lectures
-  <https://github.com/ysc2229/library>`_: each week is a separate
-  branch, ``master`` is a final snapshot.
-* `Example OCaml project with graphics
-  <https://github.com/ysc2229/ocaml-graphics-demo>`_ 
-* `GitHub Organisation <https://github.com/ysc2229/>`_ 
+TBA
+
+..
+   * `Code from the lectures
+     <https://github.com/ysc2229/library>`_: each week is a separate
+     branch, ``master`` is a final snapshot.
+   * `Example OCaml project with graphics
+     <https://github.com/ysc2229/ocaml-graphics-demo>`_ 
+   * `GitHub Organisation <https://github.com/ysc2229/>`_ 
 
 Textbooks
 ---------

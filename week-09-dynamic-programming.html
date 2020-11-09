@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>12.3. Optimisation Problems and Dynamic Programming &mdash; YSC2229 2020</title>
+  <title>Optimisation Problems and Dynamic Programming &mdash; YSC2229 2020</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="13. Week 10: Binary Data Compression" href="week-10.html" />
-    <link rel="prev" title="12.2. Constraint Solving via Backtracking" href="week-09-backtracking.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -78,36 +76,9 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-07.html">10. Week 07: Hashing-Based Data Structures</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="week-09-union-find.html">12.1. Equivalence Classes and Union-Find</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-09-backtracking.html">12.2. Constraint Solving via Backtracking</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">12.3. Optimisation Problems and Dynamic Programming</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#implementing-fibonacci-numbers">12.3.1. Implementing Fibonacci numbers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#knapsack-problem">12.3.2. Knapsack Problem</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#determining-the-maximal-price">12.3.3. Determining the Maximal Price</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#solving-knapsack-problem-via-dynamic-programming">12.3.4. Solving Knapsack Problem via Dynamic Programming</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#restoring-the-optimal-list-of-items">12.3.5. Restoring the Optimal List of Items</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-11.html">14. Week 11: Binary Search Trees and Graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-12.html">15. Week 12: Graph Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-13.html">16. Week 13: Elements of Computational Geometry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="final.html">17. Final Project: Vroomba Programming</a></li>
 </ul>
 
             
@@ -153,9 +124,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a> &raquo;</li>
-        
-      <li>12.3. Optimisation Problems and Dynamic Programming</li>
+      <li>Optimisation Problems and Dynamic Programming</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -173,7 +142,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="optimisation-problems-and-dynamic-programming">
-<span id="week-09-dp"></span><h1>12.3. Optimisation Problems and Dynamic Programming<a class="headerlink" href="#optimisation-problems-and-dynamic-programming" title="Permalink to this headline">¶</a></h1>
+<span id="week-09-dp"></span><h1>Optimisation Problems and Dynamic Programming<a class="headerlink" href="#optimisation-problems-and-dynamic-programming" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">DynamicProgramming.ml</span></code></li>
 </ul>
@@ -181,7 +150,7 @@
 <p>The term <a class="reference external" href="https://en.wikipedia.org/wiki/Dynamic_programming">“dynamic programming”</a> was originally used in the 1940s by Richard Bellman to describe the process of solving problems where one needs to find the best decisions one after another.</p>
 <p>A similar idea has been already demonstrated in the implementation of <a class="reference internal" href="week-08-kmp.html#section-kmp"><span class="std std-ref">Knuth–Morris–Pratt Algorithm</span></a>.</p>
 <div class="section" id="implementing-fibonacci-numbers">
-<h2>12.3.1. Implementing Fibonacci numbers<a class="headerlink" href="#implementing-fibonacci-numbers" title="Permalink to this headline">¶</a></h2>
+<h2>Implementing Fibonacci numbers<a class="headerlink" href="#implementing-fibonacci-numbers" title="Permalink to this headline">¶</a></h2>
 <p>Let us demonstrate the main idea of dynamic programming on a toy example: efficiently computing <a class="reference external" href="https://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci numbers</a>.</p>
 <p>One can implement the definition of Fibonacci numbers is implemented as a program naively as follows:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">naive_fib</span> <span class="n">n</span> <span class="o">=</span>
@@ -226,7 +195,7 @@
 <p>As it is easy to show, the complexity of <code class="docutils literal notranslate"><span class="pre">naive_fib</span></code> is <span class="math notranslate nohighlight">\(O(2^n)\)</span>, while the complexity of <code class="docutils literal notranslate"><span class="pre">memo_fib</span></code> is <span class="math notranslate nohighlight">\(O(n)\)</span>.</p>
 </div>
 <div class="section" id="knapsack-problem">
-<h2>12.3.2. Knapsack Problem<a class="headerlink" href="#knapsack-problem" title="Permalink to this headline">¶</a></h2>
+<h2>Knapsack Problem<a class="headerlink" href="#knapsack-problem" title="Permalink to this headline">¶</a></h2>
 <p><em>Knapsack Problem</em> (KP) is a very famous instance of a CSP, combined with an <em>optimisation problem</em>. This means that not only we need to find a solution that satisfies the given constraints, but also such that it maximises certain target function.</p>
 <p>The classical formulation of KP is as follows. Given a set of distinct items, each with a weight and a value, determine which items to include in a collection so that the total weight is less than or equal to a given limit and the total value is as large as possible. It derives its name from the problem faced by someone who is constrained by a fixed-size knapsack and must fill it with the most valuable items.</p>
 <p>For instance, we can encode our items (each available in a singe instance) in a form of an array, coupling their descriptions with their weight and price:</p>
@@ -249,7 +218,7 @@
 <p>That is, we have a selection of 4 fruit, of different weight and price. For instance, the weight of kiwi is 1 while its cost is 2. Two additional functions are defined to retrieve the corresponding item characteristics.</p>
 </div>
 <div class="section" id="determining-the-maximal-price">
-<h2>12.3.3. Determining the Maximal Price<a class="headerlink" href="#determining-the-maximal-price" title="Permalink to this headline">¶</a></h2>
+<h2>Determining the Maximal Price<a class="headerlink" href="#determining-the-maximal-price" title="Permalink to this headline">¶</a></h2>
 <p>Now assume that we want to first solve a simpler problem: what is the maximal cumulative price of the items we can carry in the knapsack, without exceeding the weight limit. The following program provides such a solution:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">knapsack_max_price</span> <span class="n">max_weight</span> <span class="n">items</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">num_items</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">items</span> <span class="k">in</span>
@@ -274,7 +243,7 @@
 <p><strong>Question:</strong> What is going to be the result of <code class="docutils literal notranslate"><span class="pre">knapsack_max_price</span> <span class="pre">4</span> <span class="pre">fruit_sack</span></code>?</p>
 </div>
 <div class="section" id="solving-knapsack-problem-via-dynamic-programming">
-<h2>12.3.4. Solving Knapsack Problem via Dynamic Programming<a class="headerlink" href="#solving-knapsack-problem-via-dynamic-programming" title="Permalink to this headline">¶</a></h2>
+<h2>Solving Knapsack Problem via Dynamic Programming<a class="headerlink" href="#solving-knapsack-problem-via-dynamic-programming" title="Permalink to this headline">¶</a></h2>
 <p>The implementation <code class="docutils literal notranslate"><span class="pre">knapsack_max_price</span></code> has the same problems as the naive implementation of Fibonacci numbers. For instance, it’s not difficult to see that <code class="docutils literal notranslate"><span class="pre">solver</span> <span class="pre">(n</span> <span class="pre">-</span> <span class="pre">1)</span> <span class="pre">w</span></code> is going to be called multiple times for the same <code class="docutils literal notranslate"><span class="pre">n</span></code>. This is a good candidate for using DP memoisation technique.</p>
 <p>We are going to implement the said memoisation by computing, bottom-up, the table <code class="docutils literal notranslate"><span class="pre">m</span></code> as a two-dimensional array, where <code class="docutils literal notranslate"><span class="pre">m.(i).(w)</span></code> stores the maximal price achievable by taking only <code class="docutils literal notranslate"><span class="pre">i</span></code> first items while not exceeding the weight <code class="docutils literal notranslate"><span class="pre">w</span></code>. Having the maximal weight specified, we can populate our table by iterating through all prefixes of the item list, and all weights from 0 to the maximal given one, thus tabulating all the results. The implementation is as follows:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">knapsack_max_price_dynamic</span> <span class="n">max_weight</span> <span class="n">items</span> <span class="o">=</span>
@@ -317,7 +286,7 @@
 <p><strong>Question:</strong> what is the complexity of <code class="docutils literal notranslate"><span class="pre">knapsack_max_price_dynamic</span></code> in terms of <code class="docutils literal notranslate"><span class="pre">n</span></code> and <code class="docutils literal notranslate"><span class="pre">max_weight</span></code>? How come that it does not contradict the NP-completeness of the Knapsack Problem?</p>
 </div>
 <div class="section" id="restoring-the-optimal-list-of-items">
-<h2>12.3.5. Restoring the Optimal List of Items<a class="headerlink" href="#restoring-the-optimal-list-of-items" title="Permalink to this headline">¶</a></h2>
+<h2>Restoring the Optimal List of Items<a class="headerlink" href="#restoring-the-optimal-list-of-items" title="Permalink to this headline">¶</a></h2>
 <p>As the final step, let us obtain the actual items that deliver the optimal price. This can be done by walking the resulting memoisation table from the bottom-right cornet up and left. Specifically, if the price is not reduced by going, bottom-up in the same column, from an element <code class="docutils literal notranslate"><span class="pre">n</span></code> of the list, then the element <code class="docutils literal notranslate"><span class="pre">n</span></code> has not been taken. However, if the price is reduced, this means that means that wee need to include element number <code class="docutils literal notranslate"><span class="pre">n</span></code> to the list of taken items, subtract its weight, obtaining the new column to consult and repeat the process. The following program implement this logic:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">knapsack_obtain_items</span> <span class="n">max_weight</span> <span class="n">items</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">num_items</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">items</span> <span class="k">in</span>
@@ -347,15 +316,6 @@
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="week-10.html" class="btn btn-neutral float-right" title="13. Week 10: Binary Data Compression" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="week-09-backtracking.html" class="btn btn-neutral" title="12.2. Constraint Solving via Backtracking" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

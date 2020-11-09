@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>10. Week 07: Hashing-Based Data Structures &mdash; YSC2229 2020</title>
+  <title>Week 07: Hashing-Based Data Structures &mdash; YSC2229 2020</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="10.1. Hash-tables" href="week-07-hash-tables.html" />
-    <link rel="prev" title="9. Midterm Project: Memory Allocation and Reclamation" href="midterm.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -78,29 +76,9 @@
               
             
             
-              <ul class="current">
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-01.html">3. Week 01: Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-02.html">4. Week 02: Array Sorting and Order Notation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-03.html">5. Week 03: Complexity of Recursive Algorithms; Array Generators</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-04.html">6. Week 04: Divide-and-Conquer Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-05.html">7. Week 05: Binary Heaps and Priority Queues</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-06.html">8. Week 06: Abstract Data Types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="midterm.html">9. Midterm Project: Memory Allocation and Reclamation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">10. Week 07: Hashing-Based Data Structures</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables.html">10.1. Hash-tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html">10.2. Generalised Hash-Tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html">10.3. Bloom Filters and Their Applications</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-08.html">11. Week 08: Searching in Strings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-09.html">12. Week 09: Backtracking and Dynamic Programming</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-10.html">13. Week 10: Binary Data Compression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-11.html">14. Week 11: Binary Search Trees and Graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-12.html">15. Week 12: Graph Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-13.html">16. Week 13: Elements of Computational Geometry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="final.html">17. Final Project: Vroomba Programming</a></li>
 </ul>
 
             
@@ -146,7 +124,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>10. Week 07: Hashing-Based Data Structures</li>
+      <li>Week 07: Hashing-Based Data Structures</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -164,34 +142,34 @@
            <div itemprop="articleBody">
             
   <div class="section" id="week-07-hashing-based-data-structures">
-<h1>10. Week 07: Hashing-Based Data Structures<a class="headerlink" href="#week-07-hashing-based-data-structures" title="Permalink to this headline">¶</a></h1>
+<h1>Week 07: Hashing-Based Data Structures<a class="headerlink" href="#week-07-hashing-based-data-structures" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="week-07-hash-tables.html">10.1. Hash-tables</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables.html#allocation-by-hashing-keys">10.1.1. Allocation by hashing keys</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables.html#operations-on-hash-tables">10.1.2. Operations on hash-tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables.html#implementing-hash-tables">10.1.3. Implementing hash-tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables.html#hash-tables-in-action">10.1.4. Hash-tables in action</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-07-hash-tables.html">Hash-tables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables.html#allocation-by-hashing-keys">Allocation by hashing keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables.html#operations-on-hash-tables">Operations on hash-tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables.html#implementing-hash-tables">Implementing hash-tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables.html#hash-tables-in-action">Hash-tables in action</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-07-hash-tables-again.html">10.2. Generalised Hash-Tables</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#ocaml-s-universal-hashing">10.2.1. OCaml’s universal hashing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#redefining-hash-table-signature">10.2.2. Redefining hash-table signature</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#a-framework-for-testing-hash-tables">10.2.3. A framework for testing hash-tables</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#a-simple-list-based-hash-table">10.2.4. A simple list-based hash-table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#testing-a-simple-hash-table">10.2.5. Testing a Simple Hash-Table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#a-resizable-hash-table">10.2.6. A Resizable hash-table</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#comparing-performance-of-different-implementations">10.2.7. Comparing performance of different implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-07-hash-tables-again.html">Generalised Hash-Tables</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#ocaml-s-universal-hashing">OCaml’s universal hashing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#redefining-hash-table-signature">Redefining hash-table signature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#a-framework-for-testing-hash-tables">A framework for testing hash-tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#a-simple-list-based-hash-table">A simple list-based hash-table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#testing-a-simple-hash-table">Testing a Simple Hash-Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#a-resizable-hash-table">A Resizable hash-table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html#comparing-performance-of-different-implementations">Comparing performance of different implementations</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-07-bloom.html">10.3. Bloom Filters and Their Applications</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#high-level-intuition">10.3.1. High-level intuition</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#bloom-filter-signature">10.3.2. Bloom filter signature</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#implementing-a-bloom-filter">10.3.3. Implementing a Bloom filter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#experimenting-with-bloom-filters">10.3.4. Experimenting with Bloom filters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#testing-bloom-filters">10.3.5. Testing Bloom Filters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#improving-simple-hash-table-with-a-bloom-filter">10.3.6. Improving Simple Hash-table with a Bloom filter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#comparing-performance">10.3.7. Comparing performance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-07-bloom.html">Bloom Filters and Their Applications</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#high-level-intuition">High-level intuition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#bloom-filter-signature">Bloom filter signature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#implementing-a-bloom-filter">Implementing a Bloom filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#experimenting-with-bloom-filters">Experimenting with Bloom filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#testing-bloom-filters">Testing Bloom Filters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#improving-simple-hash-table-with-a-bloom-filter">Improving Simple Hash-table with a Bloom filter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-bloom.html#comparing-performance">Comparing performance</a></li>
 </ul>
 </li>
 </ul>
@@ -203,15 +181,6 @@
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="week-07-hash-tables.html" class="btn btn-neutral float-right" title="10.1. Hash-tables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="midterm.html" class="btn btn-neutral" title="9. Midterm Project: Memory Allocation and Reclamation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>
