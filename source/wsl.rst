@@ -158,7 +158,25 @@ fully functional Linux distribution installed on your machine.
 
 .. image:: ../resources/howto/tuareg.png
    :width: 820px
-   :align: center    
+   :align: center
+
+11. You can additionally setup the following parameters in Emacs for better
+    editing by searching in ``Options -> Customize Emacs -> Top-level
+    Customization Group``:
+
+    * Set the width of the buffer line to cut automatically beyond 80 characters
+      (parameter ``Fill Column``):   
+
+      .. image:: ../resources/howto/line80.png
+         :width: 820px
+         :align: center
+
+    * Remove the red highlighting of trailing whitespaces in the buffers
+      (parameter ``Show Trailing Whitespace``):
+
+      .. image:: ../resources/howto/trailing.png
+         :width: 820px
+         :align: center
 
 Linux
 -----
@@ -247,3 +265,21 @@ OCaml is well supported in Mac OS X, so the installation process is fairly strai
 .. image:: ../resources/howto/mac-tuareg.png
    :width: 820px
    :align: center    
+
+9. You can additionally setup the following parameters in Emacs for better
+   editing by searching in ``Options -> Customize Aquamacs -> Top-level
+   Customization Group``:
+
+   * Set the width of the buffer line to cut automatically beyond 80 characters
+     (parameter ``Fill Column``):   
+
+     .. image:: ../resources/howto/line80.png
+        :width: 820px
+        :align: center
+
+   * Remove the red highlighting of trailing whitespaces in the buffers
+     (parameter ``Show Trailing Whitespace``):
+
+     .. image:: ../resources/howto/trailing.png
+        :width: 820px
+        :align: center
