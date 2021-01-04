@@ -186,7 +186,7 @@ fully functional Linux distribution installed on your machine.
     libraries above via ``opam``). `This link
     <https://code.visualstudio.com/docs/remote/wsl-tutorial>`_ contains
     instructions on enabling WSL in VSCode (you can skip the part about
-    installing WSL, as have already don it).
+    installing WSL, as you have already done it).
 
 
 Linux
