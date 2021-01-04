@@ -62,7 +62,7 @@ Examples and Code
 -----------------
 
 * `Code from the lectures
-  <https://github.com/ysc2229/ysc2229-2020>`_: each week is a separate  branch, ``master`` is a final snapshot.
+  <https://github.com/ysc2229/ysc2229-2021>`_: each week ``N`` is a separate  branch ``weekN``.
 * `Example OCaml project with graphics
   <https://github.com/ysc2229/ocaml-graphics-demo>`_ 
 * `GitHub Organisation <https://github.com/ysc2229/>`_ (please, email me your GitHub handle to have access) 
