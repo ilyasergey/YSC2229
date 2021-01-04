@@ -178,6 +178,17 @@ fully functional Linux distribution installed on your machine.
          :width: 820px
          :align: center
 
+12. [Optional] If you prefer to use `VSCode <https://code.visualstudio.com/>`_
+    instead of Aquamacs for your development, you might consider installing
+    `this plugin
+    https://marketplace.visualstudio.com/items?itemName=ocamllabs.ocaml-platform`_,
+    which enables OCaml support in VSCode (assuming you have installed all
+    libraries above via ``opam``). `This link
+    <https://code.visualstudio.com/docs/remote/wsl-tutorial>`_ contains
+    instructions on enabling WSL in VSCode (you can skip the part about
+    installing WSL, as have already don it).
+
+
 Linux
 -----
 
