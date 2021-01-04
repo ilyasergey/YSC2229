@@ -46,13 +46,17 @@ Lecture Notes
 ..   week-13
 ..   final
 
+Lecture notes will be posted gradually as we progress through the material.
+
 Supplementary Materials
 -----------------------
 
-.. * `Week 01 Introductory Slides <_static/Week-01-Intro.pdf>`_
-.. * `Matrix determinants in Haskell <_static/Matrices.hs>`_
-.. * `Week 04 Slides on Advanced Sorting <_static/Week-04-Sorting.pdf>`_
-.. * `Board shots from the Backtracking lecture <_static/backtracking.pdf>`_
+TBA
+
+.. * `Week 01 Introductory Slides <_static/2021/Week-01-Intro.pdf>`_
+.. * `Matrix determinants in Haskell <_static/2021/Matrices.hs>`_
+.. * `Week 04 Slides on Advanced Sorting <_static/2021/Week-04-Sorting.pdf>`_
+.. * `Board shots from the Backtracking lecture <_static/2021/backtracking.pdf>`_
 
 Examples and Code
 -----------------
@@ -79,7 +83,7 @@ Textbooks
 
 **On OCaml**
 
-1. `Introduction to Objective Caml <./resources/ocaml-book.pdf>`_ by Jason Hickey 
+1. `Introduction to Objective Caml <_static/ocaml-book.pdf>`_ by Jason Hickey 
 2. `Real World OCaml <https://dev.realworldocaml.org/>`_ by Yaron Minsky, Anil Madhavapeddy, and Jason Hickey
 
 ..
