@@ -1,0 +1,1039 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. OCaml Style Guide &mdash; YSC2229 2021</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="2.3. Checking your setup" href="setup.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> YSC2229: Introductory Data Structures and Algorithms
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="syllabus.html">1. Course Syllabus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. OCaml Style Guide</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">YSC2229: Introductory Data Structures and Algorithms</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>3. OCaml Style Guide</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="ocaml-style-guide">
+<span id="codestyle"></span><h1>3. OCaml Style Guide<a class="headerlink" href="#ocaml-style-guide" title="Permalink to this headline">¶</a></h1>
+<p>One important goal in this class is to teach you how to program elegantly. You have most likely spent many years in secondary school learning style with respect to the English language – programming should be no different. Every programming language demands a particular style of programming, and forcing one language’s style upon another can have disastrous results. Of course there are some elements of writing a computer program that are shared between all languages. You should be able to pick up these elements through experience.</p>
+<p>Listed below are some style guidelines for OCaml.  Egregious violation of these guidelines may result in loss of programming style points. Note that these guidelines cover many more OCaml features than we will be expecting you to use in this class.</p>
+<p>Although the list below seems daunting, most of the suggestions are common sense. Also, you should note that these rules come no where near to the style mandates you will likely come across in industry.  Many companies go so far as to dictate exactly where spaces can go.</p>
+<p>Acknowledgement: Much of this style guide is adapted from <a class="reference external" href="https://www.cis.upenn.edu/~cis341/20sp/programming_style.shtml">CIS341 at UPenn</a>.</p>
+<embed>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 5px;
+  text-align: left;
+}
+
+ tt {
+    font-family: monospace;
+}
+/* For formatting code examples */
+
+pre {
+    font-family: monospace;
+}
+
+pre.code {
+    width: 95%;
+    max-width: 80em;
+    color: var(--Color--code-fg);
+    background-color: var(--Color--code-bg);
+    display: block;
+    margin: 15px auto;
+    padding: 10px;
+    border: 1px solid var(--Color--code-border);
+}
+
+pre.error {
+    color: var(--Color--code-error);
+}
+</style>
+
+
+<p style="margin-bottom: 0px;"><b>File Submission Requirements:</b></p>
+<ol style="margin-top: 0px;">
+  <li><a href="#1">Code must compile</a></li>
+  <li><a href="#2">80 column limit</a></li>
+  <li><a href="#3">No tab characters</a></li>
+</ol></p>
+<p style="margin-bottom: 0px;"><b>Commenting:</b></p>
+<ol  start="4" style="margin-top: 0px;">
+  <li><a href="#4">Comments go above the code they reference</a></li>
+  <li><a href="#5">Avoid useless comments</a></li>
+  <li><a href="#6">Avoid over-commenting</a></li>
+  <li><a href="#7">Line breaks</a></li>
+  <li><a href="#8">Proper multi-line commenting</a></li>
+</ol>
+</p>
+<p style="margin-bottom: 0px;"><b>Naming and Declarations:</b></p>
+<ol start="9" style="margin-top: 0px;">
+  <li><a href="#9">Use meaningful names</a></li>
+  <li><a href="#10">Naming conventions</a></li>
+  <li><a href="#11">Type annotations</a></li>
+  <li><a href="#12">Avoid global mutable variables</a></li>
+  <li><a href="#13">When to rename variables</a></li>
+  <li><a href="#14">Order of declarations in a structure</a></li>
+</ol>
+</p>
+<p style="margin-bottom: 0px;"><b>Indentation:</b></p>
+<ol start="15" style="margin-top: 0px;">
+  <li><a href="#15">Indent two spaces at a time</a></li>
+  <li><a href="#16">Indenting nested <tt>let</tt> expressions</a></li>
+  <li><a href="#17">Indenting <tt>match</tt> expressions</a></li>
+  <li><a href="#18">Indenting <tt>if</tt> expressions</a></li>
+  <li><a href="#19">Indenting comments</a></li>
+</ol>
+</p>
+<p style="margin-bottom: 0px;"><b>Using Parentheses:</b></p>
+<ol start="20" style="margin-top: 0px;">
+  <li><a href="#20">Parenthesize to help indentation</a></li>
+  <li><a href="#21">Wrap match expressions with parenthesis</a></li>
+  <li><a href="#22">Over parenthesizing</a></li>
+</ol>
+</p>
+<p style="margin-bottom: 0px;"><b>Pattern Matching:</b></p>
+<ol start="23" style="margin-top: 0px;">
+  <li><a href="#23">No incomplete pattern matches</a></li>
+  <li><a href="#24">Pattern match in the function arguments when possible</a></li>
+  <li><a href="#25">Function arguments should not use values for patterns</a></li>
+  <li><a href="#26">Avoid using too many projections</a></li>
+  <li><a href="#27">Pattern match with as few match expressions as necessary</a></li>
+  <li><a href="#28">Don't use <tt>List.hd</tt>, <tt>List.tl</tt>, or <tt>List.nth</tt></a></li>
+</ol>
+</p>
+<p style="margin-bottom: 0px;"><b>Code Factoring:</b></p>
+<ol start="29" style="margin-top: 0px;">
+  <li><a href="#29">Don't let expressions take up multiple lines</a></li>
+  <li><a href="#30">Breakup large functions into smaller functions</a></li>
+  <li><a href="#31">Over-factoring code</a></li>
+</ol>
+</p>
+<p style="margin-bottom: 0px;"><b>Verbosity:</b></p>
+<ol start="32" style="margin-top: 0px;">
+  <li><a href="#32">Don't rewrite existing code</a></li>
+  <li><a href="#33">Misusing <tt>if</tt> expressions</a></li>
+  <li><a href="#34">Misusing <tt>match</tt> expressions</a></li>
+  <li><a href="#35">Other common misuses</a></li>
+  <li><a href="#36">Don't rewrap functions</a></li>
+  <li><a href="#37">Avoid computing values twice</a></li>
+</ol>
+<hr>
+<h3>File Submission Requirements</h3>
+<ol start="1">
+  <li><a name="1"></a><b>Code Must Compile:</b> Any code you submit <b>must</b>
+    compile.  If it does not compile, we won't grade the project and
+    you will lose all the points for the project. You should treat any
+    compiler warnings as errors.</li>
+
+  <li><a name="2"></a><b>80 Column Limit:</b> No line of code should have more than
+    80 columns.  Using more than 80 columns causes your code to wrap around
+    to the next line which is devastating for readability.
+    Ensuring that all your lines fall within the 80 column limit
+    is not something you should do when you have finished programming.</li>
+
+  <li><a name="3"></a><b>No Tab Characters:</b> Do not use the tab character
+    (0x09).  Instead, use spaces to control indenting.  Eclipse
+    provides good tab stops by default. The Emacs
+    package from the OCaml website avoids using tabs (with the exception of pasting
+    text from the clipboard or kill ring).  When in ml-mode, Emacs
+    uses the <tt>TAB</tt> key to control indenting instead of inserting the tab
+    character.</li>
+</ol>
+<h3>Commenting</h3>
+<ol start="4">
+  <li><a name="4"></a><b>Comments Go Above the Code They Reference:</b> Consider
+    the following:
+    <div style="margin-left: 25px;">
+      <pre style="margin-top: 0px; margin-bottom: 0px;">let sum = List.fold_left (+) 0
+<span class="comment">(* Sums a list of integers. *)</span>
+
+<span class="comment">(* Sums a list of integers. *)</span>
+let sum = List.fold_left (+) 0</pre>
+    </div>
+    The latter is the better style, although you may find some source
+    code that uses the first.  We require that you use
+    the latter.</li>
+</ol>
+<ol start="5">
+  <li><a name="5"></a><b>Avoid Useless Comments:</b> Comments that merely repeat
+    the code it references or state the obvious are a travesty to
+    programmers.  Comments should state the invariants, the non-obvious, or
+    any references that have more information about the code.</li>
+</ol>
+<ol start="6">
+  <li><a name="6"></a><b>Avoid Over-commenting:</b> Incredibly long comments are
+    not very useful.  Long comments should only appear at the top of a file
+    -- here you should explain the overall design of the code and reference any
+    sources that have more information about the algorithms or data
+    structures.  All other comments in the file should be as short as
+    possible, after all brevity is the soul of wit.  Most often the best
+    place for any comment is just before a function declaration.  Rarely
+    should you need to comment within a function -- variable naming should be
+    enough.</li>
+</ol>
+<ol start="7">
+  <li><a name="7"></a><b>Line Breaks:</b> Obviously the best way to stay within
+    the 80 character limit imposed by the rule above is pressing the enter key
+    every once and a while.  Empty lines should be included
+    between value declarations within a <tt>struct</tt> block, especially
+    between function declarations.  Often it is not necessary to have empty
+    lines between other declarations unless you are separating the different
+    types of declarations (such as structures, types, exceptions and
+    values).  Unless function declarations within a <tt>let</tt> block are
+    long, there should be no empty lines within a <tt>let</tt> block. There should
+    never be an empty line within an expression.</li>
+</ol>
+<ol start="8">
+  <li><a name="8"></a><b>Proper Multi-line Commenting:</b> When comments are
+    printed on paper, the reader lacks the advantage of color highlighting
+    performed by an editor such as Emacs.  This makes it important for you
+    to distinguish comments from code.  When a comment extends beyond one
+    line, it should be preceded with a <tt>*</tt> similar to the following:
+    <div style="margin-left: 25px;">
+      <pre style="margin-top: 0px;"><span class="comment">(* This is one of those rare but long comments
+ * that need to span multiple lines because
+ * the code is unusually complex and requires
+ * extra explanation. *)</span>
+let complicatedFunction () = ...</pre>
+    </div>
+  </li>
+</ol>
+<h3>Naming and Declarations</h3>
+<ol start="9">
+  <li><a name="9"></a><b>Use Meaningful Names:</b> Variable names should
+    describe what they are for.  Distinguishing what a variable references
+    is best done by following a particular naming convention (see suggestion
+    below).  Variable names should be words or combinations of words.
+    Cases where variable names can be one letter are in a short let
+    blocks.  Often it is the case that a function used in a fold, filter,
+    or map is bound to the name <tt>f</tt>.  Here is an example for short
+    variable names:
+    <div style="margin-left: 25px;">
+      <pre style="margin-top: 0px;"><span class="keyword"> let d = Unix.localtime (Unix.time ()) in<br> let m = d.Unix.tm_min in<br> let s = d.Unix.tm_min in<br> let f n = (n mod 3) = 0 in<br>         List.filter f [m;s]</span></pre>
+    </div>
+  </li>
+</ol>
+
+<ol start="10">
+  <li><a name="10"></a><b>Naming Conventions:</b> The following are
+  the naming guidelines that are followed by the OCaml library; try to
+  follow similar conventions:
+    <div style="margin-left: 25px;">
+      <table cellspacing="0" style="border: 0.5pt solid black;">
+        <col>
+        <col width="10">
+        <col>
+        <col width="10">
+        <col>
+        <tbody><tr style="background-color: silver; color: black;">
+          <td style="border-bottom: 0.5pt solid black;" valign="top"><b>Token</b></td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"> </td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"><b>Convention</b></td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"> </td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"><b>Example</b></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"><i>Variables
+              and functions</i></td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"> </td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top">Symbolic
+            or initial lower case. Use underscores for multiword names:</td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"> </td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"><tt>get_item</tt></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"><i>Constructors</i></td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"> </td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top">Initial upper
+            case.  Use embedded caps for multiword names.  Historic
+            exceptions are <tt>true</tt>, and <tt>false</tt>.
+            Rarely are symbolic names like <tt>::</tt> used.</td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"> </td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"><tt>Node<br>
+            EmptyQueue</tt></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"><i>Types</i></td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"> </td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top">All lower
+            case.  Use underscores for multiword names.</td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"> </td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"><tt>priority_queue</tt></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"><i>Module
+              Types</i></td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"> </td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top">Initial upper
+            case.  Use embedded caps for multiword names.</td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"> </td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"><tt>PriorityQueue</tt></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"><i>Modules</i></td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"> </td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top">Same as
+             module type convention.</td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"> </td>
+          <td style="border-bottom: 0.5pt solid black;" valign="top"><tt>PriorityQueue</tt></td>
+        </tr><tr>
+          <td valign="top"><i>Functors</i></td>
+          <td valign="top"> </td>
+          <td valign="top">Same as module type convention.</td>
+          <td valign="top"> </td>
+          <td valign="top"><tt>PriorityQueue</tt></td>
+      </tr></tbody></table>
+    </div>
+    These conventions are not enforced by the compiler, though
+    violations of the variable/constructor conventions ought to cause warning
+    messages because of the danger of a constructor turning into a variable when
+    it is misspelled.</li>
+</ol>
+
+<ol start="11">
+  <li><a name="11"></a><b>Type Annotations:</b> Complex or potentially
+  ambiguous top-level
+  functions and values should be declared with types to aid the reader.  Consider the following:
+    <div style="margin-left: 25px;">
+      <pre style="margin-top: 0px; margin-bottom: 0px;">
+ let get_bit bitidx n =
+   let shb = Int32.shift_left 1l bitidx in
+   Int32.logand shb n = shb
+
+ let get_bit (bitidx:int) (n:int32):bool =
+   let shb = Int32.shift_left 1l bitidx in
+   Int32.logand shb n = shb
+      </pre>
+    </div>
+    The latter is considered better. Such type annotations can also
+    help significantly when debugging typechecking problems.</li>
+</ol>
+<ol start="12">
+  <li><a name="12"></a><b>Avoid Global Mutable Variables:</b> Mutable values
+    should be local to closures and almost never declared as a structure's
+    value.  Making a mutable value global causes many problems.
+    First, running code that mutates the value cannot be ensured that the value
+    is consistent with the algorithm, as it might be modified outside the
+    function or by a previous execution of the algorithm.  Second, and more
+    importantly, having global mutable values makes it more likely that your
+    code is nonreentrant.  Without proper knowledge of the ramifications,
+    declaring global mutable values can extend beyond bad style to incorrect
+    code.  </li>
+</ol>
+<ol start="13">
+  <li><a name="13"></a><b>When to Rename Variables:</b> You should rarely need
+    to rename values, in fact this is a sure way to obfuscate code.
+    Renaming a value should be backed up with a very good reason. One instance
+    where renaming a variable is common and encouraged is aliasing structures.
+    In these cases, other structures used by functions within the current
+    structure are aliased to one or two letter variables at the top of the <tt>struct</tt>
+    block. This serves two purposes: it shortens the name of the structure and
+    it documents the structures you use. Here is an example:
+    <div style="margin-left: 25px;">
+      <pre style="margin-top: 0px;">
+  <span class="keyword">module</span> H = Hashtbl
+  <span class="keyword">module</span> L = List
+  <span class="keyword">module</span> A = Array
+  ...
+</pre>
+    </div>
+  </li>
+</ol>
+<ol start="14">
+  <li><a name="14"></a><b>Order of Declarations in a Structure:</b> When
+    declaring elements in a file (or nested module) you first alias the structures
+    you intend to use, followed by the types, followed by exceptions, and lastly
+    list all
+    the value declarations for the structure. Here is an example:
+    <div style="margin-left: 25px;">
+      <pre style="margin-top: 0px; margin-bottom: 0px;">  modul<span class="keyword">e</span> L = List
+  <span class="keyword">type</span> foo = unit
+  <span class="keyword">exception</span> InternalError
+  let first list = L.nth list 0
+</pre>
+    </div>
+    Note that every declaration within the structure should be indented the same
+    amount.</li>
+</ol>
+
+<h3>Indenting</h3>
+<ol start="15">
+  <li><a name="15"></a><b>Indent Two Spaces at a Time:</b> Most lines that
+    indent code should only indent by two spaces more than the previous line of
+    code.</li>
+  <li><a name="16"></a><b>Indenting nested <tt>let</tt>
+  expressions:</b>  Blocks of code that have nested <tt>let</tt>
+  expressions should not be indented.
+
+  <br><b>Bad:</b>
+   <pre style="margin-top: 0px; margin-bottom: 0px;">
+   let x = exp1 in
+      let y = exp2 in
+        x + y
+   </pre>
+   <br><b>Good:</b>
+   <pre style="margin-top: 0px; margin-bottom: 0px;">
+   let x = exp1 in
+   let y = exp2 in
+     x + y
+   </pre>
+
+  <li><a name="17"></a><b>Indenting <tt>match</tt> Expressions:</b> Indent
+    similar to the following.
+    <div style="margin-left: 25px;">
+      <pre style="margin-top: 0px;"><span class="keyword">match</span> expr with
+| pat1 -&gt; ...
+| pat2 -&gt; ...</pre>
+    </div>
+  </li>
+  <li><a name="18"></a><b>Indenting <tt>if</tt> Expressions:</b> Indent similar
+    to the following.
+    <div style="margin-left: 25px;">
+      <pre style="margin-top: 0px;"><span class="keyword">if</span> exp1 <span class="keyword">then</span> exp2              <span class="keyword">if</span> exp1 <span class="keyword">then</span>
+<span class="keyword">else</span> <span class="keyword">if</span> exp3 <span class="keyword">then</span> exp4           exp2
+<span class="keyword">else</span> <span class="keyword">if</span> exp5 <span class="keyword">then</span> exp6         <span class="keyword">else</span> exp3
+     <span class="keyword">else</span> exp8
+
+<span class="keyword">if</span> exp1 <span class="keyword">then</span> exp2 <span class="keyword">else</span> exp3
+
+<span class="keyword">if</span> exp1 <span class="keyword">then</span> exp2
+<span class="keyword">else</span> exp3</pre>
+    </div>
+  </li>
+  <li><a name="19"></a><b>Indenting Comments:</b> Comments should be indented to
+    the level of the line of code that follows the comment.
+    <div style="margin-left: 25px;"> </div>
+  </li>
+</ol>
+
+<h3>Using Parentheses:</h3>
+<ol start="20">
+  <li><a name="20"></a><b>Parenthesize to Help Indentation:</b> Indentation
+    algorithms are often assisted by added parenthesization.  Consider the
+    following:
+    <div style="margin-left: 25px;">
+      <pre style="margin-top: 0px; margin-bottom: 0px;">let x = <span class="string">"Long line..."</span>^
+  <span class="string">"Another long line."</span>
+
+<span class="keyword">let</span> x = (<span class="string">"Long line..."</span>^
+         <span class="string">"Another long line."</span>)</pre>
+    </div>
+    The latter is considered better style.</li>
+  <li><a name="21"></a><b>Wrap <tt>match</tt> Expressions with Parenthesis:</b>
+    This avoids a common (and confusing) error that you get when you have a
+    nested <tt>match</tt> expression. </li>
+  <li><a name="22"></a><b>Over Parenthesizing:</b> Parenthesis have many
+    semantic purposes in ML, including constructing tuples, grouping sequences
+    of side-effect expressions, forcing higher-precedence on an expression for
+    parsing, and grouping structures for functor arguments.  Clearly, the
+    parenthesis must be used with care.  You may only use parentheses when
+    necessary or when it improves readability.  Consider the following two
+    function applications:
+    <div style="margin-left: 25px;">
+      <pre style="margin-top: 0px; margin-bottom: 0px;">let x = function1 (arg1) (arg2) (function2 (arg3)) (arg4)
+
+let x = function1 arg1 arg2 (function2 arg3) arg4</pre>
+    </div>
+    The latter is considered better style. Parentheses should usually not appear on a
+    line by themselves, nor should they be the first graphical character --
+    parentheses do not serve the same purpose as brackets do in C or Java.</li>
+</ol>
+<h3>Pattern Matching</h3>
+<ol start="23">
+  <li><a name="23"></a><b>No Incomplete Pattern Matches:</b> Incomplete pattern
+    matches are flagged with compiler warnings. We strongly discourage compiler
+    warnings when grading; thus, if there is a compiler warning, the project
+    will get reduced style points.</li>
+
+  <li><a name="24"></a><b>Pattern Match in the Function Arguments When Possible:</b>
+    Tuples, records and datatypes can be deconstructed using pattern
+    matching.  If you simply deconstruct the function argument before you
+    do anything useful, it is better to pattern match in the function argument.
+    Consider these examples:
+    <div style="margin-left: 25px;">
+      <table cellpadding="0" cellspacing="0">
+        <tbody><tr>
+          <td><b>Bad</b></td>
+          <td>          </td>
+          <td><b>Good</b></td>
+        </tr>
+        <tr>
+          <td valign="top">
+            <pre>let f arg1 arg2 =
+  let x = fst arg1 in
+  let y = snd arg1 in
+  let z = fst arg2 in
+  ...
+</pre>
+          </td>
+          <td> </td>
+          <td valign="top">
+            <pre>let f (x,y) (z,_) = ...</pre>
+          </td>
+        </tr>
+        <tr>
+          <td valign="top">
+            <pre>let f arg1 =
+  let x = arg1.foo in
+  let y = arg1.bar in
+  let baz = arg1.baz in
+  ...
+</pre>
+          </td><td> </td>
+          <td valign="top">
+            <pre>let f {foo=x, bar=y, baz} = ...</pre>
+          </td>
+        </tr>
+      </tbody></table>
+    </div>
+  </li>
+
+  <li><a name="25"></a><b>Function Arguments Should Not Use Values for Patterns:</b>
+    You should only deconstruct values with variable names and/or wildcards in
+    function arguments.  If you want to pattern match against a specific
+    value, use a <tt>match</tt> expression or an <tt>if</tt> expression.  We
+    include this rule because there are too many errors that can occur when you
+    don't do this exactly right.  Consider the following:
+    <div style="margin-left: 25px;">
+      <pre style="margin-top: 0px; margin-bottom: 0px;">let fact 0 = 1
+  | fact n = n * fact(n-1)
+
+let fact n =
+  <span class="keyword">if</span> n=0 <span class="keyword">then</span> 1
+  <span class="keyword">else</span> n * fact(n-1)</pre>
+    </div>
+    The latter is considered better style.</li>
+
+  <li><a name="26"></a><b>Avoid Using Too Many Projections:</b> Frequently
+    projecting a value from a record or tuple causes your code to become
+    unreadable.  This is especially a problem with tuple projection because
+    the value is not documented by a variable name.  To prevent
+    projections, you should use pattern matching with a function argument or a
+    value declaration.  Of course, using projections is okay as long as it
+    is infrequent and the meaning is clearly understood from the context.
+    The above rule shows how to pattern match in the function arguments.
+    Here is an example for pattern matching with value declarations.
+    <div style="margin-left: 25px;">
+      <table>
+        <tbody><tr>
+          <td><b>Bad</b></td>
+          <td>          </td>
+          <td><b>Good</b></td>
+        </tr>
+        <tr>
+          <td valign="top">
+            <pre><span class="keyword">let</span> v = someFunction() in
+let x = fst v in
+let y = snd v <span class="keyword">in</span>
+  x+y
+</pre>
+          </td>
+          <td> </td>
+          <td valign="top">
+            <pre><span class="keyword">let</span>  x,y = someFunction() <span class="keyword">in</span>
+  x+y
+</pre>
+          </td>
+        </tr>
+      </tbody></table>
+    </div>
+  </li>
+
+  <li><a name="27"></a><b>Pattern Match with as Few <tt>match</tt> Expressions as
+    Necessary:</b> Rather than nest <tt>match</tt> expressions, you can combine
+    them by pattern matching against a tuple.  Of course, this doesn't work
+    if one of the nested <tt>match</tt> expressions matches against a value
+    obtained from a branch in another <tt>match</tt> expression.
+    Nevertheless, if all the values are independent of each other you should
+    combine the values in a tuple and match against that.  Here is an
+    example:<br>
+    <div style="margin-left: 25px;">
+      <b>Bad</b>
+      <pre style="margin-top: 0px; margin-bottom: 0px;">     <span class="keyword">let</span> d = Date.fromTimeLocal(Unix.time()) in
+     <span class="keyword">match</span> Date.month d with
+       | Date.Jan -&gt; (<span class="keyword">match</span> Date.day d with
+                      | 1 -&gt; print <span class="string">"Happy New Year"</span>
+                      | _ -&gt; ())
+       | Date.Jul -&gt; (<span class="keyword">match</span> Date.day d with
+                      | 4 -&gt; print <span class="string">"Happy Independence Day"</span>
+                      | _ -&gt; ())
+       | Date.Oct -&gt; (<span class="keyword">match</span> Date.day d with
+                      | 10 -&gt; print <span class="string">"Happy Metric Day"</span>
+                      | _ -&gt; ())
+     </pre>
+      <b>Good</b>
+      <pre style="margin-top: 0px;">     <span class="keyword">let</span>  d = Date.fromTimeLocal(Unix.time()) <span class="keyword">in</span>
+       <span class="keyword">match</span> (Date.month d, Date.day d) <span class="keyword">of</span>
+       | (Date.Jan, 1) -&gt; print <span class="string">"Happy New Year"</span>
+       | (Date.Jul, 4) -&gt; print <span class="string">"Happy Independence Day"</span>
+       | (Date.Oct, 10) -&gt; print <span class="string">"Happy Metric Day"</span>
+       | _ -&gt; ()
+     </pre>
+    </div>
+  </li>
+
+  <li><a name="28"></a><b>Don't use <tt>List.hd</tt>,
+  <tt>List.tl</tt>, or <tt>List.nth</tt>:</b>
+    The functions <tt>hd</tt>, <tt>tl</tt>, and <tt>nth</tt> are used to
+    deconstruct  list types; however, they raise exceptions on
+    certain inputs.  You should rarely use these functions.  In the
+    case that you find it absolutely necessary to use these (something that
+    probably won't ever happen), you should handle any exceptions that can be
+    raised by these functions.</li>
+</ol>
+<h3>Code Factoring</h3>
+<ol start="29">
+  <li><a name="29"></a><b>Don't Let Expressions Take Up Multiple Lines:</b> If a
+    tuple consists of more than two or three elements, you should consider using
+    a record instead of a tuple.  Records have the advantage of placing
+    each name on a separate line and still looking good.  Constructing a
+    tuple over multiple lines makes your code look hideous -- the expressions
+    within the tuple construction should be extraordinarily simple.  Other
+    expressions that take up multiple lines should be done with a lot of
+    thought.  The best way to transform code that constructs expressions
+    over multiple lines to something that has good style is to factor the code
+    using a <tt>let</tt> expression.  Consider the following:
+    <div style="margin-left: 25px;">
+      <b>Bad</b>
+      <pre style="margin-top: 0px; margin-bottom: 0px;">     <span class="keyword">fun</span> euclid (m:int,n:int) : (int * int * int) =
+       <span class="keyword">if</span> n=0
+         <span class="keyword">then</span> (b 1, b 0, m)
+       <span class="keyword">else</span> (#2 (euclid (n, m mod n)), u - (m div n) *
+             (euclid (n, m mod n)), #3 (euclid (n, m mod n)))</pre>
+      <b>Good</b>
+      <pre style="margin-top: 0px; margin-bottom: 0px;">     <span class="keyword">fun</span> euclid (m:int,n:int) : (int * int * int) =
+       <span class="keyword">if</span> n=0
+         <span class="keyword">then</span> (b 1, b 0, m)
+       <span class="keyword">else</span>
+         <span class="keyword">let</span> q = m div n in
+         <span class="keyword">let</span> r = n mod n in
+         <span class="keyword">let</span> (u,v,g) = euclid (n,r) in
+           (v, u-(q*v), g)
+    </div>
+  </li>
+
+
+  <li><a name="30"></a><b>Breakup Large Functions into Smaller Functions:</b>
+    One of the greatest advantages of functional programming is that it
+    encourages writing smaller functions and combining them to solve bigger
+    problems.  Just how and when to break up functions is something that
+    comes with experience.</li>
+
+  <li><a name="31"></a><b>Over-factoring code:</b> In some situations, it's not
+    necessary to bind the results of an expression to a variable.  Consider
+    the following:
+    <div style="margin-left: 25px;">
+      <b>Bad</b>
+      <pre style="margin-top: 0px; margin-bottom: 0px;">     <span class="keyword">let</span><span class="keyword">l</span> x = TextIO.inputLine TextIO.stdIn <span class="keyword">in</span>
+       <span class="keyword">match</span> x with
+         ...
+     </pre>
+      <b>Good</b>
+      <pre style="margin-top: 0px; margin-bottom: 0px;">     <span class="keyword">match</span> TextIO.inputLine TextIO.stdIn with
+       ...</pre>
+    </div>
+    Here is another example of over-factoring (provided y is not a large
+    expression):
+    <div style="margin-left: 25px;">
+      <pre style="margin-top: 0px; margin-bottom: 0px;"><span class="keyword">let</span>  x = y*y <span class="keyword">in</span> x+z
+
+y*y + z</pre>
+    </div>
+    The latter is considered better.</li>
+</ol>
+
+<h3>Verbosity</h3>
+<ol start="32">
+  <li><a name="32"></a><b>Don't Rewrite Existing Code:</b> The OCaml <a href="http://caml.inria.fr/ocaml/htmlman/manual034.html">standard
+    libraries</a> have a great number of functions and data structures
+    -- use them!  Often students will recode <tt><a
+    href="http://caml.inria.fr/ocaml/htmlman/libref/List.html">List.filter</a></tt>,
+    <tt>List.map</tt>, and similar functions.  Another common
+    way in which one can avoid recoding is to use the <tt>fold</tt>
+    functions.  Writing a function that recursively walks down a
+    list can almost always make use of <tt>List.fold_left</tt> or
+    <tt>List.fold_right</tt>.  Other data structures often have similar
+    folding functions; use them whenever they are available.</li>
+
+  <li><a name="33"></a><b>Misusing <tt>if</tt> Expressions:</b> Remember that
+    the type of the condition in an <tt>if</tt> expression is <tt>bool</tt>. In
+    general, the type of an <tt>if</tt> expression is <tt>'a</tt>, but in the
+    case that the type is <tt>bool</tt>, you should not be using <tt>if</tt> at
+    all. Consider the following:
+    <div style="margin-left: 25px;">
+      <table style="border: 0.5pt solid black;" cellspacing="0">
+        <tbody><tr style="background-color: silver; color: black;">
+          <td style="border-bottom: 0.5pt solid black;"><b>Bad</b></td>
+          <td style="border-bottom: 0.5pt solid black;">
+              </td>
+          <td style="border-bottom: 0.5pt solid black;"><b>Good</b></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 0.5pt solid black;"><tt><span class="keyword">if</span>
+            e <span class="keyword">then</span> true <span class="keyword">else</span>
+            false</tt></td>
+          <td style="border-bottom: 0.5pt solid black;"> </td>
+          <td style="border-bottom: 0.5pt solid black;"><tt>e</tt></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 0.5pt solid black;"><tt><span class="keyword">if</span>
+            e <span class="keyword">then</span> false <span class="keyword">else</span>
+            true</tt></td>
+          <td style="border-bottom: 0.5pt solid black;"> </td>
+          <td style="border-bottom: 0.5pt solid black;"><tt>not e</tt></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 0.5pt solid black;"><tt><span class="keyword">if</span>
+            beta <span class="keyword">then</span> beta <span class="keyword">else</span>
+            false</tt></td>
+          <td style="border-bottom: 0.5pt solid black;"> </td>
+          <td style="border-bottom: 0.5pt solid black;"><tt>beta</tt></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 0.5pt solid black;"><tt><span class="keyword">if</span>
+            not e <span class="keyword">then</span> x <span class="keyword">else</span>
+            y</tt></td>
+          <td style="border-bottom: 0.5pt solid black;"> </td>
+          <td style="border-bottom: 0.5pt solid black;"><tt><span class="keyword">if</span>
+            e <span class="keyword">then</span> y <span class="keyword">else</span>
+            x</tt></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 0.5pt solid black;"><tt><span class="keyword">if</span>
+            x <span class="keyword">then</span> true <span class="keyword">else</span>
+            y</tt></td>
+          <td style="border-bottom: 0.5pt solid black;"> </td>
+          <td style="border-bottom: 0.5pt solid black;"><tt>x <span class="keyword">||</span>
+            y</tt></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 0.5pt solid black;"><tt><span class="keyword">if</span>
+            x <span class="keyword">then</span> y <span class="keyword">else</span>
+            false</tt></td>
+          <td style="border-bottom: 0.5pt solid black;"> </td>
+          <td style="border-bottom: 0.5pt solid black;"><tt>x <span class="keyword">&amp;&amp;</span>
+            y</tt></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 0.5pt solid black;"><tt><span class="keyword">if</span>
+            x <span class="keyword">then</span> false <span class="keyword">else</span>
+            y</tt></td>
+          <td style="border-bottom: 0.5pt solid black;"> </td>
+          <td style="border-bottom: 0.5pt solid black;"><tt>not x <span class="keyword">&amp;&amp;</span>
+            y</tt></td>
+        </tr>
+        <tr>
+          <td><tt><span class="keyword">if</span> x <span class="keyword">then</span>
+            y <span class="keyword">else</span> true</tt></td>
+          <td> </td>
+          <td><tt>not x || y</tt></td>
+        </tr>
+      </tbody></table>
+    </div>
+  </li>
+
+  <li><a name="34"></a><b>Misusing <tt>match</tt> Expressions:</b> The <tt>match</tt>
+    expression is misused in two common situations.  First, <tt>match</tt>
+    should never be used in place of an <tt>if</tt> expression (that's why <tt>if</tt>
+    exists).  Note the following:
+    <div style="margin-left: 25px;">
+      <pre style="margin-top: 0px; margin-bottom: 0px;"><span class="keyword">match</span> e with
+| true -&gt; x
+| false -&gt; y
+
+<span class="keyword">if</span> e <span class="keyword">then</span> x <span class="keyword">else</span> y</pre>
+    </div>
+    The latter expression is much better.  Another situation where <tt>if</tt>
+    expressions are preferred over <tt>match</tt> expressions is as follows:
+    <div style="margin-left: 25px;">
+      <pre style="margin-top: 0px; margin-bottom: 0px;"><span class="keyword">match</span> e with
+| c -&gt; x   <span class="comment">(* c is a constant value *)</span>
+| _ -&gt; y
+
+<span class="keyword">if</span> e=c <span class="keyword">then</span> x <span class="keyword">else</span> y</pre>
+    </div>
+    The latter expression is definitely better.  The other misuse is using <tt>match</tt>
+    when pattern matching with a <tt>val</tt> declaration is enough. Consider
+    the following:
+    <div style="margin-left: 25px;">
+      <pre style="margin-top: 0px; margin-bottom: 0px;"><span class="keyword">letl</span> x = <span class="keyword">match</span> expr with (y,z) -&gt; y
+
+let x,_ = expr</pre>
+    </div>
+    The latter is considered better.</li>
+
+  <li><a name="35"></a><b>Other Common Misuses:</b> Here is a bunch of other
+    common mistakes to watch out for:
+    <div style="margin-left: 25px;">
+      <table style="border: 0.5pt solid black;" cellspacing="0">
+        <tbody><tr style="background-color: silver; color: black;">
+          <td style="border-bottom: 0.5pt solid black;"><b>Bad</b></td>
+          <td style="border-bottom: 0.5pt solid black;">
+              </td>
+          <td style="border-bottom: 0.5pt solid black;"><b>Good</b></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 0.5pt solid black;"><tt>l::nil</tt></td>
+          <td style="border-bottom: 0.5pt solid black;"> </td>
+          <td style="border-bottom: 0.5pt solid black;"><tt>[l]</tt></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 0.5pt solid black;"><tt>l::[]</tt></td>
+          <td style="border-bottom: 0.5pt solid black;"> </td>
+          <td style="border-bottom: 0.5pt solid black;"><tt>[l]</tt></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 0.5pt solid black;"><tt>length + 0</tt></td>
+          <td style="border-bottom: 0.5pt solid black;"> </td>
+          <td style="border-bottom: 0.5pt solid black;"><tt>length</tt></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 0.5pt solid black;"><tt>length * 1</tt></td>
+          <td style="border-bottom: 0.5pt solid black;"> </td>
+          <td style="border-bottom: 0.5pt solid black;"><tt>length</tt></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 0.5pt solid black;"><tt>big exp * same big exp</tt></td>
+          <td style="border-bottom: 0.5pt solid black;"> </td>
+          <td style="border-bottom: 0.5pt solid black;"><tt><span class="keyword">let</span>
+             x = big exp <span class="keyword">in</span>
+            x*x </tt></td>
+        </tr>
+        <tr>
+          <td style="border-bottom: 0.5pt solid black;"><tt><span class="keyword">if</span>
+            x <span class="keyword">then</span> f a b c1<br>
+            <span class="keyword">else</span> f a b c2</tt></td>
+          <td style="border-bottom: 0.5pt solid black;"> </td>
+          <td style="border-bottom: 0.5pt solid black;"><tt>f a b <span class="keyword">(if</span>
+            x <span class="keyword">then</span> c1 <span class="keyword">else</span>
+            c2)</tt></td>
+        </tr>
+      </tbody></table>
+    </div>
+  </li>
+
+  <li><a name="36"></a><b>Don't Rewrap Functions:</b> When passing a function
+    around as an argument to another function, don't rewrap the function if it
+    already does what you want it to.  Here's an example:
+    <div style="margin-left: 25px;">
+      <pre style="margin-top: 0px; margin-bottom: 0px;">List.map (<span class="keyword">fun</span> x -&gt; sqrt x) [1.0; 4.0; 9.0; 16.0]
+
+List.map sqrt [1.0; 4.0; 9.0; 16.0]</pre>
+    </div>
+    The latter is better. Another case for rewrapping a function is often
+    associated with infix binary operators. To prevent rewrapping the binary
+    operator, use the <tt>op</tt> keyword. Consider this example:
+    <div style="margin-left: 25px;">
+      <pre style="margin-top: 0px; margin-bottom: 0px;">fold_left (<span class="keyword">fun</span>  x y -&gt; x + y) 0
+
+fold_left (+) 0</pre>
+    </div>
+    The latter is considered better style.</li>
+
+  <li><a name="37"></a><b>Avoid Computing Values Twice:</b> When computing
+    values twice you're wasting the CPU time and making your program ugly. The
+    best way to avoid computing things twice is to create a <tt>let</tt>
+    expression and bind the computed value to a variable name. This has the
+    added benefit of letting you document the purpose of the value with a
+    variable name -- which means less commenting.</li>
+</ol>
+
+
+</embed></div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="setup.html" class="btn btn-neutral" title="2.3. Checking your setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2021, Ilya Sergey
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"extensions": ["tex2jax.js"], "jax": ["input/TeX", "output/HTML-CSS"]})</script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
