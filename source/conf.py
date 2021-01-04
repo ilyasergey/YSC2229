@@ -20,13 +20,13 @@
 # -- Project information -----------------------------------------------------
 
 project = u'YSC2229: Introductory Data Structures and Algorithms'
-copyright = u'2020, Ilya Sergey'
+copyright = u'2021, Ilya Sergey'
 author = u'Ilya Sergey'
 
 # The short X.Y version
 version = u''
 # The full version, including alpha/beta/rc tags
-release = u'2020'
+release = u'2021'
 
 
 # -- General configuration ---------------------------------------------------
@@ -74,7 +74,7 @@ pygments_style = None
 
 # -- Options for HTML output -------------------------------------------------
 
-html_title = 'YSC2229 2020'
+html_title = 'YSC2229 2021'
 
 # html_theme = 'default'
 # html_theme = 'sphinxdoc'
