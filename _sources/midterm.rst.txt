@@ -124,5 +124,7 @@ project:
 * Any discoveries, anecdotes, and gotchas, elaborating on your
   experience with this project.
 
-You individual report should not be very long; please, try to make it
-succinct and to the point. 2-3 pages should be enough.
+You individual report should not be very long; please, try to make it succinct
+and to the point; 3-4 pages should be enough. The reports will be graded based
+on their clarity, demonstration of your understanding of the project design, and
+how fun they are to read (the report should not simply paraphrase the code).
