@@ -160,7 +160,7 @@ fully functional Linux distribution installed on your machine.
    :width: 820px
    :align: center
 
-11. You can additionally setup the following parameters in Emacs for better
+11. [Optional] You can additionally setup the following parameters in Emacs for better
     editing by searching in ``Options -> Customize Emacs -> Top-level
     Customization Group``:
 
@@ -266,7 +266,7 @@ OCaml is well supported in Mac OS X, so the installation process is fairly strai
    :width: 820px
    :align: center    
 
-9. You can additionally setup the following parameters in Emacs for better
+9. [Optional] You can additionally setup the following parameters in Emacs for better
    editing by searching in ``Options -> Customize Aquamacs -> Top-level
    Customization Group``:
 
@@ -283,3 +283,10 @@ OCaml is well supported in Mac OS X, so the installation process is fairly strai
      .. image:: ../resources/howto/trailing.png
         :width: 820px
         :align: center
+
+10. [Optional] If you prefer to use `VSCode <https://code.visualstudio.com/>`_
+    instead of Aquamacs for your development, you might consider installing
+    `this plugin
+    https://marketplace.visualstudio.com/items?itemName=ocamllabs.ocaml-platform`_,
+    which enables OCaml support in VSCode (assuming you have installed all
+    libraries above via ``opam``).
