@@ -46,11 +46,9 @@ Lecture Notes
 ..   week-13
 ..   final
 
-Lecture notes will be posted gradually as we progress through the course material.
+Supplementary Materials
+-----------------------
 
-..
-   Supplementary Materials
-   -----------------------
 .. * `Week 01 Introductory Slides <_static/Week-01-Intro.pdf>`_
 .. * `Matrix determinants in Haskell <_static/Matrices.hs>`_
 .. * `Week 04 Slides on Advanced Sorting <_static/Week-04-Sorting.pdf>`_
