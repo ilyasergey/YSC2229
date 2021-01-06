@@ -9,7 +9,7 @@ In the introductory course on Computer Science, you have learned that testing is
 
 In order to write tests more efficiently in quickly growing OCaml projects, the `dune` build-system provides a convenient way to write *in-line automated* tests immediately in your files.
 
-For instance, consider the following `configuration file <https://github.com/ysc2229/library/blob/master/lib/dune>`_, which defines dependencies of for the libraries of the second part of this course. THe following lines::
+For instance, consider the following `configuration file <https://github.com/ysc2229/library/blob/master/lib/dune>`_, which defines dependencies of for the libraries of the second part of this course. The following lines::
 
   (inline_tests)                
   (preprocess (pps ppx_inline_test ppx_expect))
