@@ -181,7 +181,7 @@ fully functional Linux distribution installed on your machine.
 12. [Optional] If you prefer to use `VSCode <https://code.visualstudio.com/>`_
     instead of Aquamacs for your development, you might consider installing
     `this plugin
-    https://marketplace.visualstudio.com/items?itemName=ocamllabs.ocaml-platform`_,
+    <https://marketplace.visualstudio.com/items?itemName=ocamllabs.ocaml-platform>`_,
     which enables OCaml support in VSCode (assuming you have installed all
     libraries above via ``opam``). `This link
     <https://code.visualstudio.com/docs/remote/wsl-tutorial>`_ contains
@@ -298,6 +298,6 @@ OCaml is well supported in Mac OS X, so the installation process is fairly strai
 10. [Optional] If you prefer to use `VSCode <https://code.visualstudio.com/>`_
     instead of Aquamacs for your development, you might consider installing
     `this plugin
-    https://marketplace.visualstudio.com/items?itemName=ocamllabs.ocaml-platform`_,
+    <https://marketplace.visualstudio.com/items?itemName=ocamllabs.ocaml-platform>`_,
     which enables OCaml support in VSCode (assuming you have installed all
     libraries above via ``opam``).

@@ -149,9 +149,12 @@
 </ul>
 <p>In the introductory course on Computer Science, you have learned that testing is an important part of the software development process, which becomes particularly critical when designing and implementing intricate data structures and algorithms.</p>
 <p>In order to write tests more efficiently in quickly growing OCaml projects, the <cite>dune</cite> build-system provides a convenient way to write <em>in-line automated</em> tests immediately in your files.</p>
-<p>For instance, consider the following <a class="reference external" href="https://github.com/ysc2229/library/blob/master/lib/dune">configuration file</a>, which defines dependencies of for the libraries of the second part of this course. THe following lines:</p>
+<p>For instance, consider the following <a class="reference external" href="https://github.com/ysc2229/ocaml-graphics-demo/blob/master/lib/graph/dune">configuration file</a>, which defines dependencies of for the libraries of the second part of this course. The following lines:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">(</span><span class="n">inline_tests</span><span class="o">)</span>
 <span class="o">(</span><span class="n">preprocess</span> <span class="o">(</span><span class="n">pps</span> <span class="n">ppx_inline_test</span> <span class="n">ppx_expect</span><span class="o">))</span>
+
+<span class="o">(</span><span class="n">env</span>
+  <span class="o">(</span><span class="n">release</span> <span class="o">(</span><span class="n">inline_tests</span> <span class="n">enabled</span><span class="o">)))</span>
 </pre></div>
 </div>
 <p>allow one to write the tests immediately in your OCaml code (e.g., in a file <code class="docutils literal notranslate"><span class="pre">fact.ml</span></code>), so they will be checked during the compilation of the project (you can do it via <code class="docutils literal notranslate"><span class="pre">dune</span> <span class="pre">runtest</span></code> or simply <code class="docutils literal notranslate"><span class="pre">make</span></code>):</p>

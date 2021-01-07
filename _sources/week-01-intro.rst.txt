@@ -148,14 +148,16 @@ and complexity:
   some idea of behaviour on different sizes of input. This approach is
   very practical (and we are going to rely on it a lot), but has
   certain shortcomings:
-     * Was our selection of inputs representative?
-     * This process consumes the very resource (time) we are trying to conserve!
+     
+  * Was our selection of inputs representative?
+  * This process consumes the very resource (time) we are trying to conserve!
 
 * **Theoretical** -- a mathematical analysis of a "paper" version of the
   algorithm:
-     * Can deal with all cases (even impractically large input instances);
-     * Machine-independent;
-     * Sometimes requires non-trivial mathematical reasoning.
+
+  * Can deal with all cases (even impractically large input instances);
+  * Machine-independent;
+  * Sometimes requires non-trivial mathematical reasoning.
 
 
 
