@@ -179,7 +179,7 @@ fully functional Linux distribution installed on your machine.
          :align: center
 
 12. [Optional] If you prefer to use `VSCode <https://code.visualstudio.com/>`_
-    instead of Aquamacs for your development, you might consider installing
+    instead of Emacs for your development, you might consider installing
     `this plugin
     <https://marketplace.visualstudio.com/items?itemName=ocamllabs.ocaml-platform>`_,
     which enables OCaml support in VSCode (assuming you have installed all
@@ -192,23 +192,27 @@ fully functional Linux distribution installed on your machine.
 Linux
 -----
 
-If you're using Linux, the setup is similar to the one for Windows 10 WSL described previously. Just follow the points above starting from the step 5. If you're using a distribution different from Ubuntu, make sure to use the corresponding package manager (instead of ``apt``) to get the system packages in the step 6.
+If you're using Linux, the setup is similar to the one for Windows 10 WSL
+described previously. Just follow the points above starting from the step 5. If
+you're using a distribution different from Ubuntu, make sure to use the
+corresponding package manager (instead of ``apt``) to get the system packages in
+the step 6.
 
-Mac OS X
---------
+macOS
+-----
 
-OCaml is well supported in Mac OS X, so the installation process is fairly straightforward.
+OCaml is well supported in macOS, so the installation process is fairly straightforward.
 
 1. I suggest to use `Aquamacs <http://aquamacs.org/>`_ as an Emacs-like editor for work with OCaml. Please, download and install it.
 
-2. Install the `Homebrew package manager <https://brew.sh/>`_ for Mac OS X.
+2. Install the `Homebrew package manager <https://brew.sh/>`_ for macOS.
 
 3. Install the following system packages using Homebrew::
 
      brew install make m4 gcc pkg-config
 
 4. Install the `XQuartz <https://www.xquartz.org/>`_ X window system
-   for Mac OS X. Make sure it `before` you install ``opam`` and all
+   for macOS. Make sure it `before` you install ``opam`` and all
    libraries from it. We will need this library for a few graphical
    applications at the end of this course. 
 
