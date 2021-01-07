@@ -43,7 +43,7 @@ Let's compile it and run the executables. Execute the following commands::
   make
   bin/demo
 
-After a few seconds (longer on Mac OS X), you should get a window with a funny face. Feel free to play with it and close when done. You can also browse the sources of the project with Emacs.
+After a few seconds (longer on macOS), you should get a window with a funny face. Feel free to play with it and close when done. You can also browse the sources of the project with Emacs.
 
 .. image:: ../resources/howto/face.png
    :width: 820px
