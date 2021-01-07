@@ -5,7 +5,7 @@ Installing and using Git
 
 We will be using ``git`` as a version control for this course. You will have to master a small set of its commands to be able to submit your homework assignments.
 
-Command-line client for ``git`` comes as a part of standard Mac OS X and Linux distributions, but you can install is separately via ``apt`` or ``brew``. Please, also create yourself an account on `GitHub <http://github.com/>`_, as you will need it to make submissions.
+Command-line client for ``git`` comes as a part of standard macOS and Linux distributions, but you can install is separately via ``apt`` or ``brew``. Please, also create yourself an account on `GitHub <http://github.com/>`_, as you will need it to make submissions.
 
 To work with GitHub comfortably, you will need to set up your SSH keys. To do so, run the following command in your terminal (entering your email)::
 

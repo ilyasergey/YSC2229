@@ -84,7 +84,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">2.1. Installing OCaml Libraries and setting up Emacs</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#microsoft-windows-10">2.1.1. Microsoft Windows 10</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#linux">2.1.2. Linux</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mac-os-x">2.1.3. Mac OS X</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#macos">2.1.3. macOS</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="git.html">2.2. Installing and using Git</a></li>
@@ -318,7 +318,7 @@ editing by searching in <code class="docutils literal notranslate"><span class="
 </ul>
 </li>
 <li><p class="first">[Optional] If you prefer to use <a class="reference external" href="https://code.visualstudio.com/">VSCode</a>
-instead of Aquamacs for your development, you might consider installing
+instead of Emacs for your development, you might consider installing
 <a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=ocamllabs.ocaml-platform">this plugin</a>,
 which enables OCaml support in VSCode (assuming you have installed all
 libraries above via <code class="docutils literal notranslate"><span class="pre">opam</span></code>). <a class="reference external" href="https://code.visualstudio.com/docs/remote/wsl-tutorial">This link</a> contains
@@ -329,15 +329,19 @@ installing WSL, as you have already done it).</p>
 </div>
 <div class="section" id="linux">
 <h2>2.1.2. Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
-<p>If you’re using Linux, the setup is similar to the one for Windows 10 WSL described previously. Just follow the points above starting from the step 5. If you’re using a distribution different from Ubuntu, make sure to use the corresponding package manager (instead of <code class="docutils literal notranslate"><span class="pre">apt</span></code>) to get the system packages in the step 6.</p>
+<p>If you’re using Linux, the setup is similar to the one for Windows 10 WSL
+described previously. Just follow the points above starting from the step 5. If
+you’re using a distribution different from Ubuntu, make sure to use the
+corresponding package manager (instead of <code class="docutils literal notranslate"><span class="pre">apt</span></code>) to get the system packages in
+the step 6.</p>
 </div>
-<div class="section" id="mac-os-x">
-<h2>2.1.3. Mac OS X<a class="headerlink" href="#mac-os-x" title="Permalink to this headline">¶</a></h2>
-<p>OCaml is well supported in Mac OS X, so the installation process is fairly straightforward.</p>
+<div class="section" id="macos">
+<h2>2.1.3. macOS<a class="headerlink" href="#macos" title="Permalink to this headline">¶</a></h2>
+<p>OCaml is well supported in macOS, so the installation process is fairly straightforward.</p>
 <ol class="arabic">
 <li><p class="first">I suggest to use <a class="reference external" href="http://aquamacs.org/">Aquamacs</a> as an Emacs-like editor for work with OCaml. Please, download and install it.</p>
 </li>
-<li><p class="first">Install the <a class="reference external" href="https://brew.sh/">Homebrew package manager</a> for Mac OS X.</p>
+<li><p class="first">Install the <a class="reference external" href="https://brew.sh/">Homebrew package manager</a> for macOS.</p>
 </li>
 <li><p class="first">Install the following system packages using Homebrew:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">make</span> <span class="n">m4</span> <span class="n">gcc</span> <span class="n">pkg</span><span class="o">-</span><span class="n">config</span>
@@ -345,7 +349,7 @@ installing WSL, as you have already done it).</p>
 </div>
 </li>
 <li><p class="first">Install the <a class="reference external" href="https://www.xquartz.org/">XQuartz</a> X window system
-for Mac OS X. Make sure it <cite>before</cite> you install <code class="docutils literal notranslate"><span class="pre">opam</span></code> and all
+for macOS. Make sure it <cite>before</cite> you install <code class="docutils literal notranslate"><span class="pre">opam</span></code> and all
 libraries from it. We will need this library for a few graphical
 applications at the end of this course.</p>
 <p>Once you have done it, <strong>log-out from the system and log-in again</strong>.</p>
