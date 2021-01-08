@@ -17,7 +17,7 @@ Introductory Data Structures and Algorithms
 * Lectures: Fridays, 2:30-5:30pm
 * Location: ERC-SR10 Seminar Room 10, UTown (two storeys above Starbucks)
 * Instructor: `Ilya Sergey <https://ilyasergey.net/>`_
-* Office hours: Wednesdays, 3:00-5:00pm, #RC3-01-03E (Cendana)
+* Office hours: Wednesdays, 5:00-7:00pm, #RC3-01-03E (Cendana)
 * Peer Tutors: Hoang Ngoc Tram, Gabriel Petrov
 * Tutoring Sessions: TBA
 
