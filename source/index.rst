@@ -21,7 +21,7 @@ Introductory Data Structures and Algorithms
 * Peer Tutors: 
 
   * Hoang Ngoc Tram (Wednesdays, 7pm-9pm, location TBA)
-  * Gabriel Petrov, TBA
+  * Gabriel Petrov (Thursdays, 6pm-8pm, location TBA)
 
 Lecture Notes
 -------------
