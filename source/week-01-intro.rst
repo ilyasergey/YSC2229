@@ -97,8 +97,8 @@ the future. Some of the data structures you have already seen in the
 past are lists, trees, and arrays. However, more intricate problems
 will require more sophisticated data structures. 
 
-Therefore, on the goals of this course is to show how to pick a right
-data structure for a corresponding problem.
+Therefore, one of the goals of this course is to show how to pick a right data
+structure for a corresponding problem.
 
 What is analysis of algorithms?
 -------------------------------
