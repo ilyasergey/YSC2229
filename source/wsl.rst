@@ -249,10 +249,7 @@ OCaml is well supported in macOS, so the installation process is fairly straight
     ;; Melpa
     (require 'package)
     (add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
-    (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
     (package-initialize)
    
    Restart Aquamacs. Once it's reopened, execute company-mode for completion

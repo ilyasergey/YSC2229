@@ -110,7 +110,7 @@ criteria:
 * **Correctness**: Does the algorithm really do what it’s supposed to
   do?
 
-* **Termination**: Does the algorithm terminate for any given input.
+* **Termination**: Does the algorithm terminate for any given input?
 
 * **Complexity**: Why the algorithm consumes so much resource (time,
   memory) and how can we improve it?
