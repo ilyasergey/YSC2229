@@ -20,8 +20,8 @@ Introductory Data Structures and Algorithms
 * Office hours: Wednesdays, 5:00-7:00pm, #RC3-01-03E (Cendana)
 * Peer Tutors: 
 
-  * Hoang Ngoc Tram (Wednesdays, 7pm-9pm, location TBA)
-  * Gabriel Petrov (Thursdays, 6pm-8pm, location TBA)
+  * `Tram Hoang <mailto:tram.hoang@u.yale-nus.edu.sg>`_ (Wednesdays, 7pm-9pm, location TBA)
+  * `Gabriel Petrov <mailto:gabrielphoenixpetrov@u.yale-nus.edu.sg>`_ (Thursdays, 6pm-8pm, location TBA)
 
 Lecture Notes
 -------------
