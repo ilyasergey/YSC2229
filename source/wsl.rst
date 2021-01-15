@@ -327,8 +327,8 @@ OCaml is well supported in macOS, so the installation process is fairly straight
         :width: 820px
         :align: center
 
-10. You can use `VSCode <https://code.visualstudio.com/>`_ instead of Aquamacs
-    for your development, assuming you've done steps 1-5.
+10. You can use `VSCode <https://code.visualstudio.com/>`_ instead of Aquamacs,
+    assuming you've done the steps 1-5.
 
     First, you you will need to install the `OCaml and Reason IDE extension
     <https://marketplace.visualstudio.com/items?itemName=freebroccolo.reasonml>`_,
