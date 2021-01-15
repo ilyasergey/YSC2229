@@ -253,6 +253,11 @@ OCaml is well supported in macOS, so the installation process is fairly straight
     eval $(opam env)
     opam install -y dune core batteries utop graphics merlin ocp-indent
 
+   Once done, add the following line to your ``~/.bashrc`` or ``~/.profile``
+   files (if they exist)::
+
+    eval $(opam env)   
+
    After that, close your terminal window and start a new one.
 
    Notice that if you had some ``opam`` installation before completing
@@ -336,16 +341,26 @@ OCaml is well supported in macOS, so the installation process is fairly straight
     libraries above via ``opam`` in the step 5). You can install the extension
     by pressing ``Command-Shift-P``, typing "Install Extensions", and choosing
     that item from the dropdown menu.
+   
+    Now, if you open an OCaml file, it will look like that:
 
-    In order to get ``merlin`` working properly with it, you will also need to
-    add the following lines to the ``settings.json`` file (with your account
-    name instead of ``YOURNAME``). To find that file, press ``Command-Shift-P``
-    and choose "Preferences: Open Settings (JSON)" (to find it just type
-    "settings" and choose the correct option)::
+.. image:: ../resources/vscode-mac.png
+   :width: 820px
+   :align: center
+
+.. admonition:: When ``merlin`` is not detected by VSCode
+
+     If, upon opening an OCaml file, you see an error that ``ocamlmerlin`` is not
+     found (which is the case if you didn't add ``eval $(opam env)`` to the
+     configuration files in step 5), you will also need to add the following
+     lines to the ``settings.json`` file (with your account name instead of
+     ``YOURNAME``). To find that file, press ``Command-Shift-P`` and choose
+     "Preferences: Open Settings (JSON)" (to find it just type "settings" and
+     choose the correct option)::
 
       "reason.path.ocamlmerlin": "/Users/YOURNAME/.opam/4.10.0/bin/ocamlmerlin"
 
-    For example, in my case the contents of this file look as follows::
+     For example, in my case the contents of this file look as follows::
 
       {
           "window.zoomLevel": 2,
@@ -353,10 +368,7 @@ OCaml is well supported in macOS, so the installation process is fairly straight
           "reason.path.ocamlmerlin": "/Users/ilya/.opam/4.10.0/bin/ocamlmerlin"
       }
 
-    Don't forget to save the file. Now, if you open an OCaml file, it will look
-    like that:
+     Don't forget to save the file. 
+ 
 
-.. image:: ../resources/vscode-mac.png
-   :width: 820px
-   :align: center
 

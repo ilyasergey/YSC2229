@@ -383,6 +383,11 @@ lines from the terminal:</p>
 <span class="n">opam</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">dune</span> <span class="n">core</span> <span class="n">batteries</span> <span class="n">utop</span> <span class="n">graphics</span> <span class="n">merlin</span> <span class="n">ocp</span><span class="o">-</span><span class="n">indent</span>
 </pre></div>
 </div>
+<p>Once done, add the following line to your <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> or <code class="docutils literal notranslate"><span class="pre">~/.profile</span></code>
+files (if they exist):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">eval</span> <span class="o">$(</span><span class="n">opam</span> <span class="n">env</span><span class="o">)</span>
+</pre></div>
+</div>
 <p>After that, close your terminal window and start a new one.</p>
 <p>Notice that if you had some <code class="docutils literal notranslate"><span class="pre">opam</span></code> installation before completing
 step 4, the installation of the <code class="docutils literal notranslate"><span class="pre">graphics</span></code> package will fail. To
@@ -455,11 +460,19 @@ which enables OCaml support in VSCode (assuming you have installed all
 libraries above via <code class="docutils literal notranslate"><span class="pre">opam</span></code> in the step 5). You can install the extension
 by pressing <code class="docutils literal notranslate"><span class="pre">Command-Shift-P</span></code>, typing “Install Extensions”, and choosing
 that item from the dropdown menu.</p>
-<p>In order to get <code class="docutils literal notranslate"><span class="pre">merlin</span></code> working properly with it, you will also need to
-add the following lines to the <code class="docutils literal notranslate"><span class="pre">settings.json</span></code> file (with your account
-name instead of <code class="docutils literal notranslate"><span class="pre">YOURNAME</span></code>). To find that file, press <code class="docutils literal notranslate"><span class="pre">Command-Shift-P</span></code>
-and choose “Preferences: Open Settings (JSON)” (to find it just type
-“settings” and choose the correct option):</p>
+<p>Now, if you open an OCaml file, it will look like that:</p>
+</li>
+</ol>
+<a class="reference internal image-reference" href="_images/vscode-mac.png"><img alt="_images/vscode-mac.png" class="align-center" src="_images/vscode-mac.png" style="width: 820px;" /></a>
+<div class="admonition-when-merlin-is-not-detected-by-vscode admonition">
+<p class="first admonition-title">When <code class="docutils literal notranslate"><span class="pre">merlin</span></code> is not detected by VSCode</p>
+<p>If, upon opening an OCaml file, you see an error that <code class="docutils literal notranslate"><span class="pre">ocamlmerlin</span></code> is not
+found (which is the case if you didn’t add <code class="docutils literal notranslate"><span class="pre">eval</span> <span class="pre">$(opam</span> <span class="pre">env)</span></code> to the
+configuration files in step 5), you will also need to add the following
+lines to the <code class="docutils literal notranslate"><span class="pre">settings.json</span></code> file (with your account name instead of
+<code class="docutils literal notranslate"><span class="pre">YOURNAME</span></code>). To find that file, press <code class="docutils literal notranslate"><span class="pre">Command-Shift-P</span></code> and choose
+“Preferences: Open Settings (JSON)” (to find it just type “settings” and
+choose the correct option):</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;reason.path.ocamlmerlin&quot;</span><span class="o">:</span> <span class="s2">&quot;/Users/YOURNAME/.opam/4.10.0/bin/ocamlmerlin&quot;</span>
 </pre></div>
 </div>
@@ -471,11 +484,8 @@ and choose “Preferences: Open Settings (JSON)” (to find it just type
 <span class="o">}</span>
 </pre></div>
 </div>
-<p>Don’t forget to save the file. Now, if you open an OCaml file, it will look
-like that:</p>
-</li>
-</ol>
-<a class="reference internal image-reference" href="_images/vscode-mac.png"><img alt="_images/vscode-mac.png" class="align-center" src="_images/vscode-mac.png" style="width: 820px;" /></a>
+<p class="last">Don’t forget to save the file.</p>
+</div>
 </div>
 </div>
 
