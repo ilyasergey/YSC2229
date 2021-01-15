@@ -1,4 +1,4 @@
-.. -*- mode: rst -*-
+ r.. -*- mode: rst -*-
 
 Installing OCaml Libraries and Setting up Emacs/VSCode
 ======================================================
@@ -93,26 +93,18 @@ fully functional Linux distribution installed on your machine.
    :width: 820px
    :align: center 
 
-5. Next, we will install Emacs. It is fairly straightforward and can
-   be done using the instructions given `in this article
-   <https://solarianprogrammer.com/2017/05/18/emacs-windows-subsystem-linux/>`_.
-
-   To use Emacs comfortably with Windows-like shortcuts, you will need to enable the `Cua mode <https://www.emacswiki.org/emacs/CuaMode>`_ for it. 
-   To enable Cua mode, create the file ``.emacs`` in you Linux home folder (i.e., it should be located under ``~/.emacs``) and add the following lines to it (or just append them to the file if it already exists)::
-
-    (cua-mode t)
-    (setq cua-auto-tabify-rectangles nil) ;; Don't tabify after rectangle commands
-    (transient-mark-mode 1) ;; No region when it is not highlighted
-    (setq cua-keep-region-after-copy t) ;; Standard Windows behaviour
-
-6. So far so good, now we have a running Linux and Emacs in it, so it's time to install OCaml libraries. 
-   First, we need to install a number of Linux packages that OCaml needs. Run the following lines from Linux terminal (it can be done both from within graphical shell, or from within a separate Ubuntu terminal run as a Windows applications)::
+5. It's time to install OCaml libraries. First, we need to install a number of
+   Linux packages that OCaml needs. Run the following lines from Linux terminal
+   (it can be done both from within graphical shell, or from within a separate
+   Ubuntu terminal run as a Windows applications)::
 
     sudo apt install make m4 gcc pkg-config libx11-dev
 
-   Don't forget to enter the password you've created for your Linux account, it might be different from your Windows one. Be patient: installing those packages will take quite some time.
+   Don't forget to enter the password you've created for your Linux account, it
+   might be different from your Windows one. Be patient: installing those
+   packages will take quite some time.
 
-7. Next, we will install the ``opam`` package manager for working with different OCaml libraries. Execute the following lines from Linux terminal::
+6. Next, we will install the ``opam`` package manager for working with different OCaml libraries. Execute the following lines from Linux terminal::
 
     sudo add-apt-repository ppa:avsm/ppa
     sudo apt install opam
@@ -129,11 +121,21 @@ fully functional Linux distribution installed on your machine.
    To check that your OCaml is correctly installed, run ``ocamlc --version`` from the terminal. You should get the output
    ``4.10.0``, which is the version of the OCaml compiler we have just installed.
 
-8. We're nearly there. Now we need to install the OCaml support for Emacs. 
+7. **If you're planning to use VSCode instead, please, skip to the step 12.**
 
-   **If you're planning to use VSCode instead, please, skip to the step 12.**
+   Now we need to install the OCaml support for Emacs. Emacs can be installed
+   using the instructions given `in this article
+   <https://solarianprogrammer.com/2017/05/18/emacs-windows-subsystem-linux/>`_.
 
-   To continue with installing Emacs, Execute the following from terminal::
+   To use Emacs comfortably with Windows-like shortcuts, you will need to enable the `Cua mode <https://www.emacswiki.org/emacs/CuaMode>`_ for it. 
+   To enable Cua mode, create the file ``.emacs`` in you Linux home folder (i.e., it should be located under ``~/.emacs``) and add the following lines to it (or just append them to the file if it already exists)::
+
+    (cua-mode t)
+    (setq cua-auto-tabify-rectangles nil) ;; Don't tabify after rectangle commands
+    (transient-mark-mode 1) ;; No region when it is not highlighted
+    (setq cua-keep-region-after-copy t) ;; Standard Windows behaviour
+
+8. To continue with installing Emacs, Execute the following from terminal::
 
     opam install tuareg user-setup
     opam user-setup install --editors=emacs
@@ -183,7 +185,7 @@ fully functional Linux distribution installed on your machine.
          :align: center
 
 12. You can use `VSCode <https://code.visualstudio.com/>`_ instead of
-    Emacs for your development, assuming you've done steps 1-7.
+    Emacs for your development, assuming you've done steps 1-6.
 
     Start by installing the Remote-WSL plugin. It is the one suggested the
     firsrt time you run VSCode. Alternatively, you can install it by pressing
@@ -218,7 +220,7 @@ If you're using Linux, the setup is similar to the one for Windows 10 WSL
 described previously. Just follow the points above starting from the step 5. If
 you're using a distribution different from Ubuntu, make sure to use the
 corresponding package manager (instead of ``apt``) to get the system packages in
-the step 6.
+the step 5.
 
 If you wish to use VSCode, just follow the instructions in step 12 for Windows
 10 WSL, skipping the part about Remote-WSL and remote window and starting from
@@ -229,22 +231,20 @@ macOS
 
 OCaml is well supported in macOS, so the installation process is fairly straightforward.
 
-1. I suggest to use `Aquamacs <http://aquamacs.org/>`_ as an Emacs-like editor for work with OCaml. Please, download and install it.
+1. Install the `Homebrew package manager <https://brew.sh/>`_ for macOS.
 
-2. Install the `Homebrew package manager <https://brew.sh/>`_ for macOS.
-
-3. Install the following system packages using Homebrew::
+2. Install the following system packages using Homebrew::
 
      brew install make m4 gcc pkg-config
 
-4. Install the `XQuartz <https://www.xquartz.org/>`_ X window system
+3. Install the `XQuartz <https://www.xquartz.org/>`_ X window system
    for macOS. Make sure it `before` you install ``opam`` and all
    libraries from it. We will need this library for a few graphical
    applications at the end of this course. 
 
    Once you have done it, **log-out from the system and log-in again**.
 
-5. Next, we will install the ``opam`` package manager for installing
+4. Next, we will install the ``opam`` package manager for installing
    and maintaining different OCaml libraries. Execute the following
    lines from the terminal::
 
@@ -254,7 +254,7 @@ OCaml is well supported in macOS, so the installation process is fairly straight
     opam install -y dune core batteries utop graphics merlin ocp-indent
 
    Once done, add the following line to your ``~/.bashrc`` or ``~/.profile``
-   files (if they exist)::
+   files (if they exist, otherwise create ``~/.bashrc``)::
 
     eval $(opam env)   
 
@@ -271,11 +271,13 @@ OCaml is well supported in macOS, so the installation process is fairly straight
    from the terminal. You should get the output ``4.10.0``, which is the version
    of the OCaml compiler we have just installed.
 
-6. We're nearly there. Now we need to install the OCaml support for Emacs. 
+5. **If you're planning to use VSCode instead, please, skip to the step 10.**
 
-   **If you're planning to use VSCode instead, please, skip to the step 10.**
+   Now we need to install the OCaml support for Emacs. As an Emacs-like editor,
+   I suggest to use `Aquamacs <http://aquamacs.org/>`_. Please, download and
+   install it.
 
-   To continue with installing Emacs, Execute the following from terminal::
+6. To continue with installing Emacs, Execute the following from terminal::
 
     opam install tuareg user-setup 
     opam user-setup install --editors=emacs
@@ -333,7 +335,7 @@ OCaml is well supported in macOS, so the installation process is fairly straight
         :align: center
 
 10. You can use `VSCode <https://code.visualstudio.com/>`_ instead of Aquamacs,
-    assuming you've done the steps 1-5.
+    assuming you've done the steps 1-4.
 
     First, you you will need to install the `OCaml and Reason IDE extension
     <https://marketplace.visualstudio.com/items?itemName=freebroccolo.reasonml>`_,
@@ -370,5 +372,3 @@ OCaml is well supported in macOS, so the installation process is fairly straight
 
      Don't forget to save the file. 
  
-
-
