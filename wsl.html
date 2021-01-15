@@ -363,7 +363,7 @@ lines from the terminal:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">opam</span>
 <span class="n">opam</span> <span class="n">init</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">compiler</span><span class="o">=</span><span class="mi">4</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">0</span>
 <span class="n">eval</span> <span class="o">$(</span><span class="n">opam</span> <span class="n">env</span><span class="o">)</span>
-<span class="n">opam</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">dune</span> <span class="n">core</span> <span class="n">batteries</span> <span class="n">utop</span> <span class="n">graphics</span>
+<span class="n">opam</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">dune</span> <span class="n">core</span> <span class="n">batteries</span> <span class="n">utop</span> <span class="n">graphics</span> <span class="n">tuareg</span> <span class="n">user</span><span class="o">-</span><span class="n">setup</span> <span class="n">merlin</span>
 </pre></div>
 </div>
 <p>After that, close your terminal window and start a new one.</p>
@@ -377,9 +377,10 @@ above packages:</p>
 <p>To check that your OCaml is correctly installed, run <code class="docutils literal notranslate"><span class="pre">ocamlc</span> <span class="pre">--version</span></code> from the terminal. You should get the output
 <code class="docutils literal notranslate"><span class="pre">4.10.0</span></code>, which is the version of the OCaml compiler we have just installed.</p>
 </li>
-<li><p class="first">We’re nearly there. Now we need to install the OCaml support for Emacs. Execute the following from terminal:</p>
-<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">opam</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">tuareg</span> <span class="n">user</span><span class="o">-</span><span class="n">setup</span> <span class="n">merlin</span>
-<span class="n">opam</span> <span class="n">user</span><span class="o">-</span><span class="n">setup</span> <span class="n">install</span> <span class="o">--</span><span class="n">editors</span><span class="o">=</span><span class="n">emacs</span>
+<li><p class="first">We’re nearly there. Now we need to install the OCaml support for Emacs.</p>
+<p><strong>If you’re planning to use VSCode instead, please, skip to the step 10.</strong></p>
+<p>To continue with installing Emacs, Execute the following from terminal:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">opam</span> <span class="n">user</span><span class="o">-</span><span class="n">setup</span> <span class="n">install</span> <span class="o">--</span><span class="n">editors</span><span class="o">=</span><span class="n">emacs</span>
 </pre></div>
 </div>
 <p>The last touch is to add the code completion feature to Aquamacs. First, add these lines to your <code class="docutils literal notranslate"><span class="pre">~/.emacs</span></code> file (create it if it doesn’t exist):</p>
@@ -429,15 +430,15 @@ editing by searching in <code class="docutils literal notranslate"><span class="
 </ul>
 </li>
 <li><p class="first">[Optional] If you prefer to use <a class="reference external" href="https://code.visualstudio.com/">VSCode</a>
-instead of Aquamacs for your development, you might consider installing
-<a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=freebroccolo.reasonml">this extension</a>,
+instead of Aquamacs for your development, you you will need to install <a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=freebroccolo.reasonml">this
+extension</a>,
 which enables OCaml support in VSCode (assuming you have installed all
-libraries above via <code class="docutils literal notranslate"><span class="pre">opam</span></code>).</p>
+libraries above via <code class="docutils literal notranslate"><span class="pre">opam</span></code> in the step 5).</p>
 <p>In order to get <code class="docutils literal notranslate"><span class="pre">merlin</span></code> working properly with it, you will also need to
 add the following lines (with your account name instead of <code class="docutils literal notranslate"><span class="pre">YOURNAME</span></code>) to
 the file <code class="docutils literal notranslate"><span class="pre">~/Library/Application\</span> <span class="pre">Support/Code/User/settings.json</span></code>:</p>
-<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;ocaml.merlinPath&quot;</span><span class="o">:</span> <span class="s2">&quot;/Users/ilya/.opam/4.10.0/bin/ocamlmerlin&quot;</span><span class="o">,</span>
-<span class="s2">&quot;reason.path.ocamlmerlin&quot;</span><span class="o">:</span> <span class="s2">&quot;/Users/ilya/.opam/4.10.0/bin/ocamlmerlin&quot;</span>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;ocaml.merlinPath&quot;</span><span class="o">:</span> <span class="s2">&quot;/Users/YOURNAME/.opam/4.10.0/bin/ocamlmerlin&quot;</span><span class="o">,</span>
+<span class="s2">&quot;reason.path.ocamlmerlin&quot;</span><span class="o">:</span> <span class="s2">&quot;/Users/YOURNAME/.opam/4.10.0/bin/ocamlmerlin&quot;</span>
 </pre></div>
 </div>
 <p>For example, in my case the contents of this file look as follows:</p>

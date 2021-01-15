@@ -225,7 +225,7 @@ OCaml is well supported in macOS, so the installation process is fairly straight
     brew install opam
     opam init -y --compiler=4.10.0
     eval $(opam env)
-    opam install -y dune core batteries utop graphics
+    opam install -y dune core batteries utop graphics tuareg user-setup merlin
 
    After that, close your terminal window and start a new one.
 
@@ -239,9 +239,12 @@ OCaml is well supported in macOS, so the installation process is fairly straight
    To check that your OCaml is correctly installed, run ``ocamlc --version`` from the terminal. You should get the output
    ``4.10.0``, which is the version of the OCaml compiler we have just installed.
 
-6. We're nearly there. Now we need to install the OCaml support for Emacs. Execute the following from terminal::
+6. We're nearly there. Now we need to install the OCaml support for Emacs. 
 
-    opam install -y tuareg user-setup merlin
+   **If you're planning to use VSCode instead, please, skip to the step 10.**
+
+   To continue with installing Emacs, Execute the following from terminal::
+
     opam user-setup install --editors=emacs
 
    The last touch is to add the code completion feature to Aquamacs. First, add these lines to your ``~/.emacs`` file (create it if it doesn't exist)::
@@ -297,18 +300,18 @@ OCaml is well supported in macOS, so the installation process is fairly straight
         :align: center
 
 10. [Optional] If you prefer to use `VSCode <https://code.visualstudio.com/>`_
-    instead of Aquamacs for your development, you might consider installing
-    `this extension
+    instead of Aquamacs for your development, you you will need to install `this
+    extension
     <https://marketplace.visualstudio.com/items?itemName=freebroccolo.reasonml>`_,
     which enables OCaml support in VSCode (assuming you have installed all
-    libraries above via ``opam``).
+    libraries above via ``opam`` in the step 5).
 
     In order to get ``merlin`` working properly with it, you will also need to
     add the following lines (with your account name instead of ``YOURNAME``) to
     the file ``~/Library/Application\ Support/Code/User/settings.json``::
 
-      "ocaml.merlinPath": "/Users/ilya/.opam/4.10.0/bin/ocamlmerlin",
-      "reason.path.ocamlmerlin": "/Users/ilya/.opam/4.10.0/bin/ocamlmerlin"
+      "ocaml.merlinPath": "/Users/YOURNAME/.opam/4.10.0/bin/ocamlmerlin",
+      "reason.path.ocamlmerlin": "/Users/YOURNAME/.opam/4.10.0/bin/ocamlmerlin"
 
     For example, in my case the contents of this file look as follows::
 
