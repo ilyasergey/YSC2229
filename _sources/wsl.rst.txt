@@ -200,7 +200,7 @@ fully functional Linux distribution installed on your machine.
     File") and enjoy the advanced features: highlighting, code completion, and
     type information, as well as many others. An example of the UI is shown
     below. Notice the indicators at the bottom of the screen, showing that
-    VSCode runs in VSL, with OCaml/merlin support enabled:
+    VSCode runs in WSL (Ubuntu), with OCaml/merlin support enabled:
 
 .. image:: ../resources/vscode-wsl.png
    :width: 820px
