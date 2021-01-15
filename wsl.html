@@ -266,7 +266,7 @@ First, we need to install a number of Linux packages that OCaml needs. Run the f
 <span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="n">opam</span>
 <span class="n">opam</span> <span class="n">init</span> <span class="o">-</span><span class="n">y</span> <span class="o">--</span><span class="n">compiler</span><span class="o">=</span><span class="mi">4</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">0</span> <span class="o">--</span><span class="n">disable</span><span class="o">-</span><span class="n">sandboxing</span>
 <span class="n">eval</span> <span class="o">$(</span><span class="n">opam</span> <span class="n">env</span><span class="o">)</span>
-<span class="n">opam</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">dune</span> <span class="n">core</span> <span class="n">batteries</span> <span class="n">utop</span> <span class="n">graphics</span>
+<span class="n">opam</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">dune</span> <span class="n">core</span> <span class="n">batteries</span> <span class="n">utop</span> <span class="n">graphics</span> <span class="n">tuareg</span> <span class="n">user</span><span class="o">-</span><span class="n">setup</span> <span class="n">merlin</span>
 </pre></div>
 </div>
 <p>Once done, add the following line to your <code class="docutils literal notranslate"><span class="pre">~/.bashrc</span></code> file:</p>
@@ -277,9 +277,10 @@ First, we need to install a number of Linux packages that OCaml needs. Run the f
 <p>To check that your OCaml is correctly installed, run <code class="docutils literal notranslate"><span class="pre">ocamlc</span> <span class="pre">--version</span></code> from the terminal. You should get the output
 <code class="docutils literal notranslate"><span class="pre">4.10.0</span></code>, which is the version of the OCaml compiler we have just installed.</p>
 </li>
-<li><p class="first">We’re nearly there. Now we need to install the OCaml support for Emacs. Execute the following from terminal:</p>
-<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">opam</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">tuareg</span> <span class="n">user</span><span class="o">-</span><span class="n">setup</span> <span class="n">merlin</span>
-<span class="n">opam</span> <span class="n">user</span><span class="o">-</span><span class="n">setup</span> <span class="n">install</span> <span class="o">--</span><span class="n">editors</span><span class="o">=</span><span class="n">emacs</span>
+<li><p class="first">We’re nearly there. Now we need to install the OCaml support for Emacs.</p>
+<p><strong>If you’re planning to use VSCode instead, please, skip to the step 12.</strong></p>
+<p>To continue with installing Emacs, Execute the following from terminal:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">opam</span> <span class="n">user</span><span class="o">-</span><span class="n">setup</span> <span class="n">install</span> <span class="o">--</span><span class="n">editors</span><span class="o">=</span><span class="n">emacs</span>
 </pre></div>
 </div>
 <p>The last touch is to add the code completion feature to Emacs. Open Emacs and execute
@@ -321,14 +322,24 @@ editing by searching in <code class="docutils literal notranslate"><span class="
 </ul>
 </li>
 <li><p class="first">[Optional] If you prefer to use <a class="reference external" href="https://code.visualstudio.com/">VSCode</a>
-instead of Emacs for your development, you might consider installing
-<a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=ocamllabs.ocaml-platform">this plugin</a>,
-which enables OCaml support in VSCode (assuming you have installed all
-libraries above via <code class="docutils literal notranslate"><span class="pre">opam</span></code>). <a class="reference external" href="https://code.visualstudio.com/docs/remote/wsl-tutorial">This link</a> contains
-instructions on enabling WSL in VSCode (you can skip the part about
-installing WSL, as you have already done it).</p>
+instead of Emacs for your development, you should start by installing the
+Remote-WSL plugin. It is the one suggested the firsrt time you run VSCode.
+Alternative you can install it by pressing <code class="docutils literal notranslate"><span class="pre">Ctrl-Shift-P</span></code>, typing
+“install extensions”, and choosing “Install Extensions” item from the
+dropdown menu, and then finding and installing the “Remote-WSL” extension.</p>
+<p>Next, press <code class="docutils literal notranslate"><span class="pre">Ctrl-Shift-P</span></code> and choose “Remote-WSL: New Window”. This will
+take a few seconds and will start a new window of VSCode that runs <strong>inside
+your WSL Linux</strong> (you can even start a terminal there).</p>
+<p>Next, <strong>in this remote window</strong>, install the exntesion “OCaml and Reason
+IDE”.</p>
+<p>Now, you can open an OCaml file (<code class="docutils literal notranslate"><span class="pre">Ctrl-Shift-P</span></code>, followed by “File: Open
+File”) and enjoy the advanced features: highlighting, code completion, and
+type information, as well as many others. An example of the UI is shown
+below. Notice the indicators at the bottom of the screen, showing that
+VSCode runs in VSL, with OCaml/merlin support enabled:</p>
 </li>
 </ol>
+<a class="reference internal image-reference" href="_images/vscode-wsl.png"><img alt="_images/vscode-wsl.png" class="align-center" src="_images/vscode-wsl.png" style="width: 820px;" /></a>
 </div>
 <div class="section" id="linux">
 <h2>2.1.2. Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
@@ -337,6 +348,9 @@ described previously. Just follow the points above starting from the step 5. If
 you’re using a distribution different from Ubuntu, make sure to use the
 corresponding package manager (instead of <code class="docutils literal notranslate"><span class="pre">apt</span></code>) to get the system packages in
 the step 6.</p>
+<p>If you wish to use VSCode, just follow the instructions in step 12 for Windows
+10 WSL, skipping the part about Remote-WSL and remote window and starting from
+installing the “OCaml and Reason IDE” extension.</p>
 </div>
 <div class="section" id="macos">
 <h2>2.1.3. macOS<a class="headerlink" href="#macos" title="Permalink to this headline">¶</a></h2>
@@ -374,8 +388,9 @@ above packages:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">opam</span> <span class="n">switch</span> <span class="n">reinstall</span> <span class="mi">4</span><span class="o">.</span><span class="mi">10</span><span class="o">.</span><span class="mi">0</span>
 </pre></div>
 </div>
-<p>To check that your OCaml is correctly installed, run <code class="docutils literal notranslate"><span class="pre">ocamlc</span> <span class="pre">--version</span></code> from the terminal. You should get the output
-<code class="docutils literal notranslate"><span class="pre">4.10.0</span></code>, which is the version of the OCaml compiler we have just installed.</p>
+<p>To check that your OCaml is correctly installed, run <code class="docutils literal notranslate"><span class="pre">ocamlc</span> <span class="pre">--version</span></code>
+from the terminal. You should get the output <code class="docutils literal notranslate"><span class="pre">4.10.0</span></code>, which is the version
+of the OCaml compiler we have just installed.</p>
 </li>
 <li><p class="first">We’re nearly there. Now we need to install the OCaml support for Emacs.</p>
 <p><strong>If you’re planning to use VSCode instead, please, skip to the step 10.</strong></p>
@@ -430,13 +445,17 @@ editing by searching in <code class="docutils literal notranslate"><span class="
 </ul>
 </li>
 <li><p class="first">[Optional] If you prefer to use <a class="reference external" href="https://code.visualstudio.com/">VSCode</a>
-instead of Aquamacs for your development, you you will need to install <a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=freebroccolo.reasonml">this
-extension</a>,
+instead of Aquamacs for your development, you you will need to install the
+<a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=freebroccolo.reasonml">OCaml and Reason IDE extension</a>,
 which enables OCaml support in VSCode (assuming you have installed all
-libraries above via <code class="docutils literal notranslate"><span class="pre">opam</span></code> in the step 5).</p>
+libraries above via <code class="docutils literal notranslate"><span class="pre">opam</span></code> in the step 5). You can install the extension
+by pressing <code class="docutils literal notranslate"><span class="pre">Command-Shift-P</span></code>, typing “Install Extensions”, and choosing
+that item from the dropdown menu.</p>
 <p>In order to get <code class="docutils literal notranslate"><span class="pre">merlin</span></code> working properly with it, you will also need to
-add the following lines (with your account name instead of <code class="docutils literal notranslate"><span class="pre">YOURNAME</span></code>) to
-the file <code class="docutils literal notranslate"><span class="pre">~/Library/Application\</span> <span class="pre">Support/Code/User/settings.json</span></code>:</p>
+add the following lines to the <code class="docutils literal notranslate"><span class="pre">settings.json</span></code> file (with your account
+name instead of <code class="docutils literal notranslate"><span class="pre">YOURNAME</span></code>). To find that file, press <code class="docutils literal notranslate"><span class="pre">Command-Shift-P</span></code>
+and choose “Preferences: Open Settings (JSON)” (to find it just type
+“settings” and choose the correct option):</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;ocaml.merlinPath&quot;</span><span class="o">:</span> <span class="s2">&quot;/Users/YOURNAME/.opam/4.10.0/bin/ocamlmerlin&quot;</span><span class="o">,</span>
 <span class="s2">&quot;reason.path.ocamlmerlin&quot;</span><span class="o">:</span> <span class="s2">&quot;/Users/YOURNAME/.opam/4.10.0/bin/ocamlmerlin&quot;</span>
 </pre></div>
@@ -450,8 +469,11 @@ the file <code class="docutils literal notranslate"><span class="pre">~/Library/
 <span class="o">}</span>
 </pre></div>
 </div>
+<p>Don’t forget to save the file. Now, if you open an OCaml file, it will look
+like that:</p>
 </li>
 </ol>
+<a class="reference internal image-reference" href="_images/vscode-mac.png"><img alt="_images/vscode-mac.png" class="align-center" src="_images/vscode-mac.png" style="width: 820px;" /></a>
 </div>
 </div>
 
