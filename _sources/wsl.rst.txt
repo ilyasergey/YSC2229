@@ -182,19 +182,22 @@ fully functional Linux distribution installed on your machine.
          :width: 820px
          :align: center
 
-12. If you prefer to use `VSCode <https://code.visualstudio.com/>`_ instead of
-    Emacs for your development, you should start by installing the Remote-WSL
-    plugin. It is the one suggested the firsrt time you run VSCode. Alternative
-    you can install it by pressing ``Ctrl-Shift-P``, typing "install
-    extensions", and choosing "Install Extensions" item from the dropdown menu,
-    and then finding and installing the "Remote-WSL" extension.
+12. You can use `VSCode <https://code.visualstudio.com/>`_ instead of
+    Emacs for your development, assuming you've done steps 1-7.
 
-    Next, press ``Ctrl-Shift-P`` and choose "Remote-WSL: New Window". This will
-    take a few seconds and will start a new window of VSCode that runs **inside
-    your WSL Linux** (you can even start a terminal there). 
+    Start by installing the Remote-WSL plugin. It is the one suggested the
+    firsrt time you run VSCode. Alternatively, you can install it by pressing
+    ``Ctrl-Shift-P``, typing "install extensions", and choosing "Install
+    Extensions" item from the dropdown menu, and then finding and installing the
+    "Remote-WSL" extension.
+
+    After installing that extension, press ``Ctrl-Shift-P`` and choose
+    "Remote-WSL: New Window". This will take a few seconds and will start a new
+    window of VSCode that runs **inside your WSL Linux** (you can even start a
+    Linux terminal there).
 
     Next, **in this remote window**, install the exntesion "OCaml and Reason
-    IDE".
+    IDE" in the same way as described above.
 
     Now, you can open an OCaml file (``Ctrl-Shift-P``, followed by "File: Open
     File") and enjoy the advanced features: highlighting, code completion, and
@@ -324,9 +327,10 @@ OCaml is well supported in macOS, so the installation process is fairly straight
         :width: 820px
         :align: center
 
-10. If you prefer to use `VSCode <https://code.visualstudio.com/>`_
-    instead of Aquamacs for your development, you you will need to install the
-    `OCaml and Reason IDE extension
+10. You can use `VSCode <https://code.visualstudio.com/>`_ instead of Aquamacs
+    for your development, assuming you've done steps 1-5.
+
+    First, you you will need to install the `OCaml and Reason IDE extension
     <https://marketplace.visualstudio.com/items?itemName=freebroccolo.reasonml>`_,
     which enables OCaml support in VSCode (assuming you have installed all
     libraries above via ``opam`` in the step 5). You can install the extension
