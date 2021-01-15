@@ -118,7 +118,7 @@ fully functional Linux distribution installed on your machine.
     sudo apt install opam
     opam init -y --compiler=4.10.0 --disable-sandboxing
     eval $(opam env)
-    opam install -y dune core batteries utop graphics
+    opam install -y dune core batteries utop graphics tuareg user-setup merlin
 
    Once done, add the following line to your ``~/.bashrc`` file::
 
@@ -129,9 +129,12 @@ fully functional Linux distribution installed on your machine.
    To check that your OCaml is correctly installed, run ``ocamlc --version`` from the terminal. You should get the output
    ``4.10.0``, which is the version of the OCaml compiler we have just installed.
 
-8. We're nearly there. Now we need to install the OCaml support for Emacs. Execute the following from terminal::
+8. We're nearly there. Now we need to install the OCaml support for Emacs. 
 
-    opam install -y tuareg user-setup merlin
+   **If you're planning to use VSCode instead, please, skip to the step 12.**
+
+   To continue with installing Emacs, Execute the following from terminal::
+
     opam user-setup install --editors=emacs
 
    The last touch is to add the code completion feature to Emacs. Open Emacs and execute
@@ -179,14 +182,29 @@ fully functional Linux distribution installed on your machine.
          :align: center
 
 12. [Optional] If you prefer to use `VSCode <https://code.visualstudio.com/>`_
-    instead of Emacs for your development, you might consider installing
-    `this plugin
-    <https://marketplace.visualstudio.com/items?itemName=ocamllabs.ocaml-platform>`_,
-    which enables OCaml support in VSCode (assuming you have installed all
-    libraries above via ``opam``). `This link
-    <https://code.visualstudio.com/docs/remote/wsl-tutorial>`_ contains
-    instructions on enabling WSL in VSCode (you can skip the part about
-    installing WSL, as you have already done it).
+    instead of Emacs for your development, you should start by installing the
+    Remote-WSL plugin. It is the one suggested the firsrt time you run VSCode.
+    Alternative you can install it by pressing ``Ctrl-Shift-P``, typing
+    "install extensions", and choosing "Install Extensions" item from the
+    dropdown menu, and then finding and installing the "Remote-WSL" extension.
+
+    Next, press ``Ctrl-Shift-P`` and choose "Remote-WSL: New Window". This will
+    take a few seconds and will start a new window of VSCode that runs **inside
+    your WSL Linux** (you can even start a terminal there). 
+
+    Next, **in this remote window**, install the exntesion "OCaml and Reason
+    IDE".
+
+    Now, you can open an OCaml file (``Ctrl-Shift-P``, followed by "File: Open
+    File") and enjoy the advanced features: highlighting, code completion, and
+    type information, as well as many others. An example of the UI is shown
+    below. Notice the indicators at the bottom of the screen, showing that
+    VSCode runs in VSL, with OCaml/merlin support enabled:
+
+.. image:: ../resources/vscode-wsl.png
+   :width: 820px
+   :align: center
+
 
 
 Linux
@@ -197,6 +215,10 @@ described previously. Just follow the points above starting from the step 5. If
 you're using a distribution different from Ubuntu, make sure to use the
 corresponding package manager (instead of ``apt``) to get the system packages in
 the step 6.
+
+If you wish to use VSCode, just follow the instructions in step 12 for Windows
+10 WSL, skipping the part about Remote-WSL and remote window and starting from
+installing the "OCaml and Reason IDE" extension.
 
 macOS
 -----
@@ -236,8 +258,9 @@ OCaml is well supported in macOS, so the installation process is fairly straight
 
      opam switch reinstall 4.10.0
 
-   To check that your OCaml is correctly installed, run ``ocamlc --version`` from the terminal. You should get the output
-   ``4.10.0``, which is the version of the OCaml compiler we have just installed.
+   To check that your OCaml is correctly installed, run ``ocamlc --version``
+   from the terminal. You should get the output ``4.10.0``, which is the version
+   of the OCaml compiler we have just installed.
 
 6. We're nearly there. Now we need to install the OCaml support for Emacs. 
 
@@ -300,15 +323,19 @@ OCaml is well supported in macOS, so the installation process is fairly straight
         :align: center
 
 10. [Optional] If you prefer to use `VSCode <https://code.visualstudio.com/>`_
-    instead of Aquamacs for your development, you you will need to install `this
-    extension
+    instead of Aquamacs for your development, you you will need to install the
+    `OCaml and Reason IDE extension
     <https://marketplace.visualstudio.com/items?itemName=freebroccolo.reasonml>`_,
     which enables OCaml support in VSCode (assuming you have installed all
-    libraries above via ``opam`` in the step 5).
+    libraries above via ``opam`` in the step 5). You can install the extension
+    by pressing ``Command-Shift-P``, typing "Install Extensions", and choosing
+    that item from the dropdown menu.
 
     In order to get ``merlin`` working properly with it, you will also need to
-    add the following lines (with your account name instead of ``YOURNAME``) to
-    the file ``~/Library/Application\ Support/Code/User/settings.json``::
+    add the following lines to the ``settings.json`` file (with your account
+    name instead of ``YOURNAME``). To find that file, press ``Command-Shift-P``
+    and choose "Preferences: Open Settings (JSON)" (to find it just type
+    "settings" and choose the correct option)::
 
       "ocaml.merlinPath": "/Users/YOURNAME/.opam/4.10.0/bin/ocamlmerlin",
       "reason.path.ocamlmerlin": "/Users/YOURNAME/.opam/4.10.0/bin/ocamlmerlin"
@@ -321,3 +348,11 @@ OCaml is well supported in macOS, so the installation process is fairly straight
           "ocaml.merlinPath": "/Users/ilya/.opam/4.10.0/bin/ocamlmerlin",
           "reason.path.ocamlmerlin": "/Users/ilya/.opam/4.10.0/bin/ocamlmerlin"
       }
+
+    Don't forget to save the file. Now, if you open an OCaml file, it will look
+    like that:
+
+.. image:: ../resources/vscode-mac.png
+   :width: 820px
+   :align: center
+
