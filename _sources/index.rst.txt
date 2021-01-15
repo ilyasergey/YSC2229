@@ -30,7 +30,7 @@ Lecture Notes
    :numbered:
    :maxdepth: 2
 
-..   week-01
+   week-01
 ..   week-02
 ..   week-03	 
 ..   week-04	 
@@ -53,10 +53,9 @@ Lecture notes will be posted gradually as we progress through the material.
 Supplementary Materials
 -----------------------
 
-TBA
+* `Week 01 Introductory Slides <_static/2021/Week-01-Intro.pdf>`_
+* `Matrix determinants in Haskell <_static/2021/Matrices.hs>`_
 
-.. * `Week 01 Introductory Slides <_static/2021/Week-01-Intro.pdf>`_
-.. * `Matrix determinants in Haskell <_static/2021/Matrices.hs>`_
 .. * `Week 04 Slides on Advanced Sorting <_static/2021/Week-04-Sorting.pdf>`_
 .. * `Board shots from the Backtracking lecture <_static/2021/backtracking.pdf>`_
 
