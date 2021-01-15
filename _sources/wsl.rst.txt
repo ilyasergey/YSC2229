@@ -339,7 +339,6 @@ OCaml is well supported in macOS, so the installation process is fairly straight
     and choose "Preferences: Open Settings (JSON)" (to find it just type
     "settings" and choose the correct option)::
 
-      "ocaml.merlinPath": "/Users/YOURNAME/.opam/4.10.0/bin/ocamlmerlin",
       "reason.path.ocamlmerlin": "/Users/YOURNAME/.opam/4.10.0/bin/ocamlmerlin"
 
     For example, in my case the contents of this file look as follows::
@@ -347,7 +346,6 @@ OCaml is well supported in macOS, so the installation process is fairly straight
       {
           "window.zoomLevel": 2,
           "search.searchOnType": false,
-          "ocaml.merlinPath": "/Users/ilya/.opam/4.10.0/bin/ocamlmerlin",
           "reason.path.ocamlmerlin": "/Users/ilya/.opam/4.10.0/bin/ocamlmerlin"
       }
 
