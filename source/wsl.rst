@@ -253,7 +253,7 @@ OCaml is well supported in macOS, so the installation process is fairly straight
     (package-initialize)
    
    Restart Aquamacs. Once it's reopened, execute company-mode for completion
-   `Alt-X package-list-packages`. From the list choose `company -> Install -> Yes`:
+   `Option-X package-list-packages`. From the list choose `company -> Install -> Yes`:
 
 .. image:: ../resources/howto/mac-company.png
    :width: 820px
@@ -298,7 +298,23 @@ OCaml is well supported in macOS, so the installation process is fairly straight
 
 10. [Optional] If you prefer to use `VSCode <https://code.visualstudio.com/>`_
     instead of Aquamacs for your development, you might consider installing
-    `this plugin
-    <https://marketplace.visualstudio.com/items?itemName=ocamllabs.ocaml-platform>`_,
+    `this extension
+    <https://marketplace.visualstudio.com/items?itemName=freebroccolo.reasonml>`_,
     which enables OCaml support in VSCode (assuming you have installed all
     libraries above via ``opam``).
+
+    In order to get ``merlin`` working properly with it, you will also need to
+    add the following lines (with your account name instead of ``YOURNAME``) to
+    the file ``~/Library/Application\ Support/Code/User/settings.json``::
+
+      "ocaml.merlinPath": "/Users/ilya/.opam/4.10.0/bin/ocamlmerlin",
+      "reason.path.ocamlmerlin": "/Users/ilya/.opam/4.10.0/bin/ocamlmerlin"
+
+    For example, in my case the contents of this file look as follows::
+
+      {
+          "window.zoomLevel": 2,
+          "search.searchOnType": false,
+          "ocaml.merlinPath": "/Users/ilya/.opam/4.10.0/bin/ocamlmerlin",
+          "reason.path.ocamlmerlin": "/Users/ilya/.opam/4.10.0/bin/ocamlmerlin"
+      }
