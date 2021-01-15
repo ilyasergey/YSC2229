@@ -118,7 +118,7 @@ fully functional Linux distribution installed on your machine.
     sudo apt install opam
     opam init -y --compiler=4.10.0 --disable-sandboxing
     eval $(opam env)
-    opam install -y dune core batteries utop graphics merlin user-setup
+    opam install -y dune core batteries utop graphics merlin ocp-indent
 
    Once done, add the following line to your ``~/.bashrc`` file::
 
@@ -135,7 +135,7 @@ fully functional Linux distribution installed on your machine.
 
    To continue with installing Emacs, Execute the following from terminal::
 
-    opam install tuareg 
+    opam install tuareg user-setup
     opam user-setup install --editors=emacs
 
    The last touch is to add the code completion feature to Emacs. Open Emacs and execute
@@ -251,7 +251,7 @@ OCaml is well supported in macOS, so the installation process is fairly straight
     brew install opam
     opam init -y --compiler=4.10.0
     eval $(opam env)
-    opam install -y dune core batteries utop graphics merlin user-setup
+    opam install -y dune core batteries utop graphics merlin ocp-indent
 
    After that, close your terminal window and start a new one.
 
