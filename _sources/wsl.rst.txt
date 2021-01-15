@@ -1,7 +1,7 @@
 .. -*- mode: rst -*-
 
-Installing OCaml Libraries and setting up Emacs
-===============================================
+Installing OCaml Libraries and Setting up Emacs/VSCode
+======================================================
 
 First, we need to install all the software necessary for fully fledged OCaml development. The instructions on how to do so are provided below.
 
@@ -182,12 +182,12 @@ fully functional Linux distribution installed on your machine.
          :width: 820px
          :align: center
 
-12. [Optional] If you prefer to use `VSCode <https://code.visualstudio.com/>`_
-    instead of Emacs for your development, you should start by installing the
-    Remote-WSL plugin. It is the one suggested the firsrt time you run VSCode.
-    Alternative you can install it by pressing ``Ctrl-Shift-P``, typing
-    "install extensions", and choosing "Install Extensions" item from the
-    dropdown menu, and then finding and installing the "Remote-WSL" extension.
+12. If you prefer to use `VSCode <https://code.visualstudio.com/>`_ instead of
+    Emacs for your development, you should start by installing the Remote-WSL
+    plugin. It is the one suggested the firsrt time you run VSCode. Alternative
+    you can install it by pressing ``Ctrl-Shift-P``, typing "install
+    extensions", and choosing "Install Extensions" item from the dropdown menu,
+    and then finding and installing the "Remote-WSL" extension.
 
     Next, press ``Ctrl-Shift-P`` and choose "Remote-WSL: New Window". This will
     take a few seconds and will start a new window of VSCode that runs **inside
@@ -324,7 +324,7 @@ OCaml is well supported in macOS, so the installation process is fairly straight
         :width: 820px
         :align: center
 
-10. [Optional] If you prefer to use `VSCode <https://code.visualstudio.com/>`_
+10. If you prefer to use `VSCode <https://code.visualstudio.com/>`_
     instead of Aquamacs for your development, you you will need to install the
     `OCaml and Reason IDE extension
     <https://marketplace.visualstudio.com/items?itemName=freebroccolo.reasonml>`_,
