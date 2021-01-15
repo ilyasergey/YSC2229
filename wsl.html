@@ -391,7 +391,7 @@ above packages:</p>
 </pre></div>
 </div>
 <p>Restart Aquamacs. Once it’s reopened, execute company-mode for completion
-<cite>Alt-X package-list-packages</cite>. From the list choose <cite>company -&gt; Install -&gt; Yes</cite>:</p>
+<cite>Option-X package-list-packages</cite>. From the list choose <cite>company -&gt; Install -&gt; Yes</cite>:</p>
 </li>
 </ol>
 <a class="reference internal image-reference" href="_images/mac-company.png"><img alt="_images/mac-company.png" class="align-center" src="_images/mac-company.png" style="width: 820px;" /></a>
@@ -430,9 +430,25 @@ editing by searching in <code class="docutils literal notranslate"><span class="
 </li>
 <li><p class="first">[Optional] If you prefer to use <a class="reference external" href="https://code.visualstudio.com/">VSCode</a>
 instead of Aquamacs for your development, you might consider installing
-<a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=ocamllabs.ocaml-platform">this plugin</a>,
+<a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=freebroccolo.reasonml">this extension</a>,
 which enables OCaml support in VSCode (assuming you have installed all
 libraries above via <code class="docutils literal notranslate"><span class="pre">opam</span></code>).</p>
+<p>In order to get <code class="docutils literal notranslate"><span class="pre">merlin</span></code> working properly with it, you will also need to
+add the following lines (with your account name instead of <code class="docutils literal notranslate"><span class="pre">YOURNAME</span></code>) to
+the file <code class="docutils literal notranslate"><span class="pre">~/Library/Application\</span> <span class="pre">Support/Code/User/settings.json</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;ocaml.merlinPath&quot;</span><span class="o">:</span> <span class="s2">&quot;/Users/ilya/.opam/4.10.0/bin/ocamlmerlin&quot;</span><span class="o">,</span>
+<span class="s2">&quot;reason.path.ocamlmerlin&quot;</span><span class="o">:</span> <span class="s2">&quot;/Users/ilya/.opam/4.10.0/bin/ocamlmerlin&quot;</span>
+</pre></div>
+</div>
+<p>For example, in my case the contents of this file look as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">{</span>
+    <span class="s2">&quot;window.zoomLevel&quot;</span><span class="o">:</span> <span class="mi">2</span><span class="o">,</span>
+    <span class="s2">&quot;search.searchOnType&quot;</span><span class="o">:</span> <span class="bp">false</span><span class="o">,</span>
+    <span class="s2">&quot;ocaml.merlinPath&quot;</span><span class="o">:</span> <span class="s2">&quot;/Users/ilya/.opam/4.10.0/bin/ocamlmerlin&quot;</span><span class="o">,</span>
+    <span class="s2">&quot;reason.path.ocamlmerlin&quot;</span><span class="o">:</span> <span class="s2">&quot;/Users/ilya/.opam/4.10.0/bin/ocamlmerlin&quot;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
 </li>
 </ol>
 </div>
