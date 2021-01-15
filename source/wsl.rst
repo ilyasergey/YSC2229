@@ -132,7 +132,7 @@ fully functional Linux distribution installed on your machine.
 8. We're nearly there. Now we need to install the OCaml support for Emacs. Execute the following from terminal::
 
     opam install -y tuareg user-setup merlin
-    opam user-setup install
+    opam user-setup install --editors=emacs
 
    The last touch is to add the code completion feature to Emacs. Open Emacs and execute
    `Alt-X package-list-packages`. From the list choose `company -> Install -> Yes`:
@@ -242,7 +242,7 @@ OCaml is well supported in macOS, so the installation process is fairly straight
 6. We're nearly there. Now we need to install the OCaml support for Emacs. Execute the following from terminal::
 
     opam install -y tuareg user-setup merlin
-    opam user-setup install
+    opam user-setup install --editors=emacs
 
    The last touch is to add the code completion feature to Aquamacs. First, add these lines to your ``~/.emacs`` file (create it if it doesn't exist)::
 
