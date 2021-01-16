@@ -1,7 +1,7 @@
- r.. -*- mode: rst -*-
+.. -*- mode: rst -*-
 
-Installing OCaml Libraries and Setting up Emacs/VSCode
-======================================================
+Installing OCaml Libraries and Setting up Editors
+=================================================
 
 First, we need to install all the software necessary for fully fledged OCaml development. The instructions on how to do so are provided below.
 
