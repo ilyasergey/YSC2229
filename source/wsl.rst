@@ -121,7 +121,7 @@ fully functional Linux distribution installed on your machine.
    To check that your OCaml is correctly installed, run ``ocamlc --version`` from the terminal. You should get the output
    ``4.10.0``, which is the version of the OCaml compiler we have just installed.
 
-7. **If you're planning to use VSCode instead, please, skip to the step 12.**
+7. **If you're planning to use VSCode instead of Emacs, please, skip to the step 12.**
 
    Now we need to install the OCaml support for Emacs. Emacs can be installed
    using the instructions given `in this article
@@ -271,7 +271,7 @@ OCaml is well supported in macOS, so the installation process is fairly straight
    from the terminal. You should get the output ``4.10.0``, which is the version
    of the OCaml compiler we have just installed.
 
-5. **If you're planning to use VSCode instead, please, skip to the step 10.**
+5. **If you're planning to use VSCode instead of Emacs, please, skip to the step 10.**
 
    Now we need to install the OCaml support for Emacs. As an Emacs-like editor,
    I suggest to use `Aquamacs <http://aquamacs.org/>`_. Please, download and
