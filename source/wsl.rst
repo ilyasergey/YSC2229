@@ -403,3 +403,9 @@ Troubleshooting
    ``tuareg``::
 
      opam install tuareg.2.0.8
+
+   Another way to fix it is to ensure that the executable ``emacs`` is in your
+   ``PATH``. This can be done by, e.g., installing ``emacs`` via Homebrew::
+
+     brew install aquamacs
+
