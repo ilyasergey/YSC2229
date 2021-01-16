@@ -3,7 +3,10 @@
 Installing OCaml Libraries and Setting up Editors
 =================================================
 
-First, we need to install all the software necessary for fully fledged OCaml development. The instructions on how to do so are provided below.
+First, we need to install all the software necessary for fully fledged OCaml
+development. The instructions on how to do so are provided below. If you
+followed the instructions, but something is not working as it should, check out
+the Troubleshooting section at the end of this page.
 
 Microsoft Windows 10
 --------------------
@@ -137,7 +140,7 @@ fully functional Linux distribution installed on your machine.
 
 8. To continue with installing Emacs, Execute the following from terminal::
 
-    opam install tuareg user-setup
+    opam install -y tuareg user-setup
     opam user-setup install --editors=emacs
 
    The last touch is to add the code completion feature to Emacs. Open Emacs and execute
@@ -279,7 +282,7 @@ OCaml is well supported in macOS, so the installation process is fairly straight
 
 6. To continue with installing Emacs, Execute the following from terminal::
 
-    opam install tuareg user-setup 
+    opam install -y tuareg user-setup 
     opam user-setup install --editors=emacs
 
    The last touch is to add the code completion feature to Aquamacs. First, add these lines to your ``~/.emacs`` file (create it if it doesn't exist)::
@@ -349,20 +352,37 @@ OCaml is well supported in macOS, so the installation process is fairly straight
 .. image:: ../resources/vscode-mac.png
    :width: 820px
    :align: center
+ 
+Troubleshooting
+---------------
 
-.. admonition:: When ``merlin`` is not detected by VSCode
+1. **Problem**: In-line tests are highlighed red in my editor with an error message
+   ``ppx_inline_test: extension is disabled because the tests would be ignored
+   ...``.
 
-     If, upon opening an OCaml file, you see an error that ``ocamlmerlin`` is not
-     found (which is the case if you didn't add ``eval $(opam env)`` to the
-     configuration files in step 5), you will also need to add the following
-     lines to the ``settings.json`` file (with your account name instead of
-     ``YOURNAME``). To find that file, press ``Command-Shift-P`` and choose
-     "Preferences: Open Settings (JSON)" (to find it just type "settings" and
-     choose the correct option)::
+   **Solution**: This is a bug in a certain version of the tests. To fix it, install a
+   fixed version of the testing liberary as follows::
+
+     opam install -y ppx_inline_test.v0.14.0
+
+   Then, in your project, run ``make clean; make``. After that, the error in the
+   editor should be gone.
+
+2. **Problem**: Merlin is not detected by VSCode, which gives an error
+   "``ocamlmerlin`` is not found".
+
+   **Solution**: This is the case if you didn't add ``eval $(opam env)`` to the
+   configuration files (e.g., ``~/.bashrc`` and/or ``~/.profile``). Adding it
+   and restarting VSCode should fix it.
+
+   Alternatively, you can add the following lines to the ``settings.json``
+   file (with your account name instead of ``YOURNAME``). To find that file,
+   press ``Command-Shift-P`` and choose "Preferences: Open Settings (JSON)"
+   (to find it just type "settings" and choose the correct option)::
 
       "reason.path.ocamlmerlin": "/Users/YOURNAME/.opam/4.10.0/bin/ocamlmerlin"
 
-     For example, in my case the contents of this file look as follows::
+   For example, in my case the contents of this file look as follows::
 
       {
           "window.zoomLevel": 2,
@@ -370,5 +390,4 @@ OCaml is well supported in macOS, so the installation process is fairly straight
           "reason.path.ocamlmerlin": "/Users/ilya/.opam/4.10.0/bin/ocamlmerlin"
       }
 
-     Don't forget to save the file. 
- 
+   Don't forget to save the file. 
