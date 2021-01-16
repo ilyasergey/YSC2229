@@ -282,10 +282,13 @@ OCaml is well supported in macOS, so the installation process is fairly straight
 
 6. To continue with installing Emacs, Execute the following from terminal::
 
-    opam install -y tuareg user-setup 
+    opam install -y tuareg.2.0.8 user-setup 
     opam user-setup install --editors=emacs
 
-   The last touch is to add the code completion feature to Aquamacs. First, add these lines to your ``~/.emacs`` file (create it if it doesn't exist)::
+   It is important that you install ``touareg`` version 2.0.8, as other versions
+   might cause Emacs-related issues when compiling.
+   The last touch is to add the code completion feature to Aquamacs. First, add
+   these lines to your ``~/.emacs`` file (create it if it doesn't exist)::
 
     ;; Melpa
     (require 'package)
@@ -391,3 +394,12 @@ Troubleshooting
       }
 
    Don't forget to save the file. 
+
+3. **Problem**: When installing ``tuareg`` mode with ``opam``, I get an error::
+     
+     [ERROR] The compilation of conf-emacs failed at ...
+
+   **Solution**: This can be solved by installing a particular version 2.0.8 of
+   ``tuareg``::
+
+     opam install tuareg.2.0.8
