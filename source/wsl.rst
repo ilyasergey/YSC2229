@@ -395,7 +395,8 @@ Troubleshooting
 
    Don't forget to save the file. 
 
-3. **Problem**: When installing ``tuareg`` mode with ``opam``, I get an error::
+3. **Problem**: When installing ``tuareg`` mode with ``opam`` on macOS, I get an
+   error::
      
      [ERROR] The compilation of conf-emacs failed at ...
 
@@ -407,5 +408,6 @@ Troubleshooting
    Another way to fix it is to ensure that the executable ``emacs`` is in your
    ``PATH``. This can be done by, e.g., installing ``emacs`` via Homebrew::
 
-     brew install aquamacs
+     brew install emacs
+
 
