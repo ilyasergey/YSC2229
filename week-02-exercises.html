@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Exercises &mdash; YSC2229 2021</title>
+  <title>2.4. Exercises &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,8 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="2.3. Selection Sort" href="week-02-selection_sort.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,8 +82,22 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-02-arrays.html">2.1. Arrays and Operations on Them</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-insert_sort.html">2.2. Insertion Sort on Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-02-selection_sort.html">2.3. Selection Sort</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.4. Exercises</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-1">2.4.1. Exercise 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-2">2.4.2. Exercise 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-3">2.4.3. Exercise 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-4">2.4.4. Exercise 4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-5">2.4.5. Exercise 5</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
             
@@ -128,7 +143,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Exercises</li>
+          <li><a href="week-02.html">2. Week 02: Working with Arrays</a> &raquo;</li>
+        
+      <li>2.4. Exercises</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -146,9 +163,9 @@
            <div itemprop="articleBody">
             
   <div class="section" id="exercises">
-<h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
+<h1>2.4. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="exercise-1">
-<span id="exercise-selection-max"></span><h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-selection-max"></span><h2>2.4.1. Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
 <p>Rewrite selection sort, so it would walk the array right-to-left,
 looking for a maximum rather than a minimum for a currently
 unprocessed sub-array, while sorting the overall array in an ascending
@@ -157,7 +174,7 @@ loop invariant, upon the loop’s termination, implies the outer loop’s
 invariant.</p>
 </div>
 <div class="section" id="exercise-2">
-<span id="exercise-comparison-order"></span><h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-comparison-order"></span><h2>2.4.2. Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Which sorting method executes less primitive operations, such as
 swapping and comparing array elements, for an array in reverse
@@ -168,7 +185,7 @@ order, selection sort or insertion sort?</li>
 mechanics of the algorithms.</p>
 </div>
 <div class="section" id="exercise-3">
-<span id="exercise-matrix-sum-complexity"></span><h2>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-matrix-sum-complexity"></span><h2>2.4.3. Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
 <p>One can represent a matrix of <span class="math notranslate nohighlight">\(n \times n\)</span> elements in OCaml as a
 two-dimensional array:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span>   <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="o">[|</span> <span class="o">[|</span><span class="mi">1</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">|];</span> <span class="o">[|</span><span class="mi">4</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">6</span><span class="o">|];</span> <span class="o">[|</span><span class="mi">7</span><span class="o">;</span> <span class="mi">8</span><span class="o">;</span> <span class="mi">9</span> <span class="o">|]</span> <span class="o">|];;</span>
@@ -181,7 +198,7 @@ of this procedure using big-O notation and justify your answer using
 the material above.</p>
 </div>
 <div class="section" id="exercise-4">
-<span id="exercise-big-o-defs4"></span><h2>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-big-o-defs4"></span><h2>2.4.4. Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
 <p>Algorithms <em>A</em> and <em>B</em> spend exactly <span class="math notranslate nohighlight">\(T_A(n) = c_A \cdot n \cdot
 \log_2 n\)</span> and <span class="math notranslate nohighlight">\(T_B(n) = c_B \cdot n^2\)</span> nanoseconds,
 respectively, for a problem of size <span class="math notranslate nohighlight">\(n\)</span>. Find the best algorithm
@@ -190,7 +207,7 @@ spends 10 nanoseconds to process 1024 items, while the algorithm <em>B</em>
 spends only 1 nanosecond to process 1024 items.</p>
 </div>
 <div class="section" id="exercise-5">
-<span id="exercise-bubble-sort-complexity"></span><h2>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-bubble-sort-complexity"></span><h2>2.4.5. Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
 <p>Express the complexity of Bubble Sort (see the homework for Week 02)
 using big-O notation. Justify your answer.</p>
 </div>
@@ -201,6 +218,13 @@ using big-O notation. Justify your answer.</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="week-02-selection_sort.html" class="btn btn-neutral" title="2.3. Selection Sort" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

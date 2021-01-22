@@ -31,7 +31,7 @@ Lecture Notes
    :maxdepth: 2
 
    week-01
-..   week-02
+   week-02
 ..   week-03	 
 ..   week-04	 
 ..   week-05
