@@ -1,9 +1,13 @@
 .. -*- mode: rst -*-
 
-Week 03: Complexity of Recursive Algorithms; Array Generators
-=============================================================
+Week 03: Complexity of Algorithms nad Order Notation
+====================================================
 
 .. toctree::
+
+  week-02-complexity
+  week-02-notation
+  week-02-sums
 
   week-03-recursive-complexity
 
