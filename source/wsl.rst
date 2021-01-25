@@ -410,4 +410,13 @@ Troubleshooting
 
      brew install emacs
 
+4. **Problem**: In VSCode, a Git icon in the vertical panel on the left keeps
+   blinking with  the "watch" symbol when being updated. 
+
+   **Solution**: Add the following line to your ``settings.json`` file::
+
+      "git.showProgress": false
+
+      
+
 
