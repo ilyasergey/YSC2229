@@ -167,7 +167,7 @@ resepct to a particular sub-array::
 We can now state the invariants::
 
  let insert_sort_inner_loop_inv j i arr = 
-   is_min_sub_array !j i arr arr.(!j) &&
+   is_min_sub_array !j (i + 1) arr arr.(!j) &&
    sub_array_sorted 0 !j arr && 
    sub_array_sorted (!j + 1) (i + 1) arr
 
