@@ -14,7 +14,7 @@ suffix of the array::
  let select_sort arr = 
    let len = Array.length arr in
    for i = 0 to len - 1 do
-     for j = i to len - 1 do
+     for j = i + 1 to len - 1 do
        if arr.(j) < arr.(i)
        then swap arr i j
        else ()

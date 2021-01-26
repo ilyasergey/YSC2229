@@ -325,7 +325,7 @@ resepct to a particular sub-array:</p>
 </div>
 <p>We can now state the invariants:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">insert_sort_inner_loop_inv</span> <span class="n">j</span> <span class="n">i</span> <span class="n">arr</span> <span class="o">=</span>
-  <span class="n">is_min_sub_array</span> <span class="o">!</span><span class="n">j</span> <span class="n">i</span> <span class="n">arr</span> <span class="n">arr</span><span class="o">.(!</span><span class="n">j</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
+  <span class="n">is_min_sub_array</span> <span class="o">!</span><span class="n">j</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">arr</span> <span class="n">arr</span><span class="o">.(!</span><span class="n">j</span><span class="o">)</span> <span class="o">&amp;&amp;</span>
   <span class="n">sub_array_sorted</span> <span class="mi">0</span> <span class="o">!</span><span class="n">j</span> <span class="n">arr</span> <span class="o">&amp;&amp;</span>
   <span class="n">sub_array_sorted</span> <span class="o">(!</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="n">arr</span>
 
