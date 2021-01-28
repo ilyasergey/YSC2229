@@ -38,7 +38,7 @@ Out of the explanations and the code above, estimate (in terms of
 big-O notation) the time complexity :math:`t(n)` of the recursive
 determinant computation. Start by writing down a recurrence relation
 on :math:`t(n)`. Assume that the complexity of ``minor`` is :math:`c
-\dot n^2` for some constant :math:`c`. Consider the complexity of
+\cdot n^2` for some constant :math:`c`. Consider the complexity of
 returning an element of an array to be 0 (i.e., :math:`t(1) = 0`). For
 :math:`n > 1`, ``power``, addition, multiplication and other primitive
 operations to be constants and approximate all of them by a single
