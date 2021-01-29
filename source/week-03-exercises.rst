@@ -66,31 +66,3 @@ included), and returns the list of all elements in the array, whose
 keys are in that range. Estimate the complexity of this procedure.
 
 .. _exercise-binare-no-mid:
-
-Exercise 4
-----------
-
-Modify ``binary_search`` in a way that it does not test the equality
-of ``fst arr.(mid) = k`` and does not exclude the middle element, but
-rather considers it as a part of one of the recursively processed
-array subparts.
-
-.. _exercise-three-way-merge-sort:
-
-Exercise 5 
-----------
-
-Implement a version of merge sort that splits the sub-arrays into
-three parts and then combines them together. Compare its performance
-to the ordinary 2-way merge sort.
-
-.. _exercise-index-sort:
-
-Exercise 6
-----------
-
-Develop and implement a version of merge sort that does not rearrange
-the input array ``arr``, but returns an array ``perm`` of type ``int
-array``, such that ``perm.(i)`` is the index in ``arr`` of the entry
-with ``i`` th smallest key in the array.
-
