@@ -84,6 +84,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
 </ul>
 
             
@@ -149,7 +150,27 @@
   <div class="section" id="exercises">
 <h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="exercise-1">
-<span id="exercise-partition-invariants"></span><h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<p>Modify <code class="docutils literal notranslate"><span class="pre">binary_search</span></code> in a way that it does not test the equality
+of <code class="docutils literal notranslate"><span class="pre">fst</span> <span class="pre">arr.(mid)</span> <span class="pre">=</span> <span class="pre">k</span></code> and does not exclude the middle element, but
+rather considers it as a part of one of the recursively processed
+array subparts.</p>
+</div>
+<div class="section" id="exercise-2">
+<span id="exercise-three-way-merge-sort"></span><h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<p>Implement a version of merge sort that splits the sub-arrays into
+three parts and then combines them together. Compare its performance
+to the ordinary 2-way merge sort.</p>
+</div>
+<div class="section" id="exercise-3">
+<span id="exercise-index-sort"></span><h2>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<p>Develop and implement a version of merge sort that does not rearrange
+the input array <code class="docutils literal notranslate"><span class="pre">arr</span></code>, but returns an array <code class="docutils literal notranslate"><span class="pre">perm</span></code> of type <code class="docutils literal notranslate"><span class="pre">int</span>
+<span class="pre">array</span></code>, such that <code class="docutils literal notranslate"><span class="pre">perm.(i)</span></code> is the index in <code class="docutils literal notranslate"><span class="pre">arr</span></code> of the entry
+with <code class="docutils literal notranslate"><span class="pre">i</span></code> th smallest key in the array.</p>
+</div>
+<div class="section" id="exercise-4">
+<span id="exercise-partition-invariants"></span><h2>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
 <p>Implement and check the loop invariants (described in the text) of the
 <code class="docutils literal notranslate"><span class="pre">partition</span></code> procedure from Section <a class="reference internal" href="week-04-quicksort.html#sec-partition"><span class="std std-ref">Partitioning an array</span></a>, as well as
 as the procedure’s postcondition. The assertions should relate the
@@ -157,21 +178,21 @@ initial array, the final array and returned <code class="docutils literal notran
 introduce an initial copy of an unmodified array to assert those
 statements.</p>
 </div>
-<div class="section" id="exercise-2">
-<span id="exercise-partition-different-pivot"></span><h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-5">
+<span id="exercise-partition-different-pivot"></span><h2>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
 <p>Change the procedure <code class="docutils literal notranslate"><span class="pre">partition</span></code> from Section <a class="reference internal" href="week-04-quicksort.html#sec-partition"><span class="std std-ref">Partitioning an array</span></a>
 so it would take as <code class="docutils literal notranslate"><span class="pre">pivot</span></code> the first element of an array.</p>
 </div>
-<div class="section" id="exercise-3">
-<span id="exercise-qsort-invariant"></span><h2>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-6">
+<span id="exercise-qsort-invariant"></span><h2>Exercise 6<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h2>
 <p>Implement and check a precondition of the <code class="docutils literal notranslate"><span class="pre">sort</span></code> subrouting within
 <code class="docutils literal notranslate"><span class="pre">quick_sort</span></code> from Section <a class="reference internal" href="week-04-quicksort.html#sec-partition"><span class="std std-ref">Partitioning an array</span></a>. It should relate the
 initial array, and the sub-arrays, obtained as results of
 partitioning, stating something about the arrangement of elements in
 them wrt. element at the position <code class="docutils literal notranslate"><span class="pre">mid</span></code> and others.</p>
 </div>
-<div class="section" id="exercise-4">
-<span id="exercise-change-var"></span><h2>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-7">
+<span id="exercise-change-var"></span><h2>Exercise 7<a class="headerlink" href="#exercise-7" title="Permalink to this headline">¶</a></h2>
 <p>Solve, by means of changing a variable, the following recurrence
 relation:</p>
 <div class="math notranslate nohighlight">
@@ -180,21 +201,21 @@ f(1) &amp;= 1 \\
 f(n) &amp;= 4 f(n/2) + n^2, \text{if}~n &gt; 1
 \end{align*}\end{split}\]</div>
 </div>
-<div class="section" id="exercise-5">
-<span id="exercise-quicksort-worst"></span><h2>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-8">
+<span id="exercise-quicksort-worst"></span><h2>Exercise 8<a class="headerlink" href="#exercise-8" title="Permalink to this headline">¶</a></h2>
 <p>What is the worst-case complexity of Quicksort? Obtain it by stating
 and solving the corresponding recurrence relations. Give an example of
 an array when the worst-case complexity is achieved (hint: think of a
 case insert sort does its best).</p>
 </div>
-<div class="section" id="exercise-6">
-<span id="exercise-more-notations"></span><h2>Exercise 6<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-more-notations">
+<span id="id1"></span><h2>Exercise 6<a class="headerlink" href="#exercise-more-notations" title="Permalink to this headline">¶</a></h2>
 <p>Prove, out of definitions that for ay two functions <span class="math notranslate nohighlight">\(f(n)\)</span> and
 <cite>:math:`g(n)</cite>, one has <span class="math notranslate nohighlight">\(f(n) \in \Theta(g(n))\)</span> if and only if
 <span class="math notranslate nohighlight">\(f(n) \in O(g(n))\)</span> and <span class="math notranslate nohighlight">\(f(n) \in \Omega(g(n))\)</span>.</p>
 </div>
-<div class="section" id="exercise-7">
-<span id="exercise-functor-printing"></span><h2>Exercise 7<a class="headerlink" href="#exercise-7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-functor-printing">
+<span id="id2"></span><h2>Exercise 7<a class="headerlink" href="#exercise-functor-printing" title="Permalink to this headline">¶</a></h2>
 <p>Enhance <a class="reference internal" href="week-04-comparison-based-sorting.html#sec-functor-sorting"><span class="std std-ref">A functor for sorting</span></a> <code class="docutils literal notranslate"><span class="pre">Sorting</span></code>, so it would also take
 an instance of a signature <code class="docutils literal notranslate"><span class="pre">Printable</span></code> that provides an
 implementation for printing elements of an array. With that
@@ -202,8 +223,8 @@ implementation for printing elements of an array. With that
 <code class="docutils literal notranslate"><span class="pre">sort_print</span></code>, which will print a sorting trace using the machinery
 imported from <code class="docutils literal notranslate"><span class="pre">Printable</span></code>.</p>
 </div>
-<div class="section" id="exercise-8">
-<span id="exercise-radix-sort"></span><h2>Exercise 8<a class="headerlink" href="#exercise-8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-radix-sort">
+<span id="id3"></span><h2>Exercise 8<a class="headerlink" href="#exercise-radix-sort" title="Permalink to this headline">¶</a></h2>
 <p>Implement and test the invariant for the <code class="docutils literal notranslate"><span class="pre">while</span></code>-loop of
 <a class="reference internal" href="week-04-linear-time.html#sec-radix-sort"><span class="std std-ref">Radix Sort</span></a>.</p>
 </div>

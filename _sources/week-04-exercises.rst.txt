@@ -3,9 +3,37 @@
 Exercises
 =========
 
+Exercise 1
+----------
+
+Modify ``binary_search`` in a way that it does not test the equality
+of ``fst arr.(mid) = k`` and does not exclude the middle element, but
+rather considers it as a part of one of the recursively processed
+array subparts.
+
+.. _exercise-three-way-merge-sort:
+
+Exercise 2 
+----------
+
+Implement a version of merge sort that splits the sub-arrays into
+three parts and then combines them together. Compare its performance
+to the ordinary 2-way merge sort.
+
+.. _exercise-index-sort:
+
+Exercise 3
+----------
+
+Develop and implement a version of merge sort that does not rearrange
+the input array ``arr``, but returns an array ``perm`` of type ``int
+array``, such that ``perm.(i)`` is the index in ``arr`` of the entry
+with ``i`` th smallest key in the array.
+
+
 .. _exercise-partition-invariants: 
 
-Exercise 1
+Exercise 4
 ----------
 
 Implement and check the loop invariants (described in the text) of the
@@ -17,7 +45,7 @@ statements.
 
 .. _exercise-partition-different-pivot: 
 
-Exercise 2
+Exercise 5
 ----------
 
 Change the procedure ``partition`` from Section :ref:`sec-partition`
@@ -26,7 +54,7 @@ so it would take as ``pivot`` the first element of an array.
 
 .. _exercise-qsort-invariant: 
 
-Exercise 3
+Exercise 6
 ----------
 
 Implement and check a precondition of the ``sort`` subrouting within
@@ -37,7 +65,7 @@ them wrt. element at the position ``mid`` and others.
 
 .. _exercise-change-var: 
 
-Exercise 4
+Exercise 7
 ----------
 
 Solve, by means of changing a variable, the following recurrence
@@ -52,7 +80,7 @@ relation:
 
 .. _exercise-quicksort-worst: 
 
-Exercise 5
+Exercise 8
 ----------
 
 What is the worst-case complexity of Quicksort? Obtain it by stating

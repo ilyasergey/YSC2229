@@ -84,6 +84,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
 </ul>
 
             
@@ -301,7 +302,7 @@ t(n) &amp;= 2 \cdot t\left(\frac{n}{2}\right) + n
 \end{align*}\end{split}\]</div>
 <p>The second component is, however, a bit subtle as the fact that the input is divided by two <em>is not guaranteed</em> (unlike in merge sort). The partitioning into two equal halves is only the case if the pivot for partitioning has been chosen so putting it at its “right place” would partition the array precisely in the middle. And, as we’ve seen from the examples before, this is not always true.</p>
 <p>However, remember that we have assumed that all keys in the array are randomly distributed. Therefore, it is highly unlikely that at each recursive call we will partition the array badly (e.g., to <span class="math notranslate nohighlight">\(n - 1\)</span> and <cite>1</cite> element). Proving that the <em>average</em> sorting time of quick sort is still within <span class="math notranslate nohighlight">\(O(n \log n)\)</span> is beyond the scope of this lecture.</p>
-<p>As the final remark, when asked about the <em>worst</em>-case complexity of Quicksort, one should be careful and tell <span class="math notranslate nohighlight">\(O(n \log n)\)</span> only specifying that it is an <em>average</em>-case complexity on uniformly distributed inputs. For the truly worst-case complexity the recurrence relations will be somewhat different (see <a class="reference internal" href="week-04-exercises.html#exercise-quicksort-worst"><span class="std std-ref">Exercise 5</span></a>):</p>
+<p>As the final remark, when asked about the <em>worst</em>-case complexity of Quicksort, one should be careful and tell <span class="math notranslate nohighlight">\(O(n \log n)\)</span> only specifying that it is an <em>average</em>-case complexity on uniformly distributed inputs. For the truly worst-case complexity the recurrence relations will be somewhat different (see <a class="reference internal" href="week-04-exercises.html#exercise-quicksort-worst"><span class="std std-ref">Exercise 8</span></a>):</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{align*}
 t(0) &amp;= t(1) = 0 \\
