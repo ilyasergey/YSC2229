@@ -33,7 +33,7 @@ Lecture Notes
    week-01
    week-02
    week-03	 
-..   week-04	 
+   week-04	 
 ..   week-05
 ..   week-06
 
