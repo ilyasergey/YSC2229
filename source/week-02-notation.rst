@@ -37,6 +37,7 @@ Properties of Big O-notation
 Multiplying by :math:`k` just means re-adjusting the values of the arbitrary constant factor :math:`c` in the definition of big-O.  This property ensures machine-independence  (i.e., we can forget about constant factors).  Since :math:`\log_{a}n = \log_{a}b \times \log_{b}n`, we don't need to be specific about the base when saying :math:`O(\log~n)`.
 
 .. admonition:: Property 2
+
    :math:`f(n) + g(n) \in O(\max(f(n), g(n))`
 
    Here, :math:`\max((f(n), g(n))` is a function that for any n, returns the maximum of :math:`f(n)` and :math:`g(n))`:
