@@ -90,7 +90,7 @@ case insert sort does its best).
 
 .. _exercise-more-notations:
 
-Exercise 6
+Exercise 9
 ----------
 
 Prove, out of definitions that for ay two functions :math:`f(n)` and
@@ -99,8 +99,8 @@ Prove, out of definitions that for ay two functions :math:`f(n)` and
 
 .. _exercise-functor-printing:
 
-Exercise 7
-----------
+Exercise 10
+-----------
 
 Enhance :ref:`sec-functor-sorting` ``Sorting``, so it would also take
 an instance of a signature ``Printable`` that provides an
@@ -111,8 +111,8 @@ imported from ``Printable``.
 
 .. _exercise-radix-sort:
 
-Exercise 8
-----------
+Exercise 11
+-----------
 
 Implement and test the invariant for the ``while``-loop of
 :ref:`sec-radix-sort`.

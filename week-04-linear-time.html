@@ -280,7 +280,7 @@ below, which sorts an array of key-value pairs based on the keys:</p>
   <span class="k">done</span><span class="o">;</span>
   <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">ref</span> <span class="bp">[]</span> <span class="k">in</span>
   <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="n">bnum</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span> <span class="k">do</span>
-    <span class="n">res</span> <span class="o">:=</span> <span class="nn">List</span><span class="p">.</span><span class="n">append</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">rev</span> <span class="o">(</span><span class="n">buckets</span><span class="o">.(</span><span class="n">i</span><span class="o">)))</span> <span class="o">!</span><span class="n">res</span>
+    <span class="n">res</span> <span class="o">:=</span> <span class="nn">List</span><span class="p">.</span><span class="n">rev_append</span> <span class="n">buckets</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">!</span><span class="n">res</span>
   <span class="k">done</span><span class="o">;</span>
   <span class="n">list_to_array</span> <span class="o">!</span><span class="n">res</span>
 </pre></div>
@@ -339,7 +339,7 @@ applying it iteratively and sorting a list of integer-keyed elements
       <span class="n">radix</span> <span class="o">:=</span> <span class="o">!</span><span class="n">radix</span> <span class="o">/</span> <span class="mi">10</span>
     <span class="k">done</span><span class="o">;</span>
     <span class="k">let</span> <span class="n">result_list</span> <span class="o">=</span> <span class="n">array_to_list</span> <span class="o">!</span><span class="n">res</span> <span class="k">in</span>
-    <span class="n">list_to_array</span> <span class="o">@@</span> <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="n">snd</span> <span class="n">result_list</span>
+    <span class="n">list_to_array</span> <span class="n">result_list</span> <span class="o">|&gt;</span> <span class="nn">Array</span><span class="p">.</span><span class="n">map</span> <span class="n">snd</span>
 </pre></div>
 </div>
 <p>It starts by determining the largest key <code class="docutils literal notranslate"><span class="pre">max_key</span></code> in the initial

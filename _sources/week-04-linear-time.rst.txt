@@ -143,7 +143,7 @@ below, which sorts an array of key-value pairs based on the keys::
    done;
    let res = ref [] in
    for i = bnum - 1 downto 0 do
-     res := List.append (List.rev (buckets.(i))) !res
+     res := List.rev_append buckets.(i) !res
    done;
    list_to_array !res
 
@@ -207,7 +207,7 @@ applying it iteratively and sorting a list of integer-keyed elements
        radix := !radix / 10
      done;
      let result_list = array_to_list !res in
-     list_to_array @@ List.map snd result_list
+     list_to_array result_list |> Array.map snd
 
 It starts by determining the largest key ``max_key`` in the initial
 array. Next, it creates an array ``combined``, which pairs all
