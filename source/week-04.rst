@@ -10,5 +10,6 @@ Week 04: Divide-and-Conquer Algorithms
 
   week-04-quicksort
   week-04-divide-and-conquer-complexity
+  week-04-comparison-based-sorting
 
   week-04-exercises
