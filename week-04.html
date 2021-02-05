@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Week 04: Divide-and-Conquer Algorithms &mdash; YSC2229 2021</title>
+  <title>4. Week 04: Divide-and-Conquer Algorithms &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4.1. Searching in Arrays" href="week-03-search.html" />
+    <link rel="prev" title="3.6. Exercises" href="week-03-exercises.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,10 +83,18 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. Week 04: Divide-and-Conquer Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03-search.html">4.1. Searching in Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-merge-sort.html">4.2. Merge Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-quicksort.html">4.3. Quicksort and its Variations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html">4.4. Complexity of Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html">4.5. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -130,7 +140,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Week 04: Divide-and-Conquer Algorithms</li>
+      <li>4. Week 04: Divide-and-Conquer Algorithms</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -148,59 +158,45 @@
            <div itemprop="articleBody">
             
   <div class="section" id="week-04-divide-and-conquer-algorithms">
-<h1>Week 04: Divide-and-Conquer Algorithms<a class="headerlink" href="#week-04-divide-and-conquer-algorithms" title="Permalink to this headline">¶</a></h1>
+<h1>4. Week 04: Divide-and-Conquer Algorithms<a class="headerlink" href="#week-04-divide-and-conquer-algorithms" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="week-03-search.html">Searching in Arrays</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-03-search.html#linear-search">Linear Search</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03-search.html#binary-search">Binary Search</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03-search.html#binary-search-invariant">Binary Search Invariant</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03-search.html#the-main-idea-of-divide-and-conquer-algorithms">The Main Idea of Divide-and-Conquer algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03-search.html">4.1. Searching in Arrays</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03-search.html#linear-search">4.1.1. Linear Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-search.html#binary-search">4.1.2. Binary Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-search.html#binary-search-invariant">4.1.3. Binary Search Invariant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-search.html#the-main-idea-of-divide-and-conquer-algorithms">4.1.4. The Main Idea of Divide-and-Conquer algorithms</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-03-merge-sort.html">Merge Sort</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-03-merge-sort.html#merging-two-sorted-arrays">Merging two sorted arrays</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-03-merge-sort.html#main-sorting-procedure-and-its-invariants">Main sorting procedure and its invariants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-03-merge-sort.html">4.2. Merge Sort</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-03-merge-sort.html#merging-two-sorted-arrays">4.2.1. Merging two sorted arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-merge-sort.html#main-sorting-procedure-and-its-invariants">4.2.2. Main sorting procedure and its invariants</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-04-quicksort.html">Quicksort and its Variations</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-04-quicksort.html#partitioning-an-array">Partitioning an array</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-quicksort.html#partitioning-in-action">Partitioning in action</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-quicksort.html#sorting-via-partitioning">Sorting via partitioning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04-quicksort.html">4.3. Quicksort and its Variations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-04-quicksort.html#partitioning-an-array">4.3.1. Partitioning an array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-quicksort.html#partitioning-in-action">4.3.2. Partitioning in action</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-quicksort.html#sorting-via-partitioning">4.3.3. Sorting via partitioning</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html">Complexity of Divide-and-Conquer Algorithms</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html#changing-variable-in-recurrence-relations">Changing variable in recurrence relations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html#complexity-of-merge-sort">Complexity of Merge Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html#complexity-of-quicksort">Complexity of Quicksort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html#the-master-theorem">The Master Theorem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html">4.4. Complexity of Divide-and-Conquer Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html#changing-variable-in-recurrence-relations">4.4.1. Changing variable in recurrence relations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html#complexity-of-merge-sort">4.4.2. Complexity of Merge Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html#complexity-of-quicksort">4.4.3. Complexity of Quicksort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html#the-master-theorem">4.4.4. The Master Theorem</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-04-comparison-based-sorting.html">Generalising Comparison-Based Sorting</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-04-comparison-based-sorting.html#comparator-as-a-parameter">Comparator as a parameter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-comparison-based-sorting.html#a-functor-for-sorting">A functor for sorting</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-04-sorting-best-worst.html">Best-Worst Case for Comparison-Based Sorting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-04-linear-time.html">Sorting in Linear Time</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html#simple-bucket-sort">Simple Bucket Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html#enhanced-bucket-sort">Enhanced Bucket Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html#stability-of-sorting">Stability of sorting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html#radix-sort">Radix Sort</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-04-exercises.html">Exercises</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-1">Exercise 1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-2">Exercise 2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-3">Exercise 3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-4">Exercise 4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-5">Exercise 5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-6">Exercise 6</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-7">Exercise 7</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-8">Exercise 8</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-9">Exercise 9</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-10">Exercise 10</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-11">Exercise 11</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04-exercises.html">4.5. Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-1">4.5.1. Exercise 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-2">4.5.2. Exercise 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-3">4.5.3. Exercise 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-4">4.5.4. Exercise 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-5">4.5.5. Exercise 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-6">4.5.6. Exercise 6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-7">4.5.7. Exercise 7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-8">4.5.8. Exercise 8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-9">4.5.9. Exercise 9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html#exercise-10">4.5.10. Exercise 10</a></li>
 </ul>
 </li>
 </ul>
@@ -212,6 +208,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-03-search.html" class="btn btn-neutral float-right" title="4.1. Searching in Arrays" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-03-exercises.html" class="btn btn-neutral" title="3.6. Exercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

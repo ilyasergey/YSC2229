@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Quicksort and its Variations &mdash; YSC2229 2021</title>
+  <title>4.3. Quicksort and its Variations &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4.4. Complexity of Divide-and-Conquer Algorithms" href="week-04-divide-and-conquer-complexity.html" />
+    <link rel="prev" title="4.2. Merge Sort" href="week-03-merge-sort.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,10 +83,23 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-04.html">4. Week 04: Divide-and-Conquer Algorithms</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-03-search.html">4.1. Searching in Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-merge-sort.html">4.2. Merge Sort</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.3. Quicksort and its Variations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#partitioning-an-array">4.3.1. Partitioning an array</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#partitioning-in-action">4.3.2. Partitioning in action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sorting-via-partitioning">4.3.3. Sorting via partitioning</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html">4.4. Complexity of Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html">4.5. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -130,7 +145,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Quicksort and its Variations</li>
+          <li><a href="week-04.html">4. Week 04: Divide-and-Conquer Algorithms</a> &raquo;</li>
+        
+      <li>4.3. Quicksort and its Variations</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -148,7 +165,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="quicksort-and-its-variations">
-<h1>Quicksort and its Variations<a class="headerlink" href="#quicksort-and-its-variations" title="Permalink to this headline">¶</a></h1>
+<h1>4.3. Quicksort and its Variations<a class="headerlink" href="#quicksort-and-its-variations" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">QuickSort.ml</span></code></li>
 </ul>
@@ -159,7 +176,7 @@ by <a class="reference external" href="https://en.wikipedia.org/wiki/Tony_Hoare"
 algorithm now is a part of the standard Unix library (known as
 <code class="docutils literal notranslate"><span class="pre">qsort</span></code>) and Java Developer Kit (JDK).</p>
 <div class="section" id="partitioning-an-array">
-<span id="sec-partition"></span><h2>Partitioning an array<a class="headerlink" href="#partitioning-an-array" title="Permalink to this headline">¶</a></h2>
+<span id="sec-partition"></span><h2>4.3.1. Partitioning an array<a class="headerlink" href="#partitioning-an-array" title="Permalink to this headline">¶</a></h2>
 <p>Similarly to Merge sort, Quicksort belongs to the family of
 divide-and-conquer algorithms: it splits the problem into multiple
 “simpler” sub-tasks, which are solved recursively, with a base case
@@ -190,7 +207,7 @@ implementation in OCaml is shown below:</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">partition</span></code>-ing, thus, works as follows. If the subarray is empty, it just returns its lower end. Otherwise, it picks the <code class="docutils literal notranslate"><span class="pre">pivot</span></code> to be its last element (<code class="docutils literal notranslate"><span class="pre">arr.(hi</span> <span class="pre">-</span> <span class="pre">1)</span></code>). It then allocates two counters <code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">j</span></code>, with <code class="docutils literal notranslate"><span class="pre">j</span></code> starting to iterate through the range <code class="docutils literal notranslate"><span class="pre">lo</span> <span class="pre">...</span> <span class="pre">hi</span></code>. Any element with a key smaller or equal than the one <code class="docutils literal notranslate"><span class="pre">pivot</span></code>, gets swapped to the “beginning”, i.e., in the range <code class="docutils literal notranslate"><span class="pre">lo</span> <span class="pre">...</span> <span class="pre">i</span></code>, and then <code class="docutils literal notranslate"><span class="pre">i</span></code> is advanced. Any element with a key larger than the one of <code class="docutils literal notranslate"><span class="pre">pivot</span></code> remains where it is. Therefore, at any moment all keys that are less ot equal than pivot are in the range <code class="docutils literal notranslate"><span class="pre">[lo</span> <span class="pre">...</span> <span class="pre">i)</span></code> and all keys that are larger than <code class="docutils literal notranslate"><span class="pre">pivot</span></code> are in the range <code class="docutils literal notranslate"><span class="pre">[i</span> <span class="pre">...</span> <span class="pre">j]</span></code>. Therefore, once <code class="docutils literal notranslate"><span class="pre">j</span></code> reaches the end (<code class="docutils literal notranslate"><span class="pre">hi</span> <span class="pre">-</span> <span class="pre">2)</span></code>, the only unprocessed element is <code class="docutils literal notranslate"><span class="pre">pivot</span></code> itself, which can be thus swapped with the element at the position <code class="docutils literal notranslate"><span class="pre">i</span></code> (Why is it correct? Convince yourself). The procedure returns the position of <code class="docutils literal notranslate"><span class="pre">i</span></code> as the position of <code class="docutils literal notranslate"><span class="pre">pivot</span></code>. At that moment all elements with smaller or equal keys are left of <code class="docutils literal notranslate"><span class="pre">i</span></code>, and all elements with larger keys are on the right of <code class="docutils literal notranslate"><span class="pre">i</span></code>.</p>
 </div>
 <div class="section" id="partitioning-in-action">
-<h2>Partitioning in action<a class="headerlink" href="#partitioning-in-action" title="Permalink to this headline">¶</a></h2>
+<h2>4.3.2. Partitioning in action<a class="headerlink" href="#partitioning-in-action" title="Permalink to this headline">¶</a></h2>
 <p>Let us trace the execution of the <code class="docutils literal notranslate"><span class="pre">partition</span></code> on a small array:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="o">[|</span><span class="mi">4</span><span class="o">;</span> <span class="mi">5</span><span class="o">;</span> <span class="mi">1</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">|];;</span>
 </pre></div>
@@ -259,7 +276,7 @@ at the position <code class="docutils literal notranslate"><span class="pre">i</
 </div>
 </div>
 <div class="section" id="sorting-via-partitioning">
-<span id="sec-qsort"></span><h2>Sorting via partitioning<a class="headerlink" href="#sorting-via-partitioning" title="Permalink to this headline">¶</a></h2>
+<span id="sec-qsort"></span><h2>4.3.3. Sorting via partitioning<a class="headerlink" href="#sorting-via-partitioning" title="Permalink to this headline">¶</a></h2>
 <p>Having seen the main working horse of Quicksort, namely <code class="docutils literal notranslate"><span class="pre">partition</span></code>,
 the main procedure is surprisingly simple:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">quick_sort</span> <span class="n">arr</span> <span class="o">=</span>
@@ -293,6 +310,15 @@ either of sub-arrays to be sorted?</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-04-divide-and-conquer-complexity.html" class="btn btn-neutral float-right" title="4.4. Complexity of Divide-and-Conquer Algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-03-merge-sort.html" class="btn btn-neutral" title="4.2. Merge Sort" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

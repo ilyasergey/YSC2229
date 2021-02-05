@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Searching in Arrays &mdash; YSC2229 2021</title>
+  <title>4.1. Searching in Arrays &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4.2. Merge Sort" href="week-03-merge-sort.html" />
+    <link rel="prev" title="4. Week 04: Divide-and-Conquer Algorithms" href="week-04.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,10 +83,24 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-04.html">4. Week 04: Divide-and-Conquer Algorithms</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.1. Searching in Arrays</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#linear-search">4.1.1. Linear Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#binary-search">4.1.2. Binary Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#binary-search-invariant">4.1.3. Binary Search Invariant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-main-idea-of-divide-and-conquer-algorithms">4.1.4. The Main Idea of Divide-and-Conquer algorithms</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-merge-sort.html">4.2. Merge Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-quicksort.html">4.3. Quicksort and its Variations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-divide-and-conquer-complexity.html">4.4. Complexity of Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html">4.5. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -130,7 +146,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Searching in Arrays</li>
+          <li><a href="week-04.html">4. Week 04: Divide-and-Conquer Algorithms</a> &raquo;</li>
+        
+      <li>4.1. Searching in Arrays</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -148,13 +166,13 @@
            <div itemprop="articleBody">
             
   <div class="section" id="searching-in-arrays">
-<h1>Searching in Arrays<a class="headerlink" href="#searching-in-arrays" title="Permalink to this headline">¶</a></h1>
+<h1>4.1. Searching in Arrays<a class="headerlink" href="#searching-in-arrays" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">SearchArray.ml</span></code></li>
 </ul>
 <p>Let us put key-value arrays to some good use.</p>
 <div class="section" id="linear-search">
-<h2>Linear Search<a class="headerlink" href="#linear-search" title="Permalink to this headline">¶</a></h2>
+<h2>4.1.1. Linear Search<a class="headerlink" href="#linear-search" title="Permalink to this headline">¶</a></h2>
 <p>One of the most common operations with key-value arrays is
 <em>searching</em>, i.e., looking for the index of an element with some known
 key, or discovering that there is not such element in the array. The
@@ -188,7 +206,7 @@ second case, it returns <code class="docutils literal notranslate"><span class="
 array <code class="docutils literal notranslate"><span class="pre">a1</span></code>.</p>
 </div>
 <div class="section" id="binary-search">
-<span id="binsearch"></span><h2>Binary Search<a class="headerlink" href="#binary-search" title="Permalink to this headline">¶</a></h2>
+<span id="binsearch"></span><h2>4.1.2. Binary Search<a class="headerlink" href="#binary-search" title="Permalink to this headline">¶</a></h2>
 <p>Binary search is an efficient search procedure that works on a <em>sorted
 array</em> and looks for an element in it, repeatedly dividing its
 search-space by half:</p>
@@ -266,7 +284,7 @@ does not even have consider the entire array, and this is the crux of
 its efficiency!</p>
 </div>
 <div class="section" id="binary-search-invariant">
-<h2>Binary Search Invariant<a class="headerlink" href="#binary-search-invariant" title="Permalink to this headline">¶</a></h2>
+<h2>4.1.3. Binary Search Invariant<a class="headerlink" href="#binary-search-invariant" title="Permalink to this headline">¶</a></h2>
 <p>Binary search crucially relies on the fact that the given array (and
 hence its contiguous sub-array segments) are sorted, so, upon
 comparing the key to the middle, it can safely ignore the half that is
@@ -318,7 +336,7 @@ sub-array bound by <code class="docutils literal notranslate"><span class="pre">
 </div>
 </div>
 <div class="section" id="the-main-idea-of-divide-and-conquer-algorithms">
-<h2>The Main Idea of Divide-and-Conquer algorithms<a class="headerlink" href="#the-main-idea-of-divide-and-conquer-algorithms" title="Permalink to this headline">¶</a></h2>
+<h2>4.1.4. The Main Idea of Divide-and-Conquer algorithms<a class="headerlink" href="#the-main-idea-of-divide-and-conquer-algorithms" title="Permalink to this headline">¶</a></h2>
 <p>The binary search algorithm is an example of the so-called
 <em>divide-and-conquer</em> approach. In this approach the processing of a
 data (a key-value array in our case) is based on multi-branched
@@ -337,6 +355,15 @@ the original problem.</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-03-merge-sort.html" class="btn btn-neutral float-right" title="4.2. Merge Sort" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-04.html" class="btn btn-neutral" title="4. Week 04: Divide-and-Conquer Algorithms" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

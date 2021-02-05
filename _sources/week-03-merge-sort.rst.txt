@@ -85,7 +85,7 @@ We can supplement this procedure with standard randomised tests::
     generic_array_sort_tester merge_sort
 
 The correctness of merge sort relies on the correctness of the
-``merge`` procedure, which generates a sorted array out of two smalle
+``merge`` procedure, which generates a sorted array out of two smaller
 sorted arrays by copying them in the correct interleaving order. We
 can check that ``merge`` indeed does so, by employing the familiar
 auxiliary functions for testing. The pre- and post-condition of

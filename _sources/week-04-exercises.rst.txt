@@ -109,10 +109,3 @@ implementation for printing elements of an array. With that
 ``sort_print``, which will print a sorting trace using the machinery
 imported from ``Printable``.
 
-.. _exercise-radix-sort:
-
-Exercise 11
------------
-
-Implement and test the invariant for the ``while``-loop of
-:ref:`sec-radix-sort`.

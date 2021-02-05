@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Complexity of Divide-and-Conquer Algorithms &mdash; YSC2229 2021</title>
+  <title>4.4. Complexity of Divide-and-Conquer Algorithms &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4.5. Exercises" href="week-04-exercises.html" />
+    <link rel="prev" title="4.3. Quicksort and its Variations" href="week-04-quicksort.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,10 +83,24 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-04.html">4. Week 04: Divide-and-Conquer Algorithms</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-03-search.html">4.1. Searching in Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-03-merge-sort.html">4.2. Merge Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-quicksort.html">4.3. Quicksort and its Variations</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4.4. Complexity of Divide-and-Conquer Algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#changing-variable-in-recurrence-relations">4.4.1. Changing variable in recurrence relations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#complexity-of-merge-sort">4.4.2. Complexity of Merge Sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#complexity-of-quicksort">4.4.3. Complexity of Quicksort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-master-theorem">4.4.4. The Master Theorem</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-exercises.html">4.5. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -130,7 +146,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Complexity of Divide-and-Conquer Algorithms</li>
+          <li><a href="week-04.html">4. Week 04: Divide-and-Conquer Algorithms</a> &raquo;</li>
+        
+      <li>4.4. Complexity of Divide-and-Conquer Algorithms</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -148,10 +166,10 @@
            <div itemprop="articleBody">
             
   <div class="section" id="complexity-of-divide-and-conquer-algorithms">
-<h1>Complexity of Divide-and-Conquer Algorithms<a class="headerlink" href="#complexity-of-divide-and-conquer-algorithms" title="Permalink to this headline">¶</a></h1>
+<h1>4.4. Complexity of Divide-and-Conquer Algorithms<a class="headerlink" href="#complexity-of-divide-and-conquer-algorithms" title="Permalink to this headline">¶</a></h1>
 <p>We have seen several examples of divide-and-conquer algorithms. As their main trait is dividing the input into several parts and solving the problem recursively, one should be able to analyse their complexity via the recurrence relations method (Section <a class="reference internal" href="week-03-recursive-complexity.html#sec-rr"><span class="std std-ref">Complexity of Simple Recursive Algorithms</span></a>). The only thing we need is a little twist:</p>
 <div class="section" id="changing-variable-in-recurrence-relations">
-<h2>Changing variable in recurrence relations<a class="headerlink" href="#changing-variable-in-recurrence-relations" title="Permalink to this headline">¶</a></h2>
+<h2>4.4.1. Changing variable in recurrence relations<a class="headerlink" href="#changing-variable-in-recurrence-relations" title="Permalink to this headline">¶</a></h2>
 <p>Consider the binary search program:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">binary_search</span> <span class="n">arr</span> <span class="n">k</span> <span class="o">=</span>
   <span class="k">let</span> <span class="k">rec</span> <span class="n">rank</span> <span class="n">lo</span> <span class="n">hi</span> <span class="o">=</span>
@@ -209,7 +227,7 @@ f(k) &amp;= f(k - 1) + c
 <p>As the result we can conclude that time demand of binary search is within <span class="math notranslate nohighlight">\(O(\log n)\)</span> unconditionally.</p>
 </div>
 <div class="section" id="complexity-of-merge-sort">
-<h2>Complexity of Merge Sort<a class="headerlink" href="#complexity-of-merge-sort" title="Permalink to this headline">¶</a></h2>
+<h2>4.4.2. Complexity of Merge Sort<a class="headerlink" href="#complexity-of-merge-sort" title="Permalink to this headline">¶</a></h2>
 <p>Recall the code of merge sort:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">merge_sort</span> <span class="n">arr</span> <span class="o">=</span>
   <span class="k">let</span> <span class="k">rec</span> <span class="n">sort</span> <span class="n">a</span> <span class="o">=</span>
@@ -276,7 +294,7 @@ g(1) &amp;= f(1) = 0
 <p>As we have obtained <span class="math notranslate nohighlight">\(t(n) \in O(n \log n)\)</span> for the powers of two, we need to check the conditions of the theorem, Indeed, <span class="math notranslate nohighlight">\(n \log n\)</span> is a monotonically growing function. It is also not difficult to check that it is smooth, hence the worst-case complexity of merge sort is in <span class="math notranslate nohighlight">\(O(n \log n)\)</span>.</p>
 </div>
 <div class="section" id="complexity-of-quicksort">
-<h2>Complexity of Quicksort<a class="headerlink" href="#complexity-of-quicksort" title="Permalink to this headline">¶</a></h2>
+<h2>4.4.3. Complexity of Quicksort<a class="headerlink" href="#complexity-of-quicksort" title="Permalink to this headline">¶</a></h2>
 <p>Recall the code of Quicksort:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">quick_sort</span> <span class="n">arr</span> <span class="o">=</span>
   <span class="k">let</span> <span class="k">rec</span> <span class="n">sort</span> <span class="n">arr</span> <span class="n">lo</span> <span class="n">hi</span> <span class="o">=</span>
@@ -311,7 +329,7 @@ t(n) &amp;= t(n - 1) + n + c
 <p>What do you think the complexity will be in this case?</p>
 </div>
 <div class="section" id="the-master-theorem">
-<h2>The Master Theorem<a class="headerlink" href="#the-master-theorem" title="Permalink to this headline">¶</a></h2>
+<h2>4.4.4. The Master Theorem<a class="headerlink" href="#the-master-theorem" title="Permalink to this headline">¶</a></h2>
 <p>Divide-and-conquer algorithms come in many shapes, and so far we have seen only a class of very specific (albeit, arguably, most common) one — such that divide their input into two parts. For a general case of analysing the recursive algorithms, there is a widely used theorem, known and Master Theorem or a Master Method for solving recurrence relations, which covers a larger class of algorithms. Here we provide necessary definitions to formulate the theorem and give its statement.</p>
 <div class="admonition-definition-theta-notation admonition">
 <p class="first admonition-title">Definition (Theta-notation)</p>
@@ -346,6 +364,15 @@ t(n) &amp;= t(n - 1) + n + c
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-04-exercises.html" class="btn btn-neutral float-right" title="4.5. Exercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-04-quicksort.html" class="btn btn-neutral" title="4.3. Quicksort and its Variations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
