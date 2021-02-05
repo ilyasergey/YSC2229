@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Generalising Comparison-Based Sorting &mdash; YSC2229 2021</title>
+  <title>4.5. Generalising Comparison-Based Sorting &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4.6. Exercises" href="week-04-exercises.html" />
+    <link rel="prev" title="4.4. Complexity of Divide-and-Conquer Algorithms" href="week-04-divide-and-conquer-complexity.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -131,7 +133,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Generalising Comparison-Based Sorting</li>
+          <li><a href="week-04.html">4. Week 04: Divide-and-Conquer Algorithms</a> &raquo;</li>
+        
+      <li>4.5. Generalising Comparison-Based Sorting</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -149,14 +153,14 @@
            <div itemprop="articleBody">
             
   <div class="section" id="generalising-comparison-based-sorting">
-<h1>Generalising Comparison-Based Sorting<a class="headerlink" href="#generalising-comparison-based-sorting" title="Permalink to this headline">¶</a></h1>
+<h1>4.5. Generalising Comparison-Based Sorting<a class="headerlink" href="#generalising-comparison-based-sorting" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">GeneralisedSorting.ml</span></code></li>
 </ul>
 <p>So far we have seen a number of sorting algorithms that were useful on arrays of particular shape, such as filled with just integers, or pairs having integers as their first components. However, the only operation we required of a data inhabiting the array to provide is the ability to <em>compare</em> its elements with each other. Such an ability has been provided by means of comparing integers, but the very same algorithms can be used, e.g., for sorting arrays of lists (ordered via length) or strings (ordered lexicographically), or even arrays of arrays.</p>
 <p>Let us generalise the latest introduced sorting algorithm, namely, Quicksort via two different mechanisms OCaml provides.</p>
 <div class="section" id="comparator-as-a-parameter">
-<h2>Comparator as a parameter<a class="headerlink" href="#comparator-as-a-parameter" title="Permalink to this headline">¶</a></h2>
+<h2>4.5.1. Comparator as a parameter<a class="headerlink" href="#comparator-as-a-parameter" title="Permalink to this headline">¶</a></h2>
 <p>The following implementation of <code class="docutils literal notranslate"><span class="pre">generic_quick_sort</span></code> takes a <em>named</em> parameter <code class="docutils literal notranslate"><span class="pre">comp</span></code> (hence the syntax with <code class="docutils literal notranslate"><span class="pre">~</span></code>). It serves as a <em>comparator</em> — a function that takes an element of an array and returns an integer. The contract the implementation follows is that if <code class="docutils literal notranslate"><span class="pre">comp</span> <span class="pre">x</span> <span class="pre">y</span></code> returns a negative integer, it is interpreted as <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&lt;</span> <span class="pre">y</span></code>, a positive integer means <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">&gt;</span> <span class="pre">y</span></code> and zero means <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">y</span></code>:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">generic_quick_sort</span> <span class="n">arr</span> <span class="o">~</span><span class="n">comp</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">partition</span> <span class="n">arr</span> <span class="n">lo</span> <span class="n">hi</span> <span class="o">=</span>
@@ -200,7 +204,7 @@
 </div>
 </div>
 <div class="section" id="a-functor-for-sorting">
-<span id="sec-functor-sorting"></span><h2>A functor for sorting<a class="headerlink" href="#a-functor-for-sorting" title="Permalink to this headline">¶</a></h2>
+<span id="sec-functor-sorting"></span><h2>4.5.2. A functor for sorting<a class="headerlink" href="#a-functor-for-sorting" title="Permalink to this headline">¶</a></h2>
 <p>Another way to define generic sorting is by using OCaml’s mechanisms of <em>modules</em> as a way to bundle several dependent definitions together, and <em>functors</em> — modules that take other modules as parameters.</p>
 <p>The following code defines a <em>module signature</em> — an abstract interface that postulates that the modules satisfying this signature will feature a concrete type <code class="docutils literal notranslate"><span class="pre">t</span></code> and a function <code class="docutils literal notranslate"><span class="pre">comp</span></code> of type <code class="docutils literal notranslate"><span class="pre">t</span> <span class="pre">-&gt;</span> <span class="pre">t</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code>:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="k">type</span> <span class="nc">Comparable</span> <span class="o">=</span> <span class="k">sig</span>
@@ -286,6 +290,15 @@ actively in this class.</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-04-exercises.html" class="btn btn-neutral float-right" title="4.6. Exercises" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-04-divide-and-conquer-complexity.html" class="btn btn-neutral" title="4.4. Complexity of Divide-and-Conquer Algorithms" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
