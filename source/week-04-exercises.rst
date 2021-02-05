@@ -94,7 +94,7 @@ Exercise 9
 ----------
 
 Prove, out of definitions that for ay two functions :math:`f(n)` and
-`:math:`g(n)`, one has :math:`f(n) \in \Theta(g(n))` if and only if
+:math:`g(n)`, one has :math:`f(n) \in \Theta(g(n))` if and only if
 :math:`f(n) \in O(g(n))` and :math:`f(n) \in \Omega(g(n))`.
 
 .. _exercise-functor-printing:
