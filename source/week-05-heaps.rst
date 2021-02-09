@@ -88,7 +88,11 @@ below:
   and :math:`2(i + 1)` correspondingly, are such that their keys are
   smaller or equal than :math:`k` [#]_.
 
-Notice that, due to its representation, a binary heep, as a tree is *almost complete*: some of the bottom-level nodes (*leaves*) might be missing, but the nodes on all other levels are present [#]_. Naturally, for a node with an index :math:`i > 0`, its parent can be obtained by taking an index :math:`(i + 1) / 2 - 1`
+Notice that, due to its representation, a binary heep, as a tree is *almost
+complete*: some of the bottom-level right-most nodes (*leaves*) might be
+missing, but the nodes on all other levels are present [#]_. Naturally, for a
+node with an index :math:`i > 0`, its parent can be obtained by taking an index
+:math:`(i + 1) / 2 - 1`
 
 Let us now define a module that encapsulates all operations with binary heaps (represented via arrays), of which so far know three: finding a parent, a left and a right child of a node::
 

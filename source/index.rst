@@ -36,9 +36,7 @@ Lecture Notes
    week-04	 
 ..   week-05
 ..   week-06
-
 ..   midterm   
-
 ..   week-07
 ..   week-08
 ..   week-09
@@ -56,9 +54,9 @@ Supplementary Materials
 * `Week 01 Introductory Slides <_static/2021/Week-01-Intro.pdf>`_
 * `Matrix determinants in Haskell <_static/2021/Matrices.hs>`_
 * `Week 04 Slides on Advanced Sorting <_static/2021/Week-04-Sorting.pdf>`_
-.. * `Week 05 Slides on Best-Wosrt Sorting Complxity <_static/2021/Week-05-More-Sorting.pdf>`_
 
-.. * `Board shots from the Backtracking lecture <_static/2021/backtracking.pdf>`_
+..  `Week 05 Slides on Best-Wosrt Sorting Complxity <_static/2021/Week-05-More-Sorting.pdf>`_
+..  `Board shots from the Backtracking lecture <_static/2021/backtracking.pdf>`_
 
 Examples and Code
 -----------------

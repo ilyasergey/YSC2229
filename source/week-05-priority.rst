@@ -103,7 +103,8 @@ The first and the simplest operation on a priority queue ``h`` is to take its hi
 
   let heap_maximum h = (h.arr).(0)
 
-The next operation allows not just look at, but also extract (i.e., obtain and remove) the maximal element from the priority queue::
+The next operation allows not just look at, but also extract (i.e., fetch and
+remove) the maximal element from the priority queue::
 
   let heap_extract_max h = 
     if !(h.heap_size) < 1 then None
