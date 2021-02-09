@@ -7,12 +7,12 @@ Priority Queues
 
 * File: ``PriorityQueue.ml``
 
-Recall our main for studying binary heaps: efficient retrieval of an
-element with maximal/minimal key in an array, without re-sorting it
-from scratch between the changes. A data structure that allows for
-efficient retrieval of an element with the highest/lowest key is
-called a *priority queue*. In this section, we will design a priority
-queue based on the implementation of the heaps we already have.
+Recall our main motivation for studying binary heaps: efficient retrieval of an
+element with maximal/minimal key in an array, without re-sorting it from scratch
+between the changes. A data structure that allows for efficient retrieval of an
+element with the highest/lowest key is called a *priority queue*. In this
+section, we will design a priority queue based on the implementation of the
+heaps we already have.
 
 The priority queue will be implemented by a dedicated data type and a
 number of operations, all residing within the following functor::
