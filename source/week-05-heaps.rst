@@ -172,7 +172,7 @@ We can do so by querying its contents::
 
 Notice that, while not sorted (in an ascending or a descending order),
 the heap (as per its definition) always has the element with the
-greatest key in at the position 0 of the array.
+greatest key at the position 0 of the array.
 
 .. admonition:: Definition 
 

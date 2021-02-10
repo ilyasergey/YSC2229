@@ -69,29 +69,11 @@ individually with a suitable sorting, such as insertion sort
 (implemented for lists), as it will be operating on small and almost
 sorted sub-arrays::
 
- (* An auxiliary insertion sort on lists *)
- let kv_insert_sort ls = 
-   let rec walk xs acc =
-     match xs with
-     | [] -> acc
-     | h :: t -> 
-       let rec insert elem remaining = 
-         match remaining with
-         | [] -> [elem]
-         | h :: t as l ->
-           if fst h < fst elem 
-           then h :: (insert elem t) else (elem :: l)
-       in
-       let acc' = insert h acc in
-       walk t acc'
-   in 
-   walk ls []
-
- let bucket_sort max ?(bnum = 10) arr = 
+ let bucket_sort max ?(bnum = 1000) arr = 
    let buckets = Array.make bnum [] in
    let len = Array.length arr in 
    for i = 0 to len - 1 do
-     let key = fst arr.(i) in
+     let key = arr.(i) in
      let bind = key * bnum / max in
      let b = buckets.(bind) in
      buckets.(bind) <- arr.(i) :: b
@@ -99,10 +81,11 @@ sorted sub-arrays::
    let res = ref [] in
    for i = bnum - 1 downto 0 do
      let bucket_contents = List.rev (buckets.(i)) in 
-     let sorted_bucket = kv_insert_sort bucket_contents in
+     let sorted_bucket = InsertSort.insert_sort bucket_contents in
      res := List.append sorted_bucket !res
    done;
    list_to_array !res
+
 
 The code of ``bucket_sort`` above takes an optional parameter ``bnum``
 for the number of buckets (default is 10, if omitted) and a parameter
@@ -112,8 +95,7 @@ buckets, it divides the entire space of keys (up to the maximal one)
 into ``bnum`` portions, and puts the corresponding element into the
 appropriate bucket. Since elements with different keys (from the same
 segment) may end up in the same bucket, and additional sorting is
-required. This is what is done in the second ``for``-loop by means of
-``kv_insert_sort``. Let us test this implementation::
+required. Let us test this implementation::
 
  # let e = generate_int_array 10000;;
  val e : int array = [|4505; 6905; 5076; 9250; 5101; 2539; 1721; ... |]
