@@ -42,12 +42,13 @@ the bucket with the corresponding index, obtained as ``bindex = key
 mod bnum``.  Notice that if the all keys are in range limited by
 ``bnum``, the ``mod`` operation returns the key itself.
 
-Therefore, the first ``for``-loop has a complexity :math:`\Theta(n)`,
-where :math:`n` is the size of ``arr``. The second loop walks through
-the array of buckets all the buckets (making ``bnum`` iterations) and
-concatenates all the lists, returning the result as the array. It is
-straightforward to show that the resulting complexity of the algorithm
-is in :math:`O(\mathtt{bnum} \cdot n)`, i.e., it is linear in ``n``.
+Therefore, the first ``for``-loop has a complexity :math:`\Theta(n)`, where
+:math:`n` is the size of ``arr``. The second loop walks through the array of
+buckets all the buckets (making ``bnum`` iterations) and concatenates all the
+lists, returning the result as the array. It is straightforward to show that the
+resulting complexity of the algorithm is in :math:`O(\mathtt{bnum} \cdot n)` (it
+can be made :math:`O(\mathtt{bnum} + n)` if we use append-only buffers, so we
+don't have to re-traverse the lists), i.e., it is linear in ``n``.
 
 We can see ``simple_bucket_sort`` in action::
 
