@@ -152,7 +152,7 @@ is a home exercise):
 
 **Question:** What happens if we start building the heap from the beginning of the array, moving right. How correctness and performance will be affected? Justify your answer by talking about loop invariants.
 
-We can test our procedure on some random_arrays::
+We can test our procedure on some random arrays::
 
  # let a = generate_key_value_array 10;;
  val a : (int * string) array =
