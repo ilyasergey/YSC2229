@@ -53,7 +53,7 @@ is generic and hence is defined at the top level::
  let to_list arr = array_to_list arr
 
 In this chapter, we will see yet another linearithmic (i.e., working
-in :math:`O(\log n)`) algorithm for sorting. Therefore, it will be
+in :math:`O(n \log n)`) algorithm for sorting. Therefore, it will be
 useful to be able to test automatically that it indeed sorts arrays.
 Since we have written the specification for sorting before, what seems
 like a logical next step is to makes this definition generic
