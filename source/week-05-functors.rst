@@ -7,9 +7,8 @@ Printing and Validating Generic Arrays
 
 * File ``ArrayUtil.ml``, search for ``Week 05 definitions``
 
-The machinery to print whole arrays, as well as their sub-arrays has
-been prven very useful in the previous examples. Let us now generalise
-it for the future use.
+The machinery to print whole arrays, as well as their sub-arrays has proven very
+useful in the previous examples. Let us now generalise it for the future use.
 
 The functor ``ArrayPrinter`` below takes a module parameter ``P`` with
 some type ``t`` and a function ``pp`` (short name for *pretty-print*),
