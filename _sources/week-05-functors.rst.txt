@@ -7,9 +7,8 @@ Printing and Validating Generic Arrays
 
 * File ``ArrayUtil.ml``, search for ``Week 05 definitions``
 
-The machinery to print whole arrays, as well as their sub-arrays has
-been prven very useful in the previous examples. Let us now generalise
-it for the future use.
+The machinery to print whole arrays, as well as their sub-arrays has proven very
+useful in the previous examples. Let us now generalise it for the future use.
 
 The functor ``ArrayPrinter`` below takes a module parameter ``P`` with
 some type ``t`` and a function ``pp`` (short name for *pretty-print*),
@@ -54,7 +53,7 @@ is generic and hence is defined at the top level::
  let to_list arr = array_to_list arr
 
 In this chapter, we will see yet another linearithmic (i.e., working
-in :math:`O(\log n)`) algorithm for sorting. Therefore, it will be
+in :math:`O(n \log n)`) algorithm for sorting. Therefore, it will be
 useful to be able to test automatically that it indeed sorts arrays.
 Since we have written the specification for sorting before, what seems
 like a logical next step is to makes this definition generic

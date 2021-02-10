@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Printing and Validating Generic Arrays &mdash; YSC2229 2021</title>
+  <title>5.1. Printing and Validating Generic Arrays &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5.2. Best-Worst Case for Comparison-Based Sorting" href="week-04-sorting-best-worst.html" />
+    <link rel="prev" title="5. Week 05: Binary Heaps and Priority Queues" href="week-05.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,11 +83,22 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-04.html">4. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-05.html">5. Week 05: Binary Heaps and Priority Queues</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.1. Printing and Validating Generic Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-sorting-best-worst.html">5.2. Best-Worst Case for Comparison-Based Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html">5.3. Sorting in Linear Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heaps.html">5.4. Binary Heaps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapify.html">5.5. Maintaining Binary Heaps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapsort.html">5.6. Heapsort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-priority.html">5.7. Priority Queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html">5.8. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -131,7 +144,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Printing and Validating Generic Arrays</li>
+          <li><a href="week-05.html">5. Week 05: Binary Heaps and Priority Queues</a> &raquo;</li>
+        
+      <li>5.1. Printing and Validating Generic Arrays</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -149,13 +164,12 @@
            <div itemprop="articleBody">
             
   <div class="section" id="printing-and-validating-generic-arrays">
-<span id="sec-array-functors"></span><h1>Printing and Validating Generic Arrays<a class="headerlink" href="#printing-and-validating-generic-arrays" title="Permalink to this headline">¶</a></h1>
+<span id="sec-array-functors"></span><h1>5.1. Printing and Validating Generic Arrays<a class="headerlink" href="#printing-and-validating-generic-arrays" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File <code class="docutils literal notranslate"><span class="pre">ArrayUtil.ml</span></code>, search for <code class="docutils literal notranslate"><span class="pre">Week</span> <span class="pre">05</span> <span class="pre">definitions</span></code></li>
 </ul>
-<p>The machinery to print whole arrays, as well as their sub-arrays has
-been prven very useful in the previous examples. Let us now generalise
-it for the future use.</p>
+<p>The machinery to print whole arrays, as well as their sub-arrays has proven very
+useful in the previous examples. Let us now generalise it for the future use.</p>
 <p>The functor <code class="docutils literal notranslate"><span class="pre">ArrayPrinter</span></code> below takes a module parameter <code class="docutils literal notranslate"><span class="pre">P</span></code> with
 some type <code class="docutils literal notranslate"><span class="pre">t</span></code> and a function <code class="docutils literal notranslate"><span class="pre">pp</span></code> (short name for <em>pretty-print</em>),
 which constructs a string out of a value of type <code class="docutils literal notranslate"><span class="pre">t</span></code>. The
@@ -198,7 +212,7 @@ is generic and hence is defined at the top level:</p>
 </pre></div>
 </div>
 <p>In this chapter, we will see yet another linearithmic (i.e., working
-in <span class="math notranslate nohighlight">\(O(\log n)\)</span>) algorithm for sorting. Therefore, it will be
+in <span class="math notranslate nohighlight">\(O(n \log n)\)</span>) algorithm for sorting. Therefore, it will be
 useful to be able to test automatically that it indeed sorts arrays.
 Since we have written the specification for sorting before, what seems
 like a logical next step is to makes this definition generic
@@ -251,6 +265,15 @@ sorting and printing:</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-04-sorting-best-worst.html" class="btn btn-neutral float-right" title="5.2. Best-Worst Case for Comparison-Based Sorting" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-05.html" class="btn btn-neutral" title="5. Week 05: Binary Heaps and Priority Queues" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

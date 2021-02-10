@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Best-Worst Case for Comparison-Based Sorting &mdash; YSC2229 2021</title>
+  <title>5.2. Best-Worst Case for Comparison-Based Sorting &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5.3. Sorting in Linear Time" href="week-04-linear-time.html" />
+    <link rel="prev" title="5.1. Printing and Validating Generic Arrays" href="week-05-functors.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,11 +83,22 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-04.html">4. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-05.html">5. Week 05: Binary Heaps and Priority Queues</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-05-functors.html">5.1. Printing and Validating Generic Arrays</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.2. Best-Worst Case for Comparison-Based Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html">5.3. Sorting in Linear Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heaps.html">5.4. Binary Heaps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapify.html">5.5. Maintaining Binary Heaps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapsort.html">5.6. Heapsort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-priority.html">5.7. Priority Queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html">5.8. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -131,7 +144,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Best-Worst Case for Comparison-Based Sorting</li>
+          <li><a href="week-05.html">5. Week 05: Binary Heaps and Priority Queues</a> &raquo;</li>
+        
+      <li>5.2. Best-Worst Case for Comparison-Based Sorting</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -149,7 +164,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="best-worst-case-for-comparison-based-sorting">
-<span id="best-worst"></span><h1>Best-Worst Case for Comparison-Based Sorting<a class="headerlink" href="#best-worst-case-for-comparison-based-sorting" title="Permalink to this headline">¶</a></h1>
+<span id="best-worst"></span><h1>5.2. Best-Worst Case for Comparison-Based Sorting<a class="headerlink" href="#best-worst-case-for-comparison-based-sorting" title="Permalink to this headline">¶</a></h1>
 <p>A strength and a weakness of Comparison-Based Sorting is the fact that the only operation it relies in its implementation is a primitive to compare two elements. This makes it very generic and applicable to diverse classes of data, but also puts a theoretical limit on how fast (in the asymptotic big-O sence) we can sort arrays <em>if we use only comparison</em>.</p>
 <p>Let us se what is this theoretical limit. Quicksort, Insertion sort, Merge sort are all comparison-based sorting algorithms: they compare elements pairwise. An “ideal” algorithm will always perform no more than <span class="math notranslate nohighlight">\(t(n)\)</span> comparisons, for the worst possible case on an array of size <span class="math notranslate nohighlight">\(n\)</span>. What is then <span class="math notranslate nohighlight">\(t(n)\)</span>?</p>
 <p>Let us think in the following way. What a sorting delivers is a permutation of an initial array, which is also sorted. A number of possible permutations of <span class="math notranslate nohighlight">\(n\)</span> elements is <span class="math notranslate nohighlight">\(n!\)</span>, and such an algorithm should find “the right one” by following a path in a binary decision tree, where each node corresponds to comparing just two elements.</p>
@@ -173,6 +188,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-04-linear-time.html" class="btn btn-neutral float-right" title="5.3. Sorting in Linear Time" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-05-functors.html" class="btn btn-neutral" title="5.1. Printing and Validating Generic Arrays" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

@@ -5,13 +5,12 @@ Sorting in Linear Time
 
 * File: ``LinearTimeSorting.ml``
 
-As we have just determined, one cannot do comparison-based sorting
-better than in :math:`O(n \log n)` in the worst case. However, we can
-improve this complexity if we base the complexity *not* just on
-comparisons, but will also exploit the intrinsic properties of the
-data used as keys for elements to be sorted (e.g., integers). In this
-chapter we will see some examples of such specialised sorting
-procedures.
+As we have just determined, one cannot do comparison-based sorting better than
+in :math:`O(n \log n)` in the worst case. However, we can improve this
+complexity if we base the logic of our algorithm *not* just on comparisons, but
+will also exploit the `intrinsic` properties of the data used as keys for
+elements to be sorted (e.g., integers). In this chapter we will see some
+examples of such specialised sorting procedures.
 
 Simple Bucket Sort
 ------------------
@@ -43,12 +42,13 @@ the bucket with the corresponding index, obtained as ``bindex = key
 mod bnum``.  Notice that if the all keys are in range limited by
 ``bnum``, the ``mod`` operation returns the key itself.
 
-Therefore, the first ``for``-loop has a complexity :math:`\Theta(n)`,
-where :math:`n` is the size of ``arr``. The second loop walks through
-the array of buckets all the buckets (making ``bnum`` iterations) and
-concatenates all the lists, returning the result as the array. It is
-straightforward to show that the resulting complexity of the algorithm
-is in :math:`O(\mathtt{bnum} \cdot n)`, i.e., it is linear in ``n``.
+Therefore, the first ``for``-loop has a complexity :math:`\Theta(n)`, where
+:math:`n` is the size of ``arr``. The second loop walks through the array of
+buckets all the buckets (making ``bnum`` iterations) and concatenates all the
+lists, returning the result as the array. It is straightforward to show that the
+resulting complexity of the algorithm is in :math:`O(\mathtt{bnum} \cdot n)` (it
+can be made :math:`O(\mathtt{bnum} + n)` if we use append-only buffers, so we
+don't have to re-traverse the lists), i.e., it is linear in ``n``.
 
 We can see ``simple_bucket_sort`` in action::
 
@@ -69,29 +69,11 @@ individually with a suitable sorting, such as insertion sort
 (implemented for lists), as it will be operating on small and almost
 sorted sub-arrays::
 
- (* An auxiliary insertion sort on lists *)
- let kv_insert_sort ls = 
-   let rec walk xs acc =
-     match xs with
-     | [] -> acc
-     | h :: t -> 
-       let rec insert elem remaining = 
-         match remaining with
-         | [] -> [elem]
-         | h :: t as l ->
-           if fst h < fst elem 
-           then h :: (insert elem t) else (elem :: l)
-       in
-       let acc' = insert h acc in
-       walk t acc'
-   in 
-   walk ls []
-
- let bucket_sort max ?(bnum = 10) arr = 
+ let bucket_sort max ?(bnum = 1000) arr = 
    let buckets = Array.make bnum [] in
    let len = Array.length arr in 
    for i = 0 to len - 1 do
-     let key = fst arr.(i) in
+     let key = arr.(i) in
      let bind = key * bnum / max in
      let b = buckets.(bind) in
      buckets.(bind) <- arr.(i) :: b
@@ -99,10 +81,11 @@ sorted sub-arrays::
    let res = ref [] in
    for i = bnum - 1 downto 0 do
      let bucket_contents = List.rev (buckets.(i)) in 
-     let sorted_bucket = kv_insert_sort bucket_contents in
+     let sorted_bucket = InsertSort.insert_sort bucket_contents in
      res := List.append sorted_bucket !res
    done;
    list_to_array !res
+
 
 The code of ``bucket_sort`` above takes an optional parameter ``bnum``
 for the number of buckets (default is 10, if omitted) and a parameter
@@ -112,8 +95,7 @@ buckets, it divides the entire space of keys (up to the maximal one)
 into ``bnum`` portions, and puts the corresponding element into the
 appropriate bucket. Since elements with different keys (from the same
 segment) may end up in the same bucket, and additional sorting is
-required. This is what is done in the second ``for``-loop by means of
-``kv_insert_sort``. Let us test this implementation::
+required. Let us test this implementation::
 
  # let e = generate_int_array 10000;;
  val e : int array = [|4505; 6905; 5076; 9250; 5101; 2539; 1721; ... |]

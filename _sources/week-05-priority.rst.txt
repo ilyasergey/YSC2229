@@ -7,12 +7,12 @@ Priority Queues
 
 * File: ``PriorityQueue.ml``
 
-Recall our main for studying binary heaps: efficient retrieval of an
-element with maximal/minimal key in an array, without re-sorting it
-from scratch between the changes. A data structure that allows for
-efficient retrieval of an element with the highest/lowest key is
-called a *priority queue*. In this section, we will design a priority
-queue based on the implementation of the heaps we already have.
+Recall our main motivation for studying binary heaps: efficient retrieval of an
+element with maximal/minimal key in an array, without re-sorting it from scratch
+between the changes. A data structure that allows for efficient retrieval of an
+element with the highest/lowest key is called a *priority queue*. In this
+section, we will design a priority queue based on the implementation of the
+heaps we already have.
 
 The priority queue will be implemented by a dedicated data type and a
 number of operations, all residing within the following functor::
@@ -103,7 +103,8 @@ The first and the simplest operation on a priority queue ``h`` is to take its hi
 
   let heap_maximum h = (h.arr).(0)
 
-The next operation allows not just look at, but also extract (i.e., obtain and remove) the maximal element from the priority queue::
+The next operation allows not just look at, but also extract (i.e., fetch and
+remove) the maximal element from the priority queue::
 
   let heap_extract_max h = 
     if !(h.heap_size) < 1 then None

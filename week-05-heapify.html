@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Maintaining Binary Heaps &mdash; YSC2229 2021</title>
+  <title>5.5. Maintaining Binary Heaps &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5.6. Heapsort" href="week-05-heapsort.html" />
+    <link rel="prev" title="5.4. Binary Heaps" href="week-05-heaps.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,11 +83,27 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-04.html">4. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-05.html">5. Week 05: Binary Heaps and Priority Queues</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-05-functors.html">5.1. Printing and Validating Generic Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-sorting-best-worst.html">5.2. Best-Worst Case for Comparison-Based Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html">5.3. Sorting in Linear Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heaps.html">5.4. Binary Heaps</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.5. Maintaining Binary Heaps</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#heapifying-elements-of-an-array">5.5.1. “Heapifying” elements of an array</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#complexity-of-heapify">5.5.2. Complexity of heapify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#building-a-heap-from-an-array">5.5.3. Building a heap from an array</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapsort.html">5.6. Heapsort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-priority.html">5.7. Priority Queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html">5.8. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -131,7 +149,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Maintaining Binary Heaps</li>
+          <li><a href="week-05.html">5. Week 05: Binary Heaps and Priority Queues</a> &raquo;</li>
+        
+      <li>5.5. Maintaining Binary Heaps</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -149,7 +169,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="maintaining-binary-heaps">
-<h1>Maintaining Binary Heaps<a class="headerlink" href="#maintaining-binary-heaps" title="Permalink to this headline">¶</a></h1>
+<h1>5.5. Maintaining Binary Heaps<a class="headerlink" href="#maintaining-binary-heaps" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">Heaps.ml</span></code> (continued)</li>
 </ul>
@@ -157,7 +177,7 @@
 it. As we can see, the issue there is between the parent <code class="docutils literal notranslate"><span class="pre">(10,</span> <span class="pre">&quot;c&quot;)</span></code>
 and a left child <code class="docutils literal notranslate"><span class="pre">(11,</span> <span class="pre">&quot;f&quot;)</span></code> that are out of order.</p>
 <div class="section" id="heapifying-elements-of-an-array">
-<h2>“Heapifying” elements of an array<a class="headerlink" href="#heapifying-elements-of-an-array" title="Permalink to this headline">¶</a></h2>
+<h2>5.5.1. “Heapifying” elements of an array<a class="headerlink" href="#heapifying-elements-of-an-array" title="Permalink to this headline">¶</a></h2>
 <p>What we need to do is to swap the offending parent with the children
 (assuming that both subtrees reachable from the children obey the
 descending order), and also make sure that the swapped element <code class="docutils literal notranslate"><span class="pre">(10,</span>
@@ -250,7 +270,7 @@ a parent, and now, after the swap, resides at the position
 <p>As we can observe the two elements have now been correctly swapped.</p>
 </div>
 <div class="section" id="complexity-of-heapify">
-<h2>Complexity of heapify<a class="headerlink" href="#complexity-of-heapify" title="Permalink to this headline">¶</a></h2>
+<h2>5.5.2. Complexity of heapify<a class="headerlink" href="#complexity-of-heapify" title="Permalink to this headline">¶</a></h2>
 <p>The maximal number of steps required to reach a child in a tree is
 called a <em>height</em> of a tree. Notice that the way <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code>
 “walks” and array is by taking left/right child of an element. This
@@ -259,7 +279,7 @@ of a heap). That is, the <code class="docutils literal notranslate"><span class=
 quickly.</p>
 </div>
 <div class="section" id="building-a-heap-from-an-array">
-<span id="sec-build-heap"></span><h2>Building a heap from an array<a class="headerlink" href="#building-a-heap-from-an-array" title="Permalink to this headline">¶</a></h2>
+<span id="sec-build-heap"></span><h2>5.5.3. Building a heap from an array<a class="headerlink" href="#building-a-heap-from-an-array" title="Permalink to this headline">¶</a></h2>
 <p>We can now use <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code> iteratively to turn an arbitrary array
 into a max-heap. The following code should be added to the <code class="docutils literal notranslate"><span class="pre">Heap</span></code>
 functor:</p>
@@ -283,7 +303,7 @@ root of a max-heap.</p>
 </div>
 <p><strong>Question:</strong> Why does this invariant holds for the elements from the second half of the array?</p>
 <p><strong>Question:</strong> What happens if we start building the heap from the beginning of the array, moving right. How correctness and performance will be affected? Justify your answer by talking about loop invariants.</p>
-<p>We can test our procedure on some random_arrays:</p>
+<p>We can test our procedure on some random arrays:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">generate_key_value_array</span> <span class="mi">10</span><span class="o">;;</span>
 <span class="k">val</span> <span class="n">a</span> <span class="o">:</span> <span class="o">(</span><span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span><span class="o">)</span> <span class="kt">array</span> <span class="o">=</span>
   <span class="o">[|(</span><span class="mi">6</span><span class="o">,</span> <span class="s2">&quot;ktesl&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">9</span><span class="o">,</span> <span class="s2">&quot;herli&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">7</span><span class="o">,</span> <span class="s2">&quot;etqiz&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s2">&quot;wrnqu&quot;</span><span class="o">);</span> <span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="s2">&quot;ceojd&quot;</span><span class="o">);</span>
@@ -306,6 +326,15 @@ root of a max-heap.</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-05-heapsort.html" class="btn btn-neutral float-right" title="5.6. Heapsort" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-05-heaps.html" class="btn btn-neutral" title="5.4. Binary Heaps" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

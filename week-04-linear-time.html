@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Sorting in Linear Time &mdash; YSC2229 2021</title>
+  <title>5.3. Sorting in Linear Time &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5.4. Binary Heaps" href="week-05-heaps.html" />
+    <link rel="prev" title="5.2. Best-Worst Case for Comparison-Based Sorting" href="week-04-sorting-best-worst.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,11 +83,28 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-04.html">4. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-05.html">5. Week 05: Binary Heaps and Priority Queues</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-05-functors.html">5.1. Printing and Validating Generic Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-sorting-best-worst.html">5.2. Best-Worst Case for Comparison-Based Sorting</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.3. Sorting in Linear Time</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#simple-bucket-sort">5.3.1. Simple Bucket Sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#enhanced-bucket-sort">5.3.2. Enhanced Bucket Sort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stability-of-sorting">5.3.3. Stability of sorting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#radix-sort">5.3.4. Radix Sort</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heaps.html">5.4. Binary Heaps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapify.html">5.5. Maintaining Binary Heaps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapsort.html">5.6. Heapsort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-priority.html">5.7. Priority Queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html">5.8. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -131,7 +150,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Sorting in Linear Time</li>
+          <li><a href="week-05.html">5. Week 05: Binary Heaps and Priority Queues</a> &raquo;</li>
+        
+      <li>5.3. Sorting in Linear Time</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -149,19 +170,18 @@
            <div itemprop="articleBody">
             
   <div class="section" id="sorting-in-linear-time">
-<h1>Sorting in Linear Time<a class="headerlink" href="#sorting-in-linear-time" title="Permalink to this headline">¶</a></h1>
+<h1>5.3. Sorting in Linear Time<a class="headerlink" href="#sorting-in-linear-time" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">LinearTimeSorting.ml</span></code></li>
 </ul>
-<p>As we have just determined, one cannot do comparison-based sorting
-better than in <span class="math notranslate nohighlight">\(O(n \log n)\)</span> in the worst case. However, we can
-improve this complexity if we base the complexity <em>not</em> just on
-comparisons, but will also exploit the intrinsic properties of the
-data used as keys for elements to be sorted (e.g., integers). In this
-chapter we will see some examples of such specialised sorting
-procedures.</p>
+<p>As we have just determined, one cannot do comparison-based sorting better than
+in <span class="math notranslate nohighlight">\(O(n \log n)\)</span> in the worst case. However, we can improve this
+complexity if we base the logic of our algorithm <em>not</em> just on comparisons, but
+will also exploit the <cite>intrinsic</cite> properties of the data used as keys for
+elements to be sorted (e.g., integers). In this chapter we will see some
+examples of such specialised sorting procedures.</p>
 <div class="section" id="simple-bucket-sort">
-<h2>Simple Bucket Sort<a class="headerlink" href="#simple-bucket-sort" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.1. Simple Bucket Sort<a class="headerlink" href="#simple-bucket-sort" title="Permalink to this headline">¶</a></h2>
 <p>Bucket sort works well for the case, when the size of the set, from
 which we draw the keys is limited by a certain number <cite>bnum</cite>. In this
 case, we can allocate an auxiliary array of “buckets” (implemented as
@@ -188,12 +208,13 @@ initial array <code class="docutils literal notranslate"><span class="pre">arr</
 the bucket with the corresponding index, obtained as <code class="docutils literal notranslate"><span class="pre">bindex</span> <span class="pre">=</span> <span class="pre">key</span>
 <span class="pre">mod</span> <span class="pre">bnum</span></code>.  Notice that if the all keys are in range limited by
 <code class="docutils literal notranslate"><span class="pre">bnum</span></code>, the <code class="docutils literal notranslate"><span class="pre">mod</span></code> operation returns the key itself.</p>
-<p>Therefore, the first <code class="docutils literal notranslate"><span class="pre">for</span></code>-loop has a complexity <span class="math notranslate nohighlight">\(\Theta(n)\)</span>,
-where <span class="math notranslate nohighlight">\(n\)</span> is the size of <code class="docutils literal notranslate"><span class="pre">arr</span></code>. The second loop walks through
-the array of buckets all the buckets (making <code class="docutils literal notranslate"><span class="pre">bnum</span></code> iterations) and
-concatenates all the lists, returning the result as the array. It is
-straightforward to show that the resulting complexity of the algorithm
-is in <span class="math notranslate nohighlight">\(O(\mathtt{bnum} \cdot n)\)</span>, i.e., it is linear in <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p>
+<p>Therefore, the first <code class="docutils literal notranslate"><span class="pre">for</span></code>-loop has a complexity <span class="math notranslate nohighlight">\(\Theta(n)\)</span>, where
+<span class="math notranslate nohighlight">\(n\)</span> is the size of <code class="docutils literal notranslate"><span class="pre">arr</span></code>. The second loop walks through the array of
+buckets all the buckets (making <code class="docutils literal notranslate"><span class="pre">bnum</span></code> iterations) and concatenates all the
+lists, returning the result as the array. It is straightforward to show that the
+resulting complexity of the algorithm is in <span class="math notranslate nohighlight">\(O(\mathtt{bnum} \cdot n)\)</span> (it
+can be made <span class="math notranslate nohighlight">\(O(\mathtt{bnum} + n)\)</span> if we use append-only buffers, so we
+don’t have to re-traverse the lists), i.e., it is linear in <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p>
 <p>We can see <code class="docutils literal notranslate"><span class="pre">simple_bucket_sort</span></code> in action:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="k">let</span> <span class="n">c</span> <span class="o">=[|</span><span class="mi">9</span><span class="o">;</span> <span class="mi">9</span><span class="o">;</span> <span class="mi">0</span><span class="o">;</span> <span class="mi">9</span><span class="o">;</span> <span class="mi">4</span><span class="o">;</span> <span class="mi">7</span><span class="o">;</span> <span class="mi">9</span><span class="o">;</span> <span class="mi">2</span><span class="o">;</span> <span class="mi">3</span><span class="o">;</span> <span class="mi">3</span><span class="o">|];;</span>
 
@@ -203,35 +224,17 @@ is in <span class="math notranslate nohighlight">\(O(\mathtt{bnum} \cdot n)\)</s
 </div>
 </div>
 <div class="section" id="enhanced-bucket-sort">
-<span id="sec-bucket-sort"></span><h2>Enhanced Bucket Sort<a class="headerlink" href="#enhanced-bucket-sort" title="Permalink to this headline">¶</a></h2>
+<span id="sec-bucket-sort"></span><h2>5.3.2. Enhanced Bucket Sort<a class="headerlink" href="#enhanced-bucket-sort" title="Permalink to this headline">¶</a></h2>
 <p>If the size of the space of keys exceeds the number of the buckets,
 one can still use the same idea, while also sorting each bucket
 individually with a suitable sorting, such as insertion sort
 (implemented for lists), as it will be operating on small and almost
 sorted sub-arrays:</p>
-<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* An auxiliary insertion sort on lists *)</span>
-<span class="k">let</span> <span class="n">kv_insert_sort</span> <span class="n">ls</span> <span class="o">=</span>
-  <span class="k">let</span> <span class="k">rec</span> <span class="n">walk</span> <span class="n">xs</span> <span class="n">acc</span> <span class="o">=</span>
-    <span class="k">match</span> <span class="n">xs</span> <span class="k">with</span>
-    <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="n">acc</span>
-    <span class="o">|</span> <span class="n">h</span> <span class="o">::</span> <span class="n">t</span> <span class="o">-&gt;</span>
-      <span class="k">let</span> <span class="k">rec</span> <span class="n">insert</span> <span class="n">elem</span> <span class="n">remaining</span> <span class="o">=</span>
-        <span class="k">match</span> <span class="n">remaining</span> <span class="k">with</span>
-        <span class="o">|</span> <span class="bp">[]</span> <span class="o">-&gt;</span> <span class="o">[</span><span class="n">elem</span><span class="o">]</span>
-        <span class="o">|</span> <span class="n">h</span> <span class="o">::</span> <span class="n">t</span> <span class="k">as</span> <span class="n">l</span> <span class="o">-&gt;</span>
-          <span class="k">if</span> <span class="n">fst</span> <span class="n">h</span> <span class="o">&lt;</span> <span class="n">fst</span> <span class="n">elem</span>
-          <span class="k">then</span> <span class="n">h</span> <span class="o">::</span> <span class="o">(</span><span class="n">insert</span> <span class="n">elem</span> <span class="n">t</span><span class="o">)</span> <span class="k">else</span> <span class="o">(</span><span class="n">elem</span> <span class="o">::</span> <span class="n">l</span><span class="o">)</span>
-      <span class="k">in</span>
-      <span class="k">let</span> <span class="n">acc&#39;</span> <span class="o">=</span> <span class="n">insert</span> <span class="n">h</span> <span class="n">acc</span> <span class="k">in</span>
-      <span class="n">walk</span> <span class="n">t</span> <span class="n">acc&#39;</span>
-  <span class="k">in</span>
-  <span class="n">walk</span> <span class="n">ls</span> <span class="bp">[]</span>
-
-<span class="k">let</span> <span class="n">bucket_sort</span> <span class="n">max</span> <span class="o">?(</span><span class="n">bnum</span> <span class="o">=</span> <span class="mi">10</span><span class="o">)</span> <span class="n">arr</span> <span class="o">=</span>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">bucket_sort</span> <span class="n">max</span> <span class="o">?(</span><span class="n">bnum</span> <span class="o">=</span> <span class="mi">1000</span><span class="o">)</span> <span class="n">arr</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">buckets</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">make</span> <span class="n">bnum</span> <span class="bp">[]</span> <span class="k">in</span>
   <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">arr</span> <span class="k">in</span>
   <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">to</span> <span class="n">len</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">do</span>
-    <span class="k">let</span> <span class="n">key</span> <span class="o">=</span> <span class="n">fst</span> <span class="n">arr</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">key</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="k">in</span>
     <span class="k">let</span> <span class="n">bind</span> <span class="o">=</span> <span class="n">key</span> <span class="o">*</span> <span class="n">bnum</span> <span class="o">/</span> <span class="n">max</span> <span class="k">in</span>
     <span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="n">buckets</span><span class="o">.(</span><span class="n">bind</span><span class="o">)</span> <span class="k">in</span>
     <span class="n">buckets</span><span class="o">.(</span><span class="n">bind</span><span class="o">)</span> <span class="o">&lt;-</span> <span class="n">arr</span><span class="o">.(</span><span class="n">i</span><span class="o">)</span> <span class="o">::</span> <span class="n">b</span>
@@ -239,7 +242,7 @@ sorted sub-arrays:</p>
   <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">ref</span> <span class="bp">[]</span> <span class="k">in</span>
   <span class="k">for</span> <span class="n">i</span> <span class="o">=</span> <span class="n">bnum</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">downto</span> <span class="mi">0</span> <span class="k">do</span>
     <span class="k">let</span> <span class="n">bucket_contents</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">rev</span> <span class="o">(</span><span class="n">buckets</span><span class="o">.(</span><span class="n">i</span><span class="o">))</span> <span class="k">in</span>
-    <span class="k">let</span> <span class="n">sorted_bucket</span> <span class="o">=</span> <span class="n">kv_insert_sort</span> <span class="n">bucket_contents</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">sorted_bucket</span> <span class="o">=</span> <span class="nn">InsertSort</span><span class="p">.</span><span class="n">insert_sort</span> <span class="n">bucket_contents</span> <span class="k">in</span>
     <span class="n">res</span> <span class="o">:=</span> <span class="nn">List</span><span class="p">.</span><span class="n">append</span> <span class="n">sorted_bucket</span> <span class="o">!</span><span class="n">res</span>
   <span class="k">done</span><span class="o">;</span>
   <span class="n">list_to_array</span> <span class="o">!</span><span class="n">res</span>
@@ -253,8 +256,7 @@ buckets, it divides the entire space of keys (up to the maximal one)
 into <code class="docutils literal notranslate"><span class="pre">bnum</span></code> portions, and puts the corresponding element into the
 appropriate bucket. Since elements with different keys (from the same
 segment) may end up in the same bucket, and additional sorting is
-required. This is what is done in the second <code class="docutils literal notranslate"><span class="pre">for</span></code>-loop by means of
-<code class="docutils literal notranslate"><span class="pre">kv_insert_sort</span></code>. Let us test this implementation:</p>
+required. Let us test this implementation:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">#</span> <span class="k">let</span> <span class="n">e</span> <span class="o">=</span> <span class="n">generate_int_array</span> <span class="mi">10000</span><span class="o">;;</span>
 <span class="k">val</span> <span class="n">e</span> <span class="o">:</span> <span class="kt">int</span> <span class="kt">array</span> <span class="o">=</span> <span class="o">[|</span><span class="mi">4505</span><span class="o">;</span> <span class="mi">6905</span><span class="o">;</span> <span class="mi">5076</span><span class="o">;</span> <span class="mi">9250</span><span class="o">;</span> <span class="mi">5101</span><span class="o">;</span> <span class="mi">2539</span><span class="o">;</span> <span class="mi">1721</span><span class="o">;</span> <span class="o">...</span> <span class="o">|]</span>
 
@@ -264,7 +266,7 @@ required. This is what is done in the second <code class="docutils literal notra
 </div>
 </div>
 <div class="section" id="stability-of-sorting">
-<h2>Stability of sorting<a class="headerlink" href="#stability-of-sorting" title="Permalink to this headline">¶</a></h2>
+<h2>5.3.3. Stability of sorting<a class="headerlink" href="#stability-of-sorting" title="Permalink to this headline">¶</a></h2>
 <p>An important property of a sorting algorithm is <strong>stability</strong>. A sorting
 algorithms is <em>stable</em> if it preserves the ordering between the elements
 with equal keys in the initial array.</p>
@@ -304,7 +306,7 @@ sorting algorithms are stable though. Try to answer, whether merge
 sort is stable? What about Quicksort?</p>
 </div>
 <div class="section" id="radix-sort">
-<span id="sec-radix-sort"></span><h2>Radix Sort<a class="headerlink" href="#radix-sort" title="Permalink to this headline">¶</a></h2>
+<span id="sec-radix-sort"></span><h2>5.3.4. Radix Sort<a class="headerlink" href="#radix-sort" title="Permalink to this headline">¶</a></h2>
 <p>The stability comes into play, when one sorting algorithm uses another
 one as a black-box, relying on the fact that original order of
 elements in partially-sorted arrays with “almost-same” keys will be
@@ -372,6 +374,15 @@ considered as a constant.</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-05-heaps.html" class="btn btn-neutral float-right" title="5.4. Binary Heaps" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-04-sorting-best-worst.html" class="btn btn-neutral" title="5.2. Best-Worst Case for Comparison-Based Sorting" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

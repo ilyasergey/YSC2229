@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Exercises &mdash; YSC2229 2021</title>
+  <title>5.8. Exercises &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,8 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="5.7. Priority Queues" href="week-05-priority.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,11 +82,30 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-04.html">4. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-05.html">5. Week 05: Binary Heaps and Priority Queues</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-05-functors.html">5.1. Printing and Validating Generic Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-sorting-best-worst.html">5.2. Best-Worst Case for Comparison-Based Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html">5.3. Sorting in Linear Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heaps.html">5.4. Binary Heaps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapify.html">5.5. Maintaining Binary Heaps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapsort.html">5.6. Heapsort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-priority.html">5.7. Priority Queues</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.8. Exercises</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-1">5.8.1. Exercise 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-2">5.8.2. Exercise 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-3">5.8.3. Exercise 3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-4">5.8.4. Exercise 4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-5">5.8.5. Exercise 5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-6">5.8.6. Exercise 6</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
             
@@ -131,7 +151,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Exercises</li>
+          <li><a href="week-05.html">5. Week 05: Binary Heaps and Priority Queues</a> &raquo;</li>
+        
+      <li>5.8. Exercises</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -149,9 +171,9 @@
            <div itemprop="articleBody">
             
   <div class="section" id="exercises">
-<h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
+<h1>5.8. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="exercise-1">
-<span id="exercise-small"></span><h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-small"></span><h2>5.8.1. Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
 <p>Answer the following small questions about heaps:</p>
 <ol class="arabic simple">
 <li>What is a maximal and a minimal number of elements in a heap of the
@@ -162,7 +184,7 @@ reside, assuming that all keys are distinct?</li>
 </ol>
 </div>
 <div class="section" id="exercise-2">
-<span id="exercise-heapify"></span><h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-heapify"></span><h2>5.8.2. Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Let us remove a self-recursive call at the end of <code class="docutils literal notranslate"><span class="pre">max_heapify</span></code>.
 Give a concrete example of an array <code class="docutils literal notranslate"><span class="pre">arr</span></code>, which is almost a heap
@@ -174,13 +196,13 @@ the recursion. Provide a variant for this loop.</li>
 </ul>
 </div>
 <div class="section" id="exercise-3">
-<span id="exercise-build-heap"></span><h2>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-build-heap"></span><h2>5.8.3. Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
 <p>Implement in OCaml and check an invariant from Section
 <a class="reference internal" href="week-05-heapify.html#sec-build-heap"><span class="std std-ref">Building a heap from an array</span></a>. Explain how it implies the postcondition of
 <cite>build_max_heap</cite> (which should be expressed in terms of <code class="docutils literal notranslate"><span class="pre">is_heap</span></code>).</p>
 </div>
 <div class="section" id="exercise-4">
-<span id="exercise-heapsort-inv"></span><h2>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-heapsort-inv"></span><h2>5.8.4. Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
 <p>Implement in OCaml and check the invariant of the <code class="docutils literal notranslate"><span class="pre">for</span></code>-loop of
 heapsort. How does it imply the postcondition (i.e., that the whole
 array is sorted)? <strong>Hint:</strong> how does it relate the elements of the
@@ -188,13 +210,13 @@ original array (you might need a copy of it), the sub-array before
 <code class="docutils literal notranslate"><span class="pre">heap-size</span></code> and the sub-array beyond the <code class="docutils literal notranslate"><span class="pre">heap_size</span></code>?</p>
 </div>
 <div class="section" id="exercise-5">
-<span id="exercise-min-heap"></span><h2>Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-min-heap"></span><h2>5.8.5. Exercise 5<a class="headerlink" href="#exercise-5" title="Permalink to this headline">¶</a></h2>
 <p>Reimplement the heapsort, so it would work with a min-heaps instead of
 max-heaps. For this, you might also reimplement or, better, generalise
 the prior definitions of the <code class="docutils literal notranslate"><span class="pre">Heap</span></code> module.</p>
 </div>
 <div class="section" id="exercise-6">
-<span id="exercise-radix-sort"></span><h2>Exercise 6<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h2>
+<span id="exercise-radix-sort"></span><h2>5.8.6. Exercise 6<a class="headerlink" href="#exercise-6" title="Permalink to this headline">¶</a></h2>
 <p>Implement and test the invariant for the <code class="docutils literal notranslate"><span class="pre">while</span></code>-loop of
 <a class="reference internal" href="week-04-linear-time.html#sec-radix-sort"><span class="std std-ref">Radix Sort</span></a>.</p>
 </div>
@@ -205,6 +227,13 @@ the prior definitions of the <code class="docutils literal notranslate"><span cl
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="week-05-priority.html" class="btn btn-neutral" title="5.7. Priority Queues" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Binary Heaps &mdash; YSC2229 2021</title>
+  <title>5.4. Binary Heaps &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5.5. Maintaining Binary Heaps" href="week-05-heapify.html" />
+    <link rel="prev" title="5.3. Sorting in Linear Time" href="week-04-linear-time.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,11 +83,27 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-04.html">4. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-05.html">5. Week 05: Binary Heaps and Priority Queues</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-05-functors.html">5.1. Printing and Validating Generic Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-sorting-best-worst.html">5.2. Best-Worst Case for Comparison-Based Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html">5.3. Sorting in Linear Time</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.4. Binary Heaps</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#finding-a-maximum-in-a-changing-array">5.4.1. Finding a maximum in a changing array</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#definition-of-a-binary-heap">5.4.2. Definition of a binary heap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#checking-that-an-array-is-a-heap">5.4.3. Checking that an array is a heap</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapify.html">5.5. Maintaining Binary Heaps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapsort.html">5.6. Heapsort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-priority.html">5.7. Priority Queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html">5.8. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -131,7 +149,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Binary Heaps</li>
+          <li><a href="week-05.html">5. Week 05: Binary Heaps and Priority Queues</a> &raquo;</li>
+        
+      <li>5.4. Binary Heaps</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -149,12 +169,12 @@
            <div itemprop="articleBody">
             
   <div class="section" id="binary-heaps">
-<h1>Binary Heaps<a class="headerlink" href="#binary-heaps" title="Permalink to this headline">¶</a></h1>
+<h1>5.4. Binary Heaps<a class="headerlink" href="#binary-heaps" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">Heaps.ml</span></code></li>
 </ul>
 <div class="section" id="finding-a-maximum-in-a-changing-array">
-<h2>Finding a maximum in a changing array<a class="headerlink" href="#finding-a-maximum-in-a-changing-array" title="Permalink to this headline">¶</a></h2>
+<h2>5.4.1. Finding a maximum in a changing array<a class="headerlink" href="#finding-a-maximum-in-a-changing-array" title="Permalink to this headline">¶</a></h2>
 <p>We have started this course from a simple exercise — finding a
 minimal element in a list. While simple enough (and possible to
 implement in <span class="math notranslate nohighlight">\(O(n)\)</span> operations) for a case when we need to find
@@ -192,7 +212,7 @@ have to sort the array <em>every time</em> some changes in its contents take
 place, thus, spending <span class="math notranslate nohighlight">\(O(n \log n)\)</span> operations.</p>
 </div>
 <div class="section" id="definition-of-a-binary-heap">
-<h2>Definition of a binary heap<a class="headerlink" href="#definition-of-a-binary-heap" title="Permalink to this headline">¶</a></h2>
+<h2>5.4.2. Definition of a binary heap<a class="headerlink" href="#definition-of-a-binary-heap" title="Permalink to this headline">¶</a></h2>
 <p>This week we will learn how to solve the problem of retrieving the
 element with the biggest/smallest key from a constantly changing array
 in a more cheaper way than by sorting the array of elements every
@@ -225,7 +245,11 @@ index <span class="math notranslate nohighlight">\(i\)</span>, the two elements,
 and <span class="math notranslate nohighlight">\(2(i + 1)\)</span> correspondingly, are such that their keys are
 smaller or equal than <span class="math notranslate nohighlight">\(k\)</span> <a class="footnote-reference" href="#id3" id="id1">[1]</a>.</p>
 </div>
-<p>Notice that, due to its representation, a binary heep, as a tree is <em>almost complete</em>: some of the bottom-level nodes (<em>leaves</em>) might be missing, but the nodes on all other levels are present <a class="footnote-reference" href="#id4" id="id2">[2]</a>. Naturally, for a node with an index <span class="math notranslate nohighlight">\(i &gt; 0\)</span>, its parent can be obtained by taking an index <span class="math notranslate nohighlight">\((i + 1) / 2 - 1\)</span></p>
+<p>Notice that, due to its representation, a binary heep, as a tree is <em>almost
+complete</em>: some of the bottom-level right-most nodes (<em>leaves</em>) might be
+missing, but the nodes on all other levels are present <a class="footnote-reference" href="#id4" id="id2">[2]</a>. Naturally, for a
+node with an index <span class="math notranslate nohighlight">\(i &gt; 0\)</span>, its parent can be obtained by taking an index
+<span class="math notranslate nohighlight">\((i + 1) / 2 - 1\)</span></p>
 <p>Let us now define a module that encapsulates all operations with binary heaps (represented via arrays), of which so far know three: finding a parent, a left and a right child of a node:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">Heaps</span> <span class="o">(</span><span class="nc">C</span> <span class="o">:</span> <span class="nc">CompareAndPrint</span><span class="o">)</span>  <span class="o">=</span> <span class="k">struct</span>
   <span class="k">include</span> <span class="nc">C</span>
@@ -304,7 +328,7 @@ smaller or equal than <span class="math notranslate nohighlight">\(k\)</span> <a
 </div>
 <p>Notice that, while not sorted (in an ascending or a descending order),
 the heap (as per its definition) always has the element with the
-greatest key in at the position 0 of the array.</p>
+greatest key at the position 0 of the array.</p>
 <div class="admonition-definition admonition">
 <p class="first admonition-title">Definition</p>
 <p class="last">A heap defined as per the definition above (a parent is larger than
@@ -313,7 +337,7 @@ parent is smaller than children) is called <em>min-heap</em>.</p>
 </div>
 </div>
 <div class="section" id="checking-that-an-array-is-a-heap">
-<h2>Checking that an array is a heap<a class="headerlink" href="#checking-that-an-array-is-a-heap" title="Permalink to this headline">¶</a></h2>
+<h2>5.4.3. Checking that an array is a heap<a class="headerlink" href="#checking-that-an-array-is-a-heap" title="Permalink to this headline">¶</a></h2>
 <p>Next, we shall write a function that, taking an array, will determine whether it does have heap structure or not. The following definition should be placed within the body of <code class="docutils literal notranslate"><span class="pre">Heap</span></code> functor:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* 2. Testing whether something is a heap *)</span>
 <span class="k">let</span> <span class="n">is_heap</span> <span class="n">arr</span> <span class="o">=</span>
@@ -430,6 +454,15 @@ here and further by <em>heaps</em> we will mean binary trees.</td></tr>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-05-heapify.html" class="btn btn-neutral float-right" title="5.5. Maintaining Binary Heaps" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-04-linear-time.html" class="btn btn-neutral" title="5.3. Sorting in Linear Time" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

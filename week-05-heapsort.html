@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Heapsort &mdash; YSC2229 2021</title>
+  <title>5.6. Heapsort &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5.7. Priority Queues" href="week-05-priority.html" />
+    <link rel="prev" title="5.5. Maintaining Binary Heaps" href="week-05-heapify.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,11 +83,27 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-04.html">4. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-05.html">5. Week 05: Binary Heaps and Priority Queues</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-05-functors.html">5.1. Printing and Validating Generic Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-sorting-best-worst.html">5.2. Best-Worst Case for Comparison-Based Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html">5.3. Sorting in Linear Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heaps.html">5.4. Binary Heaps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapify.html">5.5. Maintaining Binary Heaps</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5.6. Heapsort</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#heapsort-complexity">5.6.1. Heapsort Complexity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#evaluating-heapsort">5.6.2. Evaluating Heapsort</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#which-sorting-algorithm-to-choose">5.6.3. Which sorting algorithm to choose?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-priority.html">5.7. Priority Queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html">5.8. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -131,7 +149,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Heapsort</li>
+          <li><a href="week-05.html">5. Week 05: Binary Heaps and Priority Queues</a> &raquo;</li>
+        
+      <li>5.6. Heapsort</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -149,7 +169,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="heapsort">
-<h1>Heapsort<a class="headerlink" href="#heapsort" title="Permalink to this headline">¶</a></h1>
+<h1>5.6. Heapsort<a class="headerlink" href="#heapsort" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">Heaps.ml</span></code> (continued)</li>
 </ul>
@@ -178,7 +198,7 @@ final addition to the <code class="docutils literal notranslate"><span class="pr
 </pre></div>
 </div>
 <div class="section" id="heapsort-complexity">
-<h2>Heapsort Complexity<a class="headerlink" href="#heapsort-complexity" title="Permalink to this headline">¶</a></h2>
+<h2>5.6.1. Heapsort Complexity<a class="headerlink" href="#heapsort-complexity" title="Permalink to this headline">¶</a></h2>
 <p>The main bulk of complexity is taken by <code class="docutils literal notranslate"><span class="pre">build_max_heap</span> <span class="pre">arr</span></code> (which
 results in <span class="math notranslate nohighlight">\(O(n \log n)\)</span>) and in running the loop. Since the
 loop runs <span class="math notranslate nohighlight">\(n/2\)</span> iteration, and each reconstruction of the tree
@@ -186,7 +206,7 @@ takes <span class="math notranslate nohighlight">\(O(\log n)\)</span> swaps, the
 <span class="math notranslate nohighlight">\(O(n \log n)\)</span>.</p>
 </div>
 <div class="section" id="evaluating-heapsort">
-<h2>Evaluating Heapsort<a class="headerlink" href="#evaluating-heapsort" title="Permalink to this headline">¶</a></h2>
+<h2>5.6.2. Evaluating Heapsort<a class="headerlink" href="#evaluating-heapsort" title="Permalink to this headline">¶</a></h2>
 <p>We can now use our checked to make sure that it indeed delivers sorted arrays:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">Checker</span> <span class="o">=</span> <span class="nc">SortChecker</span><span class="o">(</span><span class="nc">KV</span><span class="o">)</span>
 
@@ -203,7 +223,7 @@ takes <span class="math notranslate nohighlight">\(O(\log n)\)</span> swaps, the
 </div>
 </div>
 <div class="section" id="which-sorting-algorithm-to-choose">
-<h2>Which sorting algorithm to choose?<a class="headerlink" href="#which-sorting-algorithm-to-choose" title="Permalink to this headline">¶</a></h2>
+<h2>5.6.3. Which sorting algorithm to choose?<a class="headerlink" href="#which-sorting-algorithm-to-choose" title="Permalink to this headline">¶</a></h2>
 <p>By now we have seen three linearithmic sorting algorithms: merge sort,
 Quicksort and Heapsort. The first two achieve efficiency via
 divide-and-conquer strategy (structuring the computations in a tree).
@@ -276,6 +296,15 @@ will not require extra memory:</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-05-priority.html" class="btn btn-neutral float-right" title="5.7. Priority Queues" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-05-heapify.html" class="btn btn-neutral" title="5.5. Maintaining Binary Heaps" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

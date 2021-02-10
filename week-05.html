@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Week 05: Binary Heaps and Priority Queues &mdash; YSC2229 2021</title>
+  <title>5. Week 05: Binary Heaps and Priority Queues &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5.1. Printing and Validating Generic Arrays" href="week-05-functors.html" />
+    <link rel="prev" title="4.6. Exercises" href="week-04-exercises.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,11 +83,22 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-04.html">4. Week 04: Divide-and-Conquer Algorithms</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. Week 05: Binary Heaps and Priority Queues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-05-functors.html">5.1. Printing and Validating Generic Arrays</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-sorting-best-worst.html">5.2. Best-Worst Case for Comparison-Based Sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html">5.3. Sorting in Linear Time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heaps.html">5.4. Binary Heaps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapify.html">5.5. Maintaining Binary Heaps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapsort.html">5.6. Heapsort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-priority.html">5.7. Priority Queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html">5.8. Exercises</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -131,7 +144,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Week 05: Binary Heaps and Priority Queues</li>
+      <li>5. Week 05: Binary Heaps and Priority Queues</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -149,54 +162,49 @@
            <div itemprop="articleBody">
             
   <div class="section" id="week-05-binary-heaps-and-priority-queues">
-<h1>Week 05: Binary Heaps and Priority Queues<a class="headerlink" href="#week-05-binary-heaps-and-priority-queues" title="Permalink to this headline">¶</a></h1>
+<h1>5. Week 05: Binary Heaps and Priority Queues<a class="headerlink" href="#week-05-binary-heaps-and-priority-queues" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="week-04-comparison-based-sorting.html">4.5. Generalising Comparison-Based Sorting</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-04-comparison-based-sorting.html#comparator-as-a-parameter">4.5.1. Comparator as a parameter</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-comparison-based-sorting.html#a-functor-for-sorting">4.5.2. A functor for sorting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-05-functors.html">5.1. Printing and Validating Generic Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04-sorting-best-worst.html">5.2. Best-Worst Case for Comparison-Based Sorting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-04-linear-time.html">5.3. Sorting in Linear Time</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html#simple-bucket-sort">5.3.1. Simple Bucket Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html#enhanced-bucket-sort">5.3.2. Enhanced Bucket Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html#stability-of-sorting">5.3.3. Stability of sorting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html#radix-sort">5.3.4. Radix Sort</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-04-sorting-best-worst.html">Best-Worst Case for Comparison-Based Sorting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-04-linear-time.html">Sorting in Linear Time</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html#simple-bucket-sort">Simple Bucket Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html#enhanced-bucket-sort">Enhanced Bucket Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html#stability-of-sorting">Stability of sorting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-04-linear-time.html#radix-sort">Radix Sort</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-05-heaps.html">5.4. Binary Heaps</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heaps.html#finding-a-maximum-in-a-changing-array">5.4.1. Finding a maximum in a changing array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heaps.html#definition-of-a-binary-heap">5.4.2. Definition of a binary heap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heaps.html#checking-that-an-array-is-a-heap">5.4.3. Checking that an array is a heap</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-05-functors.html">Printing and Validating Generic Arrays</a></li>
-<li class="toctree-l1"><a class="reference internal" href="week-05-heaps.html">Binary Heaps</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-05-heaps.html#finding-a-maximum-in-a-changing-array">Finding a maximum in a changing array</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-heaps.html#definition-of-a-binary-heap">Definition of a binary heap</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-heaps.html#checking-that-an-array-is-a-heap">Checking that an array is a heap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-05-heapify.html">5.5. Maintaining Binary Heaps</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapify.html#heapifying-elements-of-an-array">5.5.1. “Heapifying” elements of an array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapify.html#complexity-of-heapify">5.5.2. Complexity of heapify</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapify.html#building-a-heap-from-an-array">5.5.3. Building a heap from an array</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-05-heapify.html">Maintaining Binary Heaps</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-05-heapify.html#heapifying-elements-of-an-array">“Heapifying” elements of an array</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-heapify.html#complexity-of-heapify">Complexity of heapify</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-heapify.html#building-a-heap-from-an-array">Building a heap from an array</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-05-heapsort.html">5.6. Heapsort</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapsort.html#heapsort-complexity">5.6.1. Heapsort Complexity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapsort.html#evaluating-heapsort">5.6.2. Evaluating Heapsort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-heapsort.html#which-sorting-algorithm-to-choose">5.6.3. Which sorting algorithm to choose?</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-05-heapsort.html">Heapsort</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-05-heapsort.html#heapsort-complexity">Heapsort Complexity</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-heapsort.html#evaluating-heapsort">Evaluating Heapsort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-heapsort.html#which-sorting-algorithm-to-choose">Which sorting algorithm to choose?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-05-priority.html">5.7. Priority Queues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-05-priority.html#creating-priority-queues">5.7.1. Creating Priority Queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-priority.html#operations-on-priority-queues">5.7.2. Operations on Priority Queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-priority.html#working-with-priority-queues">5.7.3. Working with Priority Queues</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-05-priority.html">Priority Queues</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-05-priority.html#creating-priority-queues">Creating Priority Queues</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-priority.html#operations-on-priority-queues">Operations on Priority Queues</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-priority.html#working-with-priority-queues">Working with Priority Queues</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="week-05-exercises.html">Exercises</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html#exercise-1">Exercise 1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html#exercise-2">Exercise 2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html#exercise-3">Exercise 3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html#exercise-4">Exercise 4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html#exercise-5">Exercise 5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html#exercise-6">Exercise 6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-05-exercises.html">5.8. Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html#exercise-1">5.8.1. Exercise 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html#exercise-2">5.8.2. Exercise 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html#exercise-3">5.8.3. Exercise 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html#exercise-4">5.8.4. Exercise 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html#exercise-5">5.8.5. Exercise 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-05-exercises.html#exercise-6">5.8.6. Exercise 6</a></li>
 </ul>
 </li>
 </ul>
@@ -208,6 +216,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-05-functors.html" class="btn btn-neutral float-right" title="5.1. Printing and Validating Generic Arrays" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-04-exercises.html" class="btn btn-neutral" title="4.6. Exercises" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
