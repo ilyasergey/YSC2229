@@ -5,13 +5,12 @@ Sorting in Linear Time
 
 * File: ``LinearTimeSorting.ml``
 
-As we have just determined, one cannot do comparison-based sorting
-better than in :math:`O(n \log n)` in the worst case. However, we can
-improve this complexity if we base the complexity *not* just on
-comparisons, but will also exploit the intrinsic properties of the
-data used as keys for elements to be sorted (e.g., integers). In this
-chapter we will see some examples of such specialised sorting
-procedures.
+As we have just determined, one cannot do comparison-based sorting better than
+in :math:`O(n \log n)` in the worst case. However, we can improve this
+complexity if we base the logic of our algorithm *not* just on comparisons, but
+will also exploit the `intrinsic` properties of the data used as keys for
+elements to be sorted (e.g., integers). In this chapter we will see some
+examples of such specialised sorting procedures.
 
 Simple Bucket Sort
 ------------------
