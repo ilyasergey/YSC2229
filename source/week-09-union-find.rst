@@ -21,11 +21,12 @@ Reasoning about inclusion of an element into a certain equivalence class within 
 
 We are going to refer to equivalent elements (according to a certain equivalence relation) as to *connected* ones.
 
-
 Union-Find Structure
 --------------------
 
-*Union-Find* is a data structure that allows to efficiently represent a finite set of ``n`` elements (encoded by a segment of integers ``0 ... n``) with a possibility to answer the following questions:
+*Union-Find* is a data structure that allows to efficiently represent a finite
+set of ``n`` elements (encoded by a segment of integers ``0 ... n - 1``) with a
+possibility to answer the following questions:
 
 * Are elements ``i`` and ``j`` connected?
 * What is an equivalence class of an element ``i``?
