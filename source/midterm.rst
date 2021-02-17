@@ -54,11 +54,11 @@ following artefacts:
   should free the memory occupied by its nodes, when the nodes are
   explicitly removed.
 
-* An implementation of a queue data type (taking ``int * string``
-  pairs), following the module signature from Section :ref:`sec_queues`
-  and tests for checking that it indeed behaves like a queue. As your
-  queue will not be polymorphic only be able to accept elements of a
-  specific type, it needs to implement a specialised signature::
+* An implementation of a queue data type (taking ``int * string`` pairs),
+  following the module signature from Section :ref:`sec_queues` and tests for
+  checking that it indeed behaves like a queue. As your queue will not be
+  polymorphic and only be able to accept elements of a specific type, it needs
+  to implement a specialised signature::
 
    module type Queue = 
    sig
