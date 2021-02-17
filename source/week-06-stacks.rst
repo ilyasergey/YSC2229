@@ -70,25 +70,23 @@ following implementation almost effortlessly::
        | _ -> None
    end
 
-What is important to notice is that ``type 'e t`` in the concrete
-implementation is defined to be ``'e list ref``, so in the rest of the
-module we can use the properties of this concrete data type (i.e.,
-dereference it and work with it as with an OCaml list). Notice also
-that the concrete module ``ListBasedStack`` is annotated with the
-abstract signature ``AbstractStack``, making sure that all definitions
-have the matching types. The implication of this is that `no user` of
-this module will be able to exploit the fact that our "stack type" is,
-in fact, a reference to an OCaml list. An example of such an "exploit"
-would be, for instance, making the stack empty foregoing the use of
-``pop`` in order to deplete it first, element by element.
+What is important to notice is that ``type 'e t`` in the concrete implementation
+is defined to be ``'e list ref``, so in the rest of the module we can use the
+properties of this concrete data type (i.e., dereference it and work with it as
+with an OCaml list). Notice also that the concrete module ``ListBasedStack`` is
+annotated with the abstract signature ``AbstractStack``, making sure that all
+definitions have the matching types. The implication of this is that `no user`
+of this module will be able to exploit the fact that our "stack type" is, in
+fact, a reference to an OCaml list. An example of such an "exploit" would be,
+for instance, making the stack empty foregoing the use of ``pop`` in order to
+deplete it first, element by element.
 
-When implementing your own concrete implementation of an abstract data
-type, it is recommended to ascribe the module signature (e.g.,
-``AbstractStack``) as the `last` step of your implementation. If you
-do it before the module is complete, the OCaml compiler/back-end will
-not be complaining about your implementation of the module does not
-match the signature, which makes the whole development process less
-pleasant.
+When implementing your own concrete implementation of an abstract data type, it
+is recommended to ascribe the module signature (e.g., ``AbstractStack``) as the
+`last` step of your implementation. If you do it before the module is complete,
+the OCaml compiler/back-end will be complaining that your implementation of the
+module does not match the signature, which makes the whole development process
+less pleasant.
 
 Let us now test our stack ADT implementation by pushing and popping
 different elements, keeping in mind the expected LIFO behaviour. We

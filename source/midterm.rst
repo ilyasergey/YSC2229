@@ -46,7 +46,7 @@ following artefacts:
   updating them. Similarly to languages without automatic memory
   management, such as C, it should be possible to both allocate and
   "free" consecutive pointer segments, making it possible to reuse the
-  memory (i.e., "reclaim" it be the allocator).
+  memory (i.e., "reclaim" it by the allocator).
 
 * An implementation of a doubly-linked list, built on top of the
   allocator interface via the abstract "heap" it provides and the
