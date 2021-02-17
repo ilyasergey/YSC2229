@@ -25,13 +25,12 @@ A simple stack interface is described by the following OCaml module signature::
      val pop : 'e t -> 'e option
    end
 
-Notice that the first type member (``type 'e t``) is what makes this
-data type abstract. The type declaration stands for and "abstract type
-``t`` of the stack storing elements of type ``'e``. In reality, the
-stack, as a data structure, can be implemented in various ways, but
-this type definition does not reveal those details. Instead, it
-provides four functions to manipulate with stacks --- and this is the
-only vocabulary for doing so. Specifically:
+Notice that the first type member (``type 'e t``) is what makes this data type
+abstract. The type declaration stands for and "abstract type ``t`` of the stack
+storing elements of type ``'e``". In reality, the stack, as a data structure,
+can be implemented in various ways, but this type definition does not reveal
+those details. Instead, it provides four functions to manipulate with stacks ---
+and this is the only vocabulary for doing so. Specifically:
 
 * ``mk_stack`` creates a new empty stack (hence the output result is
   ``'e t``) with a suggested size ``n``
