@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Equivalence Classes and Union-Find &mdash; YSC2229 2021</title>
+  <title>6.1. Equivalence Classes and Union-Find &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="6.2. Information Hiding and Abstraction" href="week-06-abstract-data-types.html" />
+    <link rel="prev" title="6. Week 06: Abstract Data Types" href="week-06.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,12 +83,26 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-04.html">4. Week 04: Divide-and-Conquer Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-05.html">5. Week 05: Binary Heaps and Priority Queues</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-06.html">6. Week 06: Abstract Data Types</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6.1. Equivalence Classes and Union-Find</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#union-find-structure">6.1.1. Union-Find Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#working-with-sets-via-union-find">6.1.2. Working with Sets via Union-Find</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-union-find">6.1.3. Testing Union-Find</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-abstract-data-types.html">6.2. Information Hiding and Abstraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-stacks.html">6.3. Stacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html">6.4. Queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-exercises.html">6.5. Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="midterm.html">7. Midterm Project: Memory Allocation and Reclamation</a></li>
 </ul>
 
             
@@ -132,7 +148,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Equivalence Classes and Union-Find</li>
+          <li><a href="week-06.html">6. Week 06: Abstract Data Types</a> &raquo;</li>
+        
+      <li>6.1. Equivalence Classes and Union-Find</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -150,7 +168,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="equivalence-classes-and-union-find">
-<span id="union-find"></span><h1>Equivalence Classes and Union-Find<a class="headerlink" href="#equivalence-classes-and-union-find" title="Permalink to this headline">¶</a></h1>
+<span id="union-find"></span><h1>6.1. Equivalence Classes and Union-Find<a class="headerlink" href="#equivalence-classes-and-union-find" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">UnionFind.ml</span></code></li>
 </ul>
@@ -168,8 +186,10 @@
 </ul>
 <p>We are going to refer to equivalent elements (according to a certain equivalence relation) as to <em>connected</em> ones.</p>
 <div class="section" id="union-find-structure">
-<h2>Union-Find Structure<a class="headerlink" href="#union-find-structure" title="Permalink to this headline">¶</a></h2>
-<p><em>Union-Find</em> is a data structure that allows to efficiently represent a finite set of <code class="docutils literal notranslate"><span class="pre">n</span></code> elements (encoded by a segment of integers <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">...</span> <span class="pre">n</span></code>) with a possibility to answer the following questions:</p>
+<h2>6.1.1. Union-Find Structure<a class="headerlink" href="#union-find-structure" title="Permalink to this headline">¶</a></h2>
+<p><em>Union-Find</em> is a data structure that allows to efficiently represent a finite
+set of <code class="docutils literal notranslate"><span class="pre">n</span></code> elements (encoded by a segment of integers <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">...</span> <span class="pre">n</span> <span class="pre">-</span> <span class="pre">1</span></code>) with a
+possibility to answer the following questions:</p>
 <ul class="simple">
 <li>Are elements <code class="docutils literal notranslate"><span class="pre">i</span></code> and <code class="docutils literal notranslate"><span class="pre">j</span></code> connected?</li>
 <li>What is an equivalence class of an element <code class="docutils literal notranslate"><span class="pre">i</span></code>?</li>
@@ -204,7 +224,7 @@ affecting the answers to the questions above.</p>
 </div>
 </div>
 <div class="section" id="working-with-sets-via-union-find">
-<h2>Working with Sets via Union-Find<a class="headerlink" href="#working-with-sets-via-union-find" title="Permalink to this headline">¶</a></h2>
+<h2>6.1.2. Working with Sets via Union-Find<a class="headerlink" href="#working-with-sets-via-union-find" title="Permalink to this headline">¶</a></h2>
 <p>The Union-Find structure is going to rely on an old trick — encoding
 certain information about elements in an array via their locations. In
 this particular case, once created, each location in a UnionFind’s
@@ -246,7 +266,7 @@ fixed point in the corresponding chain:</p>
 <p>If two elements belong to different classes (their canonical elements are different), then one’s canonical element is “attached” to another. So now all chain for elements that used to lead to <code class="docutils literal notranslate"><span class="pre">i</span></code>, will be extended to go to <code class="docutils literal notranslate"><span class="pre">j</span></code>, hence they will end up in the same equivalence class! To emphasise, recall that initially every element’s canonical representation is itself, but this is what changes via <code class="docutils literal notranslate"><span class="pre">union</span></code>.</p>
 </div>
 <div class="section" id="testing-union-find">
-<h2>Testing Union-Find<a class="headerlink" href="#testing-union-find" title="Permalink to this headline">¶</a></h2>
+<h2>6.1.3. Testing Union-Find<a class="headerlink" href="#testing-union-find" title="Permalink to this headline">¶</a></h2>
 <p>We can observe the evolution of equivalence classes in Union-Find by implementing the following printing machinery:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">print_uf</span> <span class="n">uf</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">Array</span><span class="p">.</span><span class="n">length</span> <span class="n">uf</span><span class="o">.</span><span class="n">id</span> <span class="k">in</span>
@@ -301,6 +321,15 @@ fixed point in the corresponding chain:</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-06-abstract-data-types.html" class="btn btn-neutral float-right" title="6.2. Information Hiding and Abstraction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-06.html" class="btn btn-neutral" title="6. Week 06: Abstract Data Types" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

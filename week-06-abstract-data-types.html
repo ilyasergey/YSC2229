@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Information Hiding and Abstraction &mdash; YSC2229 2021</title>
+  <title>6.2. Information Hiding and Abstraction &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="6.3. Stacks" href="week-06-stacks.html" />
+    <link rel="prev" title="6.1. Equivalence Classes and Union-Find" href="week-09-union-find.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,12 +83,21 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-04.html">4. Week 04: Divide-and-Conquer Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-05.html">5. Week 05: Binary Heaps and Priority Queues</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-06.html">6. Week 06: Abstract Data Types</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-09-union-find.html">6.1. Equivalence Classes and Union-Find</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6.2. Information Hiding and Abstraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-stacks.html">6.3. Stacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html">6.4. Queues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-exercises.html">6.5. Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="midterm.html">7. Midterm Project: Memory Allocation and Reclamation</a></li>
 </ul>
 
             
@@ -132,7 +143,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Information Hiding and Abstraction</li>
+          <li><a href="week-06.html">6. Week 06: Abstract Data Types</a> &raquo;</li>
+        
+      <li>6.2. Information Hiding and Abstraction</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -150,7 +163,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="information-hiding-and-abstraction">
-<h1>Information Hiding and Abstraction<a class="headerlink" href="#information-hiding-and-abstraction" title="Permalink to this headline">¶</a></h1>
+<h1>6.2. Information Hiding and Abstraction<a class="headerlink" href="#information-hiding-and-abstraction" title="Permalink to this headline">¶</a></h1>
 <p><em>Data structures</em> provide an efficient way to represent information,
 facilitating access to it and its manipulation. However, it is not
 always desirable to let the client of a data structure know <em>how
@@ -184,6 +197,15 @@ implemented differently by means of data structures at hand.</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-06-stacks.html" class="btn btn-neutral float-right" title="6.3. Stacks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-09-union-find.html" class="btn btn-neutral" title="6.1. Equivalence Classes and Union-Find" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

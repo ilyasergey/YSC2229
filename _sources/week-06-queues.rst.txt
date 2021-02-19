@@ -319,7 +319,7 @@ grow infinitely::
       
     let is_full _q = false
 
-Enqueueing an element is implemented by means of creating a new node and inserting it behind the tail (if it exists). Since ``mk_node`` always returns a new node, there is no risc of creating a circular DLL::
+Enqueueing an element is implemented by means of creating a new node and inserting it behind the tail (if it exists). Since ``mk_node`` always returns a new node, there is no risk of creating a circular DLL::
 
     let enqueue q e = 
       let n = mk_node e in

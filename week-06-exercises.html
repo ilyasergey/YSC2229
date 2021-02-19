@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Exercises &mdash; YSC2229 2021</title>
+  <title>6.5. Exercises &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="7. Midterm Project: Memory Allocation and Reclamation" href="midterm.html" />
+    <link rel="prev" title="6.4. Queues" href="week-06-queues.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,12 +83,25 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-04.html">4. Week 04: Divide-and-Conquer Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-05.html">5. Week 05: Binary Heaps and Priority Queues</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-06.html">6. Week 06: Abstract Data Types</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-09-union-find.html">6.1. Equivalence Classes and Union-Find</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-abstract-data-types.html">6.2. Information Hiding and Abstraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-stacks.html">6.3. Stacks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-06-queues.html">6.4. Queues</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6.5. Exercises</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-1">6.5.1. Exercise 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-2">6.5.2. Exercise 2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="midterm.html">7. Midterm Project: Memory Allocation and Reclamation</a></li>
 </ul>
 
             
@@ -132,7 +147,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Exercises</li>
+          <li><a href="week-06.html">6. Week 06: Abstract Data Types</a> &raquo;</li>
+        
+      <li>6.5. Exercises</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -150,13 +167,13 @@
            <div itemprop="articleBody">
             
   <div class="section" id="exercises">
-<h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
+<h1>6.5. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="exercise-1">
-<h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<h2>6.5.1. Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
 <p>Implement a queue data structure, which does not use OCaml arrays or double-linked lists, and at most two values of type <code class="docutils literal notranslate"><span class="pre">ref</span></code>. Make sure it satisfies the <code class="docutils literal notranslate"><span class="pre">Queue</span></code> interface. To do so, use two OCaml lists to represent the part for “enqueueing” and “dequeueing”. What happens if one of them gets empty? Argue that the average-case complexity for enqueue and dequeue operations of your implementation is linear.</p>
 </div>
 <div class="section" id="exercise-2">
-<h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<h2>6.5.2. Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
 <p>Implement a procedure for “reversing” a doubly-linked list, starting from its arbitrary node (which might be at its beginning, end, or in the middle). Make sure that your procedure works in linear time.</p>
 </div>
 </div>
@@ -166,6 +183,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="midterm.html" class="btn btn-neutral float-right" title="7. Midterm Project: Memory Allocation and Reclamation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-06-queues.html" class="btn btn-neutral" title="6.4. Queues" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
