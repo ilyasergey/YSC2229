@@ -113,6 +113,7 @@ fully functional Linux distribution installed on your machine.
     sudo apt install opam
     opam init -y --compiler=4.10.0 --disable-sandboxing
     eval $(opam env)
+    opam pin add ppx_inline_test v0.14.0
     opam install -y dune core batteries utop graphics merlin ocp-indent
 
    Once done, add the following line to your ``~/.bashrc`` file::
@@ -254,6 +255,7 @@ OCaml is well supported in macOS, so the installation process is fairly straight
     brew install opam
     opam init -y --compiler=4.10.0
     eval $(opam env)
+    opam pin add ppx_inline_test v0.14.0
     opam install -y dune core batteries utop graphics merlin ocp-indent
 
    Once done, add the following line to your ``~/.bashrc`` or ``~/.profile``
