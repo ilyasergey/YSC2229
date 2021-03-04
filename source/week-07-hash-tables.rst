@@ -141,9 +141,9 @@ key are lingering in the same bucket::
       List.filter (fun (k', _) -> k' <> k) bucket in
     ht.buckets.(bnum) <- (k, v) :: clean_bucket
 
-Retrieving an element by its key is done by using ``List.filter_opt``
+Retrieving an element by its key is done by using ``List.find_opt``
 for retrieving the desired element from the bucket. Even though
-``List.filter_opt`` has linear complexity, it will not hurt
+``List.find_opt`` has linear complexity, it will not hurt
 performance for small buckets::
 
   let get ht k = 
