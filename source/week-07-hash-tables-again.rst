@@ -37,8 +37,8 @@ Thanks to OCaml's universal hashing, we no longer have to provide a hashing stra
 
  module type HashTable = sig
    type key
-   type 'v hash_table
-   val mk_new_table : int -> (key* 'v) hash_table 
+   type 'a hash_table
+   val mk_new_table : int -> (key * 'v) hash_table 
    val insert : (key * 'v) hash_table -> key -> 'v -> unit
    val get : (key * 'v) hash_table -> key -> 'v option
    val remove : (key * 'v) hash_table -> key -> unit

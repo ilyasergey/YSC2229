@@ -55,8 +55,8 @@ table::
  module type HashTable = functor 
    (H : Hashable) -> sig
    type key = H.t
-   type 'v hash_table
-   val mk_new_table : int -> 'v hash_table 
+   type 'a hash_table
+   val mk_new_table : int -> (key * 'v) hash_table 
    val insert : (key * 'v) hash_table -> key -> 'v -> unit
    val get : (key * 'v) hash_table -> key -> 'v option
    val remove : (key * 'v) hash_table -> key -> unit
