@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Bloom Filters and Their Applications &mdash; YSC2229 2021</title>
+  <title>8.3. Bloom Filters and Their Applications &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,8 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="8.2. Generalised Hash-Tables" href="week-07-hash-tables-again.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,7 +82,7 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
@@ -89,6 +90,21 @@
 <li class="toctree-l1"><a class="reference internal" href="week-05.html">5. Week 05: Binary Heaps and Priority Queues</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-06.html">6. Week 06: Abstract Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="midterm.html">7. Midterm Project: Memory Allocation and Reclamation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-07.html">8. Week 07: Hashing-Based Data Structures</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables.html">8.1. Hash-tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-07-hash-tables-again.html">8.2. Generalised Hash-Tables</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">8.3. Bloom Filters and Their Applications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#high-level-intuition">8.3.1. High-level intuition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bloom-filter-signature">8.3.2. Bloom filter signature</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implementing-a-bloom-filter">8.3.3. Implementing a Bloom filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experimenting-with-bloom-filters">8.3.4. Experimenting with Bloom filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-bloom-filters">8.3.5. Testing Bloom Filters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#improving-simple-hash-table-with-a-bloom-filter">8.3.6. Improving Simple Hash-table with a Bloom filter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#comparing-performance">8.3.7. Comparing performance</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
             
@@ -134,7 +150,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Bloom Filters and Their Applications</li>
+          <li><a href="week-07.html">8. Week 07: Hashing-Based Data Structures</a> &raquo;</li>
+        
+      <li>8.3. Bloom Filters and Their Applications</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -152,7 +170,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="bloom-filters-and-their-applications">
-<span id="sec-bloom"></span><h1>Bloom Filters and Their Applications<a class="headerlink" href="#bloom-filters-and-their-applications" title="Permalink to this headline">¶</a></h1>
+<span id="sec-bloom"></span><h1>8.3. Bloom Filters and Their Applications<a class="headerlink" href="#bloom-filters-and-their-applications" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">BloomFilters.ml</span></code></li>
 </ul>
@@ -189,7 +207,7 @@ might tolerate imprecise “yes”-answers, given conservatively.</p>
 <li><a class="reference external" href="https://en.wikipedia.org/wiki/Bitcoin">Bitcoin</a> uses Bloom filters to speed up wallet synchronisation.</li>
 </ul>
 <div class="section" id="high-level-intuition">
-<h2>High-level intuition<a class="headerlink" href="#high-level-intuition" title="Permalink to this headline">¶</a></h2>
+<h2>8.3.1. High-level intuition<a class="headerlink" href="#high-level-intuition" title="Permalink to this headline">¶</a></h2>
 <p>Bloom filter is a very simple data structure, which uses hashing. It
 is represented by a large boolean/bit array (you can think of it of an
 array of 0s and 1s) of size <code class="docutils literal notranslate"><span class="pre">m</span></code>, and a finite number <code class="docutils literal notranslate"><span class="pre">k</span></code> of
@@ -201,7 +219,7 @@ interest to <code class="docutils literal notranslate"><span class="pre">int</sp
 <p>Elements are <strong>never</strong> removed from a Bloom filter.</p>
 </div>
 <div class="section" id="bloom-filter-signature">
-<h2>Bloom filter signature<a class="headerlink" href="#bloom-filter-signature" title="Permalink to this headline">¶</a></h2>
+<h2>8.3.2. Bloom filter signature<a class="headerlink" href="#bloom-filter-signature" title="Permalink to this headline">¶</a></h2>
 <p>Let us first define the Bloom filter signature. It starts from the module describing the type of its elements and the list of hash functions:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="k">type</span> <span class="nc">BloomHashing</span> <span class="o">=</span> <span class="k">sig</span>
   <span class="k">type</span> <span class="n">t</span>
@@ -222,7 +240,7 @@ interest to <code class="docutils literal notranslate"><span class="pre">int</sp
 </div>
 </div>
 <div class="section" id="implementing-a-bloom-filter">
-<h2>Implementing a Bloom filter<a class="headerlink" href="#implementing-a-bloom-filter" title="Permalink to this headline">¶</a></h2>
+<h2>8.3.3. Implementing a Bloom filter<a class="headerlink" href="#implementing-a-bloom-filter" title="Permalink to this headline">¶</a></h2>
 <p>The implementation of the Bloom filter is simply an array of booleans (which we use to represent 0/1-bits) of a fixed size:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">BloomFilterImpl</span> <span class="o">:</span> <span class="nc">BloomFilter</span> <span class="o">=</span> <span class="k">functor</span>
   <span class="o">(</span><span class="nc">H</span><span class="o">:</span> <span class="nc">BloomHashing</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="k">struct</span>
@@ -276,7 +294,7 @@ interest to <code class="docutils literal notranslate"><span class="pre">int</sp
 </div>
 </div>
 <div class="section" id="experimenting-with-bloom-filters">
-<h2>Experimenting with Bloom filters<a class="headerlink" href="#experimenting-with-bloom-filters" title="Permalink to this headline">¶</a></h2>
+<h2>8.3.4. Experimenting with Bloom filters<a class="headerlink" href="#experimenting-with-bloom-filters" title="Permalink to this headline">¶</a></h2>
 <p>Let us fix a hashing strategy for our favourite data type <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">*</span> <span class="pre">string</span></code>:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">IntStringHashing</span> <span class="o">=</span> <span class="k">struct</span>
   <span class="k">type</span> <span class="n">t</span> <span class="o">=</span> <span class="kt">int</span> <span class="o">*</span> <span class="kt">string</span>
@@ -321,7 +339,7 @@ interest to <code class="docutils literal notranslate"><span class="pre">int</sp
 </div>
 </div>
 <div class="section" id="testing-bloom-filters">
-<h2>Testing Bloom Filters<a class="headerlink" href="#testing-bloom-filters" title="Permalink to this headline">¶</a></h2>
+<h2>8.3.5. Testing Bloom Filters<a class="headerlink" href="#testing-bloom-filters" title="Permalink to this headline">¶</a></h2>
 <p>Testing for no true positive:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;bloom filter true positives&quot;</span> <span class="o">=</span>
   <span class="k">let</span> <span class="k">open</span> <span class="nc">IntStringFilter</span> <span class="k">in</span>
@@ -335,7 +353,7 @@ interest to <code class="docutils literal notranslate"><span class="pre">int</sp
 </pre></div>
 </div>
 <p>Testing for true negatives:</p>
-<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;bloom filter false positives&quot;</span> <span class="o">=</span>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span><span class="o">%</span><span class="n">test</span> <span class="s2">&quot;bloom filter true negatives&quot;</span> <span class="o">=</span>
   <span class="k">let</span> <span class="k">open</span> <span class="nc">IntStringFilter</span> <span class="k">in</span>
   <span class="k">let</span> <span class="n">fsize</span> <span class="o">=</span> <span class="mi">2000</span> <span class="k">in</span>
   <span class="k">let</span> <span class="n">len</span> <span class="o">=</span> <span class="mi">1000</span> <span class="k">in</span>
@@ -355,9 +373,13 @@ interest to <code class="docutils literal notranslate"><span class="pre">int</sp
 <p>However, there can be also <em>false positives</em>, although we don’t check for them.</p>
 </div>
 <div class="section" id="improving-simple-hash-table-with-a-bloom-filter">
-<h2>Improving Simple Hash-table with a Bloom filter<a class="headerlink" href="#improving-simple-hash-table-with-a-bloom-filter" title="Permalink to this headline">¶</a></h2>
+<h2>8.3.6. Improving Simple Hash-table with a Bloom filter<a class="headerlink" href="#improving-simple-hash-table-with-a-bloom-filter" title="Permalink to this headline">¶</a></h2>
 <p>Let us put Bloom filter to some good use by improving our simple implementation of a hash table.</p>
-<p>The way it has been implemented, it has spent too much on iterating through the buckets before adding or getting an element. This is something that can be improved with a Bloom filter: indeed if we known that there is <em>no</em> element with a certain key in the bucket (the answer that Bloom filter can answer precisely), we don’t have to look for it.</p>
+<p>The way we implemented hash-tables before made them waster too much on iterating
+through the buckets before adding or getting an element. This is something that
+can be improved with a Bloom filter: indeed if we known that there is <em>no</em>
+element with a certain key in the bucket (the answer that Bloom filter can
+answer precisely), we don’t have to look for it.</p>
 <p>The price to pay for this speed-up is inability to remove elements from the hash-table (as one cannot remove elements from a Bloom filter).</p>
 <p>We start our hash-table from the following preamble. Its core data structure now gets enhanced with a Bloom filter:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">BloomHashTable</span> <span class="o">(</span><span class="nc">K</span><span class="o">:</span> <span class="nc">BloomHashing</span><span class="o">)</span> <span class="o">=</span> <span class="k">struct</span>
@@ -423,7 +445,7 @@ interest to <code class="docutils literal notranslate"><span class="pre">int</sp
 </div>
 </div>
 <div class="section" id="comparing-performance">
-<h2>Comparing performance<a class="headerlink" href="#comparing-performance" title="Permalink to this headline">¶</a></h2>
+<h2>8.3.7. Comparing performance<a class="headerlink" href="#comparing-performance" title="Permalink to this headline">¶</a></h2>
 <p>Let us instantiate the Bloom filter-enhanced hash table:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="nc">BHT</span> <span class="o">=</span> <span class="nc">BloomHashTable</span><span class="o">(</span><span class="nc">IntStringHashing</span><span class="o">)</span>
 <span class="k">module</span> <span class="nc">BHTTester</span> <span class="o">=</span> <span class="nc">HashTableTester</span><span class="o">(</span><span class="nc">BHT</span><span class="o">)</span>
@@ -484,6 +506,13 @@ of elements being inserted:</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="week-07-hash-tables-again.html" class="btn btn-neutral" title="8.2. Generalised Hash-Tables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

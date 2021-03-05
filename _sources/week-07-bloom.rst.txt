@@ -203,7 +203,7 @@ Testing for no true positive::
 
 Testing for true negatives::
 
- let%test "bloom filter false positives" = 
+ let%test "bloom filter true negatives" = 
    let open IntStringFilter in
    let fsize = 2000 in
    let len = 1000 in
@@ -226,7 +226,11 @@ Improving Simple Hash-table with a Bloom filter
 
 Let us put Bloom filter to some good use by improving our simple implementation of a hash table.
 
-The way it has been implemented, it has spent too much on iterating through the buckets before adding or getting an element. This is something that can be improved with a Bloom filter: indeed if we known that there is *no* element with a certain key in the bucket (the answer that Bloom filter can answer precisely), we don't have to look for it.
+The way we implemented hash-tables before made them waster too much on iterating
+through the buckets before adding or getting an element. This is something that
+can be improved with a Bloom filter: indeed if we known that there is *no*
+element with a certain key in the bucket (the answer that Bloom filter can
+answer precisely), we don't have to look for it.
 
 The price to pay for this speed-up is inability to remove elements from the hash-table (as one cannot remove elements from a Bloom filter).
 
