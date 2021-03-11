@@ -159,7 +159,7 @@
 </ul>
 <p>Imagine that you are searching for a word on a web page or a Word
 document.</p>
-<p>This problem is known and pattern search in a string. Despite being seemlingly a simple challenge to solve, in order to do efficiently, it requires a lot of ingenuity.</p>
+<p>This problem is known and pattern search in a string. Despite being seemingly a simple challenge to solve, in order to do efficiently, it requires a lot of ingenuity.</p>
 <p>In this lecture we will see several solutions for it, of the increased implementation complexity, while reduced time demand.</p>
 <div class="section" id="testing-a-search-procedure">
 <h2>Testing a search procedure<a class="headerlink" href="#testing-a-search-procedure" title="Permalink to this headline">¶</a></h2>
@@ -175,9 +175,35 @@ document.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="a-naive-search">
-<h2>A naive search<a class="headerlink" href="#a-naive-search" title="Permalink to this headline">¶</a></h2>
-<p>We can implement a naive search as follows. Notice that OCaml syntax <code class="docutils literal notranslate"><span class="pre">s.[i]</span></code> allows one to refer to a character of a string <code class="docutils literal notranslate"><span class="pre">s</span></code> at a position <code class="docutils literal notranslate"><span class="pre">i</span></code>:</p>
+<div class="section" id="a-very-naive-search">
+<h2>A very naive search<a class="headerlink" href="#a-very-naive-search" title="Permalink to this headline">¶</a></h2>
+<p>Our first attempt to implement the search is as follows:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">very_naive_search</span> <span class="n">text</span> <span class="n">pattern</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">String</span><span class="p">.</span><span class="n">length</span> <span class="n">text</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="nn">String</span><span class="p">.</span><span class="n">length</span> <span class="n">pattern</span> <span class="k">in</span>
+  <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="k">then</span> <span class="nc">None</span>
+  <span class="k">else</span>
+    <span class="k">let</span> <span class="n">k</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">0</span> <span class="k">in</span>
+    <span class="k">let</span> <span class="n">res</span> <span class="o">=</span> <span class="n">ref</span> <span class="nc">None</span> <span class="k">in</span>
+    <span class="k">while</span> <span class="o">!</span><span class="n">k</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">-</span> <span class="n">m</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">res</span> <span class="o">=</span> <span class="nc">None</span> <span class="k">do</span>
+      <span class="k">let</span> <span class="n">candidate</span> <span class="o">=</span> <span class="nn">String</span><span class="p">.</span><span class="n">sub</span> <span class="n">text</span> <span class="o">!</span><span class="n">k</span> <span class="n">m</span> <span class="k">in</span>
+      <span class="k">if</span> <span class="n">candidate</span> <span class="o">=</span> <span class="n">pattern</span>
+      <span class="k">then</span> <span class="n">res</span> <span class="o">:=</span> <span class="nc">Some</span> <span class="o">!</span><span class="n">k</span>
+      <span class="k">else</span> <span class="n">k</span> <span class="o">:=</span> <span class="o">!</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">done</span><span class="o">;</span>
+    <span class="o">!</span><span class="n">res</span>
+</pre></div>
+</div>
+<p><strong>Question:</strong> what is the worst-case complexity of this search in terms of sizes
+<code class="docutils literal notranslate"><span class="pre">n</span></code> and <code class="docutils literal notranslate"><span class="pre">m</span></code> of <code class="docutils literal notranslate"><span class="pre">text</span></code> and <code class="docutils literal notranslate"><span class="pre">pattern</span></code> correspondingly?</p>
+<p>If we try to evaluate this search on reasonably large strings, we will notice
+that it behaves quite poorly already for strings of size <code class="docutils literal notranslate"><span class="pre">5000</span></code> and pattern
+size <code class="docutils literal notranslate"><span class="pre">20</span></code>. This is because it exercises its worst-case theoretical complexity.
+How can we make it better?</p>
+</div>
+<div class="section" id="a-slightly-better-naive-search">
+<h2>A slightly better naive search<a class="headerlink" href="#a-slightly-better-naive-search" title="Permalink to this headline">¶</a></h2>
+<p>We can implement a slightly better naive search as follows. Notice that OCaml syntax <code class="docutils literal notranslate"><span class="pre">s.[i]</span></code> allows one to refer to a character of a string <code class="docutils literal notranslate"><span class="pre">s</span></code> at a position <code class="docutils literal notranslate"><span class="pre">i</span></code>:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">naive_search</span> <span class="n">text</span> <span class="n">pattern</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">String</span><span class="p">.</span><span class="n">length</span> <span class="n">text</span> <span class="k">in</span>
   <span class="k">let</span> <span class="n">m</span> <span class="o">=</span> <span class="nn">String</span><span class="p">.</span><span class="n">length</span> <span class="n">pattern</span> <span class="k">in</span>
