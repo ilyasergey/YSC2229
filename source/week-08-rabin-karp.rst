@@ -54,10 +54,9 @@ The search procedure now takes advantage of it::
 
 **Question:** why on regular strungs Rabin-Karp search is not so efficient?
 
-**Question:** What do you think would be the strings on which
- Rabin-Karp search performs more efficiently than naive search?
+**Question:** What do you think would be the strings on which Rabin-Karp search performs more efficiently than naive search?
 
-.. Complexity: :math:`O(n)`
+.. Complexity: :math:`O(nm)`
 
 Testing Rabin-Karp search can be done easily with the help of the ``search_tested procedure``::
 
