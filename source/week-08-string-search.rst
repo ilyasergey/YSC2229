@@ -8,7 +8,7 @@ Substring Search
 Imagine that you are searching for a word on a web page or a Word
 document. 
 
-This problem is known and pattern search in a string. Despite being seemlingly a simple challenge to solve, in order to do efficiently, it requires a lot of ingenuity.
+This problem is known and pattern search in a string. Despite being seemingly a simple challenge to solve, in order to do efficiently, it requires a lot of ingenuity.
 
 In this lecture we will see several solutions for it, of the increased implementation complexity, while reduced time demand.
 
@@ -27,10 +27,38 @@ Even before we implement the search procedure itself, we develop a test for it. 
  let test_pattern_not_in search text pattern =
    assert (search text pattern = None)
 
-A naive search
---------------
+A very naive search
+-------------------
 
-We can implement a naive search as follows. Notice that OCaml syntax ``s.[i]`` allows one to refer to a character of a string ``s`` at a position ``i``::
+Our first attempt to implement the search is as follows::
+
+ let very_naive_search text pattern = 
+   let n = String.length text in
+   let m = String.length pattern in
+   if n < m then None
+   else
+     let k = ref 0 in
+     let res = ref None in
+     while !k <= n - m && !res = None do
+       let candidate = String.sub text !k m in
+       if candidate = pattern
+       then res := Some !k
+       else k := !k + 1
+     done;
+     !res
+
+**Question:** what is the worst-case complexity of this search in terms of sizes
+``n`` and ``m`` of ``text`` and ``pattern`` correspondingly?
+
+If we try to evaluate this search on reasonably large strings, we will notice
+that it behaves quite poorly already for strings of size ``5000`` and pattern
+size ``20``. This is because it exercises its worst-case theoretical complexity.
+How can we make it better?
+
+A slightly better naive search
+------------------------------
+
+We can implement a slightly better naive search as follows. Notice that OCaml syntax ``s.[i]`` allows one to refer to a character of a string ``s`` at a position ``i``::
 
  let naive_search text pattern = 
    let n = String.length text in
