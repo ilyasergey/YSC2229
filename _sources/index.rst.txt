@@ -38,7 +38,7 @@ Lecture Notes
    week-06
    midterm   
    week-07
-..   week-08
+   week-08
 ..   week-09
 ..   week-10
 ..   week-11

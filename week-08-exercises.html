@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Exercises &mdash; YSC2229 2021</title>
+  <title>9.4. Exercises &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,8 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="9.3. Knuth–Morris–Pratt Algorithm" href="week-08-kmp.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,7 +82,7 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
@@ -90,6 +91,18 @@
 <li class="toctree-l1"><a class="reference internal" href="week-06.html">6. Week 06: Abstract Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="midterm.html">7. Midterm Project: Memory Allocation and Reclamation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-07.html">8. Week 07: Hashing-Based Data Structures</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-08.html">9. Week 08: Searching in Strings</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-08-string-search.html">9.1. Substring Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-rabin-karp.html">9.2. Rabin-Karp Search</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-08-kmp.html">9.3. Knuth–Morris–Pratt Algorithm</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">9.4. Exercises</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-1">9.4.1. Exercise 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-2">9.4.2. Exercise 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exercise-3">9.4.3. Exercise 3</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
             
@@ -135,7 +148,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Exercises</li>
+          <li><a href="week-08.html">9. Week 08: Searching in Strings</a> &raquo;</li>
+        
+      <li>9.4. Exercises</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -153,9 +168,9 @@
            <div itemprop="articleBody">
             
   <div class="section" id="exercises">
-<span id="exercises-8"></span><h1>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
+<span id="exercises-8"></span><h1>9.4. Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="exercise-1">
-<h2>Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
+<h2>9.4.1. Exercise 1<a class="headerlink" href="#exercise-1" title="Permalink to this headline">¶</a></h2>
 <p>How to shorten a URL? One can imagine a service (a function with a
 state) invoked on a server, to which you make a call and it generates
 a fresh random URL and sends it back. But how can it efficiently check
@@ -168,14 +183,14 @@ this will be cheaper than querying a database of previously generated
 URLs.</p>
 </div>
 <div class="section" id="exercise-2">
-<h2>Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
+<h2>9.4.2. Exercise 2<a class="headerlink" href="#exercise-2" title="Permalink to this headline">¶</a></h2>
 <p>Write a program that, given two strings, determines whether one is a
 cyclic rotation of the other. For instance it should identify
 <code class="docutils literal notranslate"><span class="pre">lenusya</span></code> as a cyclic rotation of <code class="docutils literal notranslate"><span class="pre">yalenus</span></code>. Design automated
 randomised tests for this algorithm.</p>
 </div>
 <div class="section" id="exercise-3">
-<h2>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<h2>9.4.3. Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
 <p>Using the idea of a rolling hash from Rabin-Karp algorithm, implement
 the procedure for efficiently finding a smallest number <code class="docutils literal notranslate"><span class="pre">i</span> <span class="pre">&gt;</span> <span class="pre">1</span></code> of a
 string <code class="docutils literal notranslate"><span class="pre">s</span></code>, such that that the substring <code class="docutils literal notranslate"><span class="pre">s[0</span> <span class="pre">..</span> <span class="pre">i]</span></code> is a
@@ -189,6 +204,13 @@ palindrome. For instance, for <code class="docutils literal notranslate"><span c
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="week-08-kmp.html" class="btn btn-neutral" title="9.3. Knuth–Morris–Pratt Algorithm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
