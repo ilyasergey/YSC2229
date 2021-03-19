@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Constraint Solving via Backtracking &mdash; YSC2229 2021</title>
+  <title>10.1. Constraint Solving via Backtracking &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="10.2. Optimisation Problems and Dynamic Programming" href="week-09-dynamic-programming.html" />
+    <link rel="prev" title="10. Week 09: Backtracking and Dynamic Programming" href="week-09.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,7 +83,7 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
@@ -91,6 +93,17 @@
 <li class="toctree-l1"><a class="reference internal" href="midterm.html">7. Midterm Project: Memory Allocation and Reclamation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-07.html">8. Week 07: Hashing-Based Data Structures</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-08.html">9. Week 08: Searching in Strings</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-09.html">10. Week 09: Backtracking and Dynamic Programming</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">10.1. Constraint Solving via Backtracking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#constraint-solving-by-backtracking">10.1.1. Constraint Solving by Backtracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#computing-solutions-with-backtracking">10.1.2. Computing Solutions with Backtracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#examples-of-csp-solved-by-backtracking">10.1.3. Examples of CSP solved by Backtracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#n-queens-problem">10.1.4. N-Queens problem</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-09-dynamic-programming.html">10.2. Optimisation Problems and Dynamic Programming</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -136,7 +149,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Constraint Solving via Backtracking</li>
+          <li><a href="week-09.html">10. Week 09: Backtracking and Dynamic Programming</a> &raquo;</li>
+        
+      <li>10.1. Constraint Solving via Backtracking</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -154,7 +169,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="constraint-solving-via-backtracking">
-<span id="week-09-backtracking"></span><h1>Constraint Solving via Backtracking<a class="headerlink" href="#constraint-solving-via-backtracking" title="Permalink to this headline">¶</a></h1>
+<span id="week-09-backtracking"></span><h1>10.1. Constraint Solving via Backtracking<a class="headerlink" href="#constraint-solving-via-backtracking" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">Backtracking.ml</span></code></li>
 </ul>
@@ -179,7 +194,7 @@ problems for small number of variables (e.g., 20 or less), it becomes
 quite tedious as the number fo involved variables grows, and should be
 implemented as a computer program.</p>
 <div class="section" id="constraint-solving-by-backtracking">
-<h2>Constraint Solving by Backtracking<a class="headerlink" href="#constraint-solving-by-backtracking" title="Permalink to this headline">¶</a></h2>
+<h2>10.1.1. Constraint Solving by Backtracking<a class="headerlink" href="#constraint-solving-by-backtracking" title="Permalink to this headline">¶</a></h2>
 <p>In practice, most of constraint satisfaction problems (CSPs) do not
 have an efficient solution, and fall into the category of
 <strong>intractable</strong>, having complexity <span class="math notranslate nohighlight">\(O(2^n)\)</span> or <span class="math notranslate nohighlight">\(O(n!)\)</span> in
@@ -210,7 +225,7 @@ somewhat reminiscent to the tree of sorting possibilities discussed in
 Section <a class="reference internal" href="week-04-sorting-best-worst.html#best-worst"><span class="std std-ref">Best-Worst Case for Comparison-Based Sorting</span></a>.</p>
 </div>
 <div class="section" id="computing-solutions-with-backtracking">
-<h2>Computing Solutions with Backtracking<a class="headerlink" href="#computing-solutions-with-backtracking" title="Permalink to this headline">¶</a></h2>
+<h2>10.1.2. Computing Solutions with Backtracking<a class="headerlink" href="#computing-solutions-with-backtracking" title="Permalink to this headline">¶</a></h2>
 <p>In the light of the tree-analogy described above, let us remark that each algorithm implementing a CSP solution by search via back-tracking combines two computational patterns:</p>
 <ul class="simple">
 <li>Iteration (e.g., via <code class="docutils literal notranslate"><span class="pre">for</span></code>-loop) — for enumerating possible alternatives (branches) to consider at a given stage.</li>
@@ -218,7 +233,7 @@ Section <a class="reference internal" href="week-04-sorting-best-worst.html#best
 </ul>
 </div>
 <div class="section" id="examples-of-csp-solved-by-backtracking">
-<h2>Examples of CSP solved by Backtracking<a class="headerlink" href="#examples-of-csp-solved-by-backtracking" title="Permalink to this headline">¶</a></h2>
+<h2>10.1.3. Examples of CSP solved by Backtracking<a class="headerlink" href="#examples-of-csp-solved-by-backtracking" title="Permalink to this headline">¶</a></h2>
 <p>The tree-based analogy and back-tracking is widely applicable for solving NP-complete problems, such as</p>
 <ul class="simple">
 <li><a class="reference external" href="https://en.wikipedia.org/wiki/Boolean_satisfiability_problem">Boolean satisfiability problem (SAT)</a></li>
@@ -231,7 +246,7 @@ this section focus on a simpler (and less practically useful) problem
 solved by backtracking, namely <em>N-Queens problem</em>.</p>
 </div>
 <div class="section" id="n-queens-problem">
-<h2>N-Queens problem<a class="headerlink" href="#n-queens-problem" title="Permalink to this headline">¶</a></h2>
+<h2>10.1.4. N-Queens problem<a class="headerlink" href="#n-queens-problem" title="Permalink to this headline">¶</a></h2>
 <p>Assume you are given an <code class="docutils literal notranslate"><span class="pre">n</span></code> by <code class="docutils literal notranslate"><span class="pre">n</span></code> chessboard so that no two queens threaten each other; thus, a solution requires that no two queens share the same row, column, or diagonal. We are going to discover this solution iteratively, via back-tracking, by considering it a CSP.</p>
 <p><strong>Question</strong>: does the solution exist fo any <code class="docutils literal notranslate"><span class="pre">n</span></code>?</p>
 <p>The board is encoded as 2-dimensional array <code class="docutils literal notranslate"><span class="pre">board</span></code> of integers (0
@@ -356,6 +371,15 @@ different row.</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-09-dynamic-programming.html" class="btn btn-neutral float-right" title="10.2. Optimisation Problems and Dynamic Programming" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-09.html" class="btn btn-neutral" title="10. Week 09: Backtracking and Dynamic Programming" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
