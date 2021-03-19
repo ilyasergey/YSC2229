@@ -39,8 +39,7 @@ Lecture Notes
    midterm   
    week-07
    week-08
-
-..   week-09
+   week-09
 ..   week-10
 ..   week-11
 ..   week-12
@@ -56,9 +55,8 @@ Slides and Supplementary Materials
 * `Matrix determinants in Haskell <_static/2021/Matrices.hs>`_
 * `Week 04 Slides on Advanced Sorting <_static/2021/Week-04-Sorting.pdf>`_
 * `Week 05 Slides on Best-Worst Sorting Complexity <_static/2021/Week-05-More-Sorting.pdf>`_
-
-.. * `Week 09 Slides on Hamiltonian Paths <_static/2021/Week-09-Hamilton.pdf>`_
-.. * `Board shots from the Backtracking lecture <_static/2021/backtracking.pdf>`_
+* `Week 09 Slides on Hamiltonian Paths <_static/2021/Week-09-Hamilton.pdf>`_
+* `Board shots from the Backtracking lecture <_static/2021/backtracking.pdf>`_
 
 Examples and Code
 -----------------
