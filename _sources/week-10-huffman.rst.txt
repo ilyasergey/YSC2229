@@ -119,8 +119,8 @@ To build the tree from those leaves, we are going to use a familiar structure mi
    type t = char tree * int
    let comp x y = 
      if snd x < snd y then 1
-     else if fst x = fst y then 0
-     else -1
+     else if snd x > snd y then -1
+     else 0
    let pp (_, f) = Printf.sprintf "[tree -> %d]" f
  end
 

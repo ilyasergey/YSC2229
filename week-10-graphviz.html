@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installing GraphViz &mdash; YSC2229 2021</title>
+  <title>11.5. Installing GraphViz &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,8 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="11.4. Huffman Encoding" href="week-10-huffman.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,7 +82,7 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
@@ -92,6 +93,19 @@
 <li class="toctree-l1"><a class="reference internal" href="week-07.html">8. Week 07: Hashing-Based Data Structures</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-08.html">9. Week 08: Searching in Strings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-09.html">10. Week 09: Backtracking and Dynamic Programming</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-10.html">11. Week 10: Binary Data Compression</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-10-reading-files.html">11.1. File Input and Output in OCaml</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-binary-encondings.html">11.2. Binary Encoding of Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-rle.html">11.3. Run-Length Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-huffman.html">11.4. Huffman Encoding</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11.5. Installing GraphViz</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#microsoft-windows-10">11.5.1. Microsoft Windows 10</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#linux">11.5.2. Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mac-os-x">11.5.3. Mac OS X</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
             
@@ -137,7 +151,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Installing GraphViz</li>
+          <li><a href="week-10.html">11. Week 10: Binary Data Compression</a> &raquo;</li>
+        
+      <li>11.5. Installing GraphViz</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -155,7 +171,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="installing-graphviz">
-<h1>Installing GraphViz<a class="headerlink" href="#installing-graphviz" title="Permalink to this headline">¶</a></h1>
+<h1>11.5. Installing GraphViz<a class="headerlink" href="#installing-graphviz" title="Permalink to this headline">¶</a></h1>
 <p>For the next two lectures we will be using the <a class="reference external" href="https://www.graphviz.org/">GraphViz</a> tool suite for visualising graph-like
 data structures. GraphViz is available on all modern operating
 systems and is easy to install. Below, I provide brief instructions on
@@ -164,7 +180,7 @@ special format, which it can then convert to an image of a graph,
 taking care of positioning the nodes and rendering the edges between
 them. Some examples for using GraphViz can be found by <a class="reference external" href="https://graphs.grevian.org/example">this link</a>.</p>
 <div class="section" id="microsoft-windows-10">
-<h2>Microsoft Windows 10<a class="headerlink" href="#microsoft-windows-10" title="Permalink to this headline">¶</a></h2>
+<h2>11.5.1. Microsoft Windows 10<a class="headerlink" href="#microsoft-windows-10" title="Permalink to this headline">¶</a></h2>
 <p>Assuming that you have WSL and Ubuntu Linux installed, execute the following commands from the terminal:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">graphviz</span> <span class="n">evince</span>
 </pre></div>
@@ -194,11 +210,11 @@ type in the terminal:</p>
 </div>
 </div>
 <div class="section" id="linux">
-<h2>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
+<h2>11.5.2. Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
 <p>Follow the same steps as for MS Windows 10 above, using the corresponding package manager.</p>
 </div>
 <div class="section" id="mac-os-x">
-<h2>Mac OS X<a class="headerlink" href="#mac-os-x" title="Permalink to this headline">¶</a></h2>
+<h2>11.5.3. Mac OS X<a class="headerlink" href="#mac-os-x" title="Permalink to this headline">¶</a></h2>
 <p>Install GraphViz by executing the following command in the terminal:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">graphviz</span> <span class="n">wget</span>
 </pre></div>
@@ -229,6 +245,13 @@ type in the terminal:</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="week-10-huffman.html" class="btn btn-neutral" title="11.4. Huffman Encoding" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

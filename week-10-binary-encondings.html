@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Binary Encoding of Data &mdash; YSC2229 2021</title>
+  <title>11.2. Binary Encoding of Data &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="11.3. Run-Length Encoding" href="week-10-rle.html" />
+    <link rel="prev" title="11.1. File Input and Output in OCaml" href="week-10-reading-files.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,7 +83,7 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
@@ -92,6 +94,19 @@
 <li class="toctree-l1"><a class="reference internal" href="week-07.html">8. Week 07: Hashing-Based Data Structures</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-08.html">9. Week 08: Searching in Strings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-09.html">10. Week 09: Backtracking and Dynamic Programming</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="week-10.html">11. Week 10: Binary Data Compression</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="week-10-reading-files.html">11.1. File Input and Output in OCaml</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">11.2. Binary Encoding of Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#writing-and-reading-binary-files">11.2.1. Writing and Reading Binary Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#writing-and-reading-ocaml-strings">11.2.2. Writing and Reading OCaml Strings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#compressing-dna-sequences">11.2.3. Compressing DNA Sequences</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-rle.html">11.3. Run-Length Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-huffman.html">11.4. Huffman Encoding</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-10-graphviz.html">11.5. Installing GraphViz</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -137,7 +152,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Binary Encoding of Data</li>
+          <li><a href="week-10.html">11. Week 10: Binary Data Compression</a> &raquo;</li>
+        
+      <li>11.2. Binary Encoding of Data</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -155,7 +172,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="binary-encoding-of-data">
-<span id="week-10-binary"></span><h1>Binary Encoding of Data<a class="headerlink" href="#binary-encoding-of-data" title="Permalink to this headline">¶</a></h1>
+<span id="week-10-binary"></span><h1>11.2. Binary Encoding of Data<a class="headerlink" href="#binary-encoding-of-data" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File: <code class="docutils literal notranslate"><span class="pre">BinaryEncodings.ml</span></code></li>
 </ul>
@@ -166,7 +183,7 @@
 </div>
 <p>The standard terminology for writing/reading data to/from its binary representation is to <em>serialize</em>/<em>deserialize</em> it.</p>
 <div class="section" id="writing-and-reading-binary-files">
-<h2>Writing and Reading Binary Files<a class="headerlink" href="#writing-and-reading-binary-files" title="Permalink to this headline">¶</a></h2>
+<h2>11.2.1. Writing and Reading Binary Files<a class="headerlink" href="#writing-and-reading-binary-files" title="Permalink to this headline">¶</a></h2>
 <p>Standard OCaml library does not provide means to work with binary data
 in the most fine-grained way: with standard functions one can
 read/write sequences of bits that are multipliers of 8 (i.e., bytes
@@ -194,7 +211,7 @@ files.</p>
 <p>Notice the last statement <code class="docutils literal notranslate"><span class="pre">flush_bits</span> <span class="pre">bits_output</span></code>. What it does is to add “missing” bits (as zeroes) to the binary file so its length (in bits) would be divisible by 8. If this is not done, then reading such a file might result in an error. The procedure <code class="docutils literal notranslate"><span class="pre">write_to_binary</span></code> takes as arguments, the function <code class="docutils literal notranslate"><span class="pre">serialize</span></code> that handles the data to be written to an output file , the <code class="docutils literal notranslate"><span class="pre">filename</span></code> of the file and the <code class="docutils literal notranslate"><span class="pre">data</span></code> itself.</p>
 </div>
 <div class="section" id="writing-and-reading-ocaml-strings">
-<h2>Writing and Reading OCaml Strings<a class="headerlink" href="#writing-and-reading-ocaml-strings" title="Permalink to this headline">¶</a></h2>
+<h2>11.2.2. Writing and Reading OCaml Strings<a class="headerlink" href="#writing-and-reading-ocaml-strings" title="Permalink to this headline">¶</a></h2>
 <p>Let us now use the binary-manipulating machinery to read/write OCaml strings as if they were just sequences of bits.</p>
 <p>Writing is done via the following function:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">write_string_to_binary</span> <span class="n">filename</span> <span class="n">text</span> <span class="o">=</span>
@@ -267,7 +284,7 @@ tests - feel frree to check it). Here, we have tailored the path so it
 would work correctly with inline tests.</p>
 </div>
 <div class="section" id="compressing-dna-sequences">
-<h2>Compressing DNA Sequences<a class="headerlink" href="#compressing-dna-sequences" title="Permalink to this headline">¶</a></h2>
+<h2>11.2.3. Compressing DNA Sequences<a class="headerlink" href="#compressing-dna-sequences" title="Permalink to this headline">¶</a></h2>
 <p>There is no gain in reading strings in binary, as we use the same
 format for representing them as plain OCaml.</p>
 <p>Some domains, however, have data, for which it would be too wasteful
@@ -365,6 +382,15 @@ OCaml string:</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-10-rle.html" class="btn btn-neutral float-right" title="11.3. Run-Length Encoding" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-10-reading-files.html" class="btn btn-neutral" title="11.1. File Input and Output in OCaml" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
