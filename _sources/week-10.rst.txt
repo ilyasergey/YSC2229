@@ -1,7 +1,7 @@
 .. -*- mode: rst -*-
 
-Week 10: Binary Data Compression
-================================
+Week 10: Data Encoding and Compression
+======================================
 
 .. toctree::
 
