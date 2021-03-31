@@ -15,7 +15,7 @@ a value --- all those operations taking the time proportional to the
 height :math:`h` of the tree or, if the tree is constructed randomly
 out of :math:`n` elements --- :math:`O(\log n)`. This makes BST a
 superior alternative to lists, heaps, and even hash-tables when
-impelmenting sets mutable sets with a number of operations.
+impelmenting mutable sets with a number of standard set operations.
 
 The key to this expressivity and efficience is the invariant of a
 tree-shaped data structure, that mandates that, for any node ``q``,
@@ -260,7 +260,11 @@ We define the ``search`` function so it would return not just the element, but a
     in
     map_option (get_root t) (walk k) None
 
-In the absence of the abstract module signature, it is quite dangerous to return a node (node just its value), as one can break the BST properties, by checking its mutable components. However, returning a node also simplifies the implementation of various testing and manipulation procedures, specifically, deletion of tree nodes. 
+In the absence of the abstract module signature, it is quite dangerous to return
+a node (not just `its value`), as one can break the BST properties, by messing
+with its mutable components (e.g., reference to left/right children). However,
+returning a node also simplifies the implementation of various testing and
+manipulation procedures, specifically, deletion of tree nodes.
 
 Tree Traversals
 ---------------
@@ -376,7 +380,8 @@ Thanks to its invariant, a BST makes it almost trivial to implement operations, 
 * Getting minimum/maximum element in a set representing by a tree
 * Find a successor/predecessor of an element
 
-For instance, finding the minimal element of a `subtree` starting from a node ``n`` can be achieved by the following operation::
+For instance, finding the minimal element of a `subtree` starting from a node
+``n`` can be achieved by the following operation::
 
   let rec find_min_node n = 
     match left n with
@@ -385,7 +390,7 @@ For instance, finding the minimal element of a `subtree` starting from a node ``
 
 Notice that this operation does not find the `global` tree-wise
 successor of the element in node `n`, although that is also possible
-to do in :math:`O(log n)` operations for a tree that is well-balanced
+to do in :math:`O(\log n)` operations for a tree that is well-balanced
 (i.e., not to "tall" and "thin").
 
 Deleting a node from BST
@@ -496,7 +501,7 @@ choosing a random node in it ``z``, and then checking the following
 properties for the modified tree after the deletion of ``z``:
 
 * The tree still satisfies the BST invariant;
-* It has the same number of elements;
+* It has the previous number of elements minus one;
 * All elements from the modified tree plus the deleted one are the elements of the old tree.
 
 These checks can be automatically performed by the following function, parameterised by the size of the tree::

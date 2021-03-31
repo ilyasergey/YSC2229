@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Week 11: Binary Search Trees and Graphs &mdash; YSC2229 2021</title>
+  <title>12. Week 11: Binary Search Trees and Graphs &mdash; YSC2229 2021</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="12.1. Representing Sets via Binary Search Trees" href="week-11-bst.html" />
+    <link rel="prev" title="11.5. Installing GraphViz" href="week-10-graphviz.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,7 +83,7 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
@@ -93,6 +95,11 @@
 <li class="toctree-l1"><a class="reference internal" href="week-08.html">9. Week 08: Searching in Strings</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-09.html">10. Week 09: Backtracking and Dynamic Programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-10.html">11. Week 10: Data Encoding and Compression</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">12. Week 11: Binary Search Trees and Graphs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html">12.1. Representing Sets via Binary Search Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html">12.2. Representing Graphs</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -138,7 +145,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Week 11: Binary Search Trees and Graphs</li>
+      <li>12. Week 11: Binary Search Trees and Graphs</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -156,28 +163,28 @@
            <div itemprop="articleBody">
             
   <div class="section" id="week-11-binary-search-trees-and-graphs">
-<h1>Week 11: Binary Search Trees and Graphs<a class="headerlink" href="#week-11-binary-search-trees-and-graphs" title="Permalink to this headline">¶</a></h1>
+<h1>12. Week 11: Binary Search Trees and Graphs<a class="headerlink" href="#week-11-binary-search-trees-and-graphs" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="week-11-bst.html">Representing Sets via Binary Search Trees</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#a-data-structure-for-binary-search-trees">A Data Structure for Binary-Search Trees</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#inserting-an-element-into-a-bst">Inserting an element into a BST</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#binary-search-tree-invariant">Binary-Search-Tree Invariant</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#testing-tree-operations">Testing Tree Operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#printing-a-tree">Printing a Tree</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#searching-elements">Searching Elements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#tree-traversals">Tree Traversals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#testing-element-retrieval-and-tree-traversals">Testing Element Retrieval and Tree Traversals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#more-bst-operations">More BST operations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#deleting-a-node-from-bst">Deleting a node from BST</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#bst-rotations">BST Rotations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-11-bst.html">12.1. Representing Sets via Binary Search Trees</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#a-data-structure-for-binary-search-trees">12.1.1. A Data Structure for Binary-Search Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#inserting-an-element-into-a-bst">12.1.2. Inserting an element into a BST</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#binary-search-tree-invariant">12.1.3. Binary-Search-Tree Invariant</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#testing-tree-operations">12.1.4. Testing Tree Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#printing-a-tree">12.1.5. Printing a Tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#searching-elements">12.1.6. Searching Elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#tree-traversals">12.1.7. Tree Traversals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#testing-element-retrieval-and-tree-traversals">12.1.8. Testing Element Retrieval and Tree Traversals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#more-bst-operations">12.1.9. More BST operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#deleting-a-node-from-bst">12.1.10. Deleting a node from BST</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11-bst.html#bst-rotations">12.1.11. BST Rotations</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-11-graphs.html">Representing Graphs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#graphs-as-adjacency-lists">Graphs as Adjacency Lists</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#reading-and-printing-graphs">Reading and Printing Graphs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#rendering-graphs-via-graphviz">Rendering Graphs via GraphViz</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#shortcomings-of-adjacency-list-graph-representation">Shortcomings of Adjacency-List graph representation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-11-graphs.html">12.2. Representing Graphs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#graphs-as-adjacency-lists">12.2.1. Graphs as Adjacency Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#reading-and-printing-graphs">12.2.2. Reading and Printing Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#rendering-graphs-via-graphviz">12.2.3. Rendering Graphs via GraphViz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#shortcomings-of-adjacency-list-graph-representation">12.2.4. Shortcomings of Adjacency-List graph representation</a></li>
 </ul>
 </li>
 </ul>
@@ -189,6 +196,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="week-11-bst.html" class="btn btn-neutral float-right" title="12.1. Representing Sets via Binary Search Trees" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="week-10-graphviz.html" class="btn btn-neutral" title="11.5. Installing GraphViz" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
