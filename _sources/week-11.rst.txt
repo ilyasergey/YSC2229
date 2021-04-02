@@ -1,7 +1,7 @@
 .. -*- mode: rst -*-
 
-Week 11: Binary Search Trees and Graphs
-=======================================
+Week 11: Binary Search Trees
+============================
 
 .. toctree::
 
