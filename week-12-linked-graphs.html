@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>13.2. Graphs as Linked Data Structures &mdash; YSC2229 2021</title>
+  <title>Graphs as Linked Data Structures &mdash; YSC2229 2021</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="13.3. Reachability and Graph Traversals" href="week-12-reachability.html" />
-    <link rel="prev" title="13.1. Representing Graphs" href="week-11-graphs.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -83,7 +81,7 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
@@ -96,19 +94,6 @@
 <li class="toctree-l1"><a class="reference internal" href="week-09.html">10. Week 09: Backtracking and Dynamic Programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-10.html">11. Week 10: Data Encoding and Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-11.html">12. Week 11: Binary Search Trees</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="week-12.html">13. Week 12: Graph Algorithms</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html">13.1. Representing Graphs</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">13.2. Graphs as Linked Data Structures</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#switching-between-graph-representations">13.2.1. Switching between graph representations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#testing-graph-operations">13.2.2. Testing graph operations</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html">13.3. Reachability and Graph Traversals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html">13.4. Single-Source Shortest Paths</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-spanning.html">13.5. Minimal Spanning Trees</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-exercises.html">13.6. Exercises</a></li>
-</ul>
-</li>
 </ul>
 
             
@@ -154,9 +139,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="week-12.html">13. Week 12: Graph Algorithms</a> &raquo;</li>
-        
-      <li>13.2. Graphs as Linked Data Structures</li>
+      <li>Graphs as Linked Data Structures</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -174,7 +157,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="graphs-as-linked-data-structures">
-<span id="linked-graphs"></span><h1>13.2. Graphs as Linked Data Structures<a class="headerlink" href="#graphs-as-linked-data-structures" title="Permalink to this headline">¶</a></h1>
+<span id="linked-graphs"></span><h1>Graphs as Linked Data Structures<a class="headerlink" href="#graphs-as-linked-data-structures" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li>File <code class="docutils literal notranslate"><span class="pre">Graphs.ml</span></code></li>
 </ul>
@@ -331,7 +314,7 @@ it in both the set of node identifiers, and the node map:</p>
 </pre></div>
 </div>
 <div class="section" id="switching-between-graph-representations">
-<h2>13.2.1. Switching between graph representations<a class="headerlink" href="#switching-between-graph-representations" title="Permalink to this headline">¶</a></h2>
+<h2>Switching between graph representations<a class="headerlink" href="#switching-between-graph-representations" title="Permalink to this headline">¶</a></h2>
 <p>As we already have reading/writing implemented for AL-based graphs, let us implement conversion between them and linked representations. The following function, for instance, converts a simple AL-based graph (with arbitrary node payloads) to a linked representation:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">from_simple_adjacency_graph</span> <span class="o">(</span><span class="n">ag</span> <span class="o">:</span> <span class="o">(</span><span class="k">&#39;</span><span class="n">a</span><span class="o">,</span> <span class="k">&#39;</span><span class="n">b</span><span class="o">)</span> <span class="nn">AdjacencyGraphs</span><span class="p">.</span><span class="n">graph</span><span class="o">)</span> <span class="o">=</span>
   <span class="k">let</span> <span class="n">g</span> <span class="o">=</span> <span class="n">mk_graph</span> <span class="bp">()</span> <span class="k">in</span>
@@ -391,7 +374,7 @@ it in both the set of node identifiers, and the node map:</p>
 </div>
 </div>
 <div class="section" id="testing-graph-operations">
-<h2>13.2.2. Testing graph operations<a class="headerlink" href="#testing-graph-operations" title="Permalink to this headline">¶</a></h2>
+<h2>Testing graph operations<a class="headerlink" href="#testing-graph-operations" title="Permalink to this headline">¶</a></h2>
 <p>One advantage of AL-based representation is that it makes it
 considerably easier to test graphs for certain properties. For
 instance, the following function checks that two AL-represented graphs
@@ -461,15 +444,6 @@ have the same topology assuming the exact correspondence of the nodes
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="week-12-reachability.html" class="btn btn-neutral float-right" title="13.3. Reachability and Graph Traversals" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="week-11-graphs.html" class="btn btn-neutral" title="13.1. Representing Graphs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

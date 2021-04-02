@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>13. Week 12: Graph Algorithms &mdash; YSC2229 2021</title>
+  <title>Week 12: Graph Algorithms &mdash; YSC2229 2021</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="13.1. Representing Graphs" href="week-11-graphs.html" />
-    <link rel="prev" title="12.1. Representing Sets via Binary Search Trees" href="week-11-bst.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -83,7 +81,7 @@
 <li class="toctree-l1"><a class="reference internal" href="prerequisites.html">2. Software Prerequisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codestyle.html">3. OCaml Style Guide</a></li>
 </ul>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="week-01.html">1. Week 01: Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-02.html">2. Week 02: Working with Arrays</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-03.html">3. Week 03: Complexity of Algorithms and Order Notation</a></li>
@@ -96,15 +94,6 @@
 <li class="toctree-l1"><a class="reference internal" href="week-09.html">10. Week 09: Backtracking and Dynamic Programming</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-10.html">11. Week 10: Data Encoding and Compression</a></li>
 <li class="toctree-l1"><a class="reference internal" href="week-11.html">12. Week 11: Binary Search Trees</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">13. Week 12: Graph Algorithms</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html">13.1. Representing Graphs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-linked-graphs.html">13.2. Graphs as Linked Data Structures</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html">13.3. Reachability and Graph Traversals</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html">13.4. Single-Source Shortest Paths</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-spanning.html">13.5. Minimal Spanning Trees</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-exercises.html">13.6. Exercises</a></li>
-</ul>
-</li>
 </ul>
 
             
@@ -150,7 +139,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>13. Week 12: Graph Algorithms</li>
+      <li>Week 12: Graph Algorithms</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -168,56 +157,56 @@
            <div itemprop="articleBody">
             
   <div class="section" id="week-12-graph-algorithms">
-<h1>13. Week 12: Graph Algorithms<a class="headerlink" href="#week-12-graph-algorithms" title="Permalink to this headline">¶</a></h1>
+<h1>Week 12: Graph Algorithms<a class="headerlink" href="#week-12-graph-algorithms" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="week-11-graphs.html">13.1. Representing Graphs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#graphs-as-adjacency-lists">13.1.1. Graphs as Adjacency Lists</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#reading-and-printing-graphs">13.1.2. Reading and Printing Graphs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#rendering-graphs-via-graphviz">13.1.3. Rendering Graphs via GraphViz</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#shortcomings-of-adjacency-list-graph-representation">13.1.4. Shortcomings of Adjacency-List graph representation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-11-graphs.html">Representing Graphs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#graphs-as-adjacency-lists">Graphs as Adjacency Lists</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#reading-and-printing-graphs">Reading and Printing Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#rendering-graphs-via-graphviz">Rendering Graphs via GraphViz</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-11-graphs.html#shortcomings-of-adjacency-list-graph-representation">Shortcomings of Adjacency-List graph representation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-12-linked-graphs.html">13.2. Graphs as Linked Data Structures</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-12-linked-graphs.html#switching-between-graph-representations">13.2.1. Switching between graph representations</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-linked-graphs.html#testing-graph-operations">13.2.2. Testing graph operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-12-linked-graphs.html">Graphs as Linked Data Structures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-12-linked-graphs.html#switching-between-graph-representations">Switching between graph representations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-linked-graphs.html#testing-graph-operations">Testing graph operations</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-12-reachability.html">13.3. Reachability and Graph Traversals</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html#checking-reachability-in-a-graph">13.3.1. Checking Reachability in a Graph</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html#testing-reachability">13.3.2. Testing Reachability</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html#rendering-paths-in-a-graph">13.3.3. Rendering Paths in a Graph</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html#depth-first-traversal">13.3.4. Depth-First Traversal</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html#dfs-and-reachability">13.3.5. DFS and Reachability</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html#dfs-and-cycle-detection">13.3.6. DFS and Cycle Detection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html#topological-sort">13.3.7. Topological Sort</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html#testing-topological-sort">13.3.8. Testing Topological Sort</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-12-reachability.html">Reachability and Graph Traversals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html#checking-reachability-in-a-graph">Checking Reachability in a Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html#testing-reachability">Testing Reachability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html#rendering-paths-in-a-graph">Rendering Paths in a Graph</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html#depth-first-traversal">Depth-First Traversal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html#dfs-and-reachability">DFS and Reachability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html#dfs-and-cycle-detection">DFS and Cycle Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html#topological-sort">Topological Sort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-reachability.html#testing-topological-sort">Testing Topological Sort</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-12-paths.html">13.4. Single-Source Shortest Paths</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html#weighted-graphs">13.4.1. Weighted Graphs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html#some-properties-of-paths">13.4.2. Some Properties of Paths</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html#representing-shortest-paths">13.4.3. Representing Shortest Paths</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html#representing-distance">13.4.4. Representing Distance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html#initialisation-and-relaxation">13.4.5. Initialisation and Relaxation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html#bellman-ford-algorithm">13.4.6. Bellman-Ford Algorithm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html#rendering-minimal-paths">13.4.7. Rendering Minimal Paths</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html#dijkstra-s-algorithm">13.4.8. Dijkstra’s Algorithm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html#testing-shortest-path-algorithms">13.4.9. Testing Shortest-Path Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-12-paths.html">Single-Source Shortest Paths</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html#weighted-graphs">Weighted Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html#some-properties-of-paths">Some Properties of Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html#representing-shortest-paths">Representing Shortest Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html#representing-distance">Representing Distance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html#initialisation-and-relaxation">Initialisation and Relaxation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html#bellman-ford-algorithm">Bellman-Ford Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html#rendering-minimal-paths">Rendering Minimal Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html#dijkstra-s-algorithm">Dijkstra’s Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-paths.html#testing-shortest-path-algorithms">Testing Shortest-Path Algorithms</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-12-spanning.html">13.5. Minimal Spanning Trees</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-12-spanning.html#representing-undirected-graphs">13.5.1. Representing Undirected Graphs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-spanning.html#trees-in-undirected-connected-graphs">13.5.2. Trees in Undirected Connected Graphs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-spanning.html#id1">13.5.3. Minimal Spanning Trees</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-spanning.html#kruskal-s-algorithm">13.5.4. Kruskal’s Algorithm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-spanning.html#testing-mst-construction">13.5.5. Testing MST Construction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-spanning.html#other-mst-algorithms">13.5.6. Other MST Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-12-spanning.html">Minimal Spanning Trees</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-12-spanning.html#representing-undirected-graphs">Representing Undirected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-spanning.html#trees-in-undirected-connected-graphs">Trees in Undirected Connected Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-spanning.html#id1">Minimal Spanning Trees</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-spanning.html#kruskal-s-algorithm">Kruskal’s Algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-spanning.html#testing-mst-construction">Testing MST Construction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-spanning.html#other-mst-algorithms">Other MST Algorithms</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="week-12-exercises.html">13.6. Exercises</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="week-12-exercises.html#exercise-1">13.6.1. Exercise 1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="week-12-exercises.html#exercise-2">13.6.2. Exercise 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="week-12-exercises.html">Exercises</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="week-12-exercises.html#exercise-1">Exercise 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="week-12-exercises.html#exercise-2">Exercise 2</a></li>
 </ul>
 </li>
 </ul>
@@ -229,15 +218,6 @@
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="week-11-graphs.html" class="btn btn-neutral float-right" title="13.1. Representing Graphs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="week-11-bst.html" class="btn btn-neutral" title="12.1. Representing Sets via Binary Search Trees" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>
