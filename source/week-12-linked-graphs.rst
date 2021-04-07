@@ -190,7 +190,7 @@ As we already have reading/writing implemented for AL-based graphs, let us imple
 
     g
 
-Conversely, the following functionsobtains an adjacency graph from a linked representation::
+Conversely, the following function obtains an adjacency graph from a linked representation::
 
   let to_adjacency_graph g = 
     let size = v_size g in

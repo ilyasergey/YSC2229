@@ -132,7 +132,7 @@ Depth-First Traversal
 
 It is possible to split graph into a set of trees with dedicated roots, so that each subtree is reachable from its root. One way to do it is using the Depth-First Search (DFS) procedure.
 
-The procedure is similar to reachability checking implemented above, but employs a more efficient way to detect cycles via the "colouring" technique. In essence, it maintains an additional hash table, assigning the colors as attributes to the nodes, to indicate whether the have not yet, are inte processed, or have been fully processed::
+The procedure is similar to reachability checking implemented above, but employs a more efficient way to detect cycles via the "colouring" technique. In essence, it maintains an additional hash table, assigning the colors as attributes to the nodes, to indicate whether the have not yet, are being, or have been fully processed::
 
   open NodeTable 
 
@@ -221,11 +221,15 @@ tree to retrieve the edge attributes::
   write_string_to_file out s
 
 For instance, for our working graph we get the following image,
-indicating two trees, rooted at nodes 0 and 2, correspondingly:
+indicating `four` trees, rooted at nodes 0, 2, 7, and 8, correspondingly (the
+last two trees only have one node each, hence are difficult to spot):
 
 .. image:: ../resources/dfs.png
    :width: 500px
    :align: center
+
+The reason why we ended up with four trees is due to the order in which DFS was
+choosing nodes to start from.
 
 DFS and Reachability
 --------------------
