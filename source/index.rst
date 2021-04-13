@@ -21,7 +21,7 @@ Introductory Data Structures and Algorithms
 * Peer Tutors: 
 
   * `Tram Hoang <mailto:tram.hoang@u.yale-nus.edu.sg>`_, Wednesdays, 7pm-9pm, CR20 (RC3-01-02)
-  * `Gabriel Petrov <mailto:gabrielphoenixpetrov@u.yale-nus.edu.sg>`_ Thursdays, 6pm-8pm, CR20 (RC3-01-02)
+  * `Gabriel Petrov <mailto:gabrielphoenixpetrov@u.yale-nus.edu.sg>`_, Thursdays, 6pm-8pm, CR20 (RC3-01-02)
 
 Lecture Notes
 -------------
@@ -43,7 +43,7 @@ Lecture Notes
    week-10
    week-11
    week-12
-..   week-13
+   week-13
 ..   final
 
 Lecture notes will be posted gradually as we progress through the material.
