@@ -44,7 +44,7 @@ Lecture Notes
    week-11
    week-12
    week-13
-..   final
+   final
 
 Lecture notes will be posted gradually as we progress through the material.
 
@@ -57,6 +57,7 @@ Slides and Supplementary Materials
 * `Week 05 Slides on Best-Worst Sorting Complexity <_static/2021/Week-05-More-Sorting.pdf>`_
 * `Week 09 Slides on Hamiltonian Paths <_static/2021/Week-09-Hamilton.pdf>`_
 * `Board shots from the Backtracking lecture <_static/2021/backtracking.pdf>`_
+* `Week 13 Slides (Wrapping Up) <_static/2021/Week-13-Conclusion.pdf>`_
 
 Examples and Code
 -----------------
