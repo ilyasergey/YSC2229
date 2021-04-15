@@ -222,9 +222,8 @@ The image above has been obtained via GraphViz for the graph, read from ``small_
 Shortcomings of Adjacency-List graph representation
 ---------------------------------------------------
 
-The main disadvantage of adjacency-list based representation is that
-the operations of adding an edge, getting successors (and possibly
-predecessors) of a node in it are very expensive: all of those
-operations take :math:`O(|V|)` time. It is also very difficult to add
-new nodes, as it would require allocating a new array.
+The main disadvantage of adjacency-list based representation is that many common
+operations, such as getting predecessors of a node, in it are very expensive and
+can take :math:`O(|E|)` time. It is also very difficult to add new nodes, as it
+would require allocating a new array.
 
