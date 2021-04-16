@@ -111,6 +111,8 @@
 <li class="toctree-l2"><a class="reference internal" href="week-12-exercises.html">13.6. Exercises</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="week-13.html">14. Week 13: Elements of Computational Geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="final.html">15. Final Project: Vroomba Programming</a></li>
 </ul>
 
             
@@ -379,11 +381,10 @@ can be found by <a class="reference external" href="https://graphs.grevian.org/e
 </div>
 <div class="section" id="shortcomings-of-adjacency-list-graph-representation">
 <h2>13.1.4. Shortcomings of Adjacency-List graph representation<a class="headerlink" href="#shortcomings-of-adjacency-list-graph-representation" title="Permalink to this headline">¶</a></h2>
-<p>The main disadvantage of adjacency-list based representation is that
-the operations of adding an edge, getting successors (and possibly
-predecessors) of a node in it are very expensive: all of those
-operations take <span class="math notranslate nohighlight">\(O(|V|)\)</span> time. It is also very difficult to add
-new nodes, as it would require allocating a new array.</p>
+<p>The main disadvantage of adjacency-list based representation is that many common
+operations, such as getting predecessors of a node, in it are very expensive and
+can take <span class="math notranslate nohighlight">\(O(|E|)\)</span> time. It is also very difficult to add new nodes, as it
+would require allocating a new array.</p>
 </div>
 </div>
 
