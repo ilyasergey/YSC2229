@@ -441,11 +441,18 @@
 </pre></div>
 </div>
 <p>Specifically, if the ray and the segment are collinear than we can try to find if one of the end points of the segment is on the ray.</p>
-<p>Otherwise, if they are not collinear, we express them both in the vector form and solve two equations, wrt. the scalar parameters <code class="docutils literal notranslate"><span class="pre">t</span></code> and <code class="docutils literal notranslate"><span class="pre">u</span></code>. Finally, we check that <code class="docutils literal notranslate"><span class="pre">u</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code> are in the allowed ranges, and use one of them to calculate the intersection point.</p>
+<p>Otherwise, if they are not collinear, we express them both in the vector form
+and solve two equations, wrt. the scalar parameters <code class="docutils literal notranslate"><span class="pre">t</span></code> and <code class="docutils literal notranslate"><span class="pre">u</span></code>. Finally, we
+check that <code class="docutils literal notranslate"><span class="pre">u</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code> are in the allowed ranges, and use one of them to
+calculate the intersection point.</p>
 </div>
 <div class="section" id="point-within-an-polygon">
 <h2>14.3.6. Point within an polygon<a class="headerlink" href="#point-within-an-polygon" title="Permalink to this headline">¶</a></h2>
-<p>A simple way to determine whether a point is within a polygon if to draw a ray (in an arbitrary direction) from it and count how many times it intersect the edges of the polygon. If this number is odd, the point is within the polygon, otherwise it is outside. This is done by the procedure <code class="docutils literal notranslate"><span class="pre">point_within_polygon</span></code> defined below, along with several auxiliary functions:</p>
+<p>A simple way to determine whether a point is within a polygon if to draw a ray
+(in an arbitrary direction) from it and count how many times it intersect the
+edges of the polygon. If this number is odd, the point is within the polygon,
+otherwise it is outside. This is done by the procedure <code class="docutils literal notranslate"><span class="pre">point_within_polygon</span></code>
+defined below, along with several auxiliary functions:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Get neightbors of a vertex *)</span>
 <span class="k">let</span> <span class="n">get_vertex_neighbours</span> <span class="n">pol</span> <span class="n">v</span> <span class="o">=</span>
   <span class="k">assert</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">mem</span> <span class="n">v</span> <span class="n">pol</span><span class="o">);</span>
@@ -475,24 +482,33 @@
     <span class="n">dir1</span> <span class="o">&lt;&gt;</span> <span class="n">dir2</span>
 </pre></div>
 </div>
-<p>To avoid conrer cases, it makes sense to choose the ray, so it would
-not be collinear with any of the edges. For this, we will need the
-following function:</p>
-<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">choose_ray_angle</span> <span class="n">pol</span> <span class="o">=</span>
+<p>To avoid conrer cases, it makes sense to cast the ray from <code class="docutils literal notranslate"><span class="pre">p</span></code> in a way that
+so it would not be collinear with any of the edges and not pass through any
+vertices. For this, we will need the following function:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">choose_ray_angle</span> <span class="n">pol</span> <span class="n">p</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">xp</span><span class="o">,</span> <span class="n">yp</span><span class="o">)</span> <span class="o">=</span> <span class="n">p</span> <span class="k">in</span>
   <span class="k">let</span> <span class="n">edge_angles</span> <span class="o">=</span>
     <span class="n">edges</span> <span class="n">pol</span> <span class="o">|&gt;</span>
     <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x1</span><span class="o">,</span> <span class="n">y1</span><span class="o">),</span> <span class="nc">Point</span> <span class="o">(</span><span class="n">x2</span><span class="o">,</span> <span class="n">y2</span><span class="o">))</span> <span class="o">-&gt;</span>
         <span class="k">let</span> <span class="n">dx</span> <span class="o">=</span> <span class="n">x2</span> <span class="o">-.</span> <span class="n">x1</span> <span class="k">in</span>
-        <span class="k">let</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">-.</span> <span class="n">y1</span> <span class="k">in</span>
+        <span class="k">let</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">y2</span> <span class="o">-.</span> <span class="n">y1</span> <span class="k">in</span>
         <span class="n">atan2</span> <span class="n">dy</span> <span class="n">dx</span><span class="o">)</span> <span class="k">in</span>
-  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">length</span> <span class="n">pol</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">vertex_angles</span> <span class="o">=</span>
+    <span class="n">pol</span> <span class="o">|&gt;</span> <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">fun</span> <span class="o">(</span><span class="nc">Point</span> <span class="o">(</span><span class="n">x1</span><span class="o">,</span><span class="n">y1</span><span class="o">))</span> <span class="o">-&gt;</span>
+                  <span class="k">let</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">y1</span> <span class="o">-.</span> <span class="n">yp</span> <span class="k">in</span>
+                  <span class="k">let</span> <span class="n">dx</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">-.</span> <span class="n">xp</span> <span class="k">in</span>
+                  <span class="n">atan2</span> <span class="n">dy</span> <span class="n">dx</span><span class="o">)</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">length</span> <span class="n">pol</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">in</span>
   <span class="k">let</span> <span class="n">candidate_angles</span> <span class="o">=</span>
     <span class="n">iota</span> <span class="o">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span> <span class="o">|&gt;</span>
     <span class="nn">List</span><span class="p">.</span><span class="n">map</span> <span class="o">(</span><span class="k">fun</span> <span class="n">i</span> <span class="o">-&gt;</span>
       <span class="o">(</span><span class="n">float_of_int</span> <span class="n">i</span><span class="o">)</span> <span class="o">*.</span> <span class="n">pi</span> <span class="o">/.</span> <span class="o">(</span><span class="n">float_of_int</span> <span class="n">n</span><span class="o">))</span> <span class="k">in</span>
   <span class="k">let</span> <span class="n">phi</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">find</span> <span class="o">(</span><span class="k">fun</span> <span class="n">c</span> <span class="o">-&gt;</span>  <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span>
                           <span class="o">(</span><span class="k">fun</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">not</span> <span class="o">(</span><span class="n">a</span> <span class="o">=~=</span> <span class="n">c</span><span class="o">))</span>
-                          <span class="n">edge_angles</span><span class="o">)</span> <span class="n">candidate_angles</span> <span class="k">in</span>
+                          <span class="n">edge_angles</span> <span class="o">&amp;&amp;</span>
+                          <span class="nn">List</span><span class="p">.</span><span class="n">for_all</span>
+                          <span class="o">(</span><span class="k">fun</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="n">not</span> <span class="o">(</span><span class="n">a</span> <span class="o">=~=</span> <span class="n">c</span><span class="o">))</span>
+                          <span class="n">vertex_angles</span><span class="o">)</span> <span class="n">candidate_angles</span> <span class="k">in</span>
   <span class="n">phi</span>
 </pre></div>
 </div>
@@ -500,7 +516,7 @@ following function:</p>
 <div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="c">(* Point within a polygon *)</span>
 
 <span class="k">let</span> <span class="n">point_within_polygon</span> <span class="n">pol</span> <span class="n">p</span> <span class="o">=</span>
-  <span class="k">let</span> <span class="n">ray</span> <span class="o">=</span> <span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="o">(</span><span class="n">choose_ray_angle</span> <span class="n">pol</span><span class="o">))</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">ray</span> <span class="o">=</span> <span class="o">(</span><span class="n">p</span><span class="o">,</span> <span class="o">(</span><span class="n">choose_ray_angle</span> <span class="n">pol</span> <span class="n">p</span><span class="o">))</span> <span class="k">in</span>
   <span class="k">let</span> <span class="n">es</span> <span class="o">=</span> <span class="n">edges</span> <span class="n">pol</span> <span class="k">in</span>
   <span class="k">if</span> <span class="nn">List</span><span class="p">.</span><span class="n">mem</span> <span class="n">p</span> <span class="n">pol</span> <span class="o">||</span>
      <span class="nn">List</span><span class="p">.</span><span class="n">exists</span> <span class="o">(</span><span class="k">fun</span> <span class="n">e</span> <span class="o">-&gt;</span> <span class="n">point_on_segment</span> <span class="n">e</span> <span class="n">p</span><span class="o">)</span> <span class="n">es</span> <span class="k">then</span> <span class="bp">true</span>

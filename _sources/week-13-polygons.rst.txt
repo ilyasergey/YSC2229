@@ -278,13 +278,20 @@ Now, we can find an intersection of a ray and a segment, in a way similar to how
  
 Specifically, if the ray and the segment are collinear than we can try to find if one of the end points of the segment is on the ray.
 
-Otherwise, if they are not collinear, we express them both in the vector form and solve two equations, wrt. the scalar parameters ``t`` and ``u``. Finally, we check that ``u`` and ``t`` are in the allowed ranges, and use one of them to calculate the intersection point.
+Otherwise, if they are not collinear, we express them both in the vector form
+and solve two equations, wrt. the scalar parameters ``t`` and ``u``. Finally, we
+check that ``u`` and ``t`` are in the allowed ranges, and use one of them to
+calculate the intersection point.
 
 
 Point within an polygon
 -----------------------
 
-A simple way to determine whether a point is within a polygon if to draw a ray (in an arbitrary direction) from it and count how many times it intersect the edges of the polygon. If this number is odd, the point is within the polygon, otherwise it is outside. This is done by the procedure ``point_within_polygon`` defined below, along with several auxiliary functions::
+A simple way to determine whether a point is within a polygon if to draw a ray
+(in an arbitrary direction) from it and count how many times it intersect the
+edges of the polygon. If this number is odd, the point is within the polygon,
+otherwise it is outside. This is done by the procedure ``point_within_polygon``
+defined below, along with several auxiliary functions::
 
  (* Get neightbors of a vertex *)
  let get_vertex_neighbours pol v = 
@@ -314,26 +321,35 @@ A simple way to determine whether a point is within a polygon if to draw a ray (
      let dir2 = direction r s b in
      dir1 <> dir2
 
-To avoid conrer cases, it makes sense to choose the ray, so it would
-not be collinear with any of the edges. For this, we will need the
-following function::
+To avoid conrer cases, it makes sense to cast the ray from ``p`` in a way that
+so it would not be collinear with any of the edges and not pass through any
+vertices. For this, we will need the following function::
 
- let choose_ray_angle pol = 
+ let choose_ray_angle pol p = 
+   let Point (xp, yp) = p in 
    let edge_angles = 
      edges pol |>
      List.map (fun (Point (x1, y1), Point (x2, y2)) -> 
          let dx = x2 -. x1 in
-         let dy = y1 -. y1 in 
+         let dy = y2 -. y1 in 
          atan2 dy dx) in
-   let n = List.length pol in
+   let vertex_angles = 
+     pol |> List.map (fun (Point (x1,y1)) -> 
+                   let dy = y1 -. yp in 
+                   let dx = x1 -. xp in 
+                   atan2 dy dx) in 
+   let n = 2 * (List.length pol) + 1 in
    let candidate_angles = 
      iota (n + 1) |>
      List.map (fun i -> 
        (float_of_int i) *. pi /. (float_of_int n)) in
    let phi = List.find (fun c ->  List.for_all 
                            (fun a -> not (a =~= c)) 
-                           edge_angles) candidate_angles in
-   phi
+                           edge_angles && 
+                           List.for_all 
+                           (fun a -> not (a =~= c)) 
+                           vertex_angles) candidate_angles in
+   phi      
 
 
 Now, we can determine whether the point is within the polygon::
@@ -341,7 +357,7 @@ Now, we can determine whether the point is within the polygon::
  (* Point within a polygon *)
 
  let point_within_polygon pol p = 
-   let ray = (p, (choose_ray_angle pol)) in
+   let ray = (p, (choose_ray_angle pol p)) in
    let es = edges pol in
    if List.mem p pol ||
       List.exists (fun e -> point_on_segment e p) es then true
