@@ -111,9 +111,8 @@ fully functional Linux distribution installed on your machine.
 
     sudo add-apt-repository ppa:avsm/ppa
     sudo apt install opam
-    opam init -y --compiler=4.10.0 --disable-sandboxing
+    opam init -y --compiler=4.12.0 --disable-sandboxing
     eval $(opam env)
-    opam pin add ppx_inline_test v0.14.0
     opam install -y dune core batteries utop graphics merlin ocp-indent
 
    Once done, add the following line to your ``~/.bashrc`` file::
@@ -122,94 +121,32 @@ fully functional Linux distribution installed on your machine.
 
    After that, close your terminal window and start a new one.
 
-   To check that your OCaml is correctly installed, run ``ocamlc --version`` from the terminal. You should get the output
-   ``4.10.0``, which is the version of the OCaml compiler we have just installed.
+   To check that your OCaml is correctly installed, run ``ocamlc --version``
+   from the terminal. You should get the output ``4.12.0``, which is the version
+   of the OCaml compiler we have just installed.
 
-7. **If you're planning to use VSCode instead of Emacs, please, skip to the step 12.**
+7. We recommend you to use `VSCode <https://code.visualstudio.com/>`_ for your
+   OCaml your development, assuming you've done steps 1-6.
 
-   Now we need to install the OCaml support for Emacs. Emacs can be installed
-   using the instructions given `in this article
-   <https://solarianprogrammer.com/2017/05/18/emacs-windows-subsystem-linux/>`_.
+   Start by installing the ``Remote-WSL`` plugin. It is the one suggested the
+   first time you run VSCode. Alternatively, you can install it by pressing
+   ``Ctrl-Shift-P``, typing ``install extensions``, and choosing ``Install
+   Extensions`` item from the dropdown menu, and then finding and installing the
+   ``Remote-WSL`` extension.
 
-   To use Emacs comfortably with Windows-like shortcuts, you will need to enable the `Cua mode <https://www.emacswiki.org/emacs/CuaMode>`_ for it. 
-   To enable Cua mode, create the file ``.emacs`` in you Linux home folder (i.e., it should be located under ``~/.emacs``) and add the following lines to it (or just append them to the file if it already exists)::
+   After installing that extension, press ``Ctrl-Shift-P`` and choose
+   ``Remote-WSL: New Window``. This will take a few seconds and will start a new
+   window of VSCode that runs **inside your WSL Linux** (you can even start a
+   Linux terminal there).
 
-    (cua-mode t)
-    (setq cua-auto-tabify-rectangles nil) ;; Don't tabify after rectangle commands
-    (transient-mark-mode 1) ;; No region when it is not highlighted
-    (setq cua-keep-region-after-copy t) ;; Standard Windows behaviour
+   Next, **in this remote window**, install the exntesion "OCaml and Reason IDE"
+   in the same way as described above.
 
-8. To continue with installing Emacs, Execute the following from terminal::
-
-    opam install -y tuareg user-setup
-    opam user-setup install --editors=emacs
-
-   The last touch is to add the code completion feature to Emacs. Open Emacs and execute
-   `Alt-X package-list-packages`. From the list choose `company -> Install -> Yes`:
-
-.. image:: ../resources/howto/company.png
-   :width: 820px
-   :align: center 
-
-9. Add the following lines to your ``~/.emacs`` configuration::
-
-    ; Make company aware of merlin
-    (with-eval-after-load 'company
-    (add-to-list 'company-backends 'merlin-company-backend))
-    ; Enable company on merlin managed buffers
-    (add-hook 'merlin-mode-hook 'company-mode)
-
-   Some additional information about this Emacs mode can be found `here <https://github.com/ocaml/merlin/wiki/emacs-from-scratch>`_.
-
-10. You're good to go. To check your setup, create an OCaml file in
-    Emacs (e.g., ``a.ml``) and try to play with some definitions. The
-    editor should highlight OCaml syntax, compile-time errors, and
-    will suggest options for name auto-completion:
-
-.. image:: ../resources/howto/tuareg.png
-   :width: 820px
-   :align: center
-
-11. [Optional] You can additionally setup the following parameters in Emacs for better
-    editing by searching in ``Options -> Customize Emacs -> Top-level
-    Customization Group``:
-
-    * Set the width of the buffer line to cut automatically beyond 80 characters
-      (parameter ``Fill Column``):   
-
-      .. image:: ../resources/howto/line80.png
-         :width: 820px
-         :align: center
-
-    * Remove the red highlighting of trailing whitespaces in the buffers
-      (parameter ``Show Trailing Whitespace``):
-
-      .. image:: ../resources/howto/trailing.png
-         :width: 820px
-         :align: center
-
-12. You can use `VSCode <https://code.visualstudio.com/>`_ instead of
-    Emacs for your development, assuming you've done steps 1-6.
-
-    Start by installing the Remote-WSL plugin. It is the one suggested the
-    firsrt time you run VSCode. Alternatively, you can install it by pressing
-    ``Ctrl-Shift-P``, typing "install extensions", and choosing "Install
-    Extensions" item from the dropdown menu, and then finding and installing the
-    "Remote-WSL" extension.
-
-    After installing that extension, press ``Ctrl-Shift-P`` and choose
-    "Remote-WSL: New Window". This will take a few seconds and will start a new
-    window of VSCode that runs **inside your WSL Linux** (you can even start a
-    Linux terminal there).
-
-    Next, **in this remote window**, install the exntesion "OCaml and Reason
-    IDE" in the same way as described above.
-
-    Now, you can open an OCaml file (``Ctrl-Shift-P``, followed by "File: Open
-    File") and enjoy the advanced features: highlighting, code completion, and
-    type information, as well as many others. An example of the UI is shown
-    below. Notice the indicators at the bottom of the screen, showing that
-    VSCode runs in WSL (Ubuntu), with OCaml/merlin support enabled:
+   Now, you can open an OCaml file (``Ctrl-Shift-P``, followed by "File: Open
+   File") and enjoy the advanced features: highlighting, code completion, and
+   type information, as well as many others. An example of the UI is shown
+   below. Notice the indicators at the bottom of the screen, showing that VSCode
+   runs in WSL (Ubuntu), with OCaml/merlin support enabled:
 
 .. image:: ../resources/vscode-wsl.png
    :width: 820px
@@ -233,7 +170,8 @@ installing the "OCaml and Reason IDE" extension.
 macOS
 -----
 
-OCaml is well supported in macOS, so the installation process is fairly straightforward.
+OCaml is well-supported in macOS, so the installation process is fairly
+straightforward.
 
 1. Install the `Homebrew package manager <https://brew.sh/>`_ for macOS.
 
@@ -253,9 +191,8 @@ OCaml is well supported in macOS, so the installation process is fairly straight
    lines from the terminal::
 
     brew install opam
-    opam init -y --compiler=4.10.0
+    opam init -y --compiler=4.12.0
     eval $(opam env)
-    opam pin add ppx_inline_test v0.14.0
     opam install -y dune core batteries utop graphics merlin ocp-indent
 
    Once done, add the following line to your ``~/.bashrc`` or ``~/.profile``
@@ -270,89 +207,22 @@ OCaml is well supported in macOS, so the installation process is fairly straight
    avoid it, please, run this line first before installing the listed
    above packages::
 
-     opam switch reinstall 4.10.0
+     opam switch reinstall 4.12.0
 
    To check that your OCaml is correctly installed, run ``ocamlc --version``
-   from the terminal. You should get the output ``4.10.0``, which is the version
+   from the terminal. You should get the output ``4.12.0``, which is the version
    of the OCaml compiler we have just installed.
 
-5. **If you're planning to use VSCode instead of Emacs, please, skip to the step 10.**
-
-   Now we need to install the OCaml support for Emacs. As an Emacs-like editor,
-   I suggest to use `Aquamacs <http://aquamacs.org/>`_. Please, download and
-   install it.
-
-6. To continue with installing Emacs, Execute the following from terminal::
-
-    opam install -y tuareg.2.0.8 user-setup 
-    opam user-setup install --editors=emacs
-
-   It is important that you install ``touareg`` version 2.0.8, as other versions
-   might cause Emacs-related issues when compiling.
-   The last touch is to add the code completion feature to Aquamacs. First, add
-   these lines to your ``~/.emacs`` file (create it if it doesn't exist)::
-
-    ;; Melpa
-    (require 'package)
-    (add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-    (package-initialize)
+5. We suggest you use `VSCode <https://code.visualstudio.com/>`_ for OCaml
+   development. To do so, after downloading and installing the VSCode IDE, you
+   you will need to install the `OCaml and Reason IDE extension
+   <https://marketplace.visualstudio.com/items?itemName=freebroccolo.reasonml>`_,
+   which enables OCaml support in VSCode (assuming you have installed all
+   libraries above via ``opam`` in the step 3). You can install the extension by
+   pressing ``Command-Shift-P``, typing ``Install Extensions``, and choosing that
+   item from the dropdown menu.
    
-   Restart Aquamacs. Once it's reopened, execute company-mode for completion
-   `Option-X package-list-packages`. From the list choose `company -> Install -> Yes`:
-
-.. image:: ../resources/howto/mac-company.png
-   :width: 820px
-   :align: center 
-
-7. Add the following lines to your ``~/.emacs`` configuration::
-
-    ; Make company aware of merlin
-    (with-eval-after-load 'company
-    (add-to-list 'company-backends 'merlin-company-backend))
-    ; Enable company on merlin managed buffers
-    (add-hook 'merlin-mode-hook 'company-mode)
-
-   Some additional information about this Emacs mode can be found `here <https://github.com/ocaml/merlin/wiki/emacs-from-scratch>`_.
-
-8. You're good to go. To check your setup, create an OCaml file in
-   Emacs (e.g., ``a.ml``) and try to play with some definitions. The
-   editor should highlight OCaml syntax, compile-time errors, and will
-   suggest options for name auto-completion:
-
-.. image:: ../resources/howto/mac-tuareg.png
-   :width: 820px
-   :align: center    
-
-9. [Optional] You can additionally setup the following parameters in Emacs for better
-   editing by searching in ``Options -> Customize Aquamacs -> Top-level
-   Customization Group``:
-
-   * Set the width of the buffer line to cut automatically beyond 80 characters
-     (parameter ``Fill Column``):   
-
-     .. image:: ../resources/howto/line80.png
-        :width: 820px
-        :align: center
-
-   * Remove the red highlighting of trailing whitespaces in the buffers
-     (parameter ``Show Trailing Whitespace``):
-
-     .. image:: ../resources/howto/trailing.png
-        :width: 820px
-        :align: center
-
-10. You can use `VSCode <https://code.visualstudio.com/>`_ instead of Aquamacs,
-    assuming you've done the steps 1-4.
-
-    First, you you will need to install the `OCaml and Reason IDE extension
-    <https://marketplace.visualstudio.com/items?itemName=freebroccolo.reasonml>`_,
-    which enables OCaml support in VSCode (assuming you have installed all
-    libraries above via ``opam`` in the step 5). You can install the extension
-    by pressing ``Command-Shift-P``, typing "Install Extensions", and choosing
-    that item from the dropdown menu.
-   
-    Now, if you open an OCaml file, it will look like that:
+   Now, if you open an OCaml file, it will look like that:
 
 .. image:: ../resources/vscode-mac.png
    :width: 820px
@@ -385,14 +255,14 @@ Troubleshooting
    press ``Command-Shift-P`` and choose "Preferences: Open Settings (JSON)"
    (to find it just type "settings" and choose the correct option)::
 
-      "reason.path.ocamlmerlin": "/Users/YOURNAME/.opam/4.10.0/bin/ocamlmerlin"
+      "reason.path.ocamlmerlin": "/Users/YOURNAME/.opam/4.12.0/bin/ocamlmerlin"
 
    For example, in my case the contents of this file look as follows::
 
       {
           "window.zoomLevel": 2,
           "search.searchOnType": false,
-          "reason.path.ocamlmerlin": "/Users/ilya/.opam/4.10.0/bin/ocamlmerlin"
+          "reason.path.ocamlmerlin": "/Users/ilya/.opam/4.12.0/bin/ocamlmerlin"
       }
 
    Don't forget to save the file. 
