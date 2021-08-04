@@ -111,7 +111,7 @@ fully functional Linux distribution installed on your machine.
 
     sudo add-apt-repository ppa:avsm/ppa
     sudo apt install opam
-    opam init -y --compiler=4.12.0 --disable-sandboxing
+    opam init -y --compiler=4.10.0 --disable-sandboxing
     eval $(opam env)
     opam install -y dune core batteries utop graphics merlin ocp-indent
 
@@ -122,7 +122,7 @@ fully functional Linux distribution installed on your machine.
    After that, close your terminal window and start a new one.
 
    To check that your OCaml is correctly installed, run ``ocamlc --version``
-   from the terminal. You should get the output ``4.12.0``, which is the version
+   from the terminal. You should get the output ``4.10.0``, which is the version
    of the OCaml compiler we have just installed.
 
 7. We recommend you to use `VSCode <https://code.visualstudio.com/>`_ for your
@@ -191,7 +191,7 @@ straightforward.
    lines from the terminal::
 
     brew install opam
-    opam init -y --compiler=4.12.0
+    opam init -y --compiler=4.10.0
     eval $(opam env)
     opam install -y dune core batteries utop graphics merlin ocp-indent
 
@@ -207,10 +207,10 @@ straightforward.
    avoid it, please, run this line first before installing the listed
    above packages::
 
-     opam switch reinstall 4.12.0
+     opam switch reinstall 4.10.0
 
    To check that your OCaml is correctly installed, run ``ocamlc --version``
-   from the terminal. You should get the output ``4.12.0``, which is the version
+   from the terminal. You should get the output ``4.10.0``, which is the version
    of the OCaml compiler we have just installed.
 
 5. We suggest you use `VSCode <https://code.visualstudio.com/>`_ for OCaml
@@ -228,10 +228,18 @@ straightforward.
    :width: 820px
    :align: center
  
-Troubleshooting
----------------
+FAQ & Troubleshooting
+---------------------
 
-1. **Problem**: In-line tests are highlighed red in my editor with an error message
+1. **Question**: May I use Emacs for programming in OCaml?
+
+   **Answer**: Of course, you can! This tutorial used to have notes on how to
+   configure Emacs/Aquamacs for OCaml, but the experience of the last few years
+   has confincingly demonstrated that VSCode is a much simpler and more
+   convenient to use alternative, so why don't you give it a try?
+
+
+2. **Problem**: In-line tests are highlighed red in my editor with an error message
    ``ppx_inline_test: extension is disabled because the tests would be ignored
    ...``.
 
@@ -243,31 +251,39 @@ Troubleshooting
    Then, in your project, run ``make clean; make``. After that, the error in the
    editor should be gone.
 
-2. **Problem**: Merlin is not detected by VSCode, which gives an error
+3. **Problem**: Merlin is not detected by VSCode, which gives an error
    "``ocamlmerlin`` is not found".
 
    **Solution**: This is the case if you didn't add ``eval $(opam env)`` to the
    configuration files (e.g., ``~/.bashrc`` and/or ``~/.profile``). Adding it
    and restarting VSCode should fix it.
 
-   Alternatively, you can add the following lines to the ``settings.json``
-   file (with your account name instead of ``YOURNAME``). To find that file,
-   press ``Command-Shift-P`` and choose "Preferences: Open Settings (JSON)"
-   (to find it just type "settings" and choose the correct option)::
+   Alternatively (NOT RECOMMENDED), you can add the following lines to the
+   ``settings.json`` file (with your account name instead of ``YOURNAME``). To
+   find that file, press ``Command-Shift-P`` and choose "Preferences: Open
+   Settings (JSON)" (to find it just type "settings" and choose the correct
+   option)::
 
-      "reason.path.ocamlmerlin": "/Users/YOURNAME/.opam/4.12.0/bin/ocamlmerlin"
+      "reason.path.ocamlmerlin": "/Users/YOURNAME/.opam/4.10.0/bin/ocamlmerlin"
 
    For example, in my case the contents of this file look as follows::
 
       {
           "window.zoomLevel": 2,
           "search.searchOnType": false,
-          "reason.path.ocamlmerlin": "/Users/ilya/.opam/4.12.0/bin/ocamlmerlin"
+          "reason.path.ocamlmerlin": "/Users/ilya/.opam/4.10.0/bin/ocamlmerlin"
       }
 
    Don't forget to save the file. 
 
-3. **Problem**: When installing ``tuareg`` mode with ``opam`` on macOS, I get an
+4. **Problem**: In VSCode, a Git icon in the vertical panel on the left keeps
+   blinking with  the "watch" symbol when being updated. 
+
+   **Solution**: Add the following line to your ``settings.json`` file::
+
+      "git.showProgress": false
+
+5. **Problem**: When installing ``tuareg`` mode with ``opam`` on macOS, I get an
    error::
      
      [ERROR] The compilation of conf-emacs failed at ...
@@ -281,14 +297,6 @@ Troubleshooting
    ``PATH``. This can be done by, e.g., installing ``emacs`` via Homebrew::
 
      brew install emacs
-
-4. **Problem**: In VSCode, a Git icon in the vertical panel on the left keeps
-   blinking with  the "watch" symbol when being updated. 
-
-   **Solution**: Add the following line to your ``settings.json`` file::
-
-      "git.showProgress": false
-
       
 
 
