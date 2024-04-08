@@ -6,6 +6,14 @@
 Introductory Data Structures and Algorithms
 ===========================================
 
+This course on "classic" imperative data structures and algorithms has been
+offered by `Ilya Sergey <https://ilyasergey.net/>`_ at Yale-NUS College in
+2019-2022. Feel free to use all the materials below and submit pull requests on
+GitHub (see the links to the sources below).
+
+Please, get in touch is you'd like to get access model solutions for the
+midterm/final project or the homework assignments (not posted on this page).
+
 .. toctree::
    :numbered:
    :maxdepth: 1
@@ -13,15 +21,6 @@ Introductory Data Structures and Algorithms
    syllabus
    prerequisites
    codestyle
-
-..   * Lectures: Fridays, 2:30-5:30pm
-..   * Location: ERC-SR10 Seminar Room 10, UTown (two storeys above Starbucks)
-..   * Instructor: `Ilya Sergey <https://ilyasergey.net/>`_
-..   * Office hours: Wednesdays, 5:00-7:00pm, #RC3-01-03E (Cendana)
-..   * Peer Tutors: 
-
-..     * `Tram Hoang <mailto:tram.hoang@u.yale-nus.edu.sg>`_, Wednesdays, 7pm-9pm, CR20 (RC3-01-02)
-..     * `Gabriel Petrov <mailto:gabrielphoenixpetrov@u.yale-nus.edu.sg>`_, Thursdays, 6pm-8pm, CR20 (RC3-01-02)
 
 Lecture Notes
 -------------
@@ -46,8 +45,6 @@ Lecture Notes
    week-13
    final
 
-Lecture notes will be posted gradually as we progress through the material.
-
 Slides and Supplementary Materials
 ----------------------------------
 
@@ -66,6 +63,10 @@ Examples and Code
 * `Example OCaml project with graphics <https://github.com/ysc2229/ocaml-graphics-demo>`_ 
 * `Midterm project starter code  <https://github.com/ysc2229/midterm-starter-code>`_
 * `Final project starter code  <https://github.com/ysc2229/final-starter-code>`_
+* `Sources of these lecture notes  <https://github.com/ilyasergey/YSC2229>`_
+
+Pull requests are welcome!
+
 
 
 .. * `GitHub Organisation <https://github.com/ysc2229/>`_ (please, email me your GitHub handle to have access) 
@@ -86,8 +87,7 @@ Textbooks
 
 **On OCaml**
 
-1. `Introduction to Objective Caml <_static/ocaml-book.pdf>`_ by Jason Hickey 
-2. `Real World OCaml <https://dev.realworldocaml.org/>`_ by Yaron Minsky, Anil Madhavapeddy, and Jason Hickey
+1. `Real World OCaml <https://dev.realworldocaml.org/>`_ by Yaron Minsky, Anil Madhavapeddy, and Jason Hickey
 
 ..
    Indices and tables
