@@ -3,6 +3,8 @@
 Final Project: Vroomba Programming
 ==================================
 
+* `Final project starter code  <https://github.com/ysc2229/final-starter-code>`_
+
 The final project will consist of two parts: team-based coding
 assignments and individual implementation reports. 
 

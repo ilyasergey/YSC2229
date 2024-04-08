@@ -3,6 +3,8 @@
 Midterm Project: Memory Allocation and Reclamation
 ==================================================
 
+* `Midterm project starter code  <https://github.com/ysc2229/midterm-starter-code>`_
+
 This midterm project will consist of two parts: team-based coding
 assignments and individual implementation reports. 
 

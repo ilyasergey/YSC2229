@@ -63,8 +63,11 @@ Examples and Code
 -----------------
 
 * `Code from the lectures  <https://github.com/ysc2229/ysc2229>`_
-* `Example OCaml project with graphics
-  <https://github.com/ysc2229/ocaml-graphics-demo>`_ 
+* `Example OCaml project with graphics <https://github.com/ysc2229/ocaml-graphics-demo>`_ 
+* `Midterm project starter code  <https://github.com/ysc2229/midterm-starter-code>`_
+* `Final project starter code  <https://github.com/ysc2229/final-starter-code>`_
+
+
 .. * `GitHub Organisation <https://github.com/ysc2229/>`_ (please, email me your GitHub handle to have access) 
 
 Textbooks
