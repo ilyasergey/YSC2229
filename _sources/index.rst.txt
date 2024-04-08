@@ -8,11 +8,11 @@ Introductory Data Structures and Algorithms
 
 This course on "classic" imperative data structures and algorithms has been
 offered by `Ilya Sergey <https://ilyasergey.net/>`_ at Yale-NUS College in
-2019-2022. Feel free to use all the materials below and submit pull requests on
+2019-2021. Feel free to use all the materials below and submit pull requests on
 GitHub (see the links to the sources below).
 
-Please, get in touch is you'd like to get access model solutions for the
-midterm/final project or the homework assignments (not posted on this page).
+Please, get in touch is you'd like to get access to the homework assignments or
+to the model solutions for the midterm/final projects.
 
 .. toctree::
    :numbered:
