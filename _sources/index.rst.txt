@@ -14,14 +14,14 @@ Introductory Data Structures and Algorithms
    prerequisites
    codestyle
 
-* Lectures: Fridays, 2:30-5:30pm
-* Location: ERC-SR10 Seminar Room 10, UTown (two storeys above Starbucks)
-* Instructor: `Ilya Sergey <https://ilyasergey.net/>`_
-* Office hours: Wednesdays, 5:00-7:00pm, #RC3-01-03E (Cendana)
-* Peer Tutors: 
+..   * Lectures: Fridays, 2:30-5:30pm
+..   * Location: ERC-SR10 Seminar Room 10, UTown (two storeys above Starbucks)
+..   * Instructor: `Ilya Sergey <https://ilyasergey.net/>`_
+..   * Office hours: Wednesdays, 5:00-7:00pm, #RC3-01-03E (Cendana)
+..   * Peer Tutors: 
 
-  * `Tram Hoang <mailto:tram.hoang@u.yale-nus.edu.sg>`_, Wednesdays, 7pm-9pm, CR20 (RC3-01-02)
-  * `Gabriel Petrov <mailto:gabrielphoenixpetrov@u.yale-nus.edu.sg>`_, Thursdays, 6pm-8pm, CR20 (RC3-01-02)
+..     * `Tram Hoang <mailto:tram.hoang@u.yale-nus.edu.sg>`_, Wednesdays, 7pm-9pm, CR20 (RC3-01-02)
+..     * `Gabriel Petrov <mailto:gabrielphoenixpetrov@u.yale-nus.edu.sg>`_, Thursdays, 6pm-8pm, CR20 (RC3-01-02)
 
 Lecture Notes
 -------------
@@ -65,7 +65,7 @@ Examples and Code
 * `Code from the lectures  <https://github.com/ysc2229/ysc2229>`_
 * `Example OCaml project with graphics
   <https://github.com/ysc2229/ocaml-graphics-demo>`_ 
-* `GitHub Organisation <https://github.com/ysc2229/>`_ (please, email me your GitHub handle to have access) 
+.. * `GitHub Organisation <https://github.com/ysc2229/>`_ (please, email me your GitHub handle to have access) 
 
 Textbooks
 ---------
