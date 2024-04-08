@@ -26,7 +26,7 @@ Introductory Data Structures and Algorithms
 Lecture Notes
 -------------
 
-.. toctree::
+.. toctree:: 
    :numbered:
    :maxdepth: 2
 
@@ -62,8 +62,7 @@ Slides and Supplementary Materials
 Examples and Code
 -----------------
 
-* `Code from the lectures
-  <https://github.com/ysc2229/ysc2229-2021>`_: each week ``N`` is a separate  branch ``weekN``.
+* `Code from the lectures  <https://github.com/ysc2229/ysc2229>`_
 * `Example OCaml project with graphics
   <https://github.com/ysc2229/ocaml-graphics-demo>`_ 
 * `GitHub Organisation <https://github.com/ysc2229/>`_ (please, email me your GitHub handle to have access) 
