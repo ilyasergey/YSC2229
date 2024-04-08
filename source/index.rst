@@ -68,9 +68,6 @@ Examples and Code
 Pull requests are welcome!
 
 
-
-.. * `GitHub Organisation <https://github.com/ysc2229/>`_ (please, email me your GitHub handle to have access) 
-
 Textbooks
 ---------
 
@@ -80,14 +77,13 @@ Textbooks
    <https://mitpress.mit.edu/books/introduction-algorithms-third-edition>`_
    by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and
    Clifford Stein
-2. (Optional) `Algorithms, 4th edition
-   <https://algs4.cs.princeton.edu/home/>`_
+2. (Optional) `Algorithms, 4th edition <https://algs4.cs.princeton.edu/home/>`_
    by Robert Sedgewick and Kevin Wayne.
    `This book has some great in-depth examples of basic algorithms.`
 
 **On OCaml**
 
-1. `Real World OCaml <https://dev.realworldocaml.org/>`_ by Yaron Minsky, Anil Madhavapeddy, and Jason Hickey
+1. `Real World OCaml <https://dev.realworldocaml.org/>`_ by Yaron Minsky and Anil Madhavapeddy
 
 ..
    Indices and tables
